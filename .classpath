@@ -11,9 +11,10 @@
 			<attribute name="javadoc_location" value="file:/E:/wtp20/plugins/com.google.gwt.eclipse.sdkbundle.2.0.2_2.0.2.v201002121411/gwt-2.0.2/doc/javadoc/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/iText-2.1.7-gae.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER/App Engine"/>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v6.0"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JDK6"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

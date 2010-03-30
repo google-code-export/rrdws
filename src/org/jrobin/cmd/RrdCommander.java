@@ -45,9 +45,11 @@ public class RrdCommander {
 			new RrdDumpCmd(),
 			new RrdRestoreCmd(),
 			new RrdXportCmd(),
-//			new RrdGraphCmd(),
 			new RrdTuneCmd(),
-			new RrdInfoCmd()
+			new RrdInfoCmd(),
+			System.getProperty("com.google.appengine.runtime.version")==null?new RrdGraphCmd():new RrdInfoCmd()
+ 
+			
 	};
 
 	/**

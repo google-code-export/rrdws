@@ -64,12 +64,13 @@ class RrdGraphCmd extends RrdToolCmd implements RrdGraphConstants {
 		return info;
 	}
 
+ 
     /**
      * @throws RrdException
      * @returns an RRD graph definition
      */
     public RrdGraphDef getGraphDef() throws RrdException {
-        RrdGraphDef gdef = new RrdGraphDef();
+    	gdef = new RrdGraphDef();
 
 		// OPTIONS
 

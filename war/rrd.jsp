@@ -11,6 +11,10 @@
 
 <%="<pre>"+System.getProperties()+"</pre>"%>
  
+ <form  method="post" action="/rrd/rrd.jsp?" >
+ <input name="cmd" size="100"/>
+ <input type="submit"/>
+</form>
 
 <%
 System.out.println("== Rrd4j's RRDTool commander ==");
@@ -21,8 +25,9 @@ RrdCommander.execute(cmdTmp);
 %>
 <% 
  
-
+if (1==2)
 try {
+	
 	PersistenceManager   pm =RRD_JDOHelper.getInstance().getPMF().getPersistenceManager();
 
     Query query =   pm.newQuery(Blob.class);
