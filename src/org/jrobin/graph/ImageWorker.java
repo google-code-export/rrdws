@@ -24,9 +24,9 @@
  */
 package org.jrobin.graph;
 
-//import com.sun.image.codec.jpeg.JPEGCodec;
-//import com.sun.image.codec.jpeg.JPEGEncodeParam;
-//import com.sun.image.codec.jpeg.JPEGImageEncoder;
+import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGEncodeParam;
+import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -186,13 +186,11 @@ class ImageWorker {
 			gifEncoder.encode(stream);
 		}
 		else if (type.equalsIgnoreCase("jpg") || type.equalsIgnoreCase("jpeg")) {
-			if (1==1) throw new RuntimeException("" +
-					"			JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(stream);" +
-					"			JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam(img);" +
-					"");
-//			param.setQuality(quality, false);
-//			encoder.setJPEGEncodeParam(param);
-//			encoder.encode(img);
+			JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(stream);
+			JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam(img);
+			param.setQuality(quality, false);
+			encoder.setJPEGEncodeParam(param);
+			encoder.encode(img);
 		}
 		else {
 			throw new IOException("Unsupported image format: " + type);
