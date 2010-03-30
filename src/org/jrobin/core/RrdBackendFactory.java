@@ -81,6 +81,8 @@ public abstract class RrdBackendFactory {
 			registerFactory(nioFactory);
 			RrdSafeFileBackendFactory safeFactory = new RrdSafeFileBackendFactory();
 			registerFactory(safeFactory);
+			RrdJdoBackendFactory jdoFactory = new RrdJdoBackendFactory();
+			registerFactory(jdoFactory );
 			selectDefaultFactory();
 		}
 		catch (RrdException e) {
@@ -93,10 +95,11 @@ public abstract class RrdBackendFactory {
 		if (version == null || version.startsWith("1.3.") ||
 				version.startsWith("1.4.0") || version.startsWith("1.4.1")) {
 			setDefaultFactory(RrdFileBackendFactory.NAME);
-		}
-		else {
-			//setDefaultFactory("NIO");
-			setDefaultFactory(RrdMemoryBackendFactory.NAME);
+		}else if (System.getProperty("com.google.appengine.runtime.version")!=null){
+			setDefaultFactory(RrdJdoBackendFactory.NAME);
+		}else {
+			setDefaultFactory(RrdNioBackendFactory.NAME);
+			
 		}
 	}
 

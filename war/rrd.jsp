@@ -1,3 +1,7 @@
+<%@page import="java.util.List"%>
+<%@page import="javax.jdo.Query"%>
+ 
+<%@page import="javax.jdo.PersistenceManager"%>
 <%@page import="ws.rdd.jdo.RRD_JDOHelper"%>
 <%@page import="ws.rdd.jdo.Blob"%> 
 <%@page import="ws.rrd.Chk"%>
@@ -5,18 +9,9 @@
 <%@page import="org.jrobin.cmd.RrdCommander"%>
 
 
-<%=" 111"+System.getProperties()%>
+<%="<pre>"+System.getProperties()+"</pre>"%>
  
-<% 
-Blob firstTmp = new Blob( "1st" );
 
-try {
-	RRD_JDOHelper.getInstance().getPm().makePersistent(firstTmp);
-} finally {
-	out.append("!!!!!!!!!!!!!!!@!");
-    //pm.close();
-} 
-%>
 <%
 System.out.println("== Rrd4j's RRDTool commander ==");
 String cmdTmp = request.getParameter("cmd");
@@ -24,11 +19,33 @@ System.out.println(cmdTmp);
 RrdCommander.setRrdDbPoolUsed(false);
 RrdCommander.execute(cmdTmp);
 %>
+<% 
+ 
+
+try {
+	PersistenceManager   pm =RRD_JDOHelper.getInstance().getPMF().getPersistenceManager();
+
+    Query query =   pm.newQuery(Blob.class);
+    //pm.newQuery("select from Blob ");
+      //      "where lastName == lastNameParam " +
+        //    "parameters String lastNameParam " +
+          //  "order by hireDate desc");
+
+	List<Blob> results = (List<Blob>) query.execute();//query.execute("Smith");	
+	for ( Object oTmp: results ){
+		out.append("stored  >> "+((Blob)oTmp).getName()  +" ["+ ((Blob)oTmp).getData().length()+"]<br>");
+	}
+	
+} finally {
+	out.append("!!!!!!!!!!!!!!!@!");
+    //pm.close();
+} 
+%>
 <%
 try{
-		(new RrdGraphCmdTest()).testExecute();
+		if (1==2)(new RrdGraphCmdTest()).testExecute();
 	}catch(Throwable e){
 		Chk.chk(e);
-			e.printStackTrace();
+		e.printStackTrace();
 }
 %>

@@ -17,7 +17,7 @@ public class RRD_JDOHelper {
 		return PMF;
 	}
 
-	public PersistenceManager getPm() {
+	protected PersistenceManager getPm() {
 		return pm;
 	}
 }
