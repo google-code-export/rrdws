@@ -22,19 +22,22 @@
  * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  * Boston, MA 02111-1307, USA.
  */
-package org.jrobin.graph;
+package org.jrobin.svg;
 
-import java.awt.Font;
-import java.awt.Paint;
+//import java.awt.Font;
+//import java.awt.Paint;
 import java.io.File;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List; 
+import java.util.List;
+
 import org.jrobin.core.RrdException;
 import org.jrobin.core.Util;
 import org.jrobin.data.Plottable;
+import org.jrobin.svg.awt.Font;
+import org.jrobin.svg.awt.Paint;
 
 /**
  * Class which should be used to define new JRobin graph. Once constructed and populated with data
@@ -64,7 +67,7 @@ import org.jrobin.data.Plottable;
  * without forcing a newline, you can use the special tag \J at the end of
  * the string to disable the auto justification.
  */
-public class RrdGraphDef implements RrdGraphConstants  {
+public class RrdGraphDef implements RrdGraphConstants {
 	boolean poolUsed = false; // ok
 	boolean antiAliasing = false; // ok
 	String filename = RrdGraphConstants.IN_MEMORY_IMAGE; // ok

@@ -47,7 +47,7 @@ public class RrdCommander {
 			new RrdXportCmd(),
 			new RrdTuneCmd(),
 			new RrdInfoCmd(),
-			System.getProperty("com.google.appengine.runtime.version")==null?new RrdGraphCmd():new RrdInfoCmd()
+			getRrdCommender()
  
 			
 	};
@@ -61,6 +61,13 @@ public class RrdCommander {
 	public static synchronized boolean isStandardOutUsed() {
 		return RrdToolCmd.isStandardOutUsed();
 	}
+
+	public  static RrdToolCmd getRrdCommender() {
+		return System.getProperty("com.google.appengine.runtime.version")==null?new RrdGraphCmd():new RrdSvgCmd();
+	}
+	public  static RrdToolCmd getRrdRenderer() {
+		return System.getProperty("com.google.appengine.runtime.version")==null?new RrdGraphCmd():new RrdSvgCmd();
+	}	
 
 	/**
 	 * Method used to control access to stdout (System.out, console) for all RRDTool commands. By default,
