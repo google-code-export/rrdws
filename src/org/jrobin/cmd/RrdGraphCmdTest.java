@@ -24,7 +24,8 @@ public class RrdGraphCmdTest {
 	 * e:\Distr\rrd4j-2.0.5\lib\speed.gif
 	 * 
 $ rrdtool create test.rrd --start 920804400 DS:speed:COUNTER:600:U:U  RRA:AVERAGE:0.5:1:24 RRA:AVERAGE:0.5:6:10
-$ rrdtool update test.rrd 920804700:12345 920805000:12357 920805300:12363
+$ rrdtool update test.rrd 920804500:12335 920804600:12337 920804700:12340
+$ rrdtool update test.rrd 920804800:12345 920805000:12357 920805300:12363
 $ rrdtool update test.rrd 920805700:12366 920805800:12367 920806100:12368
 $ rrdtool update test.rrd 920806500:12383 920806800:12393 920807100:12399
 $ rrdtool update test.rrd 920807400:12405 920807700:12411 920808000:12415
@@ -47,7 +48,7 @@ $ rrdtool fetch test.rrd AVERAGE --start 920804400 --end 920809200
  920808600: +6.6666666667E-03
  920808900: +3.3333333333E-03
  920809200:               nan
- $ rrdtool graph speed.gif      --start 920804400 --end 920808000  LINE2:myspeed#FF0000
+ $ rrdtool graph speed.gif      --start 920804400 --end 920808000  DEF:myspeed=test.rrd:speed:AVERAGE  LINE2:myspeed#FF0000
  
 	 * 
 	 * 

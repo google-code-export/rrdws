@@ -44,7 +44,7 @@ public class RrdJdoBackendFactory extends RrdBackendFactory {
 			backend = new RrdJdoBackend (blobTmp,  readOnly);
 		}
 		else {
-			blobTmp = new Blob("");
+			blobTmp = new Blob("".getBytes());
 			blobTmp .setName(id); 
 			pm.makePersistent(blobTmp);				
 			backend = new RrdJdoBackend(blobTmp ,readOnly);
@@ -82,7 +82,7 @@ public class RrdJdoBackendFactory extends RrdBackendFactory {
 	}
 	
 	@SuppressWarnings("unchecked")
-	protected synchronized Blob getById(String id) {
+	public synchronized Blob getById(String id) {
 		PersistenceManager pm = RRD_JDOHelper.getInstance().getPMF().getPersistenceManager();
 	    Query query = pm.newQuery(Blob.class);
 	    query.setFilter("name == nameParam");

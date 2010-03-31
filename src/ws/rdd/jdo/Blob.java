@@ -11,7 +11,7 @@ import com.google.appengine.api.datastore.Key;
 
 @PersistenceCapable
 public class Blob {
-    public static final String ENCODING = "UTF-8";
+
 	@PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
     private Key key;
@@ -25,7 +25,7 @@ public class Blob {
     @Persistent
     private Date updateDate;    
 
-    public Blob( String data) {
+    public Blob( byte[] data) {
 		super(); 
 		this.setData( data );
 	}
@@ -37,22 +37,10 @@ public class Blob {
     }
     
     
-	public String getData() {
-		try {
-			return new String(this.data.getBytes(), ENCODING);
-		} catch (UnsupportedEncodingException e) {
-			return new String(this.data.getBytes() );
-		}
+	public byte[] getData() {
+			 return this.data.getBytes() ;
 	}
-	public void setData(String data) {
-		byte[] buffer;
-		try {
-			buffer = data.getBytes(ENCODING);
-		} catch (UnsupportedEncodingException e) {
-			buffer = data.getBytes( );
-		}
-		this.setData(buffer);
-	}
+	
 
 	private void update() {
 		setUpdateDate(new Date () );

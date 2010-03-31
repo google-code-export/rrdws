@@ -38,7 +38,7 @@ try {
 
 	List<Blob> results = (List<Blob>) query.execute();//query.execute("Smith");	
 	for ( Object oTmp: results ){
-		out.append("stored  >> "+((Blob)oTmp).getName()  +" ["+ ((Blob)oTmp).getData().length()+"]<br>");
+		out.append("stored  >> "+((Blob)oTmp).getName()  +" ["+ ((Blob)oTmp).getData().length +"]<br>");
 	}
 	
 } finally {

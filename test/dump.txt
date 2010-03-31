@@ -1,0 +1,185 @@
+== Rrd4j's RRDTool commander ==
+dump test.rrd
+<rrd>
+   <!-- JRobin, version 0.1 -->
+   <version>0001</version>
+   <!-- Seconds -->
+   <step>300</step>
+   <!-- Sun Mar 07 11:15:00 UTC 1999 -->
+   <lastupdate>920805300</lastupdate>
+   <ds>
+      <name>speed</name>
+      <type>COUNTER</type>
+      <minimal_heartbeat>600</minimal_heartbeat>
+      <min>NaN</min>
+      <max>NaN</max>
+      <!-- PDP Status -->
+      <last_ds>+1.2363000000E04</last_ds>
+      <value>+0.0000000000E00</value>
+      <unknown_sec>0</unknown_sec>
+   </ds>
+   <rra>
+      <cf>AVERAGE</cf>
+      <!-- 300 seconds -->
+      <pdp_per_row>1</pdp_per_row>
+      <xff>+5.0000000000E-01</xff>
+      <cdp_prep>
+         <ds>
+            <value>NaN</value>
+            <unknown_datapoints>0</unknown_datapoints>
+         </ds>
+      </cdp_prep>
+      <database>
+         <!-- Sun Mar 07 09:20:00 UTC 1999 / 920798400 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 09:25:00 UTC 1999 / 920798700 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 09:30:00 UTC 1999 / 920799000 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 09:35:00 UTC 1999 / 920799300 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 09:40:00 UTC 1999 / 920799600 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 09:45:00 UTC 1999 / 920799900 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 09:50:00 UTC 1999 / 920800200 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 09:55:00 UTC 1999 / 920800500 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 10:00:00 UTC 1999 / 920800800 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 10:05:00 UTC 1999 / 920801100 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 10:10:00 UTC 1999 / 920801400 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 10:15:00 UTC 1999 / 920801700 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 10:20:00 UTC 1999 / 920802000 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 10:25:00 UTC 1999 / 920802300 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 10:30:00 UTC 1999 / 920802600 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 10:35:00 UTC 1999 / 920802900 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 10:40:00 UTC 1999 / 920803200 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 10:45:00 UTC 1999 / 920803500 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 10:50:00 UTC 1999 / 920803800 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 10:55:00 UTC 1999 / 920804100 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 11:00:00 UTC 1999 / 920804400 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 11:05:00 UTC 1999 / 920804700 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 11:10:00 UTC 1999 / 920805000 -->
+         <row>
+            <v>+4.0000000000E-02</v>
+         </row>
+         <!-- Sun Mar 07 11:15:00 UTC 1999 / 920805300 -->
+         <row>
+            <v>+2.0000000000E-02</v>
+         </row>
+      </database>
+   </rra>
+   <rra>
+      <cf>AVERAGE</cf>
+      <!-- 1800 seconds -->
+      <pdp_per_row>6</pdp_per_row>
+      <xff>+5.0000000000E-01</xff>
+      <cdp_prep>
+         <ds>
+            <value>+6.0000000000E-02</value>
+            <unknown_datapoints>1</unknown_datapoints>
+         </ds>
+      </cdp_prep>
+      <database>
+         <!-- Sun Mar 07 06:30:00 UTC 1999 / 920788200 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 07:00:00 UTC 1999 / 920790000 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 07:30:00 UTC 1999 / 920791800 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 08:00:00 UTC 1999 / 920793600 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 08:30:00 UTC 1999 / 920795400 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 09:00:00 UTC 1999 / 920797200 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 09:30:00 UTC 1999 / 920799000 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 10:00:00 UTC 1999 / 920800800 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 10:30:00 UTC 1999 / 920802600 -->
+         <row>
+            <v>NaN</v>
+         </row>
+         <!-- Sun Mar 07 11:00:00 UTC 1999 / 920804400 -->
+         <row>
+            <v>NaN</v>
+         </row>
+      </database>
+   </rra>
+</rrd>

@@ -26,6 +26,7 @@
 package org.jrobin.core;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import javax.jdo.PersistenceManager;
 
@@ -50,7 +51,7 @@ public class RrdJdoBackend extends RrdBackend {
 		super(blobTmp.getName());
 		this.isReadOnly = readOnly;
 		this.blob = blobTmp;
-		this.buffer = blob.getData().getBytes();
+		this.buffer = blob.getData();
 	}
 
 	protected synchronized void write(long offset, byte[] b) throws IOException {
@@ -100,12 +101,12 @@ public class RrdJdoBackend extends RrdBackend {
 	 * This method is required by the base class definition, but it does not
 	 * releases any memory resources at all.
 	 */
-	public void close() {		
+	public void close() {	
 		if (false == isReadOnly ){
 			PersistenceManager pm = RRD_JDOHelper.getInstance().getPMF().getPersistenceManager();
 			this.blob.setData( this.buffer );
 			pm.makePersistent(this.blob);
-			pm.close();
+			pm.close();			 
 		}		 
 	}
 
