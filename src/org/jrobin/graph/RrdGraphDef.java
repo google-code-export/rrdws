@@ -35,6 +35,7 @@ import java.util.List;
 import org.jrobin.core.RrdException;
 import org.jrobin.core.Util;
 import org.jrobin.data.Plottable;
+import org.jrobin.svg.awt.Color;
 
 /**
  * Class which should be used to define new JRobin graph. Once constructed and populated with data
@@ -1081,5 +1082,12 @@ public class RrdGraphDef implements RrdGraphConstants  {
 			}
 		}
 		return false;
+	}
+
+	public void line(String string, Color color, Object object, int i) {
+		// TODO Auto-generated method stub
+		if (1==1)throw new RuntimeException("not yet implemented since 31.03.2010");
+		else {
+		}
 	}
 }

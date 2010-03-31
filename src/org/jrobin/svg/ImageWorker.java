@@ -144,16 +144,9 @@ class ImageWorker {
 	void drawPolyline(double[] x, double[] y, Paint paint, Stroke stroke) {
 		gd.setPaint(paint);
 		gd.setStroke(stroke);
-		PathIterator path = new PathIterator(y);
-		for (int[] pos = path.getNextPath(); pos != null; pos = path.getNextPath()) {
-			int start = pos[0], end = pos[1];
-			int[] xDev = new int[end - start], yDev = new int[end - start];
-			for (int i = start; i < end; i++) {
-				xDev[i - start] = (int) x[i];
-				yDev[i - start] = (int) y[i];
-			}
-			gd.drawPolyline(xDev, yDev, xDev.length);
-		}
+		
+		gd.drawPolyline(x, y, Math.min(  y.length,  x.length) );
+		 
 	}
 
 	void drawString(String text, int x, int y, Font font, Paint paint) {

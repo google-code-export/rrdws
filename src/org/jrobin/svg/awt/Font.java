@@ -16,20 +16,16 @@ public class Font {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	public LineMetrics getLineMetrics(String dummyText, Object fontRenderContext) {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 31.03.2010");
-		else {
-		return null;
-		}
+	public LineMetrics getLineMetrics(String dummyText, FontRenderContext fontRenderContext) {
+		String data = "LineMetrics getLineMetrics(String "+dummyText+" , FontRenderContext "+ fontRenderContext+" )";
+		System.out.println(data);
+		return new LineMetrics(data);
 	}
 	public Rectangle2D getStringBounds(String text, int i, int length,
-			Object fontRenderContext) {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 31.03.2010");
-		else {
-		return null;
-		}
+			FontRenderContext fontRenderContext) {
+		String data = "Rectangle2D: getStringBounds(String :"+text+" , int"+ i+" , int "+ length+" , FontRenderContext "+fontRenderContext +");";
+		System.out.println(data);
+		return new Rectangle2D (data);
 	}
 	public Font deriveFont(String plain2, int i) {
 		// TODO Auto-generated method stub

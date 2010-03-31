@@ -1,6 +1,16 @@
 package org.jrobin.svg.awt;
 
-public class Graphics2D {
+public class Graphics2D extends Graphics {
+
+	private BufferedImage bi;
+	private String keyTextAntialiasing;
+	private String valueTextAntialiasOn;
+	private Paint paint;
+	private Stroke stroke;
+
+	public Graphics2D(BufferedImage bufferedImage) {
+		this.bi = bufferedImage;
+	}
 
 	public void dispose() {
 		// TODO Auto-generated method stub
@@ -8,118 +18,77 @@ public class Graphics2D {
 	}
 
 	public AffineTransform getTransform() {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 31.03.2010");
-		else {
-		return null;
-		}
+		return new AffineTransform();
 	}
 
 	public void setClip(int x, int y, int width, int height) {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 31.03.2010");
-		else {
-		}
+		System.out.println( "setClip(int "+x+", int"+ y+" , int "+width+", int "+height+") ");
 	}
 
 	public void translate(int x, int y) {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 31.03.2010");
-		else {
-		}
+		System.out.println( "translate(int "+x+", int"+ y+"  ) ");
 	}
 
 	public void rotate(double angle) {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 31.03.2010");
-		else {
-		}
+		System.out.println( "rotate(int "+angle+"  ) ");
 	}
 
 	public void setTransform(AffineTransform aftInitial) {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 31.03.2010");
-		else {
-		}
+		System.out.println( "setTransform(int "+aftInitial+"  ) ");
 	}
 
 	public void setPaint(Paint paint) {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 31.03.2010");
-		else {
-		}
+		this.paint = paint;
 	}
 
 	public void fillRect(int x, int y, int width, int height) {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 31.03.2010");
-		else {
-		}
+		System.out.println("fillRect(int "+x+", int"+ y+", int "+width+", int "+height+")");
 	}
 
 	public void fillPolygon(int[] x, int[] y, int length) {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 31.03.2010");
-		else {
-		}
+		System.out.println("fillPolygon(int[] "+x+", int[]"+ y+", length "+length+"  )");
 	}
 
 	public void drawPolygon(int[] dev, int[] dev2, int length) {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 31.03.2010");
-		else {
-		}
+		System.out.println("drawPolygon(int[] "+dev+", int[]"+ dev2+", length "+length+"  )");
 	}
 
 	public void setStroke(Stroke stroke) {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 31.03.2010");
-		else {
-		}
+		this.stroke = stroke;
 	}
 
 	public void drawLine(int x1, int y1, int x2, int y2) {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 31.03.2010");
-		else {
-		}
+		System.out.println("drawLine(int  "+x1+", int "+ y1+"int  "+x2+", int "+ y2  +"  )");
 	}
 
 	public void drawPolyline(int[] x, int[] y, int length) {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 31.03.2010");
-		else {
-		}
+		System.out.println("drawPolyline(int[] "+x+", int[]"+ y+", length "+length+"  )");
+	}	
+	public void drawPolyline(double[] x, double[] y, int length) {
+		System.out.println("drawPolyline(int[] "+x+", int[]"+ y+", length "+length+"  ){");
+		for (int i=0;i<length;i++)
+			System.out.print("  "+x[i]+","+ y[i]   );
+		System.out.println("}");
+		
 	}
 
 	public void setFont(Font font) {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 31.03.2010");
-		else {
-		}
+		System.out.println("setFont(  "+font+"  )");
 	}
 
 	public void drawString(String text, int x, int y) {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 31.03.2010");
-		else {
-		}
+		System.out.println("drawString(  "+text+"@"+x+":"+y+"  )");
 	}
 
-	public Object getFontRenderContext() {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 31.03.2010");
-		else {
-		return null;
-		}
+	public FontRenderContext getFontRenderContext() {
+		return FontRenderContext.DEFAULT;
 	}
 
 	public void setRenderingHint(String keyTextAntialiasing,
 			String valueTextAntialiasOn) {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 31.03.2010");
-		else {
-		}
+		this.keyTextAntialiasing =  keyTextAntialiasing;
+		this.valueTextAntialiasOn =  valueTextAntialiasOn;
+		System.out.println("keyTextAntialiasing = "+keyTextAntialiasing + ", valueTextAntialiasOn ="+valueTextAntialiasOn);
 	}
 
  

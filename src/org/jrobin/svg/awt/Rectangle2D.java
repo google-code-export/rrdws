@@ -13,20 +13,21 @@ package org.jrobin.svg.awt;
  */
 public class Rectangle2D {
 
+	private String data;
+	public String toString(){
+		return "Rectangle2D:::"+data;
+	}
+
+	public Rectangle2D(String data) {
+		this.data = data;
+	}
+
 	public Rectangle2D getBounds() {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 31.03.2010");
-		else {
-		return null;
-		}
+		return this;
 	}
 
 	public double getWidth() {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 31.03.2010");
-		else {
-		return 0;
-		}
+		return data.length();
 	}
 
  

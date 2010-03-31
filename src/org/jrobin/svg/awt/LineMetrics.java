@@ -10,20 +10,21 @@ package org.jrobin.svg.awt;
  */
 public class LineMetrics {
 
+	private String data;
+	public String toString(){
+		return "LineMetrics:::"+data;
+	}
+
+	public LineMetrics(String data) {
+		this.data = data;
+	}
+
 	public int getAscent() {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 31.03.2010");
-		else {
-		return 0;
-		}
+		return data.length()%3;
 	}
 
 	public int getDescent() {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 31.03.2010");
-		else {
-		return 0;
-		}
+		return data.length()%5;
 	}
 
 }

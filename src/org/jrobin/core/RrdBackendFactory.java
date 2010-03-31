@@ -173,6 +173,7 @@ public abstract class RrdBackendFactory {
 	 * @return Default backend factory.
 	 */
 	public static RrdBackendFactory getDefaultFactory() {
+
 		return defaultFactory;
 	}
 

@@ -26,7 +26,7 @@ package org.jrobin.graph;
 
 import org.jrobin.core.RrdException;
 import org.jrobin.core.Util;
-import org.jrobin.data.DataProcessor;
+import org.jrobin.data.DataProcessor; 
 
 import javax.swing.*;
 import java.awt.*;
@@ -670,4 +670,6 @@ public class RrdGraph implements RrdGraphConstants {
 		ImageIcon image = new ImageIcon(imageData);
 		image.paintIcon(null, g, 0, 0);
 	}
+
+ 
 }
