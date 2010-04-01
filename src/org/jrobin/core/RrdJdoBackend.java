@@ -26,7 +26,6 @@
 package org.jrobin.core;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 import javax.jdo.PersistenceManager;
 

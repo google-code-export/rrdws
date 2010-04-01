@@ -10,13 +10,13 @@ package org.jrobin.svg.awt;
  */
 public class RenderingHints {
 
-	public static final String KEY_ANTIALIASING = null;
-	public static final String VALUE_ANTIALIAS_OFF = null;
-	public static final String KEY_TEXT_ANTIALIASING = null;
-	public static final String KEY_RENDERING = null;
-	public static final String VALUE_RENDER_QUALITY = null;
-	public static final String VALUE_TEXT_ANTIALIAS_ON = null;
-	public static final String VALUE_ANTIALIAS_ON = null;
+	public static final String KEY_ANTIALIASING = "KEY_ANTIALIASING";
+	public static final String VALUE_ANTIALIAS_OFF = "VALUE_ANTIALIAS_OFF";
+	public static final String KEY_TEXT_ANTIALIASING = "KEY_TEXT_ANTIALIASING";
+	public static final String KEY_RENDERING = "KEY_RENDERING";
+	public static final String VALUE_RENDER_QUALITY = "VALUE_RENDER_QUALITY";
+	public static final String VALUE_TEXT_ANTIALIAS_ON = "VALUE_TEXT_ANTIALIAS_ON";
+	public static final String VALUE_ANTIALIAS_ON = "VALUE_ANTIALIAS_ON";
 
 }
 

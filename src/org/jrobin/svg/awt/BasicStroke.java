@@ -2,12 +2,22 @@ package org.jrobin.svg.awt;
 
 public class BasicStroke implements Stroke{
 
+	private float width;
+	
+	public String toString(){
+		return "Stroke :"+width;
+	}
+
 	public BasicStroke(int i) {
-		// TODO Auto-generated constructor stub
+		this.width = i;
 	}
 
 	public BasicStroke(float width) {
-		// TODO Auto-generated constructor stub
+		this.width = width;
+	}
+
+	public float getWidth() {
+			return width;
 	}
 
 }

@@ -13,7 +13,7 @@ public class Graphics2D extends Graphics {
 	}
 
 	public void dispose() {
-		// TODO Auto-generated method stub
+		System_out_println("//////////////DISPOSE??????????????");
 		
 	}
 
@@ -22,19 +22,19 @@ public class Graphics2D extends Graphics {
 	}
 
 	public void setClip(int x, int y, int width, int height) {
-		System.out.println( "setClip(int "+x+", int"+ y+" , int "+width+", int "+height+") ");
+		System_out_println( "setClip(int "+x+", int"+ y+" , int "+width+", int "+height+") ");
 	}
 
 	public void translate(int x, int y) {
-		System.out.println( "translate(int "+x+", int"+ y+"  ) ");
+		System_out_println( "translate(int "+x+", int"+ y+"  ) ");
 	}
 
 	public void rotate(double angle) {
-		System.out.println( "rotate(int "+angle+"  ) ");
+		System_out_println( "rotate(int "+angle+"  ) ");
 	}
 
 	public void setTransform(AffineTransform aftInitial) {
-		System.out.println( "setTransform(int "+aftInitial+"  ) ");
+		System_out_println( "setTransform(int "+aftInitial+"  ) ");
 	}
 
 	public void setPaint(Paint paint) {
@@ -42,42 +42,43 @@ public class Graphics2D extends Graphics {
 	}
 
 	public void fillRect(int x, int y, int width, int height) {
-		System.out.println("fillRect(int "+x+", int"+ y+", int "+width+", int "+height+")");
+		System_out_println("fillRect(int "+x+", int"+ y+", int "+width+", int "+height+")");
 	}
 
 	public void fillPolygon(int[] x, int[] y, int length) {
-		System.out.println("fillPolygon(int[] "+x+", int[]"+ y+", length "+length+"  )");
+		System_out_println("fillPolygon(int[] "+x+", int[]"+ y+", length "+length+"  )");
 	}
 
 	public void drawPolygon(int[] dev, int[] dev2, int length) {
-		System.out.println("drawPolygon(int[] "+dev+", int[]"+ dev2+", length "+length+"  )");
+		System_out_println("drawPolygon(int[] "+dev+", int[]"+ dev2+", length "+length+"  )");
 	}
 
 	public void setStroke(Stroke stroke) {
 		this.stroke = stroke;
+		System_out_println("setStroke(Stroke"+ stroke+")");
 	}
 
 	public void drawLine(int x1, int y1, int x2, int y2) {
-		System.out.println("drawLine(int  "+x1+", int "+ y1+"int  "+x2+", int "+ y2  +"  )");
+		System_out_println("drawLine(int  "+x1+", int "+ y1+"int  "+x2+", int "+ y2  +"  )");
 	}
 
 	public void drawPolyline(int[] x, int[] y, int length) {
-		System.out.println("drawPolyline(int[] "+x+", int[]"+ y+", length "+length+"  )");
+		System_out_println("drawPolyline(int[] "+x+", int[]"+ y+", length "+length+"  )");
 	}	
 	public void drawPolyline(double[] x, double[] y, int length) {
-		System.out.println("drawPolyline(int[] "+x+", int[]"+ y+", length "+length+"  ){");
+		System_out_println("drawPolyline(double[] "+x+", double[]"+ y+", length "+length+"  ){");
 		for (int i=0;i<length;i++)
 			System.out.print("  "+x[i]+","+ y[i]   );
-		System.out.println("}");
+		System_out_println("}");
 		
 	}
 
 	public void setFont(Font font) {
-		System.out.println("setFont(  "+font+"  )");
+		System_out_println("setFont(  "+font+"  )");
 	}
 
 	public void drawString(String text, int x, int y) {
-		System.out.println("drawString(  "+text+"@"+x+":"+y+"  )");
+		System_out_println("drawString(  "+text+"@"+x+":"+y+"  )");
 	}
 
 	public FontRenderContext getFontRenderContext() {
@@ -88,9 +89,13 @@ public class Graphics2D extends Graphics {
 			String valueTextAntialiasOn) {
 		this.keyTextAntialiasing =  keyTextAntialiasing;
 		this.valueTextAntialiasOn =  valueTextAntialiasOn;
-		System.out.println("keyTextAntialiasing = "+keyTextAntialiasing + ", valueTextAntialiasOn ="+valueTextAntialiasOn);
+		System_out_println("keyTextAntialiasing = "+keyTextAntialiasing + ", valueTextAntialiasOn ="+valueTextAntialiasOn);
 	}
 
+	private void System_out_println(String string) {
+		System.out.println(string);
+		this.bi.echo(string);
+	}
  
 
 }

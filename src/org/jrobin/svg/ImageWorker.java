@@ -64,7 +64,8 @@ class ImageWorker {
 		this.imgWidth = width;
 		this.imgHeight = height;
 		this.img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-		this.gd = img.createGraphics();
+		this.gd = img.createGraphics(buffer);
+		
 		this.aftInitial = gd.getTransform();
 		this.setAntiAliasing(false);
 	}
@@ -180,7 +181,10 @@ class ImageWorker {
 		gd.dispose();
 	}
 
+	StringBuffer buffer = new StringBuffer();
 	void saveImage(OutputStream stream, String type, float quality) throws IOException {
+		
+		stream.write(buffer.toString().getBytes());
 //		if (type.equalsIgnoreCase("png")) {
 //			ImageIO.write(img, "png", stream);
 //		}
@@ -203,15 +207,9 @@ class ImageWorker {
 
 	byte[] saveImage(String path, String type, float quality) throws IOException {
 		byte[] bytes = getImageBytes(type, quality);
-		RandomAccessFile f = new RandomAccessFile(path, "rw");
-		try {
-			f.write(bytes);
-			return bytes;
-		}
-		finally {
-			f.close();
-		}
-	}
+		System.out.println("store data into["+path+"]:="+new String(bytes));
+ 		return bytes;
+ 	}
 
 	byte[] getImageBytes(String type, float quality) throws IOException {
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -225,18 +223,11 @@ class ImageWorker {
 	}
 
 	public void loadImage(String imageFile) throws IOException {
+		System.out.println("loadImage(String imageFile =="+imageFile+") ");
 //		BufferedImage wpImage = ImageIO.read(new File(imageFile));
 //		TexturePaint paint = new TexturePaint(wpImage, new Rectangle(0, 0, wpImage.getWidth(), wpImage.getHeight()));
 //		gd.setPaint(paint);
 //		gd.fillRect(0, 0, wpImage.getWidth(), wpImage.getHeight());
-	}
-
-	public void drawString(String signature, int i, int j, Font font,
-			String lightGray) {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 31.03.2010");
-		else {
-		}
 	}
 
  

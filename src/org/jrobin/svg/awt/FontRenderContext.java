@@ -10,7 +10,9 @@ package org.jrobin.svg.awt;
  */
 public class FontRenderContext {
 
-	public static final FontRenderContext DEFAULT = new FontRenderContext();
+	public static final FontRenderContext DEFAULT = new FontRenderContext(){
+		public String toString(){return "SVG";}
+	};
 
 }
 

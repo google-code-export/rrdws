@@ -7,6 +7,7 @@ public class BufferedImage {
 	private int width;
 	private int height;
 	private String typeIntRgb;
+	private StringBuffer buffer;
 
 	public BufferedImage(int width, int height, String typeIntRgb) {
 		this.width = width;
@@ -16,8 +17,9 @@ public class BufferedImage {
 
 	public static final String TYPE_INT_RGB = null;
 
-	public Graphics2D createGraphics() {
+	public Graphics2D createGraphics(StringBuffer buffer) {
 		this.g = new Graphics2D(this);
+		this.buffer = buffer;
 		return this.g;
 	}
 
@@ -62,6 +64,10 @@ public class BufferedImage {
 
 	public void setTypeIntRgb(String typeIntRgb) {
 		this.typeIntRgb = typeIntRgb;
+	}
+
+	public void echo(String string) {
+		this.buffer.append( string );
 	}
 
 }

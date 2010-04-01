@@ -6,12 +6,43 @@ import java.io.InputStream;
 
 public class Font {
 
-	public Font(String defaultFontName, String plain2, int i) {
-		// TODO Auto-generated constructor stub
+	/**
+	 *  
+  <text font-family="Verdana" font-size="42.5" fill="blue" >
+    <textPath xlink:href="#MyPath" startOffset="80%">
+      We go up, then we go down, then up again
+    </textPath>
+  </text>
+
+	 */
+	public String toString(){
+		return "" +
+				"font-family=\""+name+"\" " +
+				"font-size=\""+size+"\" " +
+				"font-style=\""+style +"\" " +
+				"font-weight=\""+weight +"\" " +
+				"fill=\""+color+ "\" " +
+				"stroke-width=\"0\" " +
+				"stroke=\""+stroke+"\"";
 	}
-	public static final String BOLD = null;
-	public static final String PLAIN = null;
-	public static final String TRUETYPE_FONT = null;
+	
+	private String name;
+	private String style = "normal" ; // normal | italic | oblique
+	private String weight = "normal" ;//normal | bold | bolder | lighter
+	private int size = 10;
+	private String color = "black";
+	private String stroke="darkgreen";
+	
+	public Font(String defaultFontName, String plain2, int i) {
+		this.name = defaultFontName;
+		this.weight = plain2;
+		this.size = i;
+	}
+	/*weight */
+	public static final String BOLD = 	"bold";
+	public static final String PLAIN = "normal";
+	/*font-family  */
+	public static final String TRUETYPE_FONT = "Verdana";
 	public static Font createFont(String truetypeFont, InputStream fontStream) {
 		// TODO Auto-generated method stub
 		return null;
@@ -28,11 +59,8 @@ public class Font {
 		return new Rectangle2D (data);
 	}
 	public Font deriveFont(String plain2, int i) {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 31.03.2010");
-		else {
-		return null;
-		}
+		if (BOLD.equals(plain2))return new Font(TRUETYPE_FONT, BOLD, i);
+		else return new Font(TRUETYPE_FONT, PLAIN, i);
 	}
  
 
