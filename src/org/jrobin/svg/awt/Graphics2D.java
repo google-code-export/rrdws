@@ -13,7 +13,7 @@ public class Graphics2D extends Graphics {
 	}
 
 	public void dispose() {
-		System_out_println("//////////////DISPOSE??????????????");
+		System_out_println("<!--   //////////////DISPOSE??????????????  -->");
 		
 	}
 
@@ -21,8 +21,18 @@ public class Graphics2D extends Graphics {
 		return new AffineTransform();
 	}
 
+	/**
+	 * <clipPath id="cp1"></clipPath>
+	 * @author xco5015
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 */
 	public void setClip(int x, int y, int width, int height) {
-		System_out_println( "setClip(int "+x+", int"+ y+" , int "+width+", int "+height+") ");
+		System_out_println( "<clipPath id=\"_X"+x+"_Y"+y+"_W"+width+"_H"+height+"\">"); 
+			fillRect (x,  y,  width,  height);
+		System_out_println( "</clipPath>"); 
 	}
 
 	public void translate(int x, int y) {
@@ -30,19 +40,29 @@ public class Graphics2D extends Graphics {
 	}
 
 	public void rotate(double angle) {
-		System_out_println( "rotate(int "+angle+"  ) ");
+		System_out_println( "<!-- rotate(int "+angle+"  )  -->");
 	}
 
 	public void setTransform(AffineTransform aftInitial) {
-		System_out_println( "setTransform(int "+aftInitial+"  ) ");
+		System_out_println( "<!-- setTransform(int "+aftInitial+"  )  -->");
 	}
 
 	public void setPaint(Paint paint) {
 		this.paint = paint;
 	}
 
+	/**
+	 * <!-- schwarzer Hintergrund -->
+  <rect x="0" y="0" width="360" height="510"
+    style="fill:black; stroke:none;" />
+	 * @author xco5015
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 */
 	public void fillRect(int x, int y, int width, int height) {
-		System_out_println("fillRect(int "+x+", int"+ y+", int "+width+", int "+height+")");
+		System_out_println("<rect x=\""+x+"\" y=\""+ y+"\" width=\""+width+"\" height=\""+height+"\" style=\"fill:black; stroke:none;\">" );
 	}
 
 	public void fillPolygon(int[] x, int[] y, int length) {
@@ -55,21 +75,21 @@ public class Graphics2D extends Graphics {
 
 	public void setStroke(Stroke stroke) {
 		this.stroke = stroke;
-		System_out_println("setStroke(Stroke"+ stroke+")");
+		//System_out_println("setStroke(Stroke"+ stroke+")");
 	}
 
 	public void drawLine(int x1, int y1, int x2, int y2) {
-		System_out_println("drawLine(int  "+x1+", int "+ y1+"int  "+x2+", int "+ y2  +"  )");
+		drawPolyline(  new double[] {(double)x1,x2} , new double[] { y1,y2}, 2 );
 	}
 
 	public void drawPolyline(int[] x, int[] y, int length) {
 		System_out_println("drawPolyline(int[] "+x+", int[]"+ y+", length "+length+"  )");
 	}	
 	public void drawPolyline(double[] x, double[] y, int length) {
-		System_out_println("drawPolyline(double[] "+x+", double[]"+ y+", length "+length+"  ){");
+		System_out_println("<polyline points=\"");
 		for (int i=0;i<length;i++)
 			System.out.print("  "+x[i]+","+ y[i]   );
-		System_out_println("}");
+		System_out_println("\"style=\"fill:white;stroke:red;stroke-width:2\"/>");
 		
 	}
 
@@ -89,7 +109,7 @@ public class Graphics2D extends Graphics {
 			String valueTextAntialiasOn) {
 		this.keyTextAntialiasing =  keyTextAntialiasing;
 		this.valueTextAntialiasOn =  valueTextAntialiasOn;
-		System_out_println("keyTextAntialiasing = "+keyTextAntialiasing + ", valueTextAntialiasOn ="+valueTextAntialiasOn);
+		//System_out_println("keyTextAntialiasing = "+keyTextAntialiasing + ", valueTextAntialiasOn ="+valueTextAntialiasOn);
 	}
 
 	private void System_out_println(String string) {

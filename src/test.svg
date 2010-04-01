@@ -1,8 +1,391 @@
 <svg width="100%" height="100%" version="1.1"
 xmlns="http://www.w3.org/2000/svg">
-
-<polyline points="0.0,0.0 0.2,20.4 20.1,20.4 20.213,40.123 40,40 40,60"
-style="fill:white;stroke:red;stroke-width:2"/>
+<rect x="721" y="12" width="400" height="200" style="fill:black; stroke:none;">
+<clipPath id="_X722_Y11_W399_H202">
+<rect x="722" y="11" width="399" height="202" style="fill:black; stroke:none;">
+</clipPath>
+<polyline points="
+  721.0,NaN  721.0,NaN  754.0,NaN  754.0,12.0  787.0,12.0  787.0,112.0  821.0,112.0  821.0,212.0  854.0,212.0  854.0,212.0  887.0,212.0  887.0,45.0  921.0,45.0  921.0,45.0  954.0,45.0  954.0,45.0  987.0,45.0  987.0,112.0  1021.0,112.0  1021.0,112.0  1054.0,112.0  1054.0,112.0  1087.0,112.0  1087.0,145.0  1121.0,145.0"style="fill:white;stroke:red;stroke-width:2"/>
+setTransform(int org.jrobin.svg.awt.AffineTransform@4e18d4  ) 
+<clipPath id="_X0_Y0_W1137_H222">
+<rect x="0" y="0" width="1137" height="222" style="fill:black; stroke:none;">
+</clipPath>
+<polyline points="
+  0.0,0.0  1136.0,0.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1.0,1.0  1135.0,1.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  0.0,0.0  0.0,221.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1.0,1.0  1.0,220.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1136.0,0.0  1136.0,221.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  0.0,221.0  1136.0,221.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1135.0,1.0  1135.0,220.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1.0,220.0  1135.0,220.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  721.0,211.0  721.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  721.0,212.0  721.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  734.0,211.0  734.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  734.0,212.0  734.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  747.0,211.0  747.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  747.0,212.0  747.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  761.0,211.0  761.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  761.0,212.0  761.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  774.0,211.0  774.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  774.0,212.0  774.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  787.0,211.0  787.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  787.0,212.0  787.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  801.0,211.0  801.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  801.0,212.0  801.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  814.0,211.0  814.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  814.0,212.0  814.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  827.0,211.0  827.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  827.0,212.0  827.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  841.0,211.0  841.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  841.0,212.0  841.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  854.0,211.0  854.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  854.0,212.0  854.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  867.0,211.0  867.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  867.0,212.0  867.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  881.0,211.0  881.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  881.0,212.0  881.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  894.0,211.0  894.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  894.0,212.0  894.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  907.0,211.0  907.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  907.0,212.0  907.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  921.0,211.0  921.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  921.0,212.0  921.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  934.0,211.0  934.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  934.0,212.0  934.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  947.0,211.0  947.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  947.0,212.0  947.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  961.0,211.0  961.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  961.0,212.0  961.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  974.0,211.0  974.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  974.0,212.0  974.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  987.0,211.0  987.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  987.0,212.0  987.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1001.0,211.0  1001.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1001.0,212.0  1001.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1014.0,211.0  1014.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1014.0,212.0  1014.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1027.0,211.0  1027.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1027.0,212.0  1027.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1041.0,211.0  1041.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1041.0,212.0  1041.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1054.0,211.0  1054.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1054.0,212.0  1054.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1067.0,211.0  1067.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1067.0,212.0  1067.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1081.0,211.0  1081.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1081.0,212.0  1081.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1094.0,211.0  1094.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1094.0,212.0  1094.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1107.0,211.0  1107.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1107.0,212.0  1107.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1121.0,211.0  1121.0,213.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1121.0,212.0  1121.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  721.0,210.0  721.0,214.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  721.0,212.0  721.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  787.0,210.0  787.0,214.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  787.0,212.0  787.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  854.0,210.0  854.0,214.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  854.0,212.0  854.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  921.0,210.0  921.0,214.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  921.0,212.0  921.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  987.0,210.0  987.0,214.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  987.0,212.0  987.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1054.0,210.0  1054.0,214.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1054.0,212.0  1054.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1121.0,210.0  1121.0,214.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1121.0,212.0  1121.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+setFont(  font-family="Lucida Sans Typewriter" font-size="10" font-style="normal" font-weight="normal" fill="black" stroke-width="0" stroke="darkgreen"  )
+drawString(  11:10@746:216  )
+setFont(  font-family="Lucida Sans Typewriter" font-size="10" font-style="normal" font-weight="normal" fill="black" stroke-width="0" stroke="darkgreen"  )
+drawString(  11:20@813:216  )
+setFont(  font-family="Lucida Sans Typewriter" font-size="10" font-style="normal" font-weight="normal" fill="black" stroke-width="0" stroke="darkgreen"  )
+drawString(  11:30@880:216  )
+setFont(  font-family="Lucida Sans Typewriter" font-size="10" font-style="normal" font-weight="normal" fill="black" stroke-width="0" stroke="darkgreen"  )
+drawString(  11:40@946:216  )
+setFont(  font-family="Lucida Sans Typewriter" font-size="10" font-style="normal" font-weight="normal" fill="black" stroke-width="0" stroke="darkgreen"  )
+drawString(  11:50@1013:216  )
+setFont(  font-family="Lucida Sans Typewriter" font-size="10" font-style="normal" font-weight="normal" fill="black" stroke-width="0" stroke="darkgreen"  )
+drawString(     0@632:213  )
+<polyline points="
+  719.0,212.0  723.0,212.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1119.0,212.0  1123.0,212.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  721.0,212.0  1121.0,212.0"style="fill:white;stroke:red;stroke-width:2"/>
+setFont(  font-family="Lucida Sans Typewriter" font-size="10" font-style="normal" font-weight="normal" fill="black" stroke-width="0" stroke="darkgreen"  )
+drawString(     2 m@630:203  )
+<polyline points="
+  719.0,202.0  723.0,202.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1119.0,202.0  1123.0,202.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  721.0,202.0  1121.0,202.0"style="fill:white;stroke:red;stroke-width:2"/>
+setFont(  font-family="Lucida Sans Typewriter" font-size="10" font-style="normal" font-weight="normal" fill="black" stroke-width="0" stroke="darkgreen"  )
+drawString(     4 m@630:193  )
+<polyline points="
+  719.0,192.0  723.0,192.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1119.0,192.0  1123.0,192.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  721.0,192.0  1121.0,192.0"style="fill:white;stroke:red;stroke-width:2"/>
+setFont(  font-family="Lucida Sans Typewriter" font-size="10" font-style="normal" font-weight="normal" fill="black" stroke-width="0" stroke="darkgreen"  )
+drawString(     6 m@630:183  )
+<polyline points="
+  719.0,182.0  723.0,182.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1119.0,182.0  1123.0,182.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  721.0,182.0  1121.0,182.0"style="fill:white;stroke:red;stroke-width:2"/>
+setFont(  font-family="Lucida Sans Typewriter" font-size="10" font-style="normal" font-weight="normal" fill="black" stroke-width="0" stroke="darkgreen"  )
+drawString(     8 m@630:173  )
+<polyline points="
+  719.0,172.0  723.0,172.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1119.0,172.0  1123.0,172.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  721.0,172.0  1121.0,172.0"style="fill:white;stroke:red;stroke-width:2"/>
+setFont(  font-family="Lucida Sans Typewriter" font-size="10" font-style="normal" font-weight="normal" fill="black" stroke-width="0" stroke="darkgreen"  )
+drawString(    10 m@630:163  )
+<polyline points="
+  719.0,162.0  723.0,162.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1119.0,162.0  1123.0,162.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  721.0,162.0  1121.0,162.0"style="fill:white;stroke:red;stroke-width:2"/>
+setFont(  font-family="Lucida Sans Typewriter" font-size="10" font-style="normal" font-weight="normal" fill="black" stroke-width="0" stroke="darkgreen"  )
+drawString(    12 m@630:153  )
+<polyline points="
+  719.0,152.0  723.0,152.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1119.0,152.0  1123.0,152.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  721.0,152.0  1121.0,152.0"style="fill:white;stroke:red;stroke-width:2"/>
+setFont(  font-family="Lucida Sans Typewriter" font-size="10" font-style="normal" font-weight="normal" fill="black" stroke-width="0" stroke="darkgreen"  )
+drawString(    14 m@630:143  )
+<polyline points="
+  719.0,142.0  723.0,142.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1119.0,142.0  1123.0,142.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  721.0,142.0  1121.0,142.0"style="fill:white;stroke:red;stroke-width:2"/>
+setFont(  font-family="Lucida Sans Typewriter" font-size="10" font-style="normal" font-weight="normal" fill="black" stroke-width="0" stroke="darkgreen"  )
+drawString(    16 m@630:133  )
+<polyline points="
+  719.0,132.0  723.0,132.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1119.0,132.0  1123.0,132.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  721.0,132.0  1121.0,132.0"style="fill:white;stroke:red;stroke-width:2"/>
+setFont(  font-family="Lucida Sans Typewriter" font-size="10" font-style="normal" font-weight="normal" fill="black" stroke-width="0" stroke="darkgreen"  )
+drawString(    18 m@630:123  )
+<polyline points="
+  719.0,122.0  723.0,122.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1119.0,122.0  1123.0,122.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  721.0,122.0  1121.0,122.0"style="fill:white;stroke:red;stroke-width:2"/>
+setFont(  font-family="Lucida Sans Typewriter" font-size="10" font-style="normal" font-weight="normal" fill="black" stroke-width="0" stroke="darkgreen"  )
+drawString(    20 m@630:113  )
+<polyline points="
+  719.0,112.0  723.0,112.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1119.0,112.0  1123.0,112.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  721.0,112.0  1121.0,112.0"style="fill:white;stroke:red;stroke-width:2"/>
+setFont(  font-family="Lucida Sans Typewriter" font-size="10" font-style="normal" font-weight="normal" fill="black" stroke-width="0" stroke="darkgreen"  )
+drawString(    22 m@630:103  )
+<polyline points="
+  719.0,102.0  723.0,102.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1119.0,102.0  1123.0,102.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  721.0,102.0  1121.0,102.0"style="fill:white;stroke:red;stroke-width:2"/>
+setFont(  font-family="Lucida Sans Typewriter" font-size="10" font-style="normal" font-weight="normal" fill="black" stroke-width="0" stroke="darkgreen"  )
+drawString(    24 m@630:93  )
+<polyline points="
+  719.0,92.0  723.0,92.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1119.0,92.0  1123.0,92.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  721.0,92.0  1121.0,92.0"style="fill:white;stroke:red;stroke-width:2"/>
+setFont(  font-family="Lucida Sans Typewriter" font-size="10" font-style="normal" font-weight="normal" fill="black" stroke-width="0" stroke="darkgreen"  )
+drawString(    26 m@630:83  )
+<polyline points="
+  719.0,82.0  723.0,82.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1119.0,82.0  1123.0,82.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  721.0,82.0  1121.0,82.0"style="fill:white;stroke:red;stroke-width:2"/>
+setFont(  font-family="Lucida Sans Typewriter" font-size="10" font-style="normal" font-weight="normal" fill="black" stroke-width="0" stroke="darkgreen"  )
+drawString(    28 m@630:73  )
+<polyline points="
+  719.0,72.0  723.0,72.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1119.0,72.0  1123.0,72.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  721.0,72.0  1121.0,72.0"style="fill:white;stroke:red;stroke-width:2"/>
+setFont(  font-family="Lucida Sans Typewriter" font-size="10" font-style="normal" font-weight="normal" fill="black" stroke-width="0" stroke="darkgreen"  )
+drawString(    30 m@630:63  )
+<polyline points="
+  719.0,62.0  723.0,62.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1119.0,62.0  1123.0,62.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  721.0,62.0  1121.0,62.0"style="fill:white;stroke:red;stroke-width:2"/>
+setFont(  font-family="Lucida Sans Typewriter" font-size="10" font-style="normal" font-weight="normal" fill="black" stroke-width="0" stroke="darkgreen"  )
+drawString(    32 m@630:53  )
+<polyline points="
+  719.0,52.0  723.0,52.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1119.0,52.0  1123.0,52.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  721.0,52.0  1121.0,52.0"style="fill:white;stroke:red;stroke-width:2"/>
+setFont(  font-family="Lucida Sans Typewriter" font-size="10" font-style="normal" font-weight="normal" fill="black" stroke-width="0" stroke="darkgreen"  )
+drawString(    34 m@630:43  )
+<polyline points="
+  719.0,42.0  723.0,42.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1119.0,42.0  1123.0,42.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  721.0,42.0  1121.0,42.0"style="fill:white;stroke:red;stroke-width:2"/>
+setFont(  font-family="Lucida Sans Typewriter" font-size="10" font-style="normal" font-weight="normal" fill="black" stroke-width="0" stroke="darkgreen"  )
+drawString(    36 m@630:33  )
+<polyline points="
+  719.0,32.0  723.0,32.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1119.0,32.0  1123.0,32.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  721.0,32.0  1121.0,32.0"style="fill:white;stroke:red;stroke-width:2"/>
+setFont(  font-family="Lucida Sans Typewriter" font-size="10" font-style="normal" font-weight="normal" fill="black" stroke-width="0" stroke="darkgreen"  )
+drawString(    38 m@630:23  )
+<polyline points="
+  719.0,22.0  723.0,22.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1119.0,22.0  1123.0,22.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  721.0,22.0  1121.0,22.0"style="fill:white;stroke:red;stroke-width:2"/>
+setFont(  font-family="Lucida Sans Typewriter" font-size="10" font-style="normal" font-weight="normal" fill="black" stroke-width="0" stroke="darkgreen"  )
+drawString(    40 m@630:13  )
+<polyline points="
+  719.0,12.0  723.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1119.0,12.0  1123.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  721.0,12.0  1121.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1121.0,212.0  1121.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  721.0,12.0  1121.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  717.0,212.0  1125.0,212.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  721.0,212.0  721.0,12.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1125.0,209.0  1125.0,215.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1125.0,209.0  1130.0,212.0"style="fill:white;stroke:red;stroke-width:2"/>
+<polyline points="
+  1125.0,215.0  1130.0,212.0"style="fill:white;stroke:red;stroke-width:2"/>
+<clipPath id="_X722_Y11_W399_H202">
+<rect x="722" y="11" width="399" height="202" style="fill:black; stroke:none;">
+</clipPath>
+<!-- setTransform(int org.jrobin.svg.awt.AffineTransform@4e18d4  )  -->
+<clipPath id="_X0_Y0_W1137_H222">
+<rect x="0" y="0" width="1137" height="222" style="fill:black; stroke:none;">
+</clipPath>
+translate(int 1133, int4  ) 
+<!-- rotate(int 1.5707963267948966  )  -->
+setFont(  font-family="Verdana" font-size="9" font-style="normal" font-weight="normal" fill="black" stroke-width="0" stroke="darkgreen"  )
+drawString(  Created with JRobin@0:0  )
+<!-- setTransform(int org.jrobin.svg.awt.AffineTransform@4e18d4  )  -->
+<clipPath id="_X0_Y0_W1137_H222">
+<rect x="0" y="0" width="1137" height="222" style="fill:black; stroke:none;">
+</clipPath>
+<polyline points="0.0,0.0 0.2,20.4 20.1,20.4 20.213,40.123 40,40 40,60"style="fill:white;stroke:red;stroke-width:2"/>
 <polyline points=" 
 1123.0,12.0  1156.0,12.0  1156.0,112.0  1190.0,112.0  1190.0,212.0  1223.0,212.0  1223.0,212.0  1256.0,212.0  1256.0,45.0  1290.0,45.0  1290.0,45.0  1323.0,45.0  1323.0,45.0  1356.0,45.0  1356.0,112.0  1390.0,112.0  1390.0,112.0  1423.0,112.0  1423.0,112.0  1456.0,112.0  1456.0,145.0  1490.0,145.0
 "

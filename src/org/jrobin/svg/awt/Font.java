@@ -49,13 +49,13 @@ public class Font {
 	}
 	public LineMetrics getLineMetrics(String dummyText, FontRenderContext fontRenderContext) {
 		String data = "LineMetrics getLineMetrics(String "+dummyText+" , FontRenderContext "+ fontRenderContext+" )";
-		System.out.println(data);
+		//System.out.println(data);
 		return new LineMetrics(data);
 	}
 	public Rectangle2D getStringBounds(String text, int i, int length,
 			FontRenderContext fontRenderContext) {
 		String data = "Rectangle2D: getStringBounds(String :"+text+" , int"+ i+" , int "+ length+" , FontRenderContext "+fontRenderContext +");";
-		System.out.println(data);
+		//System.out.println(data);
 		return new Rectangle2D (data);
 	}
 	public Font deriveFont(String plain2, int i) {
