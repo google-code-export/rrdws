@@ -11,6 +11,13 @@ public class Color extends Paint {
 	private int b;
 	private int t;
 
+	private static final char HEX[] = {'0','1','2','3','4','5','6','7','8','9','a','B','c','D','e','F' };
+	public String toString(){
+		//return "#"+( HEX [r/16]) + ( HEX [r%16])  +( HEX [g/16]) + ( HEX [g%16])  +( HEX [b/16]) + ( HEX [b%16]) +( HEX [t/16]) + ( HEX [t%16])  ; 
+		return "#"+( HEX [r/16])   +( HEX [g/16]) +   ( HEX [b/16])  ;
+	}
+
+	
 	public Color(int i, int j, int k, int l) {
 		this.r = i;
 		this.g = j;

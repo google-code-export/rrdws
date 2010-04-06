@@ -13,6 +13,7 @@ public class BufferedImage {
 		this.width = width;
 		this.height = height;
 		this.typeIntRgb = typeIntRgb;
+		createGraphics(new StringBuffer());
 	}
 
 	public static final String TYPE_INT_RGB = null;
@@ -68,6 +69,10 @@ public class BufferedImage {
 
 	public void echo(String string) {
 		this.buffer.append( string );
+	}
+
+	public byte[] getBytes() {
+		return this.buffer.toString().getBytes();
 	}
 
 }

@@ -330,7 +330,7 @@ public interface RrdGraphConstants {
 	 * Stroke used to draw grid
 	 */
 	// solid line
-	Stroke GRID_STROKE = new BasicStroke(1);
+	Stroke GRID_STROKE = new BasicStroke(.5f);
 	
 	// dotted line
 	// Stroke GRID_STROKE = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1, new float[] {1, 1}, 0);

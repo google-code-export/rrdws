@@ -1,7 +1,10 @@
 package org.jrobin.cmd;
  
  
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.jrobin.core.FetchData;
 import org.jrobin.core.FetchRequest;
@@ -15,6 +18,8 @@ import org.jrobin.svg.RrdGraphDef;
 import org.jrobin.svg.awt.BufferedImage;
 import org.jrobin.svg.awt.Color;
 import org.junit.Test;
+
+import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 
 public class RrdSVGCmdTest {
 
@@ -54,7 +59,7 @@ $ rrdtool fetch test.rrd AVERAGE --start 920804400 --end 920809200
 	 * 
 	 */
 	@Test
-	public void testExecute() throws RrdException, IOException {
+	public RrdGraphDef testExecute() throws RrdException, IOException {
 		/*
 		 * rrdtool create test.rrd             \
          --start 920804400          \
@@ -116,25 +121,40 @@ $ rrdtool fetch test.rrd AVERAGE --start 920804400 --end 920809200
 		RrdGraphDef graphDef = new RrdGraphDef();
 		graphDef.setStartTime(920804400L);
 		graphDef.setEndTime(920808000L);
-		graphDef.setFilename("./all1.svg");
+		graphDef.setFilename("-");
 		graphDef.setWidth(400);
 		graphDef.setHeight(200);
 		 
 		graphDef.datasource("myspeed", TEST_RRD, "speed", "AVERAGE");
 		graphDef.line("myspeed", new Color(0xFF, 0, 0), null, 2);
-		RrdGraph graph = new RrdGraph(graphDef);
-		//graph.saveAsGIF("speed.gif");
-		// https://rrd4j.dev.java.net/tutorial.html
-		BufferedImage bi = new BufferedImage(100,100,BufferedImage.TYPE_INT_RGB);
-		graph.render(bi.getGraphics());
-		// to save this graph as a PNG image (recommended file format)
-		// use the following code:
-		// graph.saveAsPNG("speed.png");
-		
-		
-		
+
+		return graphDef;
 		
 		
 	}
 
+	
+	public InputStream generateSvg() throws RrdException, IOException{
+		
+		RrdGraphDef graphDef = testExecute();
+		
+		
+		RrdGraph graph = new RrdGraph(graphDef);
+		//graph.saveAsGIF("speed.gif");
+		// https://rrd4j.dev.java.net/tutorial.html
+
+		BufferedImage bi = new BufferedImage(100,100,BufferedImage.TYPE_INT_RGB);
+		graph.render(bi.getGraphics());
+
+
+		// to save this graph as a PNG image (recommended file format)
+		// use the following code:
+		// graph.saveAsPNG("speed.png");
+		
+		byte[] buf = bi.getBytes();
+		ByteArrayInputStream in = new ByteArrayInputStream(buf  );
+		return in;		
+		
+				
+	}
 }

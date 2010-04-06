@@ -8,17 +8,16 @@ response.setContentType("image/svg+xml");
 
 <%@page import="java.io.InputStream"%>
 <%@page import="java.io.ByteArrayOutputStream"%>
-<%@page import="org.jrobin.svg.Svg2PngAndJpg"%>
 <%@page import="org.jrobin.cmd.RrdSVGCmdTest"%>
 <%@page import="ws.rrd.Chk"%>
 <%@page import="org.jrobin.cmd.RrdGraphCmdTest"%>
  
 <%
 try{
-		if (1==1)(new RrdSVGCmdTest()).testExecute();
+		if (1==2)(new RrdSVGCmdTest()).testExecute();
 		ByteArrayOutputStream myOut = new ByteArrayOutputStream();
 		//Svg2PngAndJpg.Svg2Jpg(this.getClass().getClassLoader().getResourceAsStream("test.svg"),myOut);
-		InputStream in = this.getClass().getClassLoader().getResourceAsStream("test.svg");
+		InputStream in = (new RrdSVGCmdTest()).generateSvg();
 		byte[]buf = new byte[in.available()]; 
 		in.read(buf);
 		out.write(new String(buf));

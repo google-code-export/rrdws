@@ -8,7 +8,9 @@ package org.jrobin.svg.awt;
  * 
  * Creation:  31.03.2010::14:03:48<br> 
  */
-public class Graphics {
+public abstract class Graphics {
+	
+	abstract  public void paintIcon(int i, int j, byte[] data) ;
 
 }
 
