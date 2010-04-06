@@ -11,8 +11,8 @@
 
 <%="<pre>"+System.getProperties()+"</pre>"%>
  
- <form  method="post" action="/rrd/rrd.jsp?" >
- <input name="cmd" size="100"/>
+ <form  method="post" action="/rrd.jsp?" >
+ <<textarea    name="cmd"  cols="50" rows="10" ></textarea>
  <input type="submit"/>
 </form>
 
@@ -20,37 +20,9 @@
 System.out.println("== Rrd4j's RRDTool commander ==");
 String cmdTmp = request.getParameter("cmd");
 System.out.println(cmdTmp);
+cmdTmp = cmdTmp.replace("\\","\n");  
+
 RrdCommander.setRrdDbPoolUsed(false);
 RrdCommander.execute(cmdTmp);
 %>
-<% 
  
-if (1==2)
-try {
-	
-	PersistenceManager   pm =RRD_JDOHelper.getInstance().getPMF().getPersistenceManager();
-
-    Query query =   pm.newQuery(Blob.class);
-    //pm.newQuery("select from Blob ");
-      //      "where lastName == lastNameParam " +
-        //    "parameters String lastNameParam " +
-          //  "order by hireDate desc");
-
-	List<Blob> results = (List<Blob>) query.execute();//query.execute("Smith");	
-	for ( Object oTmp: results ){
-		out.append("stored  >> "+((Blob)oTmp).getName()  +" ["+ ((Blob)oTmp).getData().length +"]<br>");
-	}
-	
-} finally {
-	out.append("!!!!!!!!!!!!!!!@!");
-    //pm.close();
-} 
-%>
-<%
-try{
-		if (1==2)(new RrdGraphCmdTest()).testExecute();
-	}catch(Throwable e){
-		Chk.chk(e);
-		e.printStackTrace();
-}
-%>

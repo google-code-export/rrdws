@@ -20,11 +20,11 @@ public class LineMetrics {
 	}
 
 	public int getAscent() {
-		return data.length()%3;
+		return 0xA;
 	}
 
 	public int getDescent() {
-		return data.length()%5;
+		return 0xD;
 	}
 
 }

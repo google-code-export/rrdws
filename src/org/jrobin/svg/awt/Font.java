@@ -54,7 +54,7 @@ public class Font {
 	}
 	public Rectangle2D getStringBounds(String text, int i, int length,
 			FontRenderContext fontRenderContext) {
-		String data = "Rectangle2D: getStringBounds(String :"+text+" , int"+ i+" , int "+ length+" , FontRenderContext "+fontRenderContext +");";
+		String data = text;
 		//System.out.println(data);
 		return new Rectangle2D (data);
 	}

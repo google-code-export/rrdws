@@ -96,37 +96,18 @@ class ImageWorker {
 
 	void fillPolygon(double[] x, double yBottom, double[] yTop, Paint paint) {
 		gd.setPaint(paint);
-		PathIterator path = new PathIterator(yTop);
-		for (int[] pos = path.getNextPath(); pos != null; pos = path.getNextPath()) {
-			int start = pos[0], end = pos[1], n = end - start;
-			int[] xDev = new int[n + 2], yDev = new int[n + 2];
-			for (int i = start; i < end; i++) {
-				xDev[i - start] = (int) x[i];
-				yDev[i - start] = (int) yTop[i];
-			}
-			xDev[n] = xDev[n - 1];
-			xDev[n + 1] = xDev[0];
-			yDev[n] = yDev[n + 1] = (int) yBottom;
-			gd.fillPolygon(xDev, yDev, xDev.length);
-			gd.drawPolygon(xDev, yDev, xDev.length);
-		}
+		 
+			gd.fillPolygon(x , yBottom, yTop , x.length);
+			gd.drawPolygon(x , yBottom, yTop , x.length);
+		 
 	}
 
 	void fillPolygon(double[] x, double[] yBottom, double[] yTop, Paint paint) {
 		gd.setPaint(paint);
-		PathIterator path = new PathIterator(yTop);
-		for (int[] pos = path.getNextPath(); pos != null; pos = path.getNextPath()) {
-			int start = pos[0], end = pos[1], n = end - start;
-			int[] xDev = new int[n * 2], yDev = new int[n * 2];
-			for (int i = start; i < end; i++) {
-				int ix1 = i - start, ix2 = n * 2 - 1 - i + start;
-				xDev[ix1] = xDev[ix2] = (int) x[i];
-				yDev[ix1] = (int) yTop[i];
-				yDev[ix2] = (int) yBottom[i];
-			}
-			gd.fillPolygon(xDev, yDev, xDev.length);
-			gd.drawPolygon(xDev, yDev, xDev.length);
-		}
+			//TODO 0!
+			gd.fillPolygon(x , yBottom[0], yTop, x.length);
+			gd.drawPolygon(x , yBottom[0], yTop, x.length);
+	 
 	}
 
 

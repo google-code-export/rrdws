@@ -27,7 +27,7 @@ public class Rectangle2D {
 	}
 
 	public double getWidth() {
-		return data.length();
+		return 0xc * data.length();
 	}
 
  

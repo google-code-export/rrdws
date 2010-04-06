@@ -7,6 +7,7 @@ public class Graphics2D extends Graphics {
 	private String valueTextAntialiasOn;
 	private Paint paint;
 	private Stroke stroke;
+	private Paint fill;
 	
 
 	public Graphics2D(BufferedImage bufferedImage) {
@@ -65,15 +66,30 @@ public class Graphics2D extends Graphics {
 	 * @param height
 	 */
 	public void fillRect(int x, int y, int width, int height) {
-		System_out_println("<rect fill-opacity=\"0.1\" fill=\"yellow\"  x=\""+x+"\" y=\""+ y+"\" width=\""+width+"\" height=\""+height+"\" style=\"fill:"+this.paint+"; stroke:"+this.stroke+";\"/>" );
-	}
+		Paint fillBak = this.fill;
+		this.fill = this.paint;//fill-opacity=\"0.1\" 
+		System_out_println("<rect   x=\""+x+"\" y=\""+ y+"\" width=\""+width+"\" height=\""+height+"\" style=\"fill:"+this.paint+"; stroke:yellow ;\"/>" );
+		this.fill = fillBak;
+	} 
 
 	public void fillPolygon(int[] x, int[] y, int length) {
-		System_out_println("fillPolygon(int[] "+x+", int[]"+ y+", length "+length+"  )");
+		Paint fillBak = this.fill;
+		this.fill = this.paint;
+		drawPolyline(  x,   y,  length);
+		this.fill = fillBak;
+	}
+	public void fillPolygon(double[] x, double[] y, int length) {
+		Paint fillBak = this.fill;
+		this.fill = this.paint;
+		drawPolyline(  x,   y,  length);
+		this.fill = fillBak;
 	}
 
-	public void drawPolygon(int[] dev, int[] dev2, int length) {
-		System_out_println("drawPolygon(int[] "+dev+", int[]"+ dev2+", length "+length+"  )");
+	public void drawPolygon(int[] x, int[] y, int length) {
+		drawPolyline(  x,   y,  length);
+	}
+	public void drawPolygon(double[] x, double[] y, int length) {
+		drawPolyline(  x,   y,  length);
 	}
 
 	public void setStroke(Stroke stroke) {
@@ -86,17 +102,26 @@ public class Graphics2D extends Graphics {
 	}
 
 	public void drawPolyline(int[] x, int[] y, int length) {
-		System_out_println("drawPolyline(int[] "+x+", int[]"+ y+", length "+length+"  )");
+		double[] yD = new double[length];
+		double[] xD = new double[length];
+		for(int i=0;i<length;i++){
+			xD[i]=x[i];
+			yD[i]=y[i];
+		}
+		drawPolyline(  xD,   yD,  length);
 	}	
 	public void drawPolyline(double[] x, double[] y, int length) {
 		System_out_println("<polyline  points=\"");
 		for (int i=0;i<length;i++){
-			 double xTmp =  "NaN".equals( ""+ x[i])? 0.0:x[i] ;
-			 double yTmp =  "NaN".equals( ""+ y[i])? 0.0:y[i] ;
+			 double xTmp =  "NaN".equals( ""+ x[i])? xBottom:x[i] ;
+			 double yTmp =  "NaN".equals( ""+ y[i])? yBottom:y[i] ;
 			  
 			 System_out_println("  "+xTmp+","+ yTmp   );
 		}
-		System_out_println("\" style=\"fill:none;stroke:"+this.paint+";stroke-width:"+this.stroke+" \"/>");
+		if (this.fill == null)
+			System_out_println("\" style=\"fill:none;stroke:"+this.paint+";stroke-width:"+this.stroke+" \"/>");
+		else
+			System_out_println("\" style=\"fill:"+this.fill+ ";stroke:none ;stroke-width:"+this.stroke+" \"/>");
 		
 	}
 
@@ -129,6 +154,18 @@ public class Graphics2D extends Graphics {
 	@Override
 	public void paintIcon(int i, int j, byte[] data) {
 		this.bi.createGraphics(new StringBuffer("<svg>"+new String(data)+"</svg>"));		 
+	}
+
+	private double yBottom  = 0.0;
+	private double xBottom  = 0.0;
+	
+	public void fillPolygon(double[] x, double yBottom, double[] yTop, int length) {
+		this.yBottom = yBottom;
+		this.fillPolygon(x, yTop, length);
+	}	
+	public void drawPolygon(double[] x, double yBottom, double[] yTop, int length) {
+		this.yBottom = yBottom;
+		this.drawPolygon(x, yTop, length);
 	}
  
 
