@@ -134,6 +134,7 @@ public class Graphics2D extends Graphics {
 	Font font ;
 	public void setFont(Font font) {
 		this.font =  font;
+		//this.font.setColor((Color)this.paint);this.font.setStroke(this.stroke);
 		System_out_println("<!-- setFont(  "+font+"  ) -->");
 	}
 
