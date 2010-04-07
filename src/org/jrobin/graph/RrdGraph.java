@@ -121,7 +121,7 @@ public class RrdGraph implements RrdGraphConstants {
 	}
 
 	private void saveImage() throws IOException {
-		if (!gdef.filename.equals("-")) {
+		if (!RrdGraphConstants.IN_MEMORY_IMAGE.equals( gdef.filename )) {
 			info.bytes = worker.saveImage(gdef.filename, gdef.imageFormat, gdef.imageQuality);
 		}
 		else {
