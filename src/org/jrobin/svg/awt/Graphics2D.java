@@ -49,6 +49,7 @@ public class Graphics2D extends Graphics {
 	}
 
 	public void setTransform(AffineTransform aftInitial) {
+		this.transformation = aftInitial;
 		System_out_println( "<!-- setTransform(int "+aftInitial+"  )  -->");
 	}
 
@@ -117,6 +118,7 @@ public class Graphics2D extends Graphics {
 	public void drawPolyline(double[] x, double[] y, int length) {
 		System_out_println("<polyline  points=\"");
 		for (int i=0;i<length;i++){
+			if (("NaN".equals( ""+ y[i])) ||("NaN".equals( ""+ x[i])))   continue;
 			 double xTmp =  "NaN".equals( ""+ x[i])? xBottom:x[i] ;
 			 double yTmp =  "NaN".equals( ""+ y[i])? yBottom:y[i] ;
 			  

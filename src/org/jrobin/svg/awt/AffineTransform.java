@@ -2,14 +2,14 @@ package org.jrobin.svg.awt;
 
 public class AffineTransform {
 //transform="translate(522, 4 ) rotate(90)"
+	//double radians = (Math.PI / 180) * degrees;
 	public String toString(){
+		double degrees =   rotation / (Math.PI / 180) ;
 		return ""+
-		((x+y+rotation)==0?"":"transform=\"")+
-		(rotation == 0?"":(" rotate("+rotation+") " )+
-		(((x+y) == 0)?"":(" translate("+x+" , "+y+") " )+
-		((x+y+rotation)==0?"":"\"")
-		))
-				;
+		 "transform=\"" +
+		 "translate("+x+" , "+y+") "  +
+		 " rotate("+degrees+") "  +
+		 "\"" ;
 	}
 	
 	double rotation = 0; 

@@ -80,7 +80,7 @@ class ImageWorker {
 	}
 
 	void reset() {
-		gd.setTransform(aftInitial);
+		gd.setTransform(new AffineTransform());
 		gd.setClip(0, 0, imgWidth, imgHeight);
 	}
 
