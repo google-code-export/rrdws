@@ -34,7 +34,7 @@ if (cmdTmp!=null){
 }
 %>
 <%=o%>
-<img height="100%" width="100%" src="svg.jsp"/>
+<embed src="svg.jsp" type="image/svg+xml"  height="100%" width="100%"  />
 
 
  

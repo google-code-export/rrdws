@@ -247,7 +247,7 @@ public interface RrdGraphConstants {
 	/**
 	 * Default image format
 	 */
-	String DEFAULT_IMAGE_FORMAT = "gif";
+	String DEFAULT_IMAGE_FORMAT = "svg";
 	/**
 	 * Default image quality, used only for jpeg graphs
 	 */
@@ -260,8 +260,7 @@ public interface RrdGraphConstants {
 	/**
 	 * Default font name, determined based on the current operating system
 	 */
-	String DEFAULT_FONT_NAME = System.getProperty("os.name").toLowerCase().contains("windows") ?
-			"Lucida Sans Typewriter" : "Monospaced";
+	String DEFAULT_FONT_NAME = "'Super Sans', Helvetica, sans-serif";
 	
 	/**
 	 * Default graph small font

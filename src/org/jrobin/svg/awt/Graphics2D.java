@@ -6,7 +6,7 @@ public class Graphics2D extends Graphics {
 	private String keyTextAntialiasing;
 	private String valueTextAntialiasOn;
 	private Paint paint;
-	private Stroke stroke;
+	private Stroke stroke = new BasicStroke(0);
 	private Paint fill;
 	
 
@@ -125,20 +125,20 @@ public class Graphics2D extends Graphics {
 			 System_out_println("  "+xTmp+","+ yTmp   );
 		}
 		if (this.fill == null)
-			System_out_println("\" style=\"fill:none;stroke:"+this.paint+";stroke-width:"+this.stroke+" \"/>");
+			System_out_println("\" style=\"fill:none;stroke:"+this.paint+";stroke-width:"+this.stroke.getWidth()+" \"/>");
 		else
-			System_out_println("\" style=\"fill:"+this.fill+ ";stroke:none ;stroke-width:"+this.stroke+" \"/>");
+			System_out_println("\" style=\"fill:"+this.fill+ ";stroke:"+this.stroke+";stroke-width:"+this.stroke.getWidth()+" \"/>");
 		
 	}
 
-	String fontTmp = "font-family=\"'Super Sans', Helvetica, sans-serif\" font-size=\"10\" font-style=\"normal\" font-weight=\"normal\" fill=\""+this.paint+"\" stroke-width=\""+this.stroke+"\" stroke=\"darkgreen\" ";
+	Font font ;
 	public void setFont(Font font) {
-		fontTmp = ""+font;
+		this.font =  font;
 		System_out_println("<!-- setFont(  "+font+"  ) -->");
 	}
 
 	public void drawString(String text, int x, int y) {	
-		System_out_println("<text "+fontTmp +"  x=\""+x+"\" y=\""+y+"\" "+this.transformation+" >"+text+"</text>");
+		System_out_println("<text "+ this.font +"  x=\""+x+"\" y=\""+y+"\" "+this.transformation+" >"+text+"</text>");
 	}
 
 	public FontRenderContext getFontRenderContext() {

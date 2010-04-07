@@ -1,5 +1,5 @@
 <%@page import="java.io.ByteArrayInputStream"%><%@page  contentType="image/svg+xml"%><%
-response.setContentType("image/svg+xml");
+response.setContentType("image/svg+xml;charset=UTF-8");
 %><?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
 "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
@@ -7,6 +7,7 @@ response.setContentType("image/svg+xml");
 response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
 response.setHeader("Pragma","no-cache"); //HTTP 1.0
 response.setDateHeader ("Expires", 0); //prevents caching at the proxy server
+response.setHeader("Content-Disposition", "inline;filename=svg.svg");
 %>
 <%@page import="ws.rrd.Chk"%> 
  
