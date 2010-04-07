@@ -5,7 +5,7 @@ import org.apache.batik.transcoder.image.*;
 import org.xml.sax.XMLReader;
 /**
  * http://www.torsten-horn.de/techdocs/java-img.htm
- * @author xco5015
+ * @author vpupkin
  *
  */
 public class Svg2PngAndJpg

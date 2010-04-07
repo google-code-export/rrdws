@@ -26,7 +26,7 @@ public class Graphics2D extends Graphics {
 
 	/**
 	 * <clipPath id="cp1"></clipPath>
-	 * @author xco5015
+	 * @author vpupkin
 	 * @param x
 	 * @param y
 	 * @param width
@@ -63,7 +63,7 @@ public class Graphics2D extends Graphics {
 	 * <!-- schwarzer Hintergrund -->
   <rect x="0" y="0" width="360" height="510"
     style="fill:black; stroke:none;" />
-	 * @author xco5015
+	 * @author vpupkin
 	 * @param x
 	 * @param y
 	 * @param width
