@@ -104,9 +104,17 @@ class ImageWorker {
 
 	void fillPolygon(double[] x, double[] yBottom, double[] yTop, Paint paint) {
 		gd.setPaint(paint);
-			//TODO 0!
-			gd.fillPolygon(x , yBottom[0], yTop, x.length);
-			gd.drawPolygon(x , yBottom[0], yTop, x.length);
+		double x1[] = new double [x.length*2];
+		double y1[] = new double [x.length*2];
+		for (int i=0;i<x.length;i++){
+			x1[i] = x[i];
+			x1[x1.length-i-1] = x[i];
+			y1[i]=yTop[i];
+			y1[x1.length-i-1]=yBottom[i];
+			
+		} 
+		gd.fillPolygon(x1 , y1 , x.length*2);
+		gd.drawPolygon(x1 , y1, x.length*2);
 	 
 	}
 

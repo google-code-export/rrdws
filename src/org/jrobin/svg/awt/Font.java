@@ -44,18 +44,24 @@ public class Font {
 	/*font-family  */
 	public static final String TRUETYPE_FONT = "'Super Sans', Helvetica, sans-serif ";
 	public static Font createFont(String truetypeFont, InputStream fontStream) {
+		return ttf2font();
+	}
+	private static Font ttf2font() {
 		// TODO Auto-generated method stub
+		if (1==1)throw new RuntimeException("not yet implemented since 07.04.2010");
+		else {
 		return null;
+		}
 	}
 	public LineMetrics getLineMetrics(String dummyText, FontRenderContext fontRenderContext) {
 		String data = "LineMetrics getLineMetrics(String: "+dummyText+" , FontRenderContext: "+ fontRenderContext+" )";
-		//System.out.println(data);
+		System.out.println("<!-- getStringBounds ::"+data+" -->");
 		return new LineMetrics(data);
 	}
 	public Rectangle2D getStringBounds(String text, int i, int length,
 			FontRenderContext fontRenderContext) {
 		String data = text;
-		//System.out.println(data);
+		System.out.println("<!-- getStringBounds ::"+data+" -->");
 		return new Rectangle2D (data);
 	}
 	public Font deriveFont(String plain2, int i) {
