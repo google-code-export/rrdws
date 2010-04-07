@@ -18,9 +18,10 @@ public class Graphics2D extends Graphics {
 		System_out_println("<!--   //////////////DISPOSE??????????????  -->");
 		
 	}
-
+	AffineTransform transformation = new AffineTransform();
 	public AffineTransform getTransform() {
-		return new AffineTransform();
+		
+		return transformation;
 	}
 
 	/**
@@ -38,10 +39,12 @@ public class Graphics2D extends Graphics {
 	}
 
 	public void translate(int x, int y) {
+		this.transformation.translate(x, y);
 		System_out_println( "<!-- translate(int "+x+", int"+ y+"  )  -->");
 	}
 
 	public void rotate(double angle) {
+		this.transformation.rotate(angle);
 		System_out_println( "<!-- rotate(int "+angle+"  )  -->");
 	}
 
@@ -68,7 +71,7 @@ public class Graphics2D extends Graphics {
 	public void fillRect(int x, int y, int width, int height) {
 		Paint fillBak = this.fill;
 		this.fill = this.paint;//fill-opacity=\"0.1\" 
-		System_out_println("<rect   x=\""+x+"\" y=\""+ y+"\" width=\""+width+"\" height=\""+height+"\" style=\"fill:"+this.paint+"; stroke:yellow ;\"/>" );
+		System_out_println("<rect   x=\""+x+"\" y=\""+ y+"\" width=\""+width+"\" height=\""+height+"\" style=\"fill:"+this.paint+"; stroke:none ;\"/>" );
 		this.fill = fillBak;
 	} 
 
@@ -98,6 +101,7 @@ public class Graphics2D extends Graphics {
 	}
 
 	public void drawLine(int x1, int y1, int x2, int y2) {
+		System_out_println(" <!-- line ( "+ x1 +":"+ y1 + " - "  + x2 +":"  + y2 +") -->" );
 		drawPolyline(  new double[] {(double)x1,x2} , new double[] { y1,y2}, 2 );
 	}
 
@@ -125,14 +129,14 @@ public class Graphics2D extends Graphics {
 		
 	}
 
-	String fontTmp = "font-family=\"Lucida Sans Typewriter\" font-size=\"10\" font-style=\"normal\" font-weight=\"normal\" fill=\""+this.paint+"\" stroke-width=\""+this.stroke+"\" stroke=\"darkgreen\" ";
+	String fontTmp = "font-family=\"'Super Sans', Helvetica, sans-serif\" font-size=\"10\" font-style=\"normal\" font-weight=\"normal\" fill=\""+this.paint+"\" stroke-width=\""+this.stroke+"\" stroke=\"darkgreen\" ";
 	public void setFont(Font font) {
 		fontTmp = ""+font;
 		System_out_println("<!-- setFont(  "+font+"  ) -->");
 	}
 
 	public void drawString(String text, int x, int y) {	
-		System_out_println("<text "+fontTmp +"  x=\""+x+"\" y=\""+y+"\" >"+text+"</text>");
+		System_out_println("<text "+fontTmp +"  x=\""+x+"\" y=\""+y+"\" "+this.transformation+" >"+text+"</text>");
 	}
 
 	public FontRenderContext getFontRenderContext() {

@@ -42,13 +42,13 @@ public class Font {
 	public static final String BOLD = 	"bold";
 	public static final String PLAIN = "normal";
 	/*font-family  */
-	public static final String TRUETYPE_FONT = "Verdana";
+	public static final String TRUETYPE_FONT = "'Super Sans', Helvetica, sans-serif ";
 	public static Font createFont(String truetypeFont, InputStream fontStream) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	public LineMetrics getLineMetrics(String dummyText, FontRenderContext fontRenderContext) {
-		String data = "LineMetrics getLineMetrics(String "+dummyText+" , FontRenderContext "+ fontRenderContext+" )";
+		String data = "LineMetrics getLineMetrics(String: "+dummyText+" , FontRenderContext: "+ fontRenderContext+" )";
 		//System.out.println(data);
 		return new LineMetrics(data);
 	}

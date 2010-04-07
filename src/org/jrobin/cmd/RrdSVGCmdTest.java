@@ -12,6 +12,7 @@ import org.jrobin.core.RrdDb;
 import org.jrobin.core.RrdDef;
 import org.jrobin.core.RrdException;
 import org.jrobin.core.Sample;  
+import org.jrobin.graph.RrdGraphConstants;
 import org.jrobin.svg.RrdGraph;
 import org.jrobin.svg.RrdGraphDef;
  
@@ -121,7 +122,7 @@ $ rrdtool fetch test.rrd AVERAGE --start 920804400 --end 920809200
 		RrdGraphDef graphDef = new RrdGraphDef();
 		graphDef.setStartTime(920804400L);
 		graphDef.setEndTime(920808000L);
-		graphDef.setFilename("-");
+		graphDef.setFilename(RrdGraphConstants.IN_MEMORY_IMAGE);
 		graphDef.setWidth(400);
 		graphDef.setHeight(200);
 		 

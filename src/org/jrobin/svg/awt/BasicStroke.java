@@ -2,7 +2,7 @@ package org.jrobin.svg.awt;
 
 public class BasicStroke implements Stroke{
 
-	private float width = 1.0f;
+	private float width = 0.2f;
 	
 	public String toString(){
 		return ""+width;

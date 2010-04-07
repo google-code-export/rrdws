@@ -27,6 +27,7 @@ package org.jrobin.svg;
 import org.jrobin.core.RrdException;
 import org.jrobin.core.Util;
 import org.jrobin.data.DataProcessor;
+import org.jrobin.graph.RrdGraphConstants;
 import org.jrobin.svg.awt.BasicStroke;
 import org.jrobin.svg.awt.Color;
 import org.jrobin.svg.awt.Font;
@@ -128,7 +129,7 @@ public class RrdGraph implements RrdGraphConstants {
 	}
 
 	private void saveImage() throws IOException {
-		if (!gdef.filename.equals("-")) {
+		if (!RrdGraphConstants.IN_MEMORY_IMAGE.equals( gdef.filename )) {
 			info.bytes = worker.saveImage(gdef.filename, gdef.imageFormat, gdef.imageQuality);
 		}
 		else {
