@@ -46,7 +46,7 @@
 					session.setAttribute("svg", oInf.getBytes());
 				}
 			}
-		%> <embed src="svg.jsp" type="image/svg+xml" height="100%" width="100%" />
+		%> 	
 		<form method="post">Execution result::: <textarea
 			readonly="readonly"  name="result"  cols="60" rows="4">
  <%=o%>
