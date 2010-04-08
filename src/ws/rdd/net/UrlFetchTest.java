@@ -2,9 +2,7 @@ package ws.rdd.net;
 
 import java.io.IOException;
 import java.io.InputStream;
-
-import org.apache.commons.httpclient.HttpHost;
-import org.apache.commons.httpclient.methods.GetMethod;
+ 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -20,22 +18,23 @@ import org.esxx.js.protocol.GAEConnectionManager;
 
 /** 
  * <b>Description:TODO</b>
- * @author      xco5015<br>
+ * @author      vipup<br>
  * <br>
- * <b>Copyright:</b>     Copyright (c) 2006-2008 OXSEED AG <br>
- * <b>Company:</b>       OXSEED AG  <br>
+ * <b>Copyright:</b>     Copyright (c) 2006-2008 Monster AG <br>
+ * <b>Company:</b>       Monster AG  <br>
  * 
  * Creation:  08.04.2010::12:07:00<br> 
  */
 public class UrlFetchTest {
-	public String testFetchUrl() throws ClientProtocolException, IOException{
+	public String testFetchUrl(String toFetchStr) throws ClientProtocolException, IOException{
 		HttpParams httpParams = new BasicHttpParams();
 		org.apache.http.conn.ClientConnectionManager connectionManager = new GAEConnectionManager();
 		HttpClient httpClient = new DefaultHttpClient(connectionManager, httpParams);
 		org.apache.http.HttpHost proxy = new org.apache.http.HttpHost("proxy", 8080, "http");
 		httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
   
-		HttpUriRequest m =  new HttpGet("http://www.fiducia.de/service/suchergebnis.html?searchTerm=zeit" );;
+		String fetchUrl = null == toFetchStr? "http://www.fiducia.de/service/suchergebnis.html?searchTerm=zeit":toFetchStr;
+		HttpUriRequest m =  new HttpGet(fetchUrl );;
 		 HttpResponse s = httpClient.execute(m );
 		 System.out.println(s);//s.getAllHeaders()
 		 HttpEntity eTmp = ((BasicHttpResponse )s).getEntity();
