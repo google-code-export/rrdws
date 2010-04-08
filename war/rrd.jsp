@@ -11,8 +11,14 @@
 <table height="100%" width="100%">
 	<tr width="100%" height="64">
 		<td width="100%" height="64">
-			<a href="https://rrdsaas.appspot.com/rrd.jsp"  title=" RRD Java impl "> 
-			<img src="Java-Logo.svg" height="64" width="64" /> </a>
+			<a href="https://rrdsaas.appspot.com/rrd.jsp"  title=" RRD Java impl ">
+			RRDSAAS
+			<img src="JavaLogo.svg" height="64" width="64" /> 
+			<embed src="JavaLogo.svg" type="image/svg+xml" height="64" width="64" />
+				<embed src="JavaLogo.svg" height="64" width="64"  type="image/svg+xml"  pluginspage="http://www.adobe.com/svg/viewer/install/" /> 
+				<object data="JavaLogo.svg" width="300" height="100" type="image/svg+xml" codebase="http://www.adobe.com/svg/viewer/install/" />
+			</a>
+			
 		</td>
 	<tr width="100%" height="64">
 	</tr>
@@ -46,7 +52,7 @@
 					session.setAttribute("svg", oInf.getBytes());
 				}
 			}
-		%> 	
+		%> 	<embed src="svg.jsp" type="image/svg+xml" height="100%" width="100%" />
 		<form method="post">Execution result::: <textarea
 			readonly="readonly"  name="result"  cols="60" rows="4">
  <%=o%>
@@ -57,8 +63,7 @@
 	</tr>
 
 	<tr>
-		<td><embed src="Java-Logo.svg" type="image/svg+xml" width="64"
-			height="64" />
+		<td> 
 
 		</embed> <!-- 
  <%=" "+System.getProperties()+" "%>

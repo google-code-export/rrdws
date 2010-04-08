@@ -33,6 +33,6 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/httpcore-4.0.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-logging-1.0.4.jar"/>
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER/App Engine (1)"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/gaehttp-4.0.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/gaehttp-4.0.1.jar" sourcepath="/gaehttp/src"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

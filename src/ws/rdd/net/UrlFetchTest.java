@@ -30,8 +30,14 @@ public class UrlFetchTest {
 		HttpParams httpParams = new BasicHttpParams();
 		org.apache.http.conn.ClientConnectionManager connectionManager = new GAEConnectionManager();
 		HttpClient httpClient = new DefaultHttpClient(connectionManager, httpParams);
-		org.apache.http.HttpHost proxy = new org.apache.http.HttpHost("proxy", 8080, "http");
-		httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
+		//		System.setProperty("http.proxyHost", "webcache.mydomain.com");
+		// System.setPropery("http.proxyPort", "8080");
+		String schemes[] =  {"htttps","http"};
+		for (String scheme: schemes)
+		if ((""+System.getProperty(scheme+".proxyHost")+System.getProperty(scheme+".proxyPort")).indexOf("null")==-1){
+			org.apache.http.HttpHost proxy = new org.apache.http.HttpHost("proxy", 8080, scheme);
+			httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
+		}
   
 		String fetchUrl = null == toFetchStr? "http://www.fiducia.de/service/suchergebnis.html?searchTerm=zeit":toFetchStr;
 		HttpUriRequest m =  new HttpGet(fetchUrl );;
