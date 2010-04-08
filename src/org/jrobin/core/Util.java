@@ -766,6 +766,10 @@ public class Util {
 	 */
 	public static String sprintf(String format, Object ... args) {
 		String fmt = format.replaceAll("([^%]|^)%([^a-zA-Z%]*)l(f|g|e)", "$1%$2$3");
-		return String.format(fmt, args);
+		try{
+			return String.format(fmt, args);
+		}catch (Throwable e){
+			return String.format("%s", e.getMessage());
+		}
 	}
 }
