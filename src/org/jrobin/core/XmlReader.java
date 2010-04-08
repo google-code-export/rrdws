@@ -27,9 +27,15 @@ package org.jrobin.core;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
 
+import ws.rdd.net.UrlFetchTest;
+
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
 
 class XmlReader extends DataImporter {
 
@@ -38,6 +44,17 @@ class XmlReader extends DataImporter {
 
 	XmlReader(String xmlFilePath) throws IOException, RrdException {
 		root = Util.Xml.getRootElement(new File(xmlFilePath));
+		dsNodes = Util.Xml.getChildNodes(root, "ds");
+		arcNodes = Util.Xml.getChildNodes(root, "rra");
+	}
+	XmlReader(URI xmlUri) throws IOException, RrdException {
+		UrlFetchTest utmp = new UrlFetchTest();
+		String toFetchStr =xmlUri.toString();
+		String data = utmp.testFetchUrl(toFetchStr);
+		byte[] buf = data.getBytes();
+		InputStream in = new ByteArrayInputStream(buf );
+		InputSource inXml = new InputSource(in );
+		root = Util.Xml.getRootElement(inXml );
 		dsNodes = Util.Xml.getChildNodes(root, "ds");
 		arcNodes = Util.Xml.getChildNodes(root, "rra");
 	}

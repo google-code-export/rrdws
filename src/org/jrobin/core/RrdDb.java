@@ -26,6 +26,8 @@
 package org.jrobin.core;
 
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Date;
 
 /**
@@ -68,6 +70,14 @@ public class RrdDb implements RrdUpdater {
 	 * prefix to identify external XML file source used in various RrdDb constructors
 	 */
 	public static final String PREFIX_XML = "xml:/";
+	/**
+	 * prefix to identify external RRDTool file source used in various RrdDb constructors
+	 */
+	public static final String PREFIX_HTTP = "http:/";
+	/**
+	 * prefix to identify external RRDTool file source used in various RrdDb constructors
+	 */
+	public static final String PREFIX_HTTPS = "https:/";
 	/**
 	 * prefix to identify external RRDTool file source used in various RrdDb constructors
 	 */
@@ -394,7 +404,17 @@ public class RrdDb implements RrdUpdater {
 	public RrdDb(String rrdPath, String externalPath, RrdBackendFactory factory)
 			throws IOException, RrdException {
 		DataImporter reader;
-		if (externalPath.startsWith(PREFIX_RRDTool)) {
+		if (externalPath.startsWith(PREFIX_HTTP)) {
+			try {
+				URI uriTmp =  new URI(externalPath);
+				reader = new XmlReader(uriTmp );
+			} catch (URISyntaxException e) {
+				e.printStackTrace();
+				throw new IOException(e);
+			}
+			
+		}
+		else if (externalPath.startsWith(PREFIX_RRDTool)) {
 			String rrdToolPath = externalPath.substring(PREFIX_RRDTool.length());
 			reader = new RrdToolReader(rrdToolPath);
 		}
