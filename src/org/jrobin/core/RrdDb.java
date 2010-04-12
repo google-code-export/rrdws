@@ -410,7 +410,7 @@ public class RrdDb implements RrdUpdater {
 				reader = new XmlReader(uriTmp );
 			} catch (URISyntaxException e) {
 				e.printStackTrace();
-				throw new IOException(e);
+				throw new RrdException(e);
 			}
 			
 		}

@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="E:/wtp20/plugins/com.google.gwt.eclipse.sdkbundle.2.0.2_2.0.2.v201002121411/gwt-2.0.2/gwt-user.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="file:/E:/wtp20/plugins/com.google.gwt.eclipse.sdkbundle.2.0.2_2.0.2.v201002121411/gwt-2.0.2/doc/javadoc/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="E:/wtp20/plugins/com.google.gwt.eclipse.sdkbundle.2.0.2_2.0.2.v201002121411/gwt-2.0.2/gwt-dev.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="file:/E:/wtp20/plugins/com.google.gwt.eclipse.sdkbundle.2.0.2_2.0.2.v201002121411/gwt-2.0.2/doc/javadoc/"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/iText-2.1.7-gae.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v6.0"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JDK6"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/batik-transcoder-1.6.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/batik-dom-1.6.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/batik-bridge-1.6.jar"/>
@@ -32,7 +22,8 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/httpmime-4.0.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/httpcore-4.0.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-logging-1.0.4.jar"/>
-	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER/App Engine (1)"/>
+	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gaehttp-4.0.1.jar" sourcepath="/gaehttp/src"/>
+	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

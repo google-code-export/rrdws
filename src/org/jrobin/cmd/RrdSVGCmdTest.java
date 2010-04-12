@@ -20,7 +20,7 @@ import org.jrobin.svg.awt.BufferedImage;
 import org.jrobin.svg.awt.Color;
 import org.junit.Test;
 
-import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
+//import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 
 public class RrdSVGCmdTest {
 
