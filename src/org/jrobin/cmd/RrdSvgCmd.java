@@ -38,7 +38,7 @@ import org.jrobin.svg.awt.Paint;
 
 import java.io.IOException;
 
-class RrdSvgCmd extends RrdToolCmd implements RrdGraphConstants {
+public class RrdSvgCmd extends RrdToolCmd implements RrdGraphConstants {
 	static final Color BLIND_COLOR = new Color(0, 0, 0, 0);
 	private RrdGraphDef gdef;
 

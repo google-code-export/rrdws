@@ -35,7 +35,7 @@ import org.jrobin.graph.RrdGraphInfo;
 import java.awt.*;
 import java.io.IOException;
 
-class RrdGraphCmd extends RrdToolCmd implements RrdGraphConstants {
+public class RrdGraphCmd extends RrdToolCmd implements RrdGraphConstants {
 	static final Color BLIND_COLOR = new Color(0, 0, 0, 0);
 	private RrdGraphDef gdef;
 

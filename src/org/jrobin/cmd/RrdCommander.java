@@ -63,10 +63,14 @@ public class RrdCommander {
 	}
 
 	public  static RrdToolCmd getRrdCommender() {
-		return System.getProperty("com.google.appengine.runtime.version")==null?new RrdGraphCmd():new RrdSvgCmd();
+		return getRrdRenderer();
+	}
+
+	public static boolean isGAE() {
+		return !(System.getProperty("com.google.appengine.runtime.version")==null);
 	}
 	public  static RrdToolCmd getRrdRenderer() {
-		return System.getProperty("com.google.appengine.runtime.version")==null?new RrdGraphCmd():new RrdSvgCmd();
+		return !isGAE()?new RrdGraphCmd():new RrdSvgCmd();
 	}	
 
 	/**

@@ -10,11 +10,19 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.conn.params.ConnRoutePNames;
+import org.apache.http.conn.scheme.PlainSocketFactory;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.SingleClientConnManager;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.message.BasicHttpResponse;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.esxx.js.protocol.GAEConnectionManager;
+import org.jrobin.cmd.RrdCommander;
+ 
 
 /** 
  * <b>Description:TODO</b>
@@ -28,10 +36,19 @@ import org.esxx.js.protocol.GAEConnectionManager;
 public class UrlFetchTest {
 	public String testFetchUrl(String toFetchStr) throws ClientProtocolException, IOException{
 		HttpParams httpParams = new BasicHttpParams();
-		org.apache.http.conn.ClientConnectionManager connectionManager = new GAEConnectionManager();
+		
+		org.apache.http.conn.ClientConnectionManager connectionManager = null;
+			//?new RrdGraphCmd():new RrdSvgCmd();
+			if (!RrdCommander.isGAE()){
+				SchemeRegistry schreg = new SchemeRegistry();
+				schreg.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
+				schreg.register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));				
+				connectionManager = new ThreadSafeClientConnManager(httpParams, schreg); 
+			}	else{
+				connectionManager = new GAEConnectionManager();
+			}
 		HttpClient httpClient = new DefaultHttpClient(connectionManager, httpParams);
-		//		System.setProperty("http.proxyHost", "webcache.mydomain.com");
-		// System.setPropery("http.proxyPort", "8080");
+
 		String schemes[] =  {"htttps","http"};
 		for (String scheme: schemes)
 		if ((""+System.getProperty(scheme+".proxyHost")+System.getProperty(scheme+".proxyPort")).indexOf("null")==-1){
@@ -45,7 +62,7 @@ public class UrlFetchTest {
 		 System.out.println(s);//s.getAllHeaders()
 		 HttpEntity eTmp = ((BasicHttpResponse )s).getEntity();
 		 InputStream contentTmp = eTmp.getContent();
-		 int sizeTmp = contentTmp.available();
+		 int sizeTmp = Math.max(  (int)eTmp.getContentLength(), contentTmp.available());
 		 byte buf[] = new byte[sizeTmp];
 		 int readedTmp = contentTmp.read(buf);
 		 return new String( buf,0,readedTmp ) ; 
