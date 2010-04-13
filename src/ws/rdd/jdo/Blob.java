@@ -1,6 +1,5 @@
 package ws.rdd.jdo;
-
-import java.io.UnsupportedEncodingException;
+ 
 import java.util.Date;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
