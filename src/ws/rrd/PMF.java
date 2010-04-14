@@ -9,26 +9,21 @@ package ws.rrd;
  * Creation:  13.04.2010::19:32:04<br> 
  */
 import java.util.Date;
-
-
-import javax.jdo.JDOHelper;
+ 
 import javax.jdo.PersistenceManagerFactory;
+
+import ws.rdd.jdo.RRD_JDOHelper;
 
 
 public final class PMF {
-    private static final PersistenceManagerFactory pmfInstance =
-        JDOHelper.getPersistenceManagerFactory("transactions-optional");
-
-
-    private PMF() {}
-
+ 
 
     public static PersistenceManagerFactory get() {
-        return pmfInstance;
+        return RRD_JDOHelper.getInstance().getPMF();
     }
     
     public static Date getServerDate(){
-        return pmfInstance.getPersistenceManager().getServerDate();
+        return RRD_JDOHelper.getInstance().getPMF().getPersistenceManager().getServerDate();
     }
 }
 

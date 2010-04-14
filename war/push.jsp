@@ -16,6 +16,10 @@
 <%@page import="java.io.IOException"%>
 <%@page import="javax.jdo.PersistenceManager"%>
 <%@page import="ws.rrd.PMF"%>
+<%@page import="net.sf.jsr107cache.CacheFactory"%>
+<%@page import="net.sf.jsr107cache.CacheManager"%>
+<%@page import="net.sf.jsr107cache.Cache"%>
+<%@page import="ws.rrd.MemoryFileCache"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title>File Upload Example</title>
@@ -43,6 +47,10 @@ try{
                     response.getWriter().append( "<br>ContentType:::::"+ item.getContentType() );
                     
                     session.setAttribute(item.getName(),item );
+                     
+                     
+					String nameTmp = MemoryFileCache. put( item  );
+					System.out.println( "stored into memcache as ::["+nameTmp +"]");
                     //pm.makePersistent(item);
             }
     }else{

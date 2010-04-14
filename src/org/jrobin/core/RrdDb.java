@@ -28,7 +28,12 @@ package org.jrobin.core;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+
+import ws.rrd.MemoryFileCache;
+import ws.rrd.MemoryFileItem;
 
 /**
  * <p>Main class used to create and manipulate round robin databases (RRDs). Use this class to perform
@@ -73,7 +78,11 @@ public class RrdDb implements RrdUpdater {
 	/**
 	 * prefix to identify external RRDTool file source used in various RrdDb constructors
 	 */
-	public static final String PREFIX_HTTP = "http:/";
+	public static final String PREFIX_MEM = "mem:/";
+	/**
+	 * prefix to identify external RRDTool file source used in various RrdDb constructors
+	 */
+	public static final String PREFIX_HTTP = "http:/";	
 	/**
 	 * prefix to identify external RRDTool file source used in various RrdDb constructors
 	 */
@@ -404,7 +413,13 @@ public class RrdDb implements RrdUpdater {
 	public RrdDb(String rrdPath, String externalPath, RrdBackendFactory factory)
 			throws IOException, RrdException {
 		DataImporter reader;
-		if (externalPath.startsWith(PREFIX_HTTP)) {
+		if (externalPath.startsWith(PREFIX_MEM)) {
+			String nameTmp = externalPath.substring(PREFIX_MEM.length());
+			MemoryFileItem item = MemoryFileCache.get (nameTmp );
+			InputStream in = item.getInputStream();
+			reader = new XmlReader(in);
+			
+		}else if (externalPath.startsWith(PREFIX_HTTP)) {
 			try {
 				URI uriTmp =  new URI(externalPath);
 				reader = new XmlReader(uriTmp );
@@ -413,8 +428,7 @@ public class RrdDb implements RrdUpdater {
 				throw new IOException(e);
 			}
 			
-		}
-		else if (externalPath.startsWith(PREFIX_RRDTool)) {
+		}else if (externalPath.startsWith(PREFIX_RRDTool)) {
 			String rrdToolPath = externalPath.substring(PREFIX_RRDTool.length());
 			reader = new RrdToolReader(rrdToolPath);
 		}

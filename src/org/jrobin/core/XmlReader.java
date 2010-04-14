@@ -58,6 +58,13 @@ class XmlReader extends DataImporter {
 		dsNodes = Util.Xml.getChildNodes(root, "ds");
 		arcNodes = Util.Xml.getChildNodes(root, "rra");
 	}
+ 
+	XmlReader( InputStream in ) throws RrdException, IOException   {
+		InputSource inXml = new InputSource(in );
+		root = Util.Xml.getRootElement(inXml );
+		dsNodes = Util.Xml.getChildNodes(root, "ds");
+		arcNodes = Util.Xml.getChildNodes(root, "rra");
+	}	
 
 	String getVersion() throws RrdException {
 		return Util.Xml.getChildValue(root, "version");
