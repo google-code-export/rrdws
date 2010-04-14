@@ -3,6 +3,7 @@ package ws.rrd;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Collections;
+import java.util.HashMap;
 
 import net.sf.jsr107cache.Cache;
 import net.sf.jsr107cache.CacheException;
@@ -21,25 +22,19 @@ import net.sf.jsr107cache.CacheManager;
 public class MemoryFileCache {
      
 	 static MemoryFileCache single = new MemoryFileCache();
-	 CacheFactory cacheFactory = null;
-	 Cache cache =null;
+	 //CacheFactory cacheFactory = null;
+	  
 	 
 	 private MemoryFileCache(){ 
-		try {
-			this.cacheFactory = CacheManager.getInstance().getCacheFactory();
-			this.cache = this.cacheFactory.createCache(Collections.emptyMap());
-		} catch (CacheException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
+ 
 	 }
                     
 	 public static MemoryFileItem get (String name) throws IOException{
-		 MemoryFileItem retval = (MemoryFileItem) single.cache.get(name);
+		 Cache cache = single.getCache();
+		MemoryFileItem retval = (MemoryFileItem) cache.get(name);
 		 if (retval ==null){ // try to restore parts
-			  for (int i=0;single.cache.get(name+"::"+i)!=null;){
-				 MemoryFileItem next = (MemoryFileItem)single.cache.get(name+"::"+i);				 
+			  for (int i=0;cache.get(name+"::"+i)!=null;){
+				 MemoryFileItem next = (MemoryFileItem)cache.get(name+"::"+i);				 
 				 if (i==0 ){
 					 retval = new MemoryFileItem (next.fileName,next.contentType,next.isFormField(),next.fileName, 0);
 				 }
@@ -53,10 +48,12 @@ public class MemoryFileCache {
 	 static int MAX_SIZE = 512*1024;
 	 static int MAX_BUFF_SIZE = MAX_SIZE;
 	 public static String put (MemoryFileItem  item) throws IOException{
+		 Cache cache = single.getCache();
 		 String name = item.getName();
 		 byte[] bs = item.get();
+		 
 		if (bs.length < MAX_SIZE){
-			 single.cache.put(name,item);
+			 cache.put(name,item);
 		 }else{ //SPLIT
 			 int done = 0;
 			 for (int i=0;done<bs.length ;i++){
@@ -66,11 +63,35 @@ public class MemoryFileCache {
 				 outputStream.write(bs, done,Math.min( MAX_BUFF_SIZE, bs.length-done ));
 				 itemNext.flush();
 				 done += MAX_BUFF_SIZE;
-				 single.cache.put(nameTmp,itemNext);
+				 cache.put(nameTmp,itemNext);
 			 }
 		 }
 		 return name;
 	 }
+
+	private Cache getCache()   {
+		//return  CacheManager.getInstance().getCacheFactory() Instance(). Cache ("rrd");
+		
+		CacheManager cm = CacheManager.getInstance();
+		Cache retval = cm.getCache ("rrd");
+		if (retval == null)
+		synchronized (CacheManager.class) { 
+			if (retval == null)
+			try {
+				CacheFactory cacheFactory;
+				cacheFactory = cm.getCacheFactory();
+				HashMap hashMap = new HashMap();
+				Cache cacheTmp;
+				cacheTmp = cacheFactory.createCache(hashMap);
+				cm.registerCache("rrd", cacheTmp);
+				retval = cacheTmp;
+			} catch (CacheException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} 
+		return  retval; 
+	}
 
 }
 
