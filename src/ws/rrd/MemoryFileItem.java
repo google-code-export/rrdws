@@ -1,7 +1,7 @@
 package ws.rrd;
 /** 
  * <b>Description:TODO</b>
- * @author      xco5015<br>
+ * @author      v.i.p.<br>
  * <br>
  * <b>Copyright:</b>     Copyright (c) 2006-2008 Monster AG <br>
  * <b>Company:</b>       Monster AG  <br>
@@ -14,11 +14,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
-
-import javax.jdo.PersistenceManager;
+ 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.NotPersistent;
@@ -35,21 +35,17 @@ import com.google.appengine.api.datastore.Blob;
 
 
 
-@PersistenceCapable(identityType = IdentityType.UNSPECIFIED)//APPLICATION
-public class MemoryFileItem implements FileItem {
+@PersistenceCapable(identityType = IdentityType.NONDURABLE )//APPLICATION
+public class MemoryFileItem implements FileItem, Serializable {
+ 
+	private static final long serialVersionUID = -7492370404074144424L;
 
-
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 6873943621309250882L;
-        
-    @PrimaryKey
+	@PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
     protected Long id;
     
     @NotPersistent
-        private String fieldName;
+    private String fieldName;
     
     @Persistent
     protected String contentType;
@@ -58,10 +54,10 @@ public class MemoryFileItem implements FileItem {
     protected String fileName;
     
     @NotPersistent
-        private boolean isFormField;
+    private boolean isFormField;
         
     @NotPersistent
-        private ByteArrayOutputStream content_out;
+    volatile private Object content_out;
     
     @Persistent
     protected Blob content;
@@ -91,7 +87,7 @@ public class MemoryFileItem implements FileItem {
 
 
         public byte[] get() {
-                return (content != null) ? content.getBytes() : content_out.toByteArray(); 
+                return (content != null) ? content.getBytes() : ((ByteArrayOutputStream)content_out).toByteArray(); 
         }
 
 
@@ -110,7 +106,7 @@ public class MemoryFileItem implements FileItem {
                 if(content != null){
                         bais = new ByteArrayInputStream(content.getBytes());
                 } else {
-                        bais = new ByteArrayInputStream(content_out.toByteArray());
+                        bais = new ByteArrayInputStream(((ByteArrayOutputStream)content_out).toByteArray());
                 }
                 return bais;
         }
@@ -125,22 +121,22 @@ public class MemoryFileItem implements FileItem {
          * This method can't be used if object was fetched from datastore.
          * */
         public OutputStream getOutputStream() throws IOException {
-                return content_out;
+                return (ByteArrayOutputStream)content_out;
         }
 
 
         public long getSize() {
-                return (content != null) ? content.getBytes().length : content_out.size();
+                return (content != null) ? content.getBytes().length : ((ByteArrayOutputStream )content_out).size();
         }
 
 
         public String getString() {
-                return (content != null) ? new String(content.getBytes()) : new String(content_out.toByteArray());
+                return (content != null) ? new String(content.getBytes()) : new String(((ByteArrayOutputStream)content_out).toByteArray());
         }
 
 
         public String getString(String arg0) throws UnsupportedEncodingException {
-                return (content != null) ? new String(content.getBytes(), arg0) : new String(content_out.toByteArray(), arg0);
+                return (content != null) ? new String(content.getBytes(), arg0) : new String(((ByteArrayOutputStream)content_out).toByteArray(), arg0);
         }
 
 
@@ -165,15 +161,21 @@ public class MemoryFileItem implements FileItem {
 
 
         public void write(File arg0) throws Exception {
-                // Unimplemented - can't use FileWriter in GAE.
+        	if(1==1)throw new RuntimeException("Unimplemented - can't use FileWriter in GAE.   File::"+arg0);
         }
 
-
-        public boolean commit(){
-                
-                content = new Blob(get());
-                 
-                  return true;
+        /** 
+         * finalize write-enable-mode and flush data into content-Blob.
+         * 
+         * @return
+         * @throws IOException 
+         */
+        public synchronized boolean flush() throws IOException{
+        		((ByteArrayOutputStream)content_out).flush();
+        		((ByteArrayOutputStream)content_out).close(); 
+                content = new Blob(get());  
+                content_out = null;
+                return true;
         }
 
 

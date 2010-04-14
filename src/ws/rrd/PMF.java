@@ -1,7 +1,7 @@
 package ws.rrd;
 /** 
  * <b>Description:TODO</b>
- * @author      xco5015<br>
+ * @author      v.i.p.<br>
  * <br>
  * <b>Copyright:</b>     Copyright (c) 2006-2008 Monster AG <br>
  * <b>Company:</b>       Monster AG  <br>

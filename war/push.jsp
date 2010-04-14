@@ -35,7 +35,7 @@ try{
             PersistenceManager pm = PMF.get().getPersistenceManager();
             for(MemoryFileItem item : items) {
             	 
-                    item.commit(); 
+                    item.flush(); 
                     response.getWriter().append( "<br>Name:::"+ item.getName() );
                     response.getWriter().append( "<br>Size:::::"+ item.getSize() );
                     response.getWriter().append( "<br>Date:::::"+ item.getDate() );
