@@ -102,7 +102,7 @@ class ValueAxisLogarithmic implements RrdGraphConstants {
 			}
 		}
 		for (double value = Math.pow(10, Math.log10(1.0000001+im.minval)
-				- (1.0000001+Math.log10(im.minval) % Math.log10(1.0000001+yloglab[majoridx][0])));
+				- (Math.log10(1.0000001+im.minval) % Math.log10(1.0000001+yloglab[majoridx][0])));
 			 value <= im.maxval;
 			 value *= yloglab[majoridx][0]) {
 			if (value < im.minval) {
