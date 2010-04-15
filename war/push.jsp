@@ -30,7 +30,7 @@ try{
     // Check that we have a file upload request
     if(ServletFileUpload.isMultipartContent(request)){
             
-            MemoryFileItemFactory factory = new MemoryFileItemFactory();
+            MemoryFileItemFactory factory = MemoryFileItemFactory.getInstance();
             ServletFileUpload upload = new ServletFileUpload(factory);
             upload.setSizeMax(4*1024*1024); // 4 MB
   
