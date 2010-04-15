@@ -24,6 +24,7 @@
  */
 package org.jrobin.graph;
 
+import org.jrobin.ImageWorkerInterface;
 import org.jrobin.core.RrdException;
 import org.jrobin.core.Util;
 import org.jrobin.data.DataProcessor; 
@@ -39,7 +40,7 @@ public class RrdGraph implements RrdGraphConstants {
 	RrdGraphDef gdef;
 	ImageParameters im = new ImageParameters();
 	DataProcessor dproc;
-	ImageWorker worker;
+	ImageWorkerInterface worker;
 	Mapper mapper;
 	RrdGraphInfo info = new RrdGraphInfo();
 	private String signature;
@@ -54,7 +55,11 @@ public class RrdGraph implements RrdGraphConstants {
 	public RrdGraph(RrdGraphDef gdef) throws IOException, RrdException {
 		this.gdef = gdef;
 		signature = gdef.getSignature();
-		worker = new ImageWorker(100, 100); // Dummy worker, just to start with something
+		if ("SVG".equals(this.gdef.imageFormat)){
+			worker = new org.jrobin.svg.ImageWorker(100, 100); // Dummy worker, just to start with something
+		}else{
+			worker = new ImageWorker(100, 100); // Dummy worker, just to start with something
+		}
 		try {
 			createGraph();
 		}

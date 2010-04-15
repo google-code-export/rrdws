@@ -24,6 +24,7 @@
  */
 package org.jrobin.svg; 
 
+import org.jrobin.ImageWorkerInterface;
 import org.jrobin.svg.awt.AffineTransform;
 import org.jrobin.svg.awt.BufferedImage;
 import org.jrobin.svg.awt.Font;
@@ -34,7 +35,7 @@ import org.jrobin.svg.awt.RenderingHints;
 import org.jrobin.svg.awt.Stroke;
 import java.io.*;
 
-class ImageWorker {
+public class ImageWorker implements ImageWorkerInterface {
 	private static final String DUMMY_TEXT = "Dummy";
 
 	private BufferedImage img;
@@ -43,7 +44,7 @@ class ImageWorker {
 	//  TODO
 	private AffineTransform aftInitial;
 
-	ImageWorker(int width, int height) {
+	public ImageWorker(int width, int height) {
 		resize(width, height);
 	}
 

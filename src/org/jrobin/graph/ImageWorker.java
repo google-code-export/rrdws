@@ -29,13 +29,16 @@ import com.sun.image.codec.jpeg.JPEGEncodeParam;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 import javax.imageio.ImageIO;
+
+import org.jrobin.ImageWorkerInterface;
+
 import java.awt.*;
 import java.awt.font.LineMetrics;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
-class ImageWorker {
+class ImageWorker implements ImageWorkerInterface{
 	private static final String DUMMY_TEXT = "Dummy";
 
 	private BufferedImage img;
@@ -47,7 +50,7 @@ class ImageWorker {
 		resize(width, height);
 	}
 
-	void resize(int width, int height) {
+	public void resize(int width, int height) {
 		if (gd != null) {
 			gd.dispose();
 		}
@@ -59,16 +62,16 @@ class ImageWorker {
 		this.setAntiAliasing(false);
 	}
 
-	void clip(int x, int y, int width, int height) {
+	public void clip(int x, int y, int width, int height) {
 		gd.setClip(x, y, width, height);
 	}
 
-	void transform(int x, int y, double angle) {
+	public void transform(int x, int y, double angle) {
 		gd.translate(x, y);
 		gd.rotate(angle);
 	}
 
-	void reset() {
+	public void reset() {
 		gd.setTransform(aftInitial);
 		gd.setClip(0, 0, imgWidth, imgHeight);
 	}
@@ -166,18 +169,22 @@ class ImageWorker {
 		return font.getStringBounds(text, 0, text.length(), gd.getFontRenderContext()).getBounds().getWidth();
 	}
 
-	void setAntiAliasing(boolean enable) {
+	public void setAntiAliasing(boolean enable) {
 		gd.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				enable ? RenderingHints.VALUE_ANTIALIAS_ON : RenderingHints.VALUE_ANTIALIAS_OFF);
 		gd.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		gd.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
 	}
 
-	void dispose() {
+	public void dispose() {
 		gd.dispose();
 	}
 
 	void saveImage(OutputStream stream, String type, float quality) throws IOException {
+		if (type.equalsIgnoreCase("svg")) { 
+			ImageIO.write(img, "svg", stream);
+		}
+		else		
 		if (type.equalsIgnoreCase("png")) {
 			ImageIO.write(img, "png", stream);
 		}
@@ -198,7 +205,7 @@ class ImageWorker {
 		stream.flush();
 	}
 
-	byte[] saveImage(String path, String type, float quality) throws IOException {
+	public byte[] saveImage(String path, String type, float quality) throws IOException {
 		byte[] bytes = getImageBytes(type, quality);
 		RandomAccessFile f = new RandomAccessFile(path, "rw");
 		try {
@@ -210,7 +217,7 @@ class ImageWorker {
 		}
 	}
 
-	byte[] getImageBytes(String type, float quality) throws IOException {
+	public byte[] getImageBytes(String type, float quality) throws IOException {
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
 		try {
 			saveImage(stream, type, quality);
@@ -226,5 +233,80 @@ class ImageWorker {
 		TexturePaint paint = new TexturePaint(wpImage, new Rectangle(0, 0, wpImage.getWidth(), wpImage.getHeight()));
 		gd.setPaint(paint);
 		gd.fillRect(0, 0, wpImage.getWidth(), wpImage.getHeight());
+	}
+
+	@Override
+	public void drawLine(int x1, int y1, int x2, int y2, Object color, Object stroke) {
+		this.drawLine(x1, y1, x2, y2, (Paint)color, (Stroke)stroke);
+	}
+
+	@Override
+	public void drawPolyline(double[] x, double[] y, Object color,
+			Object basicStroke) {
+		// TODO Auto-generated method stub
+		if (1==1)throw new RuntimeException("not yet implemented since 15.04.2010");
+		else {
+		}
+	}
+
+	@Override
+	public void drawString(String title, int x, int y, Object largeFont,
+			Object paint) {
+		// TODO Auto-generated method stub
+		if (1==1)throw new RuntimeException("not yet implemented since 15.04.2010");
+		else {
+		}
+	}
+
+	@Override
+	public void fillPolygon(double[] x, double areazero, double[] y,
+			Object color) {
+		// TODO Auto-generated method stub
+		if (1==1)throw new RuntimeException("not yet implemented since 15.04.2010");
+		else {
+		}
+	}
+
+	@Override
+	public void fillPolygon(double[] x, double[] lastY, double[] y, Object color) {
+		// TODO Auto-generated method stub
+		if (1==1)throw new RuntimeException("not yet implemented since 15.04.2010");
+		else {
+		}
+	}
+
+	@Override
+	public void fillRect(int i, int j, int xgif, int ygif, Object paint) {
+		// TODO Auto-generated method stub
+		if (1==1)throw new RuntimeException("not yet implemented since 15.04.2010");
+		else {
+		}
+	}
+
+	@Override
+	public int getFontAscent(Object font) {
+		// TODO Auto-generated method stub
+		if (1==1)throw new RuntimeException("not yet implemented since 15.04.2010");
+		else {
+		return 0;
+		}
+	}
+
+	@Override
+	public double getFontHeight(Object smallFont) {
+		// TODO Auto-generated method stub
+		if (1==1)throw new RuntimeException("not yet implemented since 15.04.2010");
+		else {
+		return 0;
+		}
+	}
+
+	@Override
+	public int getStringWidth(String title, Object largeFont) {
+		// TODO Auto-generated method stub
+		if (1==1)throw new RuntimeException("not yet implemented since 15.04.2010");
+		else {
+		return 0;
+		}
 	}
 }
