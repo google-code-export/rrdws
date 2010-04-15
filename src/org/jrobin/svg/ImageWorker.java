@@ -22,13 +22,7 @@
  * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  * Boston, MA 02111-1307, USA.
  */
-package org.jrobin.svg;
-
-//import com.sun.image.codec.jpeg.JPEGCodec;
-//import com.sun.image.codec.jpeg.JPEGEncodeParam;
-//import com.sun.image.codec.jpeg.JPEGImageEncoder;
-//
-//import javax.imageio.ImageIO;
+package org.jrobin.svg; 
 
 import org.jrobin.svg.awt.AffineTransform;
 import org.jrobin.svg.awt.BufferedImage;
@@ -36,13 +30,8 @@ import org.jrobin.svg.awt.Font;
 import org.jrobin.svg.awt.Graphics2D;
 import org.jrobin.svg.awt.LineMetrics;
 import org.jrobin.svg.awt.Paint;
-import org.jrobin.svg.awt.PathIterator;
 import org.jrobin.svg.awt.RenderingHints;
 import org.jrobin.svg.awt.Stroke;
-//import java.awt.*;
-//import java.awt.font.LineMetrics;
-//import java.awt.geom.AffineTransform;
-//import java.awt.image.BufferedImage;
 import java.io.*;
 
 class ImageWorker {
@@ -51,6 +40,7 @@ class ImageWorker {
 	private BufferedImage img;
 	private Graphics2D gd;
 	private int imgWidth, imgHeight;
+	//  TODO
 	private AffineTransform aftInitial;
 
 	ImageWorker(int width, int height) {

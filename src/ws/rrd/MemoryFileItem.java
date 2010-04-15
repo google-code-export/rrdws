@@ -35,7 +35,7 @@ import com.google.appengine.api.datastore.Blob;
 
 
 
-@PersistenceCapable(identityType = IdentityType.NONDURABLE )//APPLICATION
+@PersistenceCapable(identityType = IdentityType.APPLICATION ) 
 public class MemoryFileItem implements FileItem, Serializable {
  
 	private static final long serialVersionUID = -7492370404074144424L;

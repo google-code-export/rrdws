@@ -7,7 +7,8 @@ import net.sf.jsr107cache.CacheException;
 import net.sf.jsr107cache.CacheFactory;
 
 /** 
- * <b>Description:TODO</b>
+ * <b>Description: default File-based cache-implementation 
+ * (= who said that file-system slower as RAM =)."</b>
  * @author      vipup<br>
  * <br>
  * <b>Copyright:</b>     Copyright (c) 2006-2008 Monster AG <br>
