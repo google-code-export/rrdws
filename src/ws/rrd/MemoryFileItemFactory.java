@@ -11,30 +11,28 @@ package ws.rrd;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 
-
 public class MemoryFileItemFactory implements FileItemFactory {
 
+	private int maxSize;
 
-        private int maxSize;
-        
-        public MemoryFileItemFactory(){
-                maxSize = 4*1024*1024;
-        }
-        public MemoryFileItemFactory(int size){
-                maxSize = size;
-        }
-        
-        public FileItem createItem(String fieldName, String contentType, boolean isFormField,
-                        String fileName) {
+	private static MemoryFileItemFactory myself = new MemoryFileItemFactory(
+			4 * 1024 * 1024);
+	public static MemoryFileItemFactory getInstance() {
+		return myself;
+	}
+	MemoryFileItemFactory(int size) {
+		maxSize = size;
+	}
 
+	public MemoryFileItem createItem(String fieldName, String contentType,
+			boolean isFormField, String fileName) {
 
-                MemoryFileItem item = new MemoryFileItem(fieldName,contentType,isFormField,fileName,maxSize);
-                return item;
-        }
+		MemoryFileItem item = new MemoryFileItem(fieldName, contentType,
+				isFormField, fileName, maxSize);
+		return item;
+	}
 
-
-        public void setMaxSize(int size){
-                maxSize = size;
-        }
+	public void setMaxSize(int size) {
+		maxSize = size;
+	}
 }
- 

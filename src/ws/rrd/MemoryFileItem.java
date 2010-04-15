@@ -65,7 +65,7 @@ public class MemoryFileItem implements FileItem, Serializable {
     @Persistent
     protected Date date_created;
         
-        public MemoryFileItem(String fieldName, String contentType, boolean isFormField,
+        MemoryFileItem(String fieldName, String contentType, boolean isFormField,
                         String fileName, int maxSize){
                 this.fieldName = fieldName;
                 this.contentType = contentType;

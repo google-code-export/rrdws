@@ -24,6 +24,7 @@
  */
 package org.jrobin.svg; 
 
+import org.apache.commons.fileupload.FileItem;
 import org.jrobin.svg.awt.AffineTransform;
 import org.jrobin.svg.awt.BufferedImage;
 import org.jrobin.svg.awt.Font;
@@ -32,6 +33,11 @@ import org.jrobin.svg.awt.LineMetrics;
 import org.jrobin.svg.awt.Paint;
 import org.jrobin.svg.awt.RenderingHints;
 import org.jrobin.svg.awt.Stroke;
+
+import ws.rrd.MemoryFileCache;
+import ws.rrd.MemoryFileItem;
+import ws.rrd.MemoryFileItemFactory;
+
 import java.io.*;
 
 class ImageWorker {
@@ -186,7 +192,17 @@ class ImageWorker {
 
 	byte[] saveImage(String path, String type, float quality) throws IOException {
 		byte[] bytes = getImageBytes(type, quality);
-		System.out.println("store data into["+path+"]:="+new String(bytes));
+		MemoryFileItem item = MemoryFileItemFactory.getInstance().createItem(path+quality, type, false, path);
+		if ("SVG".equalsIgnoreCase(type)){
+			OutputStream out = item.getOutputStream();
+	 		out.write("<svg  version=\"1.1\"  xmlns=\"http://www.w3.org/2000/svg\">".getBytes());
+	 		out.write(bytes);
+	 		out.write("</svg>".getBytes());
+		} 
+		item.flush();
+		String nameTmp = MemoryFileCache. put( item  );
+		System.out.println("store data '"+nameTmp+"'::["+type+"]("+item.getSize()+") into["+path+"]:={"+(new String(MemoryFileCache.get(nameTmp ).get())+"3.1415926535897932384626433832795028841971693993751058209749445923078164062862").substring(0,80)+"...}");
+		
  		return bytes;
  	}
 
