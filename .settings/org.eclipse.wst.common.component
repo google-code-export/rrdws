@@ -3,6 +3,7 @@
     <wb-module deploy-name="rrd">
         <wb-resource deploy-path="/" source-path="/war"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+<wb-resource deploy-path="/WEB-INF/classes" source-path="/ws.rrd.pdf"/>
         <property name="context-root" value="rrd"/>
         <property name="java-output-path" value="build/classes"/>
     </wb-module>
