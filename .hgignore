@@ -3,3 +3,5 @@ syntax: regexp
 ^war/WEB-INF/appengine-generated$
 syntax: regexp
 ^war/WEB-INF/appengine-generated/local_db\.bin$
+syntax: regexp
+^war/WEB-INF/appengine-generated$
