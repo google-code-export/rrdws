@@ -70,7 +70,12 @@ public class RrdCommander {
 		return !(System.getProperty("com.google.appengine.runtime.version")==null);
 	}
 	public  static RrdToolCmd getRrdRenderer() {
-		return !isGAE()?new RrdGraphCmd():new RrdSvgCmd();
+		if (isGAE()){
+			RrdToolCmd.setRrdDbPoolUsed(false);
+			return new RrdSvgCmd();
+		}else{
+			return new RrdGraphCmd();
+		}
 	}	
 
 	/**

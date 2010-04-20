@@ -20,7 +20,14 @@ public class CSVParserTest {
 	@Test
 	public void testCSVParser() throws IOException {
 		CSVParser p = new CSVParser(this.getClass().getClassLoader().getResourceAsStream("test.csv"));
+		p.perform();
 	}
+	
+	@Test
+	public void testExecuteUpdate() throws IOException {
+		CSVParser p = new CSVParser(this.getClass().getClassLoader().getResourceAsStream("test.csv"));
+		p.executeUpdate();
+	}	
 
 }
 

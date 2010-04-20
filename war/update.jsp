@@ -23,6 +23,7 @@
 <%@page import="java.io.BufferedReader"%>
 <%@page import="java.io.InputStreamReader"%>
 <%@page import="java.util.StringTokenizer"%>
+<%@page import="ws.rrd.csv.CSVParser"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title>RDD UPDATE PAGE</title>
@@ -60,22 +61,9 @@ try{
             
             // process last CSV-data 
             MemoryFileItem item = MemoryFileCache. get( nameTmp  );
-            BufferedReader rdr  = new BufferedReader( new InputStreamReader ( item.getInputStream() ) );
-            String headersStr = null;
-            headersStr  = rdr  .readLine();
-            response.getWriter().append( headersStr);
-            String DELIM = ",";
-            for (String nextLineStr = rdr.readLine();nextLineStr != null;nextLineStr = rdr.readLine()){
-            	if (nextLineStr.equals(headersStr))continue;
-            	
-            	StringTokenizer stH = new StringTokenizer (headersStr, DELIM);
-            	StringTokenizer stD = new StringTokenizer (nextLineStr, DELIM);
-            	for (;stH.hasMoreElements();){
-            		String headTmp = stH.nextToken();
-            		String dataTmp = stD.nextToken();
-            		response.getWriter().append( dataTmp);
-            	}
-            }
+            CSVParser csv = new CSVParser( item.getInputStream());
+            response.getWriter().append( ""+ csv.executeUpdate());
+
             
             
     }else{
