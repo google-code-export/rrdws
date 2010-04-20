@@ -18,6 +18,7 @@
 				<embed src="JavaLogo.svg" height="64" width="64"  type="image/svg+xml"  pluginspage="http://www.adobe.com/svg/viewer/install/" /> 
 				<object data="JavaLogo.svg" width="300" height="100" type="image/svg+xml" codebase="http://www.adobe.com/svg/viewer/install/" />
 			</a>
+			<IMG src="gif.jsp"   />
 			
 		</td>
 	<tr width="100%" height="64">
@@ -53,6 +54,7 @@
 				}
 			}
 		%> 	<embed src="svg.jsp" type="image/svg+xml" height="100%" width="100%" />
+		
 		<form method="post">Execution result::: <textarea
 			readonly="readonly"  name="result"  cols="60" rows="4">
  <%=o%>

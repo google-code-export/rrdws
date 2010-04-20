@@ -83,20 +83,21 @@ public class CSVParser {
 				}
  
 				String rrddb = "X"+xpath.hashCode()+".rrd";
-				String cmdTmp = "rrdtool update "+rrddb +" "+timestampTmp +":"+ data; 
+				String cmdTmp = "rrdtool update "+rrddb +" "+(timestampTmp/1000L) +":"+ data; 
 				try {   
 					retval  = RrdCommander.execute(cmdTmp );
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					
 					if (e instanceof FileNotFoundException){
-						String cmdCreate = "rrdtool create "+rrddb+" -s 300 "  +
-								" DS:data:DERIVE:600:U:U  " +
+						String cmdCreate = "rrdtool create "+rrddb+" --start "+((timestampTmp/1000L)-10)+" -s 300 "  +
+								" DS:data:GAUGE:600:U:U  " +
 								" RRA:AVERAGE:0.5:1:288 " +
 								" RRA:MIN:0.5:1:288 " +
 								" RRA:MAX:0.5:1:288 " +
-								" RRA:LAST:0.5:1:288";
+								" RRA:LAST:0.5:1:288 ";
 						try {
+							System.out.println(xpath +" --->  "+cmdCreate);
 							retval  =RrdCommander.execute(cmdCreate);
 							retval  =RrdCommander.execute(cmdTmp );
 						} catch (IOException e1) {
@@ -128,7 +129,7 @@ public class CSVParser {
 			public Object perform(String timestamp, String xpath, String data) {
 				try {
 					long timestampTmp =  sdf.parse(timestamp).getTime();
-					String cmdTmp = "rrdtool update "+xpath+" "+timestampTmp +":"+ data;
+					String cmdTmp = "rrdtool update "+xpath+" "+(timestampTmp/1000L) +":"+ data;
 					System.out.println( cmdTmp  );
 					return cmdTmp;
 				} catch (ParseException e) {
