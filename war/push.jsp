@@ -63,7 +63,8 @@ try{
 </form>
 <%     	
     }
-} catch(FileUploadException e){ throw new IOException("Unable to handle uploaded file"); }
+} catch(FileUploadException e){ throw new IOException("Unable to handle uploaded file"); 
+} catch(Throwable e){ e.printStackTrace(response.getWriter()); }
 
 %> 
   </body>

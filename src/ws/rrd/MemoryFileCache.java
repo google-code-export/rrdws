@@ -45,7 +45,7 @@ public class MemoryFileCache {
 		 }
 		 return retval;
 	 }
-	 static int MAX_SIZE = 512*1024;
+	 static int MAX_SIZE = 64*1024;
 	 static int MAX_BUFF_SIZE = MAX_SIZE;
 	 public static String put (MemoryFileItem  item) throws IOException{
 		 Cache cache = single.getCache();
@@ -63,7 +63,12 @@ public class MemoryFileCache {
 				 outputStream.write(bs, done,Math.min( MAX_BUFF_SIZE, bs.length-done ));
 				 itemNext.flush();
 				 done += MAX_BUFF_SIZE;
-				 cache.put(nameTmp,itemNext);
+				 try{
+					 cache.put(nameTmp,itemNext);
+				 }catch(Throwable e){
+					 e.printStackTrace();
+					 throw new IOException (e);
+				 }
 			 }
 		 }
 		 return name;
