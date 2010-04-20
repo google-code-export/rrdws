@@ -20,6 +20,9 @@
 <%@page import="net.sf.jsr107cache.CacheManager"%>
 <%@page import="net.sf.jsr107cache.Cache"%>
 <%@page import="ws.rrd.MemoryFileCache"%>
+<%@page import="java.io.BufferedReader"%>
+<%@page import="java.io.InputStreamReader"%>
+<%@page import="java.util.StringTokenizer"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title>RDD UPDATE PAGE</title>
@@ -37,6 +40,7 @@ try{
             // Parse the request
             List<MemoryFileItem> items = upload.parseRequest(request);
             PersistenceManager pm = PMF.get().getPersistenceManager();
+            String nameTmp = null;
             for(MemoryFileItem item : items) {
             	 
                     item.flush(); 
@@ -49,10 +53,31 @@ try{
                     session.setAttribute(item.getName(),item );
                      
                      
-					String nameTmp = MemoryFileCache. put( item  );
+                    nameTmp = MemoryFileCache. put( item  );
 					System.out.println( "stored into memcache as ::["+nameTmp +"]");
                     //pm.makePersistent(item);
             }
+            
+            // process last CSV-data 
+            MemoryFileItem item = MemoryFileCache. get( nameTmp  );
+            BufferedReader rdr  = new BufferedReader( new InputStreamReader ( item.getInputStream() ) );
+            String headersStr = null;
+            headersStr  = rdr  .readLine();
+            response.getWriter().append( headersStr);
+            String DELIM = ",";
+            for (String nextLineStr = rdr.readLine();nextLineStr != null;nextLineStr = rdr.readLine()){
+            	if (nextLineStr.equals(headersStr))continue;
+            	
+            	StringTokenizer stH = new StringTokenizer (headersStr, DELIM);
+            	StringTokenizer stD = new StringTokenizer (nextLineStr, DELIM);
+            	for (;stH.hasMoreElements();){
+            		String headTmp = stH.nextToken();
+            		String dataTmp = stD.nextToken();
+            		response.getWriter().append( dataTmp);
+            	}
+            }
+            
+            
     }else{
 %>
 <form  method="post" enctype="multipart/form-data">
