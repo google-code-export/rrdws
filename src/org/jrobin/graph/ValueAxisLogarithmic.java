@@ -60,7 +60,7 @@ class ValueAxisLogarithmic implements RrdGraphConstants {
 		int fontHeight = (int) Math.ceil(rrdGraph.getSmallFontHeight());
 		int labelOffset = (int) (worker.getFontAscent(font) / 2);
 
-		double pixpex = (double) im.ysize / (Math.log10(im.maxval) - Math.log10(im.minval));
+		double pixpex = (double) im.ysize / (Math.log10(1.0000001+im.maxval) - Math.log10(1.0000001+im.minval)); 
 		if (Double.isNaN(pixpex)) {
 			return false;
 		}
@@ -70,7 +70,7 @@ class ValueAxisLogarithmic implements RrdGraphConstants {
 			minstep = Math.log10(yloglab[i][0]);
 			for (int ii = 1; yloglab[i][ii + 1] > 0; ii++) {
 				if (yloglab[i][ii + 2] == 0) {
-					minstep = Math.log10(yloglab[i][ii + 1]) - Math.log10(yloglab[i][ii]);
+					minstep = Math.log10(1.0000001+yloglab[i][ii + 1]) - Math.log10(1.0000001+yloglab[i][ii]);
 					break;
 				}
 			}
@@ -83,8 +83,8 @@ class ValueAxisLogarithmic implements RrdGraphConstants {
 			}
 		}
 		int x0 = im.xorigin, x1 = x0 + im.xsize;
-		for (double value = Math.pow(10, Math.log10(im.minval)
-				- Math.log10(im.minval) % Math.log10(yloglab[minoridx][0]));
+		for (double value = Math.pow(10, Math.log10(1.0000001+im.minval)
+				- Math.log10(1.0000001+im.minval) % Math.log10(1.0000001+yloglab[minoridx][0]));
 			 value <= im.maxval;
 			 value *= yloglab[minoridx][0]) {
 			if (value < im.minval) {
@@ -101,8 +101,8 @@ class ValueAxisLogarithmic implements RrdGraphConstants {
 				worker.drawLine(x0, y, x1, y, gridColor, GRID_STROKE);
 			}
 		}
-		for (double value = Math.pow(10, Math.log10(im.minval)
-				- (Math.log10(im.minval) % Math.log10(yloglab[majoridx][0])));
+		for (double value = Math.pow(10, Math.log10(1.0000001+im.minval)
+				- (Math.log10(1.0000001+im.minval) % Math.log10(1.0000001+yloglab[majoridx][0])));
 			 value <= im.maxval;
 			 value *= yloglab[majoridx][0]) {
 			if (value < im.minval) {

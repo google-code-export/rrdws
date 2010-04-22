@@ -1,15 +1,15 @@
 package ws.rdd.jdo;
-
-import java.io.UnsupportedEncodingException;
+ 
 import java.util.Date;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 import com.google.appengine.api.datastore.Key;
 
-@PersistenceCapable
+@PersistenceCapable(identityType = IdentityType.DATASTORE )
 public class Blob {
 
 	@PrimaryKey
