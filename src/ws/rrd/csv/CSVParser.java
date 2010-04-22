@@ -9,6 +9,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList; 
+import java.util.Map;
+import java.util.TreeMap;
 
 import org.jrobin.cmd.RrdCommander;
 import org.jrobin.core.RrdException;
@@ -102,15 +104,15 @@ public class CSVParser {
 							retval  =RrdCommander.execute(cmdTmp );
 						} catch (IOException e1) {
 							// TODO Auto-generated catch block
-							e1.printStackTrace();
+							//e1.printStackTrace();
 						} catch (RrdException e1) {
 							// TODO Auto-generated catch block
-							e1.printStackTrace();
+							//e1.printStackTrace();
 						}
 					}
 				} catch (RrdException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//e.printStackTrace();
 					retval = e; 
 				} 
 				return retval;
@@ -144,7 +146,7 @@ public class CSVParser {
 	
 	
 	Object perform(Action a) throws IOException{
-		ArrayList retval = new ArrayList();
+		Map retval = new TreeMap();
         for (String nextLineStr = rdr.readLine();nextLineStr != null;nextLineStr = rdr.readLine()){
         	if (nextLineStr.equals(headersStr))continue;
         	
@@ -155,7 +157,14 @@ public class CSVParser {
         		if (next == dataTmp[0])continue;
         		// timestamp, uri, data
         		if (!("".equals(next) || " ".equals(next) ) ){
-        			retval.add( a.perform(dataTmp[0], heads[i++],  next ) );
+        			String keyTmp = heads[i++];
+        			final Object valTmp = a.perform(dataTmp[0], keyTmp,    next );
+        			ArrayList line = (ArrayList )retval.get( keyTmp);
+        			if( line == null ){
+        				line = new ArrayList();
+        				retval.put(keyTmp, line);
+        			}
+        			line.add( ""+valTmp+":"+next );
         		}
         	}
         }
