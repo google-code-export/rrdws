@@ -19,11 +19,13 @@ public final class PMF {
  
 
     public static PersistenceManagerFactory get() {
+    	if (1==1)throw new RuntimeException("wrong using public static PersistenceManagerFactory get()");
         return RRD_JDOHelper.getInstance().getPMF();
     }
     
     public static Date getServerDate(){
-        return RRD_JDOHelper.getInstance().getPMF().getPersistenceManager().getServerDate();
+    	if (1==1)throw new RuntimeException("wrong using public static PersistenceManagerFactory get()");
+    	return RRD_JDOHelper.getInstance().getPMF().getPersistenceManager().getServerDate();
     }
 }
 

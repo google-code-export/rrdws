@@ -97,7 +97,20 @@ public class CSVParser {
 								" RRA:AVERAGE:0.5:1:288 " +
 								" RRA:MIN:0.5:1:288 " +
 								" RRA:MAX:0.5:1:288 " +
-								" RRA:LAST:0.5:1:288 ";
+								" RRA:AVERAGE:0.5:6:336 " +
+								" RRA:MIN:0.5:6:336 " +
+								" RRA:MAX:0.5:6:336 " +
+								" RRA:AVERAGE:0.5:24:372 " +
+								" RRA:MIN:0.5:24:372 " +
+								" RRA:MAX:0.5:24:372 " +
+								" RRA:AVERAGE:0.5:144:730 " +
+								" RRA:MIN:0.5:144:730 " +
+								" RRA:MAX:0.5:144:730 " +
+ 								" RRA:LAST:0.5:1:288 " +
+ 
+								"";
+						
+						
 						try {
 							System.out.println(xpath +" --->  "+cmdCreate);
 							retval  =RrdCommander.execute(cmdCreate);

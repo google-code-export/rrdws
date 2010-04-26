@@ -18,51 +18,28 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
- 
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.IdentityType;
-import javax.jdo.annotations.NotPersistent;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
+  
 
 
 import org.apache.commons.fileupload.FileItem;
 
+import com.lowagie.text.html.simpleparser.ChainedProperties;
 
-import com.google.appengine.api.datastore.Blob;
+ 
 
-
-
-
-@PersistenceCapable(identityType = IdentityType.APPLICATION ) 
+ 
 public class MemoryFileItem implements FileItem, Serializable {
  
 	private static final long serialVersionUID = -7492370404074144424L;
-
-	@PrimaryKey
-    @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+ 
     protected Long id;
-    
-    @NotPersistent
-    private String fieldName;
-    
-    @Persistent
-    protected String contentType;
-    
-    @Persistent
-    protected String fileName;
-    
-    @NotPersistent
-    private boolean isFormField;
-        
-    @NotPersistent
-    volatile private Object content_out;
-    
-    @Persistent
-    protected Blob content;
-    
-    @Persistent
+     
+    private String fieldName; 
+    protected String contentType; 
+    protected String fileName; 
+    private boolean isFormField; 
+    volatile private Object content_out; 
+    protected Blob content; 
     protected Date date_created;
         
         MemoryFileItem(String fieldName, String contentType, boolean isFormField,

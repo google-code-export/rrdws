@@ -36,11 +36,11 @@ try{
             
             MemoryFileItemFactory factory = MemoryFileItemFactory.getInstance();
             ServletFileUpload upload = new ServletFileUpload(factory);
-            upload.setSizeMax(4*1024*1024); // 4 MB
+            upload.setSizeMax(94*1024*1024); // 4 MB
   
             // Parse the request
             List<MemoryFileItem> items = upload.parseRequest(request);
-            PersistenceManager pm = PMF.get().getPersistenceManager();
+             
             String nameTmp = null;
             for(MemoryFileItem item : items) {
             	 
@@ -56,13 +56,16 @@ try{
                      
                     nameTmp = MemoryFileCache. put( item  );
 					System.out.println( "stored into memcache as ::["+nameTmp +"]");
+					// process last CSV-data
+					CSVParser csv = new CSVParser( item.getInputStream());
+					response.getWriter().append( ""+ csv.executeUpdate());
                     //pm.makePersistent(item);
             }
             
             // process last CSV-data 
-            MemoryFileItem item = MemoryFileCache. get( nameTmp  );
-            CSVParser csv = new CSVParser( item.getInputStream());
-            response.getWriter().append( ""+ csv.executeUpdate());
+            //MemoryFileItem item = MemoryFileCache.get( nameTmp  );
+            
+            
 
             
             
