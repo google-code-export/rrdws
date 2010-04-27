@@ -15,6 +15,10 @@ import java.util.TreeMap;
 import org.jrobin.cmd.RrdCommander;
 import org.jrobin.core.RrdException;
 
+import ws.rrd.MemoryFileCache;
+import ws.rrd.MemoryFileItem;
+import ws.rrd.MemoryFileItemFactory;
+
 /** 
  * <b>Description:TODO</b>
  * @author      vipup<br>
@@ -112,8 +116,9 @@ public class CSVParser {
 						
 						
 						try {
-							System.out.println(xpath +" --->  "+cmdCreate);
+							System.out.println(xpath +" --->  "+cmdCreate); 
 							retval  =RrdCommander.execute(cmdCreate);
+							MemoryFileCache.getCache().put(rrddb,xpath);
 							retval  =RrdCommander.execute(cmdTmp );
 						} catch (IOException e1) {
 							// TODO Auto-generated catch block
@@ -137,6 +142,12 @@ public class CSVParser {
 		return this .perform(a ) ;
 	}
 	
+	/**
+	 * testdrive into System.out
+	 * @author vipup
+	 * @return
+	 * @throws IOException
+	 */
 	public Object perform( ) throws IOException{
 		Action a = new Action(){
 			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss.SSS");
@@ -158,13 +169,33 @@ public class CSVParser {
 	}
 	
 	
+	/**
+	 * iterate through in:InputStream line-by-line and call for any NewLine "rrdtool update" for corresponding rrd-DB.
+	 *  - first column will be recognized as event-time
+	 *  - will skip any duplicated header-lines
+	 *  - will skip any duplicated header-lines
+	 * 
+	 * 
+	 * @author vipup
+	 * @param a
+	 * @return
+	 * @throws IOException
+	 */
 	Object perform(Action a) throws IOException{
 		Map retval = new TreeMap();
+		long start = System.currentTimeMillis();
+		int lineCount =0;
         for (String nextLineStr = rdr.readLine();nextLineStr != null;nextLineStr = rdr.readLine()){
+        	lineCount++;
         	if (nextLineStr.equals(headersStr))continue;
+        	if (nextLineStr.equals(""))continue;
         	
         	String[] dataTmp =   nextLineStr.split(DELIM);
-        	dataTmp = combineChains(dataTmp);
+        	try{
+        		dataTmp = combineChains(dataTmp);
+        	}catch(StringIndexOutOfBoundsException e){
+        		throw new IOException("error at parcing line "+lineCount +"["+nextLineStr+"]",e);
+        	}
         	int i=0;
         	for (String next:dataTmp){
         		if (next == dataTmp[0])continue;
@@ -177,10 +208,15 @@ public class CSVParser {
         				line = new ArrayList();
         				retval.put(keyTmp, line);
         			}
-        			line.add( ""+valTmp+":"+next );
+        			if (valTmp instanceof Exception){
+        				//((Exception)valTmp ).printStackTrace();
+        			}else{
+        				line.add( ""+valTmp+":"+next );
+        			}
         		}
         	}
         }
+        System.out.println("done with "+(1000.00*(1+lineCount)/((System.currentTimeMillis()-start)+1) ) +" lps.");
         return retval;
 	}
 }

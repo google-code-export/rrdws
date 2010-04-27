@@ -1,8 +1,7 @@
 package ws.rrd;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Collections;
+import java.io.OutputStream; 
 import java.util.HashMap;
 
 import net.sf.jsr107cache.Cache;
@@ -74,7 +73,7 @@ public class MemoryFileCache {
 		 return name;
 	 }
 
-	private Cache getCache()   {
+	public static Cache getCache()   {
 		//return  CacheManager.getInstance().getCacheFactory() Instance(). Cache ("rrd");
 		
 		CacheManager cm = CacheManager.getInstance();

@@ -1,7 +1,5 @@
 package ws.rrd.csv;
 
-import static org.junit.Assert.*;
-
 import java.io.IOException;
 
 import org.junit.Test;
@@ -16,6 +14,10 @@ import org.junit.Test;
  * Creation:  20.04.2010::11:59:24<br> 
  */
 public class CSVParserTest {
+	
+	public CSVParserTest(){
+		System.setProperty("net.sf.jsr107cache.CacheFactory","ws.rrd.cache.BasicCacheFactory");
+	}
 
 	@Test
 	public void testCSVParser() throws IOException {
@@ -26,7 +28,8 @@ public class CSVParserTest {
 	@Test
 	public void testExecuteUpdate() throws IOException {
 		CSVParser p = new CSVParser(this.getClass().getClassLoader().getResourceAsStream("test.csv"));
-		p.executeUpdate();
+		Object o = p.executeUpdate();
+		System.err.println((""+o).replace(", \\\\",",\n \\\\"));
 	}	
 
 }

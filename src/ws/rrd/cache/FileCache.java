@@ -31,8 +31,14 @@ import net.sf.jsr107cache.CacheStatistics;
  */
 public class FileCache implements Cache {
 
+	private File basedir ;
+
 	public FileCache(Map arg0) {
 		this.putAll(arg0);
+		String baseDirName = ".filecache";
+		basedir = new File(baseDirName);
+		if (!basedir.exists())
+			basedir.mkdir();
 	}
 
 	@Override
@@ -199,10 +205,12 @@ public class FileCache implements Cache {
 	
 	@Override
 	public Object put(Object key, Object arg1) {
-		String keyStr = toName(key);
+		
 		FileOutputStream fout;
 		try {
-			fout = new FileOutputStream(keyStr);
+			
+			File fileTmp = createFile(key);
+			fout = new FileOutputStream(fileTmp );
 			ObjectOutputStream wr = new ObjectOutputStream(fout);
 			wr.writeObject(arg1);
 			wr.close();
@@ -217,6 +225,12 @@ public class FileCache implements Cache {
 			return e;
 		}
 		
+	}
+
+	private File createFile(Object key) {
+		String keyStr = toName(key);
+		File retval =  new File(this.basedir , keyStr); 
+		return retval;
 	}
 
 	@Override
