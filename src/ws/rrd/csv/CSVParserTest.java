@@ -22,12 +22,33 @@ public class CSVParserTest {
 	}
 
 	@Test
+	public void testCSVParserToLowErr() throws IOException {
+		CSVParser p = new CSVParser(this.getClass().getClassLoader()
+				.getResourceAsStream("testErr45.csv"));
+		// testdrive into System.out
+		Action a = new SystemOutPrintlnAction(); 
+		p.perform(a);
+	}
+
+	@Test
+	public void testCSVParserToMuchErr() throws IOException {
+		CSVParser p = new CSVParser(this.getClass().getClassLoader()
+				.getResourceAsStream("testErr55.csv"));
+		// testdrive into System.out
+		Action a = new SystemOutPrintlnAction();
+		try{
+			p.perform(a);
+		}catch (Exception e) {
+			assert(e instanceof ArrayIndexOutOfBoundsException);
+		}
+	}
+
+	@Test
 	public void testCSVParser() throws IOException {
 		CSVParser p = new CSVParser(this.getClass().getClassLoader()
 				.getResourceAsStream("test.csv"));
 		// testdrive into System.out
-		Action a = new SystemOutPrintlnAction();
-
+		Action a = new SystemOutPrintlnAction(); 
 		p.perform(a);
 	}
 
@@ -39,6 +60,18 @@ public class CSVParserTest {
 		Action a = new RrdUpdateAction();
 		Object o = p.perform(a);
 		System.err.println(("" + o).replace(", \\\\", ",\n \\\\"));
+	}	
+	
+	@Test
+	public void testExecuteUpdateInMEM() throws IOException {
+		System.setProperty("RrdMemoryBackendFactory","ON");
+		
+		CSVParser p = new CSVParser(this.getClass().getClassLoader()
+				.getResourceAsStream("test.csv"));
+		// RrdCommander.execute(cmdTmp);
+		Action a = new RrdUpdateAction();
+		Object o = p.perform(a);
+		System.err.println(("" + o).replace(", \\\\", ",\n \\\\"));
 	}
-
+	
 }

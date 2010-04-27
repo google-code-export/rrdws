@@ -92,11 +92,15 @@ public abstract class RrdBackendFactory {
 
 	private static void selectDefaultFactory() throws RrdException {
 		String version = System.getProperty("java.version");
-		if (version == null || version.startsWith("1.3.") ||
-				version.startsWith("1.4.0") || version.startsWith("1.4.1")) {
+		if (version == null || 
+			version.startsWith("1.3.") ||
+			version.startsWith("1.4.0") || 
+			version.startsWith("1.4.1")) {
 			setDefaultFactory(RrdFileBackendFactory.NAME);
 		}else if (System.getProperty("com.google.appengine.runtime.version")!=null){
 			setDefaultFactory(RrdJdoBackendFactory.NAME);
+		}else if (System.getProperty("RrdMemoryBackendFactory")!=null){
+			setDefaultFactory(RrdMemoryBackendFactory.NAME);
 		}else {
 			setDefaultFactory(RrdNioBackendFactory.NAME);
 			

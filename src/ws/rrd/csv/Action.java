@@ -10,7 +10,7 @@ package ws.rrd.csv;
  */
 public interface Action {
 
-	public Object perform(String timestamp, String xpath, String data);
+	public Object perform(String xpath, String timestamp, String data);
 
 }
 

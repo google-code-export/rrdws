@@ -36,19 +36,24 @@ public class CSVParser {
 	private String[]   combineChains(String[] quoteCOntainedStringPar ) {
 		ArrayList<String> headsArr = new ArrayList<String>();
         for (int i=0;i<quoteCOntainedStringPar.length ;i++){
-        	if (quoteCOntainedStringPar[i].startsWith("\"") && (!quoteCOntainedStringPar[i].endsWith("\""))){
+        	String nextStr = quoteCOntainedStringPar[i];
+			if (nextStr.startsWith("\"") && (!nextStr.endsWith("\""))){
         		StringBuffer sb = new StringBuffer("");
         		String suffix = "";
         		do{
         			sb.append(suffix);
-        			sb.append(quoteCOntainedStringPar[i]);
-        			if (quoteCOntainedStringPar[i].endsWith("\""))break; 
-        			i++;        			
+        			sb.append(nextStr);
+        			if (nextStr.endsWith("\""))break; 
+        			nextStr = quoteCOntainedStringPar[++i] ;        			
         			suffix = DELIM;        			
         		}while(i<quoteCOntainedStringPar.length);
-        		headsArr.add(sb.toString().substring(1,sb.length()-1));
-        	}else{
-        		headsArr.add (quoteCOntainedStringPar[i].substring(1,quoteCOntainedStringPar[i].length()-1));
+        		String trimmedStr = sb.toString().substring(1,sb.length()-1).trim();
+				headsArr.add(trimmedStr);
+        	}else{ // '33' OR '"34"'
+        		String trimedStr = nextStr.substring(0,nextStr.length()).trim();
+        		trimedStr = trimedStr.startsWith("\"")?trimedStr.substring(1):trimedStr;
+        		trimedStr = trimedStr.endsWith("\"")?trimedStr.substring(0,trimedStr.length()- 1):trimedStr;
+				headsArr.add (trimedStr.trim());
         	} 
         }
         quoteCOntainedStringPar = headsArr.toArray(new String[]{"XeXe"});
@@ -72,7 +77,7 @@ public class CSVParser {
 	 * @return list of compleeted work
 	 * @throws IOException
 	 */
-	Object perform(Action a) throws IOException{
+	public Object perform(Action a) throws IOException{
 		Map retval = new TreeMap();
 		long start = System.currentTimeMillis();
 		int lineCount =0;
@@ -89,11 +94,12 @@ public class CSVParser {
         	}
         	int i=0;
         	for (String next:dataTmp){
-        		if (next == dataTmp[0])continue;
+        		++i;
+        		if (next == dataTmp[0])continue; 
         		// timestamp, uri, data
         		if (!("".equals(next) || " ".equals(next) ) ){
-        			String keyTmp = heads[i++];
-        			final Object valTmp = a.perform(dataTmp[0], keyTmp,    next );
+        			String keyTmp = heads[i];
+        			final Object valTmp = a.perform(keyTmp, dataTmp[0],    next );
         			ArrayList line = (ArrayList )retval.get( keyTmp);
         			if( line == null ){
         				line = new ArrayList();
@@ -105,6 +111,9 @@ public class CSVParser {
         				line.add( ""+valTmp+":"+next );
         			}
         		}
+        	}
+        	if (lineCount%100 == 0  || lineCount%100 == 1){
+        		System.out.println( "#" +lineCount +"done with "+(1000.00*(1+lineCount)/((System.currentTimeMillis()-start)+1) ) +" lps.");
         	}
         }
         System.out.println("done with "+(1000.00*(1+lineCount)/((System.currentTimeMillis()-start)+1) ) +" lps.");

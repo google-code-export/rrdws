@@ -60,10 +60,6 @@ public class RrdDbPool {
 
 	private RrdDbPool() throws RrdException {
 		RrdBackendFactory factory = RrdBackendFactory.getDefaultFactory();
-		if (!(factory instanceof RrdFileBackendFactory  )) {
-			throw new RrdException("Cannot create instance of " + getClass().getName() + " with " +
-					"a default backend factory not derived from RrdFileBackendFactory");
-		}
 	}
 
 	/**
