@@ -28,9 +28,12 @@ public class CSVParser {
 		rdr  = new BufferedReader( new InputStreamReader ( in ) );
         
         headersStr  = rdr.readLine();
+        init();
+ 
+	}
+	private void init (){
         heads = headersStr.split(DELIM);
         heads = combineChains(heads);
- 
 	}
 
 	private String[]   combineChains(String[] quoteCOntainedStringPar ) {
@@ -87,30 +90,44 @@ public class CSVParser {
         	if (nextLineStr.equals(""))continue;
         	
         	String[] dataTmp =   nextLineStr.split(DELIM);
+        	
         	try{
         		dataTmp = combineChains(dataTmp);
+        		if (dataTmp.length>this.heads.length){
+        			//WOW!!! new headers!!!
+        			System.out.println("HEADS == "+headersStr );
+        			System.out.println("nextLineStr == "+nextLineStr);
+        			this.headersStr = nextLineStr;
+        			init();
+        			continue;
+        		}
         	}catch(StringIndexOutOfBoundsException e){
         		throw new IOException("error at parcing line "+lineCount +"["+nextLineStr+"]",e);
         	}
         	int i=0;
-        	for (String next:dataTmp){
-        		++i;
-        		if (next == dataTmp[0])continue; 
-        		// timestamp, uri, data
-        		if (!("".equals(next) || " ".equals(next) ) ){
-        			String keyTmp = heads[i];
-        			final Object valTmp = a.perform(keyTmp, dataTmp[0],    next );
-        			ArrayList line = (ArrayList )retval.get( keyTmp);
-        			if( line == null ){
-        				line = new ArrayList();
-        				retval.put(keyTmp, line);
-        			}
-        			if (valTmp instanceof Exception){
-        				//((Exception)valTmp ).printStackTrace();
-        			}else{
-        				line.add( ""+valTmp+":"+next );
-        			}
-        		}
+        	try{
+	        	for (String next:dataTmp){
+	        		++i;
+	        		if (i>=this.heads.length )break;
+	        		if (next == dataTmp[0])continue; 
+	        		// timestamp, uri, data
+	        		if (!("".equals(next) || " ".equals(next) ) ){
+	        			String keyTmp = heads[i];
+	        			final Object valTmp = a.perform(keyTmp, dataTmp[0],    next );
+	        			ArrayList line = (ArrayList )retval.get( keyTmp);
+	        			if( line == null ){
+	        				line = new ArrayList();
+	        				retval.put(keyTmp, line);
+	        			}
+	        			if (valTmp instanceof Exception){
+	        				//((Exception)valTmp ).printStackTrace();
+	        			}else{
+	        				line.add( ""+valTmp+":"+next );
+	        			}
+	        		}
+	        	}
+        	}catch(ArrayIndexOutOfBoundsException e){
+        		System.out.println( e.getMessage() + "::::"+i+" ["+nextLineStr);
         	}
         	if (lineCount%100 == 0  || lineCount%100 == 1){
         		System.out.println( "#" +lineCount +"done with "+(1000.00*(1+lineCount)/((System.currentTimeMillis()-start)+1) ) +" lps.");
