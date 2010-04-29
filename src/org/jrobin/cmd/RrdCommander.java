@@ -148,8 +148,7 @@ public class RrdCommander {
 			cmd = cmd.substring(rrdtool.length());
 		}
 		for (RrdToolCmd rrdCommand : rrdCommands) {
-			if (cmd.startsWith(rrdCommand.getCmdType() + " ")) {
-				RrdToolCmd.setRrdDbPoolUsed(false);
+			if (cmd.startsWith(rrdCommand.getCmdType() + " ")) { 
 				return rrdCommand.executeCommand(cmd);
 			}
 		}

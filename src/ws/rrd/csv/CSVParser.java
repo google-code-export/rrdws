@@ -133,7 +133,7 @@ public class CSVParser {
         		System.out.println( "#" +lineCount +"done with "+(1000.00*(1+lineCount)/((System.currentTimeMillis()-start)+1) ) +" lps.");
         	}
         }
-        System.out.println("done with "+(1000.00*(1+lineCount)/((System.currentTimeMillis()-start)+1) ) +" lps.");
+        System.out.println("done "+lineCount+" lines in "+(System.currentTimeMillis()-start)+" ms. ::= "+(1000.00*(1+lineCount)/((System.currentTimeMillis()-start)+1) ) +" lps.");
         return retval;
 	}
 }

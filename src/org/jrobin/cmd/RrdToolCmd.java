@@ -128,7 +128,8 @@ abstract class RrdToolCmd {
 
 	static RrdDb getRrdDbReference(String path) throws IOException, RrdException {
 		if (rrdDbPoolUsed) {
-			return RrdDbPool.getInstance().requestRrdDb(path);
+			RrdDbPool poolInstance = RrdDbPool.getInstance();
+			return poolInstance.requestRrdDb(path);
 		}
 		else {
 			return new RrdDb(path);

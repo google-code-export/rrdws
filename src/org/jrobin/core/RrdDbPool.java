@@ -40,8 +40,9 @@ public class RrdDbPool {
 	 * never open too many RRD files at the same time.
 	 */
 	public static final int INITIAL_CAPACITY = 200;
-	private static RrdDbPool instance;
-
+	private static RrdDbPool instance = new RrdDbPool();
+	private RrdBackendFactory factory;
+ 
 	private int capacity = INITIAL_CAPACITY;
 	private HashMap<String, RrdEntry> rrdMap = new HashMap<String, RrdEntry>(INITIAL_CAPACITY);
 
@@ -52,14 +53,11 @@ public class RrdDbPool {
 	 * @throws RrdException Thrown if the default RRD backend is not derived from the {@link RrdFileBackendFactory}
 	 */
 	public synchronized static RrdDbPool getInstance() throws RrdException {
-		if (instance == null) {
-			instance = new RrdDbPool();
-		}
 		return instance;
 	}
 
-	private RrdDbPool() throws RrdException {
-		RrdBackendFactory factory = RrdBackendFactory.getDefaultFactory();
+	private RrdDbPool() {
+		factory = RrdBackendFactory.getDefaultFactory();
 	}
 
 	/**
@@ -69,7 +67,7 @@ public class RrdDbPool {
 	 * will be incremented by one.
 	 * <li>If the file is not already open and the number of already open RRD files is less than
 	 * {@link #INITIAL_CAPACITY}, the file will be open and a new RrdDb reference will be returned.
-	 * If the file is not already open and the number of already open RRD files is equal to
+	 *     If the file is not already open and the number of already open RRD files is equal to
 	 * {@link #INITIAL_CAPACITY}, the method blocks until some RRD file is closed.
 	 * </ul>
 	 *
@@ -185,12 +183,13 @@ public class RrdDbPool {
 			throw new RrdException("Could not release [" + canonicalPath + "], the file was never requested");
 		}
 		RrdEntry entry = rrdMap.get(canonicalPath);
-		if (--entry.count <= 0) {
+		if (--entry.count < 0) {
 			// no longer used
-			rrdMap.remove(canonicalPath);
-			notifyAll();
+			rrdMap.remove(canonicalPath); 
 			entry.rrdDb.close();
 		}
+		notifyAll();
+		
 	}
 
 	/**
