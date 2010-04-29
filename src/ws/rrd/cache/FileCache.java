@@ -94,14 +94,14 @@ public class FileCache implements Cache {
 	}
 
 	@Override
-	public Object get(Object arg0) {
+	public Object get(Object key) {
 		Object retval = null;
 		try {
-			String name = toName(arg0);
+			File fTmp = createFile(  key);
 			FileInputStream fis;
 			
 
-			fis = new FileInputStream(name );
+			fis = new FileInputStream(fTmp );
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			retval = ois.readObject();		
 			fis.close();
@@ -243,13 +243,14 @@ public class FileCache implements Cache {
 	}
 
 	@Override
-	public Object remove(Object arg0) {
-		// TODO Auto-generated method stub
-		if (1 == 1)
-			throw new RuntimeException("not yet implemented since 14.04.2010");
-		else {
-			return null;
+	public Object remove(Object key) {
+		Object retval = get(key);
+		File fileTmp = createFile(key);
+		if (fileTmp.exists() && retval != null){
+			File dest = createFile("~"+key);
+			fileTmp.renameTo(dest );
 		}
+		return retval;
 	}
 
 	@Override

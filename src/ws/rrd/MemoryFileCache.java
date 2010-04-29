@@ -20,16 +20,13 @@ import net.sf.jsr107cache.CacheManager;
  */
 public class MemoryFileCache {
      
-	 static MemoryFileCache single = new MemoryFileCache();
-	 //CacheFactory cacheFactory = null;
-	  
-	 
+  
 	 private MemoryFileCache(){ 
  
 	 }
                     
 	 public static MemoryFileItem get (String name) throws IOException{
-		 Cache cache = single.getCache();
+		 Cache cache = getCache();
 		MemoryFileItem retval = (MemoryFileItem) cache.get(name);
 		 if (retval ==null){ // try to restore parts
 			  for (int i=0;cache.get(name+"::"+i)!=null;){
@@ -47,7 +44,7 @@ public class MemoryFileCache {
 	 static int MAX_SIZE = 64*1024;
 	 static int MAX_BUFF_SIZE = MAX_SIZE;
 	 public static String put (MemoryFileItem  item) throws IOException{
-		 Cache cache = single.getCache();
+		 Cache cache = getCache();
 		 String name = item.getName();
 		 byte[] bs = item.get();
 		 
@@ -84,9 +81,9 @@ public class MemoryFileCache {
 			try {
 				CacheFactory cacheFactory;
 				cacheFactory = cm.getCacheFactory();
-				HashMap hashMap = new HashMap();
+				HashMap props = new HashMap();
 				Cache cacheTmp;
-				cacheTmp = cacheFactory.createCache(hashMap);
+				cacheTmp = cacheFactory.createCache(props);
 				cm.registerCache("rrd", cacheTmp);
 				retval = cacheTmp;
 			} catch (CacheException e) {

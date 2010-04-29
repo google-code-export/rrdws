@@ -75,11 +75,12 @@ try{
             
     }else{
 %>
+<body>
 <form  method="post" enctype="multipart/form-data">
-  <p>Select CSV File for update:<br>
-    <input name="Datei" type="file" size="50" maxlength="100000" accept="text/*">
+   Select CSV File for update:<br>
+    <input name="Datei" type="file" size="50" maxlength="100000" accept="text/*"/>
     <input type="submit"/>
-  </p>
+   
 </form>
 <%     	
     }

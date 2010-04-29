@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import net.sf.jsr107cache.Cache;
+
 import org.jrobin.cmd.RrdCommander;
 import org.jrobin.core.RrdException;
 
@@ -62,7 +64,18 @@ public class RrdUpdateAction implements Action {
 							"";   
 						System.out.println(xpath +" --->  "+cmdCreate); 
 						retval  =RrdCommander.execute(cmdCreate);
-						MemoryFileCache.getCache().put(rrddb,xpath);
+						Cache cache = MemoryFileCache.getCache();
+						Registry reg = (Registry) cache.remove("REGISTRY"); 
+						if (reg != null){
+							
+							cache.remove("REGISTRY");
+						}else{
+							reg = new Registry();
+						}
+						reg.register(rrddb,xpath);
+						cache.put("REGISTRY", reg);
+						
+						
 						retval  =RrdCommander.execute(cmdTmp );
 					} catch (IOException e1) { 
 						//e1.printStackTrace();
