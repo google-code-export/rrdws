@@ -23,21 +23,23 @@ public class ToStringPrintlnAction implements Action {
 			}
  
 			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss.SSS");
+			Registry reg ;
 			@Override
 			public Object perform(String xpath, String timestamp, String data) {
 				try {
 					long timestampTmp =  sdf.parse(timestamp).getTime();
-					Cache cache = MemoryFileCache.getCache();
-					Registry reg = (Registry) cache.get("REGISTRY");
+					
+					
 					if (reg == null || reg.getPath2db() ==null || reg.getPath2db().get(xpath) == null){
 						System_out_println( xpath + "-->"  );  
 						String cmdCreateTmp = RrdUpdateAction.makeCreateCMD(timestampTmp, xpath) ;
 						System_out_println( cmdCreateTmp  );
+						reg = reg == null?(Registry) MemoryFileCache.getCache().get("REGISTRY"):reg;
 					}
 					String  cmdUpdateTmp = RrdUpdateAction.makeUpdateCMD(data, timestampTmp, xpath) ; 
 					System_out_println( cmdUpdateTmp  );
 		
-					return this;
+					return data;
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -45,7 +47,7 @@ public class ToStringPrintlnAction implements Action {
 				}
 			}
 			private void System_out_println(String cmdTmp) {
-				System.out.println(cmdTmp);
+				//System.out.println(cmdTmp);
 				sb.append(cmdTmp);
 				sb.append("\n");
 				

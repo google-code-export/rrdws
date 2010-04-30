@@ -19,7 +19,7 @@ public class SystemOutPrintlnAction implements Action {
 			public Object perform(String xpath, String timestamp, String data) {
 				try {
 					long timestampTmp =  sdf.parse(timestamp).getTime();
-					String cmdTmp = "rrdtool update "+xpath+" "+(timestampTmp/1000L) +":"+ data;
+					String cmdTmp = "rrdtool update \""+xpath+" .rdd\" "+(timestampTmp/1000L) +":"+ data;
 					System.out.println( cmdTmp  );
 					return cmdTmp;
 				} catch (ParseException e) {

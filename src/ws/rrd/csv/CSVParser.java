@@ -22,6 +22,7 @@ public class CSVParser {
 	String[] heads = null;
 	final String DELIM = ",";
 	BufferedReader rdr  ;
+	private boolean ignoreWrongLine;
 	
 	public CSVParser(InputStream in) throws IOException{
         
@@ -104,6 +105,9 @@ public class CSVParser {
         	}catch(StringIndexOutOfBoundsException e){
         		throw new IOException("error at parcing line "+lineCount +"["+nextLineStr+"]",e);
         	}
+        	if (!ignoreWrongLine && dataTmp.length != this.heads.length){
+        		throw new ArrayIndexOutOfBoundsException("DATA{:"+dataTmp.length+"}  !=  HEAD{:"+this.heads.length+"}");
+        	}
         	int i=1;
         	try{
 	        	for (String next:dataTmp){
@@ -136,6 +140,9 @@ public class CSVParser {
         }
         System.out.println("done "+lineCount+" lines in "+(System.currentTimeMillis()-start)+" ms. ::= "+(1000.00*(1+lineCount)/((System.currentTimeMillis()-start)+1) ) +" lps.");
         return retval;
+	}
+	public void setIgnoreWrongLine(boolean b) {
+		this.ignoreWrongLine = b;
 	}
 }
 

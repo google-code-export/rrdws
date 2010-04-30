@@ -6,6 +6,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import junit.framework.TestCase;
+
 import org.jrobin.core.FetchData;
 import org.jrobin.core.FetchRequest;
 import org.jrobin.core.RrdDb;
@@ -17,12 +19,11 @@ import org.jrobin.svg.RrdGraph;
 import org.jrobin.svg.RrdGraphDef;
  
 import org.jrobin.svg.awt.BufferedImage;
-import org.jrobin.svg.awt.Color;
-import org.junit.Test;
+import org.jrobin.svg.awt.Color; 
 
 //import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 
-public class RrdSVGCmdTest {
+public class RrdSVGCmdTest extends TestCase{
 
 	private static final String TEST_RRD = "test.rrd";
 
@@ -58,8 +59,7 @@ $ rrdtool fetch test.rrd AVERAGE --start 920804400 --end 920809200
  
 	 * 
 	 * 
-	 */
-	@Test
+	 */ 
 	public RrdGraphDef testExecute() throws RrdException, IOException {
 		/*
 		 * rrdtool create test.rrd             \

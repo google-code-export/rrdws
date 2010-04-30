@@ -2,7 +2,8 @@ package ws.rrd.csv;
 
 import java.io.IOException;
 
-import org.junit.Test;
+import junit.framework.TestCase;
+ 
 
 /**
  * <b>Description:TODO</b>
@@ -14,38 +15,73 @@ import org.junit.Test;
  * 
  * Creation: 20.04.2010::11:59:24<br>
  */
-public class CSVParserTest {
+public class CSVParserTest extends TestCase{
 
 	public CSVParserTest() {
 		System.setProperty("net.sf.jsr107cache.CacheFactory",
 				"ws.rrd.cache.BasicCacheFactory");
 	}
-
-	@Test
+ 
 	public void testCSVParserToLowErr() throws IOException {
 		CSVParser p = new CSVParser(this.getClass().getClassLoader()
 				.getResourceAsStream("testErr45.csv"));
 		// testdrive into System.out
 		Action a = new SystemOutPrintlnAction(); 
-		p.perform(a);
+		try{  
+			p.perform(a);
+			fail();
+		}catch (Exception e) {
+			assertTrue( e instanceof ArrayIndexOutOfBoundsException);
+		}
 	}
-	
-	@Test
+	 
 	public void testCSVTXT() throws IOException {
 		CSVParser p = new CSVParser(this.getClass().getClassLoader()
 				.getResourceAsStream("testCSV.txt"));
 		// testdrive into System.out
 		Action a = new ToStringPrintlnAction(); 
+		try{//p.setIgnoreWrongLine(true);
+			p.perform(a);
+			fail();
+			String out = a.toString();
+			System.out.println(out);
+			assertTrue( out.indexOf("\\10.253.24.80\\Prozessor(_Total)\\Prozessorzeit (%)-->\nrrdtool create X-1979395149.rrd")>0);
+			assertTrue(out.indexOf("rrdtool update X-1979395149.rrd 1272616451:8.207780")>0);
+			assertTrue(out.indexOf("rrdtool update X-1132348867.rrd 1272616691:22361.069101")>0);
+		}catch(Exception e){
+			assertTrue(a.toString(), e instanceof ArrayIndexOutOfBoundsException);
+		}
+	}
+
+	public void testCSVTXT_ignoreErrors() throws IOException {
+		CSVParser p = new CSVParser(this.getClass().getClassLoader()
+				.getResourceAsStream("testCSV.txt"));
+		// testdrive into System.out
+		Action a = new ToStringPrintlnAction(); 
+		p.setIgnoreWrongLine(true);
 		p.perform(a);
 		String out = a.toString();
 		System.out.println(out);
-		assert(out.indexOf("\\10.253.24.80\\Prozessor(_Total)\\Prozessorzeit (%)-->\nrrdtool create X-1979395149.rrd")>0);
-		assert(out.indexOf("rrdtool update X-1979395149.rrd 1272616451:8.207780")>0);
-		assert(out.indexOf("rrdtool update X-1132348867.rrd 1272616691:22361.069101")>0);
+		assertTrue( out.indexOf("\\10.253.24.80\\Prozessor(_Total)\\Prozessorzeit (%)-->\nrrdtool create X-1979395149.rrd")>0);
+		assertTrue(out.indexOf("rrdtool update X-1979395149.rrd 1272616451:8.207780")>0);
+		assertTrue(out.indexOf("rrdtool update X-1132348867.rrd 1272616691:22361.069101")>0);
 				
 	}
-
-	@Test
+	 
+	public void testCSV () throws IOException {
+		CSVParser p = new CSVParser(this.getClass().getClassLoader()
+				.getResourceAsStream("test.csv"));
+		// testdrive into System.out
+		Action a = new ToStringPrintlnAction(); 
+		p.perform(a);
+		String out = a.toString();
+		System.out.println(out);
+		assertTrue(out,out.indexOf("\\10.253.24.80\\SMSvcHost 3.0.0.0\\Protocol Failures over net.tcp-->\nrrdtool create X-857541619.rrd --start 1271697051")>0);
+		assertTrue(out,out.indexOf("rrdtool update X559623146.rrd 1271697061:23.531515422440769")>0);
+		assertTrue(out,out.indexOf("rrdtool update X559623146.rrd 1271697089:23.531515422440769")>0);
+				
+	}
+ 
 	public void testCSVParserToMuchErr() throws IOException {
 		CSVParser p = new CSVParser(this.getClass().getClassLoader()
 				.getResourceAsStream("testErr55.csv"));
@@ -53,13 +89,12 @@ public class CSVParserTest {
 		Action a = new SystemOutPrintlnAction();
 		try{
 			p.perform(a);
-		
+			fail();
 		}catch (Exception e) {
-			assert(e instanceof ArrayIndexOutOfBoundsException);
+			assertTrue( e instanceof ArrayIndexOutOfBoundsException);
 		}
 	}
-
-	@Test
+ 
 	public void testCSVParser() throws IOException {
 		CSVParser p = new CSVParser(this.getClass().getClassLoader()
 				.getResourceAsStream("test.csv"));
@@ -67,8 +102,7 @@ public class CSVParserTest {
 		Action a = new SystemOutPrintlnAction(); 
 		p.perform(a);
 	}
-
-	@Test
+ 
 	public void testExecuteUpdate() throws IOException {
 		CSVParser p = new CSVParser(this.getClass().getClassLoader()
 				.getResourceAsStream("test.csv"));
@@ -77,8 +111,7 @@ public class CSVParserTest {
 		Object o = p.perform(a);
 		System.err.println(("" + o).replace(", \\\\", ",\n \\\\"));
 	}	
-	
-	@Test
+	 
 	public void testExecuteUpdateInMEM() throws IOException {
 		System.setProperty("RrdMemoryBackendFactory","ON");
 		

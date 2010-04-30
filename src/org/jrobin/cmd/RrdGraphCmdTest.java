@@ -1,6 +1,5 @@
 package org.jrobin.cmd;
-
-import static org.junit.Assert.*;
+ 
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -13,10 +12,9 @@ import org.jrobin.core.RrdDef;
 import org.jrobin.core.RrdException;
 import org.jrobin.core.Sample;
 import org.jrobin.graph.RrdGraph;
-import org.jrobin.graph.RrdGraphDef;
-import org.junit.Test;
+import org.jrobin.graph.RrdGraphDef; 
 
-public class RrdGraphCmdTest {
+public class RrdGraphCmdTest extends junit.framework.TestCase{
 
 	private static final String TEST_RRD = "test.rrd";
 
@@ -52,8 +50,7 @@ $ rrdtool fetch test.rrd AVERAGE --start 920804400 --end 920809200
  
 	 * 
 	 * 
-	 */
-	@Test
+	 */ 
 	public void testExecute() throws RrdException, IOException {
 		/*
 		 * rrdtool create test.rrd             \
