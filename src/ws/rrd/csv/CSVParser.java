@@ -104,10 +104,10 @@ public class CSVParser {
         	}catch(StringIndexOutOfBoundsException e){
         		throw new IOException("error at parcing line "+lineCount +"["+nextLineStr+"]",e);
         	}
-        	int i=0;
+        	int i=1;
         	try{
 	        	for (String next:dataTmp){
-	        		++i;
+	        		
 	        		if (i>=this.heads.length )break;
 	        		if (next == dataTmp[0])continue; 
 	        		// timestamp, uri, data
@@ -125,6 +125,7 @@ public class CSVParser {
 	        				line.add( ""+valTmp+":"+next );
 	        			}
 	        		}
+	        		i++; 
 	        	}
         	}catch(ArrayIndexOutOfBoundsException e){
         		System.out.println( e.getMessage() + "::::"+i+" ["+nextLineStr);

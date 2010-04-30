@@ -29,6 +29,21 @@ public class CSVParserTest {
 		Action a = new SystemOutPrintlnAction(); 
 		p.perform(a);
 	}
+	
+	@Test
+	public void testCSVTXT() throws IOException {
+		CSVParser p = new CSVParser(this.getClass().getClassLoader()
+				.getResourceAsStream("testCSV.txt"));
+		// testdrive into System.out
+		Action a = new ToStringPrintlnAction(); 
+		p.perform(a);
+		String out = a.toString();
+		System.out.println(out);
+		assert(out.indexOf("\\10.253.24.80\\Prozessor(_Total)\\Prozessorzeit (%)-->\nrrdtool create X-1979395149.rrd")>0);
+		assert(out.indexOf("rrdtool update X-1979395149.rrd 1272616451:8.207780")>0);
+		assert(out.indexOf("rrdtool update X-1132348867.rrd 1272616691:22361.069101")>0);
+				
+	}
 
 	@Test
 	public void testCSVParserToMuchErr() throws IOException {
@@ -38,6 +53,7 @@ public class CSVParserTest {
 		Action a = new SystemOutPrintlnAction();
 		try{
 			p.perform(a);
+		
 		}catch (Exception e) {
 			assert(e instanceof ArrayIndexOutOfBoundsException);
 		}

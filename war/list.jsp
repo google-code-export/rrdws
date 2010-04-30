@@ -17,8 +17,8 @@
 Cache cache = MemoryFileCache.getCache();
 Registry reg = (Registry) cache.get("REGISTRY");
 
-for (String key:reg.getDb2path().keySet() ){
-%><tr><td><%=key %> </td><td>==</td><td> <%=reg.getDb2path().get(key) %></td>
+for (String key:reg.getPath2db().keySet() ){
+%><tr><td><%=key %> </td><td>==</td><td> <%=reg.getPath2db().get(key) %></td>
 </tr>
 <%
 }

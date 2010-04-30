@@ -37,45 +37,16 @@ public class RrdUpdateAction implements Action {
 				retval = e1;
 			}
 
-			String rrddb = "X"+xpath.hashCode()+".rrd";
-			String cmdTmp = "rrdtool update "+rrddb +" "+(timestampTmp/1000L) +":"+ data; 
+			
+			String cmdTmp = makeUpdateCMD(data, timestampTmp, xpath); 
 			try {   
 				retval  = RrdCommander.execute(cmdTmp );
 			} catch (IOException e) { 
 				if (e instanceof FileNotFoundException){
 					try {
-						String cmdCreate = "rrdtool create " +
-							""+rrddb+" --start "+(((timestampTmp-10)/1000L))+"" +
-							" -s 300 "  +
-							" DS:data:GAUGE:600:U:U  " +
-							" RRA:AVERAGE:0.5:1:288 " +
-							" RRA:MIN:0.5:1:288 " +
-							" RRA:MAX:0.5:1:288 " +
-							" RRA:AVERAGE:0.5:6:336 " +
-							" RRA:MIN:0.5:6:336 " +
-							" RRA:MAX:0.5:6:336 " +
-							" RRA:AVERAGE:0.5:24:372 " +
-							" RRA:MIN:0.5:24:372 " +
-							" RRA:MAX:0.5:24:372 " +
-							" RRA:AVERAGE:0.5:144:730 " +
-							" RRA:MIN:0.5:144:730 " +
-							" RRA:MAX:0.5:144:730 " +
-							" RRA:LAST:0.5:1:288 " + 
-							"";   
+						String cmdCreate = makeCreateCMD(timestampTmp, xpath);   
 						System.out.println(xpath +" --->  "+cmdCreate); 
 						retval  =RrdCommander.execute(cmdCreate);
-						Cache cache = MemoryFileCache.getCache();
-						Registry reg = (Registry) cache.remove("REGISTRY"); 
-						if (reg != null){
-							
-							cache.remove("REGISTRY");
-						}else{
-							reg = new Registry();
-						}
-						reg.register(rrddb,xpath);
-						cache.put("REGISTRY", reg);
-						
-						
 						retval  =RrdCommander.execute(cmdTmp );
 					} catch (IOException e1) { 
 						//e1.printStackTrace();
@@ -90,6 +61,53 @@ public class RrdUpdateAction implements Action {
 				retval = e; 
 			} 
 			return retval;
+		}
+
+		public static final String makeCreateCMD(long timestampTmp, String xpath) {
+			String rrddb = xpath2Hash(xpath);
+			String cmdCreate = "rrdtool create " +
+				""+rrddb+" --start "+(((timestampTmp-10000)/1000L))+"" +
+				" -s 300 "  +
+				" DS:data:GAUGE:600:U:U  " +
+				" RRA:AVERAGE:0.5:1:288 " +
+				" RRA:MIN:0.5:1:288 " +
+				" RRA:MAX:0.5:1:288 " +
+				" RRA:AVERAGE:0.5:6:336 " +
+				" RRA:MIN:0.5:6:336 " +
+				" RRA:MAX:0.5:6:336 " +
+				" RRA:AVERAGE:0.5:24:372 " +
+				" RRA:MIN:0.5:24:372 " +
+				" RRA:MAX:0.5:24:372 " +
+				" RRA:AVERAGE:0.5:144:730 " +
+				" RRA:MIN:0.5:144:730 " +
+				" RRA:MAX:0.5:144:730 " +
+				" RRA:LAST:0.5:1:288 " + 
+				""; 
+			return cmdCreate;
+		}
+
+		private static void checkReg(String rrddb, String xpath  ) {
+			Cache cache = MemoryFileCache.getCache();
+			Registry reg = (Registry) cache.remove("REGISTRY"); 
+			if (reg != null){ 
+				cache.remove("REGISTRY");
+			}else{
+				reg = new Registry();
+			}
+			reg.register(rrddb,xpath);
+			cache.put("REGISTRY", reg);
+		}
+
+		public static final String xpath2Hash(String xpath) {
+			String rrddb = "X"+xpath.hashCode()+".rrd";
+			checkReg(rrddb, xpath);
+			return rrddb;
+		}
+
+		public final static String makeUpdateCMD(String data, long timestampTmp, String xpath) {
+			String rrddb = xpath2Hash(xpath);
+			String cmdTmp = "rrdtool update "+rrddb +" "+(timestampTmp/1000L) +":"+ data;
+			return cmdTmp;
 		}
  
 
