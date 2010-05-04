@@ -42,7 +42,7 @@ public class ToStringPrintlnAction implements Action {
 					return data;
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//e.printStackTrace();
 					return e;
 				}
 			}

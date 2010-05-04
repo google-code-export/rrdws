@@ -32,8 +32,17 @@ public class CSVParser {
         init();
  
 	}
+	int lineCount =0;
 	private void init (){
-        heads = headersStr.split(DELIM);
+		try{
+			Double.parseDouble( combineChains( headersStr.split(DELIM))[1]);
+			throw new RuntimeException("number at headers at line #"+lineCount+"! ["+headersStr+"]");
+		}
+		catch(NumberFormatException e){
+			/* ignore any errors but not numbers */}
+	    catch(ArrayIndexOutOfBoundsException e){
+	    	/* ignore any errors but not numbers */}
+	    heads = headersStr.split(DELIM);
         heads = combineChains(heads);
 	}
 
@@ -84,7 +93,7 @@ public class CSVParser {
 	public Object perform(Action a) throws IOException{
 		Map retval = new TreeMap();
 		long start = System.currentTimeMillis();
-		int lineCount =0;
+		
         for (String nextLineStr = rdr.readLine();nextLineStr != null;nextLineStr = rdr.readLine()){
         	lineCount++;
         	if (nextLineStr.equals(headersStr))continue;
@@ -98,6 +107,7 @@ public class CSVParser {
         			//WOW!!! new headers!!!
         			System.out.println("HEADS == "+headersStr );
         			System.out.println("nextLineStr == "+nextLineStr);
+        			
         			this.headersStr = nextLineStr;
         			init();
         			continue;
@@ -109,7 +119,7 @@ public class CSVParser {
         	}
         	// :A
         	if (!ignoreWrongLine && dataTmp.length != this.heads.length){
-        		throw new ArrayIndexOutOfBoundsException("DATA{:"+dataTmp.length+"}  !=  HEAD{:"+this.heads.length+"}");
+        		throw new ArrayIndexOutOfBoundsException("DATA{:"+dataTmp.length+"}  !=  HEAD{:"+this.heads.length+"} at line #"+lineCount);
         	}
         	int i=1;
         	try{

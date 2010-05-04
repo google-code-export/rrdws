@@ -52,7 +52,24 @@ public class CSVParserTest extends TestCase{
 			assertTrue(a.toString(), e instanceof ArrayIndexOutOfBoundsException);
 		}
 	}
-
+	
+	public void testNumOnHead() throws IOException {
+		CSVParser p = new CSVParser(this.getClass().getClassLoader()
+				.getResourceAsStream("testNumOnHead.txt"));
+		// testdrive into System.out
+		Action a = new ToStringPrintlnAction(); 
+		p.setIgnoreWrongLine(true);
+		try{
+			p.perform(a);
+			fail( "number at headers error expected!");
+		}catch(Throwable e){
+			
+			String ch = "number at headers";
+			assertTrue(e.getMessage(),e.getMessage().indexOf(ch )>=0);
+		}
+		
+				
+	}
 	public void testCSVTXT_ignoreErrors() throws IOException {
 		CSVParser p = new CSVParser(this.getClass().getClassLoader()
 				.getResourceAsStream("testCSV.txt"));
@@ -91,7 +108,7 @@ public class CSVParserTest extends TestCase{
 			p.perform(a);
 			fail();
 		}catch (Exception e) {
-			assertTrue( e instanceof ArrayIndexOutOfBoundsException);
+			assertTrue(e.getMessage(), e.getMessage().indexOf("header")>0 );
 		}
 	}
  
@@ -112,6 +129,7 @@ public class CSVParserTest extends TestCase{
 		System.err.println(("" + o).replace(", \\\\", ",\n \\\\"));
 	}	
 	 
+	
 	public void testExecuteUpdateInMEM() throws IOException {
 		System.setProperty("RrdMemoryBackendFactory","ON");
 		
