@@ -39,7 +39,7 @@ public class RrdDbPool {
 	 * Initial capacity of the pool i.e. maximum number of simultaneously open RRD files. The pool will
 	 * never open too many RRD files at the same time.
 	 */
-	public static final int INITIAL_CAPACITY = 200;
+	public static final int INITIAL_CAPACITY = 1000;
 	private static RrdDbPool instance = new RrdDbPool();
 	private RrdBackendFactory factory;
  

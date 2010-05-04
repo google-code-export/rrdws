@@ -1,7 +1,7 @@
 package ws.rrd.csv;
 
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.Collections; 
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -23,6 +23,19 @@ public class Registry implements Serializable{
 	Map<String, String> db2path = new TreeMap<String, String>();
 	Map<String, String> path2db = new TreeMap<String, String>();
 	
+	public Registry(Map<String, String> db2path2) {
+		this.db2path.putAll(db2path2);
+		for (String key :this.db2path.keySet()){
+			String value = this.db2path.get( key);
+			this.path2db.put(value ,key );
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public Registry() {
+		this(Collections.EMPTY_MAP);
+	}
+
 	public void register(String rrddb, String xpath) {
 		db2path.put(rrddb, xpath);
 		path2db.put(xpath,rrddb );
@@ -34,13 +47,11 @@ public class Registry implements Serializable{
 	}
 
 	public Map<String, String> getDb2path() {
- 
-			return new HashMap<String, String>(db2path);
+			return Collections.unmodifiableMap(db2path);			
 	}
 
-	public Map<String, String> getPath2db() {
-			TreeMap<String, String> treeMap = new TreeMap<String, String>(path2db);
-			return treeMap;
+	public Map<String, String> getPath2db() {			
+			return  Collections.unmodifiableMap(path2db);
 	}
 
 }

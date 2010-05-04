@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.TreeMap;
 
 import net.sf.jsr107cache.Cache;
 
@@ -92,27 +94,29 @@ public class RrdUpdateAction implements Action {
 	    static int flushCount=0;
 	    static int changeCount=0;
 		private static void checkReg(String rrddb, String xpath  ) {
+			if (reg == null){ 
+				reg = new Registry();
+			}	
 			if (changeCount >10 ||(last_clean +10000) < System.currentTimeMillis()){
 				synchronized (cache) { 
 					cache.remove("REGISTRY");
-					cache.put("REGISTRY", reg);
+					cache.put("REGISTRY", new Registry( reg.getDb2path() ));
 					last_clean=System.currentTimeMillis();					
 					System.out.println("REGISTRY Flush #"+flushCount+++":"+changeCount);
 					changeCount =0;
 				}
 			}
+			if (    reg != null && 
+					reg.getDb2path()!=null && 
+					reg.getDb2path().get(rrddb)!=null && 
+					reg.getDb2path().get(rrddb).equals(xpath) ){
+				//nothing to do
+				return;
+			} 
+		 		
+
 			
-			if (reg != null){ 
-				if (    reg != null && 
-						reg.getDb2path()!=null && 
-						reg.getDb2path().get(rrddb)!=null && 
-						reg.getDb2path().get(rrddb).equals(xpath) ){
-					//nothing to do
-					return;
-				} 
-			}else{
-				reg = new Registry();
-			}
+
 			reg.register(rrddb,xpath);
 			changeCount++;
 				
