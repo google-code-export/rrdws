@@ -199,7 +199,21 @@ public class FileCache implements Cache {
 	}
 
 	String toName(Object key){
-		return (""+key).replace(":", "..");
+		String retval = ""+key;
+		String from2[][]={
+				{":", ".."},
+				{"\\", "=slash="},
+				{"\n", "=n="},
+				{"\b", "=bs="},
+				{"\t", "=tab="},
+				{"/", "=backslash="},
+				{"\"", "=2="},
+				{"\'", "=1="} 
+		};
+		for (String[]from2to:from2){
+			retval = retval.replace(from2to[0],from2to[1]);
+		}
+		return retval ;
 	}
 	
 	@Override
