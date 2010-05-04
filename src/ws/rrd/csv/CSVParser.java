@@ -101,10 +101,13 @@ public class CSVParser {
         			this.headersStr = nextLineStr;
         			init();
         			continue;
+        		}else{
+        			// GOTO A:
         		}
         	}catch(StringIndexOutOfBoundsException e){
         		throw new IOException("error at parcing line "+lineCount +"["+nextLineStr+"]",e);
         	}
+        	// :A
         	if (!ignoreWrongLine && dataTmp.length != this.heads.length){
         		throw new ArrayIndexOutOfBoundsException("DATA{:"+dataTmp.length+"}  !=  HEAD{:"+this.heads.length+"}");
         	}

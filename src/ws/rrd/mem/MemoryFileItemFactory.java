@@ -1,4 +1,4 @@
-package ws.rrd;
+package ws.rrd.mem;
 /** 
  * <b>Description:TODO</b>
  * @author      v.i.p.<br>

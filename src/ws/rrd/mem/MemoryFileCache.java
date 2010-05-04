@@ -1,4 +1,4 @@
-package ws.rrd;
+package ws.rrd.mem;
 
 import java.io.IOException;
 import java.io.OutputStream; 
@@ -26,7 +26,7 @@ public class MemoryFileCache {
 	 }
                     
 	 public static MemoryFileItem get (String name) throws IOException{
-		 Cache cache = getCache();
+		Cache cache = getCache();
 		MemoryFileItem retval = (MemoryFileItem) cache.get(name);
 		 if (retval ==null){ // try to restore parts
 			  for (int i=0;cache.get(name+"::"+i)!=null;){
@@ -70,9 +70,7 @@ public class MemoryFileCache {
 		 return name;
 	 }
 
-	public static Cache getCache()   {
-		//return  CacheManager.getInstance().getCacheFactory() Instance(). Cache ("rrd");
-		
+	public static Cache getCache()   { 
 		CacheManager cm = CacheManager.getInstance();
 		Cache retval = cm.getCache ("rrd");
 		if (retval == null)
@@ -86,9 +84,9 @@ public class MemoryFileCache {
 				cacheTmp = cacheFactory.createCache(props);
 				cm.registerCache("rrd", cacheTmp);
 				retval = cacheTmp;
-			} catch (CacheException e) {
-				// TODO Auto-generated catch block
+			} catch (CacheException e) { 
 				e.printStackTrace();
+				throw new RuntimeException(e);
 			}
 		} 
 		return  retval; 

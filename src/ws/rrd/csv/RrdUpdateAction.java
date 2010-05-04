@@ -10,7 +10,7 @@ import net.sf.jsr107cache.Cache;
 import org.jrobin.cmd.RrdCommander;
 import org.jrobin.core.RrdException;
 
-import ws.rrd.MemoryFileCache;
+import ws.rrd.mem.MemoryFileCache;
 
 /** 
  * <b>Description:TODO</b>
@@ -86,19 +86,40 @@ public class RrdUpdateAction implements Action {
 			return cmdCreate;
 		}
 
+	    private static volatile long last_clean = 0;
+	    private static Cache cache = MemoryFileCache.getCache();
+	    private static Registry reg = (Registry) cache.get("REGISTRY"); 
+	    static int flushCount=0;
+	    static int changeCount=0;
 		private static void checkReg(String rrddb, String xpath  ) {
-			Cache cache = MemoryFileCache.getCache();
-			Registry reg = (Registry) cache.remove("REGISTRY"); 
+			if (changeCount >10 ||(last_clean +10000) < System.currentTimeMillis()){
+				synchronized (cache) { 
+					cache.remove("REGISTRY");
+					cache.put("REGISTRY", reg);
+					last_clean=System.currentTimeMillis();					
+					System.out.println("REGISTRY Flush #"+flushCount+++":"+changeCount);
+					changeCount =0;
+				}
+			}
+			
 			if (reg != null){ 
-				cache.remove("REGISTRY");
+				if (    reg != null && 
+						reg.getDb2path()!=null && 
+						reg.getDb2path().get(rrddb)!=null && 
+						reg.getDb2path().get(rrddb).equals(xpath) ){
+					//nothing to do
+					return;
+				} 
 			}else{
 				reg = new Registry();
 			}
 			reg.register(rrddb,xpath);
-			cache.put("REGISTRY", reg);
+			changeCount++;
+				
 		}
+ 
 
-		public static final String xpath2Hash(String xpath) {
+		private static final String xpath2Hash(String xpath) {
 			String rrddb = "X"+xpath.hashCode()+".rrd";
 			checkReg(rrddb, xpath);
 			return rrddb;

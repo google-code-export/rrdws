@@ -6,7 +6,7 @@ response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
 response.setHeader("Pragma","no-cache"); //HTTP 1.0
 response.setDateHeader ("Expires", 0); //prevents caching at the proxy server
 response.setHeader("Content-Disposition", "inline;filename=gif.gif");
-%><%@page import="ws.rrd.Chk"%> <%
+%><%
 try{
 	FileInputStream fio = new  FileInputStream("gif.gif");
 	byte[]buf = new byte[1023];
@@ -14,8 +14,7 @@ try{
 		response.getOutputStream().write(buf,0,i);
 		response.getOutputStream().flush();
 	}
-}catch(Throwable e){
-		Chk.chk(e);
-		e.printStackTrace();
+}catch(Throwable e){ 
+		e.printStackTrace(response.getWriter());
 }
 %>

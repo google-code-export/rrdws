@@ -3,7 +3,7 @@ package ws.rrd.csv;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import ws.rrd.MemoryFileCache;
+import ws.rrd.mem.MemoryFileCache;
 
 import net.sf.jsr107cache.Cache;
 

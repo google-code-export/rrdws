@@ -34,9 +34,9 @@ import org.jrobin.svg.awt.Paint;
 import org.jrobin.svg.awt.RenderingHints;
 import org.jrobin.svg.awt.Stroke;
 
-import ws.rrd.MemoryFileCache;
-import ws.rrd.MemoryFileItem;
-import ws.rrd.MemoryFileItemFactory;
+import ws.rrd.mem.MemoryFileCache;
+import ws.rrd.mem.MemoryFileItem;
+import ws.rrd.mem.MemoryFileItemFactory;
 
 import java.io.*;
 

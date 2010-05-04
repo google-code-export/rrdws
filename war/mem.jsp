@@ -1,6 +1,6 @@
 <%@page import="java.io.OutputStream"%>
-<%@page import="org.apache.commons.fileupload.FileItem"%><%@page import="ws.rrd.Chk"%> 
-<%@page import="ws.rrd.MemoryFileCache"%><%
+<%@page import="org.apache.commons.fileupload.FileItem"%>
+<%@page import="ws.rrd.mem.MemoryFileCache"%><%
 String nameTmp = request.getParameter("name");
 FileItem item = MemoryFileCache. get ( nameTmp  );
 response.setContentType("image/svg+xml;charset=UTF-8");
@@ -15,8 +15,7 @@ try{
 	outTmp.write(item.get());
 	outTmp.flush();
 	outTmp.close();
-}catch(Throwable e){
-		Chk.chk(e);
-		e.printStackTrace();
+}catch(Throwable e){ 
+		e.printStackTrace(response.getWriter());
 }
 %>

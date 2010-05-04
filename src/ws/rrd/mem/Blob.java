@@ -1,4 +1,4 @@
-package ws.rrd;
+package ws.rrd.mem;
 
 import java.io.Serializable;
 

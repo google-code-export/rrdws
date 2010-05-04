@@ -8,10 +8,7 @@ response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
 response.setHeader("Pragma","no-cache"); //HTTP 1.0
 response.setDateHeader ("Expires", 0); //prevents caching at the proxy server
 response.setHeader("Content-Disposition", "inline;filename=svg.svg");
-%>
-<%@page import="ws.rrd.Chk"%> 
- 
-<%
+%><%
 try{
 	 	if (session.getAttribute("svg")!=null){
 	 		out.write("<svg  version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">");
@@ -25,8 +22,7 @@ try{
  	 		out.write(data.toCharArray());
 	 	}
 	
-	}catch(Throwable e){
-		Chk.chk(e);
-		e.printStackTrace();
+	}catch(Throwable e){ 
+		e.printStackTrace(response.getWriter());
 }
 %>

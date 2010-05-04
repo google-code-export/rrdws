@@ -32,8 +32,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
-import ws.rrd.MemoryFileCache;
-import ws.rrd.MemoryFileItem;
+import ws.rrd.mem.MemoryFileCache;
+import ws.rrd.mem.MemoryFileItem;
 
 /**
  * <p>Main class used to create and manipulate round robin databases (RRDs). Use this class to perform

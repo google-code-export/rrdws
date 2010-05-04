@@ -2,8 +2,7 @@
 <%@page import="javax.jdo.Query"%>
 <%@page import="javax.jdo.PersistenceManager"%>
 <%@page import="ws.rdd.jdo.RRD_JDOHelper"%>
-<%@page import="ws.rdd.jdo.Blob"%>
-<%@page import="ws.rrd.Chk"%>
+<%@page import="ws.rdd.jdo.Blob"%> 
 <%@page import="org.jrobin.cmd.RrdGraphCmdTest"%>
 <%@page import="org.jrobin.cmd.RrdCommander"%>
 <%@page import="org.jrobin.svg.RrdGraphInfo"%>

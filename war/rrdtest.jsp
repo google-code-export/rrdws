@@ -2,16 +2,10 @@
 response.setContentType("image/svg+xml");
 %><?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
-"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-
-
-
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"> 
 <%@page import="java.io.InputStream"%>
 <%@page import="java.io.ByteArrayOutputStream"%>
-<%@page import="org.jrobin.cmd.RrdSVGCmdTest"%>
-<%@page import="ws.rrd.Chk"%>
-<%@page import="org.jrobin.cmd.RrdGraphCmdTest"%>
- 
+<%@page import="org.jrobin.cmd.RrdSVGCmdTest"%>   
 <%
 try{
 		if (1==2)(new RrdSVGCmdTest()).testExecute();
@@ -23,8 +17,7 @@ try{
 		out.write(new String(buf));
 		//out.write(myOut.toString());
 		
-	}catch(Throwable e){
-		Chk.chk(e);
-		e.printStackTrace();
+	}catch(Throwable e){ 
+		e.printStackTrace(response.getWriter());
 }
 %>
