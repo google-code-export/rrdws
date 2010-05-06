@@ -14,7 +14,10 @@
 Cache cache = MemoryFileCache.getCache();
 Registry reg = (Registry) cache.get("REGISTRY");
 for (String key:reg.getPath2db().keySet() ){
-%><tr><td><%=key %> </td><td>==</td><td> <%=reg.getPath2db().get(key) %></td>
+%><tr><td><%=key %> </td><td>==</td><td> 
+<%=reg.getPath2db().get(key) %></td>
+<td><img src="gen.jsp?db=<%=reg.getPath2db().get(key) %>"/>
+</td>
 </tr>
 <%
 }

@@ -1,12 +1,13 @@
-<%@page import="org.jrobin.cmd.RrdCommander"%><%@page import="java.io.FileInputStream"%><%@page  contentType="image/gif"%><%
+<%@page import="org.jrobin.cmd.RrdCommander"%>
+<%@page import="java.io.FileInputStream"%>
+<%@page import="java.io.ByteArrayInputStream"%><%@page  contentType="image/gif"%><%
 response.setContentType("image/gif");
 %><%
-/* generates small preview (thumbnail) for last week */
 String dbParName = request.getParameter("db");
 String dbName = dbParName==null?"X-1979395149":dbParName;
 String EXT = ".rrd";
 dbName = dbName.toLowerCase().indexOf(EXT)>0?dbName.substring(0,dbName.length()-EXT.length()):dbName; 
-String cmdTmp = "rrdtool graph ./img.tmp/"+dbName+".gif --color BACK#11111111 --only-graph  -o -h 32 -w 64 --start=end-1day  DEF:dbdata="+dbName+".rrd:data:AVERAGE  LINE1:dbdata#003300AA ";
+String cmdTmp = "rrdtool graph ./img.tmp/"+dbName+".gif --color BACK#11111111 --only-graph  -o -h 32 -w 64 --start=end-1week  DEF:dbdata="+dbName+".rrd:data:AVERAGE  LINE2:dbdata#44EE4499  LINE1:dbdata#003300AA ";
 RrdCommander.execute(cmdTmp);
 response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
 response.setHeader("Pragma","no-cache"); //HTTP 1.0
