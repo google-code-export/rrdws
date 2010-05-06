@@ -45,7 +45,7 @@
 			if (cmdTmp != null) {
 				System.out.println(cmdTmp);
 				cmdTmp = cmdTmp.replace("\\", "\n");
-				RrdCommander.setRrdDbPoolUsed(false);
+				//RrdCommander.setRrdDbPoolUsed(false);
 				o = RrdCommander.execute(cmdTmp);
 				if (o instanceof org.jrobin.svg.RrdGraphInfo) {
 					RrdGraphInfo oInf = (RrdGraphInfo) o;
