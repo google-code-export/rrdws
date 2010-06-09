@@ -14,8 +14,7 @@ import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.SingleClientConnManager;
+import org.apache.http.impl.client.DefaultHttpClient; 
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.message.BasicHttpResponse;
 import org.apache.http.params.BasicHttpParams;
@@ -35,37 +34,57 @@ import org.jrobin.cmd.RrdCommander;
  */
 public class UrlFetchTest {
 	public String testFetchUrl(String toFetchStr) throws ClientProtocolException, IOException{
-		HttpParams httpParams = new BasicHttpParams();
-		
-		org.apache.http.conn.ClientConnectionManager connectionManager = null;
-			//?new RrdGraphCmd():new RrdSvgCmd();
-			if (!RrdCommander.isGAE()){
-				SchemeRegistry schreg = new SchemeRegistry();
-				schreg.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
-				schreg.register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));				
-				connectionManager = new ThreadSafeClientConnManager(httpParams, schreg); 
-			}	else{
-				connectionManager = new GAEConnectionManager();
-			}
-		HttpClient httpClient = new DefaultHttpClient(connectionManager, httpParams);
-
-		String schemes[] =  {"htttps","http"};
-		for (String scheme: schemes)
-		if ((""+System.getProperty(scheme+".proxyHost")+System.getProperty(scheme+".proxyPort")).indexOf("null")==-1){
-			org.apache.http.HttpHost proxy = new org.apache.http.HttpHost("proxy", 8080, scheme);
-			httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
-		}
-  
-		String fetchUrl = null == toFetchStr? "http://www.fiducia.de/service/suchergebnis.html?searchTerm=zeit":toFetchStr;
-		HttpUriRequest m =  new HttpGet(fetchUrl );;
-		 HttpResponse s = httpClient.execute(m );
-		 System.out.println(s);//s.getAllHeaders()
-		 HttpEntity eTmp = ((BasicHttpResponse )s).getEntity();
+		HttpResponse respTmp = fetchResp(toFetchStr);
+		 System.out.println(respTmp);//s.getAllHeaders()
+		 HttpEntity eTmp = ((BasicHttpResponse )respTmp).getEntity();
 		 InputStream contentTmp = eTmp.getContent();
 		 int sizeTmp = Math.max(  (int)eTmp.getContentLength(), contentTmp.available());
 		 byte buf[] = new byte[sizeTmp];
 		 int readedTmp = contentTmp.read(buf);
 		 return new String( buf,0,readedTmp ) ; 
+	}
+
+	public HttpResponse fetchResp(String toFetchStr) throws IOException,
+			ClientProtocolException {
+		HttpClient httpClient = makeHTTPClient();
+
+		String schemes[] = {"htttps", "http"};
+		for (String scheme : schemes)
+			if (("" + System.getProperty(scheme + ".proxyHost") + System
+					.getProperty(scheme + ".proxyPort")).indexOf("null") == -1) {
+				org.apache.http.HttpHost proxy = new org.apache.http.HttpHost(
+						"proxy", 8080, scheme);
+				httpClient.getParams().setParameter(
+						ConnRoutePNames.DEFAULT_PROXY, proxy);
+			}
+
+		String fetchUrl = null == toFetchStr
+				? "http://www.fiducia.de/service/suchergebnis.html?searchTerm=zeit"
+				: toFetchStr;
+		HttpUriRequest m = new HttpGet(fetchUrl);
+		HttpResponse respTmp = httpClient.execute(m);
+		return respTmp;
+	}
+
+	public HttpClient makeHTTPClient() {
+		HttpParams httpParams = new BasicHttpParams();
+
+		org.apache.http.conn.ClientConnectionManager connectionManager = null;
+		// ?new RrdGraphCmd():new RrdSvgCmd();
+		if (!RrdCommander.isGAE()) {
+			SchemeRegistry schreg = new SchemeRegistry();
+			schreg.register(new Scheme("http", PlainSocketFactory
+					.getSocketFactory(), 80));
+			schreg.register(new Scheme("https", SSLSocketFactory
+					.getSocketFactory(), 443));
+			connectionManager = new ThreadSafeClientConnManager(httpParams,
+					schreg);
+		} else {
+			connectionManager = new GAEConnectionManager();
+		}
+		HttpClient httpClient = new DefaultHttpClient(connectionManager,
+				httpParams);
+		return httpClient;
 	}
 	
 }
