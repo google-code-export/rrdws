@@ -43,12 +43,17 @@ public class GmailLogin {
 
 	  public static void main(String[] args) {
 	    try{
-	      URL url = new URL("http://www.FIDUCiA.De");
+	      String baseURL =  "http://localhost:8888/GmailLogin.jsp?url=";
+	      String urlStr = "http://www.fiduciA.de/service/suchergebnis.html?searchTerm=java";
+	      try{
+	    	  urlStr = args[0];
+	      }catch(Throwable e){}
+	      URL url = new URL(baseURL+urlStr);
 
-	      String data = new UrlFetchTest().testFetchUrl( "http://www.FIDUCiA.De");
+	      String data = new UrlFetchTest().testFetchUrl( urlStr );
 	      long startTmp = System.currentTimeMillis();
 	      int lenTmp = 0;
-	      int i=0;
+	      int i=100;
 	      for(;i<100;i++){
 	    	  //data = new UrlFetchTest().testFetchUrl( "http://www.FIDUCIA.DE");
 	    	  HTMLDocument documentTmp = new HTMLParser2().createDocument(data.getBytes(), "utf-8");

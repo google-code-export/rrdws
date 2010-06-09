@@ -20,6 +20,8 @@ import org.vietspider.html.parser.NodeImpl;
 import org.vietspider.token.attribute.Attribute;
 import org.vietspider.token.attribute.Attributes;
 
+import ws.rrd.server.Base64Coder;
+
 /** 
  * Author : Thuannd
  *         nhudinhthuan@yahoo.com
@@ -186,7 +188,7 @@ public class HyperLinkUtil {
         if(value == null) continue;
         if(verifier != null && !verifier.verify(value)) continue;
 //        System.out.println("truoc "+value);
-        value  = urlCreator.createURL(home, value);
+        value  = home+ new String (Base64Coder.encode(  value.getBytes() ));//value  = urlCreator.createURL(home, value);value  = urlCreator.createURL(home, value);
 //        System.out.println("sau "+value);
         attr.setValue(value);      
         attrs.set(attr);
@@ -213,7 +215,7 @@ public class HyperLinkUtil {
       attr = attrs.get(idx);
       String value = attr.getValue();
       if(verifier != null && !verifier.verify(value)) return;
-      value  = urlCreator.createURL(home, value);      
+      value  = home+ new String (Base64Coder.encode(  value.getBytes() ));//value  = urlCreator.createURL(home, value);value  = urlCreator.createURL(home, value);//value  = home+value;//value  = urlCreator.createURL(home, value);      
       attr.setValue(value);      
       attrs.set(attr);
     }

@@ -46,10 +46,10 @@ public class IdentifierAttributeHandler extends AttributeHandler {
     }
     return null;
   }
-  
+  int handleCount = 0;
   @SuppressWarnings("unused")
   public void handleNode(HTMLNode node) {
-    
+	  handleCount ++;
   }
   
 }
