@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.*;
 
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.vietspider.html.HTMLDocument;
 import org.vietspider.html.HTMLNode;
@@ -34,7 +35,7 @@ public class LServlet extends HttpServlet {
 	public static String SwapServletUrl = "local".equals(System
 			.getProperty("myenviroment"))
 			? "http://localhost:8888/l/"
-			: "https://rrdws.appspot.com/l/"; // prod
+			: "https://rrdsaas.appspot.com/l/"; // prod
 
 	public static int SwaperConnTimeoutMS = 30000;
 	public static int SwaperReadTimeoutMS = 30000;
@@ -99,16 +100,23 @@ public class LServlet extends HttpServlet {
 			}
 			HttpResponse xRespTmp = new UrlFetchTest().fetchResp(urlStr);
 			contextTypeStr = xRespTmp.getEntity().getContentType().toString();
+			String contextEncStr = ""+xRespTmp.getEntity().getContentEncoding() ;
 			
 			if (
 					"Content-Type: image/jpeg".equals(contextTypeStr) ||
-					"Content-Type: text/css".equals(contextTypeStr)					
+					// TODO!
+					"Content-Type: text/css".equals(contextTypeStr) ||		
+					"Content-Type: image/png".equals(contextTypeStr) ||	
+					"content-type: text/html; charset=ISO8859-1".equals(contextTypeStr) ||	
+										
+					"Content-Type: image/gif".equals(contextTypeStr)		
+					
 			){
 				resp.setContentType(contextTypeStr);
 				xRespTmp.getEntity().writeTo(resp.getOutputStream()) ;
 				return;
 			}else{
-				System.out.println("=====!!!======"+contextTypeStr);
+				System.out.println("=====!!!======"+contextTypeStr +"::::"+contextEncStr);
 			}
 			 
 			String data = new UrlFetchTest().testFetchUrl( urlStr ); 
@@ -130,9 +138,11 @@ public class LServlet extends HttpServlet {
 		} catch (Exception e) {
 			
 			
-			if (!"".equals(""+targetUrl  ) && targetUrl != null)
+			if (!"".equals(""+targetUrl  ) && targetUrl != null){
 				ExceptionUtils.swapFailedException(targetUrl.toString(), resp,
 						e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				e.printStackTrace();
+			}
 			else
 				outTmp = resp.getOutputStream();
 				InputStream in = this.getClass().getClassLoader().getResourceAsStream("index.html");
@@ -182,7 +192,7 @@ public class LServlet extends HttpServlet {
 	}
 
 	protected static void markFwswaperTagInResponseHead(HttpServletResponse resp) {
-		resp.setHeader("fwswaper", String.format("com.lzy.fwswaper.%d",
+		resp.setHeader("l-swapper", String.format("com.lzy.fwswaper.%d",
 				FWSwaperAppVersion));
 	}
 }
