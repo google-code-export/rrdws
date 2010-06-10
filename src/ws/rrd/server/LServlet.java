@@ -105,7 +105,7 @@ public class LServlet extends HttpServlet {
 			}
 			HttpResponse xRespTmp = new UrlFetchTest().fetchResp(urlStr);
 			HttpEntity entity = xRespTmp.getEntity();
-			contextTypeStr = entity.getContentType().toString();
+			contextTypeStr = ""+entity.getContentType();
 			String contextEncStr = ""+entity.getContentEncoding() ;
 			
 			if (
@@ -117,10 +117,13 @@ public class LServlet extends HttpServlet {
 					
 					"content-type: text/html; charset=ISO8859-1".equals(contextTypeStr) ||	
 										
-					"Content-Type: image/gif".equals(contextTypeStr)		
+					"Content-Type: image/gif".equals(contextTypeStr) ||
+					"null".equals(contextTypeStr)
 					
 			){
-				resp.setContentType(contextTypeStr.substring("Content-Type:".length()));
+				if (! "null".equals( contextTypeStr )){
+					resp.setContentType(contextTypeStr.substring("Content-Type:".length()));
+				}
 				entity.writeTo(resp.getOutputStream()) ;
 				return;
 			}else{
