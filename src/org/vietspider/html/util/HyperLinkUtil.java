@@ -190,8 +190,12 @@ public class HyperLinkUtil {
 //        System.out.println("truoc "+value);
           String homeStr = ""+home;
           if ( value.startsWith("/")){ 
-        	  homeStr = (""+home).substring(0, (""+home).indexOf( home.getFile() ) );
-        	  value = (homeStr + value);
+        	  String fileNameTmp =home.getFile() ;
+        	  if("/".equals( fileNameTmp )) // assums home will be always with "/" at the end
+        		  homeStr = (""+home);
+        	  else  
+        		  homeStr = (""+home).substring(0, (""+home).indexOf( fileNameTmp ) ) +"/";
+        	  value = (homeStr + value.substring(1,value.length()));
         	  value  = swapServletUrl2 + new String (Base64Coder.encode(  value.getBytes() ));
           }else{
         	  homeStr = homeStr.substring(0,homeStr.lastIndexOf("/")+1); 
@@ -231,7 +235,11 @@ public class HyperLinkUtil {
       if(verifier != null && !verifier.verify(value)) return;
       String homeStr = ""+home;
       if ( value.startsWith("/")){ 
-    	  homeStr = (""+home).substring(0, (""+home).indexOf( home.getFile() ) );
+    	  String fileNameTmp =home.getFile() ;
+    	  if("/".equals( fileNameTmp )) // assums home will be always with "/" at the end
+    		  homeStr = (""+home);
+    	  else  
+    		  homeStr = (""+home).substring(0, (""+home).indexOf( fileNameTmp ) )+"/";
     	  value = (homeStr + value);
     	  value  = swapServletUrl2 + new String (Base64Coder.encode(  value.getBytes() ));
       }else{

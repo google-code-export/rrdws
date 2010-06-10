@@ -1,8 +1,7 @@
 package ws.rrd.server;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.InputStream; 
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.HttpURLConnection;
@@ -135,10 +134,12 @@ public class LServlet extends HttpServlet {
 	    	URL realURL = new URL(urlStr);
 	    	 
 	    	testCreateFullLink(documentTmp.getRoot(), SwapServletUrl, realURL);
-	    	testCreateImageLink(documentTmp.getRoot(), SwapServletUrl, realURL);	
+	    	testCreateImageLink(documentTmp.getRoot(), SwapServletUrl, realURL);
+	    	resp.setContentType("text/html; charset=UTF-8");
 	    	outTmp = resp.getOutputStream();
+	    	
 	    	String textValue = documentTmp.getTextValue();
-			outTmp.write(textValue.getBytes("UTF-8"));
+			outTmp.write(textValue.getBytes(resp.getCharacterEncoding()));
 		} catch (java.lang.NoClassDefFoundError e) {
 	    	System.out.println(contextTypeStr +" ===============  "+e.getMessage());e.printStackTrace();
 	    	System.out.println(documentTmp);
@@ -152,6 +153,7 @@ public class LServlet extends HttpServlet {
 			}
 			else
 				outTmp = resp.getOutputStream();
+			
 				InputStream in = this.getClass().getClassLoader().getResourceAsStream("index.html");
 				byte buf[] = new byte[in.available()];
 				String magik = "l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001/";
