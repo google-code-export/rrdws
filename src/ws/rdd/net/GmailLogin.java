@@ -28,14 +28,14 @@ public class GmailLogin {
 	  }
 
 	  private static void testCreateFullLink(HTMLNode node, URL home){
-	    handler.createFullNormalLink(node, home);
+	    handler.createFullNormalLink(node, null, home);
 	    List<String> list  = handler.scanSiteLink(node);
 	    for(String ele : list)
 	      System.out.println(ele);
 	  }
 
 	  private static void testCreateImageLink(HTMLNode node, URL home){
-		    handler.createFullImageLink(node, home);
+		    handler.createFullImageLink(node, null, home);
 		    List<String> list  = handler.scanImageLink(node);
 		    for(String ele : list)
 		      System.out.println(ele);

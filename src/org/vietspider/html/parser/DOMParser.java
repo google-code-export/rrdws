@@ -94,22 +94,28 @@ final class DOMParser {
     if(children == null || children.size() < 1) return;
     NodeImpl head = null ;
     NodeImpl body = null;
+    NodeImpl frameset = null;
     for(HTMLNode child : children){
       if(child.isNode(Name.HEAD)) head = (NodeImpl)child;
       if(child.isNode(Name.BODY)) body = (NodeImpl) child;
+      if(child.isNode(Name.FRAMESET)) {
+    	  frameset = (NodeImpl) child;
+    	  if (1==2)head .addChild(frameset);
+      }
     }
     if(head == null) head = service.createHeader();      
-    if(body == null) body = service.createBody();
+    //if(body == null) body = service.createBody();
     
     Iterator<HTMLNode> iter = children.iterator();
     while(iter.hasNext()){
       HTMLNode ele = iter.next();
-      if(ele.isNode(Name.HEAD) || ele.isNode(Name.BODY)) continue;
+      if(ele.isNode(Name.HEAD) || ele.isNode(Name.BODY)|| ele.isNode(Name.FRAMESET)) continue;
       if(ele.isNode(Name.SCRIPT)){
         head.addInternalChild(ele);
 //        ele.setParent(head);
       } else {
-        body.addInternalChild(ele);
+        if (body != null)body.addInternalChild(ele);
+        
 //        ele.setParent(body);
       }
       iter.remove();

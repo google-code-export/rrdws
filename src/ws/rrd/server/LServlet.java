@@ -14,6 +14,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.*;
 
 import org.apache.http.Header;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.vietspider.html.HTMLDocument;
 import org.vietspider.html.HTMLNode;
@@ -63,15 +64,15 @@ public class LServlet extends HttpServlet {
 	      System.out.println(ele);
 	  }
 
-	  private static void testCreateFullLink(HTMLNode node, URL home){
-	    handler.createFullNormalLink(node, home);
+	  private static void testCreateFullLink(HTMLNode node, String swapServletUrl2, URL home){
+	    handler.createFullNormalLink(node,  swapServletUrl2,  home);
 	    List<String> list  = handler.scanSiteLink(node);
 	    for(String ele : list)
 	      System.out.println(ele);
 	  }
 
-	  private static void testCreateImageLink(HTMLNode node, URL home){
-		    handler.createFullImageLink(node, home);
+	  private static void testCreateImageLink(HTMLNode node, String swapServletUrl2, URL home){
+		    handler.createFullImageLink(node, swapServletUrl2, home);
 		    List<String> list  = handler.scanImageLink(node);
 		    for(String ele : list)
 		      System.out.println(ele);
@@ -86,11 +87,16 @@ public class LServlet extends HttpServlet {
 		String contextTypeStr = null ;
 		byte[] dataBuf =null;
 		HTMLDocument documentTmp = null;
+		String urlStr = null;
 		try {
 			StringBuffer requestURL = req.getRequestURL();
 			String decodedUrl = requestURL.substring( SwapServletUrl.length());
 			char[] charArray = decodedUrl.toCharArray();
-			String urlStr = new String(Base64Coder.decode(charArray));
+			try{
+				urlStr = new String(Base64Coder.decode(charArray));
+			}catch(Throwable e){
+				e.printStackTrace();
+			}
 			System.out.println(urlStr);
 			targetUrl = new StringBuilder(urlStr);
 
@@ -99,21 +105,24 @@ public class LServlet extends HttpServlet {
 				targetUrl.append(String.format("?%s", req.getQueryString()));
 			}
 			HttpResponse xRespTmp = new UrlFetchTest().fetchResp(urlStr);
-			contextTypeStr = xRespTmp.getEntity().getContentType().toString();
-			String contextEncStr = ""+xRespTmp.getEntity().getContentEncoding() ;
+			HttpEntity entity = xRespTmp.getEntity();
+			contextTypeStr = entity.getContentType().toString();
+			String contextEncStr = ""+entity.getContentEncoding() ;
 			
 			if (
 					"Content-Type: image/jpeg".equals(contextTypeStr) ||
 					// TODO!
 					"Content-Type: text/css".equals(contextTypeStr) ||		
 					"Content-Type: image/png".equals(contextTypeStr) ||	
+					"Content-Type: image/x-icon".equals(contextTypeStr) ||	
+					
 					"content-type: text/html; charset=ISO8859-1".equals(contextTypeStr) ||	
 										
 					"Content-Type: image/gif".equals(contextTypeStr)		
 					
 			){
-				resp.setContentType(contextTypeStr);
-				xRespTmp.getEntity().writeTo(resp.getOutputStream()) ;
+				resp.setContentType(contextTypeStr.substring("Content-Type:".length()));
+				entity.writeTo(resp.getOutputStream()) ;
 				return;
 			}else{
 				System.out.println("=====!!!======"+contextTypeStr +"::::"+contextEncStr);
@@ -124,11 +133,9 @@ public class LServlet extends HttpServlet {
 			HTMLParser2 parser2 = new HTMLParser2();
 			documentTmp = parser2.createDocument(dataBuf, "utf-8");
 	    	URL realURL = new URL(urlStr);
-	    	String suffix = realURL.getProtocol()+ "://"+realURL.getHost() ;
-	    	suffix  = new String ( Base64Coder.encode(  suffix.getBytes() )  );
-	    	URL url = new URL(SwapServletUrl+ suffix);
-	    	testCreateFullLink(documentTmp.getRoot(), url);
-	    	testCreateImageLink(documentTmp.getRoot(), url);	
+	    	 
+	    	testCreateFullLink(documentTmp.getRoot(), SwapServletUrl, realURL);
+	    	testCreateImageLink(documentTmp.getRoot(), SwapServletUrl, realURL);	
 	    	outTmp = resp.getOutputStream();
 	    	String textValue = documentTmp.getTextValue();
 			outTmp.write(textValue.getBytes("UTF-8"));

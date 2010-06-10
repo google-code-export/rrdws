@@ -91,7 +91,7 @@ import org.vietspider.token.TypeToken;
       end  = Tag.FORBIDDEN, parent = {Name.FRAMESET}, type = Default.class
   ),
   @NodeConfig (name = Name.FRAMESET, children = {Name.FRAMESET, Name.FRAME, Name.NOFRAMES}, 
-      type = Default.class
+	  type = Default.class
   ),
 
   @NodeConfig (name = Name.H1, 
@@ -119,7 +119,7 @@ import org.vietspider.token.TypeToken;
   ),
   @NodeConfig (name = Name.HR, end  = Tag.FORBIDDEN, type = Block.class),
   @NodeConfig (name = Name.HTML, 
-      start = Tag.OPTIONAL, end = Tag.OPTIONAL,  children = {Name.HEAD, Name.BODY},
+      start = Tag.OPTIONAL, end = Tag.OPTIONAL,  children = {Name.HEAD, Name.FRAMESET, Name.BODY },
       type = Default.class, only = true
   ),
   @NodeConfig (name = Name.I, type = Fontstyle.class),
@@ -142,7 +142,9 @@ import org.vietspider.token.TypeToken;
   @NodeConfig (name = Name.META, end  = Tag.FORBIDDEN, parent = {Name.HEAD}, type = HeadMisc.class),
 
   @NodeConfig (name = Name.NOBR, type = Block.class),
-  @NodeConfig (name = Name.NOFRAMES, parent = {Name.FRAMESET}, type = Block.class),
+  @NodeConfig (name = Name.NOFRAMES, parent = {Name.FRAMESET},
+		  start = Tag.REQUIRED, end = Tag.REQUIRED,
+		  children = {Name.BODY}, type = Block.class),
   @NodeConfig (name = Name.NOSCRIPT, type = Block.class),
 
   @NodeConfig (name = Name.OBJECT, type = Special.class),

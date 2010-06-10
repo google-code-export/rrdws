@@ -148,34 +148,34 @@ public class HyperLinkUtil {
     return handler.getAttributeValue(node);
   }   
      
-  public  synchronized void createFullNormalLink(HTMLNode node, URL home) {   
-    createFullLink(node, linkAttributeFullMap, home, normalLinkVerifier);  
+  public  synchronized void createFullNormalLink(HTMLNode node, String swapServletUrl2, URL home) {   
+    createFullLink(node, linkAttributeFullMap,    swapServletUrl2, home, normalLinkVerifier);  
   } 
   
-  public  synchronized void createFullImageLink(HTMLNode node, URL home) {   
-    createFullLink(node, "img", "src", home, imageLinkVerifier);  
+  public  synchronized void createFullImageLink(HTMLNode node, String swapServletUrl2, URL home) {   
+    createFullLink(node, "img", "src", swapServletUrl2, home, imageLinkVerifier);  
   } 
   
   public synchronized void createFullLink(HTMLNode node, 
-      Map<String, String> map, URL home, ValueVerifier verifier) {
+      Map<String, String> map, String swapServletUrl2, URL home, ValueVerifier verifier) {
     if(node == null) return;
     NodeIterator iterator = node.iterator();
     while(iterator.hasNext()) {
       HTMLNode n = iterator.next();
-      if(n.isTag()) createFullSingleLink(n, map, home, verifier); 
+      if(n.isTag()) createFullSingleLink(n, map, swapServletUrl2, home, verifier); 
     }
   } 
   
-  public  synchronized void createFullNormalLink(List<NodeImpl> tokens, URL home) {
+  public  synchronized void createFullNormalLink(List<NodeImpl> tokens,  String swapServletUrl2, URL home) {
     for(int i = 0; i < tokens.size(); i++) {
       NodeImpl nodeImpl = tokens.get(i);
       if(!nodeImpl.isTag()) continue;
-      createFullSingleLink(nodeImpl, pageAttributeFullMap, home, normalLinkVerifier); 
+      createFullSingleLink(nodeImpl, pageAttributeFullMap, swapServletUrl2, home, normalLinkVerifier); 
     }
   } 
   
   private void createFullSingleLink(HTMLNode node, Map<String, String> map,
-                                    URL home, ValueVerifier verifier)   {
+                                    String swapServletUrl2, URL home, ValueVerifier verifier)   {
     Set<String> keys = map.keySet();
     Iterator<String> iter = keys.iterator();
     while(iter.hasNext()){
@@ -186,9 +186,21 @@ public class HyperLinkUtil {
         if(attr == null)  continue;
         String value = attr.getValue();
         if(value == null) continue;
-        if(verifier != null && !verifier.verify(value)) continue;
+        if(verifier != null && !verifier.verify(value)) continue; 
 //        System.out.println("truoc "+value);
-        value  = home+ new String (Base64Coder.encode(  value.getBytes() ));//value  = urlCreator.createURL(home, value);value  = urlCreator.createURL(home, value);
+          String homeStr = ""+home;
+          if ( value.startsWith("/")){ 
+        	  homeStr = (""+home).substring(0, (""+home).indexOf( home.getFile() ) );
+        	  value = (homeStr + value);
+        	  value  = swapServletUrl2 + new String (Base64Coder.encode(  value.getBytes() ));
+          }else{
+        	  homeStr = homeStr.substring(0,homeStr.lastIndexOf("/")+1); 
+        	  if (value.indexOf(homeStr)== 0 ) value = value;
+        	  else if (value.indexOf("http://")==0  ||value.indexOf("https://")==0  ) value = value;
+        	  else value =  homeStr + value;  
+        	  value  = swapServletUrl2 + new String (Base64Coder.encode(  value.getBytes() ));
+          }
+        		//value  = home+ new String (Base64Coder.encode(  value.getBytes() ));//value  = urlCreator.createURL(home, value);value  = urlCreator.createURL(home, value);
 //        System.out.println("sau "+value);
         attr.setValue(value);      
         attrs.set(attr);
@@ -197,16 +209,18 @@ public class HyperLinkUtil {
   }
   
   public void createFullLink(HTMLNode node, 
-      String nodeName, String attrName, URL home, ValueVerifier verifier) {
+      String nodeName, String attrName, String swapServletUrl2, URL home, ValueVerifier verifier) {
     NodeIterator iterator = node.iterator();
     while(iterator.hasNext()) {
       HTMLNode n = iterator.next();
-      if(n.isTag()) createFullSingleLink(n, nodeName, attrName, home, verifier);
+      if(n.isTag()){
+    	  createFullSingleLink(n, nodeName, attrName,  swapServletUrl2, home, verifier);
+      }
     }
   } 
   
   private void createFullSingleLink(HTMLNode node, 
-      String nodeName, String attrName, URL home, ValueVerifier verifier)   {
+      String nodeName, String attrName, String swapServletUrl2, URL home, ValueVerifier verifier)   {
     Attribute attr = null;
     if(node.isNode(nodeName) || (nodeName.length() == 1 && nodeName.charAt(0) == '*')) {
       Attributes attrs = node.getAttributes();  
@@ -215,7 +229,16 @@ public class HyperLinkUtil {
       attr = attrs.get(idx);
       String value = attr.getValue();
       if(verifier != null && !verifier.verify(value)) return;
-      value  = home+ new String (Base64Coder.encode(  value.getBytes() ));//value  = urlCreator.createURL(home, value);value  = urlCreator.createURL(home, value);//value  = home+value;//value  = urlCreator.createURL(home, value);      
+      String homeStr = ""+home;
+      if ( value.startsWith("/")){ 
+    	  homeStr = (""+home).substring(0, (""+home).indexOf( home.getFile() ) );
+    	  value = (homeStr + value);
+    	  value  = swapServletUrl2 + new String (Base64Coder.encode(  value.getBytes() ));
+      }else{
+    	  homeStr = homeStr.substring(0,homeStr.lastIndexOf("/")+1); 
+    	  value  = swapServletUrl2 + new String (Base64Coder.encode(  (homeStr+ value).getBytes() ));
+      }      
+      //value  = home+ new String (Base64Coder.encode(  value.getBytes() ));//value  = urlCreator.createURL(home, value);value  = urlCreator.createURL(home, value);//value  = home+value;//value  = urlCreator.createURL(home, value);      
       attr.setValue(value);      
       attrs.set(attr);
     }
@@ -237,7 +260,7 @@ public class HyperLinkUtil {
     public boolean verify(String link){
       link = link.toLowerCase();    
       String exist[] = {"img", "image"};
-      String end[]={"jpg", "gif", "jpeg", "bmp", "dib"};
+      String end[]={"jpg", "gif", "jpeg", "png", "ico", "svg", "bmp", "dib"};
       return existIn(link, exist) || endWith(link, end);
     }
   }
