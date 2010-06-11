@@ -61,6 +61,7 @@ public class HyperLinkUtil {
     pageAttributeFullMap.put("a", "href");
     pageAttributeFullMap.put("meta", "url");
     pageAttributeFullMap.put("link", "href");
+    pageAttributeFullMap.put("form", "action");
     pageAttributeFullMap.put("input", "src");
     pageAttributeFullMap.put("iframe", "src");
     pageAttributeFullMap.put("frame", "src");
@@ -149,7 +150,12 @@ public class HyperLinkUtil {
   }   
      
   public  synchronized void createFullNormalLink(HTMLNode node, String swapServletUrl2, URL home) {   
-    createFullLink(node, linkAttributeFullMap,    swapServletUrl2, home, normalLinkVerifier);  
+	    //createFullLink(node, linkAttributeFullMap,    swapServletUrl2, home, normalLinkVerifier);
+	  	Map mTmp = new HashMap();
+	  	
+	  	mTmp.putAll(linkAttributeFullMap);
+	  	mTmp.putAll(pageAttributeFullMap);
+	    createFullLink(node, mTmp,    swapServletUrl2, home, normalLinkVerifier);  
   } 
   
   public  synchronized void createFullImageLink(HTMLNode node, String swapServletUrl2, URL home) {   

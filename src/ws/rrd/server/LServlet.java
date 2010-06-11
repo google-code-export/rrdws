@@ -1,7 +1,9 @@
 package ws.rrd.server;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream; 
+import java.io.PrintWriter;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.HttpURLConnection;
@@ -94,7 +96,14 @@ public class LServlet extends HttpServlet {
 			try{
 				urlStr = new String(Base64Coder.decode(charArray));
 			}catch(Throwable e){
-				e.printStackTrace();
+				outTmp = resp.getOutputStream();
+				PrintWriter pw = new PrintWriter(outTmp, true);
+				pw.println( requestURL);
+				pw.println( contextTypeStr);
+				pw.println( SwapServletUrl);
+				pw.println( decodedUrl);
+								
+				e.printStackTrace(pw);
 			}
 			System.out.println(urlStr);
 			targetUrl = new StringBuilder(urlStr);
@@ -108,11 +117,16 @@ public class LServlet extends HttpServlet {
 			contextTypeStr = ""+entity.getContentType();
 			String contextEncStr = ""+entity.getContentEncoding() ;
 			
-			if (
-					"Content-Type: image/jpeg".equals(contextTypeStr) ||
-					// TODO!
-					"Content-Type: text/css".equals(contextTypeStr) ||		
-					"Content-Type: image/png".equals(contextTypeStr) ||	
+			if (					"Content-Type: text/css".equals(contextTypeStr) ){
+				
+				ByteArrayOutputStream oaos = new ByteArrayOutputStream();
+				entity.writeTo(oaos) ;
+				String xCSS = oaos.toString().replace("url(/", "URL (/l.gif?");
+				resp.getOutputStream().write(xCSS.getBytes());
+				return;
+			}else
+			if (		"Content-Type: image/jpeg".equals(contextTypeStr) ||
+			 		"Content-Type: image/png".equals(contextTypeStr) ||	
 					"Content-Type: image/x-icon".equals(contextTypeStr) ||	
 					
 					"content-type: text/html; charset=ISO8859-1".equals(contextTypeStr) ||	
@@ -131,7 +145,7 @@ public class LServlet extends HttpServlet {
 			}
 			 
 			String data = new UrlFetchTest().testFetchUrl( urlStr ); 
-			dataBuf = data.trim().getBytes();
+			dataBuf = data.trim().getBytes( "utf-8");
 			HTMLParser2 parser2 = new HTMLParser2();
 			documentTmp = parser2.createDocument(dataBuf, "utf-8");
 	    	URL realURL = new URL(urlStr);
@@ -152,7 +166,9 @@ public class LServlet extends HttpServlet {
 			if (!"".equals(""+targetUrl  ) && targetUrl != null){
 				ExceptionUtils.swapFailedException(targetUrl.toString(), resp,
 						e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-				e.printStackTrace();
+				outTmp = resp.getOutputStream();
+				e.printStackTrace(new PrintWriter(outTmp, true));
+				 
 			}
 			else
 				outTmp = resp.getOutputStream();
@@ -164,6 +180,10 @@ public class LServlet extends HttpServlet {
 				String toBrowser = new String (buf);
 				toBrowser = toBrowser.replace(magik,"" );// SwapServletUrl
 				outTmp.write(toBrowser.getBytes());
+				
+				outTmp.write("<pre>".getBytes());
+				outTmp.write((""+e.getMessage()+"\n\n\n\n"+e.getStackTrace()).getBytes());
+				e.printStackTrace(new PrintWriter(outTmp, true));
 				outTmp.flush();
 				//ExceptionUtils.swapFailedException(resp, e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}  
