@@ -71,6 +71,13 @@ public class LServlet extends HttpServlet {
 	    for(String ele : list)
 	      System.out.println(ele);
 	  }
+	  
+	  private static void testCreateMetaLink(HTMLNode node, String swapServletUrl2, URL home){
+		    handler.createMetaLink(node,  swapServletUrl2,  home);
+		    List<String> list  = handler.scanSiteLink(node);
+		    for(String ele : list)
+		      System.out.println(ele);
+		  }	  
 
 	  private static void testCreateImageLink(HTMLNode node, String swapServletUrl2, URL home){
 		    handler.createFullImageLink(node, swapServletUrl2, home);
@@ -111,6 +118,7 @@ public class LServlet extends HttpServlet {
 			if ((targetUrl.length() > 0) && (req.getQueryString() != null)
 					&& (req.getQueryString().length() > 1)) {
 				targetUrl.append(String.format("?%s", req.getQueryString()));
+				urlStr = targetUrl.toString();
 			}
 			HttpResponse xRespTmp = new UrlFetchTest().fetchResp(urlStr);
 			HttpEntity entity = xRespTmp.getEntity();
@@ -132,6 +140,8 @@ public class LServlet extends HttpServlet {
 					"content-type: text/html; charset=ISO8859-1".equals(contextTypeStr) ||	
 										
 					"Content-Type: image/gif".equals(contextTypeStr) ||
+					"Content-Type: application/pdf".equals(contextTypeStr) ||
+					
 					"null".equals(contextTypeStr)
 					
 			){
@@ -152,6 +162,10 @@ public class LServlet extends HttpServlet {
 	    	 
 	    	testCreateFullLink(documentTmp.getRoot(), SwapServletUrl, realURL);
 	    	testCreateImageLink(documentTmp.getRoot(), SwapServletUrl, realURL);
+	    	
+	    	testCreateMetaLink(documentTmp.getRoot(), SwapServletUrl, realURL);
+	    	
+	    	
 	    	resp.setContentType("text/html; charset=UTF-8");
 	    	outTmp = resp.getOutputStream();
 	    	

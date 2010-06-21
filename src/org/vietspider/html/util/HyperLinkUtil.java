@@ -155,8 +155,28 @@ public class HyperLinkUtil {
 	  	
 	  	mTmp.putAll(linkAttributeFullMap);
 	  	mTmp.putAll(pageAttributeFullMap);
+	  	
 	    createFullLink(node, mTmp,    swapServletUrl2, home, normalLinkVerifier);  
   } 
+
+  
+  public  synchronized void createMetaLink(HTMLNode node, String swapServletUrl2, URL home) {   
+	    //createFullLink(node, linkAttributeFullMap,    swapServletUrl2, home, normalLinkVerifier);
+	  	Map mTmp = new HashMap();
+	  	
+	  	mTmp.put("META", "CONTENT");
+	  	
+	    //createFullLink(node, mTmp,    swapServletUrl2, home, normalLinkVerifier);
+	  	 if(node == null) return;
+	     NodeIterator iterator = node.iterator();
+	     while(iterator.hasNext()) {
+	       HTMLNode n = iterator.next();
+	       if(n.isTag()) createMetaLink(n, mTmp, swapServletUrl2, home, normalLinkVerifier); 
+	     }	  	
+}   
+  
+  
+  
   
   public  synchronized void createFullImageLink(HTMLNode node, String swapServletUrl2, URL home) {   
     createFullLink(node, "img", "src", swapServletUrl2, home, imageLinkVerifier);  
@@ -197,10 +217,16 @@ public class HyperLinkUtil {
           String homeStr = ""+home;
           if ( value.startsWith("/")){ 
         	  String fileNameTmp =home.getFile() ;
-        	  if("/".equals( fileNameTmp )) // assums home will be always with "/" at the end
-        		  homeStr = (""+home);
-        	  else  
-        		  homeStr = (""+home).substring(0, (""+home).indexOf( fileNameTmp ) ) +"/";
+        	  String sBaseTmp = (""+home);
+			if("/".equals( fileNameTmp )) // assums home will be always with "/" at the end
+        		  homeStr = sBaseTmp;
+			else {
+				int indexOfFileName = sBaseTmp.indexOf( fileNameTmp );
+				if (indexOfFileName>0)
+					homeStr = sBaseTmp.substring(0, indexOfFileName ) +"/";
+				else
+					homeStr = sBaseTmp +"/";
+			}
         	  value = (homeStr + value.substring(1,value.length()));
         	  value  = swapServletUrl2 + new String (Base64Coder.encode(  value.getBytes() ));
           }else{
@@ -217,6 +243,38 @@ public class HyperLinkUtil {
       }
     }  
   }
+  
+  
+  private void createMetaLink(HTMLNode node, Map<String, String> map,
+			String swapServletUrl2, URL home, ValueVerifier verifier) {
+		Set<String> keys = map.keySet();
+		Iterator<String> iter = keys.iterator();
+		while (iter.hasNext()) {
+			String key = iter.next();
+			if (node.isNode(key) || (key.length() == 1 && key.charAt(0) == '*')) {
+				Attributes attrs = node.getAttributes();
+				Attribute attr = attrs.get(map.get(key));
+				if (attr == null)
+					continue;
+				String value = attr.getValue();
+				if (value == null)
+					continue;
+				if (verifier != null && !verifier.verify(value))
+					continue;
+ 
+				if (value.toUpperCase().indexOf("URL=HTTP")<0)continue;
+				int urlStrinPos = value.toUpperCase().indexOf("HTTP");
+				String urlTmp = value.substring(urlStrinPos);
+				value = value.substring(0, urlStrinPos);
+				value += swapServletUrl2
+						+ new String(Base64Coder.encode(urlTmp.getBytes()));
+			 
+				 
+				attr.setValue(value);
+				attrs.set(attr);
+			}
+		}
+	}  
   
   public void createFullLink(HTMLNode node, 
       String nodeName, String attrName, String swapServletUrl2, URL home, ValueVerifier verifier) {
