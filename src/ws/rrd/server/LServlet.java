@@ -125,39 +125,49 @@ public class LServlet extends HttpServlet {
 			contextTypeStr = ""+entity.getContentType();
 			String contextEncStr = ""+entity.getContentEncoding() ;
 			
-			if (					"Content-Type: text/css".equals(contextTypeStr) ){
-				
+			if (					"Content-Type: text/css".equalsIgnoreCase( contextTypeStr) ){
+				log.warning("contextTypeStr/contextEncStr:"+contextTypeStr+"/"+contextEncStr +"["+urlStr+"]");
 				ByteArrayOutputStream oaos = new ByteArrayOutputStream();
 				entity.writeTo(oaos) ;
-				String xCSS = oaos.toString().replace("url(/", "URL (/l.gif?");
-				resp.getOutputStream().write(xCSS.getBytes());
+				String xCSS = oaos.toString().replace("url(/", "URL (/l.gif?")
+				.replace("url (/", "URL (/l.gif?")
+				.replace("URL(/", "URL (/l.gif?")
+				.replace("Url(/", "URL (/l.gif?")
+				.replace("url ( /", "URL (/l.gif?");
+				outTmp = resp.getOutputStream();
+				outTmp.write(xCSS.getBytes());
+				outTmp.flush();
 				return;
 			}else
-			if (		"Content-Type: image/jpeg".equals(contextTypeStr) ||
-			 		"Content-Type: image/png".equals(contextTypeStr) ||	
-					"Content-Type: image/x-icon".equals(contextTypeStr) ||	
+			if (		"Content-Type: image/jpeg".equalsIgnoreCase( contextTypeStr) ||
+			 		"Content-Type: image/png".equalsIgnoreCase( contextTypeStr) ||	
+					"Content-Type: image/x-icon".equalsIgnoreCase( contextTypeStr) ||	
 					
-					"content-type: text/html; charset=ISO8859-1".equals(contextTypeStr) ||	
+					"content-type: text/html; charset=ISO8859-1".equalsIgnoreCase( contextTypeStr) ||	
 										
-					"Content-Type: image/gif".equals(contextTypeStr) ||
-					"Content-Type: application/pdf".equals(contextTypeStr) ||
+					"Content-Type: image/gif".equalsIgnoreCase( contextTypeStr) ||
+					"Content-Type: application/pdf".equalsIgnoreCase( contextTypeStr) ||
 					
-					"null".equals(contextTypeStr)
+					"null".equalsIgnoreCase( contextTypeStr)
 					
 			){
 				if (! "null".equals( contextTypeStr )){
 					resp.setContentType(contextTypeStr.substring("Content-Type:".length()));
 				}
-				entity.writeTo(resp.getOutputStream()) ;
+				log.warning("contextTypeStr/contextEncStr:"+contextTypeStr+"/"+contextEncStr +"["+urlStr+"]");
+				outTmp = resp.getOutputStream();
+				entity.writeTo(outTmp) ;
+				outTmp.flush();
 				return;
 			}else{
+				log.warning("contextTypeStr/contextEncStr:"+contextTypeStr+"/"+contextEncStr +"["+urlStr+"]");
 				System.out.println("=====!!!======"+contextTypeStr +"::::"+contextEncStr);
 			}
 			 
 			String data = new UrlFetchTest().testFetchUrl( urlStr ); 
-			dataBuf = data.trim().getBytes( "utf-8");
+			dataBuf = data.trim().getBytes();// "utf-8"
 			HTMLParser2 parser2 = new HTMLParser2();
-			documentTmp = parser2.createDocument(dataBuf, "utf-8");
+			documentTmp = parser2.createDocument(dataBuf, "utf-8");// "utf-8"
 	    	URL realURL = new URL(urlStr);
 	    	 
 	    	testCreateFullLink(documentTmp.getRoot(), SwapServletUrl, realURL);
