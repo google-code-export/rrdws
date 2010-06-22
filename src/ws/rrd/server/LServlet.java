@@ -31,6 +31,8 @@ import ws.rdd.net.UrlFetchTest;
 @SuppressWarnings("serial")
 public class LServlet extends HttpServlet {
 
+	private static final String CHARSET_PREFIX = "charset=";
+
 	// TODO: Create a config class to dynamic load settings from system.
 	// propertiesin appengine-web.xml.
 	//	public static String SwapServletUrl = "http://localhost:8080/swap/";		// dev.
@@ -124,11 +126,15 @@ public class LServlet extends HttpServlet {
 			HttpEntity entity = xRespTmp.getEntity();
 			contextTypeStr = ""+entity.getContentType();
 			String contextEncStr =  ""+entity.getContentEncoding() ;
-			if ("null" .equals( contextEncStr )  ){
-				int encPos = contextTypeStr.toLowerCase().indexOf("charset=");
+			
+			if ("null" .equals( contextEncStr ) &&  contextTypeStr.startsWith("Content-Type: text/html")){
+				int encPos = contextTypeStr.toLowerCase().indexOf(CHARSET_PREFIX);
 				if (encPos>0){
-					contextEncStr = contextTypeStr.substring(encPos+"charset=".length());
+					contextEncStr = contextTypeStr.substring(encPos+CHARSET_PREFIX.length());
 					contextEncStr = contextEncStr .toUpperCase();
+				}else{
+					contextEncStr =  "UTF-8";
+					contextTypeStr = "text/html; charset="+contextEncStr;
 				}
 			}
 			
