@@ -197,7 +197,7 @@ public class LServlet extends HttpServlet {
 			 
 			ByteArrayOutputStream oaos = new ByteArrayOutputStream();
 			entity.writeTo(oaos) ;
-			String xCSS = oaos.toString()			;
+			String xCSS = oaos.toString(contextEncStr);//xCSS.toUpperCase().substring( 12430)
 			String data = xCSS;// data = new UrlFetchTest().testFetchUrl( urlStr ); 
 			if ("null".equals(""+contextEncStr)){
 				dataBuf = data.trim().getBytes("ISO-8859-1");// "ISO-8859-1"
@@ -209,7 +209,7 @@ public class LServlet extends HttpServlet {
 				dataBuf = data.trim().getBytes(contextEncStr);// "utf-8"
 			}
 			HTMLParser2 parser2 = new HTMLParser2();
-			documentTmp = parser2.createDocument(dataBuf, "null".equals( contextEncStr)? null:contextEncStr);// "utf-8"
+			documentTmp = parser2.createDocument(dataBuf, null );// "utf-8"
 	    	URL realURL = new URL(urlStr);
 	    	 
 	    	testCreateFullLink(documentTmp.getRoot(), SwapServletUrl, realURL);
@@ -224,7 +224,7 @@ public class LServlet extends HttpServlet {
 	    	
 	    	outTmp = resp.getOutputStream();
 	    	 
-	    	String textValue = documentTmp.getTextValue();
+	    	String textValue = documentTmp.getTextValue();//textValue.toUpperCase().substring( 12430)
 			outTmp.write(textValue.getBytes(contextEncStr));
 		} catch (java.lang.NoClassDefFoundError e) {
 	    	System.out.println(contextTypeStr +" ===============  "+e.getMessage());e.printStackTrace();
