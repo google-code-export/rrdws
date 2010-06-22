@@ -44,8 +44,10 @@ public class UrlFetchTest {
 		 return new String( buf,0,readedTmp ) ; 
 	}
 
-	public HttpResponse fetchResp(String toFetchStr) throws IOException,
-			ClientProtocolException {
+	public HttpResponse fetchResp(String toFetchStr) throws IOException, ClientProtocolException {
+		return fetchResp(toFetchStr, new String[][]{});
+	}
+	public HttpResponse fetchResp(String toFetchStr, String headers[][]) throws IOException, ClientProtocolException {
 		HttpClient httpClient = makeHTTPClient();
 
 		String schemes[] = {"htttps", "http"};
@@ -62,6 +64,8 @@ public class UrlFetchTest {
 				? "http://www.fiducia.de/service/suchergebnis.html?searchTerm=zeit"
 				: toFetchStr;
 		HttpUriRequest m = new HttpGet(fetchUrl);
+		for (String []nextHeader :headers)
+			m.addHeader(nextHeader[0], nextHeader[1]);
 		HttpResponse respTmp = httpClient.execute(m);
 		return respTmp;
 	}

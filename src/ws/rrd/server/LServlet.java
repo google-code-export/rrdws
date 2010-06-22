@@ -7,8 +7,12 @@ import java.io.PrintWriter;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.HttpURLConnection;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletOutputStream;
@@ -16,6 +20,7 @@ import javax.servlet.http.*;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.vietspider.html.HTMLDocument;
 import org.vietspider.html.HTMLNode;
@@ -122,12 +127,14 @@ public class LServlet extends HttpServlet {
 				targetUrl.append(String.format("?%s", req.getQueryString()));
 				urlStr = targetUrl.toString();
 			}
-			HttpResponse xRespTmp = new UrlFetchTest().fetchResp(urlStr);
+			
+			String[][] headsToResend = calcRequestHeaders(req);
+			HttpResponse xRespTmp = new UrlFetchTest().fetchResp(urlStr, headsToResend);
 			HttpEntity entity = xRespTmp.getEntity();
 			contextTypeStr = ""+entity.getContentType();
 			String contextEncStr =  ""+entity.getContentEncoding() ;
 			
-			if ("null" .equals( contextEncStr ) &&  contextTypeStr.startsWith("Content-Type: text/html")){
+			if ("null" .equals( contextEncStr ) &&  contextTypeStr.toLowerCase().startsWith("content-type: text/html")){
 				int encPos = contextTypeStr.toLowerCase().indexOf(CHARSET_PREFIX);
 				if (encPos>0){
 					contextEncStr = contextTypeStr.substring(encPos+CHARSET_PREFIX.length());
@@ -192,7 +199,15 @@ public class LServlet extends HttpServlet {
 			entity.writeTo(oaos) ;
 			String xCSS = oaos.toString()			;
 			String data = xCSS;// data = new UrlFetchTest().testFetchUrl( urlStr ); 
-			dataBuf = data.trim().getBytes(contextEncStr);// "utf-8"
+			if ("null".equals(""+contextEncStr)){
+				dataBuf = data.trim().getBytes("ISO-8859-1");// "ISO-8859-1"
+				contextEncStr = "ISO-8859-1";
+				log.warning("ISO-8859-1ISO-8859-1ISO-8859-1ISO-8859-1 contextTypeStr/contextEncStr:"+contextTypeStr+" ::enc :: "+contextEncStr +"["+urlStr+"]");
+			}
+			else
+			{
+				dataBuf = data.trim().getBytes(contextEncStr);// "utf-8"
+			}
 			HTMLParser2 parser2 = new HTMLParser2();
 			documentTmp = parser2.createDocument(dataBuf, "null".equals( contextEncStr)? null:contextEncStr);// "utf-8"
 	    	URL realURL = new URL(urlStr);
@@ -204,6 +219,9 @@ public class LServlet extends HttpServlet {
 	    	
 	    	int beginIndex = contextTypeStr.toUpperCase().indexOf(" ");
 	    	resp.setContentType(contextTypeStr.substring(beginIndex));
+
+	    	setupResponseProperty( resp,  xRespTmp);
+	    	
 	    	outTmp = resp.getOutputStream();
 	    	 
 	    	String textValue = documentTmp.getTextValue();
@@ -268,10 +286,44 @@ public class LServlet extends HttpServlet {
 	// "$Version=0; _javaeye3_session_=BAh7BiIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxlcjo6Rmxhc2g6OkZsYXNoSGFzaHsABjoKQHVzZWR7AA%3D%3D--d983012383f33595e8b4015c6235ad6e21fa81cf; $Path=/; $Domain=javaeye.com".
 	// Domain attribute "javaeye.com" violates RFC 2109: domain must start with a dot
 
+	static final String headersToSet []= {
+			"Content-Type",
+			"Content-Language",
+			"Date",
+			"Last-Modified" ,
+			"Accept-Charset",
+			"Accept-Language",
+			"Accept-Encoding",
+			"Referer", 
+			"Cookie",
+			"Cache-Control",
+			"User-Agent"
+			
+	};	
 	protected static void setupResponseProperty(HttpServletResponse resp,
-			HttpURLConnection swaperConn) throws IOException {
-		for (String name : swaperConn.getHeaderFields().keySet())
-			resp.setHeader(name, swaperConn.getHeaderField(name));
+			HttpResponse respTmp) throws IOException {
+		for (String headerName :headersToSet)
+		for (Header next: respTmp.getHeaders(headerName) )
+			resp.setHeader(next.getName(), next.getValue());
+	}
+	
+	protected static String[][] calcRequestHeaders(
+			HttpServletRequest req) {
+		Map<String, String> headersTmp = new HashMap<String, String>();
+		for (String headerName :headersToSet){
+			String nextVal =  req.getHeader(headerName);
+			if (nextVal != null)
+			headersTmp.put( headerName  , nextVal );
+		}
+		
+		String [][]retval = new String[headersTmp.size()][2];
+		int i=0;
+		for(String  nextKey:headersTmp.keySet()){
+			retval[i][0] = nextKey;
+			retval[i][1] = headersTmp.get(nextKey);
+			i++;
+		}
+		return   retval;
 	}
 
 	protected static void markFwswaperTagInResponseHead(HttpServletResponse resp) {
