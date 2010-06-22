@@ -186,7 +186,7 @@ public class LServlet extends HttpServlet {
 			entity.writeTo(oaos) ;
 			String xCSS = oaos.toString()			;
 			String data = xCSS;// data = new UrlFetchTest().testFetchUrl( urlStr ); 
-			dataBuf = data.trim().getBytes();// "utf-8"
+			dataBuf = data.trim().getBytes(contextEncStr);// "utf-8"
 			HTMLParser2 parser2 = new HTMLParser2();
 			documentTmp = parser2.createDocument(dataBuf, "null".equals( contextEncStr)? null:contextEncStr);// "utf-8"
 	    	URL realURL = new URL(urlStr);
@@ -199,9 +199,9 @@ public class LServlet extends HttpServlet {
 	    	int beginIndex = contextTypeStr.toUpperCase().indexOf(" ");
 	    	resp.setContentType(contextTypeStr.substring(beginIndex));
 	    	outTmp = resp.getOutputStream();
-	    	
+	    	 
 	    	String textValue = documentTmp.getTextValue();
-			outTmp.write(textValue.getBytes(resp.getCharacterEncoding()));
+			outTmp.write(textValue.getBytes(contextEncStr));
 		} catch (java.lang.NoClassDefFoundError e) {
 	    	System.out.println(contextTypeStr +" ===============  "+e.getMessage());e.printStackTrace();
 	    	System.out.println(documentTmp);
