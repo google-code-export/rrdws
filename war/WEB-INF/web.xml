@@ -4,7 +4,10 @@
     "http://java.sun.com/dtd/web-app_2_3.dtd">
 
 <web-app>
-
+	<servlet>
+	<servlet-name>info</servlet-name>
+	<jsp-file>info.jsp</jsp-file>
+	</servlet>
 	<!-- Servlets -->
 	<servlet>
 		<servlet-name>l</servlet-name>
@@ -20,6 +23,10 @@
 		<servlet-name>greetServlet</servlet-name>
 		<url-pattern>/rrd/greet</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>info</servlet-name>
+		<url-pattern>/info.htm</url-pattern>
+	</servlet-mapping>	
 	<servlet-mapping>
 		<servlet-name>l</servlet-name>
 		<url-pattern>/l/*</url-pattern>

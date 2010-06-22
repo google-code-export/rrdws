@@ -123,9 +123,19 @@ public class LServlet extends HttpServlet {
 			HttpResponse xRespTmp = new UrlFetchTest().fetchResp(urlStr);
 			HttpEntity entity = xRespTmp.getEntity();
 			contextTypeStr = ""+entity.getContentType();
-			String contextEncStr = ""+entity.getContentEncoding() ;
+			String contextEncStr =  ""+entity.getContentEncoding() ;
+			if ("null" .equals( contextEncStr )  ){
+				int encPos = contextTypeStr.toLowerCase().indexOf("charset=");
+				if (encPos>0){
+					contextEncStr = contextTypeStr.substring(encPos+"charset=".length());
+					contextEncStr = contextEncStr .toUpperCase();
+				}
+			}
 			
-			if (					"Content-Type: text/css".equalsIgnoreCase( contextTypeStr) ){
+			if (					
+				"Content-Type: text/css".equalsIgnoreCase( contextTypeStr) 
+				)
+			{
 				log.warning("contextTypeStr/contextEncStr:"+contextTypeStr+"/"+contextEncStr +"["+urlStr+"]");
 				ByteArrayOutputStream oaos = new ByteArrayOutputStream();
 				entity.writeTo(oaos) ;
@@ -139,16 +149,24 @@ public class LServlet extends HttpServlet {
 				outTmp.flush();
 				return;
 			}else
-			if (		"Content-Type: image/jpeg".equalsIgnoreCase( contextTypeStr) ||
+			if (	
+					"null".equalsIgnoreCase( contextTypeStr)||
+					"Content-Type: image/jpeg".equalsIgnoreCase( contextTypeStr) ||
 			 		"Content-Type: image/png".equalsIgnoreCase( contextTypeStr) ||	
-					"Content-Type: image/x-icon".equalsIgnoreCase( contextTypeStr) ||	
-					
-					"content-type: text/html; charset=ISO8859-1".equalsIgnoreCase( contextTypeStr) ||	
-										
+					"Content-Type: image/x-icon".equalsIgnoreCase( contextTypeStr) ||						
+					"content-type: text/html; charset=ISO8859-1".equalsIgnoreCase( contextTypeStr) ||											
 					"Content-Type: image/gif".equalsIgnoreCase( contextTypeStr) ||
 					"Content-Type: application/pdf".equalsIgnoreCase( contextTypeStr) ||
+					"Content-Type: application/x-shockwave-flash".equalsIgnoreCase( contextTypeStr) ||
+					"Content-Type: application/postscript".equalsIgnoreCase( contextTypeStr) ||
+					"Content-Type: application/octet-stream".equalsIgnoreCase( contextTypeStr) ||
+					"Content-Type: application/x-msexcel".equalsIgnoreCase( contextTypeStr) ||
+					"Content-Type: image/tiff".equalsIgnoreCase( contextTypeStr) ||
+					"Content-Type: image/ief".equalsIgnoreCase( contextTypeStr) ||
+					"Content-Type: image/g3fax".equalsIgnoreCase( contextTypeStr) ||
+					"Content-Type: application/x-shockwave-flash".equalsIgnoreCase( contextTypeStr) 
 					
-					"null".equalsIgnoreCase( contextTypeStr)
+					
 					
 			){
 				if (! "null".equals( contextTypeStr )){
@@ -160,14 +178,17 @@ public class LServlet extends HttpServlet {
 				outTmp.flush();
 				return;
 			}else{
-				log.warning("contextTypeStr/contextEncStr:"+contextTypeStr+"/"+contextEncStr +"["+urlStr+"]");
+				log.warning("contextTypeStr/contextEncStr:"+contextTypeStr+" ::enc :: "+contextEncStr +"["+urlStr+"]");
 				System.out.println("=====!!!======"+contextTypeStr +"::::"+contextEncStr);
 			}
 			 
-			String data = new UrlFetchTest().testFetchUrl( urlStr ); 
+			ByteArrayOutputStream oaos = new ByteArrayOutputStream();
+			entity.writeTo(oaos) ;
+			String xCSS = oaos.toString()			;
+			String data = xCSS;// data = new UrlFetchTest().testFetchUrl( urlStr ); 
 			dataBuf = data.trim().getBytes();// "utf-8"
 			HTMLParser2 parser2 = new HTMLParser2();
-			documentTmp = parser2.createDocument(dataBuf, "utf-8");// "utf-8"
+			documentTmp = parser2.createDocument(dataBuf, "null".equals( contextEncStr)? null:contextEncStr);// "utf-8"
 	    	URL realURL = new URL(urlStr);
 	    	 
 	    	testCreateFullLink(documentTmp.getRoot(), SwapServletUrl, realURL);
@@ -175,8 +196,8 @@ public class LServlet extends HttpServlet {
 	    	
 	    	testCreateMetaLink(documentTmp.getRoot(), SwapServletUrl, realURL);
 	    	
-	    	
-	    	resp.setContentType("text/html; charset=UTF-8");
+	    	int beginIndex = contextTypeStr.toUpperCase().indexOf(" ");
+	    	resp.setContentType(contextTypeStr.substring(beginIndex));
 	    	outTmp = resp.getOutputStream();
 	    	
 	    	String textValue = documentTmp.getTextValue();
