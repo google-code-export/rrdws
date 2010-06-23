@@ -137,12 +137,18 @@ public class LServlet extends HttpServlet {
 			if ("null" .equals( contextEncStr ) &&  contextTypeStr.toLowerCase().startsWith("content-type: text/html")){
 				int encPos = contextTypeStr.toLowerCase().indexOf(CHARSET_PREFIX);
 				if (encPos>0){
+					
 					contextEncStr = contextTypeStr.substring(encPos+CHARSET_PREFIX.length());
 					contextEncStr = contextEncStr .toUpperCase();
+					log.warning(contextEncStr + "  }} ENC :=  {  "+contextTypeStr+" } ::: enc ::: "+contextEncStr +"["+urlStr+"]");
+
 				}else{
+					log.warning(contextEncStr + "  }} ENC := UTF-8 -!!! "+contextTypeStr+" :{ :enc :::: "+contextEncStr +"["+urlStr+"]");
 					contextEncStr =  "UTF-8";
 					contextTypeStr = "text/html; charset="+contextEncStr;
 				}
+			}else{
+				log.warning("nonull::::"+ contextEncStr + " ::::: "+ contextTypeStr );
 			}
 			
 			if (					
@@ -177,6 +183,8 @@ public class LServlet extends HttpServlet {
 					"Content-Type: image/tiff".equalsIgnoreCase( contextTypeStr) ||
 					"Content-Type: image/ief".equalsIgnoreCase( contextTypeStr) ||
 					"Content-Type: image/g3fax".equalsIgnoreCase( contextTypeStr) ||
+					"Content-Type: application/x-javascript".equalsIgnoreCase( contextTypeStr) ||
+					
 					"Content-Type: application/x-shockwave-flash".equalsIgnoreCase( contextTypeStr) 
 					
 					
@@ -197,7 +205,7 @@ public class LServlet extends HttpServlet {
 			 
 			ByteArrayOutputStream oaos = new ByteArrayOutputStream();
 			entity.writeTo(oaos) ;
-			String xCSS = oaos.toString(contextEncStr);//xCSS.toUpperCase().substring( 12430)
+			String xCSS = oaos.toString("null".equals(  contextEncStr )?"ISO-8859-1":contextEncStr);//xCSS.toUpperCase().substring( 12430)
 			String data = xCSS;// data = new UrlFetchTest().testFetchUrl( urlStr ); 
 			if ("null".equals(""+contextEncStr)){
 				dataBuf = data.trim().getBytes("ISO-8859-1");// "ISO-8859-1"
@@ -225,7 +233,10 @@ public class LServlet extends HttpServlet {
 	    	outTmp = resp.getOutputStream();
 	    	 
 	    	String textValue = documentTmp.getTextValue();//textValue.toUpperCase().substring( 12430)
+	    	//PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	    	outTmp.write("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"><HtMl>".getBytes(contextEncStr));
 			outTmp.write(textValue.getBytes(contextEncStr));
+			outTmp.write("</HtMl>".getBytes(contextEncStr));
 		} catch (java.lang.NoClassDefFoundError e) {
 	    	System.out.println(contextTypeStr +" ===============  "+e.getMessage());e.printStackTrace();
 	    	System.out.println(documentTmp);
