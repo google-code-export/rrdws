@@ -1,5 +1,6 @@
 package ws.rrd.server;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream; 
@@ -14,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
+import java.util.zip.GZIPInputStream;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.*;
@@ -143,9 +145,11 @@ public class LServlet extends HttpServlet {
 					log.warning(contextEncStr + "  }} ENC :=  {  "+contextTypeStr+" } ::: enc ::: "+contextEncStr +"["+urlStr+"]");
 
 				}else{
-					log.warning(contextEncStr + "  }} ENC := UTF-8 -!!! "+contextTypeStr+" :{ :enc :::: "+contextEncStr +"["+urlStr+"]");
-					contextEncStr =  "UTF-8";
-					contextTypeStr = "text/html; charset="+contextEncStr;
+					
+					Header[] contextEncHeaders = xRespTmp.getHeaders("Content-Encoding");
+					contextEncStr =  contextEncHeaders[0].getValue();
+					log.warning("Content-Encoding[0]::=={"+ contextEncStr + "  }" );
+					 
 				}
 			}else{
 				log.warning("nonull::::"+ contextEncStr + " ::::: "+ contextTypeStr );
@@ -163,6 +167,7 @@ public class LServlet extends HttpServlet {
 				.replace("URL(/", "URL (/l.gif?")
 				.replace("Url(/", "URL (/l.gif?")
 				.replace("url ( /", "URL (/l.gif?");
+				resp.setContentType("text/css");
 				outTmp = resp.getOutputStream();
 				outTmp.write(xCSS.getBytes());
 				outTmp.flush();
@@ -205,6 +210,17 @@ public class LServlet extends HttpServlet {
 			 
 			ByteArrayOutputStream oaos = new ByteArrayOutputStream();
 			entity.writeTo(oaos) ;
+			if ("gzip".equals(contextEncStr)){
+				ByteArrayInputStream gzippeddata = new ByteArrayInputStream(oaos.toByteArray());
+				GZIPInputStream zipin = new GZIPInputStream(gzippeddata);
+				byte[] buf = new byte[1024];  //size can be  
+		        int len;
+		        oaos = new ByteArrayOutputStream();
+		        while ((len = zipin.read(buf)) > 0) {
+		        	oaos.write(buf, 0, len);
+		        }
+		        contextEncStr  = "ISO-8859-1";
+			}
 			String xCSS = oaos.toString("null".equals(  contextEncStr )?"ISO-8859-1":contextEncStr);//xCSS.toUpperCase().substring( 12430)
 			String data = xCSS;// data = new UrlFetchTest().testFetchUrl( urlStr ); 
 			if ("null".equals(""+contextEncStr)){
@@ -225,7 +241,7 @@ public class LServlet extends HttpServlet {
 	    	
 	    	testCreateMetaLink(documentTmp.getRoot(), SwapServletUrl, realURL);
 	    	
-	    	int beginIndex = contextTypeStr.toUpperCase().indexOf(" ");
+	    	int beginIndex = contextTypeStr.toUpperCase().indexOf(" ")+1;
 	    	resp.setContentType(contextTypeStr.substring(beginIndex));
 
 	    	setupResponseProperty( resp,  xRespTmp);
@@ -234,9 +250,12 @@ public class LServlet extends HttpServlet {
 	    	 
 	    	String textValue = documentTmp.getTextValue();//textValue.toUpperCase().substring( 12430)
 	    	//PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-	    	outTmp.write("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"><HtMl>".getBytes(contextEncStr));
-			outTmp.write(textValue.getBytes(contextEncStr));
-			outTmp.write("</HtMl>".getBytes(contextEncStr));
+	    	String string1 = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"><HtMl>";
+	    	String string2 = "</HtMl>";
+			//outTmp.write(string1.getBytes(contextEncStr));
+			outTmp.write((string1 + textValue + string2).getBytes(contextEncStr));
+			//outTmp.write(string2.getBytes(contextEncStr));
+			outTmp.flush();
 		} catch (java.lang.NoClassDefFoundError e) {
 	    	System.out.println(contextTypeStr +" ===============  "+e.getMessage());e.printStackTrace();
 	    	System.out.println(documentTmp);
