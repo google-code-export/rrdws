@@ -230,7 +230,7 @@ public class LServlet extends HttpServlet {
 			if ("null".equals(""+contextEncStr)){
 				dataBuf = data.trim().getBytes("ISO-8859-1");// "ISO-8859-1"
 				contextEncStr = "ISO-8859-1";
-				log.warning("ISO-8859-1ISO-8859-1ISO-8859-1ISO-8859-1 contextTypeStr/contextEncStr:"+contextTypeStr+" ::enc :: "+contextEncStr +"["+urlStr+"]");
+				log.warning("ISO-8859-1ISO-8859-1ISO-8859-1ISO-8859-1 contextTypeStr/contextEncStr:"+contextTypeStr+" :: enc :: "+contextEncStr +"["+urlStr+"]");
 			}
 			else
 			{
