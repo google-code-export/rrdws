@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.HttpURLConnection;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -131,6 +132,8 @@ public class LServlet extends HttpServlet {
 			}
 			
 			String[][] headsToResend = calcRequestHeaders(req);
+			 
+			urlStr  = urlStr.replace(" ", "%20");
 			HttpResponse xRespTmp = new UrlFetchTest().fetchResp(urlStr, headsToResend);
 			HttpEntity entity = xRespTmp.getEntity();
 			contextTypeStr = ""+entity.getContentType();
@@ -162,6 +165,10 @@ public class LServlet extends HttpServlet {
 				log.warning("contextTypeStr/contextEncStr:"+contextTypeStr+"/"+contextEncStr +"["+urlStr+"]");
 				ByteArrayOutputStream oaos = new ByteArrayOutputStream();
 				entity.writeTo(oaos) ;
+				if (isGZip(xRespTmp)){
+					oaos = deZip(oaos);
+			        contextEncStr  = "ISO-8859-1";
+				}				
 				String xCSS = oaos.toString().replace("url(/", "URL (/l.gif?")
 				.replace("url (/", "URL (/l.gif?")
 				.replace("URL(/", "URL (/l.gif?")
@@ -196,7 +203,9 @@ public class LServlet extends HttpServlet {
 					
 			){
 				if (! "null".equals( contextTypeStr )){
-					resp.setContentType(contextTypeStr.substring("Content-Type:".length()));
+					String contypeTmp = contextTypeStr.substring("Content-Type:".length());
+					resp.setContentType(contypeTmp);
+					setupResponseProperty( resp,  xRespTmp);
 				}
 				log.warning("contextTypeStr/contextEncStr:"+contextTypeStr+"/"+contextEncStr +"["+urlStr+"]");
 				outTmp = resp.getOutputStream();
@@ -210,15 +219,8 @@ public class LServlet extends HttpServlet {
 			 
 			ByteArrayOutputStream oaos = new ByteArrayOutputStream();
 			entity.writeTo(oaos) ;
-			if ("gzip".equals(contextEncStr)){
-				ByteArrayInputStream gzippeddata = new ByteArrayInputStream(oaos.toByteArray());
-				GZIPInputStream zipin = new GZIPInputStream(gzippeddata);
-				byte[] buf = new byte[1024];  //size can be  
-		        int len;
-		        oaos = new ByteArrayOutputStream();
-		        while ((len = zipin.read(buf)) > 0) {
-		        	oaos.write(buf, 0, len);
-		        }
+			if ("gzip".equals(contextEncStr)  || isGZip(xRespTmp) ){
+				oaos = deZip(oaos);
 		        contextEncStr  = "ISO-8859-1";
 			}
 			String xCSS = oaos.toString("null".equals(  contextEncStr )?"ISO-8859-1":contextEncStr);//xCSS.toUpperCase().substring( 12430)
@@ -288,6 +290,23 @@ public class LServlet extends HttpServlet {
 		}  
 	}
 
+	private boolean isGZip(HttpResponse xRespTmp) {
+		return "gzip".equals(xRespTmp.getHeaders("Content-Encoding")[0].getValue());
+	}
+
+	private ByteArrayOutputStream deZip(ByteArrayOutputStream oaos)
+			throws IOException {
+		ByteArrayInputStream gzippeddata = new ByteArrayInputStream(oaos.toByteArray());
+		GZIPInputStream zipin = new GZIPInputStream(gzippeddata);
+		byte[] buf = new byte[1024];  //size can be  
+		int len;
+		oaos = new ByteArrayOutputStream();
+		while ((len = zipin.read(buf)) > 0) {
+			oaos.write(buf, 0, len);
+		}
+		return oaos;
+	}
+
 	@SuppressWarnings("unchecked")
 	protected static void setupSwaperConnProperty(HttpURLConnection swaperConn,
 			HttpServletRequest req) throws ProtocolException {
@@ -319,6 +338,7 @@ public class LServlet extends HttpServlet {
 	static final String headersToSet []= {
 			"Content-Type",
 			"Content-Language",
+			"Content-Encoding",
 			"Date",
 			"Last-Modified" ,
 			"Accept-Charset",
