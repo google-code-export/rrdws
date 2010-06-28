@@ -227,7 +227,7 @@ public class LServlet extends HttpServlet {
 				oaos = deZip(oaos);
 		        contextEncStr  = "ISO-8859-1";
 			}
-			String xCSS = oaos.toString("null".equals(  contextEncStr )?"ISO-8859-1":contextEncStr);//xCSS.toUpperCase().substring( 12430)
+			String xCSS = oaos.toString("null".equals(  ""+contextEncStr )?"ISO-8859-1":contextEncStr);//xCSS.toUpperCase().substring( 12430)
 			String data = xCSS;// data = new UrlFetchTest().testFetchUrl( urlStr ); 
 			if ("null".equals(""+contextEncStr)){
 				dataBuf = data.trim().getBytes("ISO-8859-1");// "ISO-8859-1"
@@ -307,7 +307,11 @@ public class LServlet extends HttpServlet {
 	}
 
 	private boolean isGZip(HttpResponse xRespTmp) {
-		return "gzip".equals(xRespTmp.getHeaders("Content-Encoding")[0].getValue());
+		boolean retval = false;
+		try{
+			retval = "gzip".equals(xRespTmp.getHeaders("Content-Encoding")[0].getValue());
+		}catch(Throwable e){}
+		return  retval;
 	}
 
 	private ByteArrayOutputStream deZip(ByteArrayOutputStream oaos)

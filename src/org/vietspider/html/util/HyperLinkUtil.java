@@ -69,9 +69,10 @@ public class HyperLinkUtil {
     pageAttributeFullMap.put("frame", "src");
     pageAttributeFullMap.put("embed", "src");
     pageAttributeFullMap.put("img", "src");
-    pageAttributeFullMap.put("body", "background");
-
-    scriptAttributeFullMap.put("script", new ArrayList<String>(0));
+    pageAttributeFullMap.put("script", "src");
+    pageAttributeFullMap.put("body", "background"); 
+    
+    
     initSA();
     
   
