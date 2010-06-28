@@ -213,7 +213,9 @@ public class LServlet extends HttpServlet {
 				outTmp.flush();
 				return;
 			}else{
-				log.warning("contextTypeStr/contextEncStr:"+contextTypeStr+" ::enc :: "+contextEncStr +"["+urlStr+"]");
+				String xEncTmp = getXEnc(xRespTmp);
+				
+				log.warning("contextTypeStr/contextEncStr:"+contextTypeStr+" ::enc :: "+contextEncStr +"["+urlStr+"]   XXX::"+xEncTmp);
 				System.out.println("=====!!!======"+contextTypeStr +"::::"+contextEncStr);
 			}
 			 
@@ -288,6 +290,16 @@ public class LServlet extends HttpServlet {
 				outTmp.flush();
 				//ExceptionUtils.swapFailedException(resp, e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}  
+	}
+
+	private String getXEnc(HttpResponse respTmp) {
+		 String retval = null;
+		 try{
+			 retval = respTmp.getHeaders("Content-Encoding")[0].getValue();
+		 }catch (Exception e) {
+			// TODO: handle exception
+		}
+		 return retval;
 	}
 
 	private boolean isGZip(HttpResponse xRespTmp) {
