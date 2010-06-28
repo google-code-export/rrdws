@@ -33,13 +33,13 @@ public class GmailLogin {
 	    for(String ele : list)
 	      System.out.println(ele);
 	  }
-
-	  private static void testCreateImageLink(HTMLNode node, URL home){
-		    handler.createFullImageLink(node, null, home);
-		    List<String> list  = handler.scanImageLink(node);
-		    for(String ele : list)
-		      System.out.println(ele);
-	  }
+//
+//	  private static void testCreateImageLink(HTMLNode node, URL home){
+//		    handler.createFullImageLink(node, null, home);
+//		    List<String> list  = handler.scanImageLink(node);
+//		    for(String ele : list)
+//		      System.out.println(ele);
+//	  }
 
 	  public static void main(String[] args) {
 	    try{
@@ -58,7 +58,7 @@ public class GmailLogin {
 	    	  //data = new UrlFetchTest().testFetchUrl( "http://www.FIDUCIA.DE");
 	    	  HTMLDocument documentTmp = new HTMLParser2().createDocument(data.getBytes(), "utf-8");
 	    	  testCreateFullLink(documentTmp.getRoot(), url);
-	    	  testCreateImageLink(documentTmp.getRoot(), url);
+	    	  //testCreateImageLink(documentTmp.getRoot(), url);
 	    	  lenTmp += documentTmp.getTextValue().length();
 	      }
 	      long stopTmp = System.currentTimeMillis();
@@ -69,7 +69,7 @@ public class GmailLogin {
 	      System.out.println("\n\n\n\n*********************************************************************\n\n\n\n");
 	      testCreateFullLink(document.getRoot(), url);
 	      System.out.println("\n\n\n\n*********************************************************************\n\n\n\n");
-	      testCreateImageLink(document.getRoot(), url);
+	      //testCreateImageLink(document.getRoot(), url);
 	    }catch(Exception exp){
 	      exp.printStackTrace();
 	    }

@@ -7,10 +7,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.net.HttpURLConnection;
-import java.net.URLEncoder;
-import java.util.Arrays;
-import java.util.Collections;
+import java.net.HttpURLConnection; 
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -30,11 +27,7 @@ import org.vietspider.html.HTMLNode;
 import org.vietspider.html.parser.HTMLParser2;
 import org.vietspider.html.util.HyperLinkUtil;
 
-import ws.rdd.net.UrlFetchTest;
-
-//import org.lzy.fwswaper.swaper.SwaperFactory;
-//import org.lzy.fwswaper.util.Base64Coder;
-//import org.lzy.fwswaper.util.ExceptionUtils;
+import ws.rdd.net.UrlFetchTest; 
 
 @SuppressWarnings("serial")
 public class LServlet extends HttpServlet {
@@ -76,12 +69,19 @@ public class LServlet extends HttpServlet {
 	  }
 
 	  private static void testCreateFullLink(HTMLNode node, String swapServletUrl2, URL home){
-	    handler.createFullNormalLink(node,  swapServletUrl2,  home);
-	    List<String> list  = handler.scanSiteLink(node);
-	    for(String ele : list)
-	      System.out.println(ele);
-	  }
-	  
+		    handler.createFullNormalLink(node,  swapServletUrl2,  home);
+		    List<String> list  = handler.scanSiteLink(node);
+		    for(String ele : list)
+		      System.out.println(ele);
+		  }
+		  
+	  private static void testCreateScriptLink(HTMLNode node, String swapServletUrl2, URL home){
+		    handler.createScriptLink( node,  swapServletUrl2,  home);
+		    List<String> list  = handler.scanSiteLink(node);
+		    for(String ele : list)
+		      System.out.println(ele);
+		  }
+		  
 	  private static void testCreateMetaLink(HTMLNode node, String swapServletUrl2, URL home){
 		    handler.createMetaLink(node,  swapServletUrl2,  home);
 		    List<String> list  = handler.scanSiteLink(node);
@@ -89,12 +89,12 @@ public class LServlet extends HttpServlet {
 		      System.out.println(ele);
 		  }	  
 
-	  private static void testCreateImageLink(HTMLNode node, String swapServletUrl2, URL home){
-		    handler.createFullImageLink(node, swapServletUrl2, home);
-		    List<String> list  = handler.scanImageLink(node);
-		    for(String ele : list)
-		      System.out.println(ele);
-	  }	
+//	  private static void testCreateImageLink(HTMLNode node, String swapServletUrl2, URL home){
+//		    handler.createFullImageLink(node, swapServletUrl2, home);
+//		    List<String> list  = handler.scanImageLink(node);
+//		    for(String ele : list)
+//		      System.out.println(ele);
+//	  }	
 	
 	public void doGetPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
@@ -138,7 +138,7 @@ public class LServlet extends HttpServlet {
 			HttpEntity entity = xRespTmp.getEntity();
 			contextTypeStr = ""+entity.getContentType();
 			String contextEncStr =  ""+entity.getContentEncoding() ;
-			
+			contextEncStr = "null".equals(contextEncStr)?getXEnc(xRespTmp):contextEncStr;
 			if ("null" .equals( contextEncStr ) &&  contextTypeStr.toLowerCase().startsWith("content-type: text/html")){
 				int encPos = contextTypeStr.toLowerCase().indexOf(CHARSET_PREFIX);
 				if (encPos>0){
@@ -184,8 +184,8 @@ public class LServlet extends HttpServlet {
 					"null".equalsIgnoreCase( contextTypeStr)||
 					"Content-Type: image/jpeg".equalsIgnoreCase( contextTypeStr) ||
 			 		"Content-Type: image/png".equalsIgnoreCase( contextTypeStr) ||	
-					"Content-Type: image/x-icon".equalsIgnoreCase( contextTypeStr) ||						
-					"content-type: text/html; charset=ISO8859-1".equalsIgnoreCase( contextTypeStr) ||											
+					"Content-Type: image/x-icon".equalsIgnoreCase( contextTypeStr) ||	
+					"Content-Type: text/xml".equalsIgnoreCase( contextTypeStr) ||
 					"Content-Type: image/gif".equalsIgnoreCase( contextTypeStr) ||
 					"Content-Type: application/pdf".equalsIgnoreCase( contextTypeStr) ||
 					"Content-Type: application/x-shockwave-flash".equalsIgnoreCase( contextTypeStr) ||
@@ -195,10 +195,12 @@ public class LServlet extends HttpServlet {
 					"Content-Type: image/tiff".equalsIgnoreCase( contextTypeStr) ||
 					"Content-Type: image/ief".equalsIgnoreCase( contextTypeStr) ||
 					"Content-Type: image/g3fax".equalsIgnoreCase( contextTypeStr) ||
-					"Content-Type: application/x-javascript".equalsIgnoreCase( contextTypeStr) ||
-					
 					"Content-Type: application/x-shockwave-flash".equalsIgnoreCase( contextTypeStr) 
-					
+/*
+ 					"Content-Type: application/x-javascript".equalsIgnoreCase( contextTypeStr) ||
+					"content-type: text/html; charset=ISO8859-1".equalsIgnoreCase( contextTypeStr) ||
+					"content-type: text/javascript; charset=UTF-8".equalsIgnoreCase( contextTypeStr) || 
+ */					
 					
 					
 			){
@@ -241,9 +243,11 @@ public class LServlet extends HttpServlet {
 	    	URL realURL = new URL(urlStr);
 	    	 
 	    	testCreateFullLink(documentTmp.getRoot(), SwapServletUrl, realURL);
-	    	testCreateImageLink(documentTmp.getRoot(), SwapServletUrl, realURL);
+//	    	testCreateImageLink(documentTmp.getRoot(), SwapServletUrl, realURL);
 	    	
 	    	testCreateMetaLink(documentTmp.getRoot(), SwapServletUrl, realURL);
+	    	
+	    	testCreateScriptLink(documentTmp.getRoot(), SwapServletUrl, realURL);	    	
 	    	
 	    	int beginIndex = contextTypeStr.toUpperCase().indexOf(" ")+1;
 	    	resp.setContentType(contextTypeStr.substring(beginIndex));
