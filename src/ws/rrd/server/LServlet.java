@@ -215,7 +215,7 @@ public class LServlet extends HttpServlet {
 			}else{
 				String xEncTmp = getXEnc(xRespTmp);
 				
-				log.warning("contextTypeStr/contextEncStr:"+contextTypeStr+" ::enc :: "+contextEncStr +"["+urlStr+"]   XXX::"+xEncTmp);
+				log.warning("contextTypeStr/contextEncStr:"+contextTypeStr+" : :  enc : : "+contextEncStr +"["+urlStr+"]   XXX::"+xEncTmp);
 				System.out.println("=====!!!======"+contextTypeStr +"::::"+contextEncStr);
 			}
 			 
