@@ -61,21 +61,8 @@ public class LinkBlockChecker {
     
     
     int rate = compareNodes(links);
-//    if(model.getNode().getTextValue().indexOf("u tượng của phần mền trong control panel") > -1) { 
-//    System.out.println("===================================================" + rate);
-//    System.out.println(model.getNode().getTextValue());
-//    }
-//    if(rate > 0) {
-//      System.out.println("================================================");
-//      System.out.println("ti le cai nay " + rate);
-//      System.out.println(model.getNode().getTextValue());
-//    }
     if(rate >= 75) {
       if(hasBlockLink(node)) {
-//        if(model.getNode().getTextValue().indexOf("XUÂN YÊU") > -1) { 
-//          System.out.println("===================================================" + rate);
-//          System.out.println(model.getNode().getTextValue());
-//        }
         return false; 
       }
       return true;

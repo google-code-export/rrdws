@@ -114,7 +114,7 @@ public class JsUtils {
 //builder.append("<font face=\"Ariral\"> sdfdshfjdsfds </font> xcvxcvcxdf 333223 ');</script>\n\t");
 //builder.append("<a id=\"feedbacks\"></a><a id=\"comments\"></a><a id=\"trackbacks\">");
 //builder.append("</a><a id=\"pingbacks\"></a> \n\t");
-//builder.append("<h4>Địa chỉ gửi link liên kết đến bài viết này</h4>");
+
 
 //List<String> jsScripts = new ArrayList<String>();
 //jsScripts.add("show_postcontent");

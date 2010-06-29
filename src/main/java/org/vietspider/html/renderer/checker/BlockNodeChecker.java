@@ -32,10 +32,6 @@ public class BlockNodeChecker extends NodeChecker {
     if(model.hasTextBlock()) return true;
     
     if(linkBlockChecker.isLink(model)) {
-//      if(node.getTextValue().indexOf("u tượng của phần mền trong control panel") > -1) { 
-//      System.out.println("===================================================");
-//      System.out.println(node.getTextValue());
-//      }
       return false;
     }
     
