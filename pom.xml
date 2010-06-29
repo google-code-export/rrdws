@@ -17,10 +17,21 @@
 			<groupId>com.google.appengine</groupId>
 			<artifactId>jsr107cache</artifactId>
 			<version>${gae.version}</version>
-		</dependency><dependency>
-    <groupId>net.sf.jsr107cache</groupId>
-    <artifactId>jsr107cache</artifactId> 
-    <version>1.0</version> </dependency>	
+		</dependency>
+
+
+		<dependency>
+			<groupId>net.sf.jsr107cache</groupId>
+			<artifactId>jsr107cache</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<!-- TODO WEB-INF/lib 
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+		-->
 		<!--
 			jars from GAE's "lib/user" must be added as compile-time
 			dependencies, as described here in "Copying JARs" section:
