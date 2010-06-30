@@ -71,6 +71,10 @@ public class HyperLinkUtil {
     pageAttributeFullMap.put("img", "src");
     pageAttributeFullMap.put("script", "src");
     pageAttributeFullMap.put("body", "background"); 
+    pageAttributeFullMap.put("table", "background"); 
+    pageAttributeFullMap.put("td", "background"); 
+    pageAttributeFullMap.put("tr", "background"); 
+    pageAttributeFullMap.put("th", "background"); 
     
     
     initSA();
@@ -88,21 +92,21 @@ public class HyperLinkUtil {
   private final static String eventList[] = {
 	    " onabort"/* (bei Abbruch) */  ,
   		" onblur"/* (beim Verlassen) */  ,
-  		" onchange"/* (bei erfolgter Änderung) */  ,
+  		" onchange"/* (bei erfolgter ï¿½nderung) */  ,
   		" onclick"/* (beim Anklicken) */  ,
   		" ondblclick"/* (bei doppeltem Anklicken) */  ,
   		" onerror"/* (im Fehlerfall) */  ,
   		" onfocus"/* (beim Aktivieren) */  ,
-  		" onkeydown"/* (bei gedrückter Taste) */  ,
-  		" onkeypress"/* (bei gedrückt gehaltener Taste) */  ,
+  		" onkeydown"/* (bei gedrï¿½ckter Taste) */  ,
+  		" onkeypress"/* (bei gedrï¿½ckt gehaltener Taste) */  ,
   		" onkeyup"/* (bei losgelassener Taste) */  ,
   		" onload"/* (beim Laden einer Datei) */  ,
-  		" onmousedown"/* (bei gedrückter Maustaste) */  ,
+  		" onmousedown"/* (bei gedrï¿½ckter Maustaste) */  ,
   		" onmousemove"/* (bei weiterbewegter Maus) */  ,
   		" onmouseout"/* (beim Verlassen des Elements mit der Maus) */  ,
-  		" onmouseover"/* (beim Überfahren des Elements mit der Maus) */  ,
+  		" onmouseover"/* (beim ï¿½berfahren des Elements mit der Maus) */  ,
   		" onmouseup"/* (bei losgelassener Maustaste) */  ,
-  		" onreset"/* (beim Zurücksetzen des Formulars) */  ,
+  		" onreset"/* (beim Zurï¿½cksetzen des Formulars) */  ,
   		" onselect"/* (beim Selektieren von Text) */  ,
   		" onsubmit"/* (beim Absenden des Formulars) */  ,
   		" onunload"/* (beim Verlassen der Datei) */  ,
@@ -323,6 +327,24 @@ public class HyperLinkUtil {
   private void createFullSingleLink(HTMLNode node, 
       String nodeName, String attrName, String swapServletUrl2, URL home, ValueVerifier verifier)   {
     
+	if (( "script".equals(nodeName) ||  "noscript".equals(nodeName) )
+			&& node.isNode(nodeName)){
+		final String scriptValue = node.getTextValue();
+		System.out.println(scriptValue);
+		if (
+				scriptValue .toLowerCase().indexOf("document.")>=0 ||
+				scriptValue .toLowerCase().indexOf("eval")>=0 ||
+				scriptValue .toLowerCase().indexOf("window.")>=0 
+				
+			){
+			node.clearChildren();//setChild(0, new HTMLNode(){})getChildren().clear()setValue("/* 8-X */".toCharArray());
+			final String scriptAliasTmp = ("SCRIPT SRC=\"/l/l"+scriptValue.hashCode()+".js\"");
+			node.setValue(scriptAliasTmp.toCharArray());
+			System.out.println(""+node.getTextValue());
+		}
+		System.out.println();
+	}
+	  
     if(node.isNode(nodeName) || (nodeName.length() == 1 && nodeName.charAt(0) == '*')) {
         Attributes attrs = node.getAttributes();  
 		Attribute attr = attrs.get(attrName);

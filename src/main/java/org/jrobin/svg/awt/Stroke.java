@@ -3,9 +3,9 @@ package org.jrobin.svg.awt;
 public interface Stroke {
 	/**
 	 * 4.7.1 Die Liniendicke
-	 * Die Stärke einer Linie (also auch einer Umrandung) 
+	 * Die Storke einer Linie (also auch einer Umrandung) 
 	 * wird mit Hilfe des Attributs stroke-width festgelegt, 
-	 * das none oder positive Längenangaben besitzen kann. 
+	 * das none oder positive Langenangaben besitzen kann. 
  	 */
 	public float getWidth();
 
@@ -33,13 +33,13 @@ public interface Stroke {
 	 * dasharray
 	 * 
 	 * 4.7.4 Segmentierte Linien
-	 * Die letzte hier vorgestellte Stifteigenschaft ist für die 
-	 * Aufteilung einer Linie in einzelne Segmente zuständig. 
+	 * Die letzte hier vorgestellte Stifteigenschaft ist fuer die 
+	 * Aufteilung einer Linie in einzelne Segmente zustaendig. 
 	 * Diese Eigenschaft nennt sich stroke-dasharray und erwartet 
 	 * als Wert entweder none, was eine durchgehenden Linie 
-	 * generieren würde, oder eine komma-separierte Liste von 
+	 * generieren wuerde, oder eine komma-separierte Liste von 
 	 * Prozentwerten. Dabei verwendet der Interpreter jeden 
-	 * zweiten Wert als Lücke. Folgendes Beispiel soll dies 
+	 * zweiten Wert als Luecke. Folgendes Beispiel soll dies 
 	 * etwas anschaulicher gestalten:
 	 * 
 	 * TODO
