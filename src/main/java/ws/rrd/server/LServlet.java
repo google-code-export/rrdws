@@ -134,12 +134,14 @@ public class LServlet extends HttpServlet {
 			String[][] headsToResend = calcRequestHeaders(req);
 			 
 			urlStr  = urlStr.replace(" ", "%20");
+			// http://it-ru.de/forum/viewtopic.php?t=182374&amp;postdays=0&amp;postorder=asc&amp;start=15
+			urlStr  = urlStr.replace("&amp;", "&");
 			HttpResponse xRespTmp = new UrlFetchTest().fetchResp(urlStr, headsToResend);
 			HttpEntity entity = xRespTmp.getEntity();
 			contextTypeStr = ""+entity.getContentType();
 			String contextEncStr =  ""+entity.getContentEncoding() ;
 			contextEncStr = "null".equals(contextEncStr)?getXEnc(xRespTmp):contextEncStr;
-			if ("null" .equals( contextEncStr ) &&  contextTypeStr.toLowerCase().startsWith("content-type: text/html")){
+			if ("null" .equals( ""+contextEncStr ) &&  contextTypeStr.toLowerCase().startsWith("content-type: text/html")){
 				int encPos = contextTypeStr.toLowerCase().indexOf(CHARSET_PREFIX);
 				if (encPos>0){
 					
@@ -150,7 +152,9 @@ public class LServlet extends HttpServlet {
 				}else{
 					
 					Header[] contextEncHeaders = xRespTmp.getHeaders("Content-Encoding");
-					contextEncStr =  contextEncHeaders[0].getValue();
+					try{
+						contextEncStr =  contextEncHeaders[0].getValue();
+					}catch(Throwable e){}
 					log.warning("Content-Encoding[0]::=={"+ contextEncStr + "  }" );
 					 
 				}
@@ -265,8 +269,11 @@ public class LServlet extends HttpServlet {
 	    	resp.setCharacterEncoding(contextEncStr);
 	    	
 	    	outTmp = resp.getOutputStream();
-	    	 
+	    	
 	    	String textValue = new String(documentTmp.getTextValue().getBytes("ISO-8859-1"), contextEncStr);// "windows-1251" textValue.toUpperCase().substring( 12430)
+	    	if ("KOI8-R".equals(contextEncStr)) {
+	    		textValue = documentTmp.getTextValue();//
+	    	}
 	    	//PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 	    	String string1 = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"><HtMl>";
 	    	String string2 = "</HtMl>";
