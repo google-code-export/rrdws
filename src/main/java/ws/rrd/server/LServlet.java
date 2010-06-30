@@ -229,14 +229,23 @@ public class LServlet extends HttpServlet {
 			}
 			String xCSS = oaos.toString("null".equals(  ""+contextEncStr )?"ISO-8859-1":contextEncStr);//xCSS.toUpperCase().substring( 12430)
 			String data = xCSS;// data = new UrlFetchTest().testFetchUrl( urlStr ); 
+			if (data.toLowerCase().indexOf("content=\"text/html; charset=")>0)try{
+				String contextText = "content=\"text/html; charset=";
+				int lenTmp = contextText.length();
+				int posTmp = data.toLowerCase().indexOf(contextText);
+				int beginIndex = posTmp +lenTmp;
+				int endIndex = beginIndex + data.toLowerCase().substring(beginIndex).indexOf("\"");
+				contextEncStr = data.toLowerCase().substring(beginIndex,endIndex );
+				contextEncStr = contextEncStr.toUpperCase();
+			}catch(Throwable e){}
 			if ("null".equals(""+contextEncStr)){
 				dataBuf = data.trim().getBytes("ISO-8859-1");// "ISO-8859-1"
 				contextEncStr = "ISO-8859-1";
-				log.warning("ISO-8859-1ISO-8859-1ISO-8859-1ISO-8859-1 contextTypeStr/contextEncStr:"+contextTypeStr+" :: enc :: "+contextEncStr +"["+urlStr+"]");
+				log.warning("ISO-8859-1ISO-8859-1ISO-8859-1ISO-8859-1  contextTypeStr/contextEncStr:"+contextTypeStr+" :: enc :: "+contextEncStr +"["+urlStr+"]");
 			}
 			else
 			{
-				dataBuf = data.trim().getBytes(contextEncStr);// "utf-8"
+				dataBuf = data.trim().getBytes();// "utf-8"
 			}
 			HTMLParser2 parser2 = new HTMLParser2();
 			documentTmp = parser2.createDocument(dataBuf, null );// "utf-8"
@@ -250,20 +259,21 @@ public class LServlet extends HttpServlet {
 	    	testCreateScriptLink(documentTmp.getRoot(), SwapServletUrl, realURL);	    	
 	    	
 	    	int beginIndex = contextTypeStr.toUpperCase().indexOf(" ")+1;
-	    	resp.setContentType(contextTypeStr.substring(beginIndex));
 
 	    	setupResponseProperty( resp,  xRespTmp);
+	    	resp.setContentType(contextTypeStr.substring(beginIndex));
+	    	resp.setCharacterEncoding(contextEncStr);
 	    	
 	    	outTmp = resp.getOutputStream();
 	    	 
-	    	String textValue = documentTmp.getTextValue();//textValue.toUpperCase().substring( 12430)
+	    	String textValue = new String(documentTmp.getTextValue().getBytes("ISO-8859-1"), contextEncStr);// "windows-1251" textValue.toUpperCase().substring( 12430)
 	    	//PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 	    	String string1 = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"><HtMl>";
 	    	String string2 = "</HtMl>";
 			//outTmp.write(string1.getBytes(contextEncStr));
-			outTmp.write((string1 + textValue + string2).getBytes(contextEncStr));
+			outTmp.write((string1 + textValue + string2).getBytes(contextEncStr));//)
 			//outTmp.write(string2.getBytes(contextEncStr));
-			outTmp.flush();
+			//outTmp.flush();
 		} catch (java.lang.NoClassDefFoundError e) {
 	    	System.out.println(contextTypeStr +" ===============  "+e.getMessage());e.printStackTrace();
 	    	System.out.println(documentTmp);
@@ -291,7 +301,7 @@ public class LServlet extends HttpServlet {
 				outTmp.write("<pre>".getBytes());
 				outTmp.write((""+e.getMessage()+"\n\n\n\n"+e.getStackTrace()).getBytes());
 				e.printStackTrace(new PrintWriter(outTmp, true));
-				outTmp.flush();
+				//outTmp.flush();
 				//ExceptionUtils.swapFailedException(resp, e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}  
 	}
@@ -356,9 +366,9 @@ public class LServlet extends HttpServlet {
 	// Domain attribute "javaeye.com" violates RFC 2109: domain must start with a dot
 
 	static final String headersToSet []= {
-			"Content-Type",
+			//"Content-Type",
 			"Content-Language",
-			"Content-Encoding",
+			//"Content-Encoding",
 			"Date",
 			"Last-Modified" ,
 			"Accept-Charset",

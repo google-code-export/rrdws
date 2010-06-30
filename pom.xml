@@ -336,6 +336,8 @@
 		                <jvmFlag>-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000</jvmFlag>
 		            </jvmFlags>
 		             -->
+		             <jvmFlags><jvmFlag>-Dmyenviroment=local</jvmFlag></jvmFlags>
+
 		        </configuration>
 		    </plugin>
 			<!--
@@ -387,7 +389,7 @@
 		<gae.application.version>0</gae.application.version>
 
 		<!-- port defaults to 8080 -->
-		<gae.port>8080</gae.port>
+		<gae.port>8888</gae.port>
 
 		<!--
 			Produce detailed JS during GWT compilation for development
