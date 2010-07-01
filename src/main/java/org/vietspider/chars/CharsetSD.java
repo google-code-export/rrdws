@@ -11,8 +11,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CoderResult;
 import java.nio.charset.CodingErrorAction;
-
-import sun.nio.cs.HistoricallyNamedCharset;
+ 
 
 /**
  *  Author : Nhu Dinh Thuan
