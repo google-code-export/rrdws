@@ -7,3 +7,5 @@ syntax: regexp
 ^war/WEB-INF/appengine-generated$
 syntax: regexp
 ^target$
+syntax: regexp
+^target$
