@@ -168,12 +168,12 @@ public class LServlet extends HttpServlet {
 				"Content-Type: text/css".equalsIgnoreCase( contextTypeStr) 
 				)
 			{
-				log.warning("contextTypeStr/contextEncStr:"+contextTypeStr+"/"+contextEncStr +"["+urlStr+"]");
+				log.warning("CSS contextTypeStr / contextEncStr:{"+contextTypeStr+" / "+contextEncStr +"}, url== ["+urlStr+"]");
 				ByteArrayOutputStream oaos = new ByteArrayOutputStream();
 				entity.writeTo(oaos) ;
 				if (isGZip(xRespTmp)){
 					oaos = deZip(oaos);
-			        contextEncStr  = "ISO-8859-1";
+			        //contextEncStr  = "ISO-8859-1";
 				}				
 				String xCSS = oaos.toString().replace("url(/", "URL (/l.gif?")
 				.replace("url (/", "URL (/l.gif?")
@@ -215,7 +215,7 @@ public class LServlet extends HttpServlet {
 					resp.setContentType(contypeTmp);
 					setupResponseProperty( resp,  xRespTmp);
 				}
-				log.warning("contextTypeStr/contextEncStr:"+contextTypeStr+"/"+contextEncStr +"["+urlStr+"]");
+				log.warning("HTML contextTypeStr||contextEncStr:["+contextTypeStr+"||"+contextEncStr+"]  URL =:["+urlStr+"]");
 				outTmp = resp.getOutputStream();
 				entity.writeTo(outTmp) ;
 				outTmp.flush();
@@ -223,7 +223,7 @@ public class LServlet extends HttpServlet {
 			}else{
 				String xEncTmp = getXEnc(xRespTmp);
 				
-				log.warning("contextTypeStr/contextEncStr:"+contextTypeStr+" : :  enc : : "+contextEncStr +"["+urlStr+"]   XXX::"+xEncTmp);
+				log.warning("x---HTML---x  contextTypeStr/contextEncStr:"+contextTypeStr+" : :  enc : : "+contextEncStr +"["+urlStr+"]   XXX::"+xEncTmp);
 				System.out.println("=====!!!======"+contextTypeStr +"::::"+contextEncStr);
 			}
 			 
@@ -231,9 +231,14 @@ public class LServlet extends HttpServlet {
 			entity.writeTo(oaos) ;
 			if ("gzip".equals(contextEncStr)  || isGZip(xRespTmp) ){
 				oaos = deZip(oaos);
-		        contextEncStr  = "ISO-8859-1";
+		        //contextEncStr  = "ISO-8859-1";
 			}
-			String xCSS = oaos.toString("null".equals(  ""+contextEncStr )?"ISO-8859-1":contextEncStr);//xCSS.toUpperCase().substring( 12430)
+			String xCSS = null;
+			if ("null".equals(  ""+contextEncStr )){
+				xCSS = oaos.toString();
+			}else{
+				xCSS = oaos.toString(contextEncStr);//xCSS.toUpperCase().substring( 12430)
+			}
 			String data = xCSS;// data = new UrlFetchTest().testFetchUrl( urlStr ); 
 			if (data.toLowerCase().indexOf("content=\"text/html; charset=")>0)try{
 				String contextText = "content=\"text/html; charset=";
@@ -245,16 +250,18 @@ public class LServlet extends HttpServlet {
 				contextEncStr = contextEncStr.toUpperCase();
 			}catch(Throwable e){}
 			if ("null".equals(""+contextEncStr)){
-				dataBuf = data.trim().getBytes("ISO-8859-1");// "ISO-8859-1"
-				contextEncStr = "ISO-8859-1";
-				log.warning("ISO-8859-1ISO-8859-1ISO-8859-1ISO-8859-1  contextTypeStr/contextEncStr:"+contextTypeStr+" :: enc :: "+contextEncStr +"["+urlStr+"]");
-			}
-			else
-			{
-				dataBuf = data.trim().getBytes();// "utf-8"
+				dataBuf = data.trim().getBytes();// "ISO-8859-1"
+ 			} else {
+				dataBuf = data.trim().getBytes(contextEncStr);// "utf-8"
 			}
 			HTMLParser2 parser2 = new HTMLParser2();
-			documentTmp = parser2.createDocument(dataBuf, null );// "utf-8"
+			try{
+				documentTmp = parser2.createDocument(dataBuf, contextEncStr );// "utf-8"
+			}catch(Exception e){
+				log.warning("createDocument EXCEPTION!" +e.getMessage()+" contextTypeStr||contextEncStr:["+contextTypeStr+"||"+contextEncStr+"]  URL =:["+urlStr+"]");
+				documentTmp = parser2.createDocument(dataBuf, null );// "utf-8"
+			}
+			 
 	    	URL realURL = new URL(urlStr);
 	    	 
 	    	testCreateFullLink(documentTmp.getRoot(), SwapServletUrl, realURL);
@@ -268,19 +275,27 @@ public class LServlet extends HttpServlet {
 
 	    	setupResponseProperty( resp,  xRespTmp);
 	    	resp.setContentType(contextTypeStr.substring(beginIndex));
-	    	resp.setCharacterEncoding(contextEncStr);
+	    	if (!"null".equals(""+contextEncStr)){
+	    		resp.setCharacterEncoding(contextEncStr);
+	    	}
 	    	
 	    	outTmp = resp.getOutputStream();
 	    	
 	    	String textValue = new String(documentTmp.getTextValue().getBytes("ISO-8859-1"), contextEncStr);// "windows-1251" textValue.toUpperCase().substring( 12430)
 	    	if ("KOI8-R".equals(contextEncStr)) {
 	    		textValue = documentTmp.getTextValue();//
+	    	}else{
+	    		textValue = documentTmp.getTextValue();//
 	    	}
 	    	//PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-	    	String string1 = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"><HtMl>";
+	    	String string1 = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"><HtMl>\n\t<!-- contextEncStr="+contextEncStr+" -->";
 	    	String string2 = "</HtMl>";
 			//outTmp.write(string1.getBytes(contextEncStr));
-			outTmp.write((string1 + textValue + string2).getBytes(contextEncStr));//)
+	    	if (!"null".equals(""+contextEncStr)){
+	    		outTmp.write((string1 + textValue + string2).getBytes(contextEncStr));//)
+	    	}else{
+	    		outTmp.write((string1 + textValue + string2).getBytes());//)
+	    	}
 			//outTmp.write(string2.getBytes(contextEncStr));
 			//outTmp.flush();
 		} catch (java.lang.NoClassDefFoundError e) {
