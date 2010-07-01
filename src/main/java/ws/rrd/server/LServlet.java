@@ -108,6 +108,8 @@ public class LServlet extends HttpServlet {
 		String urlStr = null;
 		try {
 			StringBuffer requestURL = req.getRequestURL();
+			String rurlTmp = ""+req.getRequestURL();
+			SwapServletUrl  = rurlTmp.substring(0, rurlTmp.indexOf(req.getServletPath()+"/") )+req.getServletPath()+"/";
 			String decodedUrl = requestURL.substring( SwapServletUrl.length());
 			char[] charArray = decodedUrl.toCharArray();
 			try{

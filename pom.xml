@@ -329,7 +329,7 @@
 		    <plugin>
 		        <groupId>net.kindleit</groupId>
 		        <artifactId>maven-gae-plugin</artifactId>
-		        <version>0.5.3-SNAPSHOT</version>
+		        <version>0.5.9</version>
 		        <configuration>
 		            <!-- jvmFlags>
 		                <jvmFlag>-Xdebug</jvmFlag>
@@ -437,7 +437,7 @@
 					During release, set application version in
 					appengine-web.xml to 2
 				-->
-				<gae.application.version>2</gae.application.version>
+				<gae.application.version>2.1</gae.application.version>
 
 				<!--
 					Produce compressed JS during GWT compilation for

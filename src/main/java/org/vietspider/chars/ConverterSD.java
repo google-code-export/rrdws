@@ -6,7 +6,7 @@ package org.vietspider.chars;
 
 import java.io.CharConversionException;
 
-import sun.io.ByteToCharConverter;
+ 
 
 /**
  *  Author : Nhu Dinh Thuan

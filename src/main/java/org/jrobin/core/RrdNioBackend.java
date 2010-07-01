@@ -23,9 +23,7 @@
  * Boston, MA 02111-1307, USA.
  */
 
-package org.jrobin.core;
-
-import sun.nio.ch.DirectBuffer;
+package org.jrobin.core; 
 
 import java.io.IOException;
 import java.nio.MappedByteBuffer;
@@ -81,9 +79,7 @@ public class RrdNioBackend extends RrdFileBackend {
 
 	private void unmapFile() {
 		if (byteBuffer != null) {
-			if (byteBuffer instanceof DirectBuffer) {
-				((DirectBuffer) byteBuffer).cleaner().clean();
-			}
+ 
 			byteBuffer = null;
 		}
 	}
