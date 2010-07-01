@@ -1,0 +1,25 @@
+<html>
+    <script type="text/javascript">
+      document.write('Ihr Browser hat den Spitznamen: <b>'
+                     + navigator.appCodeName + '</b><br>');
+      document.write('Ihr Browser hat den vollen Namen: <b>'
+                     + navigator.appName + '</b><br>');     
+      document.write('Ihr Browser hat die folgenden' 
+                     + ' Versionsinformationen: <b>'
+                     + navigator.appVersion + '</b><br>');
+      document.write('Ihr Browser hat aktuell die folgende'
+                     + ' Spracheinstellung: <b>'
+                     + navigator.language + '</b><br>');
+      if (navigator.appName == "Microsoft Internet Explorer") {
+        document.write('Die Sprache im Browser ist: <b>'
+                     + navigator.browserLanguage + '</b><br>'); 
+      }
+      document.write('Ihr Browser läuft auf der Plattform: <b>'
+                     + navigator.platform + '</b><br>');
+      document.write('Ihr Browser sendet folgende Daten'
+                     + ' im WWW mit: <b>'
+                     + navigator.userAgent + '</b><br>');
+      document.write('Ihr Browser hat Java aktiviert: <b>'
+                     + navigator.javaEnabled() + '</b><br>');
+    </script>
+</html>
