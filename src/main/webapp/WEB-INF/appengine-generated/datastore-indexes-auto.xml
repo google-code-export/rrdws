@@ -1,0 +1,11 @@
+<!-- Indices written at Tue, 20 Apr 2010 14:30:56 UTC -->
+
+<datastore-indexes>
+
+    <!-- Used 4050 times in query history -->
+    <datastore-index kind="Blob" ancestor="false" source="auto">
+        <property name="name" direction="asc"/>
+        <property name="createDate" direction="desc"/>
+    </datastore-index>
+
+</datastore-indexes>
