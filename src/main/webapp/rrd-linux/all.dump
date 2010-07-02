@@ -1,0 +1,84 @@
+<!-- Round Robin Database Dump -->
+<rrd>
+	<version> 0001 </version>
+	<step> 300 </step> <!-- Seconds -->
+	<lastupdate> 978303900 </lastupdate> <!-- 2001-01-01 00:05:00 CET -->
+
+	<ds>
+		<name> a </name>
+		<type> COUNTER </type>
+		<minimal_heartbeat> 600 </minimal_heartbeat>
+		<min> NaN </min>
+		<max> NaN </max>
+
+		<!-- PDP Status -->
+		<last_ds> 3000 </last_ds>
+		<value> 0.0000000000e+00 </value>
+		<unknown_sec> 0 </unknown_sec>
+	</ds>
+
+	<ds>
+		<name> b </name>
+		<type> GAUGE </type>
+		<minimal_heartbeat> 600 </minimal_heartbeat>
+		<min> NaN </min>
+		<max> NaN </max>
+
+		<!-- PDP Status -->
+		<last_ds> UNKN </last_ds>
+		<value> 0.0000000000e+00 </value>
+		<unknown_sec> 0 </unknown_sec>
+	</ds>
+
+	<ds>
+		<name> c </name>
+		<type> DERIVE </type>
+		<minimal_heartbeat> 600 </minimal_heartbeat>
+		<min> NaN </min>
+		<max> NaN </max>
+
+		<!-- PDP Status -->
+		<last_ds> 1200 </last_ds>
+		<value> 0.0000000000e+00 </value>
+		<unknown_sec> 0 </unknown_sec>
+	</ds>
+
+	<ds>
+		<name> d </name>
+		<type> ABSOLUTE </type>
+		<minimal_heartbeat> 600 </minimal_heartbeat>
+		<min> NaN </min>
+		<max> NaN </max>
+
+		<!-- PDP Status -->
+		<last_ds> UNKN </last_ds>
+		<value> 0.0000000000e+00 </value>
+		<unknown_sec> 0 </unknown_sec>
+	</ds>
+
+<!-- Round Robin Archives -->
+	<rra>
+		<cf> AVERAGE </cf>
+		<pdp_per_row> 1 </pdp_per_row> <!-- 300 seconds -->
+		<xff> 5.0000000000e-01 </xff>
+
+		<cdp_prep>
+			<ds><value> NaN </value>  <unknown_datapoints> 0 </unknown_datapoints></ds>
+			<ds><value> NaN </value>  <unknown_datapoints> 0 </unknown_datapoints></ds>
+			<ds><value> NaN </value>  <unknown_datapoints> 0 </unknown_datapoints></ds>
+			<ds><value> NaN </value>  <unknown_datapoints> 0 </unknown_datapoints></ds>
+		</cdp_prep>
+		<database>
+			<!-- 2000-12-31 23:20:00 CET / 978301200 --> <row><v> NaN </v><v> 1.0000000000e+00 </v><v> NaN </v><v> 1.0000000000e+00 </v></row>
+			<!-- 2000-12-31 23:25:00 CET / 978301500 --> <row><v> 1.0000000000e+00 </v><v> 3.0000000000e+00 </v><v> 2.0000000000e+00 </v><v> 2.0000000000e+00 </v></row>
+			<!-- 2000-12-31 23:30:00 CET / 978301800 --> <row><v> 1.0000000000e+00 </v><v> 5.0000000000e+00 </v><v> 2.0000000000e+00 </v><v> 3.0000000000e+00 </v></row>
+			<!-- 2000-12-31 23:35:00 CET / 978302100 --> <row><v> 1.0000000000e+00 </v><v> 3.0000000000e+00 </v><v> 2.0000000000e+00 </v><v> 4.0000000000e+00 </v></row>
+			<!-- 2000-12-31 23:40:00 CET / 978302400 --> <row><v> 1.0000000000e+00 </v><v> 1.0000000000e+00 </v><v> 0.0000000000e+00 </v><v> 5.0000000000e+00 </v></row>
+			<!-- 2000-12-31 23:45:00 CET / 978302700 --> <row><v> 1.0000000000e+00 </v><v> 2.0000000000e+00 </v><v> -2.0000000000e+00 </v><v> 6.0000000000e+00 </v></row>
+			<!-- 2000-12-31 23:50:00 CET / 978303000 --> <row><v> 1.0000000000e+00 </v><v> 4.0000000000e+00 </v><v> -6.0000000000e+00 </v><v> 7.0000000000e+00 </v></row>
+			<!-- 2000-12-31 23:55:00 CET / 978303300 --> <row><v> 1.0000000000e+00 </v><v> 6.0000000000e+00 </v><v> 2.0000000000e+00 </v><v> 8.0000000000e+00 </v></row>
+			<!-- 2001-01-01 00:00:00 CET / 978303600 --> <row><v> 1.0000000000e+00 </v><v> 4.0000000000e+00 </v><v> 0.0000000000e+00 </v><v> 9.0000000000e+00 </v></row>
+			<!-- 2001-01-01 00:05:00 CET / 978303900 --> <row><v> 1.0000000000e+00 </v><v> 2.0000000000e+00 </v><v> 2.0000000000e+00 </v><v> 1.0000000000e+01 </v></row>
+		</database>
+	</rra>
+</rrd>
