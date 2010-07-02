@@ -111,9 +111,9 @@ public class LServlet extends HttpServlet {
 			String rurlTmp = ""+req.getRequestURL();
 			SwapServletUrl  = rurlTmp.substring(0, rurlTmp.indexOf(req.getServletPath()+"/") )+req.getServletPath()+"/";
 			String decodedUrl = requestURL.substring( SwapServletUrl.length());
-			char[] charArray = decodedUrl.toCharArray();
+			
 			try{
-				urlStr = new String(Base64Coder.decode(charArray));
+				urlStr = HyperLinkUtil.decode(decodedUrl);
 			}catch(Throwable e){
 				outTmp = resp.getOutputStream();
 				PrintWriter pw = new PrintWriter(outTmp, true);
@@ -179,7 +179,9 @@ public class LServlet extends HttpServlet {
 				.replace("url (/", "URL (/l.gif?")
 				.replace("URL(/", "URL (/l.gif?")
 				.replace("Url(/", "URL (/l.gif?")
-				.replace("url ( /", "URL (/l.gif?");
+				.replace("url ( /", "URL (/l.gif?")
+				.replace("URL (/l.gif?", "url(/l.gif?")
+				;
 				resp.setContentType("text/css");
 				outTmp = resp.getOutputStream();
 				outTmp.write(xCSS.getBytes());
@@ -230,8 +232,12 @@ public class LServlet extends HttpServlet {
 			ByteArrayOutputStream oaos = new ByteArrayOutputStream();
 			entity.writeTo(oaos) ;
 			if ("gzip".equals(contextEncStr)  || isGZip(xRespTmp) ){
-				oaos = deZip(oaos);
-		        //contextEncStr  = "ISO-8859-1";
+				oaos = deZip(oaos); 
+		        
+				int beginIndex = 0;
+				String charSetHeader = req.getHeader("Accept-Charset ");
+				int endIndex = charSetHeader.indexOf(",");
+				contextEncStr  = charSetHeader.substring(beginIndex , endIndex);//"ISO-8859-1";
 			}
 			String xCSS = null;
 			if ("null".equals(  ""+contextEncStr )){
@@ -330,6 +336,8 @@ public class LServlet extends HttpServlet {
 		}  
 	}
 
+
+
 	private String getXEnc(HttpResponse respTmp) {
 		 String retval = null;
 		 try{
@@ -397,7 +405,7 @@ public class LServlet extends HttpServlet {
 			"Last-Modified" ,
 			"Accept-Charset",
 			"Accept-Language",
-			"Accept-Encoding",
+			//"Accept-Encoding",
 			"Referer", 
 			"Cookie",
 			"Cache-Control",
@@ -411,14 +419,9 @@ public class LServlet extends HttpServlet {
 			resp.setHeader(next.getName(), next.getValue());
 	}
 	
-	protected static String[][] calcRequestHeaders(
+	protected  String[][] calcRequestHeaders(
 			HttpServletRequest req) {
-		Map<String, String> headersTmp = new HashMap<String, String>();
-		for (String headerName :headersToSet){
-			String nextVal =  req.getHeader(headerName);
-			if (nextVal != null)
-			headersTmp.put( headerName  , nextVal );
-		}
+		Map<String, String> headersTmp = calcRequestHeadersAsMap(req, headersToSet);
 		
 		String [][]retval = new String[headersTmp.size()][2];
 		int i=0;
@@ -428,6 +431,22 @@ public class LServlet extends HttpServlet {
 			i++;
 		}
 		return   retval;
+	}
+
+	private Map<String, String> calcRequestHeadersAsMap(HttpServletRequest req, String[] headersToSetPar) {
+		Map<String, String> headersTmp = new HashMap<String, String>();
+		for (String headerName :headersToSetPar){
+			String nextVal =  req.getHeader(headerName);
+			if ("Referer".equals(headerName) ){
+				if ((""+nextVal).startsWith(SwapServletUrl)){
+					nextVal   = HyperLinkUtil.decode(nextVal.substring(SwapServletUrl.length()));
+				}
+			}
+			
+			if (nextVal != null)
+			headersTmp.put( headerName  , nextVal );
+		}
+		return headersTmp;
 	}
 
 	protected static void markFwswaperTagInResponseHead(HttpServletResponse resp) {

@@ -351,8 +351,7 @@ public class HyperLinkUtil {
         if(attr == null)  return;
         String value = attr.getValue();
         if(value == null) return;
-        if(verifier != null && !verifier.verify(value)) return; 
-//        System.out.println("truoc "+value);
+        if(verifier != null && !verifier.verify(value)) return;  
           String homeStr = ""+home;
           if ( value.startsWith("/")){ 
         	  String fileNameTmp =home.getFile() ;
@@ -366,20 +365,32 @@ public class HyperLinkUtil {
 				else
 					homeStr = sBaseTmp +"/";
 			}
-        	  value = (homeStr + value.substring(1,value.length())); // createFullSingleLink #2
-        	  value  = swapServletUrl2 + new String (Base64Coder.encode(  value.getBytes() ));
+        	value = (homeStr + value.substring(1,value.length())); // createFullSingleLink #2
           }else{
         	  homeStr = homeStr.substring(0,homeStr.lastIndexOf("/")+1); 
         	  if (value.indexOf(homeStr)== 0 ) value = value;
         	  else if (value.indexOf("http://")==0  ||value.indexOf("https://")==0  ) value = value;
         	  else value =  homeStr + value;  
-        	  value  = swapServletUrl2 + new String (Base64Coder.encode(  value.getBytes() ));
           }
+          value = encode(swapServletUrl2, value);
+          
           System.out.println("NEW VAL for "+nodeName+".."+attrName+" : ["+attr.getValue()+"]=>"+value);
           attr.setValue(value);       
           attrs.set(attr);
         }
   }
+
+	public static  String encode(String swapServletUrl2, String value) {
+		value  = swapServletUrl2 + new String (Base64Coder.encode(  value.getBytes() ));
+		return value;
+	}
+	
+	public static String decode(String decodedUrl) {
+		String urlStr;
+		char[] charArray = decodedUrl.toCharArray();
+		urlStr = new String(Base64Coder.decode(charArray));
+		return urlStr;
+	}
   
   public static class SiteLinkVerifier extends TextVerifier implements ValueVerifier{
     public boolean verify(String link){
