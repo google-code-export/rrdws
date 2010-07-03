@@ -254,6 +254,7 @@ public class LServlet extends HttpServlet {
 				int endIndex = beginIndex + data.toLowerCase().substring(beginIndex).indexOf("\"");
 				contextEncStr = data.toLowerCase().substring(beginIndex,endIndex );
 				contextEncStr = contextEncStr.toUpperCase();
+				data = oaos.toString(contextEncStr);
 			}catch(Throwable e){}
 			if ("null".equals(""+contextEncStr)){
 				dataBuf = data.trim().getBytes();// "ISO-8859-1"
@@ -268,7 +269,7 @@ public class LServlet extends HttpServlet {
 				documentTmp = parser2.createDocument(dataBuf, null );// "utf-8"
 			}
 			 
-	    	URL realURL = new URL(urlStr);
+	    	URL realURL = new URL(urlStr); // new String( oaos.toString(contextEncStr).getBytes(), contextEncStr)
 	    	 
 	    	testCreateFullLink(documentTmp.getRoot(), SwapServletUrl, realURL);
 //	    	testCreateImageLink(documentTmp.getRoot(), SwapServletUrl, realURL);
