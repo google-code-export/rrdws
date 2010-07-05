@@ -2,12 +2,14 @@ package ws.rdd.net;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
  
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.conn.scheme.PlainSocketFactory;
@@ -90,6 +92,34 @@ public class UrlFetchTest {
 		HttpClient httpClient = new DefaultHttpClient(connectionManager,
 				httpParams);
 		return httpClient;
+	}
+
+	public HttpResponse fetchResp(String toFetchStr, String[][] headers, 	Map parameterMap) throws ClientProtocolException, IOException {
+		HttpClient httpClient = makeHTTPClient();
+		String schemes[] = {"https", "http", "ftp"};
+		for (String scheme : schemes) {
+			String proxHostTmp = System.getProperty(scheme + ".proxyHost");//System.getProperties();
+			String proxyPortTmp = System.getProperty(scheme + ".proxyPort");//System.setProperty("http.proxyHost","localhost");
+			if (("" + proxHostTmp + proxyPortTmp).indexOf("null") == -1) {
+				org.apache.http.HttpHost proxyTmp = new org.apache.http.HttpHost(
+						proxHostTmp, Integer.parseInt( proxyPortTmp ), scheme);
+				httpClient.getParams().setParameter( ConnRoutePNames.DEFAULT_PROXY, proxyTmp);
+			}
+		}
+
+		String fetchUrl = null == toFetchStr
+				? "http://www.fiducia.de/service/suchergebnis.html?searchTerm=java"
+				: toFetchStr;
+		HttpUriRequest m = new HttpPost(fetchUrl);
+		for (String []nextHeader :headers)
+			m.addHeader(nextHeader[0], nextHeader[1]);
+		for(Object nextParName:parameterMap.keySet()){
+			String valueTmp =  ""+(((String[])parameterMap.get(nextParName))[0]);
+			HttpParams arg0 = httpClient.getParams();
+			m.setParams(arg0.setParameter(""+nextParName, valueTmp));
+		}
+		HttpResponse respTmp = httpClient.execute(m);
+		return respTmp;
 	}
 	
 }
