@@ -61,12 +61,7 @@ public class LServlet extends HttpServlet {
 	}
 
 	  private static HyperLinkUtil handler  = new HyperLinkUtil();
-
-	  private static void testGetLink(HTMLNode node){
-	    List<String> list  = handler.scanSiteLink(node);
-	    for(String ele : list)
-	      System.out.println(ele);
-	  }
+ 
 
 	  private static void testCreateFullLink(HTMLNode node, String swapServletUrl2, URL home){
 		    handler.createFullNormalLink(node,  swapServletUrl2,  home);
@@ -88,13 +83,7 @@ public class LServlet extends HttpServlet {
 		    for(String ele : list)
 		      System.out.println(ele);
 		  }	  
-
-//	  private static void testCreateImageLink(HTMLNode node, String swapServletUrl2, URL home){
-//		    handler.createFullImageLink(node, swapServletUrl2, home);
-//		    List<String> list  = handler.scanImageLink(node);
-//		    for(String ele : list)
-//		      System.out.println(ele);
-//	  }	
+ 
 	
 	public void doGetPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
@@ -204,12 +193,7 @@ public class LServlet extends HttpServlet {
 					"Content-Type: image/ief".equalsIgnoreCase( contextTypeStr) ||
 					"Content-Type: image/g3fax".equalsIgnoreCase( contextTypeStr) ||
 					"Content-Type: application/x-shockwave-flash".equalsIgnoreCase( contextTypeStr) 
-/*
- 					"Content-Type: application/x-javascript".equalsIgnoreCase( contextTypeStr) ||
-					"content-type: text/html; charset=ISO8859-1".equalsIgnoreCase( contextTypeStr) ||
-					"content-type: text/javascript; charset=UTF-8".equalsIgnoreCase( contextTypeStr) || 
- */					
-					
+				
 					
 			){
 				if (! "null".equals( contextTypeStr )){
@@ -222,7 +206,25 @@ public class LServlet extends HttpServlet {
 				entity.writeTo(outTmp) ;
 				outTmp.flush();
 				return;
-			}else{
+			}else if (
+					 
+ 					"Content-Type: application/x-javascript".equalsIgnoreCase( contextTypeStr) ||
+					//"content-type: text/html; charset=ISO8859-1".equalsIgnoreCase( contextTypeStr) ||
+					"content-type: text/javascript; charset=UTF-8".equalsIgnoreCase( contextTypeStr)  
+ 
+					){
+				log.warning("JS contextTypeStr||contextEncStr:["+contextTypeStr+"||"+contextEncStr+"]  URL =:["+urlStr+"]");
+				
+				ByteArrayOutputStream oaos = new ByteArrayOutputStream();
+				entity.writeTo(oaos) ;				
+				
+				outTmp = resp.getOutputStream();
+				oaos.writeTo(outTmp) ;
+				outTmp.flush();
+				return;
+				
+			}	else{
+			 
 				String xEncTmp = getXEnc(xRespTmp);
 				
 				log.warning("x---HTML---x  contextTypeStr/contextEncStr:"+contextTypeStr+" : :  enc : : "+contextEncStr +"["+urlStr+"]   XXX::"+xEncTmp);

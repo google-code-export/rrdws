@@ -1,8 +1,37 @@
 package org.vietspider.chars;
 
-public class TextVerifier {
+import org.vietspider.html.HTMLNode;
+import org.vietspider.token.attribute.Attribute;
+import org.vietspider.token.attribute.Attributes;
+
+public abstract class TextVerifier implements ValueVerifier{
+	
+	
+
+
+
+	public boolean verify(HTMLNode node, String nodeName, String attrName) {
+	    if(node.isNode(nodeName) || (nodeName.length() == 1 && nodeName.charAt(0) == '*')) {
+	        Attributes attrs = node.getAttributes();  
+			Attribute attr = attrs.get(attrName);
+	        if(attr == null)  return false;
+	        String value = attr.getValue();
+	        if(value == null) return false;
+	        return verify(value);
+	    }else
+	    	return false; 
+	    
+	}	
   
-  public boolean startWith (String line, String...pattern){
+  public final String eval(HTMLNode node, String nodeName, String attrName){
+	  Attributes attrs = node.getAttributes();
+	  Attribute attr = attrs.get(attrName);
+	  String value = attr.getValue();
+	  return value;
+  }
+  protected abstract boolean verify(String value); 
+  
+public boolean startWith (String line, String...pattern){
     for(String ele : pattern) {
       if(line.startsWith(ele)) return true;
     }

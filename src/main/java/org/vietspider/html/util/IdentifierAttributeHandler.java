@@ -37,15 +37,7 @@ public class IdentifierAttributeHandler extends AttributeHandler {
     return null;
   }
   
-  public String getAttributeValue(HTMLNode node) {   
-    NodeIterator iterator = node.iterator();
-    while(iterator.hasNext()) {
-      Attribute attr = getAttribute(iterator.next());    
-      if(attr != null 
-        && (verifier == null || verifier.verify(attr.getValue()))) return attr.getValue();  
-    }
-    return null;
-  }
+ 
   int handleCount = 0;
   @SuppressWarnings("unused")
   public void handleNode(HTMLNode node) {

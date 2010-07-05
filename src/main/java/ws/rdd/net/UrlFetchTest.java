@@ -50,18 +50,19 @@ public class UrlFetchTest {
 	public HttpResponse fetchResp(String toFetchStr, String headers[][]) throws IOException, ClientProtocolException {
 		HttpClient httpClient = makeHTTPClient();
 
-		String schemes[] = {"htttps", "http"};
-		for (String scheme : schemes)
-			if (("" + System.getProperty(scheme + ".proxyHost") + System
-					.getProperty(scheme + ".proxyPort")).indexOf("null") == -1) {
-				org.apache.http.HttpHost proxy = new org.apache.http.HttpHost(
-						"proxy", 8080, scheme);
-				httpClient.getParams().setParameter(
-						ConnRoutePNames.DEFAULT_PROXY, proxy);
+		String schemes[] = {"https", "http", "ftp"};
+		for (String scheme : schemes) {
+			String proxHostTmp = System.getProperty(scheme + ".proxyHost");//System.getProperties();
+			String proxyPortTmp = System.getProperty(scheme + ".proxyPort");//System.setProperty("http.proxyHost","localhost");
+			if (("" + proxHostTmp + proxyPortTmp).indexOf("null") == -1) {
+				org.apache.http.HttpHost proxyTmp = new org.apache.http.HttpHost(
+						proxHostTmp, Integer.parseInt( proxyPortTmp ), scheme);
+				httpClient.getParams().setParameter( ConnRoutePNames.DEFAULT_PROXY, proxyTmp);
 			}
+		}
 
 		String fetchUrl = null == toFetchStr
-				? "http://www.fiducia.de/service/suchergebnis.html?searchTerm=zeit"
+				? "http://www.fiducia.de/service/suchergebnis.html?searchTerm=java"
 				: toFetchStr;
 		HttpUriRequest m = new HttpGet(fetchUrl);
 		for (String []nextHeader :headers)

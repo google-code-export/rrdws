@@ -42,7 +42,7 @@ public abstract class AttributeHandler {
       if(attr == null) continue;
       String attrValue = attr.getValue();
       if(attrValue == null) continue;
-      if (verifier == null || verifier.verify(attrValue)) list.add(attrValue);
+      if (verifier == null || verifier.verify(n, n.getName().toString(), attr.getName().toString())) list.add(attrValue);
     }
   }
   
