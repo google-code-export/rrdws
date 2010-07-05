@@ -133,7 +133,13 @@ public class LServlet extends HttpServlet {
 			urlStr  = urlStr.replace(" ", "%20");
 			// http://it-ru.de/forum/viewtopic.php?t=182374&amp;postdays=0&amp;postorder=asc&amp;start=15
 			urlStr  = urlStr.replace("&amp;", "&");
-			HttpResponse xRespTmp = new UrlFetchTest().fetchResp(urlStr, headsToResend);
+			final UrlFetchTest urlFetchTest = new UrlFetchTest();
+			HttpResponse xRespTmp = null ;
+			if ("POST".equals( req.getMethod() )){
+				xRespTmp = urlFetchTest.fetchResp(urlStr, headsToResend,	req.getParameterMap());
+			}				
+			else
+				xRespTmp = urlFetchTest.fetchResp(urlStr, headsToResend);
 			HttpEntity entity = xRespTmp.getEntity();
 			contextTypeStr = ""+entity.getContentType();
 			String contextEncStr =  ""+entity.getContentEncoding() ;
