@@ -1,6 +1,7 @@
 /***************************************************************************
  * Copyright 2001-2008 The VietSpider         All rights reserved.  		 *
  **************************************************************************/
+
 import java.io.File;
 import java.net.URL;
 import java.util.List;
@@ -21,15 +22,16 @@ import org.vietspider.net.client.WebClient;
  *          nhudinhthuan@yahoo.com
  * Nov 2, 2008
  */
-public class GmailLogin {
+public class JavaNetLogin {
+
   public static void main(String[] args) throws Exception {
     WebClient webClient = new WebClient();
 
-    String homepage  = "http://mail.google.com/";
+    String homepage  = "http://java.net/";
     webClient.setURL(homepage, new URL(homepage));
 
     HttpHost httpHost = webClient.createHttpHost(homepage);
-    HttpGet httpGet = webClient.createGetMethod(homepage, "http://www.google.com");
+    HttpGet httpGet = webClient.createGetMethod(homepage, "http://java.net/");
 
     HttpResponse response = webClient.execute(httpHost, httpGet);
     HttpEntity entity = response.getEntity();
@@ -50,18 +52,18 @@ public class GmailLogin {
 
     HttpSessionUtils httpSession = new HttpSessionUtils(webClient, "ERROR");
 
-    StringBuilder builder = new StringBuilder("https://www.google.com/accounts/ServiceLogin?service=mail&passive=true&rm=false&continue=http%3A%2F%2Fmail.google.com%2Fmail%2F%3Fui%3Dhtml%26zy%3Dl&bsv=1k96igf4806cy&ltmpl=default&ltmplcache=2");
+    StringBuilder builder = new StringBuilder(homepage);
     builder.append('\n').append("your_username:your_password");
 
     httpSession.login(builder.toString(), "utf-8", new URL(homepage), homepage);
 
-    httpGet = webClient.createGetMethod("http://mail.google.com/mail/", "http://gmail.com");
+    httpGet = webClient.createGetMethod("http://java.net/", "http://java.net/");
     response = webClient.execute(httpHost, httpGet);
     entity = response.getEntity();
 
     HttpResponseReader httpResponseReader = new HttpResponseReader();
     byte [] bytes = httpResponseReader.readBody(response);
-    new DataWriter().save(new File("google_mail.html"), bytes);
+    new DataWriter().save(new File("java_net.html"), bytes);
 
     System.out.println("Login form get: " + response.getStatusLine());
     if (entity != null) entity.consumeContent();
