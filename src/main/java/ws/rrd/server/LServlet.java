@@ -123,7 +123,13 @@ public class LServlet extends HttpServlet {
 			}
 			
 			String[][] headsToResend = calcRequestHeaders(req);
-			 
+			if (!urlStr.startsWith("http")) {
+				// fix via REFeRER
+				try{
+				 URL refURL = new URL ( HyperLinkUtil.decode( req.getHeader("Referer").substring(SwapServletUrl.length()) ) );
+				 urlStr = refURL.getProtocol() + "://"+refURL.getHost() + "/"+(urlStr.startsWith("/")?"":refURL.getPath()+"/../")+urlStr;
+				}catch(Throwable e){}
+			}
 			urlStr  = urlStr.replace(" ", "%20");
 			// http://it-ru.de/forum/viewtopic.php?t=182374&amp;postdays=0&amp;postorder=asc&amp;start=15
 			urlStr  = urlStr.replace("&amp;", "&");
@@ -208,7 +214,8 @@ public class LServlet extends HttpServlet {
 				return;
 			}else if (
 					 
- 					"Content-Type: application/x-javascript".equalsIgnoreCase( contextTypeStr) ||
+					"Content-Type: application/x-javascript".equalsIgnoreCase( contextTypeStr) ||
+					"Content-Type: application/x-javascript; charset=utf-8".equalsIgnoreCase( contextTypeStr) ||
 					//"content-type: text/html; charset=ISO8859-1".equalsIgnoreCase( contextTypeStr) ||
 					"content-type: text/javascript; charset=UTF-8".equalsIgnoreCase( contextTypeStr)  
  
@@ -217,9 +224,16 @@ public class LServlet extends HttpServlet {
 				
 				ByteArrayOutputStream oaos = new ByteArrayOutputStream();
 				entity.writeTo(oaos) ;				
-				
+				String jsToWrap = oaos.toString();
+				jsToWrap = 
+					jsToWrap
+						.replace("http://",   SwapServletUrl +  "/HtTp/" )
+						.replace("HTTP://",   SwapServletUrl +  "/HtTp/" )
+						.replace("HTTPS://",   SwapServletUrl +  "/HtTp/" )
+						.replace("https://",   SwapServletUrl +  "/HtTp/" )
+					;
 				outTmp = resp.getOutputStream();
-				oaos.writeTo(outTmp) ;
+				outTmp.write(jsToWrap.getBytes()) ;
 				outTmp.flush();
 				return;
 				
@@ -248,8 +262,8 @@ public class LServlet extends HttpServlet {
 				xCSS = oaos.toString(contextEncStr);//xCSS.toUpperCase().substring( 12430)
 			}
 			String data = xCSS;// data = new UrlFetchTest().testFetchUrl( urlStr ); 
-			if (data.toLowerCase().indexOf("content=\"text/html; charset=")>0)try{
-				String contextText = "content=\"text/html; charset=";
+			if (data.toLowerCase().indexOf("content=\"text/html")>0)try{
+				String contextText = "charset=";
 				int lenTmp = contextText.length();
 				int posTmp = data.toLowerCase().indexOf(contextText);
 				int beginIndex = posTmp +lenTmp;
@@ -290,7 +304,9 @@ public class LServlet extends HttpServlet {
 	    	
 	    	outTmp = resp.getOutputStream();
 	    	
-	    	String textValue = new String(documentTmp.getTextValue().getBytes("ISO-8859-1"), contextEncStr);// "windows-1251" textValue.toUpperCase().substring( 12430)
+	    	String textValue = null;
+	    	
+	    	//new String(documentTmp.getTextValue().getBytes("ISO-8859-1"), contextEncStr);// "windows-1251" textValue.toUpperCase().substring( 12430)
 	    	if ("KOI8-R".equals(contextEncStr)) {
 	    		textValue = documentTmp.getTextValue();//
 	    	}else{
