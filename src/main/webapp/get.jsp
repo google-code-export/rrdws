@@ -3,6 +3,7 @@
 <%@page import="org.apache.http.HttpEntity"%>
 <%@page import="org.apache.http.HttpResponse"%>
 <%@page import="ws.rdd.net.UrlFetchTest"%><%
+//test jsp for fetching-tech -  TODO : clean
 UrlFetchTest o =  new UrlFetchTest();
 String urlTmp = request.getParameter("url");
 String refTmp =  "http://localhost:8888/get.jsp"+"?url="+"http://www.fiducia.de/"; 

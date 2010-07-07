@@ -11,8 +11,11 @@
 <body bgcolor=#FFFFFF link=#006890 vlink=#003860 alink=#800000 text=#000000 topmargin="0" marginheight="0">
  <table class="data-table-1" summary="this is the table >;-)" >
 <%
+//list.jsp provide shor preview of all stored in REGISTY rrd.DBs
+ 
 Cache cache = MemoryFileCache.getCache();
 Registry reg = (Registry) cache.get("REGISTRY");
+if (null != reg)
 for (String key:reg.getPath2db().keySet() ){
 %><tr><td><%=key %> </td><td>==</td><td> 
 <%=reg.getPath2db().get(key) %></td>
@@ -22,4 +25,5 @@ for (String key:reg.getPath2db().keySet() ){
 <%
 }
 %>
+   
 </table>
