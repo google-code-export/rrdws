@@ -1,9 +1,14 @@
+<%@page import="ws.rrd.mem.MemoryFileItem"%>
 <%@page import="java.io.OutputStream"%>
 <%@page import="org.apache.commons.fileupload.FileItem"%>
 <%@page import="ws.rrd.mem.MemoryFileCache"%><%
+/**
+deliver stored by <b>push.jsp</b> data via name: 
+<a>http://x.x.x.x/mem.jsp?name=test.svg</a>
+*/
 String nameTmp = request.getParameter("name");
-FileItem item = MemoryFileCache. get ( nameTmp  );
-response.setContentType("image/svg+xml;charset=UTF-8");
+MemoryFileItem item = MemoryFileCache. get ( nameTmp  );
+response.setContentType(item.getContentType());//"image/svg+xml;charset=UTF-8"
 %><%
 response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
 response.setHeader("Pragma","no-cache"); //HTTP 1.0
