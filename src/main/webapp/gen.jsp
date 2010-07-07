@@ -3,6 +3,8 @@
 <%@page import="java.io.ByteArrayInputStream"%><%@page  contentType="image/gif"%><%
 response.setContentType("image/gif");
 %><%
+// gen.jsp generates gif.preview by RRD-name. 
+// known usage: list.jsp
 String dbParName = request.getParameter("db");
 String dbName = dbParName==null?"X-1979395149":dbParName;
 String EXT = ".rrd";

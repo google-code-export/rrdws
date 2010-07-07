@@ -7,6 +7,7 @@ response.setContentType("image/svg+xml");
 <%@page import="java.io.ByteArrayOutputStream"%>
 <%@page import="org.jrobin.cmd.RrdSVGCmdTest"%>   
 <%
+//test jsp for fetching-tech -  TODO : clean
 try{
 		if (1==2)(new RrdSVGCmdTest()).testExecute();
 		ByteArrayOutputStream myOut = new ByteArrayOutputStream();
