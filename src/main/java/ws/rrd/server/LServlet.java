@@ -72,9 +72,9 @@ public class LServlet extends HttpServlet {
 		  
 	  private static void testCreateScriptLink(HTMLNode node, String swapServletUrl2, URL home){
 		    handler.createScriptLink( node,  swapServletUrl2,  home);
-		    List<String> list  = handler.scanSiteLink(node);
-		    for(String ele : list)
-		      System.out.println(ele);
+		    //List<String> list  = handler.scanScriptLink(node );
+		    //for(String ele : list)
+		    //  System.out.println(ele);
 		  }
 		  
 	  private static void testCreateMetaLink(HTMLNode node, String swapServletUrl2, URL home){
@@ -273,12 +273,13 @@ public class LServlet extends HttpServlet {
 			 
 	    	URL realURL = new URL(urlStr); // new String( oaos.toString(contextEncStr).getBytes(), contextEncStr)
 	    	 
-	    	testCreateFullLink(documentTmp.getRoot(), SwapServletUrl, realURL);
+	    	HTMLNode rootTmp = documentTmp.getRoot();
+			testCreateFullLink(rootTmp, SwapServletUrl, realURL);
 //	    	testCreateImageLink(documentTmp.getRoot(), SwapServletUrl, realURL);
 	    	
-	    	testCreateMetaLink(documentTmp.getRoot(), SwapServletUrl, realURL);
+	    	testCreateMetaLink(rootTmp, SwapServletUrl, realURL);
 	    	
-	    	testCreateScriptLink(documentTmp.getRoot(), SwapServletUrl, realURL);	    	
+	    	testCreateScriptLink(rootTmp, SwapServletUrl, realURL);	    	
 	    	
 	    	int beginIndex = contextTypeStr.toUpperCase().indexOf(" ")+1;
 
@@ -289,15 +290,15 @@ public class LServlet extends HttpServlet {
 	    	}
 	    	
 	    	outTmp = resp.getOutputStream();
-	    	
-	    	String textValue = new String(documentTmp.getTextValue().getBytes("ISO-8859-1"), contextEncStr);// "windows-1251" textValue.toUpperCase().substring( 12430)
+	    	String textValue  = null;
+	    	//String textValue = new String(documentTmp.getTextValue().getBytes("ISO-8859-1"), contextEncStr);// "windows-1251" textValue.toUpperCase().substring( 12430)
 	    	if ("KOI8-R".equals(contextEncStr)) {
 	    		textValue = documentTmp.getTextValue();//
 	    	}else{
 	    		textValue = documentTmp.getTextValue();//
 	    	}
 	    	//PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-	    	String string1 = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"><HtMl>\n\t<!-- contextEncStr="+contextEncStr+" -->";
+	    	String string1 = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML  4.01 Transitional//EN\"><HtMl>\n\t<!-- contextEncStr="+contextEncStr+" -->";
 	    	String string2 = "</HtMl>";
 			//outTmp.write(string1.getBytes(contextEncStr));
 	    	if (!"null".equals(""+contextEncStr)){

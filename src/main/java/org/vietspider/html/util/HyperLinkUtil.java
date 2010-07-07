@@ -11,10 +11,12 @@ import java.util.Set;
 import org.vietspider.chars.TextVerifier;
 import org.vietspider.chars.URLUtils;
 import org.vietspider.chars.ValueVerifier;
+import org.vietspider.chars.chardet.bak.Verifier;
 import org.vietspider.html.HTMLNode;
 import org.vietspider.html.Name;
 import org.vietspider.html.NodeIterator;
 import org.vietspider.html.parser.NodeImpl;
+import org.vietspider.html.path2.Node;
 import org.vietspider.token.attribute.Attribute;
 import org.vietspider.token.attribute.Attributes;
 
@@ -76,10 +78,10 @@ public class HyperLinkUtil {
   }
   
 	  // Nach JavaScript (Netscape) erlaubt in folgenden HTML-Tags:
-  private final static String tagList [] ={ "<body>","<frameset>","<input>","<layer>","<select>","<textarea>","<a>","<area>","<input>","<textarea>", 
+  private final static String tagList [] ={ "noscript","script","body","frameset","input","layer","select","textarea","a","area","input","textarea", 
 
   // Nach HTML 4.0 erlaubt in folgenden HTML-Tags:
-   "<a>","<abbr>","<acronym>","<address>","<area>","<b>","<big>","<blockquote>","<body>","<button>","<caption>","<center>","<cite>","<code>","<col>","<colgroup>","<dd>","<del>","<dfn>","<dir>","<div>","<dl>","<dt>","<em>","<fieldset>","<form>","<h1>","<h2>","<h3>","<h4>","<h5>","<h6>","<hr>","<i>","<img>","<input>","<ins>","<kbd>","<label>","<legend>","<li>","<link>","<map>","<menu>","<noframes>","<noscript>","<object>","<ol>","<optgroup>","<option>","<p>","<pre>","<q>","<s>","<samp>","<select>","<small>","<span>","<strike>","<strong>","<sub>","<sup>","<table>","<tbody>","<td>","<textarea>","<tfoot>","<th>","<thead>","<tr>","<tt>","<u>","<ul>","<var>"
+   "a","abbr","acronym","address","area","b","big","blockquote","body","button","caption","center","cite","code","col","colgroup","dd","del","dfn","dir","div","dl","dt","em","fieldset","form","h1","h2","h3","h4","h5","h6","hr","i","img","input","ins","kbd","label","legend","li","link","map","menu","noframes","noscript","object","ol","optgroup","option","p","pre","q","s","samp","select","small","span","strike","strong","sub","sup","table","tbody","td","textarea","tfoot","th","thead","tr","tt","u","ul","var"
   };
 
   private final static String eventList[] = {
@@ -109,37 +111,16 @@ public class HyperLinkUtil {
   private static void initSA(){ 
 		  for(String nextTag:tagList)
 			  for (String nextEvent:eventList){
-				  String rTag = nextTag.substring(1);
-				  rTag = rTag.substring(0,rTag.length()-1);
-				  String rEvent = nextEvent.substring(1);
-				  List events = scriptAttributeFullMap.get(rTag);
+				   
+				  List<String> events = scriptAttributeFullMap.get(nextTag);
 				  events = events ==null?new ArrayList<String>(0):events;
-				  scriptAttributeFullMap.put(rTag, events);
-				  events.add(rEvent);
+				  scriptAttributeFullMap.put(nextTag, events);
+				  events.add(nextEvent);
 			  }
 		  System.out.println(scriptAttributeFullMap);
   }
   
-  public List<String> scanScriptLink(List<String> values, HTMLNode root) {
-    IdentifierAttributeHandler handler = new IdentifierAttributeHandler(values, null,  "*", "onclick");
-    handler.handle(root);
-    
-    List<String> list = handler.getValues();
-    
-    handler = new IdentifierAttributeHandler(list, jsVerifier, "a", "href");
-    handler.handle(root);
-    
-    NodeIterator iterator = root.iterator();
-    while(iterator.hasNext()) {
-      HTMLNode n = iterator.next();
-      if(!n.isNode(Name.SCRIPT)) continue;
-      if(n.getChildren().size() < 1) continue;
-      list.add(n.getChild(0).getTextValue());
-    }
-    return list;
-  }
  
-
   
   public  List<String> scanSiteLink(HTMLNode node) {
     return scanSiteLink(null, node);
@@ -184,16 +165,26 @@ public class HyperLinkUtil {
 } 
 
   public  void createScriptLink(HTMLNode node, String swapServletUrl2, URL home) {
-	  for(String nextTag:tagList)
-		  for (String nextEvent:eventList){
-			  String rTag = nextTag.substring(1);
-			  rTag = rTag.substring(0,rTag.length()-1);
-			  String rEvent = nextEvent.substring(1);
-			  createFullLink(node, rTag, rEvent,   swapServletUrl2, home, jsVerifier  );// jsVerifier
-		  }
-	   
-} 
 
+	  JavaScriptVerifier verifier = jsVerifier;
+	  if (node == null)
+		  return;	  
+	  NodeIterator iterator = node.iterator();
+	  while (iterator.hasNext()) {
+		  HTMLNode n = iterator.next();
+		  if (n.isTag()){ 
+			  System.out.println(n.getName());
+		      if(verifier != null &&  verifier.verify(n)){ 
+				String  value = verifier.eval (n, null, null);
+		        value = prepareLinkValue(home , value);
+		        value = encode(swapServletUrl2, value);
+		        verifier.modi(n, null, null, value); 
+		      }
+		  }
+	  }
+	 
+      
+  } 
   
   public void createMetaLink(HTMLNode node,
 			String swapServletUrl2, URL home) {
@@ -272,7 +263,7 @@ public class HyperLinkUtil {
 	}  
   
   public void createFullLink(HTMLNode node, 
-      String nodeName, String attrName, String swapServletUrl2, URL home, ValueVerifier verifier) {
+    String nodeName, String attrName, String swapServletUrl2, URL home, ValueVerifier verifier) {
     NodeIterator iterator = node.iterator();
     while(iterator.hasNext()) {
       HTMLNode n = iterator.next();
@@ -335,13 +326,13 @@ private String prepareLinkValue(URL home, String value) {
 	}
   
   public static class SiteLinkVerifier extends TextVerifier implements ValueVerifier{
-    protected boolean verify(String link){
-      if(link == null) return false;
-      link = link.toLowerCase();    
       String start[]={"mailto", "javascript", "window", "history", "#"};
       String end[]={"css", "js", "jpg", "png", "gif", "jpeg", "bmp", "dat", "exe", "txt", 
                     "java", "pdf", "doc", "xls", "rm", "ram", "wma", "wmv", "mp3", "swf", "zip", "jar", "rar"};
-      String exist[] ={"img(\"", "image", ":sendim"} ;
+      String exist[] ={"img(\"", "image", ":sendim"} ;	  
+    protected boolean verify(String link){
+      if(link == null) return false;
+      link = link.toLowerCase();    
       return !startOrEndOrExist(link, start, end, exist); 
     }
 	@Override
@@ -349,17 +340,18 @@ private String prepareLinkValue(URL home, String value) {
         Attributes attrs = node.getAttributes();  
 		Attribute attr = attrs.get(attrName);		
 		String value = attr.getValue();
-        System.out.println("NEW VAL for "+nodeName+".."+attrName+" : ["+attr.getValue()+"]=>"+newValue);
+        System.out.println("NEW VAL for "+nodeName+".."+attrName+" : ["+value+"]=>"+newValue);
         attr.setValue( newValue);       
         attrs.set(attr);
 	}    
   }
   
   public static class ImageLinkVerifier extends TextVerifier implements ValueVerifier{
+      String exist[] = {"img", "image"};
+      String end[]={"jpg", "gif", "jpeg", "png", "ico", "svg", "bmp", "dib"};	  
      protected boolean verify(String link){
       link = link.toLowerCase();    
-      String exist[] = {"img", "image"};
-      String end[]={"jpg", "gif", "jpeg", "png", "ico", "svg", "bmp", "dib"};
+
       return existIn(link, exist) || endWith(link, end);
     }
  	@Override
@@ -368,69 +360,78 @@ private String prepareLinkValue(URL home, String value) {
 		Attribute attr = attrs.get(attrName);		
 		String value = attr.getValue();
 		 
-        System.out.println("NEW VAL for "+nodeName+".."+attrName+" : ["+attr.getValue()+"]=>"+newValue);
+        System.out.println("NEW VAL for "+nodeName+".."+attrName+" : ["+value+"]=>"+newValue);
         attr.setValue( newValue);       
         attrs.set(attr);
 	}     
   }
   
-  public static class JavaScriptVerifier extends TextVerifier
-			implements
-				ValueVerifier {
-		protected boolean verify(String jsPar) {
-			System.out.println("JS ::"+jsPar);
-			String scriptValue = jsPar;
-			if (scriptValue.toLowerCase().indexOf("document.") >= 0
-					|| scriptValue.toLowerCase().indexOf("eval") >= 0
-					|| scriptValue.toLowerCase().indexOf("navigator.") >= 0
-					|| scriptValue.toLowerCase().indexOf("window.") >= 0
-
-			) return true;
-			else return false;
-		}
-		public boolean verify(HTMLNode node) {
-
+  public static class JavaScriptVerifier extends TextVerifier implements ValueVerifier {
+		String start[] = {  "javascript", "window", "history"};
+		String exist[] = {"document.", "eval","navigator.","window."};
+		String end[] = {};
+		protected boolean verify(String strScriptPar) {
+			strScriptPar = strScriptPar.toLowerCase();
+			return startOrEndOrExist(strScriptPar, start, end, exist);
+		}	  
+ 
+		public boolean verify(HTMLNode node) { 
+			boolean retval = false;
 			String nodeName = node.getName().toString();
-			if (("script".equals(nodeName) || "noscript".equals(nodeName))
-					&& node.isNode(nodeName)) {
-				final String scriptValue = node.getTextValue();
-				System.out.println(scriptValue);
-				if (scriptValue.toLowerCase().indexOf("document.") >= 0
-						|| scriptValue.toLowerCase().indexOf("eval") >= 0
-						|| scriptValue.toLowerCase().indexOf("navigator.") >= 0
-						|| scriptValue.toLowerCase().indexOf("window.") >= 0
-
-				) {
-					node.clearChildren();// setChild(0, new
-					// HTMLNode(){})getChildren().clear()setValue("/*
-					// 8-X */".toCharArray());
-					final String scriptAliasTmp = ("SCRIPT SRC=\"/l/l"
-							+ scriptValue.hashCode() + ".js\"");
-					node.setValue(scriptAliasTmp.toCharArray());
-					System.out.println("" + node.getTextValue());
+			List<String> events = scriptAttributeFullMap.get(nodeName.toLowerCase());
+			if ( events == null) return false;
+			for (String nextAttr:events){
+				Attribute scriptOnEventAttr = node.getAttributes().get(nextAttr);
+				if ( scriptOnEventAttr == null) continue;
+				String scriptOnEvent = scriptOnEventAttr.getValue().toString();
+				if ( scriptOnEvent == null) continue;
+				// ATTRibute check
+				if (verify(scriptOnEvent)){
+					Attribute a1 = new Attribute("_attrVale", scriptOnEvent);
+					Attribute a2 = new Attribute("_attrName", nextAttr);
+					node.getAttributes().add(a1 );
+					node.getAttributes().add(a2 ); 
+					retval = true;
+				} 
+			} 
+			// SCRIPT body-check
+			if ("SCRIPT".equals( node.getName().toString())){
+				String scriptOnBody = node.getTextValue(); 
+				if (verify(scriptOnBody)){
+					clearBody(node, scriptOnBody);
+					retval = false;
 				}
-				System.out.println();
-				return true;
 			}
-			return false;
+			return retval;
+		}
+
+		private void clearBody(HTMLNode node, final String scriptValue) {
+			node.clearChildren();// setChild(0, new
+			// HTMLNode(){})getChildren().clear()setValue("/*
+			// 8-X */".toCharArray());
+			final String scriptAliasTmp = ("SCRIPT SRC=\"/l/l"
+					+ scriptValue.hashCode() + ".js\"");
+			node.setValue(scriptAliasTmp.toCharArray());
+			System.out.println("" + node.getTextValue());
 		}
 		@Override
 		public void modi(HTMLNode node, String nodeName, String attrName, String newValue) {
 	        Attributes attrs = node.getAttributes();  
 			Attribute attr = attrs.get(attrName);		
 			String value = attr.getValue();
-	        System.out.println("NEW VAL for "+nodeName+".."+attrName+" : ["+attr.getValue()+"]=>"+newValue);
+	        System.out.println("NEW VAL for "+nodeName+".."+attrName+" : ["+value+"]=>"+newValue);
 	        attr.setValue(  newValue);       
 	        attrs.set(attr);
 		}		
 	}
   public static class NormalLinkVerifier extends TextVerifier implements ValueVerifier{
-	  
-	    protected boolean verify(String link){
-	      link = link.toLowerCase();    
+      
 	      String start[]={"mailto", "javascript", "window", "history"};    
 	      String exist[] ={"javascript", "#"} ;
-	      String end[]={};
+	      String end[]={};	
+	      
+	    protected boolean verify(String link){ 
+	       link = link.toLowerCase();    
 	      return !startOrEndOrExist(link, start, end, exist); 
 	    } 
 		@Override
@@ -438,33 +439,36 @@ private String prepareLinkValue(URL home, String value) {
 	        Attributes attrs = node.getAttributes();  
 			Attribute attr = attrs.get(attrName);		
 			String value = attr.getValue();
-	        System.out.println("NEW VAL for "+nodeName+".."+attrName+" : ["+attr.getValue()+"]=>"+newValue);
+	        System.out.println("NEW VAL for "+nodeName+".."+attrName+" : ["+value+"]=>"+newValue);
 	        attr.setValue(  newValue);       
 	        attrs.set(attr);
 		}
 	   
 	  }
   
-  public static class MetaLinkVerifier extends TextVerifier implements ValueVerifier{
-	  
-	    protected boolean verify(String link){
-	      link = link.toLowerCase();    
-	      String start[]={"mailto", "javascript", "window", "history"};    
-	      String exist[] ={"javascript", "#"} ;
-	      String end[]={};
-	      return !startOrEndOrExist(link, start, end, exist); 
-	    } 
-		@Override
-		public void modi(HTMLNode node, String nodeName, String attrName, String newValue) {
-	        Attributes attrs = node.getAttributes();  
-			Attribute attr = attrs.get(attrName);		
-			String value = attr.getValue();
-	        System.out.println("NEW VAL for "+nodeName+".."+attrName+" : ["+attr.getValue()+"]=>"+newValue);
-	        attr.setValue( newValue);       
-	        attrs.set(attr);
+  public static class MetaLinkVerifier extends TextVerifier
+			implements
+				ValueVerifier {
+		String start[] = {"mailto", "javascript", "window", "history"};
+		String exist[] = {"javascript", "#"};
+		String end[] = {};
+		protected boolean verify(String link) {
+			link = link.toLowerCase();
+			return !startOrEndOrExist(link, start, end, exist);
 		}
-	   
-	  }
+		@Override
+		public void modi(HTMLNode node, String nodeName, String attrName,
+				String newValue) {
+			Attributes attrs = node.getAttributes();
+			Attribute attr = attrs.get(attrName);
+			String value = attr.getValue();
+			System.out.println("NEW VAL for " + nodeName + ".." + attrName
+					+ " : [" + value + "]=>" + newValue);
+			attr.setValue(newValue);
+			attrs.set(attr);
+		}
+
+	}
  
 }
   
