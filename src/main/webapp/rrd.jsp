@@ -1,12 +1,5 @@
-<%@page import="java.util.List"%>
-<%@page import="javax.jdo.Query"%>
-<%@page import="javax.jdo.PersistenceManager"%>
-<%@page import="ws.rdd.jdo.RRD_JDOHelper"%>
-<%@page import="ws.rdd.jdo.Blob"%> 
-<%@page import="org.jrobin.cmd.RrdGraphCmdTest"%>
 <%@page import="org.jrobin.cmd.RrdCommander"%>
 <%@page import="org.jrobin.svg.RrdGraphInfo"%>
-
 <table height="100%" width="100%">
 	<tr width="100%" height="64">
 		<td width="100%" height="64">
@@ -18,7 +11,6 @@
 				<object data="JavaLogo.svg" width="300" height="100" type="image/svg+xml" codebase="http://www.adobe.com/svg/viewer/install/" />
 			</a>
 			<IMG src="gif.jsp"   />
-			
 		</td>
 	<tr width="100%" height="64">
 	</tr>
@@ -31,8 +23,7 @@
 		</td>
 	</tr>
 	<tr >
-		<td width="100%"><iframe
-			src="https://rrd4j.dev.java.net/tutorial.html" width="101%"
+		<td width="100%"><iframe src="https://rrd4j.dev.java.net/tutorial.html" width="99%"
 			height="333"></iframe></td>
 	</tr>
 	<tr width="100%" height="333">
@@ -58,14 +49,10 @@
 			readonly="readonly"  name="result"  cols="60" rows="4">
  <%=o%>
 </textarea></form>
-
-
 		</td>
 	</tr>
-
 	<tr>
 		<td> 
-
 		</embed> <!-- 
  <%=" "+System.getProperties()+" "%>
   --></td>
