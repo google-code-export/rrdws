@@ -372,7 +372,7 @@ private String prepareLinkValue(URL home, String value) {
 		String end[] = {};
 		protected boolean verify(String strScriptPar) {
 			strScriptPar = strScriptPar.toLowerCase();
-			return startOrEndOrExist(strScriptPar, start, end, exist);
+			return startOrEndOrExist(strScriptPar.toLowerCase(), start, end, exist);
 		}	  
  
 		public boolean verify(HTMLNode node) { 
