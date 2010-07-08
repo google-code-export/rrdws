@@ -9,7 +9,7 @@
 	<tr height="25px">
 	
 		<td align="left">
-			<iframe src="bh.jsp" height="64" width="64" scrolling="no" marginheight="0" marginwidth="0" frameborder="0"></iframe>
+			<iframe src="<%=LServlet.SwapServletUrl.substring(0, LServlet.SwapServletUrl.length()-2) %>T/bh.jsp" height="64" width="64" scrolling="no" marginheight="0" marginwidth="0" frameborder="0"></iframe>
 		</td>
 	
 		<td align="left">

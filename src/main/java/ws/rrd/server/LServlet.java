@@ -11,11 +11,14 @@ import java.net.HttpURLConnection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Logger;
 import java.util.zip.GZIPInputStream;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.*;
 
 import org.apache.http.Header;
@@ -313,7 +316,22 @@ public class LServlet extends HttpServlet {
 	    	
 	    	String textValue = null;
 	    	try{
-	    		documentTmp.getRoot().getChild(1).addChild(parser2.createDocument("<html><head></head><body><iframe src=\""+SwapServletUrl.substring(0, SwapServletUrl.length()-2)+"T/L.jsp\" height=\"64\" width=\"100%\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\" frameborder=\"0\"></iframe></body></html>").getRoot().getChild(1).getChild(0));
+	    		
+	    		RequestDispatcher rdTmp = req.getRequestDispatcher("/T/L.jsp");
+	    		FakeServletResponse arg1 = new FakeServletResponse(); 
+	    		rdTmp.forward(req, arg1 );
+	    		HTMLNode bodyTmp = documentTmp.getRoot().getChild(1);
+				String strTmp = "<html><head> </head><body>" +
+						"<div id=\"tbar\"  style=\"color:#000;background:#DDD;z-index:99999;" +
+						"width:100%;position:fixed;bottom:0;left:0\">" +
+						"<iframe src=\""+SwapServletUrl.substring(0, SwapServletUrl.length()-2)+"" +
+						"T/L.jsp\" height=\"64\" width=\"100%\" scrolling=\"no\" " +
+						"marginheight=\"0\" marginwidth=\"0\" " +
+						"frameborder=\"0\" name=\"Bildframe\" > " +
+						"<pre>):  :(</pre></iframe></div></body></html>";
+				HTMLDocument htmlTmp = parser2.createDocument(strTmp);
+				HTMLNode myIFrame = htmlTmp.getRoot().getChild(1).getChild(0);
+				bodyTmp.addChild(myIFrame);
 	    	}catch(Exception e){
 	    		e.printStackTrace();
 	    	}
