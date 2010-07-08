@@ -142,7 +142,8 @@ public class NodeImpl extends HTMLNode {
     && name != Name.CODE_CONTENT;
     if(isTag) builder.append('<');
     if(type == TypeToken.CLOSE) builder.append('/');
-    builder.append(getValue());
+    char[] startTmp = getValue();
+	builder.append(startTmp);
     if(isTag) builder.append('>');
     if(type == TypeToken.CLOSE || getConfig().hidden())  return builder;
 
@@ -151,7 +152,15 @@ public class NodeImpl extends HTMLNode {
       ele.buildValue(builder);
     }
     if(getConfig().end() != Tag.FORBIDDEN){
-      builder.append(SpecChar.n).append('<').append('/').append(getName()).append('>');
+      Name endTmp = getName();
+      String strEndTmp = endTmp.toString();
+      // >8-0
+      if (new String(startTmp).startsWith( strEndTmp.toLowerCase())){
+    	  strEndTmp = strEndTmp.toLowerCase();
+      }else if (new String(startTmp).startsWith( strEndTmp.toUpperCase())){
+    	  strEndTmp = strEndTmp.toUpperCase();
+      }
+	builder.append(SpecChar.n).append('<').append('/').append(strEndTmp).append('>');
     }
     return builder;
   }
