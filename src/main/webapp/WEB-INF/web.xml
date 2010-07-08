@@ -6,7 +6,7 @@
 <web-app>
 	<servlet>
 	<servlet-name>info</servlet-name>
-	<jsp-file>info.jsp</jsp-file>
+	<jsp-file>/info.jsp</jsp-file>
 	</servlet>
 	<!-- Servlets -->
 	<servlet>
