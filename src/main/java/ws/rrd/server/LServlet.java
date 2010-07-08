@@ -312,8 +312,13 @@ public class LServlet extends HttpServlet {
 	    	outTmp = resp.getOutputStream();
 	    	
 	    	String textValue = null;
-	    	
+	    	try{
+	    		documentTmp.getRoot().getChild(1).addChild(parser2.createDocument("<html><head></head><body><iframe src=\""+SwapServletUrl.substring(0, SwapServletUrl.length()-2)+"T/L.jsp\" height=\"64\" width=\"100%\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\" frameborder=\"0\"></iframe></body></html>").getRoot().getChild(1).getChild(0));
+	    	}catch(Exception e){
+	    		e.printStackTrace();
+	    	}
 	    	//new String(documentTmp.getTextValue().getBytes("ISO-8859-1"), contextEncStr);// "windows-1251" textValue.toUpperCase().substring( 12430)
+
 	    	if ("KOI8-R".equals(contextEncStr)) {
 	    		textValue = documentTmp.getTextValue();//
 	    	}else{
@@ -321,6 +326,7 @@ public class LServlet extends HttpServlet {
 	    	}
 	    	//PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 	    	String string1 = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML  4.01 Transitional//EN\"><HtMl>\n\t<!-- contextEncStr="+contextEncStr+" -->";
+	    	string1 += "";
 	    	String string2 = "</HtMl>";
 			//outTmp.write(string1.getBytes(contextEncStr));
 	    	if (!"null".equals(""+contextEncStr)){
