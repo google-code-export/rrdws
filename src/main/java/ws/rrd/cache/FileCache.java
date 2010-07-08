@@ -7,7 +7,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -60,7 +63,7 @@ public class FileCache implements Cache {
 
 	@Override
 	public boolean containsKey(Object arg0) {
-		return new File(""+arg0).exists();
+		return new File(this.basedir, ""+arg0).exists();
 	}
 
 	@Override
@@ -162,12 +165,9 @@ public class FileCache implements Cache {
 
 	@Override
 	public Set keySet() {
-		// TODO Auto-generated method stub
-		if (1 == 1)
-			throw new RuntimeException("not yet implemented since 14.04.2010");
-		else {
-			return null;
-		}
+		Set<String> retval = new HashSet<String> ();
+		retval .addAll( Arrays.asList( this.basedir .list() )) ;
+		return retval;
 	}
 
 	@Override
