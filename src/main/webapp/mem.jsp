@@ -3,8 +3,9 @@
 <%@page import="org.apache.commons.fileupload.FileItem"%>
 <%@page import="ws.rrd.mem.MemoryFileCache"%><%
 /**
-deliver stored by <b>push.jsp</b> data via name: 
+deliver stored by <b>push.jsp</b> data-File (!) via name: 
 <a>http://x.x.x.x/mem.jsp?name=test.svg</a>
+ mime-type are stored from upload PUSH.JSP).
 */
 String nameTmp = request.getParameter("name");
 MemoryFileItem item = MemoryFileCache. get ( nameTmp  );

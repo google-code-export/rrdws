@@ -1,3 +1,4 @@
+
 <%@page import="net.sf.jsr107cache.Cache"%>
 <%@page import="ws.rrd.mem.MemoryFileCache"%>
 <%
@@ -49,4 +50,6 @@ onmouseout="DoCheckLength(this);"
 onkeyup="DoCheckLength(this);"
 ID="ad" NAME="ad">
 </FORM>
+<%try{%>
 <!-- <%=cache.keySet()%> -->
+<%}catch(Throwable e){}%>
