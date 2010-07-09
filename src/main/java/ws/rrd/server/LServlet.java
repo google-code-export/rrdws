@@ -453,13 +453,20 @@ public class LServlet extends HttpServlet {
 			//"Content-Encoding",
 			"Date",
 			"Last-Modified" ,
+			"Accept",
 			"Accept-Charset",
 			"Accept-Language",
 			//"Accept-Encoding",
 			"Referer", 
 			"Cookie",
 			"Cache-Control",
-			"User-Agent"
+			"User-Agent",
+			"Cookie2",
+			"Cookie2",
+			"Expires",
+			"TE",
+			"Server",
+			"Authorization"
 			
 	};	
 	protected static void setupResponseProperty(HttpServletResponse resp,
