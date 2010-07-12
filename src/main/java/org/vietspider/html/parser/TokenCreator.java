@@ -51,7 +51,8 @@ public final class TokenCreator {
       } else {
         name = Name.CONTENT;
       }
-      tokens.push(new NodeImpl(value, name));
+      NodeImpl nodeTmp = new NodeImpl(value, name);
+      tokens.push(nodeTmp);
       return end;
     }
     
@@ -60,12 +61,14 @@ public final class TokenCreator {
       value  = CharsUtil.cutAndTrim(value, 1, value.length);
       name = HTML.getName(new String(value).toUpperCase());
       if(name != null){
-        tokens.push(new NodeImpl(value, name, TypeToken.CLOSE));
+        NodeImpl nodeTmp = new NodeImpl(value, name, TypeToken.CLOSE);
+		tokens.push(nodeTmp);
       } else {
         char [] newValue = new char[value.length+1];
         newValue[0] = '/'; 
         System.arraycopy(value, 0, newValue, 1, value.length);
-        tokens.push(new NodeImpl(newValue, Name.UNKNOWN));
+        NodeImpl nodeTmp = new NodeImpl(newValue, Name.UNKNOWN);
+		tokens.push(nodeTmp);
         return end;
       }
       return end;
@@ -87,9 +90,11 @@ public final class TokenCreator {
     
     name = HTML.getName(nameValue); 
     if(name != null){
-      tokens.push(new NodeImpl(value, name, TypeToken.TAG));    
+      NodeImpl nodeImpl = new NodeImpl(value, name, TypeToken.TAG);
+	tokens.push(nodeImpl);    
     }else{
-      tokens.push(new NodeImpl(value, Name.UNKNOWN));
+      NodeImpl nodeImpl = new NodeImpl(value, Name.UNKNOWN);
+	tokens.push(nodeImpl);
       return end;
     }
     if(name == Name.SCRIPT){

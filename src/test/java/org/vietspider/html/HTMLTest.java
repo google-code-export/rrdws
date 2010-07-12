@@ -24,7 +24,7 @@ public class HTMLTest extends TestCase{
 		HTMLParser2 parser2 = new HTMLParser2();
 		String contextEncStr = "UTF-8";
 		String contextTypeStr = "text/html";
-		String a = "0_aHR0cDovL2hhYnJhaGFici5ydS8=.htm";//"a.htm";//
+		String a = "a.htm";//"0_aHR0cDovL2hhYnJhaGFici5ydS8=.htm";//
 		String b =  "aHR0cDovL2hhYnJhaGFici5ydS8=.htm";		
 		HTMLDocument documentTmp;
 		HyperLinkUtil handler  = new HyperLinkUtil();

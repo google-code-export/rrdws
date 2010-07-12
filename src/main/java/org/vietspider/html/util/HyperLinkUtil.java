@@ -189,7 +189,7 @@ public class HyperLinkUtil {
 				createMetaLink(n, mTmp, swapServletUrl2, home, metaLinkVerifier);
 		}
 	}
-	public void createFullLink(HTMLNode node,
+	private void createFullLink(HTMLNode node,
 			Map<String, String> map, String swapServletUrl2, URL home,
 			ValueVerifier verifier) {
 		if (node == null)

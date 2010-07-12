@@ -52,4 +52,5 @@ ID="ad" NAME="ad">
 </FORM>
 <%try{%>
 <!-- <%=cache.keySet()%> -->
-<%}catch(Throwable e){}%>
+<%}catch(Throwable e){ %> <%=e.getMessage() %>  -->
+<%                      }%>

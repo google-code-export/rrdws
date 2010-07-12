@@ -315,13 +315,16 @@ public class LServlet extends HttpServlet {
 	    	outTmp = resp.getOutputStream();
 	    	
 	    	String textValue = null;
+	    	if (1==1)
+	    		include(resp, "L.jspX");
+	    	else
 	    	try{
 	    		
 	    		RequestDispatcher rdTmp = req.getRequestDispatcher("/T/L.jsp");
 	    		FakeServletResponse arg1 = new FakeServletResponse(); 
-	    		rdTmp.forward(req, arg1 );
+	    		if(2==2)rdTmp.forward(req, arg1 );
 	    		HTMLNode bodyTmp = documentTmp.getRoot().getChild(1);
-				String strTmp = "<html><head> </head><body>" +
+				String strTmp = "<html><head>x</head><body>" +
 						"<div id=\"tbar\"  style=\"color:#000;background:#DDD;z-index:99999;" +
 						"width:100%;position:fixed;bottom:0;left:0\">" +
 						"<iframe src=\""+SwapServletUrl.substring(0, SwapServletUrl.length()-2)+"" +
@@ -334,6 +337,7 @@ public class LServlet extends HttpServlet {
 				bodyTmp.addChild(myIFrame);
 	    	}catch(Exception e){
 	    		e.printStackTrace();
+	    		include(resp, "L.jspX");
 	    	}
 	    	//new String(documentTmp.getTextValue().getBytes("ISO-8859-1"), contextEncStr);// "windows-1251" textValue.toUpperCase().substring( 12430)
 
@@ -387,6 +391,20 @@ public class LServlet extends HttpServlet {
 	}
 
 
+
+	private void include(HttpServletResponse resp, String string) {
+		try {
+			InputStream in = this.getClass().getClassLoader().getResourceAsStream(string);
+			ServletOutputStream out;
+			out = resp.getOutputStream();
+			byte[] b = new byte[in.available()] ;
+			in.read(b);
+			out.write(b );
+		} catch (IOException e) { 
+			e.printStackTrace();
+		} 
+		
+	}
 
 	private String getXEnc(HttpResponse respTmp) {
 		 String retval = null;

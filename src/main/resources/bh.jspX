@@ -1,0 +1,32 @@
+
+
+
+<!-- ignored   -->
+<script language="javascript">
+    function DoCheckLength(aTextBox) {
+      if (aTextBox.value.length>13) {
+        document.theForm.submit();
+        //beep.play();
+      }
+    }
+</script>
+<style type="text/css">
+input.ban { 
+	padding-left: 28px;            
+	background: url("blackhole.gif");               
+	background-repeat: no-repeat;
+	border: none; 
+	background-position: left center;                 
+	height: 64px;   
+	width: 64px;   
+}
+</style>
+<FORM NAME="theForm" action="bh.jsp?">
+<input type="text" class="ban" maxlength="512" size="1"
+onkeyup="DoCheckLength(this);"
+onmouseout="DoCheckLength(this);"
+onkeyup="DoCheckLength(this);"
+ID="ad" NAME="ad">
+</FORM>
+
+<!-- 
