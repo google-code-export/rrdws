@@ -65,7 +65,9 @@ public class NodeImpl extends HTMLNode {
   public void setIsOpen(boolean open) { isOpen = open; }
 
   public int getType() { return type; }
-  public void setType(int type) { this.type = type; }
+  public void setType(int type) { 
+	  this.type = type; 
+  }
   
   public void addChild(HTMLNode node)  {
     if(addInternalChild(node)) clearToken();
