@@ -8,15 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.vietspider.chars.TextVerifier;
-import org.vietspider.chars.URLUtils;
-import org.vietspider.chars.ValueVerifier;
-import org.vietspider.chars.chardet.bak.Verifier;
-import org.vietspider.html.HTMLNode;
-import org.vietspider.html.Name;
+import org.vietspider.chars.TextVerifier; 
+import org.vietspider.chars.ValueVerifier; 
+import org.vietspider.html.HTMLNode; 
 import org.vietspider.html.NodeIterator;
-import org.vietspider.html.parser.NodeImpl;
-import org.vietspider.html.path2.Node;
+import org.vietspider.html.parser.NodeImpl; 
 import org.vietspider.token.attribute.Attribute;
 import org.vietspider.token.attribute.Attributes;
 
@@ -25,8 +21,7 @@ import ws.rrd.server.Base64Coder;
  
 public class HyperLinkUtil {   
    
-  private SiteLinkVerifier siteLinkVerifier;
-  private ImageLinkVerifier imageLinkVerifier;
+  private SiteLinkVerifier siteLinkVerifier; 
   private NormalLinkVerifier normalLinkVerifier;
   private MetaLinkVerifier metaLinkVerifier;
   private JavaScriptVerifier jsVerifier;
@@ -37,8 +32,7 @@ public class HyperLinkUtil {
   private final static Map<String, List<String>> scriptAttributeFullMap = new HashMap<String, List<String>>(5);
   
   public HyperLinkUtil() { 
-    siteLinkVerifier = new SiteLinkVerifier();
-    imageLinkVerifier  = new ImageLinkVerifier();
+    siteLinkVerifier = new SiteLinkVerifier(); 
     normalLinkVerifier = new NormalLinkVerifier();
     metaLinkVerifier = new MetaLinkVerifier();
     jsVerifier = new JavaScriptVerifier();
@@ -171,19 +165,15 @@ public class HyperLinkUtil {
 		  return;	  
 	  NodeIterator iterator = node.iterator();
 	  while (iterator.hasNext()) {
-		  HTMLNode n = iterator.next();
-		  if (n.isTag()){ 
-			  System.out.println(n.getName());
+		  HTMLNode n = iterator.next(); 
+			  //System.out.println(n.getName());
 		      if(verifier != null &&  verifier.verify(n)){ 
 				String  value = verifier.eval (n, null, null);
 		        value = prepareLinkValue(home , value);
 		        value = encode(swapServletUrl2, value);
 		        verifier.modi(n, null, null, value); 
-		      }
-		  }
-	  }
-	 
-      
+		      } 
+	  } 
   } 
   
   public void createMetaLink(HTMLNode node,
@@ -214,20 +204,12 @@ public class HyperLinkUtil {
   
   private void createFullSingleLink(HTMLNode node, Map<String, String> map,
                                     String swapServletUrl2, URL home, ValueVerifier verifier)   {
-    Set<String> keys = map.keySet();
-    Iterator<String> iter = keys.iterator();
-    String key =null;
-    try{
-	    while(iter.hasNext()){
-	      key = iter.next();
-	      if(node.isNode(key) || (key.length() == 1 && key.charAt(0) == '*')){ 
-	        String aKey = map.get(key);
-	        createFullSingleLink(node,key,aKey,swapServletUrl2,home,verifier);
- 	      }
-	    }
-    }catch(java.lang.ClassCastException e){
-    	e.printStackTrace();
-    }
+     
+    String key =node.name().toLowerCase(); 
+	String aKey = map.get(key);
+	if ( null != aKey){
+		createFullSingleLink(node,key,aKey,swapServletUrl2,home,verifier);
+	}
   }
   
   
@@ -312,6 +294,7 @@ private String prepareLinkValue(URL home, String value) {
 }
 
 	public static  String encode(String swapServletUrl2, String value) {
+		if (value.startsWith(swapServletUrl2)) return value;
 		value  = swapServletUrl2 + new String (Base64Coder.encode(  value.getBytes() ));
 		return value;
 	}
@@ -412,7 +395,7 @@ private String prepareLinkValue(URL home, String value) {
 			final String scriptAliasTmp = ("SCRIPT SRC=\"/l/l"
 					+ scriptValue.hashCode() + ".js\"");
 			node.setValue(scriptAliasTmp.toCharArray());
-			System.out.println("" + node.getTextValue());
+			//System.out.println("" + node.getTextValue());
 		}
 		@Override
 		public void modi(HTMLNode node, String nodeName, String attrName, String newValue) {
@@ -431,15 +414,15 @@ private String prepareLinkValue(URL home, String value) {
 	      String end[]={};	
 	      
 	    protected boolean verify(String link){ 
-	       link = link.toLowerCase();    
-	      return !startOrEndOrExist(link, start, end, exist); 
+	          
+	      return true;//!startOrEndOrExist(link, start, end, exist); 
 	    } 
 		@Override
 		public void modi(HTMLNode node, String nodeName, String attrName, String newValue) {
 	        Attributes attrs = node.getAttributes();  
 			Attribute attr = attrs.get(attrName);		
 			String value = attr.getValue();
-	        System.out.println("NEW VAL for "+nodeName+".."+attrName+" : ["+value+"]=>"+newValue);
+	        System.out.println("NEW VAL for "+nodeName+".."+attrName+" : ["+value+"]=>"+newValue + " := "+nodeName+"["+attrName+"]");
 	        attr.setValue(  newValue);       
 	        attrs.set(attr);
 		}
