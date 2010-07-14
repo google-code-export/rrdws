@@ -315,23 +315,10 @@ public class LServlet extends HttpServlet {
 	    	outTmp = resp.getOutputStream();
 	    	
 	    	String textValue = null;
-	    	if (1==1)
-	    		include(resp, "L.jspX");
-	    	else
-	    	try{
-	    		
-	    		RequestDispatcher rdTmp = req.getRequestDispatcher("/T/L.jsp");
-	    		FakeServletResponse arg1 = new FakeServletResponse(); 
-	    		if(2==2)rdTmp.forward(req, arg1 );
+	    	
+	    	try{ 
 	    		HTMLNode bodyTmp = documentTmp.getRoot().getChild(1);
-				String strTmp = "<html><head>x</head><body>" +
-						"<div id=\"tbar\"  style=\"color:#000;background:#DDD;z-index:99999;" +
-						"width:100%;position:fixed;bottom:0;left:0\">" +
-						"<iframe src=\""+SwapServletUrl.substring(0, SwapServletUrl.length()-2)+"" +
-						"T/L.jsp\" height=\"64\" width=\"100%\" scrolling=\"no\" " +
-						"marginheight=\"0\" marginwidth=\"0\" " +
-						"frameborder=\"0\" name=\"Bildframe\" > " +
-						"<pre>):  :(</pre></iframe></div></body></html>";
+				String strTmp = new String(getResourceAsBA("L.jspX"));
 				HTMLDocument htmlTmp = parser2.createDocument(strTmp);
 				HTMLNode myIFrame = htmlTmp.getRoot().getChild(1).getChild(0);
 				bodyTmp.addChild(myIFrame);
@@ -392,19 +379,25 @@ public class LServlet extends HttpServlet {
 
 
 
-	private void include(HttpServletResponse resp, String string) {
+	private void include(HttpServletResponse resp, String resourceName) {
 		try {
-			InputStream in = this.getClass().getClassLoader().getResourceAsStream(string);
 			ServletOutputStream out;
-			out = resp.getOutputStream();
-			byte[] b = new byte[in.available()] ;
-			in.read(b);
+			out = resp.getOutputStream();			
+			byte[] b = getResourceAsBA(resourceName);
 			out.write(b );
 		} catch (IOException e) { 
 			e.printStackTrace();
-		} 
-		
+		}  	
 	}
+
+	private byte[] getResourceAsBA(String namePar) throws IOException {
+		InputStream in = this.getClass().getClassLoader().getResourceAsStream(namePar); 
+		byte[] b = new byte[in.available()] ;
+		in.read(b);
+		return b;
+	}
+	
+	
 
 	private String getXEnc(HttpResponse respTmp) {
 		 String retval = null;

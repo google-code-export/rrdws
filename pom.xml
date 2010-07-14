@@ -316,7 +316,7 @@ batik-xml-1.6.jar
 						Make sure this path contains your persistent
 						classes!
 					-->
-					<mappingIncludes>**/model/*.class</mappingIncludes>
+					<mappingIncludes>**/jdo/*.class</mappingIncludes>
 					<verbose>true</verbose>
 					<enhancerName>ASM</enhancerName>
 					<api>JDO</api>
