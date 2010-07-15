@@ -201,7 +201,7 @@ class ImageWorker {
 		} 
 		item.flush();
 		String nameTmp = MemoryFileCache. put( item  );
-		System.out.println("store data '"+nameTmp+"'::["+type+"]("+item.getSize()+") into["+path+"]:={"+(new String(MemoryFileCache.get(nameTmp ).get())+"3.1415926535897932384626433832795028841971693993751058209749445923078164062862").substring(0,80)+"...}");
+		System.out.println("store data '"+nameTmp+"'::["+type+"]("+item.getSize()+") into["+path+"]:={"+(new String(MemoryFileCache.get(nameTmp ).get())+"3.1415926535897932384626433832795028841971693993751058209749445923078167932384626433832795028841971693993751058209749445923078167932384626433832795028841971693993751058209749445923078164062862").substring(0,80)+"...}");
 		
  		return bytes;
  	}

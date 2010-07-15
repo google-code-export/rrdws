@@ -34,7 +34,7 @@
 				<embed src="JavaLogo.svg" height="64" width="64"  type="image/svg+xml"  pluginspage="http://www.adobe.com/svg/viewer/install/" /> 
 				<object data="JavaLogo.svg" width="300" height="100" type="image/svg+xml" codebase="http://www.adobe.com/svg/viewer/install/" />
 			</a>
-			<IMG src="gif.jsp"   />
+			<IMG src="gif.jsp" height="64" width="64"   />
 			
 		</td>
 	<tr width="100%" height="64">
@@ -42,15 +42,16 @@
 
 		<td width="200" >
 		<form method="post">
-			RddCommand:: <textarea name="cmd"  cols="60" rows="4"></textarea> 
+			RddCommand:: <textarea name="cmd"  cols="160" rows="4"></textarea> 
 			<input type="submit" />
 		</form>
 		</td>
 	</tr>
 	<tr >
-		<td width="100%"><iframe
-			src="https://rrd4j.dev.java.net/tutorial.html" width="101%"
-			height="333"></iframe></td>
+		<td width="100%">
+			<iframe src="https://rrd4j.dev.java.net/tutorial.html" width="93%" height="133">
+			</iframe>
+		</td>
 	</tr>
 	<tr width="100%" height="333">
 
