@@ -172,17 +172,20 @@ public class Graphics2D extends Graphics {
 			this.fillPolygon(x, yTop, length);
 		}else{
 			// fix polygon
-			double x1 []= new double[length+1] ;
-			double y1 []= new double[length+1] ;
+			double x1 []= new double[length+2] ;
+			double y1 []= new double[length+2] ;
 			// cp x -> x1 , y -> y1
-			int i=0;
-			for (;i<length;i++){
-				x1[i]=x[i];
-				y1[i]=yTop[i];
+			
+			x1[0] = x[0];
+			y1[0] = yBottom;	
+			int i=1;
+			for (;i<(length+1);i++){
+				x1[i]=x[i-1];
+				y1[i]=yTop[i-1];
 			}
 			x1[i] = x[length-1];
 			y1[i] = yBottom;
-			this.fillPolygon(x1, y1, length+1);
+			this.fillPolygon(x1, y1, length+2);
 		}
 	}	
 	public void drawPolygon(double[] x, double yBottom, double[] yTop, int length) {
