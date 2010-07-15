@@ -30,10 +30,10 @@ public class RrdUpdateAction implements Action {
 		@Override
 		public Object perform(String xpath, String timestamp, String data) {
 			Object retval = "";
-			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss.SSS");
+			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SSS");
 			long timestampTmp = 0;
 			try {
-				timestampTmp = sdf.parse(timestamp).getTime();
+				timestampTmp = sdf.parse(timestamp).getTime();  
 			} catch (ParseException e1) { 
 				//e1.printStackTrace();
 				retval = e1;
@@ -69,21 +69,15 @@ public class RrdUpdateAction implements Action {
 			String rrddb = xpath2Hash(xpath);
 			String cmdCreate = "rrdtool create " +
 				""+rrddb+" --start "+(((timestampTmp-10000)/1000L))+"" +
-				" -s 300 "  +
-				" DS:data:GAUGE:600:U:U  " +
-				" RRA:AVERAGE:0.5:1:288 " +
-				" RRA:MIN:0.5:1:288 " +
-				" RRA:MAX:0.5:1:288 " +
-				" RRA:AVERAGE:0.5:6:336 " +
-				" RRA:MIN:0.5:6:336 " +
-				" RRA:MAX:0.5:6:336 " +
-				" RRA:AVERAGE:0.5:24:372 " +
-				" RRA:MIN:0.5:24:372 " +
-				" RRA:MAX:0.5:24:372 " +
-				" RRA:AVERAGE:0.5:144:730 " +
-				" RRA:MIN:0.5:144:730 " +
-				" RRA:MAX:0.5:144:730 " +
-				" RRA:LAST:0.5:1:288 " + 
+				" --step 60" +
+				"				DS:data:GAUGE:120:0:U" +
+				"				RRA:AVERAGE:0.5:1:60" +
+				"				RRA:AVERAGE:0.5:5:288" +
+				"				RRA:AVERAGE:0.5:30:336" +
+				"				RRA:AVERAGE:0.5:120:372" +
+				"				RRA:AVERAGE:0.5:1440:365" +
+				"				RRA:AVERAGE:0.5:60:8760" +
+				"				RRA:LAST:0.5:1:60" +
 				""; 
 			return cmdCreate;
 		}
