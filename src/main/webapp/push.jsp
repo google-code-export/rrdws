@@ -22,7 +22,7 @@ try{
             List<MemoryFileItem> items = upload.parseRequest(request); 
             for(MemoryFileItem item : items) {
                     item.flush(); 
-                    response.getWriter().append( "<br>Name:::<a href=\"/mem.jsp?name="+ item.getName()+"\">"+item.getName()+"</a>" );
+                    response.getWriter().append( "<br>Name:::<a href=\"mem.jsp?name="+ item.getName()+"\">"+item.getName()+"</a>" );
                     response.getWriter().append( "<br>Size:::::"+ item.getSize() );
                     response.getWriter().append( "<br>Date:::::"+ item.getDate() );
                     response.getWriter().append( "<br>FN:::::"+ item.getFieldName() );

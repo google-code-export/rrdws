@@ -3,6 +3,9 @@ package ws.rrd.mem;
 import java.io.IOException;
 import java.io.OutputStream; 
 import java.util.HashMap;
+import java.util.Properties;
+
+import com.lowagie.text.pdf.codec.Base64.InputStream;
 
 import net.sf.jsr107cache.Cache;
 import net.sf.jsr107cache.CacheException;
@@ -19,11 +22,22 @@ import net.sf.jsr107cache.CacheManager;
  * Creation:  14.04.2010::10:50:13<br> 
  */
 public class MemoryFileCache {
-     
-  
-	 private MemoryFileCache(){ 
- 
-	 }
+	static{
+		 // try to load default cache conf
+		 if (System.getProperty("com.google.appengine.runtime.version")==null){
+			 //net.sf.jsr107cache.CacheFactory=ws.rrd.cache.BasicCacheFactory
+			 try{
+				 java.io.InputStream in = MemoryFileCache.class.getClassLoader().getResourceAsStream("jcache.properties");
+				 Properties prTmp = new Properties();
+				 prTmp.load(in);
+				 String key = "net.sf.jsr107cache.CacheFactory";
+				 String val = prTmp.getProperty(key);
+				 System.setProperty(key, val);
+			 }catch(Exception e){
+				 e.printStackTrace();
+			 } 
+		 }		
+	}
                     
 	 public static MemoryFileItem get (String name) throws IOException{
 		Cache cache = getCache();
