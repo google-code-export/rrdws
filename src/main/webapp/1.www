@@ -1,4 +1,15 @@
 
+rrdtool graph  IBOcpu.png   -t CPU    -a PNG    \
+--start=1279086460 --end=1279172860 DEF:cpuA=X-1979395149.rrd:data:AVERAGE DEF:cpuB=X-1649629388.rrd:data:AVERAGE  \
+DEF:cpuC=X-1319863627.rrd:data:AVERAGE \
+LINE1:cpuA#FF000088:cpuA STACK:cpuB#00FF0088:cpuB STACK:cpuC#0000FF88:cpuC
+
+rrdtool graph  IBOcpu.png   -t CPU    -a PNG    \
+--start=1279086460 --end=1279172860 DEF:cpuA=X-1979395149.rrd:data:AVERAGE DEF:cpuB=X-1649629388.rrd:data:AVERAGE  \
+DEF:cpuC=X-1319863627.rrd:data:AVERAGE \
+LINE1:cpuA#FF000088:cpuA STACK:cpuB#00FF0088:cpuB STACK:cpuC#0000FF88:cpuC
+
+
 rrdtool graph all1.gif   --start 1271697001  --end 1271698863  \  
 DEF:data=X-1649629388.rrd:data:AVERAGE  \
 LINE2:data#FF0000:"Line A"
