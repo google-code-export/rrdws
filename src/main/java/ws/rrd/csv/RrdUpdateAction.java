@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.TreeMap;
 
 import net.sf.jsr107cache.Cache;
@@ -25,18 +26,23 @@ import ws.rrd.mem.MemoryFileCache;
  */
 public class RrdUpdateAction implements Action {
 
-	 
+	    final static SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SSS");
 
 		@Override
 		public Object perform(String xpath, String timestamp, String data) {
 			Object retval = "";
-			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SSS");
+			
 			long timestampTmp = 0;
 			try {
-				timestampTmp = sdf.parse(timestamp).getTime();  
+				synchronized (RrdUpdateAction.class) { 
+					Date parseVal = sdf.parse(timestamp);
+					timestampTmp = parseVal.getTime();  
+				}
 			} catch (ParseException e1) { 
 				//e1.printStackTrace();
 				retval = e1;
+			} catch (java.lang.NumberFormatException e) {
+				retval = e;
 			}
 
 			
@@ -68,17 +74,25 @@ public class RrdUpdateAction implements Action {
 		public static final String makeCreateCMD(long timestampTmp, String xpath) {
 			String rrddb = xpath2Hash(xpath);
 			String cmdCreate = "rrdtool create " +
-				""+rrddb+" --start "+(((timestampTmp-10000)/1000L))+"" +
-				" --step 60" +
-				"				DS:data:GAUGE:120:0:U" +
-				"				RRA:AVERAGE:0.5:1:60" +
-				"				RRA:AVERAGE:0.5:5:288" +
-				"				RRA:AVERAGE:0.5:30:336" +
-				"				RRA:AVERAGE:0.5:120:372" +
-				"				RRA:AVERAGE:0.5:1440:365" +
-				"				RRA:AVERAGE:0.5:60:8760" +
-				"				RRA:LAST:0.5:1:60" +
-				""; 
+				""+rrddb+" --start "+(((timestampTmp-10000)/1000L))+"" + 
+				" --step 60 " +
+				"				DS:data:GAUGE:240:U:U " +
+				"				RRA:AVERAGE:0.5:3:480 " +
+				"				RRA:AVERAGE:0.5:17:592 " +
+				"				RRA:AVERAGE:0.5:131:340 " +
+				"				RRA:AVERAGE:0.5:731:719 " +
+				"				RRA:AVERAGE:0.5:10000:273 " +
+				"				RRA:MAX:0.5:3:480 " +
+				"				RRA:MAX:0.5:17:592 " +
+				"				RRA:MAX:0.5:131:340 " +
+				"				RRA:MAX:0.5:731:719 " +
+				"				RRA:MAX:0.5:10000:273 " +
+				"				RRA:MIN:0.5:3:480 " +
+				"				RRA:MIN:0.5:17:592 " +
+				"				RRA:MIN:0.5:131:340 " +
+				"				RRA:MIN:0.5:731:719 " +
+				"				RRA:MIN:0.5:10000:273 " +
+												" "; 
 			return cmdCreate;
 		}
 
