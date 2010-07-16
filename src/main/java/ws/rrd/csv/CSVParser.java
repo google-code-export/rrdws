@@ -138,6 +138,16 @@ public class CSVParser {
 	        			}
 	        			if (valTmp instanceof Exception){
 	        				//((Exception)valTmp ).printStackTrace();
+	        				if (1==2){
+		        				String sMsg = ((Exception)valTmp).getMessage();
+		        				if (sMsg .indexOf( "org.jrobin.core.RrdException: Bad sample timestamp") >=0 ||
+		        					sMsg .indexOf( "Last update time was ") >=0 ||
+		        					sMsg .indexOf( " at least one second step is required") >=0 ||
+		        					valTmp instanceof NumberFormatException
+		        					){
+		        						break; // ignore full line with wrong timestamp or wrong value in line
+		        					}
+	        				}
 	        			}else{
 	        				line.add( ""+valTmp+":"+next );
 	        			}
