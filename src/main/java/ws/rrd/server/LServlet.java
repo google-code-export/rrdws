@@ -116,6 +116,10 @@ public class LServlet extends HttpServlet {
 								
 				e.printStackTrace(pw);
 			}
+			if (req.getParameter("url") != null || req.getParameter("_u_r_l_") != null ){
+				urlStr = req.getParameter("url");
+				urlStr = (""+urlStr ).startsWith("http")? urlStr:"http://"+urlStr;
+			}
 			System.out.println(urlStr);
 			targetUrl = new StringBuilder(urlStr);
 
@@ -384,6 +388,13 @@ public class LServlet extends HttpServlet {
 			ServletOutputStream out;
 			out = resp.getOutputStream();			
 			byte[] b = getResourceAsBA(resourceName);
+			String newVal = new String(b);
+			newVal  = newVal .replace( 
+					"l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001",
+					SwapServletUrl
+					)
+			;		
+			b = newVal.getBytes();
 			out.write(b );
 		} catch (IOException e) { 
 			e.printStackTrace();

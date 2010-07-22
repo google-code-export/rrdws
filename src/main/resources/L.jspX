@@ -1,7 +1,30 @@
 
 
 
+<script src="/js/base64coder.js" type="text/javascript"></script>
+<script type="text/javascript">
+	<!--//
+		function valid_url(str_url) {
+		
+			var regex = new RegExp("^((https|http)?://)"
+				+ "(([0-9]{1,3}.){3}[0-9]{1,3}"			// IP
+				+ "|"									// IP or domain
+				+ "([0-9a-z_!~*'()-]+.)*"				// domain
+				+ "([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]."	// sub domain
+				+ "[a-z]{2,6})"							// first level domain
+				+ "(:[0-9]{1,4})?"						// port
+				+ "((/?)|"								// a slash isn't required if there is no file name
+				+ "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$");
 
+			return regex.test(str_url);
+		}
+
+	    function openurl(){	    
+	    	var url = document.url_form.url.value;	    	
+	    	window.open(location.href + "l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001/" + base64encode(url));
+		}
+	//-->
+</script>
 <div id="tbar"
 	style="color: #000; background: #FFF; z-index: 99999; width: 100%; position: fixed; bottom: 0; left: 0">
 <table class="bd" width="100%" border="0" cellpadding="0"
@@ -9,24 +32,18 @@
 	<tr height="25px">
 	
 		<td align="left">
-			<iframe src="https://rrdsaas.appspot.com/T/bh.jsp" height="64" width="64" scrolling="no" marginheight="0" marginwidth="0" frameborder="0"></iframe>
+			<iframe src="/T/bh.jsp" height="64" width="64" scrolling="no" marginheight="0" marginwidth="0" frameborder="0"></iframe>
 		</td>
 	
 		<td align="left">
-		<form target="_self" method="post" action="/l/">
-		<table border="0" background="white_background_10.gif">
+		<form target="_self" method="post" action="l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001/">
+		<table border="0" background="/T/white_background_10.gif">
 			<tr>
-				<td width="60"><a href="#"
-					onclick="document.getElementById('tbar').style.display='none';return false;">[close]</a></td>
-				<td width="100"><a href="https://rrdsaas.appspot.com/l/" target="_blank"
-					style="color: #000; font-size: 10px">PROXY HOME</a></td>
-				<td width="100"><a href="null"
-					target="_blank" style="color: #000; font-size: 10px">ORIGINAL
-				PAGE</a></td>
-				<td align="right"><input type="text" style="width: 400px"
-					name="url" value="" width="100%" /></td>
-				<td width="100"><input type="submit" style="width: 100%"
-					value="  OK  " /></td>
+				<td width="60"><a href="#" 	onclick="document.getElementById('tbar').style.display='none';return false;">[close]</a></td>
+				<td width="100"><a href="l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001/" target="_blank" 	style="color: #000; font-size: 10px">PROXY HOME</a></td>
+				<td width="100"> </td>
+				<td align="right"><input type="text" style="width: 400px" name="url" value="" width="100%" /></td>
+				<td width="100"><input type="submit" style="width: 100%" value="  OK  " onclick="openurl(); return false;" />				</td>
 			</tr>
 		</table>
 		</form>
@@ -34,7 +51,7 @@
 
 		
 		<td width="200">
-		<table width="100%" cellpadding="0" cellspacing="0" background="white_background_4.gif">
+		<table width="100%" cellpadding="0" cellspacing="0" background="/T/white_background_4.gif">
 			<tr>
 				<td>
 				<table width="100">
@@ -42,16 +59,16 @@
 						<td>COOKIE:</td>
 						
 						<td class="true"><a target="_self" class="a"
-							href="https://rrdsaas.appspot.com/l/null?bpxckmod=off">ON</a></td>
+							href="l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001/null?bpxckmod=off">ON</a></td>
 					</tr>
 				</table>
 				</td>
 				<td>
-				<table width="100" background="white_background_5.gif">
+				<table width="100" background="/T/white_background_5.gif">
 					<tr>
 						<td>SCRIPT:</td>
 						<td class="true"><a target="_self" class="a"
-							href="https://rrdsaas.appspot.com/l/null?bpxjsmod=off">ON</a></td>
+							href="l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001/null?bpxjsmod=off">ON</a></td>
 					</tr>
 				</table>
 				</td>
