@@ -116,8 +116,9 @@ public class LServlet extends HttpServlet {
 								
 				e.printStackTrace(pw);
 			}
-			if (req.getParameter("url") != null || req.getParameter("_u_r_l_") != null ){
+			if (isRootReq(req) ){
 				urlStr = req.getParameter("url");
+				urlStr = null == urlStr ? req.getParameter("_u_r_l_"):urlStr;
 				urlStr = (""+urlStr ).startsWith("http")? urlStr:"http://"+urlStr;
 			}
 			System.out.println(urlStr);
@@ -142,7 +143,7 @@ public class LServlet extends HttpServlet {
 			urlStr  = urlStr.replace("&amp;", "&");
 			final UrlFetchTest urlFetchTest = new UrlFetchTest();
 			HttpResponse xRespTmp = null ;
-			if ("POST".equals( req.getMethod() )){
+			if ("POST".equals( req.getMethod() ) && ! isRootReq(req) ){
 				xRespTmp = urlFetchTest.fetchResp(urlStr, headsToResend,	req.getParameterMap());
 			}				
 			else
@@ -379,6 +380,10 @@ public class LServlet extends HttpServlet {
 				//outTmp.flush();
 				//ExceptionUtils.swapFailedException(resp, e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}  
+	}
+
+	private boolean isRootReq(HttpServletRequest req) {
+		return req.getParameter("url") != null || req.getParameter("_u_r_l_") != null;
 	}
 
 
