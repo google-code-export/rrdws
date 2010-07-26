@@ -54,6 +54,7 @@ public class ScriptStore {
 		ScriptItem scriptValue = (ScriptItem) scriptStore.get(cacheKey);
 		if (scriptValue == null){
 			scriptValue = new ScriptItem(value);
+			System.out.println("ScriptStore:: "+cacheKey +" == "+scriptValue);
 			scriptStore.put(cacheKey, scriptValue );
 		}  
 		return scriptValue;
