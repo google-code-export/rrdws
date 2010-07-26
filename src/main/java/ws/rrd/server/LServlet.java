@@ -35,6 +35,8 @@ import ws.rdd.net.UrlFetchTest;
 @SuppressWarnings("serial")
 public class LServlet extends HttpServlet {
 
+	public static final String _U_R_L_ = "_u_r_l_";
+
 	private static final String CHARSET_PREFIX = "charset=";
 
 	// TODO: Create a config class to dynamic load settings from system.
@@ -116,12 +118,13 @@ public class LServlet extends HttpServlet {
 								
 				e.printStackTrace(pw);
 			}
-			if (isRootReq(req) ){
-				urlStr = req.getParameter("url");
-				urlStr = null == urlStr ? req.getParameter("_u_r_l_"):urlStr;
+			// fix ROOT-Panel-Request
+			if (isRootReq(req) ){ 
+				urlStr = req.getParameter(_U_R_L_) ;
+				// normalize non-protocol-ADDRESS
 				urlStr = (""+urlStr ).startsWith("http")? urlStr:"http://"+urlStr;
 			}
-			System.out.println(urlStr);
+			System.out.println(_U_R_L_ + ":="+ urlStr);
 			targetUrl = new StringBuilder(urlStr);
 
 			if ((targetUrl.length() > 0) && (req.getQueryString() != null)
@@ -146,8 +149,9 @@ public class LServlet extends HttpServlet {
 			if ("POST".equals( req.getMethod() ) && ! isRootReq(req) ){
 				xRespTmp = urlFetchTest.fetchResp(urlStr, headsToResend,	req.getParameterMap());
 			}				
-			else
+			else{
 				xRespTmp = urlFetchTest.fetchResp(urlStr, headsToResend);
+			}
 			HttpEntity entity = xRespTmp.getEntity();
 			contextTypeStr = ""+entity.getContentType();
 			String contextEncStr =  ""+entity.getContentEncoding() ;
@@ -383,7 +387,7 @@ public class LServlet extends HttpServlet {
 	}
 
 	private boolean isRootReq(HttpServletRequest req) {
-		return req.getParameter("url") != null || req.getParameter("_u_r_l_") != null;
+		return  req.getParameter(_U_R_L_) != null;
 	}
 
 
