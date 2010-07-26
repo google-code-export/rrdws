@@ -20,8 +20,8 @@
 		}
 
 	    function openurl(){	    
-	    	var url = document.url_form.url.value;	    	
-	    	window.open(location.href + "l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001/" + base64encode(url));
+	    	var urlTmp = document.url_form._u_r_l_.value;	    	
+	    	window.open(location.href + "l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001/" + base64encode(urlTmp));
 		}
 	//-->
 </script>
@@ -36,11 +36,11 @@
 		</td>
 	
 		<td align="left">
-		<form target="_self" method="get" action="l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001/">
+		<form target="_self" method="post" action="l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001">
 		<table border="0" background="/T/white_background_10.gif">
 			<tr>
 				<td width="60"><a href="#" 	onclick="document.getElementById('tbar').style.display='none';return false;">[close]</a></td>
-				<td width="100"><a href="l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001/" target="_blank" 	style="color: #000; font-size: 10px">PROXY HOME</a></td>
+				<td width="100"><a href="l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001" target="_blank" 	style="color: #000; font-size: 10px">PROXY HOME</a></td>
 				<td width="100"> </td>
 				<td align="right"><input type="text" style="width: 400px" name="_u_r_l_" value="" width="100%" /></td>
 				<td width="100"><input type="submit" style="width: 100%" value="  OK  " onclick="openurl(); return false;" />				</td>
@@ -59,7 +59,7 @@
 						<td>COOKIE:</td>
 						
 						<td class="true"><a target="_self" class="a"
-							href="l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001/null?bpxckmod=off">ON</a></td>
+							href="l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001?bpxckmod=off">ON</a></td>
 					</tr>
 				</table>
 				</td>
@@ -68,7 +68,7 @@
 					<tr>
 						<td>SCRIPT:</td>
 						<td class="true"><a target="_self" class="a"
-							href="l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001/null?bpxjsmod=off">ON</a></td>
+							href="l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001?bpxjsmod=off">ON</a></td>
 					</tr>
 				</table>
 				</td>

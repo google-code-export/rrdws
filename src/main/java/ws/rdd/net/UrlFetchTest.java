@@ -52,7 +52,7 @@ public class UrlFetchTest {
 	public HttpResponse fetchResp(String toFetchStr, String headers[][]) throws IOException, ClientProtocolException {
 		HttpClient httpClient = makeHTTPClient();
 
-		String schemes[] = {"https", "http", "ftp"};
+		String schemes[] = {"https", "http" };
 		for (String scheme : schemes) {
 			String proxHostTmp = System.getProperty(scheme + ".proxyHost");//System.getProperties();
 			String proxyPortTmp = System.getProperty(scheme + ".proxyPort");//System.setProperty("http.proxyHost","localhost");
