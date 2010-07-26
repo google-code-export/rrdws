@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream; 
 import java.util.HashMap;
 import java.util.Properties;
-
-import com.lowagie.text.pdf.codec.Base64.InputStream;
+ 
 
 import net.sf.jsr107cache.Cache;
 import net.sf.jsr107cache.CacheException;
