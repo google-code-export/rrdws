@@ -20,6 +20,8 @@ import ws.rrd.mem.MemoryFileCache;
 import ws.rrd.mem.ScriptItem;
 import ws.rrd.mem.ScriptStore;
 import ws.rrd.server.Base64Coder;
+import ws.rrd.server.LServlet;
+import ws.rrd.server.SServlet;
 
  
 public class HyperLinkUtil {   
@@ -392,8 +394,8 @@ private String prepareLinkValue(URL home, String value) {
 		
 		private String  clearBody(HTMLNode node, final String scriptValue) {
 			node.clearChildren();// setChild(0, new
-			String retval= "l"+ scriptValue.hashCode() + ".js";
-			String stringTmp = "SCRIPT SRC=\"/S/"+retval +"\";";
+			String retval= LServlet.calcBase()+"S/"+"l"+ scriptValue.hashCode() + ".js";
+			String stringTmp = "SCRIPT SRC=\""+retval +"\";";
 			
 			// HTMLNode(){})getChildren().clear()setValue("/*
 			// 8-X */".toCharArray());
@@ -418,7 +420,7 @@ private String prepareLinkValue(URL home, String value) {
 				String newLink = cacheKey;
 				newValue = newLink;
 				//node.setValue(  newLink.toCharArray() ); 
-				System.out.println("NEW VAL for    : ["+value+"]=>"+newValue);
+				System.out.println("NEW VAL for SCRIPT   : ["+value+"]=>"+newValue);
 			}else{
 				System.out.println(" no changes for "+node.getName());
 			}
