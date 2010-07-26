@@ -36,6 +36,10 @@ public class ScriptItem implements Serializable{
 		this.value = value;
 	}
 
+	public void addReffer(String refPar) {
+		System.out.println(refPar);
+	}
+
 }
 
 

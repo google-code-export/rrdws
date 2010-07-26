@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.HttpURLConnection; 
+import java.text.SimpleDateFormat;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List; 
@@ -64,6 +65,8 @@ public class LServlet extends HttpServlet {
 	}
 
 	  private static HyperLinkUtil handler  = new HyperLinkUtil();
+
+	public static boolean TRACE = false;
  
 
 	  private static void testCreateFullLink(HTMLNode node, String swapServletUrl2, URL home){
@@ -75,16 +78,20 @@ public class LServlet extends HttpServlet {
 		  
 	  private static void testCreateScriptLink(HTMLNode node, String swapServletUrl2, URL home){
 		    handler.createScriptLink( node,  swapServletUrl2,  home);
-		    //List<String> list  = handler.scanScriptLink(node );
-		    //for(String ele : list)
-		    //  System.out.println(ele);
+		    if (TRACE){
+		    	//List<String> list  = handler.scanScriptLink(node );
+		    	//for(String ele : list)
+		    	//	System.out.println(ele);
+		    }
 		  }
 		  
 	  private static void testCreateMetaLink(HTMLNode node, String swapServletUrl2, URL home){
 		    handler.createMetaLink(node,  swapServletUrl2,  home);
-		    List<String> list  = handler.scanSiteLink(node);
-		    for(String ele : list)
-		      System.out.println(ele);
+		    if (TRACE){
+			    List<String> list  = handler.scanSiteLink(node);
+			    for(String ele : list)
+			      System.out.println(ele);
+		    }
 		  }	  
  
 	
@@ -543,6 +550,58 @@ public class LServlet extends HttpServlet {
 		for (String headerName :headersToSet)
 		for (Header next: respTmp.getHeaders(headerName) )
 			resp.setHeader(next.getName(), next.getValue());
+		
+		// cookies
+		for(Header setCookieHeader: respTmp.getHeaders("Set-Cookie") ){
+			// Set-Cookie: itrude_data=s%3A0%3A%22%22%3B; expires=Tue, 19-Jul-2011 19:20:20 GMT; path=/; domain=it-ru.de, itrude_sid=1167d5639e1181bc58dda31856a7225f; path=/; domain=it-ru.de
+            // Parse cookie
+            String[] fields = setCookieHeader.getValue().split(";\\s*");
+            String cookieValue = fields[0];
+            String cookTmp = "C00C";
+            String nameTmp =  cookTmp+ cookieValue;
+            String expires = null;
+            String path = null;
+            String domain = null;
+            boolean secure = false;
+
+            // Parse each field
+            for (int j=1; j<fields.length; j++) {
+                if ("secure".equalsIgnoreCase(fields[j])) {
+                    secure = true;
+                } else if (fields[j].indexOf('=') > 0) {
+                    String[] f = fields[j].split("=");
+                    if ("expires".equalsIgnoreCase(f[0])) {
+                        expires = f[1];
+                    } else if ("domain".equalsIgnoreCase(f[0])) {
+                        domain = "localhost";  cookieValue += f[1];
+                    } else if ("path".equalsIgnoreCase(f[0])) {
+                        path = f[1];
+                    }
+                }
+
+                if (1==1){
+                    // Save the cookie...
+                    try{
+                        nameTmp = nameTmp.split("=")[0]+cookieValue.hashCode() ;
+                        Cookie newCookie = new Cookie(nameTmp,""+cookieValue );
+	                    newCookie.setSecure(secure);
+	                    newCookie.setDomain(domain);
+	                    newCookie.setPath(path);
+                    	// Tue, 19-Jul-2011 20:00:53 GMT
+                    	SimpleDateFormat sf = new SimpleDateFormat ("EEE, dd-MMM-yyyy hh:mm:ss z");
+                    	long nowTmp = (System.currentTimeMillis());
+                    	long endTmp = sf.parse(expires).getTime();
+                    	int expiresInSecTmp = (int)(endTmp-nowTmp)/1000;
+                    	newCookie.setMaxAge(expiresInSecTmp);
+                        resp.addCookie(newCookie);
+                    }catch(Throwable e){}
+                	
+                }
+                
+            }
+
+		}
+		
 	}
 	
 	protected  String[][] calcRequestHeaders(
