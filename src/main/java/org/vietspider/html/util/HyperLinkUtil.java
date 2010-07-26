@@ -16,6 +16,9 @@ import org.vietspider.html.parser.NodeImpl;
 import org.vietspider.token.attribute.Attribute;
 import org.vietspider.token.attribute.Attributes;
 
+import ws.rrd.mem.MemoryFileCache;
+import ws.rrd.mem.ScriptItem;
+import ws.rrd.mem.ScriptStore;
 import ws.rrd.server.Base64Coder;
 
  
@@ -168,10 +171,10 @@ public class HyperLinkUtil {
 		  HTMLNode n = iterator.next(); 
 			  //System.out.println(n.getName());
 		      if(verifier != null &&  verifier.verify(n)){ 
-				String  value = verifier.eval (n, null, null);
-		        value = prepareLinkValue(home , value);
-		        value = encode(swapServletUrl2, value);
-		        verifier.modi(n, null, null, value); 
+				//String  value = verifier.eval (n, null, null);
+		        //value = prepareLinkValue(home , value);
+		        //value = encode(swapServletUrl2, value);
+		        verifier.modi(n, swapServletUrl2, home.toString(),home.toExternalForm()  ); 
 		      } 
 	  } 
   } 
@@ -381,30 +384,46 @@ private String prepareLinkValue(URL home, String value) {
 			if ("SCRIPT".equals( node.getName().toString())){
 				String scriptOnBody = node.getTextValue(); 
 				if (verify(scriptOnBody)){
-					clearBody(node, scriptOnBody);
-					retval = false;
+					retval = true;
 				}
 			}
 			return retval;
 		}
-
-		private void clearBody(HTMLNode node, final String scriptValue) {
+		
+		private String  clearBody(HTMLNode node, final String scriptValue) {
 			node.clearChildren();// setChild(0, new
+			String retval= "l"+ scriptValue.hashCode() + ".js";
+			String stringTmp = "SCRIPT SRC=\"/S/"+retval +"\";";
+			
 			// HTMLNode(){})getChildren().clear()setValue("/*
 			// 8-X */".toCharArray());
-			final String scriptAliasTmp = ("SCRIPT SRC=\"/l/l"
-					+ scriptValue.hashCode() + ".js\"");
+			final String scriptAliasTmp = (stringTmp);
+			// replace Script-Content by link to cached value
+			//ScriptItem siTmp = ssTmp.getByValue();
 			node.setValue(scriptAliasTmp.toCharArray());
 			//System.out.println("" + node.getTextValue());
+			return retval;
+			
 		}
 		@Override
-		public void modi(HTMLNode node, String nodeName, String attrName, String newValue) {
+		public void modi(HTMLNode node, String rootServletPar, String refPar, String refPar2) {
 	        Attributes attrs = node.getAttributes();  
-			Attribute attr = attrs.get(attrName);		
-			String value = attr.getValue();
-	        System.out.println("NEW VAL for "+nodeName+".."+attrName+" : ["+value+"]=>"+newValue);
-	        attr.setValue(  newValue);       
-	        attrs.set(attr);
+			String newValue = null; 	
+			String value =  node.getTextValue() ;
+			if (verify(value)){
+				String cacheKey = clearBody(node, value);//clearBody(node, scriptOnBody);
+
+				ScriptStore ssTmp = ScriptStore.getInstanse();
+				ssTmp .putOrCreate(cacheKey, value );
+				String newLink = cacheKey;
+				newValue = newLink;
+				//node.setValue(  newLink.toCharArray() ); 
+				System.out.println("NEW VAL for    : ["+value+"]=>"+newValue);
+			}else{
+				System.out.println(" no changes for "+node.getName());
+			}
+	        
+	        
 		}		
 	}
   public static class NormalLinkVerifier extends TextVerifier implements ValueVerifier{

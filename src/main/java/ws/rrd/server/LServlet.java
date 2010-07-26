@@ -10,20 +10,16 @@ import java.net.URL;
 import java.net.HttpURLConnection; 
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
+import java.util.List; 
 import java.util.Map;
 import java.util.logging.Logger;
 import java.util.zip.GZIPInputStream;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.ServletResponse;
+ 
+import javax.servlet.ServletOutputStream; 
 import javax.servlet.http.*;
 
 import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpRequest;
+import org.apache.http.HttpEntity; 
 import org.apache.http.HttpResponse;
 import org.vietspider.html.HTMLDocument;
 import org.vietspider.html.HTMLNode;
@@ -31,6 +27,8 @@ import org.vietspider.html.parser.HTMLParser2;
 import org.vietspider.html.util.HyperLinkUtil;
 
 import ws.rdd.net.UrlFetchTest; 
+import ws.rrd.mem.ScriptItem;
+import ws.rrd.mem.ScriptStore;
 
 @SuppressWarnings("serial")
 public class LServlet extends HttpServlet {
@@ -120,10 +118,11 @@ public class LServlet extends HttpServlet {
 			}
 			// fix ROOT-Panel-Request
 			if (isRootReq(req) ){ 
-				urlStr = req.getParameter(_U_R_L_) ;
-				// normalize non-protocol-ADDRESS
-				urlStr = (""+urlStr ).startsWith("http")? urlStr:"http://"+urlStr;
+				urlStr = req.getParameter(_U_R_L_) ; 
 			}
+			
+			// normalize non-protocol-ADDRESS
+			urlStr = (""+urlStr ).startsWith("http")? urlStr:"http://"+urlStr;			
 			System.out.println(_U_R_L_ + ":="+ urlStr);
 			targetUrl = new StringBuilder(urlStr);
 
@@ -177,88 +176,20 @@ public class LServlet extends HttpServlet {
 				log.warning("nonull::::"+ contextEncStr + " ::::: "+ contextTypeStr );
 			}
 			
-			if (					
-				"Content-Type: text/css".equalsIgnoreCase( contextTypeStr) 
-				)
+			if ( isCSS(contextTypeStr)  )
 			{
-				log.warning("CSS contextTypeStr / contextEncStr:{"+contextTypeStr+" / "+contextEncStr +"}, url== ["+urlStr+"]");
-				ByteArrayOutputStream oaos = new ByteArrayOutputStream();
-				entity.writeTo(oaos) ;
-				if (isGZip(xRespTmp)){
-					oaos = deZip(oaos);
-			        //contextEncStr  = "ISO-8859-1";
-				}				
-				String xCSS = oaos.toString().replace("url(/", "URL (/l.gif?")
-				.replace("url (/", "URL (/l.gif?")
-				.replace("URL(/", "URL (/l.gif?")
-				.replace("Url(/", "URL (/l.gif?")
-				.replace("url ( /", "URL (/l.gif?")
-				.replace("URL (/l.gif?", "url(/l.gif?")
-				;
-				resp.setContentType("text/css");
-				outTmp = resp.getOutputStream();
-				outTmp.write(xCSS.getBytes());
-				outTmp.flush();
+				outTmp = performCSS(resp, contextTypeStr, urlStr, xRespTmp, entity, contextEncStr);
 				return;
-			}else
-			if (	
-					"null".equalsIgnoreCase( contextTypeStr)||
-					"Content-Type: image/jpeg".equalsIgnoreCase( contextTypeStr) ||
-			 		"Content-Type: image/png".equalsIgnoreCase( contextTypeStr) ||	
-					"Content-Type: image/x-icon".equalsIgnoreCase( contextTypeStr) ||	
-					"Content-Type: text/xml".equalsIgnoreCase( contextTypeStr) ||
-					"Content-Type: image/gif".equalsIgnoreCase( contextTypeStr) ||
-					"Content-Type: application/pdf".equalsIgnoreCase( contextTypeStr) ||
-					"Content-Type: application/x-shockwave-flash".equalsIgnoreCase( contextTypeStr) ||
-					"Content-Type: application/postscript".equalsIgnoreCase( contextTypeStr) ||
-					"Content-Type: application/octet-stream".equalsIgnoreCase( contextTypeStr) ||
-					"Content-Type: application/x-msexcel".equalsIgnoreCase( contextTypeStr) ||
-					"Content-Type: image/tiff".equalsIgnoreCase( contextTypeStr) ||
-					"Content-Type: image/ief".equalsIgnoreCase( contextTypeStr) ||
-					"Content-Type: image/g3fax".equalsIgnoreCase( contextTypeStr) ||
-					"Content-Type: application/x-shockwave-flash".equalsIgnoreCase( contextTypeStr) 
-				
-					
-			){
-				if (! "null".equals( contextTypeStr )){
-					String contypeTmp = contextTypeStr.substring("Content-Type:".length());
-					resp.setContentType(contypeTmp);
-					setupResponseProperty( resp,  xRespTmp);
-				}
-				log.warning("HTML contextTypeStr||contextEncStr:["+contextTypeStr+"||"+contextEncStr+"]  URL =:["+urlStr+"]");
-				outTmp = resp.getOutputStream();
-				entity.writeTo(outTmp) ;
-				outTmp.flush();
+			}else if ( isBinary(contextTypeStr) ){
+				outTmp = performBinary(resp, contextTypeStr, urlStr, xRespTmp, entity, contextEncStr);
 				return;
-			}else if (
-					 
-					"Content-Type: application/x-javascript".equalsIgnoreCase( contextTypeStr) ||
-					"Content-Type: application/x-javascript; charset=utf-8".equalsIgnoreCase( contextTypeStr) ||
-					//"content-type: text/html; charset=ISO8859-1".equalsIgnoreCase( contextTypeStr) ||
-					"content-type: text/javascript; charset=UTF-8".equalsIgnoreCase( contextTypeStr)  
- 
-					){
-				log.warning("JS contextTypeStr||contextEncStr:["+contextTypeStr+"||"+contextEncStr+"]  URL =:["+urlStr+"]");
-				
-				ByteArrayOutputStream oaos = new ByteArrayOutputStream();
-				entity.writeTo(oaos) ;				
-				String jsToWrap = oaos.toString();
-				jsToWrap = 
-					jsToWrap
-						.replace("http://",   SwapServletUrl +  "/HtTp/" )
-						.replace("HTTP://",   SwapServletUrl +  "/HtTp/" )
-						.replace("HTTPS://",   SwapServletUrl +  "/HtTp/" )
-						.replace("https://",   SwapServletUrl +  "/HtTp/" )
-					;
-				outTmp = resp.getOutputStream();
-				outTmp.write(jsToWrap.getBytes()) ;
-				outTmp.flush();
+			}else if (  isScript(contextTypeStr) ){
+				outTmp = performScript(resp, contextTypeStr, urlStr, entity, contextEncStr);
 				return;
 				
 			}	else{
 			 
-				String xEncTmp = getXEnc(xRespTmp);
-				
+				String xEncTmp = getXEnc(xRespTmp); 
 				log.warning("x---HTML---x  contextTypeStr/contextEncStr:"+contextTypeStr+" : :  enc : : "+contextEncStr +"["+urlStr+"]   XXX::"+xEncTmp);
 				System.out.println("=====!!!======"+contextTypeStr +"::::"+contextEncStr);
 			}
@@ -375,7 +306,8 @@ public class LServlet extends HttpServlet {
 				String magik = "l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001/";
 				int readRetVal = in.read(buf);
 				String toBrowser = new String (buf);
-				toBrowser = toBrowser.replace(magik,"" );// SwapServletUrl
+				toBrowser = toBrowser.replace(magik,SwapServletUrl );// SwapServletUrl
+				toBrowser = toBrowser.replace("B8b8B8Bbbb888B", SwapServletUrl.subSequence(0, SwapServletUrl.length()-2) );//				
 				outTmp.write(toBrowser.getBytes());
 				
 				outTmp.write("<pre>".getBytes());
@@ -384,6 +316,105 @@ public class LServlet extends HttpServlet {
 				//outTmp.flush();
 				//ExceptionUtils.swapFailedException(resp, e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}  
+	}
+
+	private ServletOutputStream performCSS(HttpServletResponse resp,
+			String contextTypeStr, String urlStr, HttpResponse xRespTmp,
+			HttpEntity entity, String contextEncStr) throws IOException {
+		ServletOutputStream outTmp;
+		log.warning("CSS contextTypeStr / contextEncStr:{"+contextTypeStr+" / "+contextEncStr +"}, url== ["+urlStr+"]");
+		ByteArrayOutputStream oaos = new ByteArrayOutputStream();
+		entity.writeTo(oaos) ;
+		if (isGZip(xRespTmp)){
+			oaos = deZip(oaos);
+		    //contextEncStr  = "ISO-8859-1";
+		}				
+		String xCSS = oaos.toString().replace("url(/", "URL (/l.gif?")
+		.replace("url (/", "URL (/l.gif?")
+		.replace("URL(/", "URL (/l.gif?")
+		.replace("Url(/", "URL (/l.gif?")
+		.replace("url ( /", "URL (/l.gif?")
+		.replace("URL (/l.gif?", "url(/l.gif?")
+		;
+		resp.setContentType("text/css");
+		outTmp = resp.getOutputStream();
+		outTmp.write(xCSS.getBytes());
+		outTmp.flush();
+		return outTmp;
+	}
+
+	private ServletOutputStream performBinary(HttpServletResponse resp,
+			String contextTypeStr, String urlStr, HttpResponse xRespTmp,
+			HttpEntity entity, String contextEncStr) throws IOException {
+		ServletOutputStream outTmp;
+		if (! "null".equals( contextTypeStr )){
+			String contypeTmp = contextTypeStr.substring("Content-Type:".length());
+			resp.setContentType(contypeTmp);
+			setupResponseProperty( resp,  xRespTmp);
+		}
+		log.warning("HTML contextTypeStr||contextEncStr:["+contextTypeStr+"||"+contextEncStr+"]  URL =:["+urlStr+"]");
+		outTmp = resp.getOutputStream();
+		entity.writeTo(outTmp) ;
+		outTmp.flush();
+		return outTmp;
+	}
+
+	private ServletOutputStream performScript(HttpServletResponse resp,
+			String contextTypeStr, String urlStr, HttpEntity entity,
+			String contextEncStr) throws IOException {
+		ServletOutputStream outTmp;
+		log.warning("JS contextTypeStr||contextEncStr:["+contextTypeStr+"||"+contextEncStr+"]  URL =:["+urlStr+"]");
+		
+		ScriptStore ssTmp = ScriptStore.getInstanse();
+		ScriptItem scriptTmp = ssTmp.getByURL( urlStr);
+		if (scriptTmp == null){
+			ByteArrayOutputStream oaos = new ByteArrayOutputStream();
+			entity.writeTo(oaos) ;				
+			String jsToWrap = oaos.toString();
+			jsToWrap = 
+				jsToWrap
+					.replace("http://",   SwapServletUrl +  "/HtTp/" )
+					.replace("HTTP://",   SwapServletUrl +  "/HtTp/" )
+					.replace("HTTPS://",   SwapServletUrl +  "/HtTp/" )
+					.replace("https://",   SwapServletUrl +  "/HtTp/" )
+				;
+			 
+			scriptTmp = ssTmp.putOrCreate(urlStr, jsToWrap);
+		} 
+		outTmp = resp.getOutputStream();
+		outTmp.write(scriptTmp.getValue().getBytes()) ;
+		outTmp.flush();
+		return outTmp;
+	}
+
+	private boolean isCSS(String contextTypeStr) {
+		return "Content-Type: text/css".equalsIgnoreCase( contextTypeStr);
+	}
+
+	private boolean isBinary(String contextTypeStr) {
+		return "null".equalsIgnoreCase( contextTypeStr)||
+		"Content-Type: image/jpeg".equalsIgnoreCase( contextTypeStr) ||
+		"Content-Type: image/png".equalsIgnoreCase( contextTypeStr) ||	
+		"Content-Type: image/x-icon".equalsIgnoreCase( contextTypeStr) ||	
+		"Content-Type: text/xml".equalsIgnoreCase( contextTypeStr) ||
+		"Content-Type: image/gif".equalsIgnoreCase( contextTypeStr) ||
+		"Content-Type: application/pdf".equalsIgnoreCase( contextTypeStr) ||
+		"Content-Type: application/x-shockwave-flash".equalsIgnoreCase( contextTypeStr) ||
+		"Content-Type: application/postscript".equalsIgnoreCase( contextTypeStr) ||
+		"Content-Type: application/octet-stream".equalsIgnoreCase( contextTypeStr) ||
+		"Content-Type: application/x-msexcel".equalsIgnoreCase( contextTypeStr) ||
+		"Content-Type: image/tiff".equalsIgnoreCase( contextTypeStr) ||
+		"Content-Type: image/ief".equalsIgnoreCase( contextTypeStr) ||
+		"Content-Type: image/g3fax".equalsIgnoreCase( contextTypeStr) ||
+		"Content-Type: application/x-shockwave-flash".equalsIgnoreCase( contextTypeStr);
+	}
+
+	private boolean isScript(String contextTypeStr) {
+		return "Content-Type: application/x-javascript".equalsIgnoreCase( contextTypeStr) ||
+		"Content-Type: application/x-javascript; charset=utf-8".equalsIgnoreCase( contextTypeStr) ||
+		//"content-type: text/html; charset=ISO8859-1".equalsIgnoreCase( contextTypeStr) ||
+		"content-type: text/javascript; charset=UTF-8".equalsIgnoreCase( contextTypeStr) || 
+		(""+contextTypeStr).toLowerCase().indexOf("text/javascript")>=0;
 	}
 
 	private boolean isRootReq(HttpServletRequest req) {
@@ -401,8 +432,11 @@ public class LServlet extends HttpServlet {
 			newVal  = newVal .replace( 
 					"l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001",
 					SwapServletUrl
-					)
-			;		
+					);	
+			newVal = newVal.replace(
+					"B8b8B8Bbbb888B", 
+					calcBase() 
+					); 
 			b = newVal.getBytes();
 			out.write(b );
 		} catch (IOException e) { 
@@ -410,6 +444,10 @@ public class LServlet extends HttpServlet {
 		}  	
 	}
 
+	public static final String calcBase(){
+		return SwapServletUrl.substring(0, SwapServletUrl.length()-2);
+	}
+	
 	private byte[] getResourceAsBA(String namePar) throws IOException {
 		InputStream in = this.getClass().getClassLoader().getResourceAsStream(namePar); 
 		byte[] b = new byte[in.available()] ;

@@ -16,6 +16,10 @@
 	<servlet>
 		<servlet-name>l</servlet-name>
 		<servlet-class>ws.rrd.server.LServlet</servlet-class>
+	</servlet>	
+	<servlet>
+		<servlet-name>S</servlet-name>
+		<servlet-class>ws.rrd.server.SServlet</servlet-class>
 	</servlet>
 
 	<servlet>
@@ -34,6 +38,10 @@
 	<servlet-mapping>
 		<servlet-name>l</servlet-name>
 		<url-pattern>/l/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>S</servlet-name>
+		<url-pattern>/S/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>L</servlet-name>
