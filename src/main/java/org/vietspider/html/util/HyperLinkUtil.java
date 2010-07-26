@@ -416,7 +416,8 @@ private String prepareLinkValue(URL home, String value) {
 				String cacheKey = clearBody(node, value);//clearBody(node, scriptOnBody);
 
 				ScriptStore ssTmp = ScriptStore.getInstanse();
-				ssTmp .putOrCreate(cacheKey, value );
+				ScriptItem scriptTmp =  ssTmp .putOrCreate(cacheKey, value );
+				scriptTmp.addReffer(refPar);
 				String newLink = cacheKey;
 				newValue = newLink;
 				//node.setValue(  newLink.toCharArray() ); 

@@ -29,7 +29,7 @@ public class SServlet extends HttpServlet{
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException{
 		ServletOutputStream out = resp.getOutputStream();
-		String uriTmp =  LServlet.calcBase()+req.getRequestURI();
+		String uriTmp =  LServlet.calcBase()+req.getRequestURI().substring(1);
 		System.out.println("sendback "+uriTmp+" ...");
 		ScriptItem scriptTmp = ScriptStore.getInstanse().getByURL(uriTmp);
 		resp.setContentType("text/javascript");
