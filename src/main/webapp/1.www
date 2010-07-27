@@ -1,0 +1,121 @@
+
+rrdtool graph  IBOcpu.png   -t CPU    -a PNG    \
+--start=1279086460 --end=1279172860 DEF:cpuA=X-1979395149.rrd:data:AVERAGE DEF:cpuB=X-1649629388.rrd:data:AVERAGE  \
+DEF:cpuC=X-1319863627.rrd:data:AVERAGE \
+LINE1:cpuA#FF000088:cpuA STACK:cpuB#00FF0088:cpuB STACK:cpuC#0000FF88:cpuC
+
+rrdtool graph  IBOcpu.png   -t CPU    -a PNG    \
+--start=1279086460 --end=1279172860 DEF:cpuA=X-1979395149.rrd:data:AVERAGE DEF:cpuB=X-1649629388.rrd:data:AVERAGE  \
+DEF:cpuC=X-1319863627.rrd:data:AVERAGE \
+LINE1:cpuA#FF000088:cpuA STACK:cpuB#00FF0088:cpuB STACK:cpuC#0000FF88:cpuC
+
+
+rrdtool graph all1.gif   --start 1271697001  --end 1271698863  \  
+DEF:data=X-1649629388.rrd:data:AVERAGE  \
+LINE2:data#FF0000:"Line A"
+
+rrdtool graph all1.gif   --start 1271697001  --end 1271698863  \  
+DEF:data=X1676848981.rrd:data:AVERAGE  \
+LINE2:data#FF0000:"Line A"
+
+rrdtool fetch  X1506064242.rrd AVERAGE --start 1271697001154 --end 1271698861174
+rrdtool fetch  X-2087838476.rrd AVERAGE --start 1271697001154 --end 1271698861174
+rrdtool fetch  X-290887117.rrd AVERAGE --start 1271697001154 --end 1271698861174
+
+
+rrdtool graph all1.gif  -o  \  
+DEF:data=X-2087838476.rrd:data:AVERAGE  \
+LINE2:data#FF0000:"Line A"
+
+rrdtool graph all1.gif  -o \  
+DEF:myspeed=X857817503.rrd:data:AVERAGE \
+LINE2:myspeed#FF0000
+
+\\10.253.24.80\SMSvcHost 3.0.0.0\Protocol Failures over net.tcp --->  rrdtool create X-857541619.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\ASP.NET\Anwendungsneustarts --->  rrdtool create X2044590405.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\ASP.NET, Version 2.0.50727\Anwendungsneustarts --->  rrdtool create X193764000.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\ASP.NET-Anwendungen, Version 2.0.50727(__Total__)\Anonyme Anforderungen --->  rrdtool create X-283450706.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\ASP.NET-Anwendungen, Version 2.0.50727(__Total__)\Anonyme Anforderungen/s --->  rrdtool create X-1813187246.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\ASP.NET-Anwendungen, Version 2.0.50727(_LM_W3SVC_1_Root_iboServer2.6)\Anonyme Anforderungen/s --->  rrdtool create X-120446016.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\ASP.NET-Anwendungen, Version 2.0.50727(__Total__)\Anforderungen gesamt --->  rrdtool create X912568618.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\ASP.NET-Zustandsdienst\Aktive Statusserversitzungen --->  rrdtool create X-4213948.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\ASP.NET-Zustandsdienst\Abgebrochene Statusserversitzungen --->  rrdtool create X1984010445.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\ASP.NET-Zustandsdienst\Abgelaufene Statusserversitzungen --->  rrdtool create X-744480115.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\ASP.NET-Zustandsdienst\Statusserversitzungen insgesamt --->  rrdtool create X511813495.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\Internetinformationsdienste Global\Dateicachetreffer --->  rrdtool create X-542465237.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\Internetinformationsdienste Global\Dateicachefehler --->  rrdtool create X955255673.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\Distributed Transaction Coordinator\Transaktionen/s --->  rrdtool create X-663342941.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\Logischer Datenträger(C:)\Freier Speicherplatz (%) --->  rrdtool create X559623146.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\Logischer Datenträger(D:)\Freier Speicherplatz (%) --->  rrdtool create X304886601.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\Logischer Datenträger(E:)\Freier Speicherplatz (%) --->  rrdtool create X50150056.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\Logischer Datenträger(_Total)\Freier Speicherplatz (%) --->  rrdtool create X1168426168.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\Logischer Datenträger(C:)\MB frei --->  rrdtool create X1506064242.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\Logischer Datenträger(D:)\MB frei --->  rrdtool create X-290887117.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\Logischer Datenträger(E:)\MB frei --->  rrdtool create X-2087838476.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\Logischer Datenträger(_Total)\MB frei --->  rrdtool create X-1635061532.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\Logischer Datenträger(C:)\Aktuelle Warteschlangenlänge --->  rrdtool create X-308684014.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\Logischer Datenträger(D:)\Aktuelle Warteschlangenlänge --->  rrdtool create X1976179441.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\Logischer Datenträger(E:)\Aktuelle Warteschlangenlänge --->  rrdtool create X-33924400.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\Logischer Datenträger(_Total)\Aktuelle Warteschlangenlänge --->  rrdtool create X783178976.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\Server\Gesamtanzahl Bytes/s --->  rrdtool create X1323096270.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\Server\Empfangene Bytes/s --->  rrdtool create X-1024920701.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\Server\Abgemeldete Sitzungen --->  rrdtool create X-414739826.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\Server\Getrennte Sitzungen --->  rrdtool create X-1835224927.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\Server\Anmeldefehler --->  rrdtool create X934806436.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\Server\Zugriffsberechtigungsfehler --->  rrdtool create X1009650472.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\Server\Zugriffsfehler --->  rrdtool create X432084500.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\Server\Systemfehler --->  rrdtool create X958811379.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\Server\Abgelehnte Sperranforderungen --->  rrdtool create X696545047.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\Prozessor(_Total)\Prozessorzeit (%) --->  rrdtool create X-1979395149.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\Speicher\Verfügbare KB --->  rrdtool create X961661811.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+\\10.253.24.80\Objekte\Prozesse --->  rrdtool create X1854889856.rrd -s 300  DS:data:DERIVE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288
+
+
+
+
+
+
+
+
+
+
+
+(PDH-CSV 4.0) (Mitteleuropäische Sommerzeit   )(-120) --->  rrdtool create X-1466746325.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\SMSvcHost 3.0.0.0\Protocol Failures over net.tcp --->  rrdtool create X-857541619.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\ASP.NET\Anwendungsneustarts --->  rrdtool create X2044590405.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\ASP.NET, Version 2.0.50727\Anwendungsneustarts --->  rrdtool create X193764000.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\ASP.NET-Anwendungen, Version 2.0.50727(__Total__)\Anonyme Anforderungen --->  rrdtool create X-283450706.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\ASP.NET-Anwendungen, Version 2.0.50727(__Total__)\Anonyme Anforderungen/s --->  rrdtool create X-1813187246.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\ASP.NET-Anwendungen, Version 2.0.50727(_LM_W3SVC_1_Root_iboServer2.6)\Anonyme Anforderungen/s --->  rrdtool create X-120446016.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\ASP.NET-Anwendungen, Version 2.0.50727(__Total__)\Anforderungen gesamt --->  rrdtool create X912568618.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\ASP.NET-Zustandsdienst\Aktive Statusserversitzungen --->  rrdtool create X-4213948.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\ASP.NET-Zustandsdienst\Abgebrochene Statusserversitzungen --->  rrdtool create X1984010445.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\ASP.NET-Zustandsdienst\Abgelaufene Statusserversitzungen --->  rrdtool create X-744480115.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\ASP.NET-Zustandsdienst\Statusserversitzungen insgesamt --->  rrdtool create X511813495.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\Internetinformationsdienste Global\Dateicachetreffer --->  rrdtool create X-542465237.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\Internetinformationsdienste Global\Dateicachefehler --->  rrdtool create X955255673.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\Distributed Transaction Coordinator\Transaktionen/s --->  rrdtool create X-663342941.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\Logischer Datenträger(C:)\Freier Speicherplatz (%) --->  rrdtool create X559623146.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\Logischer Datenträger(D:)\Freier Speicherplatz (%) --->  rrdtool create X304886601.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\Logischer Datenträger(E:)\Freier Speicherplatz (%) --->  rrdtool create X50150056.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\Logischer Datenträger(_Total)\Freier Speicherplatz (%) --->  rrdtool create X1168426168.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\Logischer Datenträger(C:)\MB frei --->  rrdtool create X1506064242.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\Logischer Datenträger(D:)\MB frei --->  rrdtool create X-290887117.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\Logischer Datenträger(E:)\MB frei --->  rrdtool create X-2087838476.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\Logischer Datenträger(_Total)\MB frei --->  rrdtool create X-1635061532.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\Logischer Datenträger(C:)\Aktuelle Warteschlangenlänge --->  rrdtool create X-308684014.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\Logischer Datenträger(D:)\Aktuelle Warteschlangenlänge --->  rrdtool create X1976179441.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\Logischer Datenträger(E:)\Aktuelle Warteschlangenlänge --->  rrdtool create X-33924400.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\Logischer Datenträger(_Total)\Aktuelle Warteschlangenlänge --->  rrdtool create X783178976.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\Server\Gesamtanzahl Bytes/s --->  rrdtool create X1323096270.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\Server\Empfangene Bytes/s --->  rrdtool create X-1024920701.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\Server\Abgemeldete Sitzungen --->  rrdtool create X-414739826.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\Server\Getrennte Sitzungen --->  rrdtool create X-1835224927.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\Server\Anmeldefehler --->  rrdtool create X934806436.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\Server\Zugriffsberechtigungsfehler --->  rrdtool create X1009650472.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\Server\Zugriffsfehler --->  rrdtool create X432084500.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\Server\Systemfehler --->  rrdtool create X958811379.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\Server\Abgelehnte Sperranforderungen --->  rrdtool create X696545047.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\Prozessor(_Total)\Prozessorzeit (%) --->  rrdtool create X-1979395149.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\Speicher\Verfügbare KB --->  rrdtool create X961661811.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
+\\10.253.24.80\Objekte\Prozesse --->  rrdtool create X1854889856.rrd --start 1271696991154 -s 300  DS:data:GAUGE:600:U:U   RRA:AVERAGE:0.5:1:288  RRA:MIN:0.5:1:288  RRA:MAX:0.5:1:288  RRA:LAST:0.5:1:288 
