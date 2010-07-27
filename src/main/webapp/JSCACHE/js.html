@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Tryit Editor v1.4</title>
+<link rel="stylesheet" type="text/css" href="tryit.css" />
+<script type="text/javascript">
+function displayad()
+{
+document.getElementById("adframe").src="ad.html?" + Math.random() 
+}
+</script>
+</head>
+
+<body>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td align="center">
+<iframe id="adframe" style="background-color:#ffffff" height="98" width="890" marginwidth="0" marginheight="0" frameborder="0" scrolling="no" 
+src="tryit_view.html"></iframe>
+
+</td>
+</tr>
+</table>
+
+<table border="0" class="maintable" cellpadding="3px" cellspacing="3px">
+<tr>
+<td width="50%">
+
+<form style="margin:0px" action="tryit_view.aspx" method="post" target="view">
+<input style="margin-bottom:5px;font-family:verdana;" name="submit" type="submit" value="Edit and Click Me >>" onclick="displayad()">
+<textarea class="code_input" width="100%" height="400px" name="code" wrap="logical" orows="21" ocols="42">  ddddddsdfsdf ");
+document.write(" p This is a PaRaGrAf. /  "); 
+document.write(" </textarea>
+</form>
+
+</td>
+<td valign="top">
+<p class="result_header">Your Result:</p>
+
+<iframe class="result_output" width="100%" height="400px" frameborder="0" name="view" src="tryit_view.aspx"></iframe>
+</td>
+</tr>
+<tr>
+<td align="left" class="bottomtext">
+Edit the code above and click to see the result.
+</td>
+<td align="right" class="bottomtext">
+<a style="color:#617f10" href="./">W3Schools.com</a> - Try it yourself&nbsp;
+</td>
+</tr>
+</table>
+
+</body>
+</html>

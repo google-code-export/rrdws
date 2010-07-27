@@ -107,7 +107,7 @@ public class LServlet extends HttpServlet {
 		String urlStr = null;
 		try {
 			StringBuffer requestURL = req.getRequestURL();
-			String rurlTmp = ""+req.getRequestURL();
+			String rurlTmp = ""+req.getRequestURL(); 
 			SwapServletUrl  = rurlTmp.substring(0, rurlTmp.indexOf(req.getServletPath()+"/") )+req.getServletPath()+"/";
 			String decodedUrl = requestURL.substring( SwapServletUrl.length());
 			
@@ -211,13 +211,13 @@ public class LServlet extends HttpServlet {
 				int endIndex = charSetHeader.indexOf(",");
 				contextEncStr  = charSetHeader.substring(beginIndex , endIndex);//"ISO-8859-1";
 			}
-			String xCSS = null;
+			String data = null;
 			if ("null".equals(  ""+contextEncStr )){
-				xCSS = oaos.toString();
+				data = oaos.toString();
 			}else{
-				xCSS = oaos.toString(contextEncStr);//xCSS.toUpperCase().substring( 12430)
+				data = oaos.toString(contextEncStr);//xCSS.toUpperCase().substring( 12430)
 			}
-			String data = xCSS;// data = new UrlFetchTest().testFetchUrl( urlStr ); 
+			 
 			if (data.toLowerCase().indexOf("content=\"text/html")>0)try{
 				String contextText = "charset=";
 				int lenTmp = contextText.length();
@@ -265,7 +265,11 @@ public class LServlet extends HttpServlet {
 	    	
 	    	try{ 
 	    		HTMLNode bodyTmp = documentTmp.getRoot().getChild(1);
-				String strTmp = new String(getResourceAsBA("L.jspX"));
+				String strTmp = "<body><div name=toolbar>"+ new String(getResourceAsBA("L.jspX") ) +"</div></body>";
+				strTmp = strTmp.replace(
+						"B8b8B8Bbbb888B", 
+						calcBase() 
+						); 				
 				HTMLDocument htmlTmp = parser2.createDocument(strTmp);
 				HTMLNode myIFrame = htmlTmp.getRoot().getChild(1).getChild(0);
 				bodyTmp.addChild(myIFrame);
@@ -386,7 +390,7 @@ public class LServlet extends HttpServlet {
 					.replace("https://",   SwapServletUrl +  "/HtTp/" )
 				;
 			 
-			scriptTmp = ssTmp.putOrCreate(urlStr, jsToWrap);
+			scriptTmp = ssTmp.putOrCreate(urlStr, jsToWrap, urlStr);
 		} 
 		outTmp = resp.getOutputStream();
 		outTmp.write(scriptTmp.getValue().getBytes()) ;
@@ -542,6 +546,8 @@ public class LServlet extends HttpServlet {
 			"Expires",
 			"TE",
 			"Server",
+			//"Set-Cookie",
+			"Keep-Alive",
 			"Authorization"
 			
 	};	
@@ -583,17 +589,32 @@ public class LServlet extends HttpServlet {
                     // Save the cookie...
                     try{
                         nameTmp = nameTmp.split("=")[0]+cookieValue.hashCode() ;
-                        Cookie newCookie = new Cookie(nameTmp,""+cookieValue );
-	                    newCookie.setSecure(secure);
-	                    newCookie.setDomain(domain);
-	                    newCookie.setPath(path);
+                        nameTmp = nameTmp.replace(".", "_").replace("-", "_").replace(":", "_");
+                        Cookie newCookie = new Cookie(nameTmp,new String ( Base64Coder.encode(   cookieValue.getBytes() ) ) );
+	                    newCookie.setSecure(secure); 
+	                    newCookie.setDomain(new URL(LServlet.SwapServletUrl).getHost());
+	                    newCookie.setPath( HyperLinkUtil.encodeLink(  new URL("http://www.google.de") , path) );
                     	// Tue, 19-Jul-2011 20:00:53 GMT
                     	SimpleDateFormat sf = new SimpleDateFormat ("EEE, dd-MMM-yyyy hh:mm:ss z");
-                    	long nowTmp = (System.currentTimeMillis());
-                    	long endTmp = sf.parse(expires).getTime();
-                    	int expiresInSecTmp = (int)(endTmp-nowTmp)/1000;
-                    	newCookie.setMaxAge(expiresInSecTmp);
+                    	if (expires != null){
+                    		long nowTmp = (System.currentTimeMillis());
+                    		long endTmp = sf.parse(expires).getTime();
+                    		int expiresInSecTmp = (int)(endTmp-nowTmp)/1000;
+                    		newCookie.setMaxAge( expiresInSecTmp);
+                    	}else{
+                    		newCookie.setMaxAge( 1111);
+                    	}
                         resp.addCookie(newCookie);
+                        System.out.println("NEW COOKIE {"+
+                        		newCookie.getName()+ "::"+
+                        		newCookie.getValue()+ "::"+
+                        		newCookie.getVersion()+ "::"+
+                        		newCookie.getSecure()+ "::"+
+                        		newCookie.getDomain()+ "::"+
+                        		newCookie.getPath() + "::"+
+                        		newCookie.getClass() + "::"+
+                        		"}"
+                        		);
                     }catch(Throwable e){}
                 	
                 }

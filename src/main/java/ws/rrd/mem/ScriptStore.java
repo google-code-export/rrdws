@@ -49,14 +49,18 @@ public class ScriptStore {
 		return (ScriptItem) scriptStore.get(key );
 	}
 
-	public ScriptItem putOrCreate(String cacheKey, String value) {
+	public ScriptItem putOrCreate(String cacheKey, String value, String refPar ) {
 		
 		ScriptItem scriptValue = (ScriptItem) scriptStore.get(cacheKey);
 		if (scriptValue == null){
 			scriptValue = new ScriptItem(value);
 			System.out.println("ScriptStore:: "+cacheKey +" == "+scriptValue);
+			scriptValue.addReffer(refPar);
 			scriptStore.put(cacheKey, scriptValue );
-		}  
+		}  else{
+			scriptValue.addReffer(refPar);
+			scriptStore.put(cacheKey, scriptValue );			
+		}
 		return scriptValue;
 	}
 	
