@@ -2,10 +2,16 @@ package ws.rdd.net;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
  
+import org.apache.commons.httpclient.auth.AuthPolicy;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -70,6 +76,12 @@ public class UrlFetchTest {
 		for (String []nextHeader :headers)
 			m.addHeader(nextHeader[0], nextHeader[1]);
 		HttpResponse respTmp = httpClient.execute(m);
+		if (respTmp.getStatusLine().toString().indexOf("200 OK")>0){
+			System.out.println("resp.:"+respTmp.getStatusLine());
+		}else{ 
+			m .addHeader("Authorization", "Basic " + new String(Base64Coder.encode(("iboserviceuser"+":"+"iboserviceuser").getBytes() )) );
+			respTmp = httpClient.execute(m);
+		}
 		return respTmp;
 	}
 
@@ -119,6 +131,12 @@ public class UrlFetchTest {
 			m.setParams(arg0.setParameter(""+nextParName, valueTmp));
 		}
 		HttpResponse respTmp = httpClient.execute(m);
+		if (respTmp.getStatusLine().toString().indexOf("200 OK")>0){
+			System.out.println("resp.:"+respTmp.getStatusLine());
+		}else{ 
+			m .addHeader("Authorization", "Basic " + new String(Base64Coder.encode(("iboserviceuser"+":"+"iboserviceuser").getBytes() )) );
+			respTmp = httpClient.execute(m);
+		}		
 		return respTmp;
 	}
 	

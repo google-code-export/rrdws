@@ -1,6 +1,12 @@
 package ws.rrd.mem;
 
 import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import org.vietspider.html.util.HyperLinkUtil;
+
+import ws.rrd.server.LServlet;
 
 /** 
  * <b>Description:TODO</b>
@@ -37,6 +43,28 @@ public class ScriptItem implements Serializable{
 	}
 
 	public void addReffer(String refPar) {
+		String homeLinkPar = refPar;
+		URL linkPar = null;
+		try {
+			linkPar = new URL(refPar);
+			linkPar = new URL(linkPar.getProtocol() ,linkPar.getHost(), linkPar.getPort(),  linkPar.getPath() +"/../");
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// TODO - parce all possible DOC-location-modifications 
+		String encodeLink = HyperLinkUtil.encodeLink(linkPar, homeLinkPar   );
+		encodeLink = encodeLink.replace("/l/", "/F/");
+		if (value.toLowerCase().indexOf(LServlet.SwapServletUrl.replace("/l/", "/F/").toLowerCase())>0){
+			return;
+		}
+		this.value = this.value.replace(".src=\"", "._s_R_c=\""+encodeLink );
+		this.value = this.value.replace("._s_R_c=\"" , ".src=\"" );
+		
+		this.value = this.value.replace("https://", ""+LServlet.SwapServletUrl.replace("/l/", "/F/").replace("https", "hTTpS")+"h_t_t_p_s://");
+		this.value = this.value.replace("http://", ""+LServlet.SwapServletUrl.replace("/l/", "/F/").replace("http", "hTTp")+"h_t_t_p_://");
+		
+		
 		System.out.println(refPar);
 	}
 

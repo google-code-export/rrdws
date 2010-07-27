@@ -18,6 +18,10 @@
 		<servlet-class>ws.rrd.server.LServlet</servlet-class>
 	</servlet>	
 	<servlet>
+		<servlet-name>F</servlet-name>
+		<servlet-class>ws.rrd.server.FServlet</servlet-class>
+	</servlet>	
+	<servlet>
 		<servlet-name>S</servlet-name>
 		<servlet-class>ws.rrd.server.SServlet</servlet-class>
 	</servlet>
@@ -42,6 +46,10 @@
 	<servlet-mapping>
 		<servlet-name>S</servlet-name>
 		<url-pattern>/S/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>F</servlet-name>
+		<url-pattern>/F/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>L</servlet-name>

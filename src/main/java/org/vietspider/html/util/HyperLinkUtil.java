@@ -265,14 +265,31 @@ public class HyperLinkUtil {
   
         if(verifier != null && !verifier.verify(node, nodeName, attrName)) return;  
         String  value = verifier.eval (node, nodeName, attrName);
-        value = prepareLinkValue(home , value);
-        value = encode(swapServletUrl2, value);
+        value = encodeLink(swapServletUrl2, home, value);
         
         verifier.modi(node, nodeName, attrName, value);
  
   }
 
-private String prepareLinkValue(URL home, String value) {
+
+
+/**
+ * @author vipup
+ * @param swapServletUrl2
+ * @param homeLinkPar
+ * @param linkPar
+ * @return
+ */
+  public static String encodeLink( URL homeLinkPar, String linkPar) {
+	  return encodeLink(LServlet.SwapServletUrl ,homeLinkPar, linkPar);
+  }
+  public static String encodeLink(String swapServletUrl2, URL homeLinkPar, String linkPar) {
+	linkPar = prepareLinkValue(homeLinkPar , linkPar);
+	linkPar = encode(swapServletUrl2, linkPar);
+	return linkPar;
+}
+
+private static String prepareLinkValue(URL home, String value) {
 	String homeStr = ""+home;
 	  if ( value.startsWith("/")){ 
 		  String fileNameTmp =home.getFile() ;
@@ -416,8 +433,9 @@ private String prepareLinkValue(URL home, String value) {
 				String cacheKey = clearBody(node, value);//clearBody(node, scriptOnBody);
 
 				ScriptStore ssTmp = ScriptStore.getInstanse();
-				ScriptItem scriptTmp =  ssTmp .putOrCreate(cacheKey, value );
-				scriptTmp.addReffer(refPar);
+				ScriptItem scriptTmp =  ssTmp .putOrCreate(cacheKey, value ,refPar);
+				
+				
 				String newLink = cacheKey;
 				newValue = newLink;
 				//node.setValue(  newLink.toCharArray() ); 
