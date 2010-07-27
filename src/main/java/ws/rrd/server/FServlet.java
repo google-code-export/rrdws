@@ -18,7 +18,7 @@ public class FServlet extends HttpServlet{ /* FORWARD-mastering servlet*/
 		
 		uriTmp = HyperLinkUtil.encodeLink(new URL(uriTmp), uriTmp);
 		resp.setStatus(301);
-		resp.setHeader( "Location", "http://www.new-url.com/" );
+		resp.setHeader( "Location", uriTmp );
 		resp.setHeader( "Connection", "close" );
  
 	} 

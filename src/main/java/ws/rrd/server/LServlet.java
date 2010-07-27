@@ -346,6 +346,10 @@ public class LServlet extends HttpServlet {
 		.replace("Url(/", "URL (/l.gif?")
 		.replace("url ( /", "URL (/l.gif?")
 		.replace("URL (/l.gif?", "url(/l.gif?")
+		// url(http://maps.gstatic.com
+		.replace("url(http://", "url(hTtP://"+SwapServletUrl.replace("/l/","/F/h_t_t_p://"))
+		.replace("url(https://", "url(hTtPs://"+SwapServletUrl.replace("/l/","/F/h_t_t_p_s://"))
+		
 		;
 		resp.setContentType("text/css");
 		outTmp = resp.getOutputStream();
@@ -361,12 +365,13 @@ public class LServlet extends HttpServlet {
 		if (! "null".equals( contextTypeStr )){
 			String contypeTmp = contextTypeStr.substring("Content-Type:".length());
 			resp.setContentType(contypeTmp);
-			setupResponseProperty( resp,  xRespTmp);
+			//setupResponseProperty( resp,  xRespTmp);
 		}
-		log.warning("HTML contextTypeStr||contextEncStr:["+contextTypeStr+"||"+contextEncStr+"]  URL =:["+urlStr+"]");
+		//log.warning("HTML contextTypeStr||contextEncStr:["+contextTypeStr+"||"+contextEncStr+"]  URL =:["+urlStr+"]");
 		outTmp = resp.getOutputStream();
 		entity.writeTo(outTmp) ;
 		outTmp.flush();
+		outTmp.close();
 		return outTmp;
 	}
 
@@ -382,12 +387,15 @@ public class LServlet extends HttpServlet {
 			ByteArrayOutputStream oaos = new ByteArrayOutputStream();
 			entity.writeTo(oaos) ;				
 			String jsToWrap = oaos.toString();
+			// 						(new Element('li', { 'class': 'fav', 'html': ((empty && i==0) ? '' : ', ') 
+			//+ '<a href="hTTp://rrdsaas.appspot.com/F/h_t_t_p_://rrdsaas.appspot.com/l//HtTp/' + temp.user.login + '.' + temp.base_short + '/favorites/tag/' + tag + '">' + tag + '</a>'}
+			String FServletURL = SwapServletUrl.replace("/l/", "/F/");
 			jsToWrap = 
 				jsToWrap
-					.replace("http://",   SwapServletUrl +  "/HtTp/" )
-					.replace("HTTP://",   SwapServletUrl +  "/HtTp/" )
-					.replace("HTTPS://",   SwapServletUrl +  "/HtTp/" )
-					.replace("https://",   SwapServletUrl +  "/HtTp/" )
+					.replace("http://",   FServletURL +  "h_t_t_p_://" )
+					.replace("HTTP://",   FServletURL +  "h_t_t_p_://" )
+					.replace("HTTPS://",   FServletURL +  "h_t_t_p_s_://" )
+					.replace("https://",   FServletURL +  "h_t_t_p_s_://" )
 				;
 			 
 			scriptTmp = ssTmp.putOrCreate(urlStr, jsToWrap, urlStr);

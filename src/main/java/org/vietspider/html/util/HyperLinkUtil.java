@@ -373,7 +373,7 @@ private static String prepareLinkValue(URL home, String value) {
   
   public static class JavaScriptVerifier extends TextVerifier implements ValueVerifier {
 		String start[] = {  "javascript", "window", "history"};
-		String exist[] = {"document.", "eval","navigator.","window."};
+		String exist[] = {"document.", "eval","navigator.","window.", ".location", "this"};
 		String end[] = {};
 		protected boolean verify(String strScriptPar) {
 			strScriptPar = strScriptPar.toLowerCase();
