@@ -216,7 +216,7 @@ public class LServlet extends HttpServlet {
 				data = oaos.toString();
 			}else{
 				data = oaos.toString(contextEncStr);//xCSS.toUpperCase().substring( 12430)
-			}
+			} //data.substring( data.indexOf("&lt;") -100, data.indexOf("&lt;") +20);
 			 
 			if (data.toLowerCase().indexOf("content=\"text/html")>0)try{
 				String contextText = "charset=";
@@ -285,9 +285,9 @@ public class LServlet extends HttpServlet {
 	    		textValue = documentTmp.getTextValue();//
 	    	}
 	    	//PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-	    	String string1 = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML  4.01 Transitional//EN\"><HtMl>\n\t<!-- contextEncStr="+contextEncStr+" -->";
+	    	String string1 = "<HTML>\n<!-- contextEncStr="+contextEncStr+" -->\n";
 	    	string1 += "";
-	    	String string2 = "</HtMl>";
+	    	String string2 = "</HTML>";
 			//outTmp.write(string1.getBytes(contextEncStr));
 	    	if (!"null".equals(""+contextEncStr)){
 	    		outTmp.write((string1 + textValue + string2).getBytes(contextEncStr));//)
@@ -347,8 +347,8 @@ public class LServlet extends HttpServlet {
 		.replace("url ( /", "URL (/l.gif?")
 		.replace("URL (/l.gif?", "url(/l.gif?")
 		// url(http://maps.gstatic.com
-		.replace("url(http://", "url(hTtP://"+SwapServletUrl.replace("/l/","/F/h_t_t_p://"))
-		.replace("url(https://", "url(hTtPs://"+SwapServletUrl.replace("/l/","/F/h_t_t_p_s://"))
+		.replace("url(http://", "url(hTtP://"+SwapServletUrl.replace("/l/","/F/h_t_t_p_://"))
+		.replace("url(https://", "url(hTtPs://"+SwapServletUrl.replace("/l/","/F/h_t_t_p_s_://"))
 		
 		;
 		resp.setContentType("text/css");

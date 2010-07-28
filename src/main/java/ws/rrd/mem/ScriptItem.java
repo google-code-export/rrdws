@@ -61,7 +61,7 @@ public class ScriptItem implements Serializable{
 		this.value = this.value.replace(".src=\"", "._s_R_c=\""+encodeLink );
 		this.value = this.value.replace("._s_R_c=\"" , ".src=\"" );
 		
-		this.value = this.value.replace("https://", ""+LServlet.SwapServletUrl.replace("/l/", "/F/").replace("https", "hTTpS")+"h_t_t_p_s://");
+		this.value = this.value.replace("https://", ""+LServlet.SwapServletUrl.replace("/l/", "/F/").replace("https", "hTTpS")+"h_t_t_p_s_://");
 		this.value = this.value.replace("http://", ""+LServlet.SwapServletUrl.replace("/l/", "/F/").replace("http", "hTTp")+"h_t_t_p_://");
 		
 		

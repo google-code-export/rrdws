@@ -24,6 +24,8 @@ public class SServlet extends HttpServlet{ /* SCRIPT-mastering servlet*/
 			for (String nextLine:linesTmp)
 				scriptValue += nextLine+"\n";
 		}
+		// http://stackoverflow.com/questions/18985/javascript-beautifier
+		
 		 
 		out.write(scriptValue.getBytes());
 	} 
