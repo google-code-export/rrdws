@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html><head>
+    <title>Punycode Converter</title>
+    <meta name="keywords" content="punycode, idna" />
+    <meta name="description" content="Punycode converter for IDN TLDs and converter for IDN ccTLDs" />
+    <script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js">
+    </script>
+    <script>
+	$(function(){
+	    $('input#encode').click(function() {
+		var url = $('textarea#url').val();
+		$.post('/encode', { url: url },
+		    function(data){
+			$('#output-url').html(data)
+			$('.answer').show()
+		}, 'text')
+	    });
+
+	})
+    </script>
+    <style>
+	div.container {
+	    width: 750px;
+	}
+	.answer {
+	    display: none;
+	}
+	.highlight {
+	    background: #ff7;
+	    padding: 12px;
+	}
+	.red {
+	    background-color: red;
+	    color: white;
+	    font-weight: bold;
+	    width: 100%;
+	}
+    </style>
+</head><body>
+
+<div class="red">
+<noscript>
+    This site requires Javascript.
+</noscript>
+</div>
+
+<div class="container">
+
+    <h1>Punycode Converter</h1>
+
+    <p><a href="http://www.rfc-editor.org/rfc/rfc3492.txt">Punycode</a> is a
+    simple ASCII compatible encoding designed for the use
+    of <a href="http://www.ietf.org/rfc/rfc3490.txt">
+    Internationalized Domain Names in Applications (IDNA)</a>. It allows the
+    reversible transformation of a Unicode string to a string of characters
+    (letters, digits, and hyphens), used in hostnames, and back again.</p>
+
+    <h2>Encode your International Domain Name (IDN)</h2>
+
+    <form>
+	Enter a domain name or URL to convert to punycode.  To convert multiple URLs, add one per line.
+	<br />
+	<br />
+	<textarea id="url" cols="60" row="20"></textarea>
+	<br />
+	<input type="button" id="encode" value="encode" />
+	<br />
+    </form>
+
+    <div class="answer">
+	<br />
+	Result:
+	<br />
+	<p class="highlight" id="output-url"> </p>
+    </div>
+
+    <div>
+	<br />
+	Examples:<br />
+	<table>
+	    <tr><td>
+		bücher.com
+	    </td><td>
+		xn--bcher-kva.com
+	    </td></tr>
+	    <tr><td>
+		日本語.日本
+	    </td><td>
+		xn--wgv71a119e.xn--wgv71a
+	    </td></tr>
+	    <tr><td>
+		http://日本語.jp/サ?a=ト
+	    </td><td>
+		http://xn--wgv71a119e.jp/%E3%82%B5?a=%E3%83%88
+	    </td></tr>
+	</table>
+    </div>
+
+</div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-12408725-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body></html>
