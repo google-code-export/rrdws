@@ -13,14 +13,19 @@
 	<packaging>war</packaging>
 
 	<dependencies>
-		<dependency>
-			<groupId>com.google.appengine</groupId>
-			<artifactId>jsr107cache</artifactId>
-			<version>${gae.version}</version>
-		</dependency>
+	<dependency>
+		<groupId>gnu.inet.encoding</groupId>
+		<artifactId>libidn</artifactId> 
+		<version>1.19</version>
+	</dependency>
+	<dependency>
+		<groupId>com.google.appengine</groupId>
+		<artifactId>jsr107cache</artifactId>
+		<version>${gae.version}</version>
+	</dependency>
 
 
-		<dependency>
+	<dependency>
 			<groupId>net.sf.jsr107cache</groupId>
 			<artifactId>jsr107cache</artifactId>
 			<version>1.0</version>
@@ -493,6 +498,18 @@ batik-xml-1.6.jar
 				</configuration>
 			</plugin>
 		</plugins>
+		
+	<!-- Build Settings -->
+ 
+		<extensions>
+			<!-- FIX 4 "Cannot find wagon which supports the requested protocol: svn" -->
+			<extension>
+				<groupId>org.jvnet</groupId>
+				<artifactId>wagon-svn</artifactId>
+				<version>1.8</version>
+			</extension> 
+		</extensions> 		
+		
 	</build><!-- Specify hard-coded project properties here -->
 
 	
@@ -609,7 +626,14 @@ batik-xml-1.6.jar
 			<url>
 				http://maven-gae-plugin.googlecode.com/svn/repository
 			</url>
-		</repository>
+		</repository> 
+		<!-- wagon-svn id located here -->
+		<repository>
+			<id>ZKgoogle</id>
+			<name>zkossAtGoogleCode</name>
+			<url>http://zkoss.googlecode.com/svn/release-repository/</url>
+			<layout>default</layout>
+		</repository> 	
 	</repositories>
 
 	<pluginRepositories>
