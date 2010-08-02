@@ -17,15 +17,21 @@
 		<groupId>gnu.inet.encoding</groupId>
 		<artifactId>libidn</artifactId> 
 		<version>1.19</version>
-	</dependency>
+	</dependency>	
 	<dependency>
-		<groupId>com.google.appengine</groupId>
-		<artifactId>jsr107cache</artifactId>
-		<version>${gae.version}</version>
-	</dependency>
+    <groupId>rhino</groupId>
+    <artifactId>js</artifactId>
+    <version>1.7R2</version>
+</dependency>
+	
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>jsr107cache</artifactId>
+			<version>${gae.version}</version>
+		</dependency>
 
 
-	<dependency>
+		<dependency>
 			<groupId>net.sf.jsr107cache</groupId>
 			<artifactId>jsr107cache</artifactId>
 			<version>1.0</version>
@@ -626,7 +632,7 @@ batik-xml-1.6.jar
 			<url>
 				http://maven-gae-plugin.googlecode.com/svn/repository
 			</url>
-		</repository> 
+		</repository>
 		<!-- wagon-svn id located here -->
 		<repository>
 			<id>ZKgoogle</id>
