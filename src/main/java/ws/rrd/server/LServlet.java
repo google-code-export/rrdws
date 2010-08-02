@@ -73,7 +73,7 @@ public class LServlet extends HttpServlet {
 		    handler.createFullNormalLink(node,  swapServletUrl2,  home);
 		    List<String> list  = handler.scanSiteLink(node);
 		    for(String ele : list)
-		      System.out.println(ele);
+		    	if (TRACE) System.out.println(ele);
 		  }
 		  
 	  private static void testCreateScriptLink(HTMLNode node, String swapServletUrl2, URL home){
@@ -90,7 +90,7 @@ public class LServlet extends HttpServlet {
 		    if (TRACE){
 			    List<String> list  = handler.scanSiteLink(node);
 			    for(String ele : list)
-			      System.out.println(ele);
+			    	if (TRACE) System.out.println(ele);
 		    }
 		  }	  
  
@@ -130,12 +130,16 @@ public class LServlet extends HttpServlet {
 			
 			// normalize non-protocol-ADDRESS
 			urlStr = (""+urlStr ).startsWith("http")? urlStr:"http://"+urlStr;			
-			System.out.println(_U_R_L_ + " := "+ urlStr);
+			if (TRACE) System.out.println(_U_R_L_ + " := "+ urlStr);
 			targetUrl = new StringBuilder(urlStr);
 
 			if ((targetUrl.length() > 0) && (req.getQueryString() != null)
 					&& (req.getQueryString().length() > 1)) {
-				targetUrl.append(String.format("?%s", req.getQueryString()));
+				if (targetUrl.toString().endsWith("?"))
+					targetUrl.append(String.format("%s", req.getQueryString()));
+				else
+					targetUrl.append(String.format("?%s", req.getQueryString()));
+				
 				urlStr = targetUrl.toString();
 			}
 			
@@ -168,7 +172,7 @@ public class LServlet extends HttpServlet {
 					
 					contextEncStr = contextTypeStr.substring(encPos+CHARSET_PREFIX.length());
 					contextEncStr = contextEncStr .toUpperCase();
-					log.warning(contextEncStr + "  }} ENC :=  {  "+contextTypeStr+" } ::: enc ::: "+contextEncStr +"["+urlStr+"]");
+					if (TRACE) log.warning(contextEncStr + "  }} ENC :=  {  "+contextTypeStr+" } ::: enc ::: "+contextEncStr +"["+urlStr+"]");
 
 				}else{
 					
@@ -176,11 +180,11 @@ public class LServlet extends HttpServlet {
 					try{
 						contextEncStr =  contextEncHeaders[0].getValue();
 					}catch(Throwable e){}
-					log.warning("Content-Encoding[0]::=={"+ contextEncStr + "  }" );
+					if (TRACE) log.warning("Content-Encoding[0]::=={"+ contextEncStr + "  }" );
 					 
 				}
 			}else{
-				log.warning("nonull::::"+ contextEncStr + " ::::: "+ contextTypeStr );
+				if (TRACE) log.warning("nonull::::"+ contextEncStr + " ::::: "+ contextTypeStr );
 			}
 			
 			if ( isCSS(contextTypeStr)  )
@@ -197,8 +201,8 @@ public class LServlet extends HttpServlet {
 			}	else{
 			 
 				String xEncTmp = getXEnc(xRespTmp); 
-				log.warning("x---HTML---x  contextTypeStr/contextEncStr:"+contextTypeStr+" : :  enc : : "+contextEncStr +"["+urlStr+"]   XXX::"+xEncTmp);
-				System.out.println("=====!!!======"+contextTypeStr +"::::"+contextEncStr);
+				if (TRACE) log.warning("x---HTML---x  contextTypeStr/contextEncStr:"+contextTypeStr+" : :  enc : : "+contextEncStr +"["+urlStr+"]   XXX::"+xEncTmp);
+				if (TRACE) System.out.println("=====!!!======"+contextTypeStr +"::::"+contextEncStr);
 			}
 			 
 			ByteArrayOutputStream oaos = new ByteArrayOutputStream();
@@ -237,7 +241,7 @@ public class LServlet extends HttpServlet {
 			try{
 				documentTmp = parser2.createDocument(dataBuf, contextEncStr );// "utf-8"
 			}catch(Exception e){
-				log.warning("createDocument EXCEPTION!" +e.getMessage()+" contextTypeStr||contextEncStr:["+contextTypeStr+"||"+contextEncStr+"]  URL =:["+urlStr+"]");
+				if (TRACE) log.warning("createDocument EXCEPTION!" +e.getMessage()+" contextTypeStr||contextEncStr:["+contextTypeStr+"||"+contextEncStr+"]  URL =:["+urlStr+"]");
 				documentTmp = parser2.createDocument(dataBuf, null );// "utf-8"
 			}
 			 
@@ -297,8 +301,8 @@ public class LServlet extends HttpServlet {
 			//outTmp.write(string2.getBytes(contextEncStr));
 			//outTmp.flush();
 		} catch (java.lang.NoClassDefFoundError e) {
-	    	System.out.println(contextTypeStr +" ===============  "+e.getMessage());e.printStackTrace();
-	    	System.out.println(documentTmp);
+			if (TRACE) System.out.println(contextTypeStr +" ===============  "+e.getMessage());e.printStackTrace();
+			if (TRACE) System.out.println(documentTmp);
 		} catch (Exception e) {
 			
 			
@@ -333,7 +337,7 @@ public class LServlet extends HttpServlet {
 			String contextTypeStr, String urlStr, HttpResponse xRespTmp,
 			HttpEntity entity, String contextEncStr) throws IOException {
 		ServletOutputStream outTmp;
-		log.warning("CSS contextTypeStr / contextEncStr:{"+contextTypeStr+" / "+contextEncStr +"}, url== ["+urlStr+"]");
+		if (TRACE) log.warning("CSS contextTypeStr / contextEncStr:{"+contextTypeStr+" / "+contextEncStr +"}, url== ["+urlStr+"]");
 		ByteArrayOutputStream oaos = new ByteArrayOutputStream();
 		entity.writeTo(oaos) ;
 		if (isGZip(xRespTmp)){
@@ -379,7 +383,7 @@ public class LServlet extends HttpServlet {
 			String contextTypeStr, String urlStr, HttpEntity entity,
 			String contextEncStr) throws IOException {
 		ServletOutputStream outTmp;
-		log.warning("JS contextTypeStr||contextEncStr:["+contextTypeStr+"||"+contextEncStr+"]  URL =:["+urlStr+"]");
+		if (TRACE) log.warning("JS contextTypeStr||contextEncStr:["+contextTypeStr+"||"+contextEncStr+"]  URL =:["+urlStr+"]");
 		
 		ScriptStore ssTmp = ScriptStore.getInstanse();
 		ScriptItem scriptTmp = ssTmp.getByURL( urlStr);
@@ -613,7 +617,7 @@ public class LServlet extends HttpServlet {
                     		newCookie.setMaxAge( 1111);
                     	}
                         resp.addCookie(newCookie);
-                        System.out.println("NEW COOKIE {"+
+                        if (TRACE) System.out.println("NEW COOKIE {"+
                         		newCookie.getName()+ "::"+
                         		newCookie.getValue()+ "::"+
                         		newCookie.getVersion()+ "::"+
