@@ -107,7 +107,7 @@ public class LServlet extends HttpServlet {
 		String urlStr = null;
 		try {
 			StringBuffer requestURL = req.getRequestURL();
-			String rurlTmp = ""+req.getRequestURL(); 
+			String rurlTmp = ""+req.getRequestURL()+""; 
 			SwapServletUrl  = rurlTmp.substring(0, rurlTmp.indexOf(req.getServletPath()+"/") )+req.getServletPath()+"/";
 			String decodedUrl = requestURL.substring( SwapServletUrl.length());
 			
@@ -130,7 +130,7 @@ public class LServlet extends HttpServlet {
 			
 			// normalize non-protocol-ADDRESS
 			urlStr = (""+urlStr ).startsWith("http")? urlStr:"http://"+urlStr;			
-			System.out.println(_U_R_L_ + ":="+ urlStr);
+			System.out.println(_U_R_L_ + " := "+ urlStr);
 			targetUrl = new StringBuilder(urlStr);
 
 			if ((targetUrl.length() > 0) && (req.getQueryString() != null)
@@ -147,7 +147,7 @@ public class LServlet extends HttpServlet {
 				 urlStr = refURL.getProtocol() + "://"+refURL.getHost() + "/"+(urlStr.startsWith("/")?"":refURL.getPath()+"/../")+urlStr;
 				}catch(Throwable e){}
 			}
-			urlStr  = urlStr.replace(" ", "%20");
+			urlStr  = urlStr.replace(" ", "%20").replace("\t", "%090");
 			// http://it-ru.de/forum/viewtopic.php?t=182374&amp;postdays=0&amp;postorder=asc&amp;start=15
 			urlStr  = urlStr.replace("&amp;", "&");
 			final UrlFetchTest urlFetchTest = new UrlFetchTest();

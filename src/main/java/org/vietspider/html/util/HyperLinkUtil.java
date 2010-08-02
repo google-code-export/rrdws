@@ -325,8 +325,11 @@ private static String prepareLinkValue(URL home, String value) {
 		String urlStr = decodedUrl;
 		char[] charArray = decodedUrl.toCharArray();
 		try{
-			urlStr = new String(Base64Coder.decode(charArray));
-		}catch(Throwable e){}
+			final byte[] decodedTmp = Base64Coder.decode(charArray);
+			urlStr = ""+ new String(decodedTmp);
+		}catch(Throwable e){
+			e.printStackTrace();
+		}
 		return urlStr;
 	}
   
