@@ -116,7 +116,7 @@ public class HyperLinkUtil {
 				  scriptAttributeFullMap.put(nextTag, events);
 				  events.add(nextEvent);
 			  }
-		  System.out.println(scriptAttributeFullMap);
+		  if(LServlet.TRACE)System.out.println(scriptAttributeFullMap);
   }
   
  
@@ -326,9 +326,17 @@ private static String prepareLinkValue(URL home, String value) {
 		char[] charArray = decodedUrl.toCharArray();
 		try{
 			final byte[] decodedTmp = Base64Coder.decode(charArray);
-			urlStr = ""+ new String(decodedTmp);
+			urlStr = ""+ new String(decodedTmp)+"";
 		}catch(Throwable e){
-			e.printStackTrace();
+			try{
+				// aHR0cDovL2l0LXJ1LmRlL2ZvcnVtL3ZpZXdmb3J1bS5waHA/viewforum.php
+				final int indexOfSLASH = decodedUrl.indexOf("/");
+				charArray = decodedUrl.substring(0, indexOfSLASH +1 ).toCharArray();
+				final byte[] decodedTmp = Base64Coder.decode(charArray);
+				urlStr = ""+ new String(decodedTmp);//+decodedUrl.substring(indexOfSLASH+1);
+			}catch (Throwable e1 ){ 
+				e1.printStackTrace();
+			}
 		}
 		return urlStr;
 	}
@@ -348,7 +356,7 @@ private static String prepareLinkValue(URL home, String value) {
         Attributes attrs = node.getAttributes();  
 		Attribute attr = attrs.get(attrName);		
 		String value = attr.getValue();
-        System.out.println("NEW VAL for "+nodeName+".."+attrName+" : ["+value+"]=>"+newValue);
+		if(LServlet.TRACE)System.out.println("NEW VAL for "+nodeName+".."+attrName+" : ["+value+"]=>"+newValue);
         attr.setValue( newValue);       
         attrs.set(attr);
 	}    
@@ -368,7 +376,7 @@ private static String prepareLinkValue(URL home, String value) {
 		Attribute attr = attrs.get(attrName);		
 		String value = attr.getValue();
 		 
-        System.out.println("NEW VAL for "+nodeName+".."+attrName+" : ["+value+"]=>"+newValue);
+		if(LServlet.TRACE)System.out.println("NEW VAL for "+nodeName+".."+attrName+" : ["+value+"]=>"+newValue);
         attr.setValue( newValue);       
         attrs.set(attr);
 	}     
@@ -442,9 +450,9 @@ private static String prepareLinkValue(URL home, String value) {
 				String newLink = cacheKey;
 				newValue = newLink;
 				//node.setValue(  newLink.toCharArray() ); 
-				System.out.println("NEW VAL for SCRIPT   : ["+value+"]=>"+newValue);
+				if(LServlet.TRACE)System.out.println("NEW VAL for SCRIPT   : ["+value+"]=>"+newValue);
 			}else{
-				System.out.println(" no changes for "+node.getName());
+				if(LServlet.TRACE)System.out.println(" no changes for "+node.getName());
 			}
 	        
 	        
@@ -465,7 +473,7 @@ private static String prepareLinkValue(URL home, String value) {
 	        Attributes attrs = node.getAttributes();  
 			Attribute attr = attrs.get(attrName);		
 			String value = attr.getValue();
-	        System.out.println("NEW VAL for "+nodeName+".."+attrName+" : ["+value+"]=>"+newValue + " := "+nodeName+"["+attrName+"]");
+			if(LServlet.TRACE)System.out.println("NEW VAL for "+nodeName+".."+attrName+" : ["+value+"]=>"+newValue + " := "+nodeName+"["+attrName+"]");
 	        attr.setValue(  newValue);       
 	        attrs.set(attr);
 		}
@@ -488,7 +496,7 @@ private static String prepareLinkValue(URL home, String value) {
 			Attributes attrs = node.getAttributes();
 			Attribute attr = attrs.get(attrName);
 			String value = attr.getValue();
-			System.out.println("NEW VAL for " + nodeName + ".." + attrName
+			if(LServlet.TRACE)System.out.println("NEW VAL for " + nodeName + ".." + attrName
 					+ " : [" + value + "]=>" + newValue);
 			attr.setValue(newValue);
 			attrs.set(attr);

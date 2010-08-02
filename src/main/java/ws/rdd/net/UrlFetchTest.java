@@ -1,17 +1,11 @@
 package ws.rdd.net;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.InputStream; 
 import java.util.Map;
- 
-import org.apache.commons.httpclient.auth.AuthPolicy;
-import org.apache.commons.httpclient.methods.GetMethod;
+  
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.HttpResponse; 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
