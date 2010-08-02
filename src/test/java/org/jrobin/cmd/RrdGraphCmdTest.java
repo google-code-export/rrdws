@@ -18,7 +18,7 @@ import org.jrobin.graph.RrdGraphDef;
 
 public class RrdGraphCmdTest extends TestCase{
 
-	private static final String TEST_RRD = "test.rrd";
+	private static final String TEST_RRD = "target/test.rrd";
 
 	/*
 	 * e:\Distr\rrd4j-2.0.5\lib\speed.gif
@@ -115,7 +115,7 @@ $ rrdtool fetch test.rrd AVERAGE --start 920804400 --end 920809200
 		RrdGraphDef graphDef = new RrdGraphDef();
 		graphDef.setStartTime(920804400L);
 		graphDef.setEndTime(920808000L);
-		graphDef.setFilename("./all1.gif");
+		graphDef.setFilename("./target/all1.gif");
 		graphDef.setWidth(400);
 		graphDef.setHeight(200);
 		 
