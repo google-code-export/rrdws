@@ -499,7 +499,7 @@ public class LServlet extends HttpServlet {
 				 
 				 //InputStream inStream  = this.getClass().getClassLoader().getResourceAsStream("java2http.properties");
 				//props.load(inStream  );
-				 retval  = ""+Charset.availableCharsets().get("windows-1251").displayName() ;
+				 retval  = ""+Charset.availableCharsets().get(retval).displayName() ;
 			 }catch (Exception e2) {
 				// TODO: handle exception
 			}
