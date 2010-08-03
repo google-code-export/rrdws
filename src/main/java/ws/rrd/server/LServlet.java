@@ -5,14 +5,17 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream; 
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.HttpURLConnection; 
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List; 
 import java.util.Map;
+import java.util.Properties;
 import java.util.logging.Logger;
 import java.util.zip.GZIPInputStream;
  
@@ -180,7 +183,7 @@ public class LServlet extends HttpServlet {
 					try{
 						contextEncStr =  contextEncHeaders[0].getValue();
 					}catch(Throwable e){}
-					if (TRACE) log.warning("Content-Encoding[0]::=={"+ contextEncStr + "  }" );
+					if (TRACE) log.warning("Content-Encoding[0]::== {"+ contextEncStr + "  }" );
 					 
 				}
 			}else{
@@ -222,7 +225,7 @@ public class LServlet extends HttpServlet {
 				data = oaos.toString(contextEncStr);//xCSS.toUpperCase().substring( 12430)
 			} //data.substring( data.indexOf("&lt;") -100, data.indexOf("&lt;") +20);
 			 
-			if (data.toLowerCase().indexOf("content=\"text/html")>0)try{
+			if ("null".equals(  ""+contextEncStr ) &&  data.toLowerCase().indexOf("content=\"text/html")>0)try{
 				String contextText = "charset=";
 				int lenTmp = contextText.length();
 				int posTmp = data.toLowerCase().indexOf(contextText);
@@ -232,10 +235,11 @@ public class LServlet extends HttpServlet {
 				contextEncStr = contextEncStr.toUpperCase();
 				data = oaos.toString(contextEncStr);
 			}catch(Throwable e){}
-			if ("null".equals(""+contextEncStr)){
-				dataBuf = data.trim().getBytes();// "ISO-8859-1"
- 			} else {
+			try{
 				dataBuf = data.trim().getBytes(contextEncStr);// "utf-8"
+ 			} catch(Exception e) {
+ 				contextEncStr = null;
+ 				dataBuf = data.trim().getBytes();// "ISO-8859-1"
 			}
 			HTMLParser2 parser2 = new HTMLParser2();
 			try{
@@ -485,7 +489,20 @@ public class LServlet extends HttpServlet {
 		 try{
 			 retval = respTmp.getHeaders("Content-Encoding")[0].getValue();
 		 }catch (Exception e) {
-			// TODO: handle exception
+			 try{
+				 retval = respTmp.getHeaders("Content-Type")[0].getValue();
+				 // for ex. [Content-Type: text/html; charset=windows-1251]
+				 int beginIndex =  retval.toLowerCase().indexOf("charset=")+"charset=".length();
+				 retval = retval.substring(beginIndex).toUpperCase();
+				 Properties props = new Properties();
+				 String strEncodings = "";
+				 
+				 //InputStream inStream  = this.getClass().getClassLoader().getResourceAsStream("java2http.properties");
+				//props.load(inStream  );
+				 retval  = ""+Charset.availableCharsets().get("windows-1251").displayName() ;
+			 }catch (Exception e2) {
+				// TODO: handle exception
+			}
 		}
 		 return retval;
 	}
