@@ -219,10 +219,10 @@ public class LServlet extends HttpServlet {
 				contextEncStr  = charSetHeader.substring(beginIndex , endIndex);//"ISO-8859-1";
 			}
 			String data = null;
-			if ("null".equals(  ""+contextEncStr )){
-				data = oaos.toString();
-			}else{
+			try{
 				data = oaos.toString(contextEncStr);//xCSS.toUpperCase().substring( 12430)
+			}catch(Exception e){
+				data = oaos.toString();
 			} //data.substring( data.indexOf("&lt;") -100, data.indexOf("&lt;") +20);
 			 
 			if ("null".equals(  ""+contextEncStr ) &&  data.toLowerCase().indexOf("content=\"text/html")>0)try{
@@ -273,7 +273,7 @@ public class LServlet extends HttpServlet {
 	    	
 	    	try{ 
 	    		HTMLNode bodyTmp = documentTmp.getRoot().getChild(1);
-				String strTmp = "<body><div name=toolbar>"+ new String(getResourceAsBA("L.jspX") ) +"</div></body>";
+				String strTmp = "<body><div  name=toolbar>"+ new String(getResourceAsBA("L.jspX") ) +"</div></body>";
 				strTmp = strTmp.replace(
 						"B8b8B8Bbbb888B", 
 						calcBase() 
@@ -490,16 +490,11 @@ public class LServlet extends HttpServlet {
 			 retval = respTmp.getHeaders("Content-Encoding")[0].getValue();
 		 }catch (Exception e) {
 			 try{
-				 retval = respTmp.getHeaders("Content-Type")[0].getValue();
+				 String retvalTmp = respTmp.getHeaders("Content-Type")[0].getValue();
 				 // for ex. [Content-Type: text/html; charset=windows-1251]
-				 int beginIndex =  retval.toLowerCase().indexOf("charset=")+"charset=".length();
-				 retval = retval.substring(beginIndex).toUpperCase();
-				 Properties props = new Properties();
-				 String strEncodings = "";
-				 
-				 //InputStream inStream  = this.getClass().getClassLoader().getResourceAsStream("java2http.properties");
-				//props.load(inStream  );
-				 retval  = ""+Charset.availableCharsets().get(retval).displayName() ;
+				 int beginIndex =  retvalTmp.toLowerCase().indexOf("charset=")+"charset=".length();
+ 
+				 retval  = ""+Charset.availableCharsets().get(retvalTmp.substring(beginIndex).toUpperCase()).displayName() ;
 			 }catch (Exception e2) {
 				// TODO: handle exception
 			}
