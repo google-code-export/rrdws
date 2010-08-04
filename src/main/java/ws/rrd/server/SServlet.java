@@ -1,9 +1,21 @@
 package ws.rrd.server; 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException; 
+import java.io.InputStream;
+import java.io.PrintStream;
+
 import javax.servlet.ServletOutputStream; 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse; 
+
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.ContextFactory;
+import org.mozilla.javascript.Script;
+import org.mozilla.javascript.Scriptable;
+import org.mozilla.javascript.tools.shell.Main;
+
 import ws.rrd.mem.ScriptItem;
 import ws.rrd.mem.ScriptStore; 
 public class SServlet extends HttpServlet{ /* SCRIPT-mastering servlet*/
@@ -14,7 +26,21 @@ public class SServlet extends HttpServlet{ /* SCRIPT-mastering servlet*/
 		System.out.println("sendback "+uriTmp+" ...");
 		ScriptItem scriptTmp = ScriptStore.getInstanse().getByURL(uriTmp);
 		resp.setContentType("text/javascript");
-		String scriptValue = scriptTmp.getValue();
+		String scriptValue = "";
+		
+		if (!"yes".equals( req.getParameter("skip") )){
+   			final String scriptPath = this.getClass().getClassLoader(). getResource("beautifyALL.js").toExternalForm();
+			String[] args = new String[]{scriptPath, "-i", "1", uriTmp+ "?skip=yes"};
+			ByteArrayOutputStream baOut = new ByteArrayOutputStream();
+			PrintStream myOut = new PrintStream(baOut);
+			Main.setOut(myOut );
+			try{
+				Main.main(args );
+			}catch(java.security.AccessControlException e){}
+			scriptValue = new String(baOut.toByteArray());
+		}else{
+			scriptValue = scriptTmp.getValue();
+		}
 		String linesTmp[] = scriptValue.split("\n");
 		if (linesTmp[0].toLowerCase().trim().startsWith("<script"))
 		if (linesTmp[linesTmp.length-1].toLowerCase().trim().startsWith("</script")){
@@ -29,6 +55,16 @@ public class SServlet extends HttpServlet{ /* SCRIPT-mastering servlet*/
 		 
 		out.write(scriptValue.getBytes());
 	} 
+	
+
+	private String readRes(String namePar) throws IOException {
+		String scriptSource;
+		InputStream in = this.getClass().getResourceAsStream(namePar);
+		byte[] buf =  new byte[in.available()] ;
+		in.read(buf);
+		scriptSource = new String(buf);
+		return scriptSource;
+	}
 }
 
 
