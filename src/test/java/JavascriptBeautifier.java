@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 
 import junit.framework.TestCase;
 
@@ -22,8 +23,34 @@ import org.mozilla.javascript.tools.shell.Main;
  * Creation:  Jul 28, 2010::10:35:38 PM<br> 
  */
 public class JavascriptBeautifier extends TestCase{
+
 	
-	public void testCMD(){
+	
+	
+	public void testEXEC() throws IOException{
+		String scriptSource = readRes("beautifyALL.js");
+		scriptSource += "";
+//
+//		scriptSource += "//options = parse_opts('.','-i',' 1' );\n";
+//		scriptSource += "var oTmp = js_beautify('http://www.google-analytics.com/ga.js');\n";
+//		scriptSource += " print(js_beautify('http://www.google-analytics.com/ga.js'));";
+
+// 		String  scriptURL =  "http://www.google-analytics.com/ga.js";
+		ContextFactory cf = ContextFactory.getGlobal();
+		Context cx = cf.enterContext(); 		
+		Scriptable scope = cx.initStandardObjects();
+		Script script = Main.loadScriptFromSource(cx, scriptSource, null , 11110, null);
+		final String scriptPath = this.getClass().getResource("beautifyALL.js").toExternalForm();
+		String[] args = new String[]{scriptPath, "-i", "1", "http://rrdsaas.appspot.com/l/aHR0cDovL3d3dy5raW5vbWFuaWEucnUvbGliL2pxdWVyeS0xLjMuMi5taW4uanM="};
+		PrintStream myOut = System.err;
+		Main.setOut(myOut );
+		Main.main(args ); 		
+		//Object o = Main.evaluateScript(script, cx, scope);
+		//System.out.println(o); 
+	}
+	
+	/* its works locally only */
+	public void _testCMD(){
 		String path = this.getClass().getResource("").getPath();
 		path  = path.substring(0,path .length()-1);
 		System.setProperty("user.dir", path);
@@ -34,7 +61,7 @@ public class JavascriptBeautifier extends TestCase{
 		Main.main(args ); 
 	}
 	
-	public void test1(){
+	public void _test1(){
 		ContextFactory cf = ContextFactory.getGlobal();
 		Context cx = cf.enterContext(); 
 		String scriptSource = "var a= 1; a";
@@ -48,7 +75,7 @@ public class JavascriptBeautifier extends TestCase{
 		System.out.println(o);
 	}
 
-	public void testIS() throws IOException{
+	public void _testIS() throws IOException{
 		ContextFactory cf = ContextFactory.getGlobal();
 		Context cx = cf.enterContext(); 
 		
