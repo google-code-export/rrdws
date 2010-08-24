@@ -30,6 +30,8 @@ public abstract class HTMLNode implements Node<Name>, Serializable {
   
   protected Attributes attributes;
   
+  protected boolean isBeautify = false;
+  
   protected HTMLNode( Name name){
 //    this.value = value;
     this.name = name;

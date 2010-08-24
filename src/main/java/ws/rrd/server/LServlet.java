@@ -165,6 +165,11 @@ public class LServlet extends HttpServlet {
 			else{
 				xRespTmp = urlFetchTest.fetchResp(urlStr, headsToResend);
 			}
+			if (xRespTmp.getStatusLine().getStatusCode() == 401){
+				resp.setStatus(401);
+				resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
+				return;
+			}
 			HttpEntity entity = xRespTmp.getEntity();
 			contextTypeStr = ""+entity.getContentType();
 			String contextEncStr =  ""+entity.getContentEncoding() ;

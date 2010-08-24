@@ -136,36 +136,52 @@ public class NodeImpl extends HTMLNode {
     this.parent = parent;
   }
 
-  public StringBuilder buildValue(StringBuilder builder){
-//  if(value.length < 1) return builder;
-    if(builder.length() > 0) builder.append(SpecChar.n);
-    boolean isTag = name != Name.CONTENT 
-    && name != Name.COMMENT
-    && name != Name.CODE_CONTENT;
-    if(isTag) builder.append('<');
-    if(type == TypeToken.CLOSE) builder.append('/');
-    char[] startTmp = getValue();
-	builder.append(startTmp);
-    if(isTag) builder.append('>');
-    if(type == TypeToken.CLOSE || getConfig().hidden())  return builder;
+  public StringBuilder buildValue(StringBuilder builder) {
+		// if(value.length < 1) return builder;
+		if (isBeautify && builder.length() > 0) {
+			builder.append(SpecChar.n);
+		}
+		boolean isTag = name != Name.CONTENT && name != Name.COMMENT
+				&& name != Name.CODE_CONTENT;
+		if (isTag) {
+			builder.append('<');
+		}
+		if (type == TypeToken.CLOSE) {
+			builder.append('/');
+		}
+		char[] startTmp = getValue();
+		builder.append(startTmp);
+		if (isTag) {
+			builder.append('>');
+		}
+		if (type == TypeToken.CLOSE || getConfig().hidden()) {
+			return builder;
+		}
 
-    if(children == null ) return builder;
-    for(HTMLNode ele : children) {
-      ele.buildValue(builder);
-    }
-    if(getConfig().end() != Tag.FORBIDDEN){
-      Name endTmp = getName();
-      String strEndTmp = endTmp.toString();
-      // >8-0
-      if (new String(startTmp).startsWith( strEndTmp.toLowerCase())){
-    	  strEndTmp = strEndTmp.toLowerCase();
-      }else if (new String(startTmp).startsWith( strEndTmp.toUpperCase())){
-    	  strEndTmp = strEndTmp.toUpperCase();
-      }
-	builder.append(SpecChar.n).append('<').append('/').append(strEndTmp).append('>');
-    }
-    return builder;
-  }
+		if (children == null) {
+			return builder;
+		}
+		for (HTMLNode ele : children) {
+			ele.buildValue(builder);
+		}
+		if (getConfig().end() != Tag.FORBIDDEN) {
+			Name endTmp = getName();
+			String strEndTmp = endTmp.toString();
+			// >8-0
+			String sEndTmp = new String(startTmp);
+			if (sEndTmp.startsWith(strEndTmp.toLowerCase())) {
+				strEndTmp = strEndTmp.toLowerCase();
+			} else if (sEndTmp.startsWith(strEndTmp.toUpperCase())) {
+				strEndTmp = strEndTmp.toUpperCase();
+			}
+			if (isBeautify) {
+				builder.append(SpecChar.n);
+			}
+
+			builder.append('<').append('/').append(strEndTmp).append('>');
+		}
+		return builder;
+	}
 
   public void setValue(char [] chars) {
     if(chars.length < 500) {
