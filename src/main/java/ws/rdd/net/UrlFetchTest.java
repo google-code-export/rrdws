@@ -3,9 +3,16 @@ package ws.rdd.net;
 import java.io.IOException;
 import java.io.InputStream; 
 import java.util.Map;
+import java.util.Properties;
   
+import net.sf.jsr107cache.Cache;
+import net.sf.jsr107cache.CacheException;
+import net.sf.jsr107cache.CacheFactory;
+import net.sf.jsr107cache.CacheManager;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse; 
+import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -70,13 +77,48 @@ public class UrlFetchTest {
 		for (String []nextHeader :headers)
 			m.addHeader(nextHeader[0], nextHeader[1]);
 		HttpResponse respTmp = httpClient.execute(m);
-		if (respTmp.getStatusLine().toString().indexOf("200 OK")>0){
-			System.out.println("resp.:"+respTmp.getStatusLine());
-		}else{ 
-			m .addHeader("Authorization", "Basic " + new String(Base64Coder.encode(("iboserviceuser"+":"+"iboserviceuser").getBytes() )) );
-			respTmp = httpClient.execute(m);
+		StatusLine statusLine = respTmp.getStatusLine();
+		String statusTmp = statusLine.toString();
+		if (statusTmp.indexOf("200 OK")>0){
+			System.out.println("resp.:"+statusLine);
+		}else if ("HTTP/1.1 401 Unauthorized".equals( statusTmp )){ 
+			Cache cacheAuth = CacheManager.getInstance().getCache(this.getClass().getName()+":Authorization");
+			String basicAuth = (String) cacheAuth.get(toFetchStr);
+			if (basicAuth != null){// go forward with cached 
+				m .addHeader("Authorization", "Basic " +  basicAuth );
+				respTmp = httpClient.execute(m);
+			}else{ // request auth from real user...
+				respTmp.addHeader("WWW-Authenticate" , "Basic realm=\"Tomcat Manager Application\"");
+				respTmp.setStatusCode(401);
+				respTmp.setStatusLine( statusLine );
+			}
+			
 		}
 		return respTmp;
+	}
+	public static final String cacheName = UrlFetchTest.class.getName()+":Authorization";
+	
+	static{
+		CacheManager cmInstance = CacheManager.getInstance();
+		
+		Cache cacheAuth = cmInstance.getCache(cacheName);
+		if (cacheAuth == null){
+			Map env = new Properties();
+			CacheFactory cacheFactory;
+			try {
+				cacheFactory = cmInstance.getCacheFactory();
+				cacheAuth = cacheFactory.createCache(env );
+				cmInstance.registerCache(cacheName, cacheAuth);
+			} catch (CacheException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+		}
+		String valueTmp = new String(Base64Coder.encode(("iboserviceuser"+":"+"iboserviceuser").getBytes() )) ;
+		cacheAuth.put("https://pegasus.peras.fiducia.de/WebUrlaub27/Login.aspx", valueTmp);
+		
 	}
 
 	public HttpClient makeHTTPClient() {

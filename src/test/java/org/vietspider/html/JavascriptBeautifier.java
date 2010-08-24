@@ -1,4 +1,6 @@
+package org.vietspider.html;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,6 +14,8 @@ import org.mozilla.javascript.ContextFactory;
 import org.mozilla.javascript.Script;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.tools.shell.Main;
+
+import ws.rrd.server.LServlet;
 
 /** 
  * <b>Description:TODO</b>
@@ -28,7 +32,7 @@ public class JavascriptBeautifier extends TestCase{
 	
 	
 	public void testEXEC() throws IOException{
-		String scriptSource = readRes("beautifyALL.js");
+		String scriptSource = readRes("/beautifyALL.js");
 		scriptSource += "";
 //
 //		scriptSource += "//options = parse_opts('.','-i',' 1' );\n";
@@ -40,11 +44,13 @@ public class JavascriptBeautifier extends TestCase{
 		Context cx = cf.enterContext(); 		
 		Scriptable scope = cx.initStandardObjects();
 		Script script = Main.loadScriptFromSource(cx, scriptSource, null , 11110, null);
-		final String scriptPath = this.getClass().getResource("beautifyALL.js").toExternalForm();
-		String[] args = new String[]{scriptPath, "-i", "1", "http://rrdsaas.appspot.com/l/aHR0cDovL3d3dy5raW5vbWFuaWEucnUvbGliL2pxdWVyeS0xLjMuMi5taW4uanM="};
-		PrintStream myOut = System.err;
+		final String scriptPath = this.getClass().getResource("/beautifyALL.js").toExternalForm();
+		String[] args = new String[]{scriptPath, "-i", "1", "http://localhost:9090/zazki/jsupload/jsupload.nocache.js"};
+		ByteArrayOutputStream baOut = new ByteArrayOutputStream();
+		PrintStream myOut = new PrintStream(baOut,true);
 		Main.setOut(myOut );
-		Main.main(args ); 		
+		Main.main(args ); 	
+		System.out.println(baOut.toString());
 		//Object o = Main.evaluateScript(script, cx, scope);
 		//System.out.println(o); 
 	}
