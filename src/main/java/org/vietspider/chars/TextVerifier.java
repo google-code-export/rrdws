@@ -14,6 +14,11 @@ public abstract class TextVerifier implements ValueVerifier{
 	    if(node.isNode(nodeName) || (nodeName.length() == 1 && nodeName.charAt(0) == '*')) {
 	        Attributes attrs = node.getAttributes();  
 			Attribute attr = attrs.get(attrName);
+			if ("form".equals(nodeName) && attr == null) {
+				Attribute newAction = new Attribute("action","");
+				node.getAttributes().add(newAction );
+				return true;
+			}
 	        if(attr == null)  return false;
 	        String value = attr.getValue();
 	        if(value == null) return false;

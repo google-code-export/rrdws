@@ -23,11 +23,17 @@ import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.ContentBody;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.InputStreamBody;
 import org.apache.http.impl.client.DefaultHttpClient; 
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.message.BasicHttpResponse;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
+import org.apache.james.mime4j.message.Entity;
 import org.esxx.js.protocol.GAEConnectionManager;
 import org.jrobin.cmd.RrdCommander;
  
@@ -143,6 +149,9 @@ public class UrlFetchTest {
 	}
 
 	public HttpResponse fetchResp(String toFetchStr, String[][] headers, 	Map parameterMap) throws ClientProtocolException, IOException {
+		return fetchResp(toFetchStr,  headers,   parameterMap, null);
+	}
+	public HttpResponse fetchResp(String toFetchStr, String[][] headers, 	Map parameterMap,  java.util.List<ws.rrd.mem.MemoryFileItem> items) throws ClientProtocolException, IOException {
 		HttpClient httpClient = makeHTTPClient();
 		String schemes[] = {"https", "http", "ftp"};
 		for (String scheme : schemes) {
@@ -158,9 +167,21 @@ public class UrlFetchTest {
 		String fetchUrl = null == toFetchStr
 				? "http://www.fiducia.de/service/suchergebnis.html?searchTerm=java"
 				: toFetchStr;
-		HttpUriRequest m = new HttpPost(fetchUrl);
+		HttpPost m = new HttpPost(fetchUrl);
 		for (String []nextHeader :headers)
-			m.addHeader(nextHeader[0], nextHeader[1]);
+			m.addHeader(nextHeader[0], nextHeader[1]); 
+
+		if (items !=null){// Multipart
+			MultipartEntity entity = new MultipartEntity( HttpMultipartMode.BROWSER_COMPATIBLE );
+			for (final ws.rrd.mem.MemoryFileItem item: items){
+				final ContentBody contentBody =  new InputStreamBody (item.getInputStream(), item.getName());
+				String name = item.getName() ;
+				// For File parameters
+				entity.addPart(name , contentBody)  ;
+			}
+			m.setEntity( entity );
+			
+		}
 		for(Object nextParName:parameterMap.keySet()){
 			String valueTmp =  ""+(((String[])parameterMap.get(nextParName))[0]);
 			HttpParams arg0 = httpClient.getParams();
