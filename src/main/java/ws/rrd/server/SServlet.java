@@ -1,5 +1,4 @@
-package ws.rrd.server; 
-import java.io.ByteArrayInputStream;
+package ws.rrd.server;  
 import java.io.ByteArrayOutputStream;
 import java.io.IOException; 
 import java.io.InputStream;
@@ -9,11 +8,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse; 
-
-import org.mozilla.javascript.Context;
-import org.mozilla.javascript.ContextFactory;
-import org.mozilla.javascript.Script;
-import org.mozilla.javascript.Scriptable;
+ 
 import org.mozilla.javascript.tools.shell.Main;
 
 import ws.rrd.mem.ScriptItem;
@@ -27,16 +22,24 @@ public class SServlet extends HttpServlet{ /* SCRIPT-mastering servlet*/
 		ScriptItem scriptTmp = ScriptStore.getInstanse().getByURL(uriTmp);
 		resp.setContentType("text/javascript");
 		String scriptValue = "";
-		
+		ByteArrayOutputStream baOut = new ByteArrayOutputStream();
+		PrintStream myOut = new PrintStream(baOut);
 		if (!"yes".equals( req.getParameter("skip") )){
    			final String scriptPath = this.getClass().getClassLoader(). getResource("beautifyALL.js").toExternalForm();
 			String[] args = new String[]{scriptPath, "-i", "1", uriTmp+ "?skip=yes"};
-			ByteArrayOutputStream baOut = new ByteArrayOutputStream();
-			PrintStream myOut = new PrintStream(baOut);
+			
+			
 			Main.setOut(myOut );
+			Main.setErr( myOut );
+			
 			try{
 				Main.main(args );
-			}catch(java.security.AccessControlException e){}
+			}catch(java.security.AccessControlException e){				
+				e.printStackTrace(myOut);
+			}catch(java.lang.SecurityException e){
+				myOut.append("\n<br><pre><!-- //*"+e.getMessage()+":::"+uriTmp+"*// --></pre>\n");
+				e.printStackTrace(myOut);
+			}
 			scriptValue = new String(baOut.toByteArray());
 		}else{
 			scriptValue = scriptTmp.getValue();
