@@ -423,7 +423,7 @@ private static String prepareLinkValue(URL home, String value) {
 		private String  clearBody(HTMLNode node, final String scriptValue) {
 			node.clearChildren();// setChild(0, new
 			String retval= LServlet.calcBase()+"S/"+"l"+ scriptValue.hashCode() + ".js";
-			String stringTmp = "SCRIPT SRC=\""+retval +"\";";
+			String stringTmp = "SCRIPT SRC=\""+retval +"\"";
 			
 			// HTMLNode(){})getChildren().clear()setValue("/*
 			// 8-X */".toCharArray());
