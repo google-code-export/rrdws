@@ -165,11 +165,5 @@ $ rrdtool fetch test.rrd AVERAGE --start 920804400 --end 920809200
 				
 	}
 
-	@Override
-	protected void setUp() throws Exception {
-		String newDir = System.getProperty("user.dir")+"/target/tests.tmp.dir";
-		File dirFile = new File(newDir);
-		if (!dirFile.exists())dirFile .mkdirs();
-		System.setProperty("user.dir", newDir );
-	}
+	 
 }
