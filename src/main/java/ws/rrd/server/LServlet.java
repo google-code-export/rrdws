@@ -31,6 +31,8 @@ import org.vietspider.html.parser.HTMLParser2;
 import org.vietspider.html.util.HyperLinkUtil;
 
 import ws.rdd.net.UrlFetchTest; 
+import ws.rrd.mem.MemoryFileItem;
+import ws.rrd.mem.MemoryFileItemFactory;
 import ws.rrd.mem.ScriptItem;
 import ws.rrd.mem.ScriptStore;
 
@@ -159,8 +161,19 @@ public class LServlet extends HttpServlet {
 			urlStr  = urlStr.replace("&amp;", "&");
 			final UrlFetchTest urlFetchTest = new UrlFetchTest();
 			HttpResponse xRespTmp = null ;
+
 			if ("POST".equals( req.getMethod() ) && ! isRootReq(req) ){
-				xRespTmp = urlFetchTest.fetchResp(urlStr, headsToResend,	req.getParameterMap());
+				List<MemoryFileItem> items  = null;
+			    if(org.apache.commons.fileupload.servlet.ServletFileUpload.isMultipartContent(req)){
+		            
+		            ws.rrd.mem.MemoryFileItemFactory factory = MemoryFileItemFactory.getInstance();
+		            org.apache.commons.fileupload.servlet.ServletFileUpload upload = new org.apache.commons.fileupload.servlet.ServletFileUpload(factory);
+		            upload.setSizeMax(4*1024*1024); // 4 MB
+		  
+		            // Parse the request
+		            items = upload.parseRequest(req);
+			    }				
+				xRespTmp = urlFetchTest.fetchResp(urlStr, headsToResend,	req.getParameterMap(), items);
 			}				
 			else{
 				xRespTmp = urlFetchTest.fetchResp(urlStr, headsToResend);
