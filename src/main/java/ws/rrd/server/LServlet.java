@@ -276,7 +276,7 @@ public class LServlet extends HttpServlet {
 	    	
 	    	String textValue = null;
 	    	
-	    	try{ 
+	    	try{ // TODO see hg hi 
 	    		HTMLNode bodyTmp = documentTmp.getRoot().getChild(1);
 				String strTmp = "<body><div  name=toolbar>"+ new String(getResourceAsBA("L.jspX") ) +"</div></body>";
 				strTmp = strTmp.replace(
