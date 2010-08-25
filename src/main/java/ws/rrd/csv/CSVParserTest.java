@@ -1,5 +1,6 @@
 package ws.rrd.csv;
 
+import java.io.File;
 import java.io.IOException;
 
 import junit.framework.TestCase;
@@ -16,6 +17,7 @@ import junit.framework.TestCase;
  * Creation: 20.04.2010::11:59:24<br>
  */
 public class CSVParserTest extends TestCase{
+	
 
 	public CSVParserTest() {
 		System.setProperty("net.sf.jsr107cache.CacheFactory",
@@ -139,6 +141,14 @@ public class CSVParserTest extends TestCase{
 		Action a = new RrdUpdateAction();
 		Object o = p.perform(a);
 		System.err.println(("" + o).replace(", \\\\", ",\n \\\\"));
+	}
+
+	@Override
+	protected void setUp() throws Exception {
+		String newDir = System.getProperty("user.dir")+"/target/tests.tmp.dir";
+		File dirFile = new File(newDir);
+		if (!dirFile.exists())dirFile .mkdirs();
+		System.setProperty("user.dir", newDir );
 	}
 	
 }
