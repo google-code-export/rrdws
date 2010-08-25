@@ -311,9 +311,9 @@ public class LServlet extends HttpServlet {
 	    		textValue = documentTmp.getTextValue();//
 	    	}
 	    	//PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-	    	String string1 = "<HTML>\n<!-- contextEncStr="+contextEncStr+" -->\n";
+	    	String string1 = "<!DOCTYPE html><html>\n<!-- contextEncStr="+contextEncStr+" -->\n";
 	    	string1 += "";
-	    	String string2 = "</HTML>";
+	    	String string2 = "</html>";
 			//outTmp.write(string1.getBytes(contextEncStr));
 	    	if (!"null".equals(""+contextEncStr)){
 	    		outTmp.write((string1 + textValue + string2).getBytes(contextEncStr));//)
