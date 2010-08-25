@@ -16,6 +16,7 @@ import org.vietspider.common.io.DataReader;
 import org.vietspider.html.HTMLDocument;
 import org.vietspider.html.HTMLNode;
 import org.vietspider.html.util.HTMLParserDetector;
+import org.vietspider.token.TokenParser;
 import org.vietspider.token.TypeToken;
 /**
  * @author nhuthuan
@@ -49,9 +50,11 @@ public class HTMLParser2 {
     CharsToken tokens = new CharsToken();
     ParserService parserService = new ParserService();
     TokenCreator tokenCreator = new TokenCreator(parserService, tokens);
-    parserService.getTokenParser().createBeans(tokens, data, tokenCreator);
-    parserService.parse(tokens, tokens.getDocument());
-    return tokens.getDocument();
+    TokenParser tokenParser = parserService.getTokenParser();
+	tokenParser.createBeans(tokens, data, tokenCreator);
+    HTMLDocument documentTmp = tokens.getDocument();
+	parserService.parse(tokens, documentTmp);
+    return documentTmp;
   }
   
   public HTMLDocument createDocument(CharsToken tokens) throws Exception { 
@@ -70,7 +73,8 @@ public class HTMLParser2 {
   }
 
   public  HTMLDocument createDocument(String text) throws Exception { 
-    return createDocument(text.toCharArray());
+    char[] charArray = text.toCharArray();
+	return createDocument(charArray);
   }
 
   public HTMLDocument createDocument(byte[] data, String charset) throws Exception {

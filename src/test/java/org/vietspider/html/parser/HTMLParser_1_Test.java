@@ -1,15 +1,20 @@
 package org.vietspider.html.parser;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 
 import org.junit.Test;
 import org.vietspider.html.HTMLDocument;
 import org.vietspider.html.HTMLNode;
+
 
 /** 
  * <b>Description:TODO</b>
@@ -18,13 +23,23 @@ import org.vietspider.html.HTMLNode;
  * <b>Copyright:</b>     Copyright (c) 2006-2008 Monster AG <br>
  * <b>Company:</b>       Monster AG  <br>
  * 
- * Creation:  24.08.2010::13:08:04<br> 
+ * Creation:  25.08.2010::14:42:58<br> 
  */
-public class HTMLParser2Test {
-
-	private final static String HTML = "<html><head><title>this is title</title></head><body>test html</body></html>"; 
+public class HTMLParser_1_Test  {
+	private static String HTML  =""; 
 	private static HTMLDocument HDOC ;
 	static{
+		InputStream inRes = HTMLParser_1_Test.class.getClassLoader().getResourceAsStream("org/vietspider/html/parser/1.html");
+		InputStreamReader in  = new InputStreamReader (inRes);
+		BufferedReader readerTmp = new BufferedReader(in);
+		try {
+			for (String lineTmp =readerTmp .readLine(); null != lineTmp; lineTmp = readerTmp .readLine() ){
+				HTML += lineTmp ;
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 		try {
 			HTMLParser2 p2 =  new HTMLParser2();
 			HDOC = p2.createDocument(HTML);
@@ -32,7 +47,7 @@ public class HTMLParser2Test {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}	 
 	@Test
 	public void testCloneHTMLNode() throws Exception {  
 		HTMLNode docTmpClone = HTMLParser2.clone(HDOC.getRoot() );
@@ -43,7 +58,7 @@ public class HTMLParser2Test {
 	public void testCreateTokens() throws Exception {
 		HTMLParser2 p2 =  new HTMLParser2(); 
 		List<NodeImpl> toksTmp = p2.createTokens(HTML.toCharArray());
-		assertEquals("JUNIT4WORKAROUND"+toksTmp.size(),"JUNIT4WORKAROUND"+10);
+		assertEquals(""+toksTmp.size(),""+18);
 	}
 
 	@Test
@@ -75,7 +90,14 @@ public class HTMLParser2Test {
 		HTMLParser2 p2 =  new HTMLParser2();  
 		HTMLDocument docTmp = p2.createDocument(HTML);
 		String textValue = docTmp.getRoot().getTextValue();
-		assertEquals(HTML, textValue );
+		//System.out.println(textValue);
+		
+		
+		Object  expected = HTML.replace( "\n","").replace( " ","");
+		Object  actual = textValue.replace( "\n","").replace( " ","" )  ;
+		assertEquals((""+expected).substring(100).indexOf((""+actual).substring(100)) >=0, true);
+	 
+		
 	}
 
 	@Test

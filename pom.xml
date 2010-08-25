@@ -314,6 +314,22 @@ batik-xml-1.6.jar
 
 	<build>
 		<plugins>
+		
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+         
+        <configuration>
+          <systemProperties>
+            <property>
+              <name>user.dir</name>
+              <value>target</value>
+            </property>
+ 
+          </systemProperties>
+        </configuration>
+      </plugin>		
+		
 			<!--
 				This plug-in "enhances" your domain model objects (i.e.
 				makes them persistent for datanucleus)
