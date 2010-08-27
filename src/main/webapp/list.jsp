@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><meta http-equiv=Content-Type content="text/html;charset=utf-8">
-<%@page import="ws.rrd.csv.Registry"%>
-<%@page import="ws.rrd.mem.MemoryFileCache"%>
+<%@page import="ws.rrd.csv.Registry"%> 
 <%@page import="net.sf.jsr107cache.Cache"%>
+<%@page import="com.no10x.cache.Manager"%>
 <html><head><title>intro to JRRD...</title>
 <link rel="stylesheet" type="text/css" media="screen,print" href="//www.ibm.com/common/v14/table.css" /> 
 <link rel="stylesheet" type="text/css" href="//www.ibm.com/common/v14/main.css" />
@@ -13,7 +13,7 @@
 <%
 //list.jsp provide shor preview of all stored in REGISTY rrd.DBs
  
-Cache cache = MemoryFileCache.getCache();
+Cache cache = Manager.getCache();
 Registry reg = (Registry) cache.get("REGISTRY");
 if (null != reg)
 for (String key:reg.getPath2db().keySet() ){

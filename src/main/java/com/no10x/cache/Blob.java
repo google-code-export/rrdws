@@ -1,4 +1,4 @@
-package ws.rrd.mem;
+package com.no10x.cache;
 
 import java.io.Serializable;
 

@@ -138,7 +138,7 @@ public class NodeImpl extends HTMLNode {
 
   public StringBuilder buildValue(StringBuilder builder) {
 		// if(value.length < 1) return builder;
-		if (isBeautify && builder.length() > 0) {
+		if (isBeautify && builder.length() > 0) { 
 			builder.append(SpecChar.n);
 		}
 		boolean isTag = name != Name.CONTENT && name != Name.COMMENT
@@ -162,7 +162,17 @@ public class NodeImpl extends HTMLNode {
 			return builder;
 		}
 		for (HTMLNode ele : children) {
-			ele.buildValue(builder);
+			
+			if (isBeautify) {
+				StringBuilder tmpBuilder = new StringBuilder();  
+				ele.buildValue(tmpBuilder);
+				for (String nextLine:tmpBuilder.toString().split("\n")){
+					builder.append("\n   "+nextLine+"");
+				}
+			}else{
+				ele.buildValue(builder);
+			}
+			
 		}
 		if (getConfig().end() != Tag.FORBIDDEN) {
 			Name endTmp = getName();

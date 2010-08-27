@@ -1,7 +1,9 @@
-<%@page import="ws.rrd.mem.MemoryFileItem"%>
+<%@page import="com.no10x.cache.MemoryFileCache"%>
+<%@page import="com.no10x.cache.MemoryFileItem"%>
+ 
 <%@page import="java.io.OutputStream"%>
 <%@page import="org.apache.commons.fileupload.FileItem"%>
-<%@page import="ws.rrd.mem.MemoryFileCache"%><%
+ <%
 /**
 deliver stored by <b>push.jsp</b> data-File (!) via name: 
 <a>http://x.x.x.x/mem.jsp?name=test.svg</a>

@@ -30,9 +30,10 @@ import org.vietspider.html.HTMLNode;
 import org.vietspider.html.parser.HTMLParser2;
 import org.vietspider.html.util.HyperLinkUtil;
 
-import ws.rdd.net.UrlFetchTest; 
-import ws.rrd.mem.MemoryFileItem;
-import ws.rrd.mem.MemoryFileItemFactory;
+import com.no10x.cache.MemoryFileItem;
+import com.no10x.cache.MemoryFileItemFactory;
+
+import ws.rdd.net.UrlFetchTest;  
 import ws.rrd.mem.ScriptItem;
 import ws.rrd.mem.ScriptStore;
 
@@ -74,14 +75,14 @@ public class LServlet extends HttpServlet {
 	public static boolean TRACE = false;
  
 
-	  private static void testCreateFullLink(HTMLNode node, String swapServletUrl2, URL home){
+	  public static void testCreateFullLink(HTMLNode node, String swapServletUrl2, URL home){
 		    handler.createFullNormalLink(node,  swapServletUrl2,  home);
 		    List<String> list  = handler.scanSiteLink(node);
 		    for(String ele : list)
 		    	if (TRACE) System.out.println(ele);
 		  }
 		  
-	  private static void testCreateScriptLink(HTMLNode node, String swapServletUrl2, URL home){
+	  public static void testCreateScriptLink(HTMLNode node, String swapServletUrl2, URL home){
 		    handler.createScriptLink( node,  swapServletUrl2,  home);
 		    if (TRACE){
 		    	//List<String> list  = handler.scanScriptLink(node );
@@ -90,7 +91,7 @@ public class LServlet extends HttpServlet {
 		    }
 		  }
 		  
-	  private static void testCreateMetaLink(HTMLNode node, String swapServletUrl2, URL home){
+	  public static void testCreateMetaLink(HTMLNode node, String swapServletUrl2, URL home){
 		    handler.createMetaLink(node,  swapServletUrl2,  home);
 		    if (TRACE){
 			    List<String> list  = handler.scanSiteLink(node);
@@ -166,7 +167,7 @@ public class LServlet extends HttpServlet {
 				List<MemoryFileItem> items  = null;
 			    if(org.apache.commons.fileupload.servlet.ServletFileUpload.isMultipartContent(req)){
 		            
-		            ws.rrd.mem.MemoryFileItemFactory factory = MemoryFileItemFactory.getInstance();
+		            MemoryFileItemFactory factory = MemoryFileItemFactory.getInstance();
 		            org.apache.commons.fileupload.servlet.ServletFileUpload upload = new org.apache.commons.fileupload.servlet.ServletFileUpload(factory);
 		            upload.setSizeMax(4*1024*1024); // 4 MB
 		  
@@ -412,7 +413,7 @@ public class LServlet extends HttpServlet {
 		if (scriptTmp == null){
 			ByteArrayOutputStream oaos = new ByteArrayOutputStream();
 			entity.writeTo(oaos) ;				
-			String jsToWrap = oaos.toString();
+			String jsToWrap = oaos.toString("UTF-8");
 			// 						(new Element('li', { 'class': 'fav', 'html': ((empty && i==0) ? '' : ', ') 
 			//+ '<a href="hTTp://rrdsaas.appspot.com/F/h_t_t_p_://rrdsaas.appspot.com/l//HtTp/' + temp.user.login + '.' + temp.base_short + '/favorites/tag/' + tag + '">' + tag + '</a>'}
 			String FServletURL = SwapServletUrl.replace("/l/", "/F/");
@@ -426,8 +427,9 @@ public class LServlet extends HttpServlet {
 			 
 			scriptTmp = ssTmp.putOrCreate(urlStr, jsToWrap, urlStr);
 		} 
+		resp.setContentType("application/x-javascript; charset=utf-8");
 		outTmp = resp.getOutputStream();
-		outTmp.write(scriptTmp.getValue().getBytes()) ;
+		outTmp.write(scriptTmp.getValue().getBytes("UTF-8")) ;
 		outTmp.flush();
 		return outTmp;
 	}

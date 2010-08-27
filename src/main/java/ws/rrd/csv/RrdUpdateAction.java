@@ -9,11 +9,13 @@ import java.util.Date;
 import java.util.TreeMap;
 
 import net.sf.jsr107cache.Cache;
+import net.sf.jsr107cache.CacheManager;
 
 import org.jrobin.cmd.RrdCommander;
 import org.jrobin.core.RrdException;
 
-import ws.rrd.mem.MemoryFileCache;
+import com.no10x.cache.Manager;
+ 
 
 /** 
  * <b>Description:TODO</b>
@@ -97,7 +99,7 @@ public class RrdUpdateAction implements Action {
 		}
 
 	    private static volatile long last_clean = 0;
-	    private static Cache cache = MemoryFileCache.getCache();
+	    private static Cache cache = Manager.getCache();
 	    private static Registry reg = (Registry) cache.get("REGISTRY"); 
 	    static int flushCount=0;
 	    static int changeCount=0;

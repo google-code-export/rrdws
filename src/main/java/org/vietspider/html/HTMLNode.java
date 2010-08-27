@@ -30,7 +30,7 @@ public abstract class HTMLNode implements Node<Name>, Serializable {
   
   protected Attributes attributes;
   
-  protected boolean isBeautify = false;
+  protected static boolean isBeautify = false;
   
   protected HTMLNode( Name name){
 //    this.value = value;
@@ -119,5 +119,13 @@ public abstract class HTMLNode implements Node<Name>, Serializable {
   abstract public NodeIterator iterator();
   
   abstract public NodeIterator iterator(List<HTMLNode> ignores);
+
+public boolean isBeautify() { 
+		return isBeautify;
+}
+
+public void setBeautify(boolean isBeautify) {
+	HTMLNode.isBeautify = isBeautify;
+}
   
 }

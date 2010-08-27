@@ -1,5 +1,9 @@
 package ws.rrd.mem; 
+import java.util.Properties;
 import java.util.TreeMap;
+
+import com.no10x.cache.Manager;
+ 
 
 import net.sf.jsr107cache.Cache;
 import net.sf.jsr107cache.CacheException;
@@ -16,22 +20,12 @@ import net.sf.jsr107cache.CacheManager;
  * Creation:  26.07.2010::11:42:57<br> 
  */ 
 public class ScriptStore { 
-	
+	 
 	private static final String SCRIPTSTORE = "SCRIPTSTORE";
 	private static final ScriptStore me = new ScriptStore();
 	Cache  scriptStore  = null;
 	ScriptStore() {
-		CacheManager cm = CacheManager.getInstance();
-		CacheFactory cf;
-		try {
-			cf = cm.getCacheFactory();
-			scriptStore = cf.createCache(new TreeMap());
-			cm.registerCache(SCRIPTSTORE, scriptStore);
-		} catch (CacheException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		this.scriptStore = Manager.getCache(SCRIPTSTORE);		
 	}
   
 

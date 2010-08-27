@@ -1,6 +1,5 @@
 
-<%@page import="net.sf.jsr107cache.Cache"%>
-<%@page import="ws.rrd.mem.MemoryFileCache"%>
+<%@page import="net.sf.jsr107cache.Cache"%> 
 <%
 String newbanTmp = "";
 newbanTmp += request.getRequestURL();
@@ -13,7 +12,7 @@ newbanTmp += request.getSession(true).getId();
 newbanTmp += "\n";
 
 System.out.println(newbanTmp);
-Cache cache = MemoryFileCache.getCache();
+Cache cache = Manager.getCache();
 String  banlistTmp = ""+cache.get("--banlist--");
 if (banlistTmp.indexOf(newbanTmp) == -1){
 	banlistTmp += newbanTmp;
@@ -24,6 +23,8 @@ if (banlistTmp.indexOf(newbanTmp) == -1){
 }
 
 %>
+<%@page import="com.no10x.cache.MemoryFileCache"%>
+<%@page import="com.no10x.cache.Manager"%>
 <script language="javascript">
     function DoCheckLength(aTextBox) {
       if (aTextBox.value.length>13) {

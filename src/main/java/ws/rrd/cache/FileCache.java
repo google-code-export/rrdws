@@ -6,8 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
+import java.io.ObjectOutputStream; 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -33,17 +32,22 @@ import net.sf.jsr107cache.CacheStatistics;
  */
 public class FileCache implements Cache {
 
+	public static final String NAMESPACE = "namespace";
 	private File basedir ;
 
 	public FileCache(Map arg0) {
 		this.putAll(arg0);
 		String baseDirName = ".filecache";
-		basedir = new File(baseDirName);
-		if (!basedir.exists())
+		String namespace = toName (""+ arg0.get(NAMESPACE));
+		//System.getProperty("user.home");
+		basedir = new File(baseDirName+File.separator+namespace);
+		if (!basedir.exists()){
 			basedir.mkdir();
+			System.out.println("BASEDIR [" + basedir +"] creted.");
+		}
 	}
 
-	@Override
+	
 	public void addListener(CacheListener arg0) {
 		// TODO Auto-generated method stub
 		if (1 == 1)
@@ -52,7 +56,7 @@ public class FileCache implements Cache {
 		}
 	}
 
-	@Override
+	
 	public void clear() {
 		// TODO Auto-generated method stub
 		if (1 == 1)
@@ -61,12 +65,12 @@ public class FileCache implements Cache {
 		}
 	}
 
-	@Override
+	
 	public boolean containsKey(Object arg0) {
 		return new File(this.basedir, ""+arg0).exists();
 	}
 
-	@Override
+	
 	public boolean containsValue(Object arg0) {
 		// TODO Auto-generated method stub
 		if (1 == 1)
@@ -76,7 +80,7 @@ public class FileCache implements Cache {
 		}
 	}
 
-	@Override
+	
 	public Set entrySet() {
 		// TODO Auto-generated method stub
 		if (1 == 1)
@@ -86,7 +90,7 @@ public class FileCache implements Cache {
 		}
 	}
 
-	@Override
+	
 	public void evict() {
 		// TODO Auto-generated method stub
 		if (1 == 1)
@@ -95,7 +99,7 @@ public class FileCache implements Cache {
 		}
 	}
 
-	@Override
+	
 	public Object get(Object key) {
 		Object retval = null;
 		try {
@@ -123,7 +127,7 @@ public class FileCache implements Cache {
 
 	}
 
-	@Override
+	
 	public Map getAll(Collection arg0) throws CacheException {
 		// TODO Auto-generated method stub
 		if (1 == 1)
@@ -133,7 +137,7 @@ public class FileCache implements Cache {
 		}
 	}
 
-	@Override
+	
 	public CacheEntry getCacheEntry(Object arg0) {
 		// TODO Auto-generated method stub
 		if (1 == 1)
@@ -143,7 +147,7 @@ public class FileCache implements Cache {
 		}
 	}
 
-	@Override
+	
 	public CacheStatistics getCacheStatistics() {
 		// TODO Auto-generated method stub
 		if (1 == 1)
@@ -153,7 +157,7 @@ public class FileCache implements Cache {
 		}
 	}
 
-	@Override
+	
 	public boolean isEmpty() {
 		// TODO Auto-generated method stub
 		if (1 == 1)
@@ -163,14 +167,14 @@ public class FileCache implements Cache {
 		}
 	}
 
-	@Override
+	
 	public Set keySet() {
 		Set<String> retval = new HashSet<String> ();
 		retval .addAll( Arrays.asList( this.basedir .list() )) ;
 		return retval;
 	}
 
-	@Override
+	
 	public void load(Object arg0) throws CacheException {
 		// TODO Auto-generated method stub
 		if (1 == 1)
@@ -179,7 +183,7 @@ public class FileCache implements Cache {
 		}
 	}
 
-	@Override
+	
 	public void loadAll(Collection arg0) throws CacheException {
 		// TODO Auto-generated method stub
 		if (1 == 1)
@@ -188,7 +192,7 @@ public class FileCache implements Cache {
 		}
 	}
 
-	@Override
+	
 	public Object peek(Object arg0) {
 		// TODO Auto-generated method stub
 		if (1 == 1)
@@ -216,13 +220,16 @@ public class FileCache implements Cache {
 		return retval ;
 	}
 	
-	@Override
+	
 	public Object put(Object key, Object arg1) {
 		
 		FileOutputStream fout;
 		try {
 			
 			File fileTmp = createFile(key);
+			try{
+				new File(fileTmp.getParent().replace(".", File.separator)).mkdirs();
+			}catch(Exception e){e.printStackTrace();}
 			fout = new FileOutputStream(fileTmp );
 			ObjectOutputStream wr = new ObjectOutputStream(fout);
 			wr.writeObject(arg1);
@@ -246,7 +253,7 @@ public class FileCache implements Cache {
 		return retval;
 	}
 
-	@Override
+	
 	public void putAll(Map arg0) {
 		 for(Iterator  it = arg0.keySet().iterator();it.hasNext();){
 			 Object key = it.next();
@@ -255,7 +262,7 @@ public class FileCache implements Cache {
 		 }
 	}
 
-	@Override
+	
 	public Object remove(Object key) {
 		Object retval = get(key);
 		File fileTmp = createFile(key);
@@ -266,7 +273,7 @@ public class FileCache implements Cache {
 		return retval;
 	}
 
-	@Override
+	
 	public void removeListener(CacheListener arg0) {
 		// TODO Auto-generated method stub
 		if (1 == 1)
@@ -275,7 +282,7 @@ public class FileCache implements Cache {
 		}
 	}
 
-	@Override
+	
 	public int size() {
 		// TODO Auto-generated method stub
 		if (1 == 1)
@@ -285,7 +292,7 @@ public class FileCache implements Cache {
 		}
 	}
 
-	@Override
+	
 	public Collection values() {
 		// TODO Auto-generated method stub
 		if (1 == 1)

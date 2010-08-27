@@ -8,7 +8,7 @@ import java.util.Properties;
 import net.sf.jsr107cache.Cache;
 import net.sf.jsr107cache.CacheException;
 import net.sf.jsr107cache.CacheFactory;
-import net.sf.jsr107cache.CacheManager;
+ 
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse; 
@@ -36,6 +36,9 @@ import org.apache.http.params.HttpParams;
 import org.apache.james.mime4j.message.Entity;
 import org.esxx.js.protocol.GAEConnectionManager;
 import org.jrobin.cmd.RrdCommander;
+
+import com.no10x.cache.Manager;
+import com.no10x.cache.MemoryFileItem;
  
 
 /** 
@@ -88,7 +91,7 @@ public class UrlFetchTest {
 		if (statusTmp.indexOf("200 OK")>0){
 			System.out.println("resp.:"+statusLine);
 		}else if ("HTTP/1.1 401 Unauthorized".equals( statusTmp )){ 
-			Cache cacheAuth = CacheManager.getInstance().getCache(this.getClass().getName()+":Authorization");
+			Cache cacheAuth = Manager.getCache(CACHE_NAME);
 			String basicAuth = (String) cacheAuth.get(toFetchStr);
 			if (basicAuth != null){// go forward with cached 
 				m .addHeader("Authorization", "Basic " +  basicAuth );
@@ -102,30 +105,13 @@ public class UrlFetchTest {
 		}
 		return respTmp;
 	}
-	public static final String cacheName = UrlFetchTest.class.getName()+":Authorization";
+	public static final String CACHE_NAME = UrlFetchTest.class.getName()+":Authorization";
 	
-	static{
-		CacheManager cmInstance = CacheManager.getInstance();
-		
-		Cache cacheAuth = cmInstance.getCache(cacheName);
-		if (cacheAuth == null){
-			Map env = new Properties();
-			CacheFactory cacheFactory;
-			try {
-				cacheFactory = cmInstance.getCacheFactory();
-				cacheAuth = cacheFactory.createCache(env );
-				cmInstance.registerCache(cacheName, cacheAuth);
-			} catch (CacheException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			
-		}
+	static{  
+		Cache cacheAuth = Manager.getCache(CACHE_NAME); 
 		String valueTmp = new String(Base64Coder.encode(("iboserviceuser"+":"+"iboserviceuser").getBytes() )) ;
 		cacheAuth.put("https://pegasus.peras.fiducia.de/WebUrlaub27/Login.aspx", valueTmp);
-		
-	}
+	 }
 
 	public HttpClient makeHTTPClient() {
 		HttpParams httpParams = new BasicHttpParams();
@@ -151,7 +137,7 @@ public class UrlFetchTest {
 	public HttpResponse fetchResp(String toFetchStr, String[][] headers, 	Map parameterMap) throws ClientProtocolException, IOException {
 		return fetchResp(toFetchStr,  headers,   parameterMap, null);
 	}
-	public HttpResponse fetchResp(String toFetchStr, String[][] headers, 	Map parameterMap,  java.util.List<ws.rrd.mem.MemoryFileItem> items) throws ClientProtocolException, IOException {
+	public HttpResponse fetchResp(String toFetchStr, String[][] headers, 	Map parameterMap,  java.util.List<MemoryFileItem> items) throws ClientProtocolException, IOException {
 		HttpClient httpClient = makeHTTPClient();
 		String schemes[] = {"https", "http", "ftp"};
 		for (String scheme : schemes) {
@@ -173,7 +159,7 @@ public class UrlFetchTest {
 
 		if (items !=null){// Multipart
 			MultipartEntity entity = new MultipartEntity( HttpMultipartMode.BROWSER_COMPATIBLE );
-			for (final ws.rrd.mem.MemoryFileItem item: items){
+			for (final com.no10x.cache.MemoryFileItem item: items){
 				final ContentBody contentBody =  new InputStreamBody (item.getInputStream(), item.getName());
 				String name = item.getName() ;
 				// For File parameters

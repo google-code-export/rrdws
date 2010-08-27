@@ -1,4 +1,4 @@
-package ws.rrd.mem;
+package com.no10x.cache;
 /** 
  * <b>Description:TODO</b>
  * @author      v.i.p.<br>

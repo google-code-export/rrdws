@@ -26,10 +26,11 @@ import org.vietspider.html.HTMLNode;
  * Creation:  25.08.2010::14:42:58<br> 
  */
 public class HTMLParser_1_Test  {
+	private static final String TEST_HTML = "org/vietspider/html/parser/1.html";
 	private static String HTML  =""; 
 	private static HTMLDocument HDOC ;
 	static{
-		InputStream inRes = HTMLParser_1_Test.class.getClassLoader().getResourceAsStream("org/vietspider/html/parser/1.html");
+		InputStream inRes = HTMLParser_1_Test.class.getClassLoader().getResourceAsStream(TEST_HTML);
 		InputStreamReader in  = new InputStreamReader (inRes);
 		BufferedReader readerTmp = new BufferedReader(in);
 		try {

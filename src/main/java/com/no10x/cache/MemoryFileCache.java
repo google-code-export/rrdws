@@ -1,9 +1,11 @@
-package ws.rrd.mem;
+package com.no10x.cache;
 
 import java.io.IOException;
 import java.io.OutputStream; 
 import java.util.HashMap;
 import java.util.Properties;
+
+import ws.rrd.cache.FileCache;
  
 
 import net.sf.jsr107cache.Cache;
@@ -21,25 +23,9 @@ import net.sf.jsr107cache.CacheManager;
  * Creation:  14.04.2010::10:50:13<br> 
  */
 public class MemoryFileCache {
-	static{
-		 // try to load default cache conf
-		 if (System.getProperty("com.google.appengine.runtime.version")==null){
-			 //net.sf.jsr107cache.CacheFactory=ws.rrd.cache.BasicCacheFactory
-			 try{
-				 java.io.InputStream in = MemoryFileCache.class.getClassLoader().getResourceAsStream("jcache.properties");
-				 Properties prTmp = new Properties();
-				 prTmp.load(in);
-				 String key = "net.sf.jsr107cache.CacheFactory";
-				 String val = prTmp.getProperty(key);
-				 System.setProperty(key, val);
-			 }catch(Exception e){
-				 e.printStackTrace();
-			 } 
-		 }		
-	}
-                    
+             
 	 public static MemoryFileItem get (String name) throws IOException{
-		Cache cache = getCache();
+		Cache cache = Manager.getCache();
 		MemoryFileItem retval = (MemoryFileItem) cache.get(name);
 		 if (retval ==null){ // try to restore parts
 			  for (int i=0;cache.get(name+"::"+i)!=null;){
@@ -57,7 +43,7 @@ public class MemoryFileCache {
 	 static int MAX_SIZE = 64*1024;
 	 static int MAX_BUFF_SIZE = MAX_SIZE;
 	 public static String put (MemoryFileItem  item) throws IOException{
-		 Cache cache = getCache();
+		 Cache cache = Manager.getCache();
 		 String name = item.getName();
 		 byte[] bs = item.get();
 		 
@@ -83,27 +69,6 @@ public class MemoryFileCache {
 		 return name;
 	 }
 
-	public static Cache getCache()   { 
-		CacheManager cm = CacheManager.getInstance();
-		Cache retval = cm.getCache ("rrd");
-		if (retval == null)
-		synchronized (CacheManager.class) { 
-			if (retval == null)
-			try {
-				CacheFactory cacheFactory;
-				cacheFactory = cm.getCacheFactory();
-				HashMap props = new HashMap();
-				Cache cacheTmp;
-				cacheTmp = cacheFactory.createCache(props);
-				cm.registerCache("rrd", cacheTmp);
-				retval = cacheTmp;
-			} catch (CacheException e) { 
-				e.printStackTrace();
-				throw new RuntimeException(e);
-			}
-		} 
-		return  retval; 
-	}
 
 }
 
