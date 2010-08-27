@@ -32,8 +32,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
-import ws.rrd.mem.MemoryFileCache;
-import ws.rrd.mem.MemoryFileItem;
+import com.no10x.cache.MemoryFileCache;
+ 
 
 /**
  * <p>Main class used to create and manipulate round robin databases (RRDs). Use this class to perform
@@ -415,7 +415,7 @@ public class RrdDb implements RrdUpdater {
 		DataImporter reader;
 		if (externalPath.startsWith(PREFIX_MEM)) {
 			String nameTmp = externalPath.substring(PREFIX_MEM.length());
-			MemoryFileItem item = MemoryFileCache.get (nameTmp );
+			com.no10x.cache.MemoryFileItem item = MemoryFileCache.get (nameTmp );
 			InputStream in = item.getInputStream();
 			reader = new XmlReader(in);
 			

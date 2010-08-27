@@ -2,12 +2,12 @@
 <!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
 <!-- % response.setContentType("application/vnd.wap.xhtml+xml"); %> -->
 <%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%> 
-<%@page import="java.util.List"%> 
-<%@page import="ws.rrd.mem.MemoryFileCache"%>
-<%@page import="ws.rrd.mem.MemoryFileItemFactory"%>
-<%@page import="ws.rrd.mem.MemoryFileItem"%>
+<%@page import="java.util.List"%>  
 <%@page import="org.apache.commons.fileupload.FileUploadException"%>
 <%@page import="java.io.IOException"%> 
+<%@page import="com.no10x.cache.MemoryFileItemFactory"%>
+<%@page import="com.no10x.cache.MemoryFileItem"%>
+<%@page import="com.no10x.cache.MemoryFileCache"%>
 <html xmlns="http://www.w3.org/1999/xhtml"> <head> <title>RDD UPDATE PAGE</title> </head> 
 <%
 try{

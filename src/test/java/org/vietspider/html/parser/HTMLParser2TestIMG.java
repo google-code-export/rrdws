@@ -20,9 +20,9 @@ import org.vietspider.html.HTMLNode;
  * 
  * Creation:  24.08.2010::13:08:04<br> 
  */
-public class HTMLParser2Test {
+public class HTMLParser2TestIMG {
 
-	private final static String HTML = "<html><head><title>this is title</title></head><body>test html</body></html>"; 
+	private final static String HTML = "<html><head><title>this is title</title></head><body><img src=\"teste.jpg\">test html</body></html>"; 
 	private static HTMLDocument HDOC ;
 	static{
 		try {
@@ -43,7 +43,7 @@ public class HTMLParser2Test {
 	public void testCreateTokens() throws Exception {
 		HTMLParser2 p2 =  new HTMLParser2(); 
 		List<NodeImpl> toksTmp = p2.createTokens(HTML.toCharArray());
-		assertEquals("JUNIT4WORKAROUND"+toksTmp.size(),"JUNIT4WORKAROUND"+10);
+		assertEquals("JUNIT4WORKAROUND"+toksTmp.size(),"JUNIT4WORKAROUND"+11);
 	}
 
 	@Test
@@ -74,10 +74,8 @@ public class HTMLParser2Test {
 	public void testCreateDocumentString() throws Exception {
 		HTMLParser2 p2 =  new HTMLParser2();  
 		HTMLDocument docTmp = p2.createDocument(HTML);
-		HTMLNode root = docTmp.getRoot();
-		root.setBeautify(false);
-		String textValue = root.getTextValue();
-		assertEquals(HTML, textValue );
+		String textValue = docTmp.getRoot().getTextValue();
+		assertTrue(textValue, HTML.indexOf(  textValue ) >=0 );
 	}
 
 	@Test

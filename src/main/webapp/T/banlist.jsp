@@ -1,7 +1,7 @@
-<%@page import="net.sf.jsr107cache.Cache"%>
-<%@page import="ws.rrd.mem.MemoryFileCache"%>
+<%@page import="com.no10x.cache.Manager"%>
+<%@page import="net.sf.jsr107cache.Cache"%> 
 <%  
-Cache cache = MemoryFileCache.getCache();
+Cache cache = Manager.getCache();
 String  banlistTmp = ""+cache.get("--banlist--"); 
 %>  
 <!-- <%=banlistTmp%> --> 

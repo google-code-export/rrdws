@@ -1,6 +1,8 @@
 package org.vietspider.chars;
 
 import org.vietspider.html.HTMLNode;
+import org.vietspider.html.parser.NodeImpl;
+import org.vietspider.token.TypeToken;
 import org.vietspider.token.attribute.Attribute;
 import org.vietspider.token.attribute.Attributes;
 
@@ -14,7 +16,7 @@ public abstract class TextVerifier implements ValueVerifier{
 	    if(node.isNode(nodeName) || (nodeName.length() == 1 && nodeName.charAt(0) == '*')) {
 	        Attributes attrs = node.getAttributes();  
 			Attribute attr = attrs.get(attrName);
-			if ("form".equals(nodeName) && attr == null) {
+			if ("form".equals(nodeName) && attr == null && !(((NodeImpl)node).getType() == TypeToken.CLOSE) ) {
 				Attribute newAction = new Attribute("action","");
 				node.getAttributes().add(newAction );
 				return true;

@@ -1,9 +1,9 @@
 package ws.rrd.csv;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.text.SimpleDateFormat; 
 
-import ws.rrd.mem.MemoryFileCache;
+import com.no10x.cache.Manager;
 
 import net.sf.jsr107cache.Cache;
 
@@ -34,7 +34,8 @@ public class ToStringPrintlnAction implements Action {
 						System_out_println( xpath + "-->"  );  
 						String cmdCreateTmp = RrdUpdateAction.makeCreateCMD(timestampTmp, xpath) ;
 						System_out_println( cmdCreateTmp  );
-						reg = reg == null?(Registry) MemoryFileCache.getCache().get("REGISTRY"):reg;
+						Cache cacheTmp = Manager.getCache();
+						reg = reg == null?(Registry) cacheTmp.get("REGISTRY"):reg;
 					}
 					String  cmdUpdateTmp = RrdUpdateAction.makeUpdateCMD(data, timestampTmp, xpath) ; 
 					System_out_println( cmdUpdateTmp  );

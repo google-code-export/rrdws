@@ -49,7 +49,7 @@ public class JavascriptBeautifier extends TestCase{
 		ByteArrayOutputStream baOut = new ByteArrayOutputStream();
 		PrintStream myOut = new PrintStream(baOut,true);
 		Main.setOut(myOut );
-		Main.main(args ); 	
+		//Main.main(args ); 	
 		System.out.println(baOut.toString());
 		//Object o = Main.evaluateScript(script, cx, scope);
 		//System.out.println(o); 

@@ -7,16 +7,21 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.vietspider.chars.TextVerifier; 
 import org.vietspider.chars.ValueVerifier; 
+import org.vietspider.common.util.Queue;
+import org.vietspider.common.util.Stack;
 import org.vietspider.html.HTMLNode; 
+import org.vietspider.html.Name;
 import org.vietspider.html.NodeIterator;
+import org.vietspider.html.Tag;
 import org.vietspider.html.parser.NodeImpl; 
+import org.vietspider.token.TypeToken;
 import org.vietspider.token.attribute.Attribute;
 import org.vietspider.token.attribute.Attributes;
-
-import ws.rrd.mem.MemoryFileCache;
+ 
 import ws.rrd.mem.ScriptItem;
 import ws.rrd.mem.ScriptStore;
 import ws.rrd.server.Base64Coder;
@@ -105,7 +110,8 @@ public class HyperLinkUtil {
   		" onsubmit"/* (beim Absenden des Formulars) */  ,
   		" onunload"/* (beim Verlassen der Datei) */  ,
   		" javascript:"/* (bei Verweisen) */
-			};  
+			};
+private static final boolean TRACE = false;  
   // http://de.selfhtml.org/javascript/sprache/eventhandler.htm
   private static void initSA(){ 
 		  for(String nextTag:tagList)
@@ -194,17 +200,95 @@ public class HyperLinkUtil {
 				createMetaLink(n, mTmp, swapServletUrl2, home, metaLinkVerifier);
 		}
 	}
+  {
+//		if (typeTmp == TypeToken.CLOSE  ){
+//			level --;
+//			lastParent = lastParent .getParent();
+//			isClosed = true;
+//		}else if (lastParent == null || n.getParent() == lastParent ){
+//			if (!  (n.getConfig().end() == Tag.FORBIDDEN ) ){
+//				lastParent = n;
+//				level ++; 
+//			}
+//		}
+	  
+  }
+  int level = 0;
+  HTMLNode lastParent = null;
+  
 	private void createFullLink(HTMLNode node,
 			Map<String, String> map, String swapServletUrl2, URL home,
 			ValueVerifier verifier) {
 		if (node == null)
 			return;
 		NodeIterator iterator = node.iterator();
+		java.util.Stack<String> toCloseStack = new java.util.Stack<String>();
+		HTMLNode n = null;
 		while (iterator.hasNext()) {
-			HTMLNode n = iterator.next();
-			if (n.isTag())
+			n = iterator.next();
+			if (TRACE){
+				Name nameTmp = n.getName();
+				boolean isClosed = false;
+				int typeTmp = ((NodeImpl)n).getType();
+				if (lastParent == null ) {
+					lastParent = n;
+					level = 0;
+				}else{
+					HTMLNode myParent = n.getParent();
+					String myParentName  = myParent.getName().toString();
+					String myName  = n.getName().toString();
+					String lastParentName  = lastParent.getName().toString();String a =myName+ myParentName +lastParentName;
+					if (myParent == lastParent ){
+						level +=  1 ; // next level
+						lastParent = n;
+					}else if (myParent == lastParent.getParent()){
+						level += 0; // same level 
+						lastParent = n;
+					}else {
+						// ../
+						while(myParent.getParent() != lastParent){
+							String spacesTmp = "                                                                                                                     ";
+							toCloseStack .push("T"+typeTmp+":l:"+level+spacesTmp.substring(0, level*3)+"</"+lastParent.getName() +">");
+							lastParent = lastParent.getParent();
+							level -= 1; // low level
+						}
+						// cd <myParent>
+						lastParent = n.getParent();
+						level ++;
+						//toCloseStack .pop();
+						// cd <me>
+						lastParent = n;
+						level ++;
+						//toCloseStack .pop();
+					}
+				}
+				
+				if (toCloseStack.size()>0){
+					java.util.Queue<String> reverseOrderToCloseStack = new ConcurrentLinkedQueue<String>(toCloseStack.subList(0, toCloseStack.size() -1 ));
+					toCloseStack.clear();
+					for (String toClose : reverseOrderToCloseStack ){
+						System.out.println(toClose);
+					}
+				}
+				
+				else
+				
+				{
+					System.out.print("t"+typeTmp+":L:"+level);
+					for (int l=0;l<level;l++){
+						System.out.print("   ");
+					}
+					isClosed = typeTmp == TypeToken.CLOSE;
+					if (!isClosed)	System.out.println("<"+nameTmp+">" +n);
+					//else			System.out.println("</"+nameTmp+">" +n);
+				}
+			}
+				
+			if (n.isTag()){ 
 				createFullSingleLink(n, map, swapServletUrl2, home, verifier);
+			}
 		}
+		if (TRACE)System.out.println("<!--- "+node.getTextValue()+" --->");
 	}  
   
   private void createFullSingleLink(HTMLNode node, Map<String, String> map,
