@@ -25,12 +25,12 @@ import org.vietspider.html.HTMLNode;
  * 
  * Creation:  25.08.2010::14:42:58<br> 
  */
-public class HTMLParser_1_Test  {
+public class HTMLParser_Map_Test  {
 	private static final String TEST_HTML = "org/vietspider/html/parser/1.html";
 	private static String HTML  =""; 
 	private static HTMLDocument HDOC ;
 	static{
-		InputStream inRes = HTMLParser_1_Test.class.getClassLoader().getResourceAsStream(TEST_HTML);
+		InputStream inRes = HTMLParser_Map_Test.class.getClassLoader().getResourceAsStream(TEST_HTML);
 		InputStreamReader in  = new InputStreamReader (inRes);
 		BufferedReader readerTmp = new BufferedReader(in);
 		try {
@@ -84,7 +84,22 @@ public class HTMLParser_1_Test  {
 		List<NodeImpl> toksTmp = p2.createTokens(HTML.toCharArray());
 		HTMLDocument docTmp = p2.createDocument(toksTmp);
 		assertEquals(HDOC.getRoot().toString(), docTmp.getRoot().toString());
-	} 
+	}
+
+	@Test
+	public void testCreateDocumentString() throws Exception {
+		HTMLParser2 p2 =  new HTMLParser2();  
+		HTMLDocument docTmp = p2.createDocument(HTML);
+		String textValue = docTmp.getRoot().getTextValue();
+		//System.out.println(textValue);
+		
+		
+		Object  expected = HTML.replace( "\n","").replace( " ","");
+		Object  actual = textValue.replace( "\n","").replace( " ","" )  ;
+		assertEquals((""+expected).substring(100).indexOf((""+actual).substring(100)) >=0, true);
+	 
+		
+	}
 
 	@Test
 	public void testCreateDocumentByteArrayString() throws Exception {

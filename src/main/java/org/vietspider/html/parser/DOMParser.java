@@ -112,7 +112,7 @@ final class DOMParser {
     }  
     for(HTMLNode ele :children ){ 
       if(ele.isNode(Name.HEAD) || ele.isNode(Name.BODY)|| ele.isNode(Name.FRAMESET)) continue;
-      if(ele.isNode(Name.SCRIPT)){
+      if(ele.isNode(Name.SCRIPT) || ele.isNode(Name.NOSCRIPT)){
         head.addInternalChild(ele);
 //        ele.setParent(head);
       } else {
