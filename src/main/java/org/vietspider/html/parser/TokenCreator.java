@@ -100,7 +100,9 @@ public final class TokenCreator {
     if(name == Name.SCRIPT){
       return findEndScript(data, new char[]{'s','c','r','i','p','t'}, end);
     } else if(name == Name.STYLE){
-      return findEndScript(data, new char[] {'s','t','y','l','e'}, end);
+        return findEndScript(data, new char[] {'s','t','y','l','e'}, end);
+    } else if(name == Name.NOSCRIPT){
+        return findEndScript(data, new char[]{'n','o','s','c','r','i','p','t'}, end);
     }
     return end;
   }  
