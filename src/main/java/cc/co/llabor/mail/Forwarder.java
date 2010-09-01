@@ -129,9 +129,9 @@ public class Forwarder {
 			String strFromMemo2, String strSubject, String strBody,
 			List<MemoryFileItem> items) throws IOException {
         Properties props = new Properties();      // 
-        props.put("mail.smtp.host", "mail.host");
-        props.put("mail.smtp.port", "" + 25);
-        props.put("mail.debug", "true"  );
+        //props.put("mail.smtp.host", "mail.host");
+        //props.put("mail.smtp.port", "" + 25);
+        //props.put("mail.debug", "true"  );
 		
         Authenticator fakeAuth = null;//new FakeAuthenticator();
 		Session session = Session.getDefaultInstance(props, fakeAuth );
@@ -141,8 +141,7 @@ public class Forwarder {
 			InternetAddress toAddress = new InternetAddress(strTo, strToMemo);
 			InternetAddress fromAddress = new InternetAddress(strFrom, strFromMemo);
 			msg.setFrom(fromAddress); 
-			msg.addRecipient(Message.RecipientType.TO, toAddress);
-			
+			msg.addRecipient(Message.RecipientType.TO, toAddress); 
 			msg.setSubject(strSubject);
             msg.setText(strBody);
 
@@ -151,17 +150,18 @@ public class Forwarder {
             htmlPart.setContent(strBody, "text/html");
             mp.addBodyPart(htmlPart);
             msg.setContent(mp);
+            System.out.println("MESSAGE FROM::"+strFrom);
+            System.out.println("MESSAGE TO::"+strTo);
+            System.out.println("SUBJ: "+strSubject);
+            System.out.println(" \n"+strBody);
             for (MemoryFileItem item:items){
                 MimeBodyPart attachment = new MimeBodyPart();
                 attachment.setFileName( item.getName());
+                System.out.println(">>>"+item.getName() +"::"+item.getContentType());
 				DataSource dsTmp = new ByteArrayDataSource(item.getInputStream() , item.getContentType());
 				DataHandler dhTmp = new DataHandler( dsTmp  );		 
-                attachment.setDataHandler( dhTmp   ); 
-                 
-				
-                mp.addBodyPart(attachment);
-                
-                	             	
+                attachment.setDataHandler( dhTmp   ); 				
+                mp.addBodyPart(attachment);                              	             	
             }//session.getTransport(toAddress)
 
             Transport.send(msg);	//Transport.class.getClassLoader().getParent().getParent().getParent().getParent()
@@ -172,7 +172,7 @@ public class Forwarder {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{ //session.getTransport("smtp")// OK!!! : session.getTransport("smtp")
-        	System.out.println("eOf"+strTo2+strToMemo2+strFrom2+strFromMemo2+strSubject+strBody+items);
+        	System.out.println("--------------------eOf"+strTo2+strToMemo2+strFrom2+strFromMemo2+strSubject+strBody+items);
         } 
 	}
 
