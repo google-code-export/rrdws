@@ -62,8 +62,8 @@ public class MailHandlerServlet extends HttpServlet {
                        HttpServletResponse resp) 
             throws IOException { 
 
-		log.warning("doPost");
-		System.out.print("doPost");
+		log.warning("do_Post");
+		//System.out.print("DoPOPST");
 		
 		//MimeMessage message = new MimeMessage(session, req.getInputStream()); 
 		//ServletInputStream inTmp = req.getInputStream();
@@ -71,8 +71,8 @@ public class MailHandlerServlet extends HttpServlet {
         Forwarder fwdTmp = new Forwarder(defaultforwardto);
 		{ // JSP/content
 			HttpServletRequest request = req ; 
-            HttpServletResponse response = resp;
-            HttpSession httpSession = req.getSession();
+            //HttpServletResponse response = resp;
+            //HttpSession httpSession = req.getSession();
 			try{
 				String strTo = "vasIlIIJ.pupkIN@gmAIl.com";
 				String strToMemo = strTo;
@@ -80,7 +80,8 @@ public class MailHandlerServlet extends HttpServlet {
 				String strFromMemo = strFrom;
 				String strSubject = "FW:"+request.getRemoteUser()+":"+request.getRequestURL();
 				String strBody  = "let it be...";
-				System.out.println("send from:"+strFrom.toLowerCase() +"  to:"+strTo.toLowerCase()+"..."); 
+				//System.out.println("send from:"+strFrom.toLowerCase() +"  to:"+strTo.toLowerCase()+"...");
+				log.warning("send from:"+strFrom.toLowerCase() +"  to:"+strTo.toLowerCase()+"...");
 				// Check that we have a file upload request
 			    if(ServletFileUpload.isMultipartContent(request)){ 
 		            MemoryFileItemFactory factory = MemoryFileItemFactory.getInstance();
@@ -90,12 +91,12 @@ public class MailHandlerServlet extends HttpServlet {
 		            List<MemoryFileItem> items = upload.parseRequest(request);  
 		            for(MemoryFileItem item : items) {
 	                    item.flush(); 
-	                    System.out.println( "Size:::::"+ item.getSize() );
-	                    System.out.println( "Date:::::"+ item.getDate() );
-	                    System.out.println( "FN:::::"+ item.getFieldName() );
-	                    System.out.println( "ContentType:::::"+ item.getContentType() );
+	                    log.warning( "Size:::::"+ item.getSize() );
+	                    log.warning( "Date:::::"+ item.getDate() );
+	                    log.warning( "FN:::::"+ item.getFieldName() );
+	                    log.warning( "ContentType:::::"+ item.getContentType() );
 						String nameTmp = MemoryFileCache. put( item  );
-						System.out.println( "stored into memcache as ::["+nameTmp +"]");
+						log.warning( "stored into memcache as ::["+nameTmp +"]");
 	                    //pm.makePersistent(item);
 		            }
 			    	strBody += parmsToString(request );
@@ -166,9 +167,17 @@ public class MailHandlerServlet extends HttpServlet {
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
-		this.log("Init ...");
+		try {
+			this.log("Init ...");
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 		super.init(config);
-		log.info("init compleet");
+		try {
+			log.info("init compleet");
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 	}	
 }
 
