@@ -39,15 +39,16 @@
 	  <servlet-name>mailhandler</servlet-name>
 	  <url-pattern>/_ah/mail/*</url-pattern>
 	</servlet-mapping>
+<!-- 
 	<security-constraint>
 	  <web-resource-collection>
 	    <url-pattern>/_ah/mail/*</url-pattern>
 	  </web-resource-collection>
-	  <!-- auth-constraint>
+	  auth-constraint>
 	    <role-name>admin</role-name>
-	  </auth-constraint-->
+	  </auth-constraint
 	</security-constraint>
-
+-->
 	<servlet-mapping>
 		<servlet-name>greetServlet</servlet-name>
 		<url-pattern>/rrd/greet</url-pattern>
