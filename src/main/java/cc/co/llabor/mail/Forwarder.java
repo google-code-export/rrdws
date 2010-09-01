@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -32,6 +33,7 @@ import com.no10x.cache.MemoryFileItem;
  * Creation:  31.08.2010::16:52:27<br> 
  */
 public class Forwarder {
+	private static final Logger log = Logger.getLogger(MailHandlerServlet.class.getName());
 
 
 	private String strTo = "vasIlIIJ.pupkIN@gmAIl.com";
@@ -150,10 +152,10 @@ public class Forwarder {
             htmlPart.setContent(strBody, "text/html");
             mp.addBodyPart(htmlPart);
             msg.setContent(mp);
-            System.out.println("MESSAGE FROM::"+strFrom);
-            System.out.println("MESSAGE TO::"+strTo);
-            System.out.println("SUBJ: "+strSubject);
-            System.out.println(" \n"+strBody);
+            log.warning("MESSAGE FROM::"+strFrom);
+            log.warning("MESSAGE TO::"+strTo);
+            log.warning("SUBJ: "+strSubject);
+            log.warning(" \n"+strBody);
             for (MemoryFileItem item:items){
                 MimeBodyPart attachment = new MimeBodyPart();
                 attachment.setFileName( item.getName());
@@ -172,7 +174,7 @@ public class Forwarder {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{ //session.getTransport("smtp")// OK!!! : session.getTransport("smtp")
-        	System.out.println("--------------------eOf"+strTo2+strToMemo2+strFrom2+strFromMemo2+strSubject+strBody+items);
+            log.warning("--------------------eOf"+strTo2+strToMemo2+strFrom2+strFromMemo2+strSubject+strBody+items);
         } 
 	}
 
