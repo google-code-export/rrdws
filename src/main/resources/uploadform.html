@@ -1,11 +1,20 @@
 <form  method="post" enctype="multipart/form-data">
-  <p>Select <b>PI3</b> File for update:<br>
-    <input name="_from" type="text" value="">
-    <input name="_to" type="text" value="">
-    <input name="f1" type="file" size="95%" maxlength="100000" accept="text/*">
-    <input name="f2" type="file" size="95%" maxlength="100000" accept="*">
-    <input name="f3" type="file" size="95%" maxlength="100000" accept="image/*">
+  <p>EMail<br>
+    from:<br> 
+    <input id="from" name="from" type="text" ><br>
+    to:<br>
+    <input id="to" name="to" type="text"  ><br>
+    s:<br>
+    <input id="subject" name="subject" type="text" ><br>
+    b:<br>
+    <input id="body" name="body" type="textarea" ><br>
+    <input id="f1"  name="f1" type="file" size="95%" maxlength="100000" accept="text/*"><br>
+    <input id="f2" name="f2" type="file" size="95%" maxlength="100000" accept="*"><br>
+    <input id="f3" name="f3" type="file" size="95%" maxlength="100000" accept="image/*"><br>
     <br>
-    <input type="submit"/>
+    <input type="submit"/><br>
+    <input type="reset"/><br>
+    <input id="i1" type="image"  name="i1" src="http://thecia.com.au/reviews/x/images/x3-x-men-3-poster-0.jpg" />
+    <input id="cap" type="hidden"  name="cap" value="#123123123#" />
   </p>
 </form>

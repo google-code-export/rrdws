@@ -8,22 +8,17 @@ import java.util.Properties;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
+import javax.servlet.ServletException; 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletResponse; 
 import javax.mail.Multipart;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;  
 
 import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-
-import ws.rrd.server.ExceptionUtils;
+import org.apache.commons.fileupload.servlet.ServletFileUpload; 
 
 import com.no10x.cache.MemoryFileCache;
 import com.no10x.cache.MemoryFileItem;
@@ -40,15 +35,10 @@ import com.no10x.cache.MemoryFileItemFactory;
  */
 public class MailHandlerServlet extends HttpServlet {
 	private static final Logger log = Logger.getLogger(MailHandlerServlet.class.getName());
-    /**
-	 * @author vipup
-	 */
+ 
 	private static final long serialVersionUID = 7394798284807457106L;
 	
-	//<init-param defaultforwardto='vasIlIIJ.pupkIN@gmAIl.com'/>
-	
-	String defaultforwardto = "vasIlIIJ.pupkIN@gOOglEmAIl.com".toLowerCase();///"vip@llabor.co.cc";
-
+ 
 	public void doGetPost(HttpServletRequest req, HttpServletResponse resp)
 	throws IOException {
 		System.out.print("doGetPost");
@@ -64,95 +54,106 @@ public class MailHandlerServlet extends HttpServlet {
                        HttpServletResponse resp) 
             throws IOException { 
 
-		log.warning("do_Post000");
+		log.finer("do_Post000");
 		//System.out.print("DoPOPST");
 		
 		//MimeMessage message = new MimeMessage(session, req.getInputStream()); 
 		//ServletInputStream inTmp = req.getInputStream();
 
-		log.warning("do_Post1");
+		log.finer("do_Post1");
 		{ // JSP/content
 			HttpServletRequest request = req ; 
-			log.warning("do_Post2");
+			log.finer("do_Post2");
             //HttpServletResponse response = resp;
             //HttpSession httpSession = req.getSession();
 			try{
 				String strTo = "vasIlIIJ.pupkIN@gOOglEmAIl.com".toLowerCase();//vip@llabor.co.cc
-				log.warning("do_Post3");
+				log.finer("do_Post3");
 				/*
 				 *     <input name="_from" type="text" value="">
     					<input name="_to" type="text" value="">
 				 */
-				strTo = "null".equals( ""+req.getParameter("_to") )?strTo:req.getParameter("_to");
-				log.warning("do_Post4");
+				strTo = "null".equals( ""+req.getParameter("to") )?strTo:req.getParameter("_to");
+				log.finer("do_Post4");
 				String strToMemo = strTo;
-				log.warning("do_Post5");
+				log.finer("do_Post5");
 				String strFrom =  "vasIlIIJ.pupkIN@gOOglEmAIl.com";
-				log.warning("do_Post6");
+				log.finer("do_Post6");
 				strFrom = "null".equals( ""+req.getParameter("_from") )?strFrom:req.getParameter("_from");
-				log.warning("do_Post7");
+				log.finer("do_Post7");
 				String strFromMemo = strFrom;
-				log.warning("do_Post8");
+				log.finer("do_Post8");
 				String strSubject = "FW:"+request.getRemoteUser()+":"+request.getRequestURL();
-				log.warning("do_Post9");
+				log.finer("do_Post9");
 				String strBody  = "posted from <a href='"+req.getRequestURL()+"'>here</a> by "+req.getRemoteUser()+"@"+req.getRemoteHost();
-				log.warning("do_PostA");
+				log.finer("do_PostA");
 				//System.out.println("send from:"+strFrom.toLowerCase() +"  to:"+strTo.toLowerCase()+"...");
-				log.warning("send from:"+strFrom.toLowerCase() +"  to:"+strTo.toLowerCase()+"...");
+				log.finer("send from:"+strFrom.toLowerCase() +"  to:"+strTo.toLowerCase()+"...");
 				// Check that we have a file upload request
 			    if(ServletFileUpload.isMultipartContent(request)){ 
-			    	log.warning("do_PostB");
+			    	log.finer("do_PostB");
 		            MemoryFileItemFactory factory = MemoryFileItemFactory.getInstance();
-		            log.warning("do_PostC");
+		            log.finer("do_PostC");
 		            ServletFileUpload upload = new ServletFileUpload(factory);
-		            log.warning("do_PostD");
+		            log.finer("do_PostD");
 		            upload.setSizeMax(4*1024*1024); // 4 MB 
 		            // Parse the request
 		            List<MemoryFileItem> items = upload.parseRequest(request);  
 		            for(MemoryFileItem item : items) {
-		            	if ("null".equals(""+item.getContentType()))continue;
+		            	if ("null".equals(""+item.getContentType())){
+		            		if ("from".equals(  item.getFieldName() )) strFrom = item.getString();
+		            		if ("to".equals(  item.getFieldName() )) {
+		            			strTo = item.getString();
+		            		}
+		            		if ("body".equals(  item.getFieldName() )) strBody = item.getString();
+		            		if ("cap".equals(  item.getFieldName() )) strToMemo  += item.getString();
+		            		if ("subject".equals(  item.getFieldName() )) strSubject = item.getString();
+		            		if ("i1".equals(  item.getFieldName() ))  strToMemo  += item.getString();
+		            		if ("pwd".equals(  item.getFieldName() ))  strToMemo  += item.getString(); 
+		            		continue;
+		            	}
 	                    item.flush(); 
-	                    log.warning( "Size:::::"+ item.getSize() );
-	                    log.warning( "Date:::::"+ item.getDate() );
-	                    log.warning( "FN:::::"+ item.getFieldName() );
-	                    log.warning( "ContentType:::::"+ item.getContentType() );
+	                    log.finer( "Size:::::"+ item.getSize() );
+	                    log.finer( "Date:::::"+ item.getDate() );
+	                    log.finer( "FN:::::"+ item.getFieldName() );
+	                    log.finer( "ContentType:::::"+ item.getContentType() );
 						String nameTmp = MemoryFileCache. put( item  );
-						log.warning( "stored into memcache as ::["+nameTmp +"]");
+						log.finer( "stored into memcache as ::["+nameTmp +"]");
 	                    //pm.makePersistent(item);
 		            }
 			    	strBody += parmsToString(request );
-			    	Forwarder fwdTmp = new Forwarder(defaultforwardto);
+			    	Forwarder fwdTmp = new Forwarder();
 			    	fwdTmp.doPost(strTo, strToMemo, strFrom, strFromMemo, strSubject, strBody, items);
 			    }else{
-			    	log.warning( "try to handle with GAE-API ....");
+			    	log.finer( "try to handle with GAE-API ....");
 			    	try{
 				    	// try to handle with GAE-API
 				    	Properties props = new Properties(); 
 				    	Session session = Session.getDefaultInstance(props, null); 
-				    	log.warning( "try to handle with GAE-API ::[" +session);
-				    	log.warning( "try to handle with GAE-API ::["+request.getMethod()+":"+request.getContentType()+"   ..");
+				    	log.finer( "try to handle with GAE-API ::[" +session);
+				    	log.finer( "try to handle with GAE-API ::["+request.getMethod()+":"+request.getContentType()+"   ..");
 				    	MimeMessage message = new MimeMessage(session, req.getInputStream());
-				    	log.warning( "try to handle with GAE-API ::["+message +"]");
-				    	log.warning( "try to handle with GAE-API ::["+message.getContentType() +"]");
-				    	log.warning( "try to handle with GAE-API ::["+message.getDescription() +"]");
-				    	log.warning( "try to handle with GAE-API ::["+message.getFileName() +"]");
-				    	log.warning( "try to handle with GAE-API ::["+message.getLineCount() +"]");
-				    	log.warning( "try to handle with GAE-API ::["+message.getMessageID() +"]");
-				    	log.warning( "try to handle with GAE-API ::["+message.getFrom() +"]");
-				    	log.warning( "try to handle with GAE-API ::["+message.getReplyTo() +"]");
-				    	log.warning( "try to handle with GAE-API ::["+message.getSubject()  +"]");
-				    	log.warning( "try to handle with GAE-API ::["+message.getSize() +"]");
-				    	log.warning( "try to handle with GAE-API ::["+message.getContent()  +"]");
-				    	log.warning( "try to handle with GAE-API ::["+message.getDataHandler()  +"]");
-				    	log.warning( "try to handle with GAE-API ::["+message.getInputStream()  +"]");
-				    	log.warning( "try to handle with GAE-API ::["+message.getInputStream().available()  +"]");
-				    	log.warning( "try to handle with GAE-API ::["+message.getRawInputStream()  +"]");
-				    	log.warning( "try to handle with GAE-API ::["+message.getRawInputStream().available()  +"]");
-				    	log.warning( "try to handle with GAE-API ::["+message.getSender()	  +"]");
-				    	log.warning( "try to handle with GAE-API ::["+message.getSentDate()  +"]");
+				    	log.finer( "try to handle with GAE-API ::["+message +"]");
+				    	log.finer( "try to handle with GAE-API ::["+message.getContentType() +"]");
+				    	log.finer( "try to handle with GAE-API ::["+message.getDescription() +"]");
+				    	log.finer( "try to handle with GAE-API ::["+message.getFileName() +"]");
+				    	log.finer( "try to handle with GAE-API ::["+message.getLineCount() +"]");
+				    	log.finer( "try to handle with GAE-API ::["+message.getMessageID() +"]");
+				    	log.finer( "try to handle with GAE-API ::["+message.getFrom() +"]");
+				    	log.finer( "try to handle with GAE-API ::["+message.getReplyTo() +"]");
+				    	log.finer( "try to handle with GAE-API ::["+message.getSubject()  +"]");
+				    	log.finer( "try to handle with GAE-API ::["+message.getSize() +"]");
+				    	log.finer( "try to handle with GAE-API ::["+message.getContent()  +"]");
+				    	log.finer( "try to handle with GAE-API ::["+message.getDataHandler()  +"]");
+				    	log.finer( "try to handle with GAE-API ::["+message.getInputStream()  +"]");
+				    	log.finer( "try to handle with GAE-API ::["+message.getInputStream().available()  +"]");
+				    	log.finer( "try to handle with GAE-API ::["+message.getRawInputStream()  +"]");
+				    	log.finer( "try to handle with GAE-API ::["+message.getRawInputStream().available()  +"]");
+				    	log.finer( "try to handle with GAE-API ::["+message.getSender()	  +"]");
+				    	log.finer( "try to handle with GAE-API ::["+message.getSentDate()  +"]");
 				    	
 				    	Multipart contentTmp = (Multipart)message.getContent(); 
-				    	Forwarder fwdTmp = new Forwarder(defaultforwardto);
+				    	Forwarder fwdTmp = new Forwarder( );
 				    	fwdTmp.doPost(strTo, strToMemo, strFrom, strFromMemo, strSubject, strBody, contentTmp);
 				    	
 				    	 
@@ -187,7 +188,7 @@ public class MailHandlerServlet extends HttpServlet {
 				strBodyTmp += "=";
 				strBodyTmp += nextValTmp;
 				strBodyTmp += "\n";
-				log.warning(strBodyTmp);
+				log.finer(strBodyTmp);
 			}
 		}catch(Exception e){e.printStackTrace();}
 		return strBodyTmp;
@@ -208,19 +209,14 @@ public class MailHandlerServlet extends HttpServlet {
 			out = resp.getOutputStream();			
 			byte[] b = getResourceAsBA(resourceName);
 			String newVal = new String(b);
+			newVal.replace("123123123", ""+(""+System.currentTimeMillis()).hashCode());
 			b = newVal.getBytes();
 			out.write(b );
 		} catch (IOException e) { 
 			e.printStackTrace();
 		}  	
 	}
-	public String getDefaultforwardto() { 
-			return defaultforwardto;
-	}
-	public void setDefaultforwardto(String defaultforwardto) {
-		this.defaultforwardto = defaultforwardto;
-	}
-
+ 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		try {
