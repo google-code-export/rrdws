@@ -1,17 +1,8 @@
 package com.no10x.cache;
 
 import java.io.IOException;
-import java.io.OutputStream; 
-import java.util.HashMap;
-import java.util.Properties;
-
-import ws.rrd.cache.FileCache;
- 
-
-import net.sf.jsr107cache.Cache;
-import net.sf.jsr107cache.CacheException;
-import net.sf.jsr107cache.CacheFactory;
-import net.sf.jsr107cache.CacheManager;
+import java.io.OutputStream;   
+import net.sf.jsr107cache.Cache; 
 
 /** 
  * <b>Description:TODO</b>

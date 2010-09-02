@@ -164,7 +164,7 @@ public class Forwarder {
 			 //setup message (from, to, subject, etc)
 			msg.setFrom(new InternetAddress(md.getEmail()));
 			msg.addRecipient(Message.RecipientType.TO, new InternetAddress( strTo ,  strToMemo ));
-			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(md.getEmail(), "Dr. " + md.getNickname()));
+			msg.addRecipient(Message.RecipientType.CC, new InternetAddress(md.getEmail(), "Dr. " + md.getNickname()));
 			msg.setSubject(strSubject);
 			//msg.setText(strBody); !!!
 			htmlPart.setContent(strBody, "text/html");
