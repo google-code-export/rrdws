@@ -1,11 +1,13 @@
 package cc.co.llabor.mail;
 import java.io.IOException; 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
 
 import javax.mail.Authenticator;
+import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -22,6 +24,7 @@ import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 
 import com.no10x.cache.MemoryFileItem;
+import com.no10x.cache.MemoryFileItemFactory;
 /** 
  * <b>Description:TODO</b>
  * @author      vipup<br>
@@ -34,21 +37,21 @@ import com.no10x.cache.MemoryFileItem;
 public class Forwarder {
 	private static final Logger log = Logger.getLogger(MailHandlerServlet.class.getName());
 
-
-	private String strTo = "vasIlIIJ.pupkIN@gOOglEmAIl.com".toLowerCase();//"vip@llabor.co.cc";
-	private String strToMemo =  " "+strTo+ " ";;
-	private String strFrom =  "vasIlIIJ.pupkIN@gOOgLemAIl.com".toLowerCase();
-	private String strFromMemo = " "+strFrom+ " ";
-
+ 
 	public Forwarder( ) {
 	 
 	}
-	
-	public Forwarder(String defaultforwardto) {
-		this.strTo = defaultforwardto;
-		this.strToMemo = "<\""+defaultforwardto+"\">"; 
-	}
-
+ 
+	/**
+	 * @deprecated
+	 * @author vipup
+	 * @param strTo
+	 * @param strToMemo
+	 * @param strFrom
+	 * @param strFromMemo
+	 * @param strSubject
+	 * @param strBody
+	 */
 	public void doPost(String strTo, String strToMemo, String strFrom, String strFromMemo, String strSubject, String strBody){
         Properties props = new Properties();
         Session session = Session.getDefaultInstance(props, null);
@@ -85,6 +88,19 @@ public class Forwarder {
         }
 	}
 	
+	/**
+	 * @deprecated
+	 * @author vipup
+	 * @param strTo
+	 * @param strToMemo
+	 * @param strFrom
+	 * @param strFromMemo
+	 * @param strSubject
+	 * @param strBody
+	 * @param attachmentName
+	 * @param attachmentData
+	 * @param strAttachContentType
+	 */
 	public void doPost(
 			String strTo, String strToMemo, 
 			String strFrom, String strFromMemo, 
@@ -116,11 +132,9 @@ public class Forwarder {
             msg.setContent(mp);	 
             Transport.send(msg);	
         } catch (UnsupportedEncodingException e) {
-        	log.throwing(this.getClass().getName(), "doPost", e);
-			// TODO Auto-generated catch block
+        	log.throwing(this.getClass().getName(), "doPost", e); 
 			e.printStackTrace();
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
+		} catch (MessagingException e) { 
 			log.throwing(this.getClass().getName(), "doPost", e);
 			e.printStackTrace();
 		}finally{
@@ -128,9 +142,12 @@ public class Forwarder {
         } 
 	}
 
-	public void doPost(String strTo2, String strToMemo2, String strFrom2,
-			String strFromMemo2, String strSubject, String strBody,
-			List<MemoryFileItem> items) throws IOException, MessagingException {
+	public void doPost(
+				String strTo, String strToMemo, 
+				String strFrom, String strFromMemo, 
+				String strSubject, 
+				String strBody,
+				List<MemoryFileItem> items) throws IOException, MessagingException {
 		Properties props = new Properties(); // 
 		// props.put("mail.smtp.host", "mail.host");
 		// props.put("mail.smtp.port", "" + 25);
@@ -146,15 +163,19 @@ public class Forwarder {
 			MimeBodyPart htmlPart = new MimeBodyPart();
 			 //setup message (from, to, subject, etc)
 			msg.setFrom(new InternetAddress(md.getEmail()));
+			msg.addRecipient(Message.RecipientType.TO, new InternetAddress( strTo ,  strToMemo ));
 			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(md.getEmail(), "Dr. " + md.getNickname()));
 			msg.setSubject(strSubject);
 			//msg.setText(strBody); !!!
 			htmlPart.setContent(strBody, "text/html");
 			mp.addBodyPart(htmlPart);
-			log.warning("MESSAGE FROM::" + strFrom2+"\nMESSAGE TO::" + strTo2+"\nSUBJ: " + strSubject+"  \n" + strBody);
+			log.warning("MESSAGE FROM::" + strFrom+"\nMESSAGE TO::" + strTo+"\nSUBJ: " + strSubject+"  \n" + strBody);
 			int i=0;
 			for (MemoryFileItem item : items) {
-				if ("null".equals( ""+item.getContentType())) continue;
+				String ctypeTmp = ""+item.getContentType();
+				if ("null".equals( ctypeTmp)) continue;
+				// z.B. multipart/alternative
+				if (!isAllowed(ctypeTmp) ) continue;
 				MimeBodyPart attachment = new MimeBodyPart();
                 //prepare attachment using abytearraydatasource
 				i++;
@@ -172,83 +193,58 @@ public class Forwarder {
 			log.warning(" sending...");
 			Transport.send(msg); // Transport.class.getClassLoader().getParent().getParent().getParent().getParent()
 			log.warning(" done.");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
+		} catch (UnsupportedEncodingException e) { 
 			log.throwing(this.getClass().getName(), "doPost", e);
 			e.printStackTrace();
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
+		} catch (MessagingException e) { 
 			log.throwing(this.getClass().getName(), "doPost", e);
 			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) { 
 			log.throwing(this.getClass().getName(), "doPost", e);
 			e.printStackTrace();
-		} catch (Throwable e) {
-			// TODO Auto-generated catch block
+		} catch (Throwable e) { 
 			log.throwing(this.getClass().getName(), "doPost", e);
 			e.printStackTrace();
 		} finally { // session.getTransport("smtp")// OK!!! :
 					// session.getTransport("smtp")
-			log.warning("--------------------eOf" + strTo2 + "|" + strToMemo2
-					+ "|" + strFrom2 + "|" + strFromMemo2 + "|" + strSubject
+			log.warning("--------------------eOf" + strTo + "|" + strToMemo
+					+ "|" + strFrom + "|" + strFromMemo + "|" + strSubject
 					+ "|" + strBody);
 		}
 	}
-	public void doPost(String strTo2, String strToMemo2, String strFrom2,
-				String strFromMemo2, String strSubject, String strBody,
-				Multipart mp) throws IOException {
-        Properties props = new Properties();      // 
-        // props.put("mail.smtp.host", "mail.host");
-        //props.put("mail.smtp.port", "" + 25);
-        //props.put("mail.debug", "true"  );
-		
-        Authenticator fakeAuth = null;//new FakeAuthenticator();
-		Session session = Session.getDefaultInstance(props, fakeAuth );
-		
-        try {
-            Message msg = new MimeMessage(session);
-            
-            MyData md = new DefaultMe();
-			
-            msg.setFrom(new InternetAddress(md.getEmail()));
-            msg.addRecipient(Message.RecipientType.TO, new InternetAddress(md.getEmail(), "Dr. " +md.getNickname()));			
-            
-			msg.setSubject(strSubject);
-			strBody = "<b>Hi</b>  Here is the encrypted ptscut list yourequested.  Please <b><i>enter your password</i></b> to open thedocument.\nCheers!";
-            msg.setText(strBody);
-            
-            log.warning("MESSAGE FROM::"+strFrom2);
-            log.warning("MESSAGE TO::"+strTo2);
-            log.warning("SUBJ: "+strSubject);
-            log.warning(" \n"+strBody);
-            
-            //Multipart mp = combineMultiPart(strBody, items);
-            
-            msg.setContent(mp);
-            msg.saveChanges();
-            log.warning(" sending...");
-            Transport.send(msg);	//Transport.class.getClassLoader().getParent().getParent().getParent().getParent()
-            log.warning(" done.");
-        } catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-        	log.throwing(this.getClass().getName(), "doPost", e);
-			e.printStackTrace();
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			log.throwing(this.getClass().getName(), "doPost", e);
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			log.throwing(this.getClass().getName(), "doPost", e);
-			e.printStackTrace();
-		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			log.throwing(this.getClass().getName(), "doPost", e);
-			e.printStackTrace();
-		}finally{ //session.getTransport("smtp")// OK!!! : session.getTransport("smtp")
-            log.warning("--------------------eOf"+strTo2+"|"+strToMemo2+"|"+strFrom2+"|"+strFromMemo2+"|"+strSubject+"|"+strBody );
-        } 
+	
+	private boolean isAllowed(String ctypeTmp) throws IOException {
+		Properties gaeMimes = new Properties();
+		gaeMimes.load(  this.getClass().getClassLoader().getResourceAsStream("gae_allowed_mimetypes.properties"));
+		if (null != gaeMimes.getProperty(ctypeTmp)) return true;
+		return false;	 
+	}
+
+	public void doPost(
+				String strTo , String strToMemo , 
+				String strFrom ,  String strFromMemo , 
+				String strSubject, String strBody,
+				Multipart mp) throws IOException, MessagingException {
+			// transform GAE-MultiPart into List<MemoryFileItem> items
+		List<MemoryFileItem> items = new ArrayList<MemoryFileItem> ();
+		for (int i=0;i<mp.getCount();i++){
+			BodyPart part = mp.getBodyPart(i);
+			String contentType = part.getContentType();
+			boolean isFormField = false;
+			String fileName = part.getFileName();
+			String fieldName = part.getDescription();
+			MemoryFileItem item = MemoryFileItemFactory.getInstance().createItem(fieldName , contentType , isFormField , fileName  );
+			part.writeTo( item.getOutputStream() );
+			item.flush();
+			items.add(item);
+		}
+		doPost( 
+				strTo , strToMemo ,
+				strFrom , strFromMemo , 
+				strSubject, strBody,
+				items
+		);
+		 
 	}
 
  
@@ -299,8 +295,7 @@ public class Forwarder {
                } catch (MessagingException e) {
                        e.printStackTrace();
                        // c.sep("sfe: "+e.getInvalidAddresses()[0].toString());
-               } catch (UnsupportedEncodingException e) {
-                       // TODO Auto-generated catch block
+               } catch (UnsupportedEncodingException e) { 
                        e.printStackTrace();
                }
        } 		
@@ -351,8 +346,7 @@ public class Forwarder {
                } catch (MessagingException e) {
                        e.printStackTrace();
                        // c.sep("sfe: "+e.getInvalidAddresses()[0].toString());
-               } catch (UnsupportedEncodingException e) {
-                       // TODO Auto-generated catch block
+               } catch (UnsupportedEncodingException e) { 
                        e.printStackTrace();
                }
        } 		
