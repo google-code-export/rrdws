@@ -8,7 +8,7 @@ package com.no10x.cache;
  * 
  * Creation:  13.04.2010::19:30:48<br> 
  */
-import org.apache.commons.fileupload.FileItem;
+
 import org.apache.commons.fileupload.FileItemFactory;
 
 public class MemoryFileItemFactory implements FileItemFactory {
