@@ -1547,6 +1547,9 @@ function print_usage() {
 }
 
  */
+function print_usage() {
+}
+
 function parse_opts(args) {
     var options = [];
     while (args.length > 0) {
