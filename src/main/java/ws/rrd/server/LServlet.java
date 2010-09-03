@@ -417,6 +417,7 @@ public class LServlet extends HttpServlet {
 			// 						(new Element('li', { 'class': 'fav', 'html': ((empty && i==0) ? '' : ', ') 
 			//+ '<a href="hTTp://rrdsaas.appspot.com/F/h_t_t_p_://rrdsaas.appspot.com/l//HtTp/' + temp.user.login + '.' + temp.base_short + '/favorites/tag/' + tag + '">' + tag + '</a>'}
 			String FServletURL = SwapServletUrl.replace("/l/", "/F/");
+			jsToWrap = SServlet.performFormatJS(urlStr, jsToWrap ) ;
 			jsToWrap = 
 				jsToWrap
 					.replace("http://",   FServletURL +  "h_t_t_p_://" )
@@ -424,9 +425,17 @@ public class LServlet extends HttpServlet {
 					.replace("HTTPS://",   FServletURL +  "h_t_t_p_s_://" )
 					.replace("https://",   FServletURL +  "h_t_t_p_s_://" )
 				;
-			 
+			
 			scriptTmp = ssTmp.putOrCreate(urlStr, jsToWrap, urlStr);
-		} 
+		} else{
+			String jsToWrap = scriptTmp.getValue();
+			String jsToWrapTmp = SServlet.performFormatJS(urlStr, jsToWrap ) ;
+			if (jsToWrapTmp .length() > jsToWrap.length()){
+				ssTmp.putOrCreate(urlStr, jsToWrapTmp, urlStr);
+			}else{
+				//System.out.println(jsToWrapTmp);
+			}
+		}
 		resp.setContentType("application/x-javascript; charset=utf-8");
 		outTmp = resp.getOutputStream();
 		outTmp.write(scriptTmp.getValue().getBytes("UTF-8")) ;
@@ -457,7 +466,12 @@ public class LServlet extends HttpServlet {
 	}
 
 	private boolean isScript(String contextTypeStr) {
-		return "Content-Type: application/x-javascript".equalsIgnoreCase( contextTypeStr) ||
+		return
+		
+		"Content-Type: text/javascript".equalsIgnoreCase( contextTypeStr) ||
+		"Content-Type: application/javascript".equalsIgnoreCase( contextTypeStr) ||
+		"Content-Type: application/x-javascript".equalsIgnoreCase( contextTypeStr) ||
+		"Content-Type: application/javascript; charset=utf-8".equalsIgnoreCase( contextTypeStr) ||
 		"Content-Type: application/x-javascript; charset=utf-8".equalsIgnoreCase( contextTypeStr) ||
 		//"content-type: text/html; charset=ISO8859-1".equalsIgnoreCase( contextTypeStr) ||
 		"content-type: text/javascript; charset=UTF-8".equalsIgnoreCase( contextTypeStr) || 
