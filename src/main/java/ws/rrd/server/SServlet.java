@@ -19,39 +19,17 @@ public class SServlet extends HttpServlet{ /* SCRIPT-mastering servlet*/
 		ServletOutputStream out = resp.getOutputStream();
 		String uriTmp =   req.getRequestURL().toString() ;
 		System.out.println("sendback "+uriTmp+" ...");
-		ScriptItem scriptTmp = ScriptStore.getInstanse().getByURL(uriTmp);
+		
 		resp.setContentType("text/javascript");
 		String scriptValue = "";
-		ByteArrayOutputStream baOut = new ByteArrayOutputStream();
-		ByteArrayOutputStream baErr = new ByteArrayOutputStream();
-		PrintStream myOut = new PrintStream(baOut);
-		PrintStream myErr = new PrintStream(baErr);
-		if (!"yes".equals( req.getParameter("skip") )){
-   			final String scriptPath = this.getClass().getClassLoader(). getResource("beautifyALL.js").toExternalForm();
-			String[] args = new String[]{scriptPath, "-i", "1", uriTmp+ "?skip=yes"};
-						
-			Main.setOut( myOut );
-			Main.setErr( myErr );
-			
-			try{
-				Main.main(args );
-			}catch(java.security.AccessControlException e){				
-				e.printStackTrace(myErr);
-			}catch(java.lang.SecurityException e){
-				myOut.append("\n<br><pre><!-- //*"+e.getMessage()+":::"+uriTmp+"*// --></pre>\n");
-				e.printStackTrace(myErr);
-			}catch(Throwable e){
-				e.printStackTrace(myErr);
-			}
-			if (myErr .toString().length() > 0){
-				System.out.println(myErr .toString());
-				scriptValue = scriptTmp.getValue();
-			}else{
-				scriptValue = new String(baOut.toByteArray());
-			}
-		}else{
-			scriptValue = scriptTmp.getValue();
-		}
+
+		ScriptItem scriptTmp = ScriptStore.getInstanse().getByURL(uriTmp);
+		scriptValue = scriptTmp.getValue() ;
+		if (!"yes".equals( req.getParameter("skip") )){ 
+			scriptValue = performFormatJS(uriTmp, scriptValue);
+			scriptTmp = ScriptStore.getInstanse().putOrCreate(uriTmp, scriptValue, uriTmp);
+		} 
+		
 		String linesTmp[] = scriptValue.split("\n");
 		if (linesTmp[0].toLowerCase().trim().startsWith("<script"))
 		if (linesTmp[linesTmp.length-1].toLowerCase().trim().startsWith("</script")){
@@ -65,6 +43,38 @@ public class SServlet extends HttpServlet{ /* SCRIPT-mastering servlet*/
 		
 		 
 		out.write(scriptValue.getBytes());
+	}
+
+
+	public static String performFormatJS(String uriTmp, String scriptValue) {//, <-- ScriptItem scriptTmp
+		
+		ByteArrayOutputStream baOut = new ByteArrayOutputStream();
+		ByteArrayOutputStream baErr = new ByteArrayOutputStream();
+		PrintStream myOut = new PrintStream(baOut);
+		PrintStream myErr = new PrintStream(baErr);
+		final String scriptPath = SServlet.class.getClassLoader(). getResource("beautifyALL.js").toExternalForm();
+		String[] args = new String[]{scriptPath, "-i", "1", uriTmp+ "?skip=yes"};
+					
+		Main.setOut( myOut );
+		Main.setErr( myErr );
+		
+		try{
+			Main.main(args );
+		}catch(java.security.AccessControlException e){				
+			e.printStackTrace(myErr);
+		}catch(java.lang.SecurityException e){
+			myOut.append("\n<br><pre><!-- //*"+e.getMessage()+":::"+uriTmp+"*// --></pre>\n");
+			e.printStackTrace(myErr);
+		}catch(Throwable e){
+			e.printStackTrace(myErr);
+		} 
+		if (baErr.toString().length() > 0 && baErr.toString().indexOf( "exitVM" )==-1){
+			System.out.println(baOut.toString());
+			//scriptValue = scriptTmp.getValue();
+		}else{
+			scriptValue = new String(baOut.toByteArray());
+		}
+		return scriptValue;
 	} 
 	
 
