@@ -4,8 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream; 
-import java.io.PrintWriter;
-import java.io.Reader;
+import java.io.PrintWriter; 
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.HttpURLConnection; 
@@ -14,8 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List; 
-import java.util.Map;
-import java.util.Properties;
+import java.util.Map; 
 import java.util.logging.Logger;
 import java.util.zip.GZIPInputStream;
  
@@ -30,6 +28,8 @@ import org.vietspider.html.HTMLNode;
 import org.vietspider.html.parser.HTMLParser2;
 import org.vietspider.html.util.HyperLinkUtil;
 
+import cc.co.llabor.system.ExitTrappedException;
+
 import com.no10x.cache.MemoryFileItem;
 import com.no10x.cache.MemoryFileItemFactory;
 
@@ -41,6 +41,8 @@ import ws.rrd.mem.ScriptStore;
 public class LServlet extends HttpServlet {
 
 	public static final String _U_R_L_ = "_u_r_l_";
+	
+	public static final String SYSTEM_EXIT_RESETED = ExitTrappedException.isReseted()? "YES":"no";
 
 	private static final String CHARSET_PREFIX = "charset=";
 
