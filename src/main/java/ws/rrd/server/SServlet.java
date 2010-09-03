@@ -25,10 +25,16 @@ public class SServlet extends HttpServlet{ /* SCRIPT-mastering servlet*/
 
 		ScriptItem scriptTmp = ScriptStore.getInstanse().getByURL(uriTmp);
 		scriptValue = scriptTmp.getValue() ;
-		if (!"yes".equals( req.getParameter("skip") )){ 
-			scriptValue = performFormatJS(uriTmp, scriptValue);
-			scriptTmp = ScriptStore.getInstanse().putOrCreate(uriTmp, scriptValue, uriTmp);
-		} 
+		String hashTmp = ""+req.getParameter("hash");
+		
+			if (!"yes".equals( req.getParameter("skip") )){ 
+				synchronized(hashTmp){
+					scriptValue = performFormatJS(uriTmp, scriptValue);
+					scriptTmp = ScriptStore.getInstanse().putOrCreate(uriTmp, scriptValue, uriTmp);
+				}
+			} else{
+				System.out.println("gives back cached "+scriptValue);
+			} 
 		
 		String linesTmp[] = scriptValue.split("\n");
 		if (linesTmp[0].toLowerCase().trim().startsWith("<script"))
@@ -45,16 +51,26 @@ public class SServlet extends HttpServlet{ /* SCRIPT-mastering servlet*/
 		out.write(scriptValue.getBytes());
 	}
 
-
+	
 	public static String performFormatJS(String uriTmp, String scriptValue) {//, <-- ScriptItem scriptTmp
 		
+
+		final String scriptPath = SServlet.class.getClassLoader(). getResource("beautifyALL.js").toExternalForm();
+		String strSctiptUrl = uriTmp;
+		if (uriTmp.indexOf("?")>0){
+			//strSctiptUrl = strSctiptUrl.substring(0,uriTmp.indexOf("?") );
+			strSctiptUrl += "&";
+		}else{
+			strSctiptUrl += "?";
+		}
+		strSctiptUrl += "lllililIILIllillILlIlLI1="+uriTmp.length()+"&skip=yes&hash="+uriTmp.hashCode()+"&ts="+System.currentTimeMillis();
+		
+		 
+		String[] args = new String[]{scriptPath, "-i", "1", strSctiptUrl};
 		ByteArrayOutputStream baOut = new ByteArrayOutputStream();
 		ByteArrayOutputStream baErr = new ByteArrayOutputStream();
 		PrintStream myOut = new PrintStream(baOut);
-		PrintStream myErr = new PrintStream(baErr);
-		final String scriptPath = SServlet.class.getClassLoader(). getResource("beautifyALL.js").toExternalForm();
-		String[] args = new String[]{scriptPath, "-i", "1", uriTmp+ "?skip=yes"};
-					
+		PrintStream myErr = new PrintStream(baErr);					
 		Main.setOut( myOut );
 		Main.setErr( myErr );
 		

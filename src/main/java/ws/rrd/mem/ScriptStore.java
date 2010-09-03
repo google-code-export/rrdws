@@ -52,7 +52,9 @@ public class ScriptStore {
 			scriptValue.addReffer(refPar);
 			scriptStore.put(cacheKey, scriptValue );
 		}  else{
-			scriptValue.addReffer(refPar);
+			// store new-value
+			scriptValue.addReffer(refPar); 
+			scriptValue.setValue(value);
 			scriptStore.put(cacheKey, scriptValue );			
 		}
 		return scriptValue;
