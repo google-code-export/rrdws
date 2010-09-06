@@ -162,7 +162,15 @@ public class LServlet extends HttpServlet {
 			urlStr  = urlStr.replace(" ", "%20").replace("\t", "%090");
 			// http://it-ru.de/forum/viewtopic.php?t=182374&amp;postdays=0&amp;postorder=asc&amp;start=15
 			urlStr  = urlStr.replace("&amp;", "&");
-			final UrlFetchTest urlFetchTest = new UrlFetchTest();
+			HttpSession sessionTmp = req.getSession();
+			
+			UrlFetchTest urlFetcherTmp = (UrlFetchTest) sessionTmp.getAttribute("UrlFetcher");
+			if (urlFetcherTmp == null){
+				urlFetcherTmp = new UrlFetchTest(sessionTmp);
+				sessionTmp.setAttribute("UrlFetcher",urlFetcherTmp);
+			}
+			
+			
 			HttpResponse xRespTmp = null ;
 
 			if ("POST".equals( req.getMethod() ) && ! isRootReq(req) ){
@@ -176,10 +184,11 @@ public class LServlet extends HttpServlet {
 		            // Parse the request
 		            items = upload.parseRequest(req);
 			    }				
-				xRespTmp = urlFetchTest.fetchResp(urlStr, headsToResend,	req.getParameterMap(), items);
+				Map parameterMap = req.getParameterMap();
+				xRespTmp = urlFetcherTmp.fetchResp(urlStr, headsToResend,	parameterMap, items);
 			}				
 			else{
-				xRespTmp = urlFetchTest.fetchResp(urlStr, headsToResend);
+				xRespTmp = urlFetcherTmp.fetchResp(urlStr, headsToResend);
 			}
 			if (xRespTmp.getStatusLine().getStatusCode() == 401){
 				resp.setStatus(401);
@@ -374,8 +383,12 @@ public class LServlet extends HttpServlet {
 		.replace("URL(/", "URL (/l.gif?")
 		.replace("Url(/", "URL (/l.gif?")
 		.replace("url ( /", "URL (/l.gif?")
+		
+		.replace("url(", "url(  "+SwapServletUrl.replace("/l/",undescoredProtocol(urlStr))+stripFileName(  stripProtocol(urlStr)))
+		
 		.replace("URL (/l.gif?", "url(/l.gif?")
 		// url(http://maps.gstatic.com
+		.replace("url(http://", "url(hTtP://"+SwapServletUrl.replace("/l/","/F/h_t_t_p_://"))
 		.replace("url(http://", "url(hTtP://"+SwapServletUrl.replace("/l/","/F/h_t_t_p_://"))
 		.replace("url(https://", "url(hTtPs://"+SwapServletUrl.replace("/l/","/F/h_t_t_p_s_://"))
 		
@@ -385,6 +398,16 @@ public class LServlet extends HttpServlet {
 		outTmp.write(xCSS.getBytes());
 		outTmp.flush();
 		return outTmp;
+	}
+
+	private String undescoredProtocol(String urlStr) {
+		return urlStr.startsWith("https://")? "/F/h_t_t_p_s_://":"/F/h_t_t_p_://";
+	}
+	private String stripProtocol(String urlStr) {
+		return urlStr.startsWith("https://")? urlStr.substring("https://".length()):urlStr.substring("http://".length());
+	}
+	private String stripFileName(String urlStr) {
+		return urlStr.endsWith("/")? urlStr :urlStr.substring(0, urlStr.lastIndexOf("/"))+"/";
 	}
 
 	private ServletOutputStream performBinary(HttpServletResponse resp,
@@ -598,7 +621,7 @@ public class LServlet extends HttpServlet {
 			"Accept-Language",
 			//"Accept-Encoding",
 			"Referer", 
-			"Cookie",
+//			"Cookie",
 			"Cache-Control",
 			"User-Agent",
 			"Cookie2",

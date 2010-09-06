@@ -29,11 +29,12 @@ public class SServlet extends HttpServlet{ /* SCRIPT-mastering servlet*/
 		
 			if (!"yes".equals( req.getParameter("skip") )){ 
 				synchronized(hashTmp){
+					System.out.println("LEVEL == ["+level +"]" );
 					scriptValue = performFormatJS(uriTmp, scriptValue);
 					scriptTmp = ScriptStore.getInstanse().putOrCreate(uriTmp, scriptValue, uriTmp);
 				}
 			} else{
-				System.out.println("gives back cached "+scriptValue);
+				System.out.println("#"+level+"#gives back cached "+scriptValue);
 			} 
 		
 		String linesTmp[] = scriptValue.split("\n");
@@ -51,9 +52,10 @@ public class SServlet extends HttpServlet{ /* SCRIPT-mastering servlet*/
 		out.write(scriptValue.getBytes());
 	}
 
+	static int level = 0;
 	
 	public static String performFormatJS(String uriTmp, String scriptValue) {//, <-- ScriptItem scriptTmp
-		
+		level ++;
 
 		final String scriptPath = SServlet.class.getClassLoader(). getResource("beautifyALL.js").toExternalForm();
 		String strSctiptUrl = uriTmp;
@@ -63,19 +65,27 @@ public class SServlet extends HttpServlet{ /* SCRIPT-mastering servlet*/
 		}else{
 			strSctiptUrl += "?";
 		}
-		strSctiptUrl += "lllililIILIllillILlIlLI1="+uriTmp.length()+"&skip=yes&hash="+uriTmp.hashCode()+"&ts="+System.currentTimeMillis();
+		strSctiptUrl += "lllililII="+level+"&LIllillILlIlLI1="+uriTmp.length()+"&skip=yes&hash="+uriTmp.hashCode()+"&ts="+System.currentTimeMillis();
 		
 		 
 		String[] args = new String[]{scriptPath, "-i", "1", strSctiptUrl};
+
 		ByteArrayOutputStream baOut = new ByteArrayOutputStream();
 		ByteArrayOutputStream baErr = new ByteArrayOutputStream();
 		PrintStream myOut = new PrintStream(baOut);
 		PrintStream myErr = new PrintStream(baErr);					
-		Main.setOut( myOut );
-		Main.setErr( myErr );
 		
 		try{
-			Main.main(args );
+			synchronized (Main.class) {
+
+				if (1==2){
+					Main.setOut( myOut );
+					Main.setErr( myErr );						
+					Main.main(args );
+				}else{
+					return scriptValue;
+				}
+			}
 		}catch(java.security.AccessControlException e){				
 			e.printStackTrace(myErr);
 		}catch(java.lang.SecurityException e){
@@ -83,7 +93,9 @@ public class SServlet extends HttpServlet{ /* SCRIPT-mastering servlet*/
 			e.printStackTrace(myErr);
 		}catch(Throwable e){
 			e.printStackTrace(myErr);
-		} 
+		}finally{
+			level --;
+		}
 		if (baErr.toString().length() > 0 && baErr.toString().indexOf( "exitVM" )==-1){
 			System.out.println(baOut.toString());
 			//scriptValue = scriptTmp.getValue();
