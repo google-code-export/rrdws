@@ -3,8 +3,7 @@
  *    *
  **************************************************************************/
 package org.vietspider.html.parser;
-
-import java.util.Iterator;
+ 
 import java.util.List;
 
 import org.vietspider.html.HTMLDocument;
@@ -12,6 +11,7 @@ import org.vietspider.html.HTMLNode;
 import org.vietspider.html.Name;
 import org.vietspider.html.NodeConfig;
 import org.vietspider.token.TypeToken;
+import org.vietspider.token.attribute.Attribute;
 /**
  *  Author : Nhu Dinh Thuan
  *          Email:nhudinhthuan@yahoo.com
@@ -38,6 +38,12 @@ final class DOMParser {
         document.setDoctype(temp);
         temp = tokens.pop();
         continue;
+      }else if(temp.isNode(Name.HTML)) {
+    	  for (Attribute e : temp.getAttributes()){
+    		  document.getRoot().getAttributes().add(e) ;    		  
+    	  }
+    	  temp = tokens.pop();          
+          continue;
       }
       
       NodeConfig config = temp.getConfig();
