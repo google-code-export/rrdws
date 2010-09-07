@@ -498,16 +498,26 @@ public class UrlFetchTest implements Serializable{
 	 */
 	private Map<String, List<Cookie>> getOrCreateStore() {
 		
-		Map<String, List<Cookie>> mCookieJar = (Map<String, List<Cookie>>) session 
-				.getAttribute(COOKIES_STORE);
+		//Map<String, List<Cookie>> mCookieJar = null;
+		try{
+			mCookieJar = (Map<String, List<Cookie>>) session .getAttribute(COOKIES_STORE);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
 		if (null == mCookieJar) {
 			mCookieJar = new HashMap<String, List<Cookie>>(); // turn on
 			// cookie
 			// processing
-			session.setAttribute(COOKIES_STORE, mCookieJar);
+			try{
+				session.setAttribute(COOKIES_STORE, mCookieJar);
+			}catch (Exception e) {
+				// TODO: handle exception
+			}			
 		}
 		return mCookieJar;
 	}
+	
+	transient Map<String, List<Cookie>> mCookieJar = null;
 
 	/**
 	 * Generate a HTTP cookie header value string from the cookie jar.
