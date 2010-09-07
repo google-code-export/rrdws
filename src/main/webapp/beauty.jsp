@@ -10,4 +10,4 @@ boolean isBeauty = ! root.isBeautify();
 root.setBeautify(isBeauty);
 String imgName = isBeauty? "beauty.jpeg":"girl.jpeg";
 %><%@page import="ws.rrd.server.LServlet"%>
-<img src="<%=LServlet.SwapServletUrl %>/../img/<%=imgName%>">
+<img src="<%=LServlet.SwapServletUrl %>../img/<%=imgName%>">
