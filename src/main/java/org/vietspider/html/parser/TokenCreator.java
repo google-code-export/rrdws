@@ -103,7 +103,7 @@ public final class TokenCreator {
         return findEndScript(data, new char[] {'s','t','y','l','e'}, end);
     } else if(name == Name.NOSCRIPT){
         return findEndScript(data, new char[]{'n','o','s','c','r','i','p','t'}, end);
-    }
+    } 
     return end;
   }  
 

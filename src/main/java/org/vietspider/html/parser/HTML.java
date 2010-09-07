@@ -114,7 +114,7 @@ import org.vietspider.token.TypeToken;
   ),
   @NodeConfig (name = Name.HEAD, 
       start = Tag.OPTIONAL, end = Tag.OPTIONAL, parent = {Name.HTML},
-      children = {Name.TITLE, Name.META, Name.LINK, Name.SCRIPT, Name.NOSCRIPT, Name.STYLE, Name.BASE},
+      children = {Name.TITLE, Name.META, Name.COMMENT, Name.LINK, Name.SCRIPT, Name.NOSCRIPT, Name.STYLE, Name.BASE},
       type = HtmlContent.class, only = true
   ),
   @NodeConfig (name = Name.HR, end  = Tag.FORBIDDEN, type = Block.class),

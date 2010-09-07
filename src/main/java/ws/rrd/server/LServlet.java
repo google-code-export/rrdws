@@ -188,7 +188,7 @@ public class LServlet extends HttpServlet {
 				xRespTmp = urlFetcherTmp.fetchResp(urlStr, headsToResend,	parameterMap, items);
 			}				
 			else{
-				xRespTmp = urlFetcherTmp.fetchResp(urlStr, headsToResend);
+				xRespTmp = urlFetcherTmp.fetchGetResp(urlStr, headsToResend);
 			}
 			if (xRespTmp.getStatusLine().getStatusCode() == 401){
 				resp.setStatus(401);

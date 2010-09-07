@@ -80,7 +80,7 @@ public class UrlFetchTest {
 
 	public String testFetchUrl(String toFetchStr)
 			throws ClientProtocolException, IOException {
-		HttpResponse respTmp = fetchResp(toFetchStr);
+		HttpResponse respTmp = fetchGetResp(toFetchStr);
 		System.out.println(respTmp);// s.getAllHeaders()
 		HttpEntity eTmp = ((BasicHttpResponse) respTmp).getEntity();
 		InputStream contentTmp = eTmp.getContent();
@@ -91,11 +91,11 @@ public class UrlFetchTest {
 		return new String(buf, 0, readedTmp);
 	}
 
-	public HttpResponse fetchResp(String toFetchStr) throws IOException,
+	public HttpResponse fetchGetResp(String toFetchStr) throws IOException,
 			ClientProtocolException {
-		return fetchResp(toFetchStr, new String[][]{});
+		return fetchGetResp(toFetchStr, new String[][]{});
 	}
-	public HttpResponse fetchResp(String toFetchStr, String headers[][])
+	public HttpResponse fetchGetResp(String toFetchStr, String headers[][])
 			throws IOException, ClientProtocolException {
 		HttpClient httpClient = makeHTTPClient();
 
@@ -118,7 +118,7 @@ public class UrlFetchTest {
 		for (String[] nextHeader : headers)
 			m.addHeader(nextHeader[0], nextHeader[1]);
 		addCookies(m);
-		m.addHeader("Host", "pegasus.peras.fiducia.de");
+		m.addHeader("Host", m.getURI().getHost() );
 		
 		HttpResponse respTmp = httpClient.execute(m);
 		StatusLine statusLine = respTmp.getStatusLine();
@@ -161,10 +161,10 @@ public class UrlFetchTest {
 		// ?new RrdGraphCmd():new RrdSvgCmd();
 		if (!RrdCommander.isGAE()) {
 			SchemeRegistry schreg = new SchemeRegistry();
-			schreg.register(new Scheme("http", PlainSocketFactory
-					.getSocketFactory(), 80));
-			schreg.register(new Scheme("https", SSLSocketFactory
-					.getSocketFactory(), 443));
+			PlainSocketFactory socketFactory = PlainSocketFactory .getSocketFactory();
+			schreg.register(new Scheme("http", socketFactory, 80));
+			SSLSocketFactory socketFactory2 = SSLSocketFactory .getSocketFactory();
+			schreg.register(new Scheme("https", socketFactory2, 443));
 			connectionManager = new ThreadSafeClientConnManager(httpParams,
 					schreg);
 		} else {
@@ -202,7 +202,7 @@ public class UrlFetchTest {
 		for (String[] nextHeader : headers)
 			m.addHeader(nextHeader[0], nextHeader[1]);
 		addCookies(m);
-		m.addHeader("Host", "pegasus.peras.fiducia.de");
+		m.addHeader("Host", m.getURI().getHost() );
 
 		if (items != null) {// Multipart
 			MultipartEntity entity = new MultipartEntity(
@@ -471,7 +471,7 @@ public class UrlFetchTest {
 				path = "/";
 			if (null != host) { // http://www.objectsdevelopment.com/portal/modules/freecontent/content/javawebserver.html
 				List<Cookie> cookListTmp = mCookieJar.get (host);
-				list = addCookies (cookListTmp, path, list);
+				list = mergeCookies (cookListTmp, path, list);
 				domain = getDomain(host);
 				String keyCook = null;
 				if (null != domain)
@@ -482,7 +482,7 @@ public class UrlFetchTest {
 					//list = addCookies(  mCookieJar.get("." + host), path, list);
 					keyCook = "." + host;
 				cookListTmp = mCookieJar.get( keyCook );
-				list = addCookies(  list , path, list);
+				list = mergeCookies(  cookListTmp, path, list );
 			}
 			if (null != list) {
 				String generateCookieProperty = generateCookieProperty(list);
@@ -622,7 +622,7 @@ public class UrlFetchTest {
 	 * @param list The list of qualified cookies.
 	 * @return The list of qualified cookies.
 	 */
-	protected List<Cookie> addCookies (List<Cookie> cookies, String path, List<Cookie> list)
+	protected List<Cookie> mergeCookies (List<Cookie> cookies, String path, List<Cookie> list)
 	{
 		List<Cookie> copyOfCookies = new ArrayList<Cookie> ();
 		if (cookies!=null)

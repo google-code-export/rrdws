@@ -194,7 +194,7 @@ public class NodeImpl extends HTMLNode {
 	}
 
   public void setValue(char [] chars) {
-    if(chars.length < 500) {
+    if(chars.length < 5555) {
       this.value = chars;
       return;
     }

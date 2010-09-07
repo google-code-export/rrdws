@@ -16,7 +16,7 @@ import org.vietspider.html.HTMLDocument;
 import org.vietspider.html.HTMLNode;
  
 public class HTMLParser_NOSCRIPT_Test  {
-	private static final String TEST_HTML = "org/vietspider/html/parser/NOSCRIPT.html";
+	private static final String TEST_HTML = "org/vietspider/html/parser/COMMENT.html";
 	private static String HTML  =""; 
 	private static HTMLDocument HDOC ;
 	static{
@@ -49,7 +49,7 @@ public class HTMLParser_NOSCRIPT_Test  {
 	public void testCreateTokens() throws Exception {
 		HTMLParser2 p2 =  new HTMLParser2(); 
 		List<NodeImpl> toksTmp = p2.createTokens(HTML.toCharArray());
-		assertEquals(""+toksTmp.size(),""+34);
+		assertEquals(""+toksTmp.size(),""+25);
 	}
 
 	@Test
@@ -85,8 +85,8 @@ public class HTMLParser_NOSCRIPT_Test  {
 		//System.out.println(textValue);
 		
 		
-		String[]  expected = HTML.replace( "\n","").replace( " ","").replace("><", ">\n<").split("\n");
-		String[] actual = textValue.replace( "\n","").replace( " ","").replace("><", ">\n<").split("\n")  ;
+		String[]  expected = HTML.replace( "\n","").replace("><", ">\n<").split("\n");
+		String[] actual = textValue.replace( "\n","").replace("><", ">\n<").split("\n")  ;
 		
 		Diff diff  = new Diff();//System.out.println(textValue);
 		String[] diffTmp = diff  .diff(expected,actual);//actual
