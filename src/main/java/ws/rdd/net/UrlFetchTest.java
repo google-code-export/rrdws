@@ -2,6 +2,7 @@ package ws.rdd.net;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -61,19 +62,24 @@ import com.no10x.cache.MemoryFileItem;
  * 
  * Creation: 08.04.2010::12:07:00<br>
  */
-public class UrlFetchTest {
+public class UrlFetchTest implements Serializable{
+	/**
+	 * @author vipup
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private static final String COOKIES_STORE = "COOKIES_STORE";
 
-	private HttpSession session;
+	transient private HttpSession session;
 
 	/**
 	 * Cookie expiry date format for parsing.
 	 */
-	static protected SimpleDateFormat mFormat = new SimpleDateFormat(
+	volatile static protected SimpleDateFormat mFormat = new SimpleDateFormat(
 			"EEE, dd-MMM-yy kk:mm:ss z");
 
 	public UrlFetchTest(HttpSession sessionTmp) {
-		this.session = sessionTmp;
+		this.session = sessionTmp ;
 	}
 
 	public UrlFetchTest() {
@@ -446,8 +452,9 @@ public class UrlFetchTest {
 	 *            The cookie to add.
 	 * @param domain
 	 *            The domain to use in case the cookie has no domain attribute.
+	 * @param request 
 	 */
-	public void setCookie(Cookie cookie, String domain) {
+	public void setCookie(Cookie cookie, String domain, HttpUriRequest request) {
 		String path;
 		Cookie probe;
 		boolean found; // flag if a cookie with current name is already there
@@ -490,7 +497,8 @@ public class UrlFetchTest {
 	 * @return
 	 */
 	private Map<String, List<Cookie>> getOrCreateStore() {
-		Map<String, List<Cookie>> mCookieJar = (Map<String, List<Cookie>>) session
+		
+		Map<String, List<Cookie>> mCookieJar = (Map<String, List<Cookie>>) session 
 				.getAttribute(COOKIES_STORE);
 		if (null == mCookieJar) {
 			mCookieJar = new HashMap<String, List<Cookie>>(); // turn on
@@ -581,7 +589,7 @@ public class UrlFetchTest {
 			String domain = cookie.getDomain();
 			if (null == domain)
 				domain = request.getURI().getHost();
-			setCookie(cookie, domain);
+			setCookie(cookie, domain,request);
 		}
 	}
 
