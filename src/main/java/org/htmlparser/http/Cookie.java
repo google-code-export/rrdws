@@ -12,7 +12,11 @@ public class Cookie
     implements Cloneable, Serializable
 {
 
-    public Cookie(String name, String value)
+    /**
+	 * @author vipup
+	 */
+	private static final long serialVersionUID = -6828169426773305291L;
+	public Cookie(String name, String value)
         throws IllegalArgumentException
     {
         if(!isToken(name) || name.equalsIgnoreCase("Comment") || name.equalsIgnoreCase("Discard") || name.equalsIgnoreCase("Domain") || name.equalsIgnoreCase("Expires") || name.equalsIgnoreCase("Max-Age") || name.equalsIgnoreCase("Path") || name.equalsIgnoreCase("Secure") || name.equalsIgnoreCase("Version"))
@@ -174,7 +178,7 @@ public class Cookie
         return ret.toString();
     }
 
-    private static final String SPECIALS = "()<>@,;:\\\"/[]?={} \t";
+    //private static final String SPECIALS = "()<>@,;:\\\"/[]?={} \t";
     protected String mName;
     protected String mValue;
     protected String mComment;
