@@ -15,12 +15,12 @@ import org.junit.Test;
 import org.vietspider.html.HTMLDocument;
 import org.vietspider.html.HTMLNode;
  
-public class HTMLParser_NOSCRIPT_Test  {
-	private static final String TEST_HTML = "org/vietspider/html/parser/COMMENT.html";
+public class HTMLParser_COMMENT_Test  {
+	private static final String TEST_HTML = "org/vietspider/html/parser/NOSCRIPT.html";
 	private static String HTML  =""; 
 	private static HTMLDocument HDOC ;
 	static{
-		InputStream inRes = HTMLParser_NOSCRIPT_Test.class.getClassLoader().getResourceAsStream(TEST_HTML);
+		InputStream inRes = HTMLParser_COMMENT_Test.class.getClassLoader().getResourceAsStream(TEST_HTML);
 		InputStreamReader in  = new InputStreamReader (inRes);
 		BufferedReader readerTmp = new BufferedReader(in);
 		try {
@@ -49,7 +49,7 @@ public class HTMLParser_NOSCRIPT_Test  {
 	public void testCreateTokens() throws Exception {
 		HTMLParser2 p2 =  new HTMLParser2(); 
 		List<NodeImpl> toksTmp = p2.createTokens(HTML.toCharArray());
-		assertEquals(""+toksTmp.size(),""+25);
+		assertEquals(""+toksTmp.size(),""+34);
 	}
 
 	@Test
@@ -85,12 +85,12 @@ public class HTMLParser_NOSCRIPT_Test  {
 		//System.out.println(textValue);
 		
 		
-		String[]  expected = HTML.toLowerCase(). replace( "\n","").replace( " ","").replace("><", ">\n<").split("\n");
-		String[] actual = textValue.toLowerCase(). replace( "\n","").replace( " ","").replace("><", ">\n<").split("\n")  ;
+		String[]  expected = HTML.replace( "\n","").replace( " ","").replace("><", ">\n<").split("\n");
+		String[] actual = textValue.replace( "\n","").replace( " ","").replace("><", ">\n<").split("\n")  ;
 		
 		Diff diff  = new Diff();//System.out.println(textValue);
 		String[] diffTmp = diff  .diff(expected,actual);//actual
-		assertEquals(diffTmp.length, 8); // TODO 5 -> 0
+		assertEquals(diffTmp.length, 5); // TODO 5 -> 0
 	 
 		
 	}
