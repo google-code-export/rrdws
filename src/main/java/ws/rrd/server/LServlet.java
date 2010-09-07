@@ -185,7 +185,7 @@ public class LServlet extends HttpServlet {
 		            items = upload.parseRequest(req);
 			    }				
 				Map parameterMap = req.getParameterMap();
-				xRespTmp = urlFetcherTmp.fetchResp(urlStr, headsToResend,	parameterMap, items);
+				xRespTmp = urlFetcherTmp.fetchPostResp(urlStr, headsToResend,	parameterMap, items);
 			}				
 			else{
 				xRespTmp = urlFetcherTmp.fetchGetResp(urlStr, headsToResend);

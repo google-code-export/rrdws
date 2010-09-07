@@ -373,31 +373,45 @@ private static final boolean TRACE = false;
 	return linkPar;
 }
 
-private static String prepareLinkValue(URL home, String value) {
-	String homeStr = ""+home;
-	  if ( value.startsWith("/")){ 
-		  String fileNameTmp =home.getFile() ;
-		  String sBaseTmp = (""+home);
-		if("/".equals( fileNameTmp )) // assums home will be always with "/"
-										// at the end
-			  homeStr = sBaseTmp;
-		else {
-			int indexOfFileName = sBaseTmp.indexOf( fileNameTmp );
-			if (indexOfFileName>0)
-				homeStr = sBaseTmp.substring(0, indexOfFileName ) +"/";
+	private static String prepareLinkValue(URL home, String value) {
+		String homeStr = "" + home;
+		if (value.startsWith("/")) {
+			String fileNameTmp = home.getFile();
+			String sBaseTmp = ("" + home);
+			if ("/".equals(fileNameTmp)) // assums home will be always with
+											// "/"
+				// at the end
+				homeStr = sBaseTmp;
+			else {
+				int indexOfFileName = sBaseTmp.indexOf(fileNameTmp);
+				if (indexOfFileName > 0)
+					homeStr = sBaseTmp.substring(0, indexOfFileName) + "/";
+				else
+					homeStr = sBaseTmp + "/";
+			}
+			value = (homeStr + value.substring(1, value.length())); // createFullSingleLink
+			// #3
+		} else if (value.startsWith(".."))  {
+			String uri = home.toString(); 
+			int srvUrlLen = (home.getProtocol().length()+home.getHost().length());
+			if (uri.length() > srvUrlLen )uri = uri.substring(0, uri.lastIndexOf("/"));
+			//if (uri.length() > srvUrlLen )uri = uri.substring(0, uri.lastIndexOf("/") );
+			uri += value.substring(2);
+			uri += "";
+			value = uri;
+			// #2
+		} else {
+			homeStr = homeStr.substring(0, homeStr.lastIndexOf("/") + 1);
+			if (value.indexOf(homeStr) == 0)
+				value = value;
+			else if (value.indexOf("http://") == 0
+					|| value.indexOf("https://") == 0)
+				value = value;
 			else
-				homeStr = sBaseTmp +"/";
+				value = homeStr + value;
 		}
-		value = (homeStr + value.substring(1,value.length())); // createFullSingleLink
-																// #2
-	  }else{
-		  homeStr = homeStr.substring(0,homeStr.lastIndexOf("/")+1); 
-		  if (value.indexOf(homeStr)== 0 ) value = value;
-		  else if (value.indexOf("http://")==0  ||value.indexOf("https://")==0  ) value = value;
-		  else value =  homeStr + value;  
-	  }
-	return value;
-}
+		return value;
+	}
 
 	public static  String encode(String swapServletUrl2, String value) {
 		if (value.startsWith(swapServletUrl2)) return value;
