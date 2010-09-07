@@ -16,7 +16,7 @@ import org.vietspider.html.HTMLDocument;
 import org.vietspider.html.HTMLNode;
  
 public class HTMLParser_NOSCRIPT_Test  {
-	private static final String TEST_HTML = "org/vietspider/html/parser/COMMENT.html";
+	private static final String TEST_HTML = "org/vietspider/html/parser/NOSCRIPT.html";
 	private static String HTML  =""; 
 	private static HTMLDocument HDOC ;
 	static{
@@ -49,7 +49,7 @@ public class HTMLParser_NOSCRIPT_Test  {
 	public void testCreateTokens() throws Exception {
 		HTMLParser2 p2 =  new HTMLParser2(); 
 		List<NodeImpl> toksTmp = p2.createTokens(HTML.toCharArray());
-		assertEquals(""+toksTmp.size(),""+25);
+		assertEquals(""+toksTmp.size(),""+34);
 	}
 
 	@Test
@@ -90,7 +90,7 @@ public class HTMLParser_NOSCRIPT_Test  {
 		
 		Diff diff  = new Diff();//System.out.println(textValue);
 		String[] diffTmp = diff  .diff(expected,actual);//actual
-		assertEquals(diffTmp.length, 8); // TODO 5 -> 0
+		assertEquals(diffTmp.length, 5); // TODO 5 -> 0
 	 
 		
 	}
