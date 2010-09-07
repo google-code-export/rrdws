@@ -921,9 +921,10 @@ public class ConnectionManager
                     list = addCookies ((Vector)mCookieJar.get ("." + host),
                         path, list);
             }
-            if (null != list)
-                connection.setRequestProperty ("Cookie",
-                    generateCookieProperty (list));
+            if (null != list) {
+				String generateCookieProperty = generateCookieProperty (list);
+				connection.setRequestProperty ("Cookie",  generateCookieProperty);
+			}
         }
     }
 

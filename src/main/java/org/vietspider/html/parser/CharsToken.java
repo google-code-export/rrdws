@@ -27,7 +27,8 @@ public class CharsToken extends Factory<NodeImpl> {
   
   public int create(char [] data, int start, int end, int type, Object...params){
     TokenCreator tokenCreator = ((TokenCreator)params[0]);
-	return tokenCreator.create(data, start, end, type, null);
+	int createdTmp = tokenCreator.create(data, start, end, type, null);
+	return createdTmp;
   }
 
   public HTMLDocument getDocument() { return document; }
