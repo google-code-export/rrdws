@@ -26,9 +26,7 @@ public class ExitTrappedException extends SecurityException {
 	static {
 		try{
 			smOld = System.getSecurityManager();
-			forbidSystemExitCall();
-			reseted = true;
-			log.info( "--------- exitVM WILL BE IGNORED! -------------");
+			forbidSystemExitCall(); 
 		}catch(Throwable e){
 			e.printStackTrace();
 		}
@@ -46,7 +44,11 @@ public class ExitTrappedException extends SecurityException {
 			}
 		};
 		try{
-			System.setSecurityManager(securityManager);
+			if (1==2){
+				System.setSecurityManager(securityManager);
+				reseted = true;
+				log.info( "--------- exitVM WILL BE IGNORED! -------------");				
+			}
 		}catch(Throwable e){
 			String msg = e.getMessage();
 			log.warning(msg);

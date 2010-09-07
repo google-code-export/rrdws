@@ -8,26 +8,28 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map; 
-import java.util.StringTokenizer; 
+import java.util.Map;
+import java.util.StringTokenizer;
 
-import  org.htmlparser.http.Cookie; 
-//import javax.servlet.http.Cookie; - setMaxAge >8E
+import org.htmlparser.http.Cookie; //import javax.servlet.http.Cookie; - setMaxAge >8E
 //import org.apache.commons.httpclient.Cookie;
 //import org.apache.http.cookie.Cookie;
 import javax.servlet.http.HttpSession;
 
-import net.sf.jsr107cache.Cache; 
+import net.sf.jsr107cache.Cache;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
@@ -36,7 +38,7 @@ import org.apache.http.conn.ssl.SSLSocketFactory;
 
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.ContentBody; 
+import org.apache.http.entity.mime.content.ContentBody;
 import org.apache.http.entity.mime.content.InputStreamBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
@@ -91,55 +93,59 @@ public class UrlFetchTest {
 		return new String(buf, 0, readedTmp);
 	}
 
-	public HttpResponse fetchGetResp(String toFetchStr) throws IOException,
+	/**
+	 * @author vipup
+	 * @param toFetchStr
+	 * @param httpClient
+	 * @param m
+	 * @param respTmp
+	 * @return
+	 * @throws IOException
+	 * @throws ClientProtocolException
+	 */
+	private HttpResponse makeAuth(String toFetchStr, HttpClient httpClient,
+			HttpUriRequest m, HttpResponse respTmp) throws IOException,
 			ClientProtocolException {
-		return fetchGetResp(toFetchStr, new String[][]{});
-	}
-	public HttpResponse fetchGetResp(String toFetchStr, String headers[][])
-			throws IOException, ClientProtocolException {
-		HttpClient httpClient = makeHTTPClient();
-
-		String schemes[] = {"https", "http"};
-		for (String scheme : schemes) {
-			String proxHostTmp = System.getProperty(scheme + ".proxyHost");// System.getProperties();
-			String proxyPortTmp = System.getProperty(scheme + ".proxyPort");// System.setProperty("http.proxyHost","localhost");
-			if (("" + proxHostTmp + proxyPortTmp).indexOf("null") == -1) {
-				org.apache.http.HttpHost proxyTmp = new org.apache.http.HttpHost(
-						proxHostTmp, Integer.parseInt(proxyPortTmp), scheme);
-				httpClient.getParams().setParameter(
-						ConnRoutePNames.DEFAULT_PROXY, proxyTmp);
-			}
-		}
-
-		String fetchUrl = null == toFetchStr
-				? "http://www.fiducia.de/service/suchergebnis.html?searchTerm=java"
-				: toFetchStr;
-		HttpUriRequest m = new HttpGet(fetchUrl);
-		for (String[] nextHeader : headers)
-			m.addHeader(nextHeader[0], nextHeader[1]);
-		addCookies(m);
-		m.addHeader("Host", m.getURI().getHost() );
-		
-		HttpResponse respTmp = httpClient.execute(m);
 		StatusLine statusLine = respTmp.getStatusLine();
 		String statusTmp = statusLine.toString();
+		if (m.getHeaders("Authorization").length>0){
+			Cache cacheAuth = Manager.getCache(CACHE_NAME);
+			String uri = toFetchStr;
+			int appUrlLen = uri.lastIndexOf( "/");				
+			String appUri = uri.substring(0, appUrlLen);
+			Header header = m.getHeaders("Authorization")[0];
+			cacheAuth.put(appUri,""+header.getValue() );			
+		}
 		if (statusTmp.indexOf("200 OK") > 0) {
 			System.out.println("resp.:" + statusLine);
+
 		} else if ("HTTP/1.1 401 Unauthorized".equals(statusTmp)) {
 			Cache cacheAuth = Manager.getCache(CACHE_NAME);
-			String basicAuth = (String) cacheAuth.get(toFetchStr);
+			String toFetchKey = toFetchStr.substring(0,toFetchStr.lastIndexOf("/") );
+			String basicAuth = (String) cacheAuth.get(toFetchKey); // auth is path (NOT File) related!
+			String uri = m.getURI().toString();
+			int domainUrlLen = uri.indexOf( m.getURI().getPath());			
+			while(basicAuth == null && toFetchKey.length()> domainUrlLen ){
+				toFetchKey = toFetchStr.substring(0,toFetchKey.lastIndexOf("/") );
+				basicAuth = (String) cacheAuth.get(toFetchKey);
+			}
+			
 			if (basicAuth != null) {// go forward with cached
-				m.addHeader("Authorization", "Basic " + basicAuth);
+				m.addHeader("Authorization", (basicAuth.startsWith("Basic ")?"":"Basic ") + basicAuth);
 				respTmp = httpClient.execute(m);
 			} else { // request auth from real user...
+				String bRealm = "Basic realm=\"$$$$$$\"";
+				Header[] hTmp = respTmp.getHeaders( "WWW-Authenticate");
+				if (hTmp.length == 0)
+					bRealm = bRealm.replace("$$$$$$", "Tomcat Manager Application");
+				else
+					bRealm = bRealm.replace("$$$$$$", ""+hTmp);
 				respTmp.addHeader("WWW-Authenticate",
-						"Basic realm=\"Tomcat Manager Application\"");
+						bRealm);
 				respTmp.setStatusCode(401);
 				respTmp.setStatusLine(statusLine);
 			}
-
 		}
-		this.parseCookies(m, respTmp);
 		return respTmp;
 	}
 	public static final String CACHE_NAME = UrlFetchTest.class.getName()
@@ -150,50 +156,65 @@ public class UrlFetchTest {
 		String valueTmp = new String(Base64Coder.encode(("iboserviceuser" + ":"
 				+ "iboserviceuser").getBytes()));
 		cacheAuth.put(
-				"https://pegasus.peras.fiducia.de/WebUrlaub27/Login.aspx",
+				"https://pegasus.peras.fiducia.de/WebUrlaub27/",
 				valueTmp);
 	}
 
 	public HttpClient makeHTTPClient() {
-		HttpParams httpParams = new BasicHttpParams();
+		HttpParams parmsTmp = new BasicHttpParams();
 
-		org.apache.http.conn.ClientConnectionManager connectionManager = null;
+		org.apache.http.conn.ClientConnectionManager cmTmp = null;
 		// ?new RrdGraphCmd():new RrdSvgCmd();
 		if (!RrdCommander.isGAE()) {
-			SchemeRegistry schreg = new SchemeRegistry();
-			PlainSocketFactory socketFactory = PlainSocketFactory .getSocketFactory();
-			schreg.register(new Scheme("http", socketFactory, 80));
-			SSLSocketFactory socketFactory2 = SSLSocketFactory .getSocketFactory();
-			schreg.register(new Scheme("https", socketFactory2, 443));
-			connectionManager = new ThreadSafeClientConnManager(httpParams,
-					schreg);
+			SchemeRegistry sregTmp = new SchemeRegistry();
+			PlainSocketFactory socketFactory = PlainSocketFactory
+					.getSocketFactory();
+			sregTmp.register(new Scheme("http", socketFactory, 80));
+			SSLSocketFactory socketFactory2 = SSLSocketFactory
+					.getSocketFactory();
+			sregTmp.register(new Scheme("https", socketFactory2, 443));
+			cmTmp = new ThreadSafeClientConnManager(parmsTmp, sregTmp);
 		} else {
-			connectionManager = new GAEConnectionManager();
+			cmTmp = new GAEConnectionManager();
 		}
-		HttpClient httpClient = new DefaultHttpClient(connectionManager,
-				httpParams);
-		return httpClient;
+		HttpClient cliTmp = new DefaultHttpClient(cmTmp, parmsTmp);
+		setupProxy(cliTmp);
+		return cliTmp;
 	}
 
-	public HttpResponse fetchResp(String toFetchStr, String[][] headers,
-			Map parameterMap) throws ClientProtocolException, IOException {
-		return fetchResp(toFetchStr, headers, parameterMap, null);
+	public HttpResponse fetchGetResp(String toFetchStr) throws IOException,
+			ClientProtocolException {
+		return fetchGetResp(toFetchStr, new String[][]{});
 	}
-	public HttpResponse fetchResp(String toFetchStr, String[][] headers,
+
+	public HttpResponse fetchPostResp(String toFetchStr, String[][] headers,
+			Map parameterMap) throws ClientProtocolException, IOException {
+		return fetchPostResp(toFetchStr, headers, parameterMap, null);
+	}
+
+	public HttpResponse fetchGetResp(String toFetchStr, String headers[][])
+			throws IOException, ClientProtocolException {
+		HttpClient httpClient = makeHTTPClient();
+		String fetchUrl = null == toFetchStr
+				? "http://www.fiducia.de/service/suchergebnis.html?searchTerm=java"
+				: toFetchStr;
+		HttpUriRequest m = new HttpGet(fetchUrl);
+		for (String[] nextHeader : headers)
+			m.addHeader(nextHeader[0], nextHeader[1]);
+		addCookies(m);
+		m.addHeader("Host", m.getURI().getHost());
+		m.addHeader("Referer", "https://pegasus.peras.fiducia.de/WebUrlaub27/Login.aspx");
+		HttpResponse respTmp = httpClient.execute(m);
+		respTmp = makeAuth(toFetchStr, httpClient, m, respTmp);
+		this.parseCookies(m, respTmp);
+		return respTmp;
+	}
+
+	public HttpResponse fetchPostResp(String toFetchStr, String[][] headers,
 			Map parameterMap, java.util.List<MemoryFileItem> items)
 			throws ClientProtocolException, IOException {
 		HttpClient httpClient = makeHTTPClient();
-		String schemes[] = {"https", "http", "ftp"};
-		for (String scheme : schemes) {
-			String proxHostTmp = System.getProperty(scheme + ".proxyHost");// System.getProperties();
-			String proxyPortTmp = System.getProperty(scheme + ".proxyPort");// System.setProperty("http.proxyHost","localhost");
-			if (("" + proxHostTmp + proxyPortTmp).indexOf("null") == -1) {
-				org.apache.http.HttpHost proxyTmp = new org.apache.http.HttpHost(
-						proxHostTmp, Integer.parseInt(proxyPortTmp), scheme);
-				httpClient.getParams().setParameter(
-						ConnRoutePNames.DEFAULT_PROXY, proxyTmp);
-			}
-		}
+		
 
 		String fetchUrl = null == toFetchStr
 				? "http://www.fiducia.de/service/suchergebnis.html?searchTerm=java"
@@ -201,8 +222,28 @@ public class UrlFetchTest {
 		HttpPost m = new HttpPost(fetchUrl);
 		for (String[] nextHeader : headers)
 			m.addHeader(nextHeader[0], nextHeader[1]);
-		addCookies(m);
-		m.addHeader("Host", m.getURI().getHost() );
+		addCookies(m);  
+ 
+		m.addHeader("Host", m.getURI().getHost());
+		//m.addHeader("Referer", "https://pegasus.peras.fiducia.de/WebUrlaub27/Login.aspx");
+		Header[] ctTmp = m.getHeaders("Content-Type");
+		if(ctTmp.length == 0){
+			//DEFAULT>>>Content-Type: application/x-www-form-urlencoded
+			m.addHeader("Content-Type", "application/x-www-form-urlencoded");
+			List<NameValuePair> listTmp= new ArrayList<NameValuePair>();
+			for (Object nextParName : parameterMap.keySet()) {
+				final String parName = "" + nextParName;
+				Object aString = parameterMap.get(parName);
+				final String valueTmp =  ((String[])  aString)[0]; //(((String[]) parameterMap.get(parName))[0]); 
+				NameValuePair newPaar = new  NameValuePair (){ 
+					public String getName() { return parName;  } 
+					public String getValue() {return valueTmp;  }
+				};
+				listTmp.add(newPaar );
+			}
+			HttpEntity entity =  new UrlEncodedFormEntity (listTmp);
+			m.setEntity(entity ); //sData = URLEncodedUtils.format(listTmp , "utf-8");
+		}
 
 		if (items != null) {// Multipart
 			MultipartEntity entity = new MultipartEntity(
@@ -215,25 +256,48 @@ public class UrlFetchTest {
 				entity.addPart(name, contentBody);
 			}
 			m.setEntity(entity);
-
 		}
+		HttpParams arg0 = httpClient.getParams();
 		for (Object nextParName : parameterMap.keySet()) {
-			String valueTmp = ""
-					+ (((String[]) parameterMap.get(nextParName))[0]);
-			HttpParams arg0 = httpClient.getParams();
-			m.setParams(arg0.setParameter("" + nextParName, valueTmp));
+			String parName = "" + nextParName;
+			Object aString = parameterMap.get(parName);
+			String valueTmp =  ((String[])  aString)[0]; //(((String[]) parameterMap.get(parName))[0]); 
+			arg0.setParameter(parName, valueTmp);
 		}
+		m.setParams(arg0);
 		HttpResponse respTmp = httpClient.execute(m);
-		if (respTmp.getStatusLine().toString().indexOf("200 OK") > 0) {
-			System.out.println("resp.:" + respTmp.getStatusLine());
-		} else {
-			m.addHeader("Authorization", "Basic "
-					+ new String(Base64Coder.encode(("iboserviceuser" + ":"
-							+ "iboserviceuser").getBytes())));
-			respTmp = httpClient.execute(m);
-		}
+		respTmp = makeAuth(toFetchStr, httpClient, m, respTmp);
+		StatusLine statusLine = respTmp.getStatusLine();
+		String statusTmp = statusLine.toString();
 		this.parseCookies(m, respTmp);
+		if ("HTTP/1.1 302 Found".equals(statusTmp)) {
+				String movedTo =""+ respTmp.getHeaders("Location")[0];
+				movedTo = movedTo.substring("Location: ".length()); 
+				String uri = m.getURI().toString();
+				int domainUrlLen = uri.indexOf( m.getURI().getPath());
+				movedTo = uri.substring(0,domainUrlLen)  +movedTo;
+				respTmp = fetchGetResp(movedTo, headers);
+		}
+		
 		return respTmp;
+	}
+
+	/**
+	 * @author vipup
+	 * @param httpClient
+	 */
+	private void setupProxy(HttpClient httpClient) {
+		String schemes[] = {"https", "http", "ftp"};
+		for (String scheme : schemes) {
+			String proxHostTmp = System.getProperty(scheme + ".proxyHost");// System.getProperties();
+			String proxyPortTmp = System.getProperty(scheme + ".proxyPort");// System.setProperty("http.proxyHost","localhost");
+			if (("" + proxHostTmp + proxyPortTmp).indexOf("null") == -1) {
+				org.apache.http.HttpHost proxyTmp = new org.apache.http.HttpHost(
+						proxHostTmp, Integer.parseInt(proxyPortTmp), scheme);
+				httpClient.getParams().setParameter(
+						ConnRoutePNames.DEFAULT_PROXY, proxyTmp);
+			}
+		}
 	}
 
 	/**
@@ -244,9 +308,9 @@ public class UrlFetchTest {
 	 *            The connection to extract cookie information from.
 	 */
 	public void parseCookies(HttpUriRequest request, HttpResponse response/*
-																	 * URLConnection
-																	 * connection
-																	 */) {
+																			 * URLConnection
+																			 * connection
+																			 */) {
 		Header[] setCookieHeaders;
 		List<Cookie> cookies;
 
@@ -272,8 +336,10 @@ public class UrlFetchTest {
 			// | "Version" "=" 1*DIGIT
 			cookies = new ArrayList<Cookie>();
 			String strCookieHeader = setCookieHeader.toString();
-			strCookieHeader = strCookieHeader.substring(strCookieHeader.indexOf( "Set-Cookie: ") +"Set-Cookie: ".length());
-			System.out.println("\"Set-Cookie: "+strCookieHeader +"\"");
+			strCookieHeader = strCookieHeader.substring(strCookieHeader
+					.indexOf("Set-Cookie: ")
+					+ "Set-Cookie: ".length());
+			System.out.println("\"Set-Cookie: " + strCookieHeader + "\"");
 			StringTokenizer tokenizer = new StringTokenizer(strCookieHeader,
 					";,", true);
 			cookie = null;
@@ -322,13 +388,16 @@ public class UrlFetchTest {
 						try {
 							Date date = mFormat.parse(value + comma + rest);
 							// http://download.oracle.com/javaee/1.4/api/javax/servlet/http/Cookie.html#setMaxAge(int)
-							//cookie.setMaxAge((int) (date.getTime() - System .currentTimeMillis()) / 1000);
+							// cookie.setMaxAge((int) (date.getTime() - System
+							// .currentTimeMillis()) / 1000);
 							cookie.setExpiryDate(date);
 						} catch (Exception pe)// catch (ParseException pe)
 						{
 							// ok now set it to 1 day!
-							//cookie.setMaxAge(24 * 60 * 60);
-							cookie.setExpiryDate(new Date(System.currentTimeMillis()+1000*24*60*60));
+							// cookie.setMaxAge(24 * 60 * 60);
+							cookie.setExpiryDate(new Date(System
+									.currentTimeMillis()
+									+ 1000 * 24 * 60 * 60));
 						}
 					} else if (key.equals("domain"))
 						cookie.setDomain(value);
@@ -344,11 +413,13 @@ public class UrlFetchTest {
 						cookie.setVersion(Integer.parseInt(value));
 					else if (key.equals("max-age")) {
 						Date date = new Date();
-						long then = date.getTime() + Integer.parseInt(value) * 1000;
+						long then = date.getTime() + Integer.parseInt(value)
+								* 1000;
 						date.setTime(then);
 						cookie.setExpiryDate(date);
 						// cookie.setMaxAge (date);
-						//cookie.setMaxAge((int) (date.getTime() - System .currentTimeMillis()) / 1000);
+						// cookie.setMaxAge((int) (date.getTime() - System
+						// .currentTimeMillis()) / 1000);
 					} else
 						// error,? unknown attribute,
 						// maybe just another cookie
@@ -423,8 +494,8 @@ public class UrlFetchTest {
 				.getAttribute(COOKIES_STORE);
 		if (null == mCookieJar) {
 			mCookieJar = new HashMap<String, List<Cookie>>(); // turn on
-																// cookie
-																// processing
+			// cookie
+			// processing
 			session.setAttribute(COOKIES_STORE, mCookieJar);
 		}
 		return mCookieJar;
@@ -470,24 +541,28 @@ public class UrlFetchTest {
 			if (0 == path.length())
 				path = "/";
 			if (null != host) { // http://www.objectsdevelopment.com/portal/modules/freecontent/content/javawebserver.html
-				List<Cookie> cookListTmp = mCookieJar.get (host);
-				list = mergeCookies (cookListTmp, path, list);
+				List<Cookie> cookListTmp = mCookieJar.get(host);
+				list = mergeCookies(cookListTmp, path, list);
 				domain = getDomain(host);
 				String keyCook = null;
 				if (null != domain)
-					//list = addCookies(  mCookieJar.get(domain), path, list);
+					// list = addCookies( mCookieJar.get(domain), path, list);
 					keyCook = domain;
 				else
 					// maybe it is the domain we're accessing
-					//list = addCookies(  mCookieJar.get("." + host), path, list);
+					// list = addCookies( mCookieJar.get("." + host), path,
+					// list);
 					keyCook = "." + host;
-				cookListTmp = mCookieJar.get( keyCook );
-				list = mergeCookies(  cookListTmp, path, list );
+				cookListTmp = mCookieJar.get(keyCook);
+				list = mergeCookies(cookListTmp, path, list);
 			}
 			if (null != list) {
 				String generateCookieProperty = generateCookieProperty(list);
-				generateCookieProperty  = generateCookieProperty .replace( "; HttpOnly=null" , "");
-				request.addHeader("Cookie", generateCookieProperty);
+				generateCookieProperty = generateCookieProperty.replace(
+						"; HttpOnly=null", "");
+				generateCookieProperty = "$Version=\"1\"; "
+						+ generateCookieProperty;
+				request.addHeader("Cookie", generateCookieProperty); // $Version="1";
 			}
 		}
 	}
@@ -542,7 +617,7 @@ public class UrlFetchTest {
 					ok = true;
 			}
 			if (ok) {
-				// so take everything  !
+				// so take everything !
 				server = tokenizer.nextToken();
 				length = server.length();
 				ret = host.substring(0);
@@ -612,49 +687,47 @@ public class UrlFetchTest {
 				ret = buffer.toString();
 		}
 		return (ret);
-		
+
 	}
 
 	/**
 	 * Add qualified cookies from cookies into list.
-	 * @param cookies The list of cookies to check (may be null).
-	 * @param path The path being accessed.
-	 * @param list The list of qualified cookies.
+	 * 
+	 * @param cookies
+	 *            The list of cookies to check (may be null).
+	 * @param path
+	 *            The path being accessed.
+	 * @param list
+	 *            The list of qualified cookies.
 	 * @return The list of qualified cookies.
 	 */
-	protected List<Cookie> mergeCookies (List<Cookie> cookies, String path, List<Cookie> list)
-	{
-		List<Cookie> copyOfCookies = new ArrayList<Cookie> ();
-		if (cookies!=null)
-			copyOfCookies .addAll(cookies);
-	    Date expires;
-	    Date now;
-	
-	    if (null != cookies)
-	    {
-	        now = new Date ();
-	        for (Cookie cookie :copyOfCookies)
-	        {
-	            
-	            expires = cookie.getExpiryDate ();
-	            if ((null != expires) && expires.before (now))
-	            {
-	                // clean original List from exired values
-	            	cookies.remove (cookie);
-	                //i--; // dick with the loop variable
-	            }
-	            else
-	                if (path.startsWith (cookie.getPath ()))
-	                {
-	                    if (null == list)
-	                        list = new ArrayList<Cookie> ();
-	                    if (list .indexOf(cookie)==-1)
-	                    	list.add(cookie);
-	                }
-	        }
-	    }
-	    
-	    return (list);
+	protected List<Cookie> mergeCookies(List<Cookie> cookies, String path,
+			List<Cookie> list) {
+		List<Cookie> copyOfCookies = new ArrayList<Cookie>();
+		if (cookies != null)
+			copyOfCookies.addAll(cookies);
+		Date expires;
+		Date now;
+
+		if (null != cookies) {
+			now = new Date();
+			for (Cookie cookie : copyOfCookies) {
+
+				expires = cookie.getExpiryDate();
+				if ((null != expires) && expires.before(now)) {
+					// clean original List from exired values
+					cookies.remove(cookie);
+					// i--; // dick with the loop variable
+				} else if (path.startsWith(cookie.getPath())) {
+					if (null == list)
+						list = new ArrayList<Cookie>();
+					if (list.indexOf(cookie) == -1)
+						list.add(cookie);
+				}
+			}
+		}
+
+		return (list);
 	}
 
 }
