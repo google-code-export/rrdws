@@ -1,14 +1,9 @@
 package ws.rrd.mem; 
-import java.util.Properties;
-import java.util.TreeMap;
-
-import com.no10x.cache.Manager;
- 
-
-import net.sf.jsr107cache.Cache;
-import net.sf.jsr107cache.CacheException;
-import net.sf.jsr107cache.CacheFactory;
-import net.sf.jsr107cache.CacheManager;
+import java.io.IOException; 
+import javax.script.ScriptException;
+import ws.rrd.server.SServlet;
+import com.no10x.cache.Manager;  
+import net.sf.jsr107cache.Cache; 
   
 /** 
  * <b>Description:TODO</b>
@@ -43,21 +38,71 @@ public class ScriptStore {
 		return (ScriptItem) scriptStore.get(key );
 	}
 
-	public ScriptItem putOrCreate(String cacheKey, String value, String refPar ) {
-		
-		ScriptItem scriptValue = (ScriptItem) scriptStore.get(cacheKey);
-		if (scriptValue == null){
-			scriptValue = new ScriptItem(value);
-			System.out.println("ScriptStore:: "+cacheKey +" == "+scriptValue);
-			scriptValue.addReffer(refPar);
-			scriptStore.put(cacheKey, scriptValue );
-		}  else{
-			// store new-value
-			scriptValue.addReffer(refPar); 
-			scriptValue.setValue(value);
-			scriptStore.put(cacheKey, scriptValue );			
+	public ScriptItem putOrCreate(String cacheKey, String value, String refPar ) { 
+		ScriptItem jsItem = (ScriptItem) scriptStore.get(cacheKey);
+		if (jsItem == null){ 
+			jsItem = new ScriptItem(value); 
+			jsItem.addReffer(refPar); 
+		}  else{  // only for existing entries
+			/*
+			 * <script type="text/javascript">
+   					mw.usability.addMessages({'vector-collapsiblenav-more':'More languages','vector-editwarning-warning':'Leaving this page may cause you to lose any changes you have made.\nIf you are logged in, you can disable this warning in the \"Editing\" section of your preferences.','vector-simplesearch-search':'Search','vector-simplesearch-containing':'containing...'});
+				</script>
+			 */
+			if (value.trim().toLowerCase().startsWith("<script")){
+				String newVal = "";
+				String[] lines =value.split("\n");
+				int i=0;
+				for (String sTmp :lines){
+					if (i ==0 || i==lines.length-1)
+						newVal += "/*";
+					newVal+= sTmp;
+					if (i ==0 || i==lines.length-1)
+						newVal += "*/";
+					newVal +="\n";
+					i++;
+				}
+				value = newVal;
+			}
+			jsItem.setValue(value); 
+			reformat(cacheKey, jsItem);		
+			jsItem.addReffer(refPar); 
 		}
-		return scriptValue;
+		
+		synchronized (SCRIPTSTORE) {
+			Object o = scriptStore.peek(cacheKey); 
+			if (jsItem != o) {// check similarity
+				o = scriptStore.remove(cacheKey);
+				if (1==2)System.out.println(o);
+				scriptStore.put(cacheKey, jsItem );
+			}
+		} 
+		return jsItem;
+	}
+
+
+	private void reformat(String cacheKey, ScriptItem jsItem) {
+		try{
+			String jsValue = jsItem.getValue();
+			jsValue  = SServlet. performFormatJS(cacheKey, jsValue );
+			
+ 
+			String linesTmp[] = jsValue.split("\n");
+			if (linesTmp[0].toLowerCase().trim().startsWith("<script"))
+			if (linesTmp[linesTmp.length-1].toLowerCase().trim().startsWith("</script")){
+				linesTmp[0] = "/*" +linesTmp[0] + "*/";
+				linesTmp[linesTmp.length-1] = "/*" +linesTmp[linesTmp.length-1] + "*/";
+				jsValue = "";
+				for (String nextLine:linesTmp)
+					jsValue += nextLine+"\n";
+			}
+			// http://stackoverflow.com/questions/18985/javascript-beautifier
+			jsItem.setValue( jsValue );
+		}catch(IOException e){
+			e.printStackTrace();
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

@@ -548,7 +548,7 @@ private static final boolean TRACE = false;
 
 				ScriptStore ssTmp = ScriptStore.getInstanse();
 				ScriptItem scriptTmp =  ssTmp .putOrCreate(cacheKey, value ,refPar);
-				
+				if (1==2) System.out.println(scriptTmp);
 				
 				String newLink = cacheKey;
 				newValue = newLink;

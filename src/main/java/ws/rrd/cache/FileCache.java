@@ -193,13 +193,9 @@ public class FileCache implements Cache {
 	}
 
 	
-	public Object peek(Object arg0) {
-		// TODO Auto-generated method stub
-		if (1 == 1)
-			throw new RuntimeException("not yet implemented since 14.04.2010");
-		else {
-			return null;
-		}
+	public Object peek(Object key) { 
+		// TODO impement HIT-rate
+			return this.get(key);
 	}
 
 	String toName(Object key){
