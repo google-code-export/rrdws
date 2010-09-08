@@ -364,11 +364,11 @@ public class LServlet extends HttpServlet {
 		}  
 	}
 
-	private static ServletOutputStream performCSS(HttpServletResponse resp,
+	static ServletOutputStream performCSS(HttpServletResponse resp,
 			String contextTypeStr, String urlStr, HttpResponse xRespTmp,
-			HttpEntity entity, String contextEncStr) throws IOException {
+			HttpEntity entity, String contextEncPar) throws IOException {
 		ServletOutputStream outTmp;
-		if (TRACE) log.warning("CSS contextTypeStr / contextEncStr:{"+contextTypeStr+" / "+contextEncStr +"}, url== ["+urlStr+"]");
+		if (TRACE) log.warning("CSS contextTypeStr / contextEncStr:{"+contextTypeStr+" / "+contextEncPar +"}, url== ["+urlStr+"]");
 		ByteArrayOutputStream oaos = new ByteArrayOutputStream();
 		entity.writeTo(oaos) ;
 		if (isGZip(xRespTmp)){
@@ -414,9 +414,9 @@ public class LServlet extends HttpServlet {
 		return urlStr.endsWith("/")? urlStr :urlStr.substring(0, urlStr.lastIndexOf("/"))+"/";
 	}
 
-	private static ServletOutputStream performBinary(HttpServletResponse resp,
+	static ServletOutputStream performBinary(HttpServletResponse resp,
 			String contextTypeStr, String urlStr, HttpResponse xRespTmp,
-			HttpEntity entity, String contextEncStr) throws IOException {
+			HttpEntity entity, String contextEncPar) throws IOException {
 		ServletOutputStream outTmp;
 		if (! "null".equals( contextTypeStr )){
 			String contypeTmp = contextTypeStr.substring("Content-Type:".length());
@@ -431,11 +431,11 @@ public class LServlet extends HttpServlet {
 		return outTmp;
 	}
 
-	private static ServletOutputStream performScript(HttpServletResponse resp,
+	static ServletOutputStream performScript(HttpServletResponse resp,
 			String contextTypeStr, String urlStr, HttpEntity entity,
-			String contextEncStr) throws IOException {
+			String contextEncPar) throws IOException {
 		ServletOutputStream outTmp;
-		if (TRACE) log.warning("JS contextTypeStr||contextEncStr:["+contextTypeStr+"||"+contextEncStr+"]  URL =:["+urlStr+"]");
+		if (TRACE) log.warning("JS contextTypeStr||contextEncStr:["+contextTypeStr+"||"+contextEncPar+"]  URL =:["+urlStr+"]");
 		
 		ScriptStore ssTmp = ScriptStore.getInstanse();
 		ScriptItem scriptTmp = ssTmp.getByURL( urlStr);
@@ -472,12 +472,12 @@ public class LServlet extends HttpServlet {
 		return outTmp;
 	}
 
-	private static boolean isCSS(String contextTypeStr) {
+	static boolean isCSS(String contextTypeStr) {
 		return "Content-Type: text/css".equalsIgnoreCase( contextTypeStr)||
 		(""+contextTypeStr).toLowerCase().indexOf( "text/css")>0;
 	}
 
-	private static boolean isBinary(String contextTypeStr) {
+	static boolean isBinary(String contextTypeStr) {
 		return "null".equalsIgnoreCase( contextTypeStr)||
 		"Content-Type: image/jpeg".equalsIgnoreCase( contextTypeStr) ||
 		"Content-Type: image/png".equalsIgnoreCase( contextTypeStr) ||	
@@ -495,7 +495,7 @@ public class LServlet extends HttpServlet {
 		"Content-Type: application/x-shockwave-flash".equalsIgnoreCase( contextTypeStr);
 	}
 
-	private static boolean isScript(String contextTypeStr) {
+	static boolean isScript(String contextTypeStr) {
 		return
 		
 		"Content-Type: text/javascript".equalsIgnoreCase( contextTypeStr) ||
@@ -539,8 +539,8 @@ public class LServlet extends HttpServlet {
 		return SwapServletUrl.substring(0, SwapServletUrl.length()-2);
 	}
 	
-	private byte[] getResourceAsBA(String namePar) throws IOException {
-		InputStream in = this.getClass().getClassLoader().getResourceAsStream(namePar); 
+	public static byte[] getResourceAsBA(String namePar) throws IOException {
+		InputStream in = LServlet.class.getClassLoader().getResourceAsStream(namePar); 
 		byte[] b = new byte[in.available()] ;
 		in.read(b);
 		return b;
@@ -684,9 +684,5 @@ public class LServlet extends HttpServlet {
 		}
 		return headersTmp;
 	}
-
-	protected static void markFwswaperTagInResponseHead(HttpServletResponse resp) {
-		resp.setHeader("l-swapper", String.format("com.lzy.fwswaper.%d",
-				FWSwaperAppVersion));
-	}
+ 
 }

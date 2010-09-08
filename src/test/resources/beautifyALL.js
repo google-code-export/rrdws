@@ -1610,9 +1610,13 @@ function do_js_beautify() {
             quit();
         }
     }
+    do_js_beautify(js_source);
+}    
+    
+function do_js_beautify(js_source) {    
     js_source = js_source.replace(/^\s+/, '');
-    var indent_size = options.indent ? options.indent : 2;
-    var preserve_newlines = options.preserve_newlines ? options.preserve_newlines : false;
+    var indent_size =  2;// options.indent ? options.indent : 2
+    var preserve_newlines = false;//options.preserve_newlines ? options.preserve_newlines : false;
     var indent_char = ' ';
     var result;
     if (indent_size == 1) {
@@ -1634,6 +1638,9 @@ function do_js_beautify() {
 }
 
 //var arguments = [  '-i', '1', 'http://www.google-analytics.com/ga.js']; 
+var arguments = [   '-i', '1' , 'example.js'];
 options = parse_opts(arguments);
-print(do_js_beautify());
-//do_js_beautify()
+//print(do_js_beautify());
+var js_source = b;
+result = do_js_beautify(js_source);
+print(result);

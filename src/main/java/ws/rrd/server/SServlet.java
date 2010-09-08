@@ -78,7 +78,10 @@ public class SServlet extends HttpServlet{ /* SCRIPT-mastering servlet*/
 		try{
 			synchronized (Main.class) {
 
-				if (1==2){
+				if (1==1){
+					InputStream myJS =  SServlet.class.getClassLoader(). getResourceAsStream("beautifyALL.js");
+					Main.setIn( myJS  );
+					
 					Main.setOut( myOut );
 					Main.setErr( myErr );						
 					Main.main(args );
