@@ -374,7 +374,7 @@ private static final boolean TRACE = false;
 }
 
 	private static String prepareLinkValue(URL home, String value) {
-		String homeStr = "" + home;
+		String homeStr = "" + home +"";
 		if (value.startsWith("//")) {
 			value = home.getProtocol()+":" + value;
 		}else if (value.startsWith("/")) {
@@ -403,7 +403,10 @@ private static final boolean TRACE = false;
 			value = uri;
 			// #2
 		} else {
-			homeStr = homeStr.substring(0, homeStr.lastIndexOf("/") + 1);
+			if (homeStr.lastIndexOf("/")>7)
+				homeStr = homeStr.substring(0, homeStr.lastIndexOf("/") + 1); //extract domain + full path
+			else
+				homeStr += "/"; // put '/' to end of url
 			if (value.indexOf(homeStr) == 0)
 				value = value;
 			else if (value.indexOf("http://") == 0
