@@ -22,6 +22,7 @@ import javax.servlet.http.*;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity; 
 import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
 import org.vietspider.html.HTMLDocument;
 import org.vietspider.html.HTMLNode;
 import org.vietspider.html.parser.HTMLParser2;
@@ -189,8 +190,29 @@ public class LServlet extends HttpServlet {
 			else{
 				xRespTmp = urlFetcherTmp.fetchGetResp(urlStr, headsToResend);
 			}
-			if (xRespTmp.getStatusLine().getStatusCode() == 401){
+			final StatusLine statusLine = xRespTmp.getStatusLine();
+			if (statusLine.getStatusCode() == 401){
 				resp.setStatus(401);
+				resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
+				return;
+			}else if (statusLine.getStatusCode() == 301){
+				resp.setStatus(301);
+				resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
+				return;
+			}else if (statusLine.getStatusCode() == 302){
+				resp.setStatus(302);//xRespTmp.getAllHeaders()
+				resp.setHeader(  "Location", requestURL.toString()  );
+				return;
+			}else if (statusLine.getStatusCode() == 303){
+				resp.setStatus(303);
+				resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
+				return;
+			}else if (statusLine.getStatusCode() == 304){
+				resp.setStatus(304);
+				resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
+				return;
+			}else if (statusLine.getStatusCode() == 305){
+				resp.setStatus(305);
 				resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
 				return;
 			}
@@ -465,7 +487,7 @@ public class LServlet extends HttpServlet {
 				//System.out.println(jsToWrapTmp);
 			}
 		}
-		resp.setContentType("application/x-javascript; charset=utf-8");
+		resp.setContentType("application/javascript; charset=utf-8");
 		outTmp = resp.getOutputStream();
 		outTmp.write(scriptTmp.getValue().getBytes("UTF-8")) ;
 		outTmp.flush();
