@@ -16,7 +16,7 @@ import ws.rdd.net.UrlFetchTest;
 public class FServlet extends HttpServlet{ /* FORWARD-mastering servlet*/
 	private static final long serialVersionUID = -5308225516841490806L; 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException{
-		ServletOutputStream out = resp.getOutputStream();
+	 
 		String uriTmp =   req.getRequestURL().toString() ;
 		uriTmp = uriTmp.substring(uriTmp.indexOf("/F/" )+3);
 		uriTmp = uriTmp.replace("h_t_t_p_://", "http://");
@@ -24,7 +24,7 @@ public class FServlet extends HttpServlet{ /* FORWARD-mastering servlet*/
 		System.out.println("sendback "+uriTmp+"  ... ");
 		
 		 
-		uriTmp = HyperLinkUtil.encodeLink(new URL(uriTmp), uriTmp);
+		//uriTmp = HyperLinkUtil.encodeLink(new URL(uriTmp), uriTmp);
 		HttpSession sessionTmp = req.getSession();
 		
 		UrlFetchTest urlFetcherTmp = (UrlFetchTest) sessionTmp.getAttribute("UrlFetcher");
@@ -37,6 +37,23 @@ public class FServlet extends HttpServlet{ /* FORWARD-mastering servlet*/
     	LServlet. setupResponseProperty( resp,  xRespTmp); 
     	ServletOutputStream outTmp = resp.getOutputStream();	
     	HttpEntity entity = xRespTmp.getEntity();
+    	
+    	String contextTypeStr = ""+entity.getContentType();
+		String contextEncStr = null;
+		try{
+			entity.getContentEncoding().getValue();
+		}catch(Exception e ){}
+		if ( LServlet.isCSS(contextTypeStr)  )
+		{
+			outTmp = LServlet.performCSS(resp, contextTypeStr, uriTmp, xRespTmp, entity, contextEncStr);
+			return;
+		}else if ( LServlet.isBinary(contextTypeStr) ){
+			outTmp = LServlet.performBinary(resp, contextTypeStr, uriTmp, xRespTmp, entity, contextEncStr);
+			return;
+		}else if (  LServlet.isScript(contextTypeStr) ){
+			outTmp = LServlet.performScript(resp, contextTypeStr, uriTmp, entity, contextEncStr);
+			return;
+		}    	
     	entity.writeTo(  outTmp );
  
 	} 

@@ -1573,12 +1573,12 @@ function parse_opts(args) {
                 break;
             case "-h":
                 print_usage();
-                quit();
+                //quit();
                 break;
             default:
                 print("Unknown parameter: " + param + "\n");
                 print("Aborting.");
-                quit();
+                //quit();
             }
         } else {
             options.source = param;
@@ -1610,7 +1610,7 @@ function do_js_beautify() {
 
         if ( ! lines.length) {
             print_usage();
-            quit();
+            //quit();
         }
     }
     js_source = js_source.replace(/^\s+/, '');
@@ -1637,6 +1637,6 @@ function do_js_beautify() {
 }
 
 //var arguments = [  '-i', '1', 'http://www.google-analytics.com/ga.js']; 
-options = parse_opts(arguments);
-print(do_js_beautify());
-//do_js_beautify()
+//options = parse_opts(arguments);
+//print(do_js_beautify());
+do_js_beautify()
