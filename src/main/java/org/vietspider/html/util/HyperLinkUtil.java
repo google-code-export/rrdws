@@ -375,7 +375,9 @@ private static final boolean TRACE = false;
 
 	private static String prepareLinkValue(URL home, String value) {
 		String homeStr = "" + home;
-		if (value.startsWith("/")) {
+		if (value.startsWith("//")) {
+			value = home.getProtocol()+":" + value;
+		}else if (value.startsWith("/")) {
 			String fileNameTmp = home.getFile();
 			String sBaseTmp = ("" + home);
 			if ("/".equals(fileNameTmp)) // assums home will be always with

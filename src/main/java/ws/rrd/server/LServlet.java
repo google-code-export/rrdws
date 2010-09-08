@@ -8,8 +8,7 @@ import java.io.PrintWriter;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.HttpURLConnection; 
-import java.nio.charset.Charset;
-import java.text.SimpleDateFormat;
+import java.nio.charset.Charset; 
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List; 
@@ -318,19 +317,17 @@ public class LServlet extends HttpServlet {
 	    	//new String(documentTmp.getTextValue().getBytes("ISO-8859-1"), contextEncStr);// "windows-1251" textValue.toUpperCase().substring( 12430)
 
 	    	if ("KOI8-R".equals(contextEncStr)) {
-	    		textValue = documentTmp.getTextValue();//
+	    		textValue = documentTmp.getTextValue(); 
 	    	}else{
-	    		textValue = documentTmp.getTextValue();//
-	    	}
-	    	//PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-	    	String string1 = "<!DOCTYPE html><html>\n<!-- contextEncStr="+contextEncStr+" -->\n";
-	    	string1 += "";
-	    	String string2 = "</html>";
-			//outTmp.write(string1.getBytes(contextEncStr));
+	    		HTMLNode doctype = documentTmp.getDoctype();
+	    		String sDoctype = (doctype==null?"":doctype.getTextValue());
+	    		textValue = sDoctype  + documentTmp.getRoot().getTextValue();
+	    		 
+	    	} 
 	    	if (!"null".equals(""+contextEncStr)){
-	    		outTmp.write((string1 + textValue + string2).getBytes(contextEncStr));//)
+	    		outTmp.write(textValue.getBytes(contextEncStr)); 
 	    	}else{
-	    		outTmp.write((string1 + textValue + string2).getBytes());//)
+	    		outTmp.write(textValue.getBytes()); 
 	    	}
 			//outTmp.write(string2.getBytes(contextEncStr));
 			//outTmp.flush();
@@ -354,7 +351,7 @@ public class LServlet extends HttpServlet {
 				byte buf[] = new byte[in.available()];
 				String magik = "l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001/";
 				int readRetVal = in.read(buf);
-				String toBrowser = new String (buf);
+				String toBrowser = new String (buf,0, readRetVal );
 				toBrowser = toBrowser.replace(magik,SwapServletUrl );// SwapServletUrl
 				toBrowser = toBrowser.replace("B8b8B8Bbbb888B", SwapServletUrl.subSequence(0, SwapServletUrl.length()-2) );//				
 				outTmp.write(toBrowser.getBytes());
@@ -367,7 +364,7 @@ public class LServlet extends HttpServlet {
 		}  
 	}
 
-	private ServletOutputStream performCSS(HttpServletResponse resp,
+	private static ServletOutputStream performCSS(HttpServletResponse resp,
 			String contextTypeStr, String urlStr, HttpResponse xRespTmp,
 			HttpEntity entity, String contextEncStr) throws IOException {
 		ServletOutputStream outTmp;
@@ -378,19 +375,26 @@ public class LServlet extends HttpServlet {
 			oaos = deZip(oaos);
 		    //contextEncStr  = "ISO-8859-1";
 		}				
-		String xCSS = oaos.toString().replace("url(/", "URL (/l.gif?")
-		.replace("url (/", "URL (/l.gif?")
-		.replace("URL(/", "URL (/l.gif?")
-		.replace("Url(/", "URL (/l.gif?")
-		.replace("url ( /", "URL (/l.gif?")
-		
-		.replace("url(", "url(  "+SwapServletUrl.replace("/l/",undescoredProtocol(urlStr))+stripFileName(  stripProtocol(urlStr)))
-		
-		.replace("URL (/l.gif?", "url(/l.gif?")
+		String lBAK_GIF = "URL (/l.gif?";
+		String FSservletURL = "url ( hTtP://"+SwapServletUrl.replace("/l/","/F/h_t_t_p_://");
+		String FSSservletURL = "url  ( hTtPs://"+SwapServletUrl.replace("/l/","/F/h_t_t_p_s_://");
+		String xCSS = oaos.toString()
+		// ROOT OF SERVER
+		.replace("url(/", lBAK_GIF)
+		.replace("url (/", lBAK_GIF)
+		.replace("URL(/", lBAK_GIF)
+		.replace("Url(/", lBAK_GIF)
+		.replace("url ( /", lBAK_GIF)
+		.replace(lBAK_GIF, FSservletURL ) //.replace(lBAK_GIF, "url(/l.gif?")
+		// ABSOLUTE-ref like: 
 		// url(http://maps.gstatic.com
-		.replace("url(http://", "url(hTtP://"+SwapServletUrl.replace("/l/","/F/h_t_t_p_://"))
-		.replace("url(http://", "url(hTtP://"+SwapServletUrl.replace("/l/","/F/h_t_t_p_://"))
-		.replace("url(https://", "url(hTtPs://"+SwapServletUrl.replace("/l/","/F/h_t_t_p_s_://"))
+		.replace("url(http://", FSservletURL)
+		.replace("url(https://", FSSservletURL)
+		// 	rel-ref from './'	
+		.replace("url(", "url  (    "+SwapServletUrl.replace("/l/",undescoredProtocol(urlStr))+stripFileName(  stripProtocol(urlStr)))
+
+		
+		
 		
 		;
 		resp.setContentType("text/css");
@@ -400,17 +404,17 @@ public class LServlet extends HttpServlet {
 		return outTmp;
 	}
 
-	private String undescoredProtocol(String urlStr) {
+	private static String undescoredProtocol(String urlStr) {
 		return urlStr.startsWith("https://")? "/F/h_t_t_p_s_://":"/F/h_t_t_p_://";
 	}
-	private String stripProtocol(String urlStr) {
+	private static String stripProtocol(String urlStr) {
 		return urlStr.startsWith("https://")? urlStr.substring("https://".length()):urlStr.substring("http://".length());
 	}
-	private String stripFileName(String urlStr) {
+	private static String stripFileName(String urlStr) {
 		return urlStr.endsWith("/")? urlStr :urlStr.substring(0, urlStr.lastIndexOf("/"))+"/";
 	}
 
-	private ServletOutputStream performBinary(HttpServletResponse resp,
+	private static ServletOutputStream performBinary(HttpServletResponse resp,
 			String contextTypeStr, String urlStr, HttpResponse xRespTmp,
 			HttpEntity entity, String contextEncStr) throws IOException {
 		ServletOutputStream outTmp;
@@ -427,7 +431,7 @@ public class LServlet extends HttpServlet {
 		return outTmp;
 	}
 
-	private ServletOutputStream performScript(HttpServletResponse resp,
+	private static ServletOutputStream performScript(HttpServletResponse resp,
 			String contextTypeStr, String urlStr, HttpEntity entity,
 			String contextEncStr) throws IOException {
 		ServletOutputStream outTmp;
@@ -468,11 +472,12 @@ public class LServlet extends HttpServlet {
 		return outTmp;
 	}
 
-	private boolean isCSS(String contextTypeStr) {
-		return "Content-Type: text/css".equalsIgnoreCase( contextTypeStr);
+	private static boolean isCSS(String contextTypeStr) {
+		return "Content-Type: text/css".equalsIgnoreCase( contextTypeStr)||
+		(""+contextTypeStr).toLowerCase().indexOf( "text/css")>0;
 	}
 
-	private boolean isBinary(String contextTypeStr) {
+	private static boolean isBinary(String contextTypeStr) {
 		return "null".equalsIgnoreCase( contextTypeStr)||
 		"Content-Type: image/jpeg".equalsIgnoreCase( contextTypeStr) ||
 		"Content-Type: image/png".equalsIgnoreCase( contextTypeStr) ||	
@@ -490,7 +495,7 @@ public class LServlet extends HttpServlet {
 		"Content-Type: application/x-shockwave-flash".equalsIgnoreCase( contextTypeStr);
 	}
 
-	private boolean isScript(String contextTypeStr) {
+	private static boolean isScript(String contextTypeStr) {
 		return
 		
 		"Content-Type: text/javascript".equalsIgnoreCase( contextTypeStr) ||
@@ -503,7 +508,7 @@ public class LServlet extends HttpServlet {
 		(""+contextTypeStr).toLowerCase().indexOf("text/javascript")>=0;
 	}
 
-	private boolean isRootReq(HttpServletRequest req) {
+	private static boolean isRootReq(HttpServletRequest req) {
 		return  req.getParameter(_U_R_L_) != null;
 	}
 
@@ -543,7 +548,7 @@ public class LServlet extends HttpServlet {
 	
 	
 
-	private String getXEnc(HttpResponse respTmp) {
+	private static String getXEnc(HttpResponse respTmp) {
 		 String retval = null;
 		 try{
 			 retval = respTmp.getHeaders("Content-Encoding")[0].getValue();
@@ -561,7 +566,7 @@ public class LServlet extends HttpServlet {
 		 return retval;
 	}
 
-	private boolean isGZip(HttpResponse xRespTmp) {
+	private static boolean isGZip(HttpResponse xRespTmp) {
 		boolean retval = false;
 		try{
 			retval = "gzip".equals(xRespTmp.getHeaders("Content-Encoding")[0].getValue());
@@ -569,7 +574,7 @@ public class LServlet extends HttpServlet {
 		return  retval;
 	}
 
-	private ByteArrayOutputStream deZip(ByteArrayOutputStream oaos)
+	private static ByteArrayOutputStream deZip(ByteArrayOutputStream oaos)
 			throws IOException {
 		ByteArrayInputStream gzippeddata = new ByteArrayInputStream(oaos.toByteArray());
 		GZIPInputStream zipin = new GZIPInputStream(gzippeddata);
@@ -611,15 +616,15 @@ public class LServlet extends HttpServlet {
 	// Domain attribute "javaeye.com" violates RFC 2109: domain must start with a dot
 
 	static final String headersToSet []= {
-			//"Content-Type",
+//			"Content-Type",
 			"Content-Language",
-			//"Content-Encoding",
+//			"Content-Encoding",
 			"Date",
 			"Last-Modified" ,
 			"Accept",
 			"Accept-Charset",
 			"Accept-Language",
-			//"Accept-Encoding",
+//			"Accept-Encoding",
 			"Referer", 
 //			"Cookie",
 			"Cache-Control",
@@ -629,86 +634,28 @@ public class LServlet extends HttpServlet {
 			"Expires",
 			"TE",
 			"Server",
-			//"Set-Cookie",
+//			"Set-Cookie",
 			"Keep-Alive",
 			"Authorization"
 			
 	};	
-	protected static void setupResponseProperty(HttpServletResponse resp,
-			HttpResponse respTmp) throws IOException {
+	/**
+	 * copy headers FROM:bPar TO: aPar
+	 * 
+	 * @author vipup
+	 * @param aPar
+	 * @param bPar
+	 * @throws IOException
+	 */
+	protected static void setupResponseProperty(HttpServletResponse aPar,
+			HttpResponse bPar) throws IOException {
 		for (String headerName :headersToSet)
-		for (Header next: respTmp.getHeaders(headerName) )
-			resp.setHeader(next.getName(), next.getValue());
-		
-		// cookies
-		for(Header setCookieHeader: respTmp.getHeaders("Set-Cookie") ){
-			// Set-Cookie: itrude_data=s%3A0%3A%22%22%3B; expires=Tue, 19-Jul-2011 19:20:20 GMT; path=/; domain=it-ru.de, itrude_sid=1167d5639e1181bc58dda31856a7225f; path=/; domain=it-ru.de
-            // Parse cookie
-            String[] fields = setCookieHeader.getValue().split(";\\s*");
-            String cookieValue = fields[0];
-            String cookTmp = "C00C";
-            String nameTmp =  cookTmp+ cookieValue;
-            String expires = null;
-            String path = null;
-            String domain = null;
-            boolean secure = false;
-
-            // Parse each field
-            for (int j=1; j<fields.length; j++) {
-                if ("secure".equalsIgnoreCase(fields[j])) {
-                    secure = true;
-                } else if (fields[j].indexOf('=') > 0) {
-                    String[] f = fields[j].split("=");
-                    if ("expires".equalsIgnoreCase(f[0])) {
-                        expires = f[1];
-                    } else if ("domain".equalsIgnoreCase(f[0])) {
-                        domain = "localhost";  cookieValue += f[1];
-                    } else if ("path".equalsIgnoreCase(f[0])) {
-                        path = f[1];
-                    }
-                }
-
-                if (1==1){
-                    // Save the cookie...
-                    try{
-                        nameTmp = nameTmp.split("=")[0]+cookieValue.hashCode() ;
-                        nameTmp = nameTmp.replace(".", "_").replace("-", "_").replace(":", "_");
-                        Cookie newCookie = new Cookie(nameTmp,new String ( Base64Coder.encode(   cookieValue.getBytes() ) ) );
-	                    newCookie.setSecure(secure); 
-	                    newCookie.setDomain(new URL(LServlet.SwapServletUrl).getHost());
-	                    newCookie.setPath( HyperLinkUtil.encodeLink(  new URL("http://www.google.de") , path) );
-                    	// Tue, 19-Jul-2011 20:00:53 GMT
-                    	SimpleDateFormat sf = new SimpleDateFormat ("EEE, dd-MMM-yyyy hh:mm:ss z");
-                    	if (expires != null){
-                    		long nowTmp = (System.currentTimeMillis());
-                    		long endTmp = sf.parse(expires).getTime();
-                    		int expiresInSecTmp = (int)(endTmp-nowTmp)/1000;
-                    		newCookie.setMaxAge( expiresInSecTmp);
-                    	}else{
-                    		newCookie.setMaxAge( 1111);
-                    	}
-                        resp.addCookie(newCookie);
-                        if (TRACE) System.out.println("NEW COOKIE {"+
-                        		newCookie.getName()+ "::"+
-                        		newCookie.getValue()+ "::"+
-                        		newCookie.getVersion()+ "::"+
-                        		newCookie.getSecure()+ "::"+
-                        		newCookie.getDomain()+ "::"+
-                        		newCookie.getPath() + "::"+
-                        		newCookie.getClass() + "::"+
-                        		"}"
-                        		);
-                    }catch(Throwable e){}
-                	
-                }
-                
-            }
-
-		}
+		for (Header next: bPar.getHeaders(headerName) )
+			aPar.setHeader(next.getName(), next.getValue()); 
 		
 	}
 	
-	protected  String[][] calcRequestHeaders(
+	protected  static String[][] calcRequestHeaders(
 			HttpServletRequest req) {
 		Map<String, String> headersTmp = calcRequestHeadersAsMap(req, headersToSet);
 		
@@ -722,7 +669,7 @@ public class LServlet extends HttpServlet {
 		return   retval;
 	}
 
-	private Map<String, String> calcRequestHeadersAsMap(HttpServletRequest req, String[] headersToSetPar) {
+	private static Map<String, String> calcRequestHeadersAsMap(HttpServletRequest req, String[] headersToSetPar) {
 		Map<String, String> headersTmp = new HashMap<String, String>();
 		for (String headerName :headersToSetPar){
 			String nextVal =  req.getHeader(headerName);
