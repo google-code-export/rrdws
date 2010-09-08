@@ -143,7 +143,7 @@ public class NodeImpl extends HTMLNode {
 		}
 		boolean isTag = name != Name.CONTENT && name != Name.COMMENT
 				&& name != Name.CODE_CONTENT;
-		if (isTag) {
+		if (isTag && Name.DOCTYPE != this.name) {
 			builder.append('<');
 		}
 		if (type == TypeToken.CLOSE) {
@@ -151,7 +151,7 @@ public class NodeImpl extends HTMLNode {
 		}
 		char[] startTmp = getValue();
 		builder.append(startTmp);
-		if (isTag) {
+		if (isTag && Name.DOCTYPE != this.name ) {
 			builder.append('>');
 		}
 		if (type == TypeToken.CLOSE || getConfig().hidden()) {
