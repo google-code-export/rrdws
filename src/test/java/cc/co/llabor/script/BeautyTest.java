@@ -53,8 +53,11 @@ public class BeautyTest {
 	
 
 	// /compiled.137a.344458206715449423.css
-	@Test
-	public void testFireCSS() throws IOException, ScriptException {
+	//@ T est
+	/**
+	 * @deprecated
+	 */
+	public void _testFireCSS() throws IOException, ScriptException {
 		Beauty b = new Beauty();
 		String scriptIn = new String ( LServlet.getResourceAsBA(   this.getClass().getPackage().getName().replace(".", "/")+"/"+"compiled.137a.344458206715449423.css") );
 		String res = b.fireCSS( scriptIn );

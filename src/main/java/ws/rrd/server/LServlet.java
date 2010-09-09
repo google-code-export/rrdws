@@ -28,14 +28,15 @@ import org.vietspider.html.HTMLNode;
 import org.vietspider.html.parser.HTMLParser2;
 import org.vietspider.html.util.HyperLinkUtil;
 
+import cc.co.llabor.cache.css.CSStore;
+import cc.co.llabor.cache.js.Item;
+import cc.co.llabor.cache.js.JSStore;
 import cc.co.llabor.system.ExitTrappedException;
 
 import com.no10x.cache.MemoryFileItem;
 import com.no10x.cache.MemoryFileItemFactory;
 
 import ws.rdd.net.UrlFetchTest;  
-import ws.rrd.mem.ScriptItem;
-import ws.rrd.mem.ScriptStore;
 
 @SuppressWarnings("serial")
 public class LServlet extends HttpServlet {
@@ -91,7 +92,14 @@ public class LServlet extends HttpServlet {
 		    	//for(String ele : list)
 		    	//	System.out.println(ele);
 		    }
-		  }
+		  }	  public static void testCreateStyleLink(HTMLNode node, String swapServletUrl2, URL home){
+			    handler.createStyleLink( node,  swapServletUrl2,  home);
+			    if (TRACE){
+			    	//List<String> list  = handler.scanScriptLink(node );
+			    	//for(String ele : list)
+			    	//	System.out.println(ele);
+			    }
+			  }
 		  
 	  public static void testCreateMetaLink(HTMLNode node, String swapServletUrl2, URL home){
 		    handler.createMetaLink(node,  swapServletUrl2,  home);
@@ -309,6 +317,7 @@ public class LServlet extends HttpServlet {
 	    	testCreateMetaLink(rootTmp, SwapServletUrl, realURL);
 	    	
 	    	testCreateScriptLink(rootTmp, SwapServletUrl, realURL);	    	
+	    	testCreateStyleLink(rootTmp, SwapServletUrl, realURL);	    	
 	    	
 	    	int beginIndex = contextTypeStr.toUpperCase().indexOf(" ")+1;
 
@@ -390,35 +399,48 @@ public class LServlet extends HttpServlet {
 			String contextTypeStr, String urlStr, HttpResponse xRespTmp,
 			HttpEntity entity, String contextEncPar) throws IOException {
 		ServletOutputStream outTmp;
+		
+		
+		
 		if (TRACE) log.warning("CSS contextTypeStr / contextEncStr:{"+contextTypeStr+" / "+contextEncPar +"}, url== ["+urlStr+"]");
-		ByteArrayOutputStream oaos = new ByteArrayOutputStream();
-		entity.writeTo(oaos) ;
-		if (isGZip(xRespTmp)){
-			oaos = deZip(oaos);
-		    //contextEncStr  = "ISO-8859-1";
-		}				
-		String lBAK_GIF = "URL (/l.gif?";
-		String FSservletURL = "url ( hTtP://"+SwapServletUrl.replace("/l/","/F/h_t_t_p_://");
-		String FSSservletURL = "url  ( hTtPs://"+SwapServletUrl.replace("/l/","/F/h_t_t_p_s_://");
-		String xCSS = oaos.toString()
-		// ROOT OF SERVER
-		.replace("url(/", lBAK_GIF)
-		.replace("url (/", lBAK_GIF)
-		.replace("URL(/", lBAK_GIF)
-		.replace("Url(/", lBAK_GIF)
-		.replace("url ( /", lBAK_GIF)
-		.replace(lBAK_GIF, FSservletURL ) //.replace(lBAK_GIF, "url(/l.gif?")
-		// ABSOLUTE-ref like: 
-		// url(http://maps.gstatic.com
-		.replace("url(http://", FSservletURL)
-		.replace("url(https://", FSSservletURL)
-		// 	rel-ref from './'	
-		.replace("url(", "url  (    "+SwapServletUrl.replace("/l/",undescoredProtocol(urlStr))+stripFileName(  stripProtocol(urlStr)))
-
+		CSStore store = CSStore.getInstanse();
+		cc.co.llabor.cache.css.Item itemTmp =  store.getByURL(urlStr);
+		String xCSS = null;
+		if (itemTmp == null){
+			
+			ByteArrayOutputStream oaos = new ByteArrayOutputStream();
+			entity.writeTo(oaos) ;
+			if (isGZip(xRespTmp)){
+				oaos = deZip(oaos);
+			    //contextEncStr  = "ISO-8859-1";
+			}				
+			String lBAK_GIF = "URL (/l.gif?";
+			String FSservletURL = "url ( hTtP://"+SwapServletUrl.replace("/l/","/F/h_t_t_p_://");
+			String FSSservletURL = "url  ( hTtPs://"+SwapServletUrl.replace("/l/","/F/h_t_t_p_s_://");
+			xCSS = oaos.toString()
+			// ROOT OF SERVER
+			.replace("url(/", lBAK_GIF)
+			.replace("url (/", lBAK_GIF)
+			.replace("URL(/", lBAK_GIF)
+			.replace("Url(/", lBAK_GIF)
+			.replace("url ( /", lBAK_GIF)
+			.replace(lBAK_GIF, FSservletURL ) //.replace(lBAK_GIF, "url(/l.gif?")
+			// ABSOLUTE-ref like: 
+			// url(http://maps.gstatic.com
+			.replace("url(http://", FSservletURL)
+			.replace("url(https://", FSSservletURL)
+			// 	rel-ref from './'	
+			.replace("url(", "url  (    "+SwapServletUrl.replace("/l/",undescoredProtocol(urlStr))+stripFileName(  stripProtocol(urlStr)))
+			; 
+			String refPar = urlStr;
+			try{
+				xRespTmp.getHeaders("Refferer")[0].getValue();
+			}catch(Throwable e){}
+			store.putOrCreate(urlStr, xCSS, refPar );
+		}else{
+			xCSS = itemTmp.getValue();
+		}
 		
-		
-		
-		;
 		resp.setContentType("text/css");
 		outTmp = resp.getOutputStream();
 		outTmp.write(xCSS.getBytes());
@@ -459,8 +481,8 @@ public class LServlet extends HttpServlet {
 		ServletOutputStream outTmp;
 		if (TRACE) log.warning("JS contextTypeStr||contextEncStr:["+contextTypeStr+"||"+contextEncPar+"]  URL =:["+urlStr+"]");
 		
-		ScriptStore ssTmp = ScriptStore.getInstanse();
-		ScriptItem scriptTmp = ssTmp.getByURL( urlStr);
+		JSStore ssTmp = JSStore.getInstanse();
+		Item scriptTmp = ssTmp.getByURL( urlStr);
 		if (scriptTmp == null){
 			ByteArrayOutputStream oaos = new ByteArrayOutputStream();
 			entity.writeTo(oaos) ;				
@@ -468,7 +490,7 @@ public class LServlet extends HttpServlet {
 			// 						(new Element('li', { 'class': 'fav', 'html': ((empty && i==0) ? '' : ', ') 
 			//+ '<a href="hTTp://rrdsaas.appspot.com/F/h_t_t_p_://rrdsaas.appspot.com/l//HtTp/' + temp.user.login + '.' + temp.base_short + '/favorites/tag/' + tag + '">' + tag + '</a>'}
 			String FServletURL = SwapServletUrl.replace("/l/", "/F/");
-			jsToWrap = SServlet.performFormatJS(urlStr, jsToWrap ) ;
+			jsToWrap = JSStore.performFormatJS(urlStr, jsToWrap ) ;
 			jsToWrap = 
 				jsToWrap
 					.replace("http://",   FServletURL +  "h_t_t_p_://" )
@@ -480,7 +502,7 @@ public class LServlet extends HttpServlet {
 			scriptTmp = ssTmp.putOrCreate(urlStr, jsToWrap, urlStr);
 		} else{
 			String jsToWrap = scriptTmp.getValue();
-			String jsToWrapTmp = SServlet.performFormatJS(urlStr, jsToWrap ) ;
+			String jsToWrapTmp = JSStore.performFormatJS(urlStr, jsToWrap ) ;
 			if (jsToWrapTmp .length() > jsToWrap.length()){
 				ssTmp.putOrCreate(urlStr, jsToWrapTmp, urlStr);
 			}else{

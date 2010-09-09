@@ -151,7 +151,7 @@ public class Beauty {
 	}
 
 	
-	String cleanCSS(String code) {
+	public String cleanCSS(String code) {
 //		int  i=0;
 
 //		if ('\n'==code[0]) code=code.substr(1);

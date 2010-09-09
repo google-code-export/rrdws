@@ -1,4 +1,4 @@
-package ws.rrd.mem;
+package cc.co.llabor.cache.css;
 
 import java.io.Serializable;
 import java.net.MalformedURLException;
@@ -17,14 +17,14 @@ import ws.rrd.server.LServlet;
  * 
  * Creation:  26.07.2010::11:45:51<br> 
  */
-public class ScriptItem implements Serializable{ 
+public class Item implements Serializable{ 
 	/**
 	 * @author vipup
 	 */
 	private static final long serialVersionUID = -7937242057537348262L;
 	private String value;
 
-	public ScriptItem(String value) {
+	public Item(String value) {
 		this.value = value;
 	}
 
@@ -44,7 +44,7 @@ public class ScriptItem implements Serializable{
 		URL linkPar = null;
 		try {
 			linkPar = new URL(refPar);
-			linkPar = new URL(linkPar.getProtocol() ,linkPar.getHost(), linkPar.getPort(),  linkPar.getPath() +"/../");
+			linkPar = new URL(linkPar.getProtocol() ,linkPar.getHost(), linkPar.getPort(),  linkPar.getPath() );
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -53,6 +53,9 @@ public class ScriptItem implements Serializable{
 		String encodeLink = HyperLinkUtil.encodeLink(linkPar, homeLinkPar   );
 		encodeLink = encodeLink.replace("/l/", "/F/");
 		if (value.toLowerCase().indexOf(LServlet.SwapServletUrl.replace("/l/", "/F/").toLowerCase())>0){
+			return;
+		}
+		if (value.toLowerCase().indexOf(LServlet.SwapServletUrl .toLowerCase())>0){
 			return;
 		}
 		this.value = this.value.replace(".src=\"", "._s_R_c=\""+encodeLink );
@@ -67,6 +70,16 @@ public class ScriptItem implements Serializable{
 	public Set<String> getRefs() {
  
 			return refs;
+	}
+
+	boolean readOnly = false;
+	public boolean isReadOnly() {
+		return readOnly;
+	}
+
+	public void setReadOnly(boolean readOnly) {
+		if (!this.readOnly)
+			this.readOnly = readOnly;
 	}
 
 }

@@ -225,7 +225,9 @@ public class FileCache implements Cache {
 			File fileTmp = createFile(key);
 			try{
 				new File(fileTmp.getParent().replace(".", File.separator)).mkdirs();
-			}catch(Exception e){e.printStackTrace();}
+			}catch(Exception e){
+				if (1==1)e.printStackTrace();
+			}
 			fout = new FileOutputStream(fileTmp );
 			ObjectOutputStream wr = new ObjectOutputStream(fout);
 			wr.writeObject(arg1);
