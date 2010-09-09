@@ -82,6 +82,32 @@ public class BeautyTest {
 		assertEquals(diffTmp.length, 13); 
 	}
 	
+	/*
+	 * 
+#
+09-09 09:05AM 39.667 /l/aHR0cDovL2hhYnJhaGFici5ydS9jc3MvMTI4NDAzMjc0NS9hbGwuY3Nz 500 29518ms 43031cpu_ms 0kb Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.7) Gecko/20091221 Firefox/3.5.7,gzip(gfe)
+See details
+
+195.200.34.50 - vasiliij.pupkin [09/Sep/2010:09:06:09 -0700] "GET /l/aHR0cDovL2hhYnJhaGFici5ydS9jc3MvMTI4NDAzMjc0NS9hbGwuY3Nz HTTP/1.1" 500 217 - "Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.7) Gecko/20091221 Firefox/3.5.7,gzip(gfe)" "rrdsaas.appspot.com" ms=29518 cpu_ms=43032 api_cpu_ms=0 cpm_usd=1.198236 exit_code=104 throttle_code=1
+
+#
+W 09-09 09:06AM 09.143
+
+ws.rrd.server.ExceptionUtils swapFailedException: Swap 'http://habrahabr.ru/css/1284032745/all.css' failed. Exception message: 'com.google.apphosting.api.DeadlineExceededException: This request (5cf11255d57a0732) started at 2010/09/09 16:05:40.384 UTC and was still executing at 2010/09/09 16:06:09.124 UTC.
+	at java.lang.AbstractStringBuilder.append(AbstractStringBuilder.java:408)
+	at java.lang.StringBuilder.append(StringBuilder.java:136)
+	at java.lang.StringBuilder.<init>(StringBuilder.java:110)
+	at cc.co.llabor.script.Beauty.cleanAsync(Beauty.java:136)
+	at cc.co.llabor.script.Beauty.cleanAsync(Beauty.java:143)
+	at cc.co.llabor.script.Beauty.cleanCSS(Beauty.java:166)
+	at cc.co.llabor.cache.css.CSStore.putOrCreate(CSStore.java:53)
+	at ws.rrd.server.LServlet.performCSS(LServlet.java:439)
+	at ws.rrd.server.LServlet.doGetPost(LServlet.java:254)
+	at ws.rrd.server.LServlet.doGet(LServlet.java:68)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:693)
+	at javax.se	 * 
+	 * 
+	 */
 }
 
 
