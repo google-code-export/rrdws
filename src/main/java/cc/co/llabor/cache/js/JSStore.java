@@ -1,7 +1,9 @@
-package ws.rrd.mem; 
+package cc.co.llabor.cache.js; 
 import java.io.IOException; 
 import javax.script.ScriptException;
 import ws.rrd.server.SServlet;
+import cc.co.llabor.script.Beauty;
+
 import com.no10x.cache.Manager;  
 import net.sf.jsr107cache.Cache; 
   
@@ -14,34 +16,34 @@ import net.sf.jsr107cache.Cache;
  * 
  * Creation:  26.07.2010::11:42:57<br> 
  */ 
-public class ScriptStore { 
+public class JSStore { 
 	 
 	private static final String SCRIPTSTORE = "SCRIPTSTORE";
-	private static final ScriptStore me = new ScriptStore();
+	private static final JSStore me = new JSStore();
 	Cache  scriptStore  = null;
-	ScriptStore() {
+	JSStore() {
 		this.scriptStore = Manager.getCache(SCRIPTSTORE);		
 	}
   
 
-	public static ScriptStore getInstanse() {
+	public static JSStore getInstanse() {
 		return me;
 	}
 
-	public ScriptItem getByValue(String scriptValue) {
+	public Item getByValue(String scriptValue) {
 		
-		return (ScriptItem) scriptStore.get(scriptValue);
+		return (Item) scriptStore.get(scriptValue);
 	}
-	public ScriptItem getByURL(String scriptURL) {
+	public Item getByURL(String scriptURL) {
 		
 		String key = scriptURL;
-		return (ScriptItem) scriptStore.get(key );
+		return (Item) scriptStore.get(key );
 	}
 
-	public ScriptItem putOrCreate(String cacheKey, String value, String refPar ) { 
-		ScriptItem jsItem = (ScriptItem) scriptStore.get(cacheKey);
+	public Item putOrCreate(String cacheKey, String value, String refPar ) { 
+		Item jsItem = (Item) scriptStore.get(cacheKey);
 		if (jsItem == null){ 
-			jsItem = new ScriptItem(value); 
+			jsItem = new Item(value); 
 			jsItem.addReffer(refPar); 
 		}  else{  // only for existing entries
 			/*
@@ -81,10 +83,10 @@ public class ScriptStore {
 	}
 
 
-	private void reformat(String cacheKey, ScriptItem jsItem) {
+	private void reformat(String cacheKey, Item jsItem) {
 		try{
 			String jsValue = jsItem.getValue();
-			jsValue  = SServlet. performFormatJS(cacheKey, jsValue );
+			jsValue  =  performFormatJS(cacheKey, jsValue );
 			
  
 			String linesTmp[] = jsValue.split("\n");
@@ -103,6 +105,21 @@ public class ScriptStore {
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
+	}
+
+
+	public static String performFormatJS(String uriTmp, String scriptValue) throws IOException  {//, <-- ScriptItem scriptTmp
+		 
+		Beauty b = new Beauty(); 
+		String formattedJS = scriptValue;
+		try{
+			formattedJS = b.fire(scriptValue);
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	
+		return formattedJS;
 	}
 	
 }

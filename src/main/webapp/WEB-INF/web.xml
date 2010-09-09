@@ -25,6 +25,10 @@
 		<servlet-name>S</servlet-name>
 		<servlet-class>ws.rrd.server.SServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>C</servlet-name>
+		<servlet-class>ws.rrd.server.CSServlet</servlet-class>
+	</servlet>	
 
 	<servlet>
 		<servlet-name>greetServlet</servlet-name>
@@ -65,6 +69,10 @@
 		<servlet-name>S</servlet-name>
 		<url-pattern>/S/*</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>C</servlet-name>
+		<url-pattern>/C/*</url-pattern>
+	</servlet-mapping>	
 	<servlet-mapping>
 		<servlet-name>F</servlet-name>
 		<url-pattern>/F/*</url-pattern>
