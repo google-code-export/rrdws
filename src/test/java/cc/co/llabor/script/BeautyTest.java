@@ -7,6 +7,7 @@ import java.io.IOException;
 import javax.script.ScriptException;
 
 import org.junit.Test;
+import org.vietspider.html.parser.Diff;
 
 import ws.rrd.server.LServlet;
 
@@ -51,6 +52,33 @@ public class BeautyTest {
 	}
 	
 
+	// /compiled.137a.344458206715449423.css
+	@Test
+	public void testFireCSS() throws IOException, ScriptException {
+		Beauty b = new Beauty();
+		String scriptIn = new String ( LServlet.getResourceAsBA(   this.getClass().getPackage().getName().replace(".", "/")+"/"+"compiled.137a.344458206715449423.css") );
+		String res = b.fireCSS( scriptIn );
+		//System.out.println(res);
+		assertTrue(res,res.indexOf("\n")>0);
+	}
+	
+	
+	//cleanCSS
+	@Test
+	public void testCSS() throws IOException, ScriptException {
+		Beauty b = new Beauty();
+		String scriptIn = new String ( LServlet.getResourceAsBA(   this.getClass().getPackage().getName().replace(".", "/")+"/"+"compiled.137a.344458206715449423.css") );
+		String actual = b.cleanCSS( scriptIn );
+		//System.out.println(res);
+		String expected = new String ( LServlet.getResourceAsBA(   this.getClass().getPackage().getName().replace(".", "/")+"/"+"online.css") );
+		//String expected = new String ( LServlet.getResourceAsBA(   this.getClass().getPackage().getName().replace(".", "/")+"/"+"java.css") );
+		expected = expected.replace("\r\n", "\n").replace("\t", " ");
+		Diff diff  = new Diff();//System.out.println(textValue);
+		diff.setSAME(false); 
+		String[] diffTmp = diff.diff(expected.split("\n"),actual.split("\n"));//actual
+		assertEquals(diffTmp.length, 13); 
+	}
+	
 }
 
 

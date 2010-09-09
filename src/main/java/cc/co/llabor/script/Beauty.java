@@ -24,12 +24,18 @@ import ws.rrd.server.LServlet;
  */
 public class Beauty {
 	
-	static byte[] bScript = "".getBytes();
 	static String beautyScript = "";
+	static String cssScript = "";
+	
 	static {
 		try {
-			bScript = LServlet.getResourceAsBA("beautifyALL.js");
-			beautyScript = new String(bScript);
+			// js
+			byte[] buf = "".getBytes();
+			buf = LServlet.getResourceAsBA("beautifyALL.js");
+			beautyScript = new String(buf);
+			// css
+			buf = LServlet.getResourceAsBA("tabifier.js");
+			cssScript = new String(buf);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -54,6 +60,34 @@ public class Beauty {
 	        retval = bout.toString();
 	        return retval;
 	}
+	public  String fireCSS(String styleIn) throws IOException, ScriptException{
+		String retval = "";
+        ScriptEngineManager manager = new ScriptEngineManager();
+        ScriptEngine engine = manager.getEngineByName("JavaScript");   
+        
+		engine.put("x", cssScript + "" +
+				"\n cleanCSS(code);" +
+				"\n print(separator);" +
+				"\n print(code);" +
+				"\n print(separator);" +
+				"\n print(out);" +
+				"\n print(separator);"); 
+        ByteArrayOutputStream bout = new ByteArrayOutputStream();
+        ByteArrayOutputStream berr = new ByteArrayOutputStream();
+        engine.getContext().setWriter(new PrintWriter(bout, true));
+        engine.getContext().setErrorWriter(new PrintWriter(berr,true)); 
+        retval = bout.toString();
+        String outTmp = "";//new StringBuilder();
+        String comment =  "\n/* --- */\n";
+        engine.put("code", styleIn  ); 
+        engine.put("separator", comment  ); 
+        engine.put("out", outTmp ); 
+        
+        bout.reset();
+        engine.eval("eval(x);");
+        retval = bout.toString();
+        return retval;
+}	
 	
 	protected void _todo() throws ScriptException{
 		ScriptEngineManager manager = new ScriptEngineManager();
@@ -70,6 +104,71 @@ public class Beauty {
         engine.eval("println(x);", newContext);
          
 	}
+	
+	
+
+
+
+	String tabs(int level) {
+		String  s="";
+		for (int j=0; j<level; j++) s+=' ';
+		return s;
+	}	
+	//int level = 0;
+	int LOOP_SIZE=64 * 1024;
+	String out = "";
+	String cleanAsync(int i, String code, int level) {
+		String out = "";
+		int iStart=i;
+		for (; i<code.length() && i<iStart+LOOP_SIZE; i++) {
+			if ('{'==code.charAt(i)) {
+				level++;
+				out+=" {\n"+tabs(level);
+			} else if ('}'==code.charAt(i)) {
+				out=out.replace("/*$", "");
+				level--;
+				out+='\n'+tabs(level)+"}\n"+tabs(level);
+			} else if (';'==code.charAt(i)) {
+				out+=";\n"+tabs(level);
+			} else if ('\n'==code.charAt(i)) {
+				out+='\n'+tabs(level);
+			} else {
+				out+=code.charAt(i);
+			}
+		}
+
+		//showProgress(i, code.length);
+		if (i<code.length()) {
+			//setTimeout(cleanAsync, 0);
+			out += cleanAsync(i,code, level+1);
+		} else {
+			//level=li;
+			//out=out.replace(/[\s\n]*$/, '');
+			//finishTabifier(out);
+			out = out ;
+		}
+		return out;
+	}
+
+	
+	String cleanCSS(String code) {
+//		int  i=0;
+
+//		if ('\n'==code[0]) code=code.substr(1);
+//		code=code.replace(/([^\/])?\n*/g, '$1');
+//		code=code.replace(/\n\s+/g, '\n');
+//		code=code.replace(/[	 ]+/g, ' ');
+//		code=code.replace(/\s?([;:{},+>])\s?/g, '$1');
+//		code=code.replace(/\{(.*):(.*)\}/g, '{$1: $2}');
+		
+		 
+		String out=tabs(0);// li=level;
+		out = cleanAsync(0, code, 0);
+		//System.out.println(out);
+		
+		return out;
+	}
+
 
 }
 
