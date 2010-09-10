@@ -612,7 +612,7 @@ private static final boolean TRACE = false;
 			node.clearChildren();// setChild(0, new
 			String retval= LServlet.calcBase()+"C/"+"0"+ xRefUrl.hashCode() + ".css";
 			// <LINK href="mystyle.css" title="compact" rel="stylesheet" type="text/css">
-			String stringTmp = "<LINK href=\""+retval+ "\" title=\""+retval+"\" rel=\"stylesheet\" type=\"text/css\">";
+			String stringTmp = "LINK  rel=\"stylesheet\"   href=\""+retval+ "\"    title=\""+retval+"\"    type=\"text/css\" media=\"all\" ";
 			
 			// HTMLNode(){})getChildren().clear()setValue("/*
 			// 8-X */".toCharArray());

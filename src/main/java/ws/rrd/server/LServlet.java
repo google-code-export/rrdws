@@ -263,7 +263,7 @@ public class LServlet extends HttpServlet {
 			}	else{
 			 
 				String xEncTmp = getXEnc(xRespTmp); 
-				if (TRACE) log.warning("x---HTML---x  contextTypeStr/contextEncStr:"+contextTypeStr+" : :  enc : : "+contextEncStr +"["+urlStr+"]   XXX::"+xEncTmp);
+				if (TRACE) log.warning("x---HTML--- x  contextTypeStr/contextEncStr:"+contextTypeStr+" : :  enc : : "+contextEncStr +"["+urlStr+"]   XXX::"+xEncTmp);
 				if (TRACE) System.out.println("=====!!!======"+contextTypeStr +"::::"+contextEncStr);
 			}
 			 
@@ -445,6 +445,7 @@ public class LServlet extends HttpServlet {
 		outTmp = resp.getOutputStream();
 		outTmp.write(xCSS.getBytes());
 		outTmp.flush();
+		store.putOrCreate(urlStr, xCSS, urlStr);
 		return outTmp;
 	}
 
@@ -549,7 +550,11 @@ public class LServlet extends HttpServlet {
 		"Content-Type: application/x-javascript; charset=utf-8".equalsIgnoreCase( contextTypeStr) ||
 		//"content-type: text/html; charset=ISO8859-1".equalsIgnoreCase( contextTypeStr) ||
 		"content-type: text/javascript; charset=UTF-8".equalsIgnoreCase( contextTypeStr) || 
-		(""+contextTypeStr).toLowerCase().indexOf("text/javascript")>=0;
+		(""+contextTypeStr).toLowerCase().indexOf("text/javascript")>=0 ||
+		(""+contextTypeStr).toLowerCase().indexOf("application/javascript")>=0 ||
+		(""+contextTypeStr).toLowerCase().indexOf("application/x-javascript")>=0 
+		
+		;
 	}
 
 	private static boolean isRootReq(HttpServletRequest req) {

@@ -37,6 +37,7 @@ public class Item implements Serializable{
 	}
 	
 	Set<String> refs = new HashSet<String>();
+	boolean readOnly = false;
 
 	public void addReffer(String refPar) {
 		refs.add(refPar); 
@@ -46,6 +47,15 @@ public class Item implements Serializable{
 	public Set<String> getRefs() {
  
 			return refs;
+	}
+
+	public boolean isReadOnly() {
+		return readOnly;
+	}
+
+	public void setReadOnly(boolean readOnly) {
+		if (!this.readOnly)
+			this.readOnly = readOnly;
 	}
 
 }
