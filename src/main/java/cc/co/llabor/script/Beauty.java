@@ -27,6 +27,11 @@ public class Beauty {
 	static String beautyScript = "";
 	static String cssScript = "";
 	
+	public Beauty(){
+		System.out.println("js:IN::"+jsInBytes+"/OUT:: "+jsOutBytes+"["+jsMs+"] ms ==~"+ (jsOutBytes/(.001*jsMs+1)+" bps"));
+		System.out.println("css:IN::"+cssInBytes+"/OUT:: "+cssOutBytes+"["+cssMs+"] ms ==~"+ (cssOutBytes/(.001*cssMs+1)+" bps"));
+	}
+	
 	static {
 		try {
 			// js
@@ -41,9 +46,13 @@ public class Beauty {
 			e.printStackTrace();
 		}
 	}
+	private static long jsInBytes = 0;
+	private static long jsOutBytes = 0;
+	volatile private static long jsMs = 0;
 	
 	
 	public  String fire(String scriptIn) throws IOException, ScriptException{
+			long start = System.currentTimeMillis();
 			String retval = "";
 	        ScriptEngineManager manager = new ScriptEngineManager();
 	        ScriptEngine engine = manager.getEngineByName("JavaScript");   
@@ -58,9 +67,17 @@ public class Beauty {
 	        bout.reset();
 	        engine.eval("eval(x);");
 	        retval = bout.toString();
+			long stop = System.currentTimeMillis();
+			jsInBytes+= scriptIn.length();
+			jsOutBytes+= retval.length();
+			jsMs += (stop-start);
+
 	        return retval;
 	}
+	
+	
 	public  String fireCSS(String styleIn) throws IOException, ScriptException{
+		
 		String retval = "";
         ScriptEngineManager manager = new ScriptEngineManager();
         ScriptEngine engine = manager.getEngineByName("JavaScript");   
@@ -150,6 +167,9 @@ public class Beauty {
 		return out;
 	}
 
+	private static long cssInBytes = 0;
+	private static long cssOutBytes = 0;
+	volatile private static long cssMs = 0;
 	
 	public String cleanCSS(String code) {
 //		int  i=0;
@@ -161,9 +181,14 @@ public class Beauty {
 //		code=code.replace(/\s?([;:{},+>])\s?/g, '$1');
 //		code=code.replace(/\{(.*):(.*)\}/g, '{$1: $2}');
 		
+		long start = System.currentTimeMillis();
 		 
 		String out=tabs(0);// li=level;
 		out = cleanAsync(0, code, 0);
+		long stop = System.currentTimeMillis();
+		cssInBytes+= code.length();
+		cssOutBytes+= out.length();
+		cssMs += (stop-start);
 		//System.out.println(out);
 		
 		return out;

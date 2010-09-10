@@ -53,6 +53,7 @@ public class JSStore {
 			 */
 			if (value.trim().toLowerCase().startsWith("<script")){
 				String newVal = "";
+				value = value.replace(">", ">\n");
 				String[] lines =value.split("\n");
 				int i=0;
 				for (String sTmp :lines){
@@ -69,6 +70,7 @@ public class JSStore {
 			jsItem.setValue(value); 
 			reformat(cacheKey, jsItem);		
 			jsItem.addReffer(refPar); 
+			jsItem.setReadOnly(true);
 		}
 		
 		synchronized (SCRIPTSTORE) {
