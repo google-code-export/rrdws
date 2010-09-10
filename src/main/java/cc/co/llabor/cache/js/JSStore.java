@@ -85,7 +85,10 @@ public class JSStore {
 			String[] lines =value.split("\n");
 			int i=0;
 			for (String sTmp :lines){
-				boolean shouldBeWraped = sTmp.toLowerCase().trim().startsWith("<");
+				String trimTmp = sTmp.toLowerCase().trim();
+				boolean shouldBeWraped = trimTmp.startsWith("<") 
+					&& (trimTmp.replace(" ", ""). startsWith("<script") ||
+						trimTmp.replace(" ", ""). startsWith("</script")) ;
 				if (shouldBeWraped)
 					newVal += "/*";
 				newVal+= sTmp;

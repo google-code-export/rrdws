@@ -80,6 +80,7 @@ public class CSStore {
 				}else{
 					out+=line;
 				}
+				out+="\n";
 			}
 
 			cssItem = new Item(out); 
