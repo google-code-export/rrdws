@@ -49,12 +49,16 @@ public class CSStore {
 	public Item putOrCreate(String cacheKey, String value, String refPar ) { 
 		Item cssItem = (Item) store.get(cacheKey);
 		if (cssItem == null){ 
-			Beauty b = new Beauty(); 
-			String actual = b.cleanCSS( value );	
+			 
+			String actual =   value  ;	
 			actual = actual
 			.replace("@import", "\n@import" )
 			.replace("\";", "\";\n" )
 			;
+			if (actual.startsWith("<")){
+				actual = actual.replace(">", ">\n");
+				actual = actual.replace("<", "\n<");
+			}
 			String out = "";
 			for (String line:actual.split("\n")){
 				if (line.startsWith("@import")){
@@ -80,15 +84,18 @@ public class CSStore {
 
 			cssItem = new Item(out); 
 			cssItem.addReffer(refPar); 
-			cssItem.setReadOnly(true);
+			
 		}  else{  // only for existing entries
 			if (cssItem.isReadOnly()) {
 				cssItem.addReffer(refPar); 
 				return cssItem;
 			}
+			//Beauty b = new Beauty(); 
+			//String actual = b.cleanCSS( value );				
 			cssItem.addReffer(refPar); 
 			cssItem.setValue(value); 
-			reformat(cacheKey, cssItem);		
+			reformat(cacheKey, cssItem);
+			cssItem.setReadOnly(true);
 			
 		}
 		
