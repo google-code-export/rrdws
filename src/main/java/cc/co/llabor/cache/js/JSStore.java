@@ -43,9 +43,6 @@ public class JSStore {
 	public Item putOrCreate(String cacheKey, String value, String refPar ) { 
 		Item jsItem = (Item) scriptStore.get(cacheKey);
 		if (jsItem == null){ 
-			jsItem = new Item(value); 
-			jsItem.addReffer(refPar); 
-		}  else{  // only for existing entries
 			/*
 			 * <script type="text/javascript">
    					mw.usability.addMessages({'vector-collapsiblenav-more':'More languages','vector-editwarning-warning':'Leaving this page may cause you to lose any changes you have made.\nIf you are logged in, you can disable this warning in the \"Editing\" section of your preferences.','vector-simplesearch-search':'Search','vector-simplesearch-containing':'containing...'});
@@ -66,7 +63,10 @@ public class JSStore {
 					i++;
 				}
 				value = newVal;
-			}
+			}			
+			jsItem = new Item(value); 
+			jsItem.addReffer(refPar); 
+		}  else{  // only for existing entries 
 			jsItem.setValue(value); 
 			reformat(cacheKey, jsItem);		
 			jsItem.addReffer(refPar); 

@@ -548,7 +548,7 @@ private static final boolean TRACE = false;
 		
 		private String  clearBody(HTMLNode node, final String scriptValue, String xRef) {
 			node.clearChildren();// setChild(0, new
-			String retval= LServlet.calcBase()+"S/"+"l"+ xRef.hashCode() + ".js";
+			String retval= LServlet.calcBase()+"S/"+"l"+ scriptValue.length() +"@"+ xRef.hashCode() + ".js";			
 			String stringTmp = "SCRIPT SRC=\""+retval +"\"";
 			
 			// HTMLNode(){})getChildren().clear()setValue("/*
@@ -610,7 +610,7 @@ private static final boolean TRACE = false;
 		
 		private String  clearBody(HTMLNode node, final String scriptValue, String xRefUrl) {
 			node.clearChildren();// setChild(0, new
-			String retval= LServlet.calcBase()+"C/"+"0"+ xRefUrl.hashCode() + ".css";
+			String retval= LServlet.calcBase()+"C/"+"0"+ scriptValue.length() +"@" +xRefUrl.hashCode() + ".css";
 			// <LINK href="mystyle.css" title="compact" rel="stylesheet" type="text/css">
 			String stringTmp = "LINK  rel=\"stylesheet\"   href=\""+retval+ "\"    title=\""+retval+"\"    type=\"text/css\" media=\"all\" ";
 			
