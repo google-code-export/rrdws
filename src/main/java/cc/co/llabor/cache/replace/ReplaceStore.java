@@ -110,7 +110,7 @@ public class ReplaceStore {
 				//e.printStackTrace();
 			}
 			if (changed){
-				replaceStore.put(cacheKey, repTmp );
+				replaceStore.put(cacheKey, value );
 			}
 		}
 		return repTmp;
