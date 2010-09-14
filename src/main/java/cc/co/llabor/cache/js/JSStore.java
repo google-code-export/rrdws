@@ -63,9 +63,22 @@ public class JSStore {
 		synchronized (SCRIPTSTORE) {
 			Object o = scriptStore.peek(cacheKey); 
 			if (jsItem != o) {// check similarity
-				o = scriptStore.remove(cacheKey);
+				try{
+					o = scriptStore.remove(cacheKey);// if (o.hashCode() == jsItem.hashCode());
+				}catch(NullPointerException e){
+					e.printStackTrace();
+				}
 				if (1==2)System.out.println(o);
-				scriptStore.put(cacheKey, jsItem );
+				
+				boolean changed = true;
+				try{
+					changed = !((Item)o).getValue().equals(jsItem.getValue());
+				}catch(NullPointerException e){
+					e.printStackTrace();
+				}
+				if (changed){
+					scriptStore.put(cacheKey, jsItem );
+				}
 			}
 		} 
 		return jsItem;
@@ -120,14 +133,21 @@ public class JSStore {
 
 
 	public static String performFormatJS(String uriTmp, String scriptValue) throws IOException  {//, <-- ScriptItem scriptTmp
-		 
-		Beauty b = new Beauty(); 
+		Item jsTmp = getInstanse().getByURL(uriTmp);
 		String formattedJS = scriptValue;
-		try{
-			formattedJS = b.fire(scriptValue);
-		}catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
+		if (jsTmp!=null && jsTmp.readOnly ) {
+			// already formatted
+			formattedJS = jsTmp.getValue();
+		}else{
+			synchronized (uriTmp) { 
+				Beauty b = new Beauty();  
+				try{
+					formattedJS = b.fire(scriptValue);
+				}catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+				}
+			}
 		}
 	
 		return formattedJS;

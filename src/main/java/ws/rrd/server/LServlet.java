@@ -501,18 +501,11 @@ public class LServlet extends HttpServlet {
 				;
 			
 			scriptTmp = ssTmp.putOrCreate(urlStr, jsToWrap, urlStr);
-		} else{
-			String jsToWrap = scriptTmp.getValue();
-			String jsToWrapTmp = JSStore.performFormatJS(urlStr, jsToWrap ) ;
-			if (jsToWrapTmp .length() > jsToWrap.length()){
-				ssTmp.putOrCreate(urlStr, jsToWrapTmp, urlStr);
-			}else{
-				//System.out.println(jsToWrapTmp);
-			}
-		}
+		}  
 		resp.setContentType("application/javascript; charset=utf-8");
 		outTmp = resp.getOutputStream();
-		outTmp.write(scriptTmp.getValue().getBytes("UTF-8")) ;
+		String scriptValueTmp = scriptTmp.getValue();
+		outTmp.write(scriptValueTmp.getBytes("UTF-8")) ;
 		outTmp.flush();
 		return outTmp;
 	}

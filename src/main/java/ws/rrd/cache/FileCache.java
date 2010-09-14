@@ -1,5 +1,8 @@
 package ws.rrd.cache;
 
+import gnu.inet.encoding.Punycode;
+import gnu.inet.encoding.PunycodeException;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -7,12 +10,20 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream; 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.apache.commons.codec.EncoderException;
+import org.apache.commons.codec.net.QuotedPrintableCodec;
  
 
 import net.sf.jsr107cache.Cache;
@@ -33,10 +44,12 @@ import net.sf.jsr107cache.CacheStatistics;
 public class FileCache implements Cache {
 
 	public static final String NAMESPACE = "namespace";
+	private static final Logger log = Logger .getLogger(FileCache.class.getName());
 	private File basedir ;
+	private Properties props = new Properties();
 
 	public FileCache(Map arg0) {
-		this.putAll(arg0);
+		this.props .putAll(arg0);
 		String baseDirName = ".filecache";
 		String namespace = toName (""+ arg0.get(NAMESPACE));
 		//System.getProperty("user.home");
@@ -108,16 +121,20 @@ public class FileCache implements Cache {
 			
 
 			fis = new FileInputStream(fTmp );
-			ObjectInputStream ois = new ObjectInputStream(fis);
-			retval = ois.readObject();		
-			fis.close();
-			
+			if ((""+key).endsWith(".properties")){
+				retval = new Properties();
+				((Properties)retval).load(fis);
+			}else{
+				ObjectInputStream ois = new ObjectInputStream(fis);
+				retval = ois.readObject();		
+				fis.close();
+			}
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
+			// http://forums.sun.com/thread.jspa?threadID=467841
+			if(Level.ALL == log.getLevel() || Level.FINEST == log.getLevel() || Level.FINER == log.getLevel() || Level.FINE == log.getLevel() ) e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// TODO http://forums.sun.com/thread.jspa?threadID=467841
+			if(Level.ALL == log.getLevel() || Level.FINEST == log.getLevel() || Level.FINER == log.getLevel() || Level.FINE == log.getLevel() ) e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -198,21 +215,28 @@ public class FileCache implements Cache {
 			return this.get(key);
 	}
 
-	String toName(Object key){
+	String toName(Object key)  {
 		String retval = ""+key;
-		String from2[][]={
-				{":", ".."},
-				{"\\", "=slash="},
-				{"\n", "=n="},
-				{"\b", "=bs="},
-				{"\t", "=tab="},
-				{"/", "=backslash="},
-				{"\"", "=2="},
-				{"\'", "=1="} 
-		};
-		for (String[]from2to:from2){
-			retval = retval.replace(from2to[0],from2to[1]);
-		}
+		if(1==2) 
+		try { 
+			retval = URLEncoder.encode(retval, "UTF-8");
+			if(1==2){			
+						String eKey = Punycode.encode(retval);
+						QuotedPrintableCodec s = new QuotedPrintableCodec();
+						(new QuotedPrintableCodec()).encode(retval);
+						System.out.println("'"+retval+"' -> ["+eKey+"]");
+			}
+		} catch (PunycodeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (EncoderException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		retval = retval.replace("%2F", "/");
 		return retval ;
 	}
 	
@@ -224,18 +248,26 @@ public class FileCache implements Cache {
 			
 			File fileTmp = createFile(key);
 			try{
-				new File(fileTmp.getParent().replace(".", File.separator)).mkdirs();
+				String parent = fileTmp.getParent();
+				String parent2 = parent.replace(".", File.separator);
+				new File(parent).mkdirs();
 			}catch(Exception e){
-				if (1==1)e.printStackTrace();
+				 e.printStackTrace();
 			}
 			fout = new FileOutputStream(fileTmp );
-			ObjectOutputStream wr = new ObjectOutputStream(fout);
-			wr.writeObject(arg1);
-			wr.close();
+			if (arg1 instanceof Properties){
+				Properties prps = (Properties) arg1;
+				prps.store(fout, "CacheEntry stored at " +System.currentTimeMillis());
+				fout.close();
+			}else{
+				ObjectOutputStream wr = new ObjectOutputStream(fout);
+				wr.writeObject(arg1);
+				wr.close();
+			}
 			return arg1;
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e.printStackTrace();//(new File(".")).getAbsoluteFile()
 			return e;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -246,7 +278,10 @@ public class FileCache implements Cache {
 	}
 
 	private File createFile(Object key) {
-		String keyStr = toName(key);
+		String keyStr = null;
+		try{
+			keyStr= toName(key);
+		}catch (Exception e) {}
 		File retval =  new File(this.basedir , keyStr); 
 		return retval;
 	}
