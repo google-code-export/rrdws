@@ -120,21 +120,16 @@ public class UrlFetchTest implements Serializable{
 			int appUrlLen = uri.lastIndexOf( "/");				
 			String appUri = uri.substring(0, appUrlLen);
 			Header header = m.getHeaders("Authorization")[0];
-			cacheAuth.put(appUri,""+header.getValue() );			
+			String basicAuth = searchForAuth(toFetchStr, m);
+			if (basicAuth == null){
+				cacheAuth.put(appUri,""+header.getValue() );
+			}
 		}
 		if (statusTmp.indexOf("200 OK") > 0) {
 			System.out.println("resp.:" + statusLine);
 
 		} else if ("HTTP/1.1 401 Unauthorized".equals(statusTmp)) {
-			Cache cacheAuth = Manager.getCache(CACHE_NAME);
-			String toFetchKey = toFetchStr.substring(0,toFetchStr.lastIndexOf("/") );
-			String basicAuth = (String) cacheAuth.get(toFetchKey); // auth is path (NOT File) related!
-			String uri = m.getURI().toString();
-			int domainUrlLen = uri.indexOf( m.getURI().getPath());			
-			while(basicAuth == null && toFetchKey.length()> domainUrlLen ){
-				toFetchKey = toFetchStr.substring(0,toFetchKey.lastIndexOf("/") );
-				basicAuth = (String) cacheAuth.get(toFetchKey);
-			}
+			String basicAuth = searchForAuth(toFetchStr, m);
 			
 			if (basicAuth != null) {// go forward with cached
 				m.addHeader("Authorization", (basicAuth.startsWith("Basic ")?"":"Basic ") + basicAuth);
@@ -153,6 +148,25 @@ public class UrlFetchTest implements Serializable{
 			}
 		}
 		return respTmp;
+	}
+
+	/**
+	 * @author vipup
+	 * @param toFetchStr
+	 * @param m
+	 * @return
+	 */
+	private String searchForAuth(String toFetchStr, HttpUriRequest m) {
+		Cache cacheAuth = Manager.getCache(CACHE_NAME);
+		String toFetchKey = toFetchStr.substring(0,toFetchStr.lastIndexOf("/") );
+		String basicAuth = (String) cacheAuth.get(toFetchKey); // auth is path (NOT File) related!
+		String uri = m.getURI().toString();
+		int domainUrlLen = uri.indexOf( m.getURI().getPath());			
+		while(basicAuth == null && toFetchKey.length()> domainUrlLen ){
+			toFetchKey = toFetchStr.substring(0,toFetchKey.lastIndexOf("/") );
+			basicAuth = (String) cacheAuth.get(toFetchKey);
+		}
+		return basicAuth;
 	}
 	public static final String CACHE_NAME = UrlFetchTest.class.getName()
 			+ ":Authorization";
