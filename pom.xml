@@ -18,6 +18,7 @@
 		<groupId>org.apache.tomcat</groupId>
 		<artifactId>catalina</artifactId>
 		<version>6.0.29</version>
+		<scope>provided</scope>
 	</dependency>	
 	<!-- javax MAIL 
 		<dependency>

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import cc.co.llabor.cache.js.Item;
 import cc.co.llabor.cache.js.JSStore; 
+import cc.co.llabor.cache.replace.ReplaceStore;
 
 public class SServlet extends HttpServlet{ /* SCRIPT-mastering servlet*/
 	private static final long serialVersionUID = -5308225516841490806L; 
@@ -20,10 +21,13 @@ public class SServlet extends HttpServlet{ /* SCRIPT-mastering servlet*/
 		String scriptValue = "";
 
 		// assumes already cached
-		final JSStore instanse = JSStore.getInstanse();
-		Item scriptTmp = instanse.getByURL(uriTmp);
-		scriptValue = scriptTmp.getValue() ;
-		out.write(scriptValue.getBytes()); 
+		final JSStore instanse = JSStore.getInstanse();//http://ejohn.org/blog/bringing-the-browser-to-the-server/
+		Item scriptTmp = instanse.getByURL(uriTmp); // http://www.snible.org/java2/uni2java.html
+		scriptValue = scriptTmp.getValue() ;//http://realcode.ru/regexptester/ 
+		ReplaceStore replacerTmp = ReplaceStore.getInstanse();//replacerTmp.putOrCreate(cacheKey, value)
+		String newValue = replacerTmp.replaceByRules(uriTmp,scriptValue);
+		
+		out.write(newValue.getBytes()); 
 		out.flush();
 		instanse.putOrCreate(uriTmp, scriptValue, scriptTmp.getRefs().toArray(new String[]{})[0] );
 	}

@@ -237,6 +237,19 @@ public class FileCache implements Cache {
 			e.printStackTrace();
 		} 
 		retval = retval.replace("%2F", "/");
+		String from2[][]={
+				{":", "=..="},
+				//{"\\", "=slash="},
+				{"\n", "=!n!="},
+				{"\b", "=!b!="},
+				{"\t", "=!T!="},
+				//{"/", "=!s!="},
+				{"\"", "=!!="},
+				{"\'", "=!="} 
+		};
+		for (String[]from2to:from2){
+			retval = retval.replace(from2to[0],from2to[1]);
+		}
 		return retval ;
 	}
 	

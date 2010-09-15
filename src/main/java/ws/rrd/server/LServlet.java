@@ -195,7 +195,13 @@ public class LServlet extends HttpServlet {
 				Map parameterMap = req.getParameterMap();
 				xRespTmp = urlFetcherTmp.fetchPostResp(urlStr, headsToResend,	parameterMap, items);
 			}				
-			else{
+			else{ // GET
+				if (urlStr.indexOf("?goto=")>0) // f.ex. https://www.ccc.de/Wxby7/Lswdn.ipx?goto=../Mdfsus/Rsdfrts.usbx 
+				{
+					urlStr = HyperLinkUtil.prepareLinkValue( new URL(urlStr.substring(0,urlStr.indexOf("?goto="))), urlStr.substring(urlStr.indexOf("?goto=")+6 )) ;
+				}
+				
+				
 				xRespTmp = urlFetcherTmp.fetchGetResp(urlStr, headsToResend);
 			}
 			final StatusLine statusLine = xRespTmp.getStatusLine();
