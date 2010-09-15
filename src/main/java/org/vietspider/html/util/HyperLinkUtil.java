@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import org.apache.catalina.util.RequestUtil;
 import org.vietspider.chars.TextVerifier; 
 import org.vietspider.chars.ValueVerifier; 
 import org.vietspider.common.util.Queue;
@@ -396,7 +397,7 @@ private static final boolean TRACE = false;
 	return linkPar;
 }
 
-	private static String prepareLinkValue(URL home, String value) {
+	public static String prepareLinkValue(URL home, String value) {
 		String homeStr = "" + home +"";
 		if (value.startsWith("//")) {
 			value = home.getProtocol()+":" + value;
@@ -419,7 +420,15 @@ private static final boolean TRACE = false;
 		} else if (value.startsWith(".."))  {
 			String uri = home.toString(); 
 			int srvUrlLen = (home.getProtocol().length()+home.getHost().length());
-			if (uri.length() > srvUrlLen )uri = uri.substring(0, uri.lastIndexOf("/"));
+			if (uri.length() > srvUrlLen ){
+				if (uri.endsWith("/")) // home hase no file in name
+					uri = uri.substring(0, uri.lastIndexOf("/"));
+				else{ // trunc file also
+					//uri = uri.substring(0, uri.lastIndexOf("/"));
+					uri = uri.substring(0, uri.lastIndexOf("/"));
+					if(1==2)RequestUtil.normalize(uri);
+				}
+			}
 			//if (uri.length() > srvUrlLen )uri = uri.substring(0, uri.lastIndexOf("/") );
 			uri += value.substring(2);
 			uri += "";

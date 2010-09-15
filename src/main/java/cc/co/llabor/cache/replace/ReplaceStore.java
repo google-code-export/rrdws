@@ -151,7 +151,7 @@ public class ReplaceStore {
 		String[] keys = keySet.toArray(new String[]{});
 		for (String key:keys){
 			String val = props.getProperty(key);
-			retval = replaceLinks(retval, key, val );
+			retval = replaceLinks(retval, key, val );props.put(key, val);putOrCreate(rulesUrl, props);
 		}		
 		return retval;
 	}
