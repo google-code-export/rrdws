@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Created-By: createjars
+
+Name: com/google/appengine/api/
+Implementation-Vendor: Google
+Implementation-Version: 1273872371
+Specification-Version: 1.0
+Implementation-Vendor-Id: com.google
+Specification-Vendor: Google
+
