@@ -8,16 +8,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
-
-import org.apache.catalina.util.RequestUtil;
+ 
 import org.vietspider.chars.TextVerifier; 
-import org.vietspider.chars.ValueVerifier; 
-import org.vietspider.common.util.Queue;
-import org.vietspider.common.util.Stack;
+import org.vietspider.chars.ValueVerifier;  
 import org.vietspider.html.HTMLNode; 
 import org.vietspider.html.Name;
-import org.vietspider.html.NodeIterator;
-import org.vietspider.html.Tag;
+import org.vietspider.html.NodeIterator; 
 import org.vietspider.html.parser.NodeImpl; 
 import org.vietspider.token.TypeToken;
 import org.vietspider.token.attribute.Attribute;
@@ -25,11 +21,10 @@ import org.vietspider.token.attribute.Attributes;
 
 import cc.co.llabor.cache.css.CSStore;
 import cc.co.llabor.cache.js.Item;
-import cc.co.llabor.cache.js.JSStore;
+import cc.co.llabor.cache.js.JSStore; 
  
 import ws.rrd.server.Base64Coder;
-import ws.rrd.server.LServlet;
-import ws.rrd.server.SServlet;
+import ws.rrd.server.LServlet; 
 
  
 public class HyperLinkUtil {   
@@ -426,7 +421,6 @@ private static final boolean TRACE = false;
 				else{ // trunc file also
 					//uri = uri.substring(0, uri.lastIndexOf("/"));
 					uri = uri.substring(0, uri.lastIndexOf("/"));
-					if(1==2)RequestUtil.normalize(uri);
 				}
 			}
 			//if (uri.length() > srvUrlLen )uri = uri.substring(0, uri.lastIndexOf("/") );

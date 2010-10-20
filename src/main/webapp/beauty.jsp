@@ -1,13 +1,13 @@
-<%@page import="org.vietspider.html.HTMLDocument"%> >
-<%@page import="org.vietspider.html.parser.HTMLParser2"%>
-<%@page import="org.vietspider.html.HTMLNode"%>
-<%
-
-HTMLParser2 p2 =  new HTMLParser2();  
-HTMLDocument docTmp = p2.createDocument("<html></html>");
-HTMLNode root = docTmp.getRoot(); 
-boolean isBeauty = ! root.isBeautify();
-root.setBeautify(isBeauty);
-String imgName = isBeauty? "beauty.jpeg":"girl.jpeg";
-%><%@page import="ws.rrd.server.LServlet"%>
-<img src="<%=LServlet.SwapServletUrl %>../img/<%=imgName%>">
+<%@page import="ws.rrd.server.LServlet"%><%
+ 	
+	if ("true".equals( request.getParameter(LServlet.BEAUTIFY)))
+ 		session.setAttribute(LServlet.BEAUTIFY,"true");	
+	if ("false".equals( request.getParameter(LServlet.BEAUTIFY)))
+ 		session.setAttribute(LServlet.BEAUTIFY,"false");	
+ 	String isBeautify = ""+session.getAttribute(LServlet.BEAUTIFY);	
+	String imgName = "true".equals(isBeautify) ? "beauty.jpeg" : "girl.jpeg";
+	String contraTmp = "true".equals(isBeautify)?"false":"true";
+%>
+<a href="beauty.jsp?<%=LServlet.BEAUTIFY%>=<%=contraTmp%>">
+<img 	height="64px" width="64px"  src="<%=LServlet.SwapServletUrl %>../img/<%=imgName%>">
+</a>

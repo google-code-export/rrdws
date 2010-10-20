@@ -8,6 +8,8 @@ syntax: regexp
 syntax: regexp
 ^target$
 syntax: regexp
+^.filecache$
+syntax: regexp
 ^target$
 syntax: regexp
 ^1$
