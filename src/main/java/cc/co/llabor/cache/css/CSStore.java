@@ -95,8 +95,11 @@ public class CSStore {
 			//String actual = b.cleanCSS( value );				
 			cssItem.addReffer(refPar); 
 			cssItem.setValue(value); 
-			reformat(cacheKey, cssItem);
-			cssItem.setReadOnly(true);
+			try{
+				reformat(cacheKey, cssItem);
+				cssItem.setReadOnly(true);
+			}catch(Throwable e ){}
+			
 			
 		}
 		
