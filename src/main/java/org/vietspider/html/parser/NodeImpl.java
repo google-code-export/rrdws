@@ -138,7 +138,7 @@ public class NodeImpl extends HTMLNode {
 
   public StringBuilder buildValue(StringBuilder builder) {
 		// if(value.length < 1) return builder;
-		if (isBeautify && builder.length() > 0) { 
+		if (isBeautify() && builder.length() > 0) { 
 			builder.append(SpecChar.n);
 		}
 		boolean isTag = name != Name.CONTENT && name != Name.COMMENT
@@ -163,7 +163,7 @@ public class NodeImpl extends HTMLNode {
 		}
 		for (HTMLNode ele : children) {
 			
-			if (isBeautify) {
+			if (isBeautify()) {
 				StringBuilder tmpBuilder = new StringBuilder();  
 				ele.buildValue(tmpBuilder);
 				for (String nextLine:tmpBuilder.toString().split("\n")){
@@ -184,7 +184,7 @@ public class NodeImpl extends HTMLNode {
 			} else if (sEndTmp.startsWith(strEndTmp.toUpperCase())) {
 				strEndTmp = strEndTmp.toUpperCase();
 			}
-			if (isBeautify) {
+			if (isBeautify()) {
 				builder.append(SpecChar.n);
 			}
 

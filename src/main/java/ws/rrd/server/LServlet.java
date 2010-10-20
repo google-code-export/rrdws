@@ -63,6 +63,8 @@ public class LServlet extends HttpServlet {
 	private static final Logger log = Logger.getLogger(LServlet.class
 			.getName());
 
+	public static final String BEAUTIFY = "BEAUTIFY";
+
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		this.doGetPost(req, resp);
@@ -317,6 +319,12 @@ public class LServlet extends HttpServlet {
 	    	URL realURL = new URL(urlStr); // new String( oaos.toString(contextEncStr).getBytes(), contextEncStr)
 	    	 
 	    	HTMLNode rootTmp = documentTmp.getRoot();
+	    	if ("true".equals(  sessionTmp.getAttribute(BEAUTIFY) )){
+	    		rootTmp.setBeautify(true);
+	    	}else{
+	    		rootTmp.setBeautify(false);
+	    	}
+	    	
 			testCreateFullLink(rootTmp, SwapServletUrl, realURL);
 //	    	testCreateImageLink(documentTmp.getRoot(), SwapServletUrl, realURL);
 	    	

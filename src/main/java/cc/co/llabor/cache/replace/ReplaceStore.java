@@ -11,9 +11,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.apache.catalina.util.RequestUtil;
+import java.util.regex.Pattern; 
  
 
 import com.no10x.cache.Manager;  
@@ -53,7 +51,7 @@ public class ReplaceStore {
 	 */
 	public Properties getByURL(String scriptURL) {
 		
-		String path = RequestUtil.normalize( scriptURL.replace("%2F", "/"));
+		String path = normalize( scriptURL.replace("%2F", "/"));
 		
 		String key = scriptURL + REPLACE_PROPERTIES_FILE_EXTENSION;
 		Properties retval = (Properties) replaceStore.get(key );
@@ -82,9 +80,69 @@ public class ReplaceStore {
 		return retval;
 	}
 
+ 
+	    /**
+	     * Normalize a relative URI path that may have relative values ("/./",
+	     * "/../", and so on ) it it. <strong>WARNING</strong> - This method is
+	     * useful only for normalizing application-generated paths. It does not try
+	     * to perform security checks for malicious input.
+	     * 
+	     * @param path
+	     *      Relative path to be normalized
+	     */
+	    public static String normalize(String path) {
+
+	        if (path == null)
+	            return null;
+
+	        // Create a place for the normalized path
+	        String normalized = path;
+
+	        if (normalized.equals("/."))
+	            return "/";
+
+	        // Add a leading "/" if necessary
+	        if (!normalized.startsWith("/"))
+	            normalized = "/" + normalized;
+
+	        // Resolve occurrences of "//" in the normalized path
+	        while (true) {
+	            int index = normalized.indexOf("//");
+	            if (index < 0)
+	                break;
+	            normalized = normalized.substring(0, index)
+	                    + normalized.substring(index + 1);
+	        }
+
+	        // Resolve occurrences of "/./" in the normalized path
+	        while (true) {
+	            int index = normalized.indexOf("/./");
+	            if (index < 0)
+	                break;
+	            normalized = normalized.substring(0, index)
+	                    + normalized.substring(index + 2);
+	        }
+
+	        // Resolve occurrences of "/../" in the normalized path
+	        while (true) {
+	            int index = normalized.indexOf("/../");
+	            if (index < 0)
+	                break;
+	            if (index == 0)
+	                return (null); // Trying to go outside our context
+	            int index2 = normalized.lastIndexOf('/', index - 1);
+	            normalized = normalized.substring(0, index2)
+	                    + normalized.substring(index + 3);
+	        }
+
+	        // Return the normalized path that we have completed
+	        return (normalized);
+
+	    }
+
 
 	public Properties putOrCreate(String cacheKey, Properties value  ) { 
-		cacheKey = RequestUtil.normalize( cacheKey.replace("%2F", "/"));
+		cacheKey = normalize( cacheKey.replace("%2F", "/"));
 		cacheKey += REPLACE_PROPERTIES_FILE_EXTENSION;
 		Properties repTmp =  replaceStore.get(cacheKey);
 		if (repTmp == null){  
