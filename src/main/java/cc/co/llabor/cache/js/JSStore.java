@@ -51,6 +51,7 @@ public class JSStore {
 			value = checkHeadAndFoot(value);			
 			jsItem = new Item(value); 
 			jsItem.addReffer(refPar); 
+			scriptStore.put(cacheKey, jsItem );
 		}  else{  // only for existing entries 
 			jsItem.addReffer(refPar); 
 			if (!jsItem.isReadOnly()){

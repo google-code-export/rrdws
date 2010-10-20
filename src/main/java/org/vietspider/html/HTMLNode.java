@@ -121,12 +121,12 @@ public abstract class HTMLNode implements Node<Name>, Serializable {
   abstract public NodeIterator iterator(List<HTMLNode> ignores);
 
 public boolean isBeautify() { 
-		if (this.parent!=null)return parent.isBeautify;
+		if (this.parent!=null)return parent.isBeautify();
 		else return this.isBeautify;
 }
 
 public void setBeautify(boolean isBeautify) {
-	if (this.parent!=null) parent.isBeautify = isBeautify;
+	if (this.parent!=null) parent.setBeautify( isBeautify );
 	this.isBeautify = isBeautify;
 }
   
