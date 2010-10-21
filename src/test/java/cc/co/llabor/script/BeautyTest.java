@@ -31,6 +31,33 @@ public class BeautyTest {
 		assertTrue(res,res.indexOf("\n")>0);
 	}
 	
+	// 
+	/**
+	 * <script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['aspnetForm'];
+if (!theForm) {
+    theForm = document.aspnetForm;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+	 */
+	@Test
+	public void testFireCDATA() throws IOException, ScriptException { 
+			Beauty b = new Beauty();
+			String scriptIn = new String ( LServlet.getResourceAsBA("CDATA.js") );
+			String res = b.fire(scriptIn );
+			//System.out.println(res);
+			assertTrue(res,res.indexOf("\n")>0);
+		}	
 
 	@Test
 	public void testFire2() throws IOException, ScriptException {

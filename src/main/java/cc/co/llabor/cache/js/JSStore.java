@@ -95,7 +95,8 @@ public class JSStore {
 		if (value.trim().toLowerCase().startsWith("<script")){
 			String newVal = "";
 			value = value.replace(">", ">\n");
-			value = value.replace("<", "\n<");
+			String XDATATMP = "XCDATAXCDATAX"+System.currentTimeMillis()+"CDATAXCDATA";
+			value = value.replace("<![CDATA[", XDATATMP). replace("<", "\n<").replace(XDATATMP, "<![CDATA[");
 			String[] lines =value.split("\n");
 			int i=0;
 			for (String sTmp :lines){
