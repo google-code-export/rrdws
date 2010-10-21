@@ -432,6 +432,9 @@ private static final boolean TRACE = false;
 			uri += "";
 			value = uri;
 			// #2
+		} else if (value.startsWith("javascript:"))  {
+			//
+			System.out.println("SCRIPTLINK::"+value);
 		} else {
 			if (homeStr.lastIndexOf("/")>7)
 				homeStr = homeStr.substring(0, homeStr.lastIndexOf("/") + 1); //extract domain + full path
@@ -670,8 +673,14 @@ private static final boolean TRACE = false;
 			Attribute attr = attrs.get(attrName);		
 			String value = attr.getValue();
 			if(LServlet.TRACE)System.out.println("NEW VAL for "+nodeName+".."+attrName+" : ["+value+"]=>"+newValue + " := "+nodeName+"["+attrName+"]");
-	        attr.setValue(  newValue);       
-	        attrs.set(attr);
+			if ((""+value).toLowerCase().startsWith("javascript:")){
+				// ignore. TODO  - should "javascript:"  be wrapped ?
+			}else{
+				attr.setValue(  newValue);
+				attrs.set(attr);
+			}
+	               
+	        
 		}
 	   
 	  }
