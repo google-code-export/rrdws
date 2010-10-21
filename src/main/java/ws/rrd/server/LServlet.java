@@ -196,6 +196,10 @@ public class LServlet extends HttpServlet {
 			    }				
 				Map parameterMap = req.getParameterMap();
 				xRespTmp = urlFetcherTmp.fetchPostResp(urlStr, headsToResend,	parameterMap, items);
+				// HOTFIX for Login-redirect
+				if (xRespTmp.getLastHeader("X-MOVED")!=null){
+					urlStr = ""+xRespTmp.getLastHeader("X-MOVED").getValue();
+				}
 			}				
 			else{ // GET
 				if (urlStr.indexOf("?goto=")>0) // f.ex. https://www.ccc.de/Wxby7/Lswdn.ipx?goto=../Mdfsus/Rsdfrts.usbx 

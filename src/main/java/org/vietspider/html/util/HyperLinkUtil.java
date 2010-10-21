@@ -414,17 +414,21 @@ private static final boolean TRACE = false;
 			// #3
 		} else if (value.startsWith(".."))  {
 			String uri = home.toString(); 
-			int srvUrlLen = (home.getProtocol().length()+home.getHost().length());
-			if (uri.length() > srvUrlLen ){
-				if (uri.endsWith("/")) // home hase no file in name
-					uri = uri.substring(0, uri.lastIndexOf("/"));
-				else{ // trunc file also
-					//uri = uri.substring(0, uri.lastIndexOf("/"));
-					uri = uri.substring(0, uri.lastIndexOf("/"));
+			while(value.startsWith("..")){
+				int srvUrlLen = (home.getProtocol()+"/"+home.getHost()+"/" ).length();
+				if (uri.length() > srvUrlLen ){ // avoid cut http://www.hp.ag/ -> http:// 
+					if (uri.endsWith("/")) // home hase no file in name : http://www.hp.ag/a/ -> http://www.hp.ag/ 
+						uri = uri.substring(0, uri.substring(0,uri.length()-1).lastIndexOf("/")+1);
+					else{ // trunc file also // http://www.hp.ag/a/file.html
+						//uri = uri.substring(0, uri.lastIndexOf("/"));
+						uri = uri.substring(0, uri.lastIndexOf("/"))+"/"; // normilize http://www.hp.ag/a/file.html -> http://www.hp.ag/a/
+						uri = uri.substring(0, uri.substring(0,uri.length()-1).lastIndexOf("/")+1);
+					}
 				}
+				value = value.substring(3);
 			}
 			//if (uri.length() > srvUrlLen )uri = uri.substring(0, uri.lastIndexOf("/") );
-			uri += value.substring(2);
+			uri += "/"+value;
 			uri += "";
 			value = uri;
 			// #2
