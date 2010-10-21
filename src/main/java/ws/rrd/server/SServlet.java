@@ -23,13 +23,18 @@ public class SServlet extends HttpServlet{ /* SCRIPT-mastering servlet*/
 		// assumes already cached
 		final JSStore instanse = JSStore.getInstanse();//http://ejohn.org/blog/bringing-the-browser-to-the-server/
 		Item scriptTmp = instanse.getByURL(uriTmp); // http://www.snible.org/java2/uni2java.html
-		scriptValue = scriptTmp.getValue() ;//http://realcode.ru/regexptester/ 
-		ReplaceStore replacerTmp = ReplaceStore.getInstanse();//replacerTmp.putOrCreate(cacheKey, value)
-		String newValue = replacerTmp.replaceByRules(uriTmp,scriptValue);
+		try{
+			scriptValue = scriptTmp.getValue() ;//http://realcode.ru/regexptester/ 
+			ReplaceStore replacerTmp = ReplaceStore.getInstanse();//replacerTmp.putOrCreate(cacheKey, value)
+			String newValue = replacerTmp.replaceByRules(uriTmp,scriptValue);
 		
-		out.write(newValue.getBytes()); 
-		out.flush();
-		instanse.putOrCreate(uriTmp, scriptValue, scriptTmp.getRefs().toArray(new String[]{})[0] );
+			out.write(newValue.getBytes()); 
+			out.flush();
+			instanse.putOrCreate(uriTmp, scriptValue, scriptTmp.getRefs().toArray(new String[]{})[0] );
+		}catch(Exception e){
+			System.out.println("NOSCRIPT in the store! URL=["+uriTmp+"]");
+			e.printStackTrace();
+		}
 	}
 
 	 
