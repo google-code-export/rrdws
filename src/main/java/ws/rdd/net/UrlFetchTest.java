@@ -297,6 +297,7 @@ public class UrlFetchTest implements Serializable{
 				int domainUrlLen = uri.indexOf( m.getURI().getPath());
 				movedTo = uri.substring(0,domainUrlLen)  +movedTo;
 				respTmp = fetchGetResp(movedTo, headers);
+				respTmp.addHeader("X-MOVED", movedTo);
 		}
 		
 		return respTmp;

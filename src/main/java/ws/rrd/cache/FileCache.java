@@ -245,6 +245,9 @@ public class FileCache implements Cache {
 				{"\t", "=!T!="},
 				//{"/", "=!s!="},
 				{"\"", "=!!="},
+				{"*", "=!X!="},
+				{"?", "=!Q!="},
+				{"&", "=!A!="},
 				{"\'", "=!="} 
 		};
 		for (String[]from2to:from2){
