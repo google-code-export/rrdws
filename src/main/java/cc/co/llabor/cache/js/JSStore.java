@@ -18,29 +18,27 @@ import net.sf.jsr107cache.Cache;
  */ 
 public class JSStore { 
 	 
-	private static final String SCRIPTSTORE = "SCRIPTSTORE";
+	private static final Object SCRIPTSTORE = JSStore.class ;
 	private static final JSStore me = new JSStore();
-	Cache  scriptStore  = null;
-	JSStore() {
-		this.scriptStore = Manager.getCache(SCRIPTSTORE);		
-	}
-  
-
+ 
 	public static JSStore getInstanse() {
 		return me;
 	}
 
 	public Item getByValue(String scriptValue) {
-		
+		Cache  scriptStore  = Manager.getCache("SCRIPTSTORE");	 
 		return (Item) scriptStore.get(scriptValue);
 	}
 	public Item getByURL(String scriptURL) {
+		Cache  scriptStore  = Manager.getCache("SCRIPTSTORE");	 
 		
 		String key = scriptURL;
 		return (Item) scriptStore.get(key );
 	}
 
 	public Item putOrCreate(String cacheKey, String value, String refPar ) { 
+		Cache  scriptStore  = Manager.getCache("SCRIPTSTORE");	 
+
 		Item jsItem = (Item) scriptStore.get(cacheKey);
 		if (jsItem == null){ 
 			/*
@@ -52,8 +50,11 @@ public class JSStore {
 			jsItem = new Item(value); 
 			jsItem.addReffer(refPar); 
 			scriptStore.put(cacheKey, jsItem );
+			jsItem  = (Item) scriptStore.get(cacheKey );
+			
 		}  else{  // only for existing entries 
 			jsItem.addReffer(refPar); 
+			
 			if (!jsItem.isReadOnly()){
 				jsItem.setValue(value); 
 				reformat(cacheKey, jsItem);						
@@ -61,11 +62,11 @@ public class JSStore {
 			}
 		}
 		
-		synchronized (SCRIPTSTORE) {
+		 { /*synchronized (SCRIPTSTORE)*/
 			Object o = scriptStore.peek(cacheKey); 
 			if (jsItem != o) {// check similarity
 				try{
-					o = scriptStore.remove(cacheKey);// if (o.hashCode() == jsItem.hashCode());
+					//o = scriptStore.remove(cacheKey);// if (o.hashCode() == jsItem.hashCode());
 				}catch(NullPointerException e){
 					e.printStackTrace();
 				}
@@ -73,11 +74,14 @@ public class JSStore {
 				
 				boolean changed = true;
 				try{
-					changed = !((Item)o).getValue().equals(jsItem.getValue());
+					final String valTmp = jsItem.getValue();
+					final String cachedVTmp = ((Item)o).getValue();
+					changed = !cachedVTmp.equals(valTmp);
 				}catch(NullPointerException e){
 					e.printStackTrace();
 				}
 				if (changed){
+					scriptStore.remove( cacheKey );
 					scriptStore.put(cacheKey, jsItem );
 				}
 			}
