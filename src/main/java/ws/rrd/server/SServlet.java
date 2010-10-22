@@ -30,8 +30,21 @@ public class SServlet extends HttpServlet{ /* SCRIPT-mastering servlet*/
 		
 			out.write(newValue.getBytes()); 
 			out.flush();
+			final String statTmp = "/* "+scriptTmp.isReadOnly() +"" +
+					":" + scriptTmp .getAccessCount()+
+					":" + scriptTmp .getChangeCount()+
+					":" + scriptTmp .getChanged() +
+					":" + scriptTmp .getCreated()+
+					":" + scriptTmp .getRefs()+
+					":" + scriptTmp .getRefs().size()+
+					" */";
+			out.write( statTmp.getBytes());
+			out.flush();
 			instanse.putOrCreate(uriTmp, scriptValue, scriptTmp.getRefs().toArray(new String[]{})[0] );
 		}catch(Exception e){
+			String infoTmp = "/* <!-- here was script src='"+uriTmp+"' err='"+e.getMessage()+"' -->  */";
+			out.write(infoTmp.getBytes()); 
+			out.flush();
 			System.out.println("NOSCRIPT in the store! URL=["+uriTmp+"]");
 			e.printStackTrace();
 		}
