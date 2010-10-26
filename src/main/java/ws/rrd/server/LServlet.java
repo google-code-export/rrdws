@@ -65,6 +65,7 @@ public class LServlet extends HttpServlet {
 
 	public static final String BEAUTIFY = "BEAUTIFY";
 	public static final String REPLACER = "REPLACER";
+	public static final String TRACER = "TRACER";
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
@@ -82,36 +83,38 @@ public class LServlet extends HttpServlet {
  
 
 	  public static void testCreateFullLink(HTMLNode node, String swapServletUrl2, URL home){
-		    handler.createFullNormalLink(node,  swapServletUrl2,  home);
+	    handler.createFullNormalLink(node,  swapServletUrl2,  home);
+	    List<String> list  = handler.scanSiteLink(node);
+	    if (TRACE)
+	    	for(String ele : list)
+	    		System.out.println(ele);
+	  }
+		  
+	  public static void testCreateScriptLink(HTMLNode node, String swapServletUrl2, URL home){
+	    handler.createScriptLink( node,  swapServletUrl2,  home);
+	    if (TRACE){
+	    	//List<String> list  = handler.scanScriptLink(node );
+	    	//for(String ele : list)
+	    	//	System.out.println(ele);
+	    }
+	  }	  
+	  public static void testCreateStyleLink(HTMLNode node, String swapServletUrl2, URL home){
+	    handler.createStyleLink( node,  swapServletUrl2,  home);
+	    if (TRACE){
+	    	//List<String> list  = handler.scanScriptLink(node );
+	    	//for(String ele : list)
+	    	//	System.out.println(ele);
+	    }
+	  }
+		  
+	  public static void testCreateMetaLink(HTMLNode node, String swapServletUrl2, URL home){
+	    handler.createMetaLink(node,  swapServletUrl2,  home);
+	    if (TRACE){
 		    List<String> list  = handler.scanSiteLink(node);
 		    for(String ele : list)
 		    	if (TRACE) System.out.println(ele);
-		  }
-		  
-	  public static void testCreateScriptLink(HTMLNode node, String swapServletUrl2, URL home){
-		    handler.createScriptLink( node,  swapServletUrl2,  home);
-		    if (TRACE){
-		    	//List<String> list  = handler.scanScriptLink(node );
-		    	//for(String ele : list)
-		    	//	System.out.println(ele);
-		    }
-		  }	  public static void testCreateStyleLink(HTMLNode node, String swapServletUrl2, URL home){
-			    handler.createStyleLink( node,  swapServletUrl2,  home);
-			    if (TRACE){
-			    	//List<String> list  = handler.scanScriptLink(node );
-			    	//for(String ele : list)
-			    	//	System.out.println(ele);
-			    }
-			  }
-		  
-	  public static void testCreateMetaLink(HTMLNode node, String swapServletUrl2, URL home){
-		    handler.createMetaLink(node,  swapServletUrl2,  home);
-		    if (TRACE){
-			    List<String> list  = handler.scanSiteLink(node);
-			    for(String ele : list)
-			    	if (TRACE) System.out.println(ele);
-		    }
-		  }	  
+	    }
+	  }	  
  
 	
 	public void doGetPost(HttpServletRequest req, HttpServletResponse resp)
