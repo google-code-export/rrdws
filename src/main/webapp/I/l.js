@@ -1,4 +1,4 @@
-
+/*@SEE http://ejohn.org/blog/javascript-getters-and-setters/#postcomment*/
 function dw(assumsHTML)
 {
 	document.write(assumsHTML);

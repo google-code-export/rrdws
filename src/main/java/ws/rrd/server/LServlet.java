@@ -64,10 +64,11 @@ public class LServlet extends HttpServlet {
 			.getName());
 
 	public static final String BEAUTIFY = "BEAUTIFY";
+	public static final String REPLACER = "REPLACER";
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-		this.doGetPost(req, resp);
+		this.doPost(req, resp);
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -77,7 +78,7 @@ public class LServlet extends HttpServlet {
 
 	  private static HyperLinkUtil handler  = new HyperLinkUtil();
 
-	public static boolean TRACE = false;
+	public static boolean TRACE = true;
  
 
 	  public static void testCreateFullLink(HTMLNode node, String swapServletUrl2, URL home){
@@ -126,12 +127,24 @@ public class LServlet extends HttpServlet {
 		try {
 			StringBuffer requestURL = req.getRequestURL();
 			String rurlTmp = ""+req.getRequestURL()+""; 
-			SwapServletUrl  = rurlTmp.substring(0, rurlTmp.indexOf(req.getServletPath()+"/") )+req.getServletPath()+"/";
-			String decodedUrl = requestURL.substring( SwapServletUrl.length());
+			String baseURL =  System .getProperty("l.baseURL");
+			String decodedUrl = rurlTmp;
+			if (baseURL == null){
+				SwapServletUrl  = rurlTmp.substring(0, rurlTmp.indexOf(req.getServletPath()+"/") )+req.getServletPath()+"/";
+				decodedUrl = requestURL.substring( SwapServletUrl.length());
+			}else{
+				SwapServletUrl  = baseURL;
+				decodedUrl = requestURL.substring( requestURL.lastIndexOf("/l/")+3 );
+				
+			}
+				
+			 
 			
 			try{
+				if (TRACE){System.out.println("DECODE :"+decodedUrl);}
 				urlStr = HyperLinkUtil.decode(decodedUrl);
 			}catch(Throwable e){
+				if (TRACE){e.printStackTrace();}
 				outTmp = resp.getOutputStream();
 				PrintWriter pw = new PrintWriter(outTmp, true);
 				pw.println( requestURL);
