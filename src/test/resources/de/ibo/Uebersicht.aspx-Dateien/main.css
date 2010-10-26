@@ -1,0 +1,378 @@
+﻿/*
+Hilfen
+------
+ibo Rot: #B82837
+
+*/
+
+/* ------------------------------------------------------------------------- */
+/* Default */
+
+body
+{
+    font-size: 12px;
+    font-family: Arial,Helvetica,sans-serif;
+    background-color: #D8E1ED;
+}
+
+div
+{
+    text-align: left;
+}
+
+a:link, a:visited, a:hover, a:active
+{
+    text-decoration: none;
+    color: #000000;
+}
+
+hr
+{
+    height: 1px;
+    color: #B82837;
+    background-color: #B82837;
+    border: none;
+}
+
+/* ------------------------------------------------------------------------- */
+/* Nachrichten Box */
+
+.msgBoxHideBackground
+{
+    clear: both;
+    position: fixed;
+    display: inline;
+    width: 100%;
+    height: 100%;
+    background-color: #D8E1ED;
+    left: 0; /* IE6, IE7 fix */
+    top: 0;
+    z-index: 1000;
+    overflow: auto;
+}
+
+.msgBox
+{
+    border: 2px solid Gray;
+    margin: 5% auto;
+    width: 300px;
+    min-height: 200px;
+    background-color: White;
+}
+
+.msgBoxLarge
+{
+    margin: 5px auto;
+    width: 950px;
+}
+
+#msgBoxTop
+{
+    background-image: url(../img/BaseDialogBottom.jpg);
+    background-position: center;
+    margin: 0 0 0 auto;
+    height: 23px;
+}
+
+.msgBoxText
+{
+    padding-top: 10px;
+    margin-left: 2%;
+    min-height: 127px;
+    width: 96%;
+}
+
+.msgBoxLine
+{
+    height: 2px;
+    width: 280px;
+    background-color: Gray;
+    margin: 0 auto;
+    overflow: hidden; /* IE6 fix */
+}
+
+.msgBoxLineLarge
+{
+    width: 930px;
+}
+
+.msgBoxButton
+{
+    width: 280px;
+    margin: 0 auto;
+    margin-top: 5px;
+    padding-bottom: 5px;
+    text-align: right;
+}
+
+.msgBoxButtonLarge
+{
+    width: 930px;
+}
+
+/* ------------------------------------------------------------------------- */
+/* Sonstiges */
+
+.indent
+{
+    margin-top: 1%;
+    margin-left: 2%;
+    width: 96%;
+}
+
+.defaultButton
+{
+    width: 80px;
+    height: 23px;
+    margin-top: 6px;
+    margin-left: 12px;
+}
+
+#txtCopyright
+{
+    font-size: 10px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 5px 0;
+}
+
+.hidden
+{
+    display: none;
+    visibility: hidden;
+}
+
+/* ------------------------------------------------------------------------- */
+/* Farben und Rahmen */
+
+.bgWhite, .borderRed
+{
+    background-color: white;
+    color: black;
+}
+
+.bgRed
+{
+    background-color: #B82837;
+    color: white;
+}
+
+.borderRed
+{
+    border: solid 1px #B82837;
+}
+
+/* ------------------------------------------------------------------------- */
+/* ASP.NET Komponenten */
+
+.imgButton
+{
+    height: 16px;
+    width: 16px;
+    vertical-align: bottom;
+}
+
+#smallButtonArea input.ui-button
+{
+    padding: 0.1em 1em;
+}
+
+/* ------------------------------------------------------------------------- */
+/* Größe und Position der Hauptbereiche */
+
+#posError
+{
+    margin: 0 auto;
+    width: 550px;
+}
+
+/* ------------------------------------------------------------------------- */
+/* Fehlerseite */
+
+.errorHeadline
+{
+    text-align: center;
+    vertical-align: middle;
+    letter-spacing: 2px;
+    font-weight: bold;
+    font-size: x-large;
+}
+
+/* ------------------------------------------------------------------------- */
+/* Tabellen */
+
+table
+{
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+}
+
+td
+{
+    vertical-align: middle;
+    padding-left: 3px;
+}
+
+th
+{
+    vertical-align: top;
+    font-weight: normal;
+}
+
+.myTable
+{
+    width: 100%;
+    border: 1px solid Gray;
+}
+
+.rowFirst
+{
+    color: #ffffff; /*background-color: #B82837; <-- vorher */
+    background-image: url(../img/rowFirst.png);
+    background-repeat: repeat-x;
+    height: 20px;
+}
+
+.rowAlternate1
+{
+    background-color: #F8F8F8;
+    color: #000000;
+}
+
+.rowAlternate2
+{
+    background-color: #EEEEEE;
+    color: #000000;
+}
+
+.rowHover
+{
+    background-color: #bbbbbb;
+}
+
+.rowLast
+{
+    background-color: #999999;
+    color: #f7f7f7;
+}
+
+.fieldUnderline
+{
+    text-decoration: underline;
+}
+
+.fieldTextRight
+{
+    text-align: right;
+    padding-right: 3px;
+}
+
+.fieldTextCenter
+{
+    text-align: center;
+}
+
+/* ------------------------------------------------------------------------- */
+/* Bereiche */
+
+#posMaster
+{
+    background-color: White;
+    border: solid 1px Gray;
+    min-height: 450px;
+    padding: 5px 5px 5px 5px;
+}
+
+#posMasterWithCopyright
+{
+    margin: 0 auto;
+    width: 980px;
+    position: relative;
+}
+
+#posMasterBottomSingle
+{
+    float: left;
+    width: 100%;
+    min-height: 450px;
+}
+
+#posMasterBottomLeft
+{
+    position: relative;
+    float: left;
+    width: 170px;
+}
+
+#posMasterBottomRight
+{
+    position: relative;
+    margin: 0 0 0 180px;
+    width: auto;
+}
+
+/* ------------------------------------------------------------------------- */
+/* Zeile mit Informationen */
+
+.lineInfo
+{
+    border: solid 1px Gray;
+    width: 99%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    height: 20px;
+    background-image: url(../img/infoLineBackground.png);
+}
+
+.lineInfoFirst
+{
+    float: left;
+    margin-left: 5px;
+    width: 70%;
+}
+
+.lineInfoLast
+{
+    float: right;
+    width: 25%;
+    margin-right: 5px;
+}
+
+/* -------------------------------------------- */
+/* Menu Items */
+
+.menuItem
+{
+    margin-bottom: 5px;
+}
+
+.menuItem .ui-button-text
+{
+    width: 140px;
+}
+
+/* -------------------------------------------- */
+/* Obere Hauptnavigation */
+
+#menuLine
+{
+    height: 1px;
+    width: 100%;
+    background-color: Gray;
+    margin: 0 auto;
+    margin-top: 5px; /* overflow: hidden; /* IE6 fix */
+    margin-bottom: 5px; /* overflow: hidden; /* IE6 fix */
+}
+
+/* -------------------------------------------- */
+/* Sonstiges */
+
+.infoBox
+{
+    border: solid 1px #B82837;
+    margin: 0px 0px 0px 0px;
+    min-height: 50px;
+    padding: 5px 5px 5px 5px;
+}

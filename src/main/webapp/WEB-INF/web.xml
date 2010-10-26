@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+    "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+	<servlet>
+	<servlet-name>info</servlet-name>
+	<jsp-file>/info.jsp</jsp-file>
+	</servlet>
+	<servlet>
+	<servlet-name>L</servlet-name>
+	<jsp-file>/T/L.jsp</jsp-file>
+	</servlet>
+	<!-- Servlets -->
+	<servlet>
+		<servlet-name>l</servlet-name>
+		<servlet-class>ws.rrd.server.LServlet</servlet-class>
+	</servlet>	
+	<servlet>
+		<servlet-name>F</servlet-name>
+		<servlet-class>ws.rrd.server.FServlet</servlet-class>
+	</servlet>	
+	<servlet>
+		<servlet-name>S</servlet-name>
+		<servlet-class>ws.rrd.server.SServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>C</servlet-name>
+		<servlet-class>ws.rrd.server.CSServlet</servlet-class>
+	</servlet>	
+
+	<servlet>
+		<servlet-name>greetServlet</servlet-name>
+		<servlet-class>ws.rrd.server.GreetingServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet>
+	  <servlet-name>mailhandler</servlet-name>
+	  <servlet-class>cc.co.llabor.mail.MailHandlerServlet</servlet-class>
+	</servlet>
+	
+
+  <servlet> 
+    <servlet-name>_ah_sessioncleanup</servlet-name> 
+
+ <servlet-class>com.google.apphosting.utils.servlet.SessionCleanupServlet</servlet-class> 
+  </servlet> 
+
+  <servlet-mapping> 
+    <servlet-name>_ah_sessioncleanup</servlet-name> 
+    <url-pattern>/_ah/sessioncleanup</url-pattern> 
+  </servlet-mapping> 
+
+<!-- 
+  <security-constraint> 
+    <web-resource-collection> 
+      <web-resource-name>session-cleanup</web-resource-name> 
+      <url-pattern>/_ah/sessioncleanup</url-pattern> 
+    </web-resource-collection> 
+    <auth-constraint> 
+      <role-name>admin</role-name> 
+    </auth-constraint> 
+  </security-constraint>
+ -->  	
+	<servlet-mapping>
+	  <servlet-name>mailhandler</servlet-name>
+	  <url-pattern>/_ah/mail/*</url-pattern>
+	</servlet-mapping>
+<!-- 
+	<security-constraint>
+	  <web-resource-collection>
+	    <url-pattern>/_ah/mail/*</url-pattern>
+	  </web-resource-collection>
+	  auth-constraint>
+	    <role-name>admin</role-name>
+	  </auth-constraint
+	</security-constraint>
+-->
+	<servlet-mapping>
+		<servlet-name>greetServlet</servlet-name>
+		<url-pattern>/rrd/greet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>info</servlet-name>
+		<url-pattern>/info.htm</url-pattern>
+	</servlet-mapping>	
+	<servlet-mapping>
+		<servlet-name>l</servlet-name>
+		<url-pattern>/l/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>S</servlet-name>
+		<url-pattern>/S/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>C</servlet-name>
+		<url-pattern>/C/*</url-pattern>
+	</servlet-mapping>	
+	<servlet-mapping>
+		<servlet-name>F</servlet-name>
+		<url-pattern>/F/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>L</servlet-name>
+		<url-pattern>/T</url-pattern>
+	</servlet-mapping>	
+	<!-- Default page to serve -->
+	<welcome-file-list>
+		<welcome-file>rrd.jsp</welcome-file>
+	</welcome-file-list>
+
+</web-app>
