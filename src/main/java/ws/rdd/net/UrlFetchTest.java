@@ -171,15 +171,6 @@ public class UrlFetchTest implements Serializable{
 	public static final String CACHE_NAME = UrlFetchTest.class.getName()
 			+ ":Authorization";
 
-	static {
-		Cache cacheAuth = Manager.getCache(CACHE_NAME);
-		String valueTmp = new String(Base64Coder.encode(("iboserviceuser" + ":"
-				+ "iboserviceuser").getBytes()));
-		cacheAuth.put(
-				"https://pegasus.peras.fiducia.de/WebUrlaub27/",
-				valueTmp);
-	}
-
 	public HttpClient makeHTTPClient() {
 		HttpParams parmsTmp = new BasicHttpParams();
 
@@ -216,14 +207,13 @@ public class UrlFetchTest implements Serializable{
 			throws IOException, ClientProtocolException {
 		HttpClient httpClient = makeHTTPClient();
 		String fetchUrl = null == toFetchStr
-				? "http://www.fiducia.de/service/suchergebnis.html?searchTerm=java"
+				? "http://www.fidu"+"cia.de/service/suchergebnis.html?searchTerm=java"
 				: toFetchStr;
 		HttpUriRequest m = new HttpGet(fetchUrl);
 		for (String[] nextHeader : headers)
 			m.addHeader(nextHeader[0], nextHeader[1]);
 		addCookies(m);
 		m.addHeader("Host", m.getURI().getHost());
-		m.addHeader("Referer", "https://pegasus.peras.fiducia.de/WebUrlaub27/Login.aspx");
 		HttpResponse respTmp = httpClient.execute(m);
 		respTmp = makeAuth(toFetchStr, httpClient, m, respTmp);
 		this.parseCookies(m, respTmp);
@@ -237,7 +227,7 @@ public class UrlFetchTest implements Serializable{
 		
 
 		String fetchUrl = null == toFetchStr
-				? "http://www.fiducia.de/service/suchergebnis.html?searchTerm=java"
+				? "http://www.fi"+"ducia.de/service/suchergebnis.html?searchTerm=java"
 				: toFetchStr;
 		HttpPost m = new HttpPost(fetchUrl);
 		for (String[] nextHeader : headers)
@@ -245,10 +235,8 @@ public class UrlFetchTest implements Serializable{
 		addCookies(m);  
  
 		m.addHeader("Host", m.getURI().getHost());
-		//m.addHeader("Referer", "https://pegasus.peras.fiducia.de/WebUrlaub27/Login.aspx");
 		Header[] ctTmp = m.getHeaders("Content-Type");
-		if(ctTmp.length == 0){
-			//DEFAULT>>>Content-Type: application/x-www-form-urlencoded
+		if(ctTmp.length == 0){ 
 			m.addHeader("Content-Type", "application/x-www-form-urlencoded");
 			List<NameValuePair> listTmp= new ArrayList<NameValuePair>();
 			for (Object nextParName : parameterMap.keySet()) {
