@@ -466,6 +466,7 @@ public class LServlet extends HttpServlet {
 			// 	rel-ref from './'	
 			.replace("url(", "url  (    "+SwapServletUrl.replace("/l/",undescoredProtocol(urlStr))+stripFileName(  stripProtocol(urlStr)))
 			; 
+			xCSS = xCSS.replace(" url  (    http", "url(http");
 			String refPar = urlStr;
 			try{
 				xRespTmp.getHeaders("Refferer")[0].getValue();
@@ -479,7 +480,7 @@ public class LServlet extends HttpServlet {
 		outTmp = resp.getOutputStream();
 		outTmp.write(xCSS.getBytes());
 		outTmp.flush();
-		store.putOrCreate(urlStr, xCSS, urlStr);
+		//store.putOrCreate(urlStr, xCSS, urlStr);
 		return outTmp;
 	}
 

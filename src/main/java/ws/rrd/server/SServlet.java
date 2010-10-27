@@ -30,7 +30,8 @@ public class SServlet extends HttpServlet{ /* SCRIPT-mastering servlet*/
 		
 			out.write(newValue.getBytes()); 
 			out.flush();
-			instanse.putOrCreate(uriTmp, scriptValue, scriptTmp.getRefs().toArray(new String[]{})[0] );
+			String refTmp = ""+req.getHeaders("referer").nextElement();
+			instanse.putOrCreate(uriTmp, scriptValue, refTmp   );
 		}catch(Exception e){
 			System.out.println("NOSCRIPT in the store! URL=["+uriTmp+"]");
 			e.printStackTrace();
