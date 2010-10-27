@@ -227,30 +227,34 @@ public class LServlet extends HttpServlet {
 				xRespTmp = urlFetcherTmp.fetchGetResp(urlStr, headsToResend);
 			}
 			final StatusLine statusLine = xRespTmp.getStatusLine();
-			if (statusLine.getStatusCode() == 401){
-				resp.setStatus(401);
-				resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
-				return;
-			}else if (statusLine.getStatusCode() == 301){
-				resp.setStatus(301);
-				resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
-				return;
-			}else if (statusLine.getStatusCode() == 302){
-				resp.setStatus(302);//xRespTmp.getAllHeaders()
-				resp.setHeader(  "Location", requestURL.toString()  );
-				return;
-			}else if (statusLine.getStatusCode() == 303){
-				resp.setStatus(303);
-				resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
-				return;
-			}else if (statusLine.getStatusCode() == 304){
-				resp.setStatus(304);
-				resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
-				return;
-			}else if (statusLine.getStatusCode() == 305){
-				resp.setStatus(305);
-				resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
-				return;
+			try{
+				if (statusLine.getStatusCode() == 401){
+					resp.setStatus(401);
+					resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
+					return;
+				}else if (statusLine.getStatusCode() == 301){
+					resp.setStatus(301);
+					resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
+					return;
+				}else if (statusLine.getStatusCode() == 302){
+					resp.setStatus(302);//xRespTmp.getAllHeaders()
+					resp.setHeader(  "Location", requestURL.toString()  );
+					return;
+				}else if (statusLine.getStatusCode() == 303){
+					resp.setStatus(303);
+					resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
+					return;
+				}else if (statusLine.getStatusCode() == 304){
+					resp.setStatus(304);
+					resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
+					return;
+				}else if (statusLine.getStatusCode() == 305){
+					resp.setStatus(305);
+					resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
+					return;
+				}
+			}catch(Exception e){
+				if (TRACE)e.printStackTrace();
 			}
 			HttpEntity entity = xRespTmp.getEntity();
 			contextTypeStr = ""+entity.getContentType();
