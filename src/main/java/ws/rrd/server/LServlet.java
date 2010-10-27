@@ -501,7 +501,7 @@ public class LServlet extends HttpServlet {
 		if (! "null".equals( contextTypeStr )){
 			String contypeTmp = contextTypeStr.substring("Content-Type:".length());
 			resp.setContentType(contypeTmp);
-			//setupResponseProperty( resp,  xRespTmp);
+			setupResponseProperty( resp,  xRespTmp);
 		}
 		//log.warning("HTML contextTypeStr||contextEncStr:["+contextTypeStr+"||"+contextEncStr+"]  URL =:["+urlStr+"]");
 		outTmp = resp.getOutputStream();
@@ -696,6 +696,7 @@ public class LServlet extends HttpServlet {
 //			"Content-Type",
 			"Content-Language",
 //			"Content-Encoding",
+			"Content-Disposition",// : attachment; filename=Personalakte.pdf
 			"Date",
 			"Last-Modified" ,
 			"Accept",
@@ -707,7 +708,8 @@ public class LServlet extends HttpServlet {
 			"Cache-Control",
 			"User-Agent",
 			"Cookie2",
-			"Cookie2",
+//			"X-Powered-By", //: ASP.NET
+//			"X-AspNet-Version",//: 2.0.50727
 			"Expires",
 			"TE",
 			"Server",
