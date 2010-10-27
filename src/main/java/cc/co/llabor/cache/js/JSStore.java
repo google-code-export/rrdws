@@ -20,68 +20,69 @@ public class JSStore {
 	 
 	private static final String SCRIPTSTORE = "SCRIPTSTORE";
 	private static final JSStore me = new JSStore();
-	Cache  scriptStore  = null;
-	JSStore() {
-		this.scriptStore = Manager.getCache(SCRIPTSTORE);		
+	volatile Cache  scriptStore  = null;
+	JSStore() { 
+		scriptStore = Manager.getCache(SCRIPTSTORE);	
 	}
   
 
 	public static JSStore getInstanse() {
+		me.scriptStore = Manager.getCache(SCRIPTSTORE);		
 		return me;
 	}
 
-	public Item getByValue(String scriptValue) {
-		
+	public Item getByValue(String scriptValue) { 
 		return (Item) scriptStore.get(scriptValue);
 	}
-	public Item getByURL(String scriptURL) {
-		
+	
+	public Item getByURL(String scriptURL) { 
 		String key = scriptURL;
 		return (Item) scriptStore.get(key );
 	}
 
 	public Item putOrCreate(String cacheKey, String value, String refPar ) { 
 		Item jsItem = (Item) scriptStore.get(cacheKey);
-		if (jsItem == null){ 
-			/*
-			 * <script type="text/javascript">
-   					mw.usability.addMessages({'vector-collapsiblenav-more':'More languages','vector-editwarning-warning':'Leaving this page may cause you to lose any changes you have made.\nIf you are logged in, you can disable this warning in the \"Editing\" section of your preferences.','vector-simplesearch-search':'Search','vector-simplesearch-containing':'containing...'});
-				</script>
-			 */
-			value = checkHeadAndFoot(value);			
-			jsItem = new Item(value); 
-			jsItem.addReffer(refPar); 
-			scriptStore.put(cacheKey, jsItem );
-		}  else{  // only for existing entries 
-			jsItem.addReffer(refPar); 
-			if (!jsItem.isReadOnly()){
-				jsItem.setValue(value); 
-				reformat(cacheKey, jsItem);						
-				jsItem.setReadOnly(true);
+		try{
+			if (jsItem == null){  
+				value = checkHeadAndFoot(value);			
+				jsItem = new Item(value); 
+				jsItem.addReffer(refPar); 
+				scriptStore.put(cacheKey, jsItem );
+			}  else{  // only for existing entries 
+				jsItem.addReffer(refPar); 
+				if (!jsItem.isReadOnly()){
+					jsItem.setValue(value); 
+					reformat(cacheKey, jsItem);						
+					jsItem.setReadOnly(true);
+				}
 			}
+			
+			synchronized (SCRIPTSTORE) {
+				Object o = scriptStore.peek(cacheKey); 
+				if (jsItem != o) {// check similarity
+					try{
+						o = scriptStore.remove(cacheKey);// if (o.hashCode() == jsItem.hashCode());
+					}catch(NullPointerException e){
+						e.printStackTrace();
+					}
+					if (1==2)System.out.println(o);
+					
+					boolean changed = true;
+					try{
+						changed = !((Item)o).getValue().equals(jsItem.getValue());
+					}catch(NullPointerException e){
+						e.printStackTrace();
+					}
+					if (changed){
+						scriptStore.put(cacheKey, jsItem );
+					}
+				}
+			} 
+		}catch(Throwable e){
+			// ignore
+		}finally{
+			
 		}
-		
-		synchronized (SCRIPTSTORE) {
-			Object o = scriptStore.peek(cacheKey); 
-			if (jsItem != o) {// check similarity
-				try{
-					o = scriptStore.remove(cacheKey);// if (o.hashCode() == jsItem.hashCode());
-				}catch(NullPointerException e){
-					e.printStackTrace();
-				}
-				if (1==2)System.out.println(o);
-				
-				boolean changed = true;
-				try{
-					changed = !((Item)o).getValue().equals(jsItem.getValue());
-				}catch(NullPointerException e){
-					e.printStackTrace();
-				}
-				if (changed){
-					scriptStore.put(cacheKey, jsItem );
-				}
-			}
-		} 
 		return jsItem;
 	}
 

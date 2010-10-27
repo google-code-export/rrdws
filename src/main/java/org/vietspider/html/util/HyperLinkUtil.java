@@ -182,7 +182,9 @@ private static final boolean TRACE = false;
 				//String  value = verifier.eval (n, null, null);
 		        //value = prepareLinkValue(home , value);
 		        //value = encode(swapServletUrl2, value);
-		        verifier.modi(n, swapServletUrl2, home.toString(),home.toExternalForm()  ); 
+		        String sHome = home.toString();
+				String externalFormHome = home.toExternalForm();
+				verifier.modi(n, swapServletUrl2, sHome, externalFormHome  ); 
 		      } 
 	  } 
   } 
@@ -558,8 +560,12 @@ private static final boolean TRACE = false;
 		
 		private String  clearBody(HTMLNode node, final String scriptValue, String xRef) {
 			node.clearChildren();// setChild(0, new
-			String retval= LServlet.calcBase()+"S/"+"l"+ scriptValue.length() +"@"+ xRef.hashCode() + ".js";			
-			String stringTmp = "SCRIPT SRC=\""+retval +"\"";
+			String cacheKey= LServlet.calcBase()+"S/"+"l"+ scriptValue.length() +"@"+ xRef.hashCode() + ".js";			
+			String stringTmp = "SCRIPT SRC=\""+cacheKey +"\"";
+
+			JSStore ssTmp = JSStore.getInstanse();
+			Item scriptTmp =  ssTmp .putOrCreate(cacheKey, scriptValue  ,xRef);
+			if (LServlet.TRACE) System.out.println(scriptTmp);
 			
 			// HTMLNode(){})getChildren().clear()setValue("/*
 			// 8-X */".toCharArray());
@@ -568,25 +574,16 @@ private static final boolean TRACE = false;
 			//ScriptItem siTmp = ssTmp.getByValue();
 			node.setValue(scriptAliasTmp.toCharArray());
 			//System.out.println("" + node.getTextValue());
-			return retval;
+			return cacheKey;
 			
 		}
 		@Override
-		public void modi(HTMLNode node, String rootServletPar, String refPar, String refPar2) {
-	        Attributes attrs = node.getAttributes();  
+		public void modi(HTMLNode node, String rootServletPar, String refPar, String refPar2) { 
 			String newValue = null; 	
 			String value =  node.getTextValue() ;
 			if (verify(value)){
-				String cacheKey = clearBody(node, value, refPar);//clearBody(node, scriptOnBody);
-
-				JSStore ssTmp = JSStore.getInstanse();
-				Item scriptTmp =  ssTmp .putOrCreate(cacheKey, value ,refPar);
-				if (1==2) System.out.println(scriptTmp);
-				
-				String newLink = cacheKey;
-				newValue = newLink;
-				//node.setValue(  newLink.toCharArray() ); 
-				if(LServlet.TRACE)System.out.println("NEW VAL for SCRIPT   : ["+value+"]=>"+newValue);
+				String cacheKey = clearBody(node, value, refPar);  
+				if(LServlet.TRACE)System.out.println("NEW VAL for SCRIPT   : ["+value+"]=>"+cacheKey);
 			}else{
 				if(LServlet.TRACE)System.out.println(" no changes for "+node.getName());
 			}

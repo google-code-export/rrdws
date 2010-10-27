@@ -4,6 +4,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse; 
+
+import org.vietspider.html.util.HyperLinkUtil;
   
 
 import cc.co.llabor.cache.js.Item;
@@ -26,12 +28,20 @@ public class SServlet extends HttpServlet{ /* SCRIPT-mastering servlet*/
 		try{
 			scriptValue = scriptTmp.getValue() ;//http://realcode.ru/regexptester/ 
 			ReplaceStore replacerTmp = ReplaceStore.getInstanse();//replacerTmp.putOrCreate(cacheKey, value)
-			String newValue = replacerTmp.replaceByRules(uriTmp,scriptValue);
-		
+			String refererTmp = null;
+			try{
+				refererTmp  = ""+req.getHeaders("referer").nextElement();
+				// DECODE BASE64 -> plain URL
+				refererTmp   = ""+ refererTmp   ;
+			}catch(Throwable e){}
+			String newValue = replacerTmp.replaceByRules(uriTmp,scriptValue, refererTmp);
+			
 			out.write(newValue.getBytes()); 
 			out.flush();
 			String refTmp = ""+req.getHeaders("referer").nextElement();
 			instanse.putOrCreate(uriTmp, scriptValue, refTmp   );
+		}catch(NullPointerException e){
+			// ignore NO_REFFERs - org.apache.tomcat.util.http.ValuesEnumerator.nextElement(MimeHeaders.java:443)
 		}catch(Exception e){
 			System.out.println("NOSCRIPT in the store! URL=["+uriTmp+"]");
 			e.printStackTrace();

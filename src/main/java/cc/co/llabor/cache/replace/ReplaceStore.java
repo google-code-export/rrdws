@@ -1,19 +1,19 @@
 package cc.co.llabor.cache.replace;  
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.Reader;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Date;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern; 
+
+import org.vietspider.html.util.HyperLinkUtil;
+
+import ws.rrd.server.LServlet;
  
 
 import com.no10x.cache.Manager;  
@@ -207,14 +207,35 @@ public class ReplaceStore {
 		    return matcher.replaceAll(fFRAGMENT);
 	}
 	
-	public String replaceByRules(String rulesUrl, String scriptIn) {
+	/**
+	 * make the job!
+	 * 1) replace <b>"$referer"</b> by HTTP-referer if any
+	 * 
+	 * 2) use .filecache/ReplaceStore/http=..=\<hostname>\rrdsaas\pathtoRepaceCong.properties 
+	 * 	and all parent XXX.properties for replacements
+	 * 
+	 * @author vipup
+	 * @param rulesUrl
+	 * @param scriptIn
+	 * @param refererTmp
+	 * @return
+	 */
+	public String replaceByRules(String rulesUrl, String scriptIn, String refererTmp) {
 		Properties props = getByURL(rulesUrl);
 		String retval = scriptIn;
 		Set<Object> keySet = props.keySet();
 		String[] keys = keySet.toArray(new String[]{});
+		if ( LServlet.TRACE ) putOrCreate(rulesUrl, props);
+
 		for (String key:keys){
 			String val = props.getProperty(key);
-			retval = replaceLinks(retval, key, val );props.put(key, val);putOrCreate(rulesUrl, props);
+			retval = replaceLinks(retval, key, val );
+			props.put(key, val); 
+		}	
+		if (null != refererTmp){
+			String xrefTmp = HyperLinkUtil.decode(refererTmp.substring(refererTmp.indexOf("/aH")+1)); 
+			xrefTmp = ""+xrefTmp;
+			retval = retval.replace("__href__", xrefTmp);
 		}		
 		return retval;
 	}
@@ -227,6 +248,11 @@ public class ReplaceStore {
 
 	public void setCollectParents(boolean collectParents) {
 		this.collectParents = collectParents;
+	}
+
+
+	public String replaceByRules(String rulesUrl, String scriptIn) {
+		return this.replaceByRules(rulesUrl, scriptIn, null);
 	}
 	
 }
