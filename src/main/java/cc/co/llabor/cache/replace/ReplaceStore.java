@@ -34,7 +34,7 @@ public class ReplaceStore {
 	private static final String ReplaceStore = "ReplaceStore";
 	private static final ReplaceStore me = new ReplaceStore();
 	Map<String, Properties>  replaceStore  = null;
-	private boolean collectParents = false;
+	private boolean collectParents = true;
 	@SuppressWarnings("unchecked")
 	ReplaceStore() {
 		this.replaceStore = Manager.getCache(ReplaceStore);		
