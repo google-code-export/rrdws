@@ -1,0 +1,25 @@
+
+syntax: regexp
+^war/WEB-INF/appengine-generated$
+syntax: regexp
+^war/WEB-INF/appengine-generated/local_db\.bin$
+syntax: regexp
+^war/WEB-INF/appengine-generated$
+syntax: regexp
+^target$
+syntax: regexp
+^.filecache$
+syntax: regexp
+^target$
+syntax: regexp
+^1$
+syntax: regexp
+^all1\.gif$
+syntax: regexp
+^1\.js\.props$
+syntax: regexp
+^11$
+syntax: regexp
+^111$
+syntax: regexp
+^deploy$

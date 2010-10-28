@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>  
+<!--
+xmlns="http://googleappengine.googlecode.com/cron"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://googleappengine.googlecode.com/cron cron.xsd">
+ http://googleappengine.googlecode.com/svn/trunk/java/docs/cron.xsd --> 
+ 
+  <cron> 
+    <url>/_ah/sessioncleanup?clear</url> 
+    <description>Clean up sessions</description> 
+    <schedule>every 2 minutes</schedule> 
+  </cron>  
+</cronentries>

@@ -1,0 +1,83 @@
+ 
+  /* corner */
+
+.corner {
+  padding:6px;
+  background-color: #66ff00; 
+  font-size: medium; 
+  font-weight: bold; 
+  /* Netscape 4, IE 4.x-5.0/Win and other lesser browsers will use this */
+  position: relative ; right: 20%; bottom:20%;
+}
+body > div.corner {
+  /* used by Opera 5+, Netscape6+/Mozilla, Konqueror, Safari, OmniWeb 4.5+, iCab, ICEbrowser */
+  position: fixed; 
+}
+.corner a { COLOR: #ffffff; }
+
+
+
+  /* cornerA */
+
+.cornerA {
+  padding:6px;
+  background-color: #FF0000; 
+  font-size: medium; 
+  font-weight: bold; 
+  /* Netscape 4, IE 4.x-5.0/Win and other lesser browsers will use this */
+  position: absolute; left: 0px; bottom: 0px;
+}
+body > div.cornerA {
+  /* used by Opera 5+, Netscape6+/Mozilla, Konqueror, Safari, OmniWeb 4.5+, iCab, ICEbrowser */
+  position: fixed; 
+}
+.cornerA a { COLOR: #ffff00; }
+
+
+  /* cornerB */
+
+.cornerB {
+  padding:6px;
+  background-color: #0066ff; 
+  font-size: medium; 
+  font-weight: bold; 
+  /* Netscape 4, IE 4.x-5.0/Win and other lesser browsers will use this */
+  position: absolute; left: 0px; top: 0px;
+}
+body > div.cornerB {
+  /* used by Opera 5+, Netscape6+/Mozilla, Konqueror, Safari, OmniWeb 4.5+, iCab, ICEbrowser */
+  position: fixed; 
+}
+.cornerB a { COLOR: #ffffff; }
+
+  /* cornerC */
+
+.cornerC {
+  padding:6px;
+  background-color: #44ff44; 
+  font-size: medium; 
+  font-weight: bold; 
+  /* Netscape 4, IE 4.x-5.0/Win and other lesser browsers will use this */
+  position: absolute; right: 0px; top: 0px;
+}
+body > div.cornerC {
+  /* used by Opera 5+, Netscape6+/Mozilla, Konqueror, Safari, OmniWeb 4.5+, iCab, ICEbrowser */
+  position: fixed; 
+}
+.cornerC a { COLOR: #0000ff; }
+
+/* cornerD */
+.cornerD {
+  padding:6px;
+  background-color: #00000; 
+  font-size: medium; 
+  font-weight: bold; 
+  /* Netscape 4, IE 4.x-5.0/Win and other lesser browsers will use this */
+  position: absolute; right: 0px; bottom: 0px;
+}
+body > div.cornerD {
+  /* used by Opera 5+, Netscape6+/Mozilla, Konqueror, Safari, OmniWeb 4.5+, iCab, ICEbrowser */
+  position: fixed; 
+}
+.cornerD a { COLOR: #00cccc; }
+

@@ -1,0 +1,1011 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ 
+<html lang="en-US"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>RRD Calculator</title>
+    <style type="text/css"
+           xml:space="preserve">
+    <!--/* <![CDATA[ */
+        div.left {
+          width: 47%;         /* width of container */
+          float: left;        /* left side of window */
+          margin: 0;
+          padding: 0% 1%;
+        }
+        div.right {
+          width: 47%;         /* width of container */
+          float: right;        /* right side of window */
+          margin: 0;
+          padding: 0% 1%;
+        }
+        div.RESULT{
+          background-color: #CFCFCF;
+          border:solid 1 px;
+        }
+        div.COMPUTE {
+          background-color: #8EB6EE;
+        }
+        div.CONSOLIDATIONS {
+          background-color: #BDDEFF;
+        }
+        div.RRA {
+          background-color: #8EB6EE;
+        }
+        table.right {
+          text-align: right;
+        }
+        div.TIME_CALC {
+          background-color: #8EB6DD;
+        }
+        div.RRD {
+          background-color: #BDDEFF; 
+          text-align: right;
+        }
+        input.right{
+          text-align: right;
+        }
+ 
+    /* ]]> */-->
+    </style>
+    <script type="text/javascript"
+          language="JavaScript"
+          xml:space="preserve">
+    <!--/* <![CDATA[ */
+ 
+    // RRD Calculator
+    // Copyright Psyber
+    // questions/comments/bugs/improvments/patches please post under this thread http://forums.cacti.net/about14810.html
+    // 
+    // This program is free software; you can redistribute it and/or modify it under the terms
+    // of the GNU General Public License as published by the Free Software Foundation; either version 2
+    // of the License, or (at your option) any later version.
+    // This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+    // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ 
+    function update()
+    {
+        var myform = document.forms['formrrdcalc'];
+        var fileName =myform.elements['filename'].value;
+        var poll_interval = myform.elements['poll_interval'].value;
+        var ds_name = myform.elements['ds_name'].value;
+        var dst = myform.elements['dst'].value;
+        var compute_dst = myform.elements['compute_dst'].value;
+        if (compute_dst=="COMPUTE"){
+            myform.elements['compute_ds_name'].disabled = false;
+            myform.elements['rpn_expression'].disabled = false;
+        }else{
+            myform.elements['compute_ds_name'].disabled = true;
+            myform.elements['rpn_expression'].disabled = true;
+        }
+        var compute_ds_name = myform.elements['compute_ds_name'].value;
+        for (var i=0; i < myform.HW.length; i++){
+	    if (myform.HW[i].checked){
+        	var hw = myform.HW[i].value;
+            }
+        }
+	if (hw=="0"){
+            myform.elements['alpha'].disabled = true;
+            myform.elements['alpha_pct'].disabled = true;
+            myform.elements['alpha_pnt'].disabled = true;
+            myform.elements['beta'].disabled = true;
+            myform.elements['beta_pct'].disabled = true;
+            myform.elements['beta_pnt'].disabled = true;
+            myform.elements['gamma'].disabled = true;
+            myform.elements['gamma_pct'].disabled = true;
+            myform.elements['gamma_pnt'].disabled = true;
+            myform.elements['row_count'].disabled = true;
+            myform.elements['period'].disabled = true;
+        }else{
+            myform.elements['alpha'].disabled = false;
+            myform.elements['alpha_pct'].disabled = false;
+            myform.elements['alpha_pnt'].disabled = false;
+            myform.elements['beta'].disabled = false;
+            myform.elements['beta_pct'].disabled = false;
+            myform.elements['beta_pnt'].disabled = false;
+            myform.elements['gamma'].disabled = false;
+            myform.elements['gamma_pct'].disabled = false;
+            myform.elements['gamma_pnt'].disabled = false;
+            myform.elements['row_count'].disabled = false;
+            myform.elements['period'].disabled = false;
+        }
+ 
+        var a_pct = myform.elements['alpha_pct'].value;
+        var b_pct = myform.elements['beta_pct'].value;
+        var c_pct = myform.elements['gamma_pct'].value;
+ 
+        var a_pnt = myform.elements['alpha_pnt'].value;
+        var b_pnt = myform.elements['beta_pnt'].value;
+        var c_pnt = myform.elements['gamma_pnt'].value;
+ 
+        myform.elements['alpha'].value= 1-(Math.exp((Math.log(1-(a_pct/100)))/a_pnt));
+        myform.elements['beta'].value= 1-(Math.exp((Math.log(1-(b_pct/100)))/b_pnt));
+        myform.elements['gamma'].value= 1-(Math.exp((Math.log(1-(c_pct/100)))/c_pnt));
+ 
+        var a = (Math.round(myform.elements['alpha'].value*10000))/10000;
+        var b = (Math.round(myform.elements['beta'].value*10000))/10000;
+        var c = (Math.round(myform.elements['gamma'].value*10000))/10000;
+ 
+        var row_count = myform.elements['row_count'].value;
+        var period = myform.elements['period'].value;
+ 
+	var consol_avg = myform.elements['AVERAGE'].checked;
+	var consol_min = myform.elements['MIN'].checked;
+	var consol_max = myform.elements['MAX'].checked;
+ 
+        var rpn_expression = myform.elements['rpn_expression'].value;
+        var missed_cnt = myform.elements['missed_cnt'].value;
+        var min_value = myform.elements['min_value'].value;
+        var max_value = myform.elements['max_value'].value;
+        var time_value = myform.elements['time_value'].value;
+        var timelist = document.getElementById("time_interval");
+        var time_interval = timelist.options[timelist.selectedIndex].value;
+	
+        var rra1_retain = myform.elements['rra1_retain'].value;
+        var rra1_summ = myform.elements['rra1_summ'].value;
+        var rra2_retain = myform.elements['rra2_retain'].value;
+        var rra2_summ = myform.elements['rra2_summ'].value;
+        var rra3_retain = myform.elements['rra3_retain'].value;
+        var rra3_summ = myform.elements['rra3_summ'].value;
+        var rra4_retain = myform.elements['rra4_retain'].value;
+        var rra4_summ = myform.elements['rra4_summ'].value;
+        var rra5_retain = myform.elements['rra5_retain'].value;
+        var rra5_summ = myform.elements['rra5_summ'].value;
+ 
+    //timecalc
+        myform.elements['time_result'].value = time_interval*time_value;
+ 
+    //step and heartbeat
+        myform.elements['step_interval'].value = poll_interval;
+        var step_interval = myform.elements['step_interval'].value;
+        myform.elements['heartbeat'].value = poll_interval*missed_cnt;
+        var heartbeat = myform.elements['heartbeat'].value;
+ 
+    //RRA calculations
+        myform.elements['rra1_combine'].value = rra1_summ*60;
+        var rra1_combine = myform.elements['rra1_combine'].value;
+        var rra1_xff = myform.elements['rra1_xff'].value;
+        myform.elements['rra1_steps'].value = rra1_combine/step_interval;
+        var rra1_steps = myform.elements['rra1_steps'].value;
+        myform.elements['rra1_rows'].value = parseInt((86400*rra1_retain)/rra1_combine);
+        var rra1_rows = myform.elements['rra1_rows'].value;
+        myform.elements['rra2_combine'].value = rra2_summ*60;
+        var rra2_combine = myform.elements['rra2_combine'].value;
+        var rra2_xff = myform.elements['rra2_xff'].value;
+        myform.elements['rra2_steps'].value = rra2_combine/step_interval;
+        var rra2_steps = myform.elements['rra2_steps'].value;
+        myform.elements['rra2_rows'].value = parseInt((86400*rra2_retain)/rra2_combine);
+        var rra2_rows = myform.elements['rra2_rows'].value;
+        myform.elements['rra3_combine'].value = rra3_summ*60;
+        var rra3_combine = myform.elements['rra3_combine'].value;
+        var rra3_xff = myform.elements['rra3_xff'].value;
+        myform.elements['rra3_steps'].value = rra3_combine/step_interval;
+        var rra3_steps = myform.elements['rra3_steps'].value;
+        myform.elements['rra3_rows'].value = parseInt((86400*rra3_retain)/rra3_combine);
+        var rra3_rows = myform.elements['rra3_rows'].value;
+        myform.elements['rra4_combine'].value = rra4_summ*60;
+        var rra4_combine = myform.elements['rra4_combine'].value;
+        var rra4_xff = myform.elements['rra4_xff'].value;
+        myform.elements['rra4_steps'].value = rra4_combine/step_interval;
+        var rra4_steps = myform.elements['rra4_steps'].value;
+        myform.elements['rra4_rows'].value = parseInt((86400*rra4_retain)/rra4_combine);
+        var rra4_rows = myform.elements['rra4_rows'].value;
+        myform.elements['rra5_combine'].value = rra5_summ*60;
+        var rra5_combine = myform.elements['rra5_combine'].value;
+        var rra5_xff = myform.elements['rra5_xff'].value;
+        myform.elements['rra5_steps'].value = rra5_combine/step_interval;
+        var rra5_steps = myform.elements['rra5_steps'].value;
+        myform.elements['rra5_rows'].value = parseInt((86400*rra5_retain)/rra5_combine);
+        var rra5_rows = myform.elements['rra5_rows'].value;
+ 
+        var size=0;
+	var overhead=0; //in bytes, dont know what this value is yet 
+    //args to pass to rrdtool to create your masterpiece
+         var compute_string;
+         if (compute_dst =="COMPUTE"){
+            compute_string = "DS:"+compute_ds_name+":"+compute_dst+":"+rpn_expression+" \\\n";
+         }else{
+            compute_string="";
+         }
+	 var avg_string;
+	 var max_string;
+	 var min_string;
+	 if (consol_avg){
+	    var rra1='';
+	    if (rra1_steps > 0 && rra1_rows > 0){
+		rra1="RRA:AVERAGE:"+rra1_xff+":"+rra1_steps+":"+rra1_rows+" \\\n";
+		size+=parseInt(rra1_rows);
+	    }
+            var rra2='';
+            if (rra2_steps > 0 && rra2_rows > 0){
+                rra2="RRA:AVERAGE:"+rra2_xff+":"+rra2_steps+":"+rra2_rows+" \\\n";
+		size+=parseInt(rra2_rows);
+            }
+            var rra3='';
+            if (rra3_steps > 0 && rra3_rows > 0){
+                rra3="RRA:AVERAGE:"+rra3_xff+":"+rra3_steps+":"+rra3_rows+" \\\n";
+		size+=parseInt(rra3_rows);
+            }
+            var rra4='';
+            if (rra4_steps > 0 && rra4_rows > 0){
+                rra4="RRA:AVERAGE:"+rra4_xff+":"+rra4_steps+":"+rra4_rows+" \\\n";
+		size+=parseInt(rra4_rows);
+            }
+            var rra5='';
+            if (rra5_steps > 0 && rra5_rows > 0){
+                rra5="RRA:AVERAGE:"+rra5_xff+":"+rra5_steps+":"+rra5_rows+" \\\n";
+		size+=parseInt(rra5_rows);
+            }
+            avg_string = rra1+rra2+rra3+rra4+rra5;
+         }else{
+            avg_string='';
+         }
+	if (consol_max){
+            var rra1='';
+            if (rra1_steps > 0 && rra1_rows > 0){
+                rra1="RRA:MAX:"+rra1_xff+":"+rra1_steps+":"+rra1_rows+" \\\n";
+		size+=parseInt(rra1_rows);
+            }
+            var rra2='';
+            if (rra2_steps > 0 && rra2_rows > 0){
+                rra2="RRA:MAX:"+rra2_xff+":"+rra2_steps+":"+rra2_rows+" \\\n";
+		size+=parseInt(rra2_rows);
+            }
+            var rra3='';
+            if (rra3_steps > 0 && rra3_rows > 0){
+                rra3="RRA:MAX:"+rra3_xff+":"+rra3_steps+":"+rra3_rows+" \\\n";
+		size+=parseInt(rra3_rows);
+            }
+            var rra4='';
+            if (rra4_steps > 0 && rra4_rows > 0){
+                rra4="RRA:MAX:"+rra4_xff+":"+rra4_steps+":"+rra4_rows+" \\\n";
+		size+=parseInt(rra4_rows);
+            }
+            var rra5='';
+            if (rra5_steps > 0 && rra5_rows > 0){
+                rra5="RRA:MAX:"+rra5_xff+":"+rra5_steps+":"+rra5_rows+" \\\n";
+		size+=parseInt(rra5_rows);
+            }
+            max_string = rra1+rra2+rra3+rra4+rra5;
+ 
+         }else{
+            max_string='';
+         }
+        if (consol_min){
+            var rra1='';
+            if (rra1_steps > 0 && rra1_rows > 0){
+                rra1="RRA:MIN:"+rra1_xff+":"+rra1_steps+":"+rra1_rows+" \\\n";
+ 		size+=parseInt(rra1_rows);
+           }
+            var rra2='';
+            if (rra2_steps > 0 && rra2_rows > 0){
+                rra2="RRA:MIN:"+rra2_xff+":"+rra2_steps+":"+rra2_rows+" \\\n";
+		size+=parseInt(rra2_rows);
+            }
+            var rra3='';
+            if (rra3_steps > 0 && rra3_rows > 0){
+                rra3="RRA:MIN:"+rra3_xff+":"+rra3_steps+":"+rra3_rows+" \\\n";
+		size+=parseInt(rra3_rows);
+            }
+            var rra4='';
+            if (rra4_steps > 0 && rra4_rows > 0){
+                rra4="RRA:MIN:"+rra4_xff+":"+rra4_steps+":"+rra4_rows+" \\\n";
+		size+=parseInt(rra4_rows);
+            }
+            var rra5='';
+            if (rra5_steps > 0 && rra5_rows > 0){
+                rra5="RRA:MIN:"+rra5_xff+":"+rra5_steps+":"+rra5_rows+" \\\n";
+		size+=parseInt(rra5_rows);
+            }
+            min_string = rra1+rra2+rra3+rra4+rra5;
+ 
+         }else{
+            min_string='';
+         }
+         var hw_string;
+ 	 if (hw =="0"){
+            hw_string="";
+         }else{
+            hw_string="RRA:"+hw+":"+row_count+":"+a+":"+b+":"+period+"\n";
+         }
+ 
+        myform.elements['rrdtool_text'].value ="rrdtool create "+fileName+" --step "+step_interval+" \\\n"+
+        "DS:"+ds_name+":"+dst+":"+heartbeat+":"+min_value+":"+max_value+" \\\n"+
+        compute_string+
+	avg_string+
+        max_string+
+	min_string+
+	hw_string;
+    //calc rrd size
+	var rrd_filesize = (size*8)+overhead;
+	myform.elements['rrd_size'].value=rrd_filesize;
+    }
+    /* ]]> */-->
+    </script>
+</head>
+ 
+<body onload='update();'>
+ 
+    <form id="formrrdcalc" name="Calc"
+          method="post">
+        <div class="left">
+            <div class="RRD"
+                 id="ds">
+                <table border="0">
+                    <caption>
+                        RRD CALC
+                    </caption>
+ 
+                    <tr>
+                        <td>Name of rrd file to create</td>
+ 
+                        <td><input type="text"
+                               name="filename"
+                               id="filename"
+                               value="newdata.rrd"
+                               class="right"
+                               onchange='update();'
+                               onsubmit='update();' /></td>
+                    </tr>
+ 
+                    <tr>
+                        <td>Polling Interval in seconds</td>
+ 
+                        <td><input type="text"
+                               name="poll_interval"
+                               id="poll_interval"
+                               value="30"
+                               class="right"
+                               onchange='update();'
+                               onsubmit='update();' /></td>
+                    </tr>
+ 
+                    <tr>
+                        <td>Number of polls that can be missed before an
+                        UNKNOWN value is stored</td>
+ 
+                        <td><input type="text"
+                               name="missed_cnt"
+                               id="missed_cnt"
+                               value="4"
+                               class="right"
+                               onchange='update();'
+                               onsubmit='update();' /></td>
+                    </tr>
+ 
+                    <tr>
+                        <td>DS name</td>
+ 
+                        <td><input type="text"
+                               name="ds_name"
+                               id="ds_name"
+                               value="data"
+                               class="right"
+                               onchange='update();'
+                               onsubmit='update();' /></td>
+                    </tr>
+ 
+                    <tr>
+                        <td>DST</td>
+ 
+                        <td><select name="dst"
+                                id="dst"
+                                onchange='update();'
+                                onsubmit='update();'>
+                            <option value="GAUGE">
+                                GAUGE
+                            </option>
+ 
+                            <option value="COUNTER">
+                                COUNTER
+                            </option>
+ 
+                            <option value="DERIVE">
+                                DERIVE
+                            </option>
+ 
+                            <option value="ABSOLUTE">
+                                ABSOLUTE
+                            </option>
+ 
+                        </select></td>
+                    </tr>
+ 
+                    <tr>
+                        <td>Minimum possible value (U for Undefined)</td>
+ 
+                        <td><input type="text"
+                               name="min_value"
+                               id="min_value"
+                               value="U"
+                               class="right"
+                               onchange='update();'
+                               onsubmit='update();' /></td>
+                    </tr>
+ 
+                    <tr>
+ 
+                        <td>Maximum possible value (U for Undefined)</td>
+ 
+                        <td><input type="text"
+                               name="max_value"
+                               id="max_value"
+                               value="U"
+                               class="right"
+                               onchange='update();'
+                               onsubmit='update();' /></td>
+                    </tr>
+                </table>
+            </div>
+ 
+            <div class="COMPUTE"
+                 id="COMPUTE">
+                <table border="0"
+                       width="100%">
+ 
+                    <caption>
+                        COMPUTE Values
+                    </caption>
+ 
+                    <tr>
+                        <td colspan="2"
+                            align="right"><select name="compute_dst"
+                                id="compute-dst"
+                                onchange='update();'
+                                onsubmit='update();'>
+                            <option value="">
+                                </option>
+ 
+                            <option value="COMPUTE">
+ 
+                                COMPUTE
+                            </option>
+                        </select></td>
+                    </tr>
+ 
+                    <tr>
+                        <td>DS name for COMPUTE</td>
+ 
+                        <td align="right"><input type="text"
+                               name="compute_ds_name"
+                               id="compute_ds_name"
+                               value="perc95"
+                               class="right"
+                               onchange='update();'
+                               onsubmit='update();' /></td>
+                    </tr>
+ 
+                    <tr>
+                        <td colspan="2">RPN expression</td>
+                    </tr>
+ 
+                    <tr>
+                        <td colspan="2"><input disabled="disabled"
+                               type="text"
+                               name="rpn_expression"
+                               id="rpn_expression"
+                               size="48"
+                               value="data,95,PERCENT"
+                               onchange='update();'
+                               onsubmit='update();' /></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="CONSOLIDATIONS"
+                 id="CONSOLIDATIONS">
+                <table width="100%">
+                    <caption>
+                        Consolidations
+                    </caption>
+ 
+                    <tr>
+                        <td><input type=checkbox name="AVERAGE" id="AVERAGE" onclick='update();' onsubmit='update();' checked/>AVERAGE</td>
+                        <td><input type=checkbox name="MIN" id="MIN" onclick='update();' onsubmit='update();' checked/>MIN</td>
+                        <td><input type=checkbox name="MAX" id="MAX" onclick='update();' onsubmit='update();' checked/>MAX</td>
+                    </tr>
+                    <tr>
+                        <td><input type=radio name="HW" id="HW" value="0" onclick='update();' onsubmit='update();' checked/>No Holt-Winters</td>
+                        <td><input type=radio name="HW" id="HW" value="HWPREDICT" onclick='update();' onsubmit='update();'/>HWPREDICT</td>
+                        <td><input type=radio name="HW" id="HW" value="MHWPREDICT" onclick='update();' onsubmit='update();'/>MHWPREDICT</td>
+                    </tr>
+                    <tr>
+                        <td title="intercept adaptation (exponential smoothing) constant- determines how quickly the forecasts will adapt to changes in the data. Values closer to 1 adapt more quickly">alpha value</td>
+                        <td><input disabled="disabled"
+                               type="text"
+                               name="alpha_pct"
+                               id="alpha_pct"
+                               size="3"
+                               value="90"
+                               title="the amount of weight our points carry in the prediction "
+			       onchange='update();'
+                               onsubmit='update();' />%</td>
+                        <td><input disabled="disabled"
+                               type="text"
+                               name="alpha_pnt"
+                               id="alpha_pnt"
+                               size="3"
+                               value="6"
+                               title="The number of most recient points to use in weighting our prediction"
+                               onchange='update();'
+                               onsubmit='update();' />points</td>
+			<td><input disabled="disabled"
+                               type="text"
+                               name="alpha"
+                               id="alpha"
+                               size="5"
+                               value=""
+                               onchange='update();'
+                               onsubmit='update();' />&#945;</td>
+                    </tr>
+                    <tr>
+                        <td title="slope (or trending) adaptation constant - accounts for long term trends, so the value for points should be at least as large as the seasonal periods worth of points ">beta value</td>
+                        <td><input disabled="disabled"
+                               type="text"
+                               name="beta_pct"
+                               id="beta_pct"
+                               size="3"
+                               value="50"
+                               onchange='update();'
+                               onsubmit='update();' />%</td>
+                        <td><input disabled="disabled"
+                               type="text"
+                               name="beta_pnt"
+                               id="beta_pnt"
+                               size="3"
+                               value="288"
+                               onchange='update();'
+                               onsubmit='update();' />points</td>
+                        <td><input disabled="disabled"
+                               type="text"
+                               name="beta"
+                               id="beta"
+                               size="5"
+                               value=""
+                               onchange='update();'
+                               onsubmit='update();' />&#946;</td>
+                    </tr>                    <tr>
+                        <td>gamma value (not used)</td>
+                        <td><input disabled="disabled"
+                               type="text"
+                               name="gamma_pct"
+                               id="gamma_pct"
+                               size="3"
+                               value="90"
+                               onchange='update();'
+                               onsubmit='update();' />%</td>
+                        <td><input disabled="disabled"
+                               type="text"
+                               name="gamma_pnt"
+                               id="gamma_pnt"
+                               size="3"
+                               value="60"
+                               onchange='update();'
+                               onsubmit='update();' />points</td>
+                        <td><input disabled="disabled"
+                               type="text"
+                               name="gamma"
+                               id="gamma"
+                               size="5"
+                               value=""
+                               onchange='update();'
+                               onsubmit='update();' />&#947;</td>
+                    </tr>
+                   </tr>                    <tr>
+                        <td colspan="2">row count <input disabled="disabled"
+                               type="text"
+                               name="row_count"
+                               id="row_count"
+                               size="6"
+                               value="1440"
+			       title="aka array length, the number of predictions you want to keep. This number needs to be at least as many datapoints as the seasonal period you want to account for. If your seasonal period is 24 hours and your step interval is 300 seconds (or 5 min) the row count should be at least 288 (the number of 5 minute periods in 24 hours)"
+                               onchange='update();'
+                               onsubmit='update();' /></td>
+                        <td colspan="2">seasonal period <input disabled="disabled"
+                               type="text"
+                               name="period"
+                               id="period"
+                               size="6"
+                               value="288"
+			       title="The number of data points in a seasonal period"
+                               onchange='update();'
+                               onsubmit='update();' />points</td>
+                    </tr>
+ 
+		</table>
+            </div>
+            <div class="RRA"
+                 id="rra_defs">
+                <table width="100%">
+                    <caption>
+                        RRA Definitions
+                    </caption>
+ 
+                    <tr>
+                        <td>&nbsp;</td>
+ 
+                        <td>Days to keep</td>
+ 
+                        <td>Minutes to summerize</td>
+                    </tr>
+ 
+                    <tr>
+                        <td>RRA1</td>
+ 
+                        <td><input type="text"
+                               name="rra1_retain"
+                               id="rra1_retain"
+                               value="14"
+                               size="10"
+                               class="right"
+                               onchange='update();'
+                               onsubmit='update();' /></td>
+ 
+                        <td><input type="text"
+                               name="rra1_summ"
+                               id="rra1_summ"
+                               value=".5"
+                               size="10"
+                               class="right"
+                               onchange='update();'
+                               onsubmit='update();' /></td>
+                    </tr>
+ 
+                    <tr>
+                        <td>RRA2</td>
+ 
+                        <td><input type="text"
+                               name="rra2_retain"
+                               id="rra2_retain"
+                               value="30.4167"
+                               size="10"
+                               class="right"
+                               onchange='update();'
+                               onsubmit='update();' /></td>
+ 
+                        <td><input type="text"
+                               name="rra2_summ"
+                               id="rra2_summ"
+                               value="1"
+                               size="10"
+                               class="right"
+                               onchange='update();'
+                               onsubmit='update();' /></td>
+                    </tr>
+ 
+                    <tr>
+                        <td>RRA3</td>
+ 
+                        <td><input type="text"
+                               name="rra3_retain"
+                               id="rra3_retain"
+                               value="182.5002"
+                               size="10"
+                               class="right"
+                               onchange='update();'
+                               onsubmit='update();' /></td>
+ 
+                        <td><input type="text"
+                               name="rra3_summ"
+                               id="rra3_summ"
+                               value="5"
+                               size="10"
+                               class="right"
+                               onchange='update();'
+                               onsubmit='update();' /></td>
+                    </tr>
+ 
+                    <tr>
+                        <td>RRA4</td>
+ 
+                        <td><input type="text"
+                               name="rra4_retain"
+                               id="rra4_retain"
+                               value="365.25"
+                               size="10"
+                               class="right"
+                               onchange='update();'
+                               onsubmit='update();' /></td>
+ 
+                        <td><input type="text"
+                               name="rra4_summ"
+                               id="rra4_summ"
+                               value="10"
+                               size="10"
+                               class="right"
+                               onchange='update();'
+                               onsubmit='update();' /></td>
+                    </tr>
+ 
+                    <tr>
+ 
+                        <td>RRA5</td>
+ 
+                        <td><input type="text"
+                               name="rra5_retain"
+                               id="rra5_retain"
+                               value="1826.25"
+                               size="10"
+                               class="right"
+                               onchange='update();'
+                               onsubmit='update();' /></td>
+ 
+                        <td><input type="text"
+                               name="rra5_summ"
+                               id="rra5_summ"
+                               value="15"
+                               size="10"
+                               class="right"
+                               onchange='update();'
+                               onsubmit='update();' /></td>
+                    </tr>
+                </table>
+            </div>
+        </div><!-- right side of page-->
+ 
+        <div class="right">
+            <div class="TIME_CALC"
+                 id="time">
+                <center>
+                    TIME CALC
+                </center><input type="text"
+                     name="time_value"
+                     id="time_value"
+                     value="1"
+                     class="right"
+                     onchange='update();'
+                     onsubmit='update();' /> <select name="time_interval"
+                     id="time_interval"
+                     onchange='update();'
+                     onsubmit='update();'>
+                    <option value="60">
+                        minute
+                    </option>
+ 
+                    <option value="3600">
+                        hour
+                    </option>
+ 
+                    <option value="86400">
+                        day
+                    </option>
+ 
+                    <option value="604800">
+                        week
+                    </option>
+ 
+                    <option value="2628003">
+                        month
+                    </option>
+ 
+                    <option value="31557600">
+                        year
+                    </option>
+                </select> = <input readonly="readonly"
+                     type="text"
+                     name="time_result"
+                     value=''
+                     class="right"
+                     onchange='update();'
+                     onsubmit='update();' />sec.
+            </div>
+ 
+            <div class="RESULT"
+                 id="info">
+                <table>
+                    <tr>
+                        <td>Step interval:</td>
+ 
+                        <td><input readonly="readonly"
+                               type="text"
+                               name="step_interval"
+                               id="step_interval"
+                               size="5"
+                               class="right"
+                               onchange='update();'
+                               onsubmit='update();' /></td>
+                    </tr>
+ 
+                    <tr>
+ 
+                        <td>Heartbeat:</td>
+ 
+                        <td><input readonly="readonly"
+                               type="text"
+                               name="heartbeat"
+                               id="heartbeat"
+                               size="5"
+                               class="right"
+                               onchange='update();'
+                               onsubmit='update();' /></td>
+                    </tr>
+                </table>
+ 
+                <table border="1"
+                       class="right">
+                    <tr>
+                        <th>Combine (secs)</th>
+ 
+                        <th>xff</th>
+ 
+                        <th>steps</th>
+ 
+                        <th>rows</th>
+                    </tr>
+ 
+                    <tr>
+ 
+                        <td><input readonly="readonly"
+                               type="text"
+                               name="rra1_combine"
+                               id="rra1_combine"
+                               value=""
+                               size="10"
+                               class="right" /></td>
+ 
+                        <td><input readonly="readonly"
+                               type="text"
+                               name="rra1_xff"
+                               id="rra1_xff"
+                               value="0.5"
+                               size="5"
+                               class="right" /></td>
+ 
+                        <td><input readonly="readonly"
+                               type="text"
+                               name="rra1_steps"
+                               id="rra1_steps"
+                               size="5"
+                               class="right" /></td>
+ 
+                        <td><input readonly="readonly"
+                               type="text"
+                               name="rra1_rows"
+                               id="rra1_rows"
+                               size="10"
+                               class="right" /></td>
+                    </tr>
+ 
+                    <tr>
+                        <td><input readonly="readonly"
+                               type="text"
+                               name="rra2_combine"
+                               id="rra2_combine"
+                               size="10"
+                               class="right" /></td>
+ 
+                        <td><input readonly="readonly"
+                               type="text"
+                               name="rra2_xff"
+                               id="rra2_xff"
+                               value="0.5"
+                               size="5"
+                               class="right" /></td>
+ 
+                        <td><input readonly="readonly"
+                               type="text"
+                               name="rra2_steps"
+                               id="rra2_steps"
+                               size="5"
+                               class="right" /></td>
+ 
+                        <td><input readonly="readonly"
+                               type="text"
+                               name="rra2_rows"
+                               id="rra2_rows"
+                               size="10"
+                               class="right" /></td>
+                    </tr>
+ 
+                    <tr>
+                        <td><input readonly="readonly"
+                               type="text"
+                               name="rra3_combine"
+                               id="rra3_combine"
+                               size="10"
+                               class="right" /></td>
+ 
+                        <td><input readonly="readonly"
+                               type="text"
+                               name="rra3_xff"
+                               id="rra3_xff"
+                               value="0.5"
+                               size="5"
+                               class="right" /></td>
+ 
+                        <td><input readonly="readonly"
+                               type="text"
+                               name="rra3_steps"
+                               id="rra3_steps"
+                               size="5"
+                               class="right" /></td>
+ 
+                        <td><input readonly="readonly"
+                               type="text"
+                               name="rra3_rows"
+                               id="rra3_rows"
+                               size="10"
+                               class="right" /></td>
+                    </tr>
+ 
+                    <tr>
+                        <td><input readonly="readonly"
+                               type="text"
+                               name="rra4_combine"
+                               id="rra4_combine"
+                               size="10"
+                               class="right" /></td>
+ 
+                        <td><input readonly="readonly"
+                               type="text"
+                               name="rra4_xff"
+                               id="rra4_xff"
+                               value="0.5"
+                               size="5"
+                               class="right" /></td>
+ 
+                        <td><input readonly="readonly"
+                               type="text"
+                               name="rra4_steps"
+                               id="rra4_steps"
+                               size="5"
+                               class="right" /></td>
+ 
+                        <td><input readonly="readonly"
+                               type="text"
+                               name="rra4_rows"
+                               id="rra4_rows"
+                               size="10"
+                               class="right" /></td>
+                    </tr>
+ 
+                    <tr>
+                        <td><input readonly="readonly"
+                               type="text"
+                               name="rra5_combine"
+                               id="rra5_combine"
+                               size="10"
+                               class="right" /></td>
+ 
+                        <td><input readonly="readonly"
+                               type="text"
+                               name="rra5_xff"
+                               id="rra5_xff"
+                               value="0.5"
+                               size="5"
+                               class="right" /></td>
+ 
+                        <td><input readonly="readonly"
+                               type="text"
+                               name="rra5_steps"
+                               id="rra5_steps"
+                               size="5"
+                               class="right" /></td>
+ 
+                        <td><input readonly="readonly"
+                               type="text"
+                               name="rra5_rows"
+                               id="rra5_rows"
+                               size="10"
+                               class="right" /></td>
+                    </tr>
+                </table>
+                <textarea readonly="readonly"
+                     name="rrdtool_text"
+                     id="rrdtool_text"
+                     cols="60"
+                     rows="19">      
+                </textarea>
+		<input readonly="readonly"
+                     type="text"
+                     name="rrd_size"
+                     id="rrd_size"
+                     size="10"
+                     class="right" /> bytes           
+             </div>
+        </div>
+    </form>
+</body>
+</html>
+

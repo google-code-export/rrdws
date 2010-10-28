@@ -1,0 +1,3323 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>Android Market сделает App Store? / Android / Хабрахабр</title>
+
+	<link href="http://habrahabr.ru/css/1276276074/all.css" rel="stylesheet" media="all" />
+
+	
+	
+	
+	
+	<link rel="shortcut icon" href="http://habrahabr.ru/i/favicon.ico" />
+	<link rel="image_src" href="http://habrahabr.ru/i/logo.gif" />
+	
+	
+		<meta name="description" content="Google запускает сегодня свой App Inventor, который позволяет кому угодно создавать свое приложение под Andriod. Как сообщает Mashable, данный продукт..." /> 
+	
+
+	
+	<link title="" type="application/rss+xml" rel="alternate" href="http://habrahabr.ru/rss/blogs/android/98848/"/>
+
+	<!--[if IE 6]><link rel="stylesheet" href="http://habrahabr.ru/css/1276276074/ie6.css" media="all" /><![endif]-->
+	<!--[if IE 7]><link rel="stylesheet" href="http://habrahabr.ru/css/1276276074/ie7.css" media="all" /><![endif]-->
+	
+	
+	<link href="/css/karma.css" rel="stylesheet" media="all" />
+	<link href="/css/profile.css" rel="stylesheet" media="all" />
+	
+
+
+	<link rel="help" href="http://habrahabr.ru/info/help/"/>
+	<link rel="search" href="http://habrahabr.ru/search/"/>
+	<link rel="home" href="http://habrahabr.ru/"/>
+	<script type="text/javascript" src="http://habrahabr.ru/js/1276276074/mootools-1.2-core-yc.js"></script>
+	<script type="text/javascript" src="http://habrahabr.ru/js/1276276074/system.js"></script>
+	<script type="text/javascript" src="http://habrahabr.ru/js/1276276074/tm/init.js"></script>
+	<script type="text/javascript" src="http://habrahabr.ru/js/1276276074/common.js"></script>
+	
+	<script type="text/javascript" src="http://habrahabr.ru/js/1276276074/old-stuff-v-1.js"></script>	
+	
+		
+
+	<script type="text/javascript" src="http://habrahabr.ru/js/1276276074/tm/validation.js?revision=29"></script>
+	<script type="text/javascript" src="http://habrahabr.ru/js/1276276074/tm/xmlhandler.js?revision=29"></script>
+	<script type="text/javascript" src="http://habrahabr.ru/js/1276276074/tm/controls/control.js?revision=29"></script>
+	<script type="text/javascript" src="http://habrahabr.ru/js/1276276074/tm/forms/favourites_add.js"></script>
+	<script type="text/javascript" src="http://habrahabr.ru/js/1276276074/tm/controls/button.js"></script>
+	<script type="text/javascript" src="http://habrahabr.ru/js/1276276074/tm/form.js?revision=29"></script>
+	<script type="text/javascript" src="http://habrahabr.ru/js/1276276074/autosuggest.js?revision=29"></script>
+	
+	<script type="text/javascript">
+	/*<![CDATA[*/
+	var ya = document.createElement('script');
+		ya.src = 'http://an.yandex.ru/system/context.js';
+	/* ]]>*/
+	</script>
+	<script type="text/javascript">
+	/*<![CDATA[*/
+	var ga = document.createElement('script');
+		ga.setAttribute('async', 'true');
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	/* ]]>*/
+	</script>
+	
+	<script type="text/javascript">
+	/*<![CDATA[*/
+		var temp=temp||{};
+		window.temp=temp;
+		temp.base = (window.base_full_url = 'http://habrahabr.ru/');
+		temp.base_short = 'habrahabr.ru'; 
+	/* ]]>*/
+	</script> 
+	
+	<script type="text/javascript" src="/js/1276276074/commentForm.js"></script>
+	<script type="text/javascript" src="/js/1276276074/voting.js"></script>
+	<script type="text/javascript" src="/js/1276276074/swfobject.js"></script>
+	<script type="text/javascript" src="/js/1276276074/postsHandler.js"></script>
+
+		
+</head>
+
+<body id="main-page" class="blogs blog-panel  guest" lang="ru">
+		
+			
+
+			
+
+			
+			
+			
+			
+			
+			
+			
+
+			
+
+			
+
+			
+			<script>
+			var mb_random = Math.round(Math.random() * 100000);
+			document.write("<script src='http://pink.habralab.ru/cgi-bin/iframe/habr_others_90?"+mb_random+"&options=FT'></scr"+"ipt>");
+			</script>
+			
+
+			
+
+			
+
+								
+
+		
+
+
+
+<div class="header">
+	
+		<dl class="panel-personal">
+	<dt><!-- Мы впишем сюда твой %username% --></dt>
+	<dd><a href="http://habrahabr.ru/login/">войти</a> <a href="http://habrahabr.ru/register/">зарегистрироваться</a></dd>
+</dl>
+	
+	 
+	<div class="panel-tools">
+		 
+		<form class="panel-search js-autosuggest-holder " action="http://habrahabr.ru/search" method="get" accept-charset="utf-8">
+			<p>
+				<label class="panel-search-label" for="search">
+					<input id="search" class="in-text js-autosuggest-field " title="поиск по сайту" type="text" name="q" value=""/> 
+					<span>поиск по сайту</span>
+				</label>
+				<input class="in-submit" type="submit" id="do" value="" title="Enter!" />
+			</p>
+			<div class="js-autosuggest-output-container"><div class="js-autosuggest-output hidden"></div></div>
+		</form>
+	</div>
+	<a class="logo " href="http://habrahabr.ru/" title="На главную страницу"></a>
+	
+
+	<ul class="panel-nav-top">
+	
+		
+		
+		
+			<li><a href="http://habrahabr.ru/">Посты</a></li>
+		
+	
+		
+			
+			
+				<li class="current"><a href="http://habrahabr.ru/bloglist/">Блоги</a></li>
+			
+		
+		
+		
+	
+		
+		
+		
+			<li><a href="http://habrahabr.ru/people/">Люди</a></li>
+		
+	
+		
+		
+		
+			<li><a href="http://habrahabr.ru/companies/">Компании</a></li>
+		
+	
+		
+		
+		
+			<li><a href="http://habrahabr.ru/job/">Работа</a></li>
+		
+	
+	
+	
+	
+	<li style="margin-bottom:0;
+		margin-left:0;
+		margin-right:0;
+		margin-top:-17px;"> 
+		<span>
+			<script type="text/javascript">
+			/*<![CDATA[*/
+			var mb_random = Math.round(Math.random() * 100000);
+			document.write("<script src=\'http://pink.habralab.ru/cgi-bin/iframe/special?"+mb_random+"&options=FT\'></scr"+"ipt>");
+			/* ]]>*/
+			</script>
+		</span>
+		
+	</li>
+	<li style="margin-bottom:0;
+		margin-left:15px;
+		margin-right:0;
+		margin-top:-22px;"> 
+		<span>
+		<script type="text/javascript">
+		/*<![CDATA[*/
+		var mb_random = Math.round(Math.random() * 100000);
+		document.write("<script src=\'http://pink.habralab.ru/cgi-bin/iframe/special_2?"+mb_random+"&options=FT\'></scr"+"ipt>");
+		/* ]]>*/
+		</script>
+		</span>
+	</li>
+	
+
+	</ul>
+
+</div>
+
+
+<div id="wrapper">
+
+
+	<div id="main-content">
+		
+
+	
+			<div id="viva-la-w3c">
+	
+		<div class="blog-title">
+			
+			<h2 class="blog-header">
+				
+				<span>
+					<a href="http://habrahabr.ru/blogs/android/" class="silentlink">Android</a>
+					<a class="blog-whois js-serv" href="#whois" onclick="blogsHandler.toggleBlogInfo(405,this); return false;" >whois</a>
+				</span>
+				
+				
+				
+			</h2>
+			 <dl class="blog-index">
+			 	<dt>индекс</dt>
+				<dd>135,33</dd>
+			 </dl>
+				
+
+		</div>
+		<div class="blog-about-text hidden" id="js-blog_info" >
+			<a href="" class="close-blog-info">&times;</a>
+			<h2>Информация о блоге</h2>
+			<div class="blog-about-text-content">
+				<div class="blog-counts">
+					2891 читатель, 415 постов
+				</div>
+				<div id="js-admins_moderators_holder" class="js-not_loaded">
+					<h3>Администрация</h3>
+					<div id="admins"></div>
+					<h3>Модераторы</h3>
+					<div id="coauthors"></div>
+				</div>
+				<div class="blog-text-descr">6 ноября 2007 года была анонсирована новая мобильная программная платформа от Google, наречённая Android и объединяющая операционную систему, связующее ПО и ключевые приложения. Проследим вместе за созданием, внедрением и работой Android, посмотрим, чем на этот раз удивит нас Google. Новости, факты, комментарии, аналитика о мобильной операционной системе Android.<br/>
+Администратор блога Android оставляет за собой право редактировать топики других авторов, публикующихся в блоге, исправлять грамматические, орфографические и смысловые неточности, а также дополнять материал. </div>
+			</div>
+		</div>
+
+	</div>
+	
+	
+
+	
+<div class="page-navigation">
+	<table class="page-menu">
+		<tr>
+			<td id="write" width="20">
+				
+				
+			</td>
+			
+				
+					<td class=" current"><div><a href="http://habrahabr.ru/blogs/android/">Захабренные</a></div></td>
+				
+				
+			
+				
+				
+					<td class=""><div><a href="http://habrahabr.ru/blogs/android/new/">Новые</a> <span class="new">+2</span></div></td>
+				
+			
+				
+				
+					<td class=""><div><a href="http://habrahabr.ru/blogs/android/unhabred/">Отхабренные</a></div></td>
+				
+			
+		</tr>
+	</table>
+	
+</div>
+
+	
+	
+
+
+
+
+	
+
+	
+		<div class="hentry ">
+
+			<h2 class="entry-title single-entry-title">
+				
+				
+				
+				
+				
+				
+					
+					
+						<span title="http://habrahabr.ru/blogs/android/98848/" class="topic">Android Market сделает App Store?</span>
+					
+				
+				
+				
+				
+				
+			</h2>
+
+			
+
+<div class="content">
+	Google запускает сегодня свой App Inventor, который позволяет кому угодно создавать свое приложение под Andriod. Как сообщает <a href="http://mashable.com/2010/07/12/google-app-inventor/">Mashable</a>, данный продукт тестировался в школах в течение года и теперь выходит на публику.<br/>
+<br/>
+<object width="425" height="355"><param name="movie" value="http://www.youtube.com/v/8ADwPLSFeY8&hl=en&fs=1"></param><param name="allowFullScreen" value="true"></param><param name="wmode" value="transparent"></param><embed src="http://www.youtube.com/v/8ADwPLSFeY8&hl=en&fs=1" type="application/x-shockwave-flash" wmode="transparent" allowfullscreen="true" width="425" height="355"></embed></object>
+
+	
+
+	
+
+	
+</div>
+
+
+
+			
+			
+<ul class="tags">
+	<li ><a href="http://habrahabr.ru/tag/android market/" rel="tag">android market</a></li>
+</ul>
+
+			
+<div class="entry-info vote_holder" id="infopanel98848">
+
+		<!--  Закруглённые уголки -->
+		
+		<div class="corner tl"></div><div class="corner tr"></div>
+		
+		<div class="entry-info-wrap">
+			
+			
+				<div class="voting  ">
+					<div class="can-vote"><a title="нравится" href="#" class="vote_plus" onclick="return Voter.vote(event, this, 'post', 'plus');"></a></div>
+					<div class="cannot-vote"><span title="нравится" class="vote_plus"></span></div>
+					<div class="mark"><span title="всего : &uarr; и &darr;"><a title="посмотреть результат" href="#" onclick="return Voter.vote(event, this, 'post', 'results');">&#8212;</a></span></div>
+					<div class="can-vote"><a title="не нравится" href="#" class="vote_minus" onclick="return Voter.vote(event, this, 'post', 'minus');"></a></div>
+					<div class="cannot-vote"><span class="vote_minus"></span></div>
+				</div>
+			
+			<div class="published"><!-- Дата в формате ISO пихается в title -->
+				<span>12 июля 2010, 10:32</span>
+			</div>
+			
+			
+			<div class="fav_added js-to_favs_holder">
+				<a class="js-to_favs_remove"  href="#" style="cursor: default" onclick="return false;"></a>
+			</div>
+			
+			
+			<div class="favs_count" title="Количество пользователей, добавивших пост в избранное">6</div>
+			<div class="twitter">
+				<a href="http://twitter.com/home/?status=http://habr.ru/p/98848/+Android+Market+сделает+App+Store?+%23habr" title="в твиттер" target="_blank"></a>
+			</div>
+			<div class="facebook">
+				<a href="http://www.facebook.com/sharer.php?u=http://habrahabr.ru/blogs/android/98848/" title="в facebook" onclick="window.open(this.href, 'Поделиться ссылкой в facebook', 'width=800,height=300'); return false"></a>
+			</div>
+			
+			
+			
+			
+		
+			
+
+			
+			
+				<div class="vcard author full">
+					<a title="автор текста" href="http://Garik.habrahabr.ru/" class="fn nickname url"><span>Garik</span></a>
+				</div>
+			
+			
+			
+			
+
+			
+			
+
+		</div>
+	
+		<div class="corner bl"></div><div class="corner br"></div>
+</div>
+
+
+		</div>
+	
+
+
+
+
+	<div class="yandex-direct">
+		<!-- Яндекс.Директ -->
+		<script type="text/javascript">
+		//<![CDATA[
+		yandex_partner_id = 14199;
+		yandex_site_bg_color = 'FFFFFF';
+		yandex_stat_id = 9582;
+		yandex_site_charset = 'utf-8';
+		yandex_ad_format = 'direct';
+		yandex_font_size = 0.9;
+		yandex_direct_type = 'horizontal';
+		yandex_direct_border_type = 'block';
+		yandex_direct_limit = 4;
+		yandex_direct_header_bg_color = 'FFFFFF';
+		yandex_direct_border_color = 'E5E5E5';
+		yandex_direct_title_color = '4D7285';
+		yandex_direct_url_color = '006600';
+		yandex_direct_all_color = 'FFFFFF';
+		yandex_direct_text_color = '666666';
+		yandex_direct_hover_color = '6DA3BD';
+		document.write('<sc'+'ript type="text/javascript" src="http://an.yandex.ru/system/context.js"></sc'+'ript>');
+		//]]>
+		</script>
+	</div>
+
+
+
+	
+		
+		<div id="comments">
+			<h2 class="comments-header">комментарии (<span class="js-comments-count">33</span>)</h2>
+			
+				<ul class="hentry">
+	
+		<li id="comment_3047305" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://YuriSerpinsky.habrahabr.ru/" title="YuriSerpinsky">
+								<img src="http://habrahabr.ru/media/thumb/d3/36/6c/27797/27797_24x24.jpg" alt="YuriSerpinsky" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://YuriSerpinsky.habrahabr.ru/" class="url">YuriSerpinsky</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T10:35:51+04:00">12 июля 2010, 10:35</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047305" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047305">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth">
+								<li class="mark"><span>+24</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047305" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047305" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Даёшь еще больше хрени в маркете!
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047305" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+		
+		</li>
+	
+		<li id="comment_3047313" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://bondbig.habrahabr.ru/" title="bondbig">
+								<img src="http://habrahabr.ru/media/thumb/3f/fc/ce/33636/33636_24x24.jpg" alt="bondbig" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://bondbig.habrahabr.ru/" class="url">bondbig</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T10:38:24+04:00">12 июля 2010, 10:38</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047313" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047313">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth">
+								<li class="mark"><span>+10</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047313" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047313" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    млин, и так в маркете 95% — такие вот программы, теперь еще и школота буде пачками вбрасывать!
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047313" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3047539" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://stari4ek.habrahabr.ru/" title="stari4ek">
+								<img src="http://habrahabr.ru/media/thumb/9a/ab/bb/34331/34331_24x24.jpg" alt="stari4ek" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://stari4ek.habrahabr.ru/" class="url">stari4ek</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T11:48:29+04:00">12 июля 2010, 11:48</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047539" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="#comment_3047313">&uarr;</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3047313'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047539">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047539" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047539" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Для того чтобы начать «вбрасывать» нужно зарегистрироваться в маркете как android-разработчик. Цена вопроса 25$. Оно им надо?<br/>
+Хотя конечно это не исключает проблему с замусоренностью Маркета.
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047539" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3047613" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://bondbig.habrahabr.ru/" title="bondbig">
+								<img src="http://habrahabr.ru/media/thumb/3f/fc/ce/33636/33636_24x24.jpg" alt="bondbig" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://bondbig.habrahabr.ru/" class="url">bondbig</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T12:10:44+04:00">12 июля 2010, 12:10</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047613" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="#comment_3047539">&uarr;</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3047539'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047613">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth">
+								<li class="mark"><span>+1</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047613" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047613" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					     — Получить аккаунт разработчика — 800р<br/>
+ — Написать своё быдлоприложение — 30 минут<br/>
+ — Прокачать своё ЧСВ «А мою прогу на Маркете скачали 16.5 человек!» — бесценно…
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047613" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3047629" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://stari4ek.habrahabr.ru/" title="stari4ek">
+								<img src="http://habrahabr.ru/media/thumb/9a/ab/bb/34331/34331_24x24.jpg" alt="stari4ek" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://stari4ek.habrahabr.ru/" class="url">stari4ek</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T12:17:03+04:00">12 июля 2010, 12:17</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047629" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="#comment_3047613">&uarr;</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3047613'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047629">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047629" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047629" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    завести карточку. зарегистрироваться в google checkout. отдать 25$.<br/>
+повторюсь, <i>Оно им надо?</i>
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047629" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+		
+		</li>
+	
+</ul>
+
+			
+		
+		</li>
+	
+</ul>
+
+			
+		
+		</li>
+	
+</ul>
+
+			
+		
+		</li>
+	
+		<li id="comment_3047314" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://CrazyViper.habrahabr.ru/" title="CrazyViper">
+								<img src="http://habrahabr.ru/media/thumb/96/69/92/33675/33675_24x24.jpg" alt="CrazyViper" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://CrazyViper.habrahabr.ru/" class="url">CrazyViper</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T10:38:39+04:00">12 июля 2010, 10:38</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047314" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047314">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth">
+								<li class="mark"><span>+6</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047314" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047314" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    В Монголии кто угодно может играть в футбол, но почему-то чемпионы мира Испанцы…
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047314" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3047468" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://fllln.habrahabr.ru/" title="fllln">
+								<img src="http://habrahabr.ru/i/avatars/stub-user-small.gif" alt="fllln" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://fllln.habrahabr.ru/" class="url">fllln</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T11:27:55+04:00">12 июля 2010, 11:27</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047468" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="#comment_3047314">&uarr;</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3047314'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047468">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth">
+								<li class="mark"><span>+5</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047468" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047468" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    ох, не травите душу…
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047468" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3047562" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://eklektikos.habrahabr.ru/" title="eklektikos">
+								<img src="http://habrahabr.ru/i/avatars/stub-user-small.gif" alt="eklektikos" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://eklektikos.habrahabr.ru/" class="url">eklektikos</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T11:55:32+04:00">12 июля 2010, 11:55</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047562" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="#comment_3047468">&uarr;</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3047468'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047562">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047562" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047562" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    ыы ))<br/>
+тоже болели за голландцев? 
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047562" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3047586" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://fllln.habrahabr.ru/" title="fllln">
+								<img src="http://habrahabr.ru/i/avatars/stub-user-small.gif" alt="fllln" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://fllln.habrahabr.ru/" class="url">fllln</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T12:01:26+04:00">12 июля 2010, 12:01</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047586" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="#comment_3047562">&uarr;</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3047562'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047586">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047586" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047586" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Угумс. С 98 года неизменно только за них.
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047586" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3047617" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://bondbig.habrahabr.ru/" title="bondbig">
+								<img src="http://habrahabr.ru/media/thumb/3f/fc/ce/33636/33636_24x24.jpg" alt="bondbig" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://bondbig.habrahabr.ru/" class="url">bondbig</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T12:12:02+04:00">12 июля 2010, 12:12</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047617" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="#comment_3047586">&uarr;</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3047586'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047617">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047617" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047617" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    крепко вы подсели — не отпускает ))
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047617" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+		
+		</li>
+	
+</ul>
+
+			
+		
+		</li>
+	
+</ul>
+
+			
+		
+		</li>
+	
+</ul>
+
+			
+		
+		</li>
+	
+		<li id="comment_3047469" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://G__Z.habrahabr.ru/" title="G__Z">
+								<img src="http://habrahabr.ru/media/thumb/3b/b6/66/26275/26275_24x24.jpg" alt="G__Z" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://G__Z.habrahabr.ru/" class="url">G__Z</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T11:27:59+04:00">12 июля 2010, 11:27</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047469" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="#comment_3047314">&uarr;</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3047314'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047469">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047469" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047469" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    какое своевременное замечание!
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047469" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+		
+		</li>
+	
+</ul>
+
+			
+		
+		</li>
+	
+		<li id="comment_3047331" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://Kyrie1965.habrahabr.ru/" title="Kyrie1965">
+								<img src="http://habrahabr.ru/media/thumb/75/5e/ef/30212/30212_24x24.jpg" alt="Kyrie1965" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://Kyrie1965.habrahabr.ru/" class="url">Kyrie1965</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T10:43:44+04:00">12 июля 2010, 10:43</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047331" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047331">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth">
+								<li class="mark"><span>+2</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047331" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047331" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    На данный момент Android Market напоминает мусорную свалку. В ней есть жемчужины, но нужно рыться в этом мусоре, чтобы их достать. После App Inventor без слёз, наверное, на Android Market вообще не взглянешь.
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047331" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3047572" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://eklektikos.habrahabr.ru/" title="eklektikos">
+								<img src="http://habrahabr.ru/i/avatars/stub-user-small.gif" alt="eklektikos" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://eklektikos.habrahabr.ru/" class="url">eklektikos</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T11:56:42+04:00">12 июля 2010, 11:56</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047572" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="#comment_3047331">&uarr;</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3047331'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047572">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047572" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047572" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    будем честны, в AppStore его не меньше )) <br/>
+я софт ставлю по рекомендациям или обзорам… искать тупо в маркете — занятие не для слабонервных…
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047572" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+		
+		</li>
+	
+</ul>
+
+			
+		
+		</li>
+	
+		<li id="comment_3047355" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://tzlom.habrahabr.ru/" title="tzlom">
+								<img src="http://habrahabr.ru/media/thumb/7c/cf/f2/34782/34782_24x24.png" alt="tzlom" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://tzlom.habrahabr.ru/" class="url">tzlom</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T10:52:07+04:00">12 июля 2010, 10:52</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047355" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047355">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047355" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047355" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    хм, прикольно, НО<br/>
+таких проектов уже было дофига<br/>
+результат один и тот же:<br/>
+кучка бесполезных приложений<br/>
+и одно-два действительно годных<br/>
+не думаю что у гугла получится иначе, хотя конечно надо смотреть на возможности блоков
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047355" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+		
+		</li>
+	
+		<li id="comment_3047390" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://saveart.habrahabr.ru/" title="saveart">
+								<img src="http://habrahabr.ru/media/thumb/de/ed/da/29224/29224_24x24.jpg" alt="saveart" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://saveart.habrahabr.ru/" class="url">saveart</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T11:05:22+04:00">12 июля 2010, 11:05</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047390" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047390">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth">
+								<li class="mark"><span>+2</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047390" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047390" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Отсев мусора решается премодерацией. Эта программка просто позволит быстрее создавать нужные приложения под себя. Хотя вроде у них была кучка официальных плагинов под эклипс?
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047390" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+		
+		</li>
+	
+		<li id="comment_3047416" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://OrdJONY.habrahabr.ru/" title="OrdJONY">
+								<img src="http://habrahabr.ru/media/thumb/53/36/6c/29752/29752_24x24.jpg" alt="OrdJONY" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://OrdJONY.habrahabr.ru/" class="url">OrdJONY</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T11:13:03+04:00">12 июля 2010, 11:13</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047416" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047416">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth">
+								<li class="mark"><span>+2</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047416" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047416" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    А почему бы и нет? Хороший инструмент для домохозяек и школьников. Пускай разрабатывают для себя какие нибудь простенькие приложения. Я за Андроид в массы
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047416" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+		
+		</li>
+	
+		<li id="comment_3047462" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://valyard.habrahabr.ru/" title="valyard">
+								<img src="http://habrahabr.ru/media/thumb/b8/8a/a8/24074/24074_24x24.jpg" alt="valyard" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://valyard.habrahabr.ru/" class="url">valyard</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T11:26:17+04:00">12 июля 2010, 11:26</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047462" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047462">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting negative no_auth">
+								<li class="mark"><span>–3</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047462" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047462" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only bad3">
+					    Отлично! Теперь андроид переполнится говноприложениями и умрет.
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047462" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3047521" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://spiritedflow.habrahabr.ru/" title="spiritedflow">
+								<img src="http://habrahabr.ru/i/avatars/stub-user-small.gif" alt="spiritedflow" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://spiritedflow.habrahabr.ru/" class="url">spiritedflow</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T11:43:43+04:00">12 июля 2010, 11:43</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047521" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="#comment_3047462">&uarr;</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3047462'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047521">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth">
+								<li class="mark"><span>+1</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047521" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047521" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    За всю историю еще не было случая, чтобы операционка или программа сдохла от переизбытка програм/плагинов/надстроек/примочек. Даже если свалка получается. Системы рейтингов, обзоров, заточенных паков/сборок решают эту проблему.<br/>
+<br/>
+А вот уйти потом, с такой горы возможностей и фич будет очень трудно.
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047521" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+		
+		</li>
+	
+</ul>
+
+			
+		
+		</li>
+	
+		<li id="comment_3047481" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://Aux.habrahabr.ru/" title="Aux">
+								<img src="http://habrahabr.ru/media/thumb/37/7f/f6/5125/5125_24x24.jpg" alt="Aux" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://Aux.habrahabr.ru/" class="url">Aux</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T11:31:44+04:00">12 июля 2010, 11:31</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047481" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047481">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047481" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047481" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Лучше бы довели свой SDK до ума, чтобы было проще генерить полезные скелеты приложений…
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047481" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+		
+		</li>
+	
+		<li id="comment_3047487" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://disserman.habrahabr.ru/" title="disserman">
+								<img src="http://habrahabr.ru/i/avatars/stub-user-small.gif" alt="disserman" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://disserman.habrahabr.ru/" class="url">disserman</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T11:34:04+04:00">12 июля 2010, 11:34</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047487" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047487">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting negative no_auth">
+								<li class="mark"><span>–5</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047487" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047487" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only bad5">
+					    а что ето за кабельхел у девахи на столе? типичное место работы задротши из гугля?
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047487" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3047524" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://novoselov.habrahabr.ru/" title="novoselov">
+								<img src="http://habrahabr.ru/i/avatars/stub-user-small.gif" alt="novoselov" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://novoselov.habrahabr.ru/" class="url">novoselov</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T11:44:18+04:00">12 июля 2010, 11:44</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047524" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="#comment_3047487">&uarr;</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3047487'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047524">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047524" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047524" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Еще скажи что она со спины вымученно так улыбается, аж уши скрипят :)
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047524" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+		
+		</li>
+	
+</ul>
+
+			
+		
+		</li>
+	
+		<li id="comment_3047507" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://ic3dragon.habrahabr.ru/" title="ic3dragon">
+								<img src="http://habrahabr.ru/media/thumb/be/e4/4d/33442/33442_24x24.jpg" alt="ic3dragon" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://ic3dragon.habrahabr.ru/" class="url">ic3dragon</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T11:39:58+04:00">12 июля 2010, 11:39</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047507" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047507">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047507" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047507" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Слишком много пессимистичных комментов. Я считаю, что ничего плохого не случится. Всегда будут появляться обзоры хороших приложений, не обязательно же всякий хлам на своём телефоне испытывать :)
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047507" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3047519" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://VasyaMobile.habrahabr.ru/" title="VasyaMobile">
+								<img src="http://habrahabr.ru/media/thumb/2b/ba/ae/32252/32252_24x24.png" alt="VasyaMobile" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://VasyaMobile.habrahabr.ru/" class="url">VasyaMobile</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T11:43:35+04:00">12 июля 2010, 11:43</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047519" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="#comment_3047507">&uarr;</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3047507'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047519">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047519" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047519" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Как вариант, самому гуглу в маркете делать обзоры десятка лучших приложений за эту неделю.
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047519" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3047553" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://ic3dragon.habrahabr.ru/" title="ic3dragon">
+								<img src="http://habrahabr.ru/media/thumb/be/e4/4d/33442/33442_24x24.jpg" alt="ic3dragon" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://ic3dragon.habrahabr.ru/" class="url">ic3dragon</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T11:52:39+04:00">12 июля 2010, 11:52</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047553" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="#comment_3047519">&uarr;</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3047519'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047553">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047553" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047553" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Да мне кажется релевантность этих самоделок будет низкой или специальный раздел отведут просто. <br/>
+Если вообще они будут на маркет попадать, на видео ничего подобного я не заметил.
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047553" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3047580" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://VasyaMobile.habrahabr.ru/" title="VasyaMobile">
+								<img src="http://habrahabr.ru/media/thumb/2b/ba/ae/32252/32252_24x24.png" alt="VasyaMobile" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://VasyaMobile.habrahabr.ru/" class="url">VasyaMobile</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T11:58:50+04:00">12 июля 2010, 11:58</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047580" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="#comment_3047553">&uarr;</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3047553'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047580">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047580" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047580" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Да я <a href="http://habrahabr.ru/blogs/android/98838/">вообщем</a> про маркет. Говорят там несколько сотен только полезных приложений.
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047580" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3047604" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://ic3dragon.habrahabr.ru/" title="ic3dragon">
+								<img src="http://habrahabr.ru/media/thumb/be/e4/4d/33442/33442_24x24.jpg" alt="ic3dragon" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://ic3dragon.habrahabr.ru/" class="url">ic3dragon</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T12:07:43+04:00">12 июля 2010, 12:07</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047604" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="#comment_3047580">&uarr;</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3047580'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047604">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047604" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047604" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Пожалуй, что так. Но разве <a href="http://4pda.ru/forum/index.php?showtopic=112220">эти</a> несколько сотен не способны удовлетворить любую потребность? Разве что только совсем уж экзотическую…
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047604" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3047625" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://VasyaMobile.habrahabr.ru/" title="VasyaMobile">
+								<img src="http://habrahabr.ru/media/thumb/2b/ba/ae/32252/32252_24x24.png" alt="VasyaMobile" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://VasyaMobile.habrahabr.ru/" class="url">VasyaMobile</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T12:16:18+04:00">12 июля 2010, 12:16</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047625" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="#comment_3047604">&uarr;</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3047604'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047625">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047625" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047625" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Каталог программ списком на форуме? Ммм, <a href="http://forum.smart60.ru/index.php?showtopic=13419">понимаю</a>, как владелец symbian. Если честно, то это позор.<br/>
+<br/>
+Если я пользователь, то хочу с телефона быстро и удобно расширить функционал, не лазия по левым форумам и сайтам.
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047625" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+		
+		</li>
+	
+</ul>
+
+			
+		
+		</li>
+	
+</ul>
+
+			
+		
+		</li>
+	
+</ul>
+
+			
+		
+		</li>
+	
+</ul>
+
+			
+		
+		</li>
+	
+</ul>
+
+			
+		
+		</li>
+	
+		<li id="comment_3047552" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://stari4ek.habrahabr.ru/" title="stari4ek">
+								<img src="http://habrahabr.ru/media/thumb/9a/ab/bb/34331/34331_24x24.jpg" alt="stari4ek" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://stari4ek.habrahabr.ru/" class="url">stari4ek</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T11:51:37+04:00">12 июля 2010, 11:51</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047552" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047552">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047552" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047552" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Стоит отметить, что сам гугл позиционирует проект именно для образовательных целей.<br/>
+И будем надеятся что 25$ барьер для начала публикации приложений в маркете — все же убережет нас от нашествия «программ от школьниц»
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047552" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+		
+		</li>
+	
+		<li id="comment_3047558" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://hiro.habrahabr.ru/" title="hiro">
+								<img src="http://habrahabr.ru/media/thumb/7f/ff/fa/31967/31967_24x24.jpg" alt="hiro" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://hiro.habrahabr.ru/" class="url">hiro</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T11:54:36+04:00">12 июля 2010, 11:54</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047558" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047558">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047558" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047558" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    сколько сейчас перделок разных появится, жуть
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047558" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3047594" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://Daymz.habrahabr.ru/" title="Daymz">
+								<img src="http://habrahabr.ru/media/thumb/cb/b2/23/17808/17808_24x24.gif" alt="Daymz" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://Daymz.habrahabr.ru/" class="url">Daymz</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T12:04:12+04:00">12 июля 2010, 12:04</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047594" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="#comment_3047558">&uarr;</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3047558'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047594">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting negative no_auth">
+								<li class="mark"><span>–1</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047594" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047594" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only bad1">
+					    &gt; приложение под Andriod<br/>
+<br/>
+&gt; перделок разных появится<br/>
+<br/>
+Андриод вперде!
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047594" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+		
+		</li>
+	
+</ul>
+
+			
+		
+		</li>
+	
+		<li id="comment_3047590" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://ArMikael.habrahabr.ru/" title="ArMikael">
+								<img src="http://habrahabr.ru/media/thumb/6a/a9/9a/19446/19446_24x24.jpg" alt="ArMikael" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://ArMikael.habrahabr.ru/" class="url">ArMikael</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T12:02:41+04:00">12 июля 2010, 12:02</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047590" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047590">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047590" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047590" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Гугл снова делают попытку подняться за счет социальной составляющей. Представте только сколько «одноклассников», которые дорвуться до Андройда начнут клепать вот такие вот «программы для своих». Интересный ход, продуманный… Расчитанный на массового пользователя. Единственное что, надеюсь они каким-то образом поместят всё написанное на этом App Inventor в отдельную категорию. Иначе мусорка ещё та получится.
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047590" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3047603" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://scoff.habrahabr.ru/" title="scoff">
+								<img src="http://habrahabr.ru/media/thumb/90/02/25/28365/28365_24x24.jpg" alt="scoff" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://scoff.habrahabr.ru/" class="url">scoff</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T12:07:32+04:00">12 июля 2010, 12:07</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047603" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="#comment_3047590">&uarr;</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3047590'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047603">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047603" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047603" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Хорошая мысль. Теперь еще надо сделать так, чтобы эти программы можно было распространять/устанавливать в обход маркета, в локальных тусовках. Или у Андроида с этим и так без проблем?
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047603" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+		
+		</li>
+	
+</ul>
+
+			
+		
+		</li>
+	
+		<li id="comment_3047611" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://namezys.habrahabr.ru/" title="namezys">
+								<img src="http://habrahabr.ru/i/avatars/stub-user-small.gif" alt="namezys" />
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://namezys.habrahabr.ru/" class="url">namezys</a>
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-07-12T12:10:09+04:00">12 июля 2010, 12:10</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="#comment_3047611" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="#">&darr;</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3047611">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3047611" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3047611" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+					
+				</div>
+				
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Вот будет свалка. Запасаемся лопатами
+					</div>
+					
+				</div>
+				
+				<div id="reply_form_3047611" class="reply_form">
+					
+					
+				</div>
+			
+			
+			
+			
+			
+
+			
+		
+		</li>
+	
+</ul>
+
+			
+			
+			
+			
+			
+			
+				<div class="info-text">Только авторизованные пользователи могут оставлять комментарии. <a href="http://habrahabr.ru/login/">Авторизуйтесь</a>, пожалуйста.</div>
+			
+		</div>
+	
+	
+
+
+
+	
+
+	
+
+	
+	
+	
+
+	</div>
+
+	<div id="sidebar">
+		
+			
+			
+			
+
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+
+			
+
+			
+				<div class="banner">
+					<script>
+					var mb_random = Math.round(Math.random() * 100000);
+					document.write("<script src='http://pink.habralab.ru/cgi-bin/iframe/habr_others_240x400?"+mb_random+"&options=FT'></scr"+"ipt>");
+					</script>
+				</div>
+			
+
+			
+			
+			
+			
+								
+		
+	
+	
+			
+	
+
+	<div class="live new-feedbacks">
+
+		<div class="bg-bott-r">
+		<div class="bg-bott-l similar-posts">
+	
+		<h3>Похожие публикации&nbsp;&#8595;</h3>
+				
+				<div>
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">12.07.2010</span>&nbsp;&#8594; <a class="where" href="http://habrahabr.ru/blogs/android/">Android</a>&nbsp;&#8594;</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/android/98838/">100 тысяч приложений в Android Market</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">08.07.2010</span>&nbsp;&#8594; <a class="where" href="http://habrahabr.ru/blogs/android/">Android</a>&nbsp;&#8594;</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/android/98619/">Тим Брай, «Перспективность Вашего Android приложения»</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">31.05.2010</span>&nbsp;&#8594; <a class="where" href="http://habrahabr.ru/blogs/pay_sistem/">Платежные системы</a>&nbsp;&#8594;</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/pay_sistem/95045/">US Virtual Bank Account, или как вывести деньги с зарубежных платежных систем</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">25.05.2010</span>&nbsp;&#8594; <a class="where" href="http://habrahabr.ru/blogs/android/">Android</a>&nbsp;&#8594;</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/android/94506/">Отчеты об ошибках в приложениях Android</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">25.05.2010</span>&nbsp;&#8594; <a class="where" href="http://habrahabr.ru/blogs/android/">Android</a>&nbsp;&#8594;</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/android/94471/">Выход Adobe Reader для Android</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">22.05.2010</span>&nbsp;&#8594; <a class="where" href="http://habrahabr.ru/blogs/android/">Android</a>&nbsp;&#8594;</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/android/94217/">Google представил конкурента Apple iTunes</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">26.04.2010</span>&nbsp;&#8594; <a class="where" href="http://habrahabr.ru/blogs/i_am_advertising/">Я пиарюсь</a>&nbsp;&#8594;</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/i_am_advertising/92041/">Android Application за 2 дня</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">22.04.2010</span>&nbsp;&#8594; <a class="where" href="http://habrahabr.ru/blogs/android/">Android</a>&nbsp;&#8594;</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/android/91756/">Как продать идею или приложение для Android?</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">23.03.2010</span>&nbsp;&#8594; <a class="where" href="http://habrahabr.ru/blogs/android/">Android</a>&nbsp;&#8594;</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/android/88686/">Вышел Nimbuzz 1.4</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">23.03.2010</span>&nbsp;&#8594; <a class="where" href="http://habrahabr.ru/blogs/startup/">Стартапы</a>&nbsp;&#8594;</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/startup/88559/">ThickButtons</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">19.03.2010</span>&nbsp;&#8594; <a class="where" href="http://habrahabr.ru/blogs/microsoft/">Microsoft</a>&nbsp;&#8594;</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/microsoft/88128/">За все, что нам известно о Windows (Phone 7|Marketplace), нам не дадут и цента</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">11.03.2010</span>&nbsp;&#8594; <a class="where" href="http://habrahabr.ru/blogs/android/">Android</a>&nbsp;&#8594;</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/android/87171/">Сделаем приложения бесплатными для России!</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">03.03.2010</span>&nbsp;&#8594; <a class="where" href="http://habrahabr.ru/blogs/android/">Android</a>&nbsp;&#8594;</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/android/86144/">Android Market — Заработай себе на пиво, part 2</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">23.01.2010</span>&nbsp;&#8594; <a class="where" href="http://habrahabr.ru/blogs/android/">Android</a>&nbsp;&#8594;</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/android/81706/">У Motorola будет свой Android Market</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">12.01.2010</span>&nbsp;&#8594; <a class="where" href="http://habrahabr.ru/blogs/android/">Android</a>&nbsp;&#8594;</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/android/80511/">Использование Android Market для начинающих</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+				</div>
+		</div>
+		</div>			
+	</div>
+	
+	
+		
+
+	<div class="live new">
+
+		<div class="bg-bott-r">
+		<div class="bg-bott-l similar-posts">
+			
+		<div class="bg-top-r yandex">
+			<!-- Яндекс.Директ -->
+			<script type="text/javascript">
+			//<![CDATA[
+			yandex_partner_id = 14199;
+			yandex_site_bg_color = 'F0F0E7';
+			yandex_site_charset = 'utf-8';
+			yandex_ad_format = 'direct';
+			yandex_font_size = 0.9;
+			yandex_direct_type = 'vertical';
+			yandex_direct_limit = 5;
+			yandex_direct_title_color = '666666';
+			yandex_direct_url_color = '333333';
+			yandex_direct_all_color = '666666';
+			yandex_direct_text_color = '666666';
+			yandex_direct_hover_color = '333333';
+			yandex_direct_favicon = false;
+			document.write('<sc'+'ript type="text/javascript" src="http://an.yandex.ru/system/context.js"></sc'+'ript>');
+			//]]>
+			</script>
+		</div>
+		</div>
+		</div>			
+	</div>
+	
+
+		
+		
+
+<div class="live new-feedbacks">
+	
+		<div class="bg-bott-r"><!-- for bottom rounded corners -->
+		<div class="bg-bott-l">
+	
+		<h3>Прямой эфир&nbsp;&#8595;</h3>
+		
+		<!-- Строчка в прямом эфире -->
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://Kuuuzya.habrahabr.ru/">Kuuuzya</a>&nbsp;&rarr;</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/hardware/">Железо</a>&nbsp;&rarr;</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/hardware/98762/#comment_3047632">Медиаплеер PowerZest HD-500</a>&nbsp;<span class="total">41</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://xn__p2a.habrahabr.ru/">xn__p2a</a>&nbsp;&rarr;</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/creative/">Креативные дела</a>&nbsp;&rarr;</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/creative/98825/#comment_3047631">Power Laces. Автоматическая шнуровка</a>&nbsp;<span class="total">49</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://arxont.habrahabr.ru/">arxont</a>&nbsp;&rarr;</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/company/academy/blog/">Блог компании Сетевая Академия</a>&nbsp;&rarr;</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/company/academy/blog/98858/#comment_3047630">Авторизованное обучение: оно того стоит?</a>&nbsp;<span class="total">1</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://stari4ek.habrahabr.ru/">stari4ek</a>&nbsp;&rarr;</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/android/">Android</a>&nbsp;&rarr;</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/android/98848/#comment_3047629">Android Market сделает App Store?</a>&nbsp;<span class="total">33</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://Himari.habrahabr.ru/">Himari</a>&nbsp;&rarr;</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/laptop/">Ноутбуки</a>&nbsp;&rarr;</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/laptop/98787/#comment_3047628">Обзор Lenovo ThinkPad x201 со стороны линуксоида</a>&nbsp;<span class="total">125</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://tangro.habrahabr.ru/">tangro</a>&nbsp;&rarr;</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/open_source/">Open source</a>&nbsp;&rarr;</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/open_source/98842/#comment_3047626">OpenSource Система электронных дневников: год спустя</a>&nbsp;<span class="total">6</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://BSDaemon.habrahabr.ru/">BSDaemon</a>&nbsp;&rarr;</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/android/">Android</a>&nbsp;&rarr;</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/android/98838/#comment_3047624">100 тысяч приложений в Android Market</a>&nbsp;<span class="total">27</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://dark_tranquillity.habrahabr.ru/">dark_tranquillity</a>&nbsp;&rarr;</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/company/samsung/blog/">Блог компании Samsung</a>&nbsp;&rarr;</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/company/samsung/blog/98788/#comment_3047622">China WCG 2010 Girls</a>&nbsp;<span class="total">25</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://OrdJONY.habrahabr.ru/">OrdJONY</a>&nbsp;&rarr;</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/telecom/">Телекомы</a>&nbsp;&rarr;</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/telecom/98410/#comment_3047621">Новые тарифы ОГО! (Укртелеком, Украина)</a>&nbsp;<span class="total">109</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://guessss_who.habrahabr.ru/">guessss_who</a>&nbsp;&rarr;</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://guessss-who.habrahabr.ru/blog/">Блог им. guessss_who</a>&nbsp;&rarr;</dt>
+					<dd><a class="topic" href="http://guessss-who.habrahabr.ru/blog/98829/#comment_3047619">Пасхальное яйцо в моем ноутбуке. Тухлое</a>&nbsp;<span class="total">36</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://k00p.habrahabr.ru/">k00p</a>&nbsp;&rarr;</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/i_recommend/">Я рекомендую</a>&nbsp;&rarr;</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/i_recommend/98855/#comment_3047615">Подмена фона в видеочате</a>&nbsp;<span class="total">1</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://equand.habrahabr.ru/">equand</a>&nbsp;&rarr;</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://atenta.habrahabr.ru/blog/">Блог им. atenta</a>&nbsp;&rarr;</dt>
+					<dd><a class="topic" href="http://atenta.habrahabr.ru/blog/98847/#comment_3047614">Проект создания единой российской распределенной информационной системы науки, образования и инноваций — за 3 млрд рублей</a>&nbsp;<span class="total">10</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://SeregaTLT.habrahabr.ru/">SeregaTLT</a>&nbsp;&rarr;</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://SeregaTLT.habrahabr.ru/blog/">Блог им. SeregaTLT</a>&nbsp;&rarr;</dt>
+					<dd><a class="topic" href="http://SeregaTLT.habrahabr.ru/blog/98822/#comment_3047612">Технология FaceTime теперь и в 3G сетях</a>&nbsp;<span class="total">8</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://Scoot.habrahabr.ru/">Scoot</a>&nbsp;&rarr;</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://startupper.habrahabr.ru/blog/">Блог им. startupper</a>&nbsp;&rarr;</dt>
+					<dd><a class="topic" href="http://startupper.habrahabr.ru/blog/98854/#comment_3047610">Google в Украине не удалось победить киберсквотера. Пока что</a>&nbsp;<span class="total">2</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://Gorthauer87.habrahabr.ru/">Gorthauer87</a>&nbsp;&rarr;</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://pryanic.habrahabr.ru/blog/">Блог им. pryanic</a>&nbsp;&rarr;</dt>
+					<dd><a class="topic" href="http://pryanic.habrahabr.ru/blog/98851/#comment_3047609">Китайцы снова клонировали iPad: встречаем 10&quot; ePad</a>&nbsp;<span class="total">7</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://harm.habrahabr.ru/">harm</a>&nbsp;&rarr;</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/nokia/">I &#9829; Nokia</a>&nbsp;&rarr;</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/nokia/98827/#comment_3047608">Некоторые мысли о конфликте Нокии и Эльдара Муртазина</a>&nbsp;<span class="total">99</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://esc.habrahabr.ru/">esc</a>&nbsp;&rarr;</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/copyright/">Копирайт</a>&nbsp;&rarr;</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/copyright/98789/#comment_3047607">Антипиратство — наглядная агитация</a>&nbsp;<span class="total">180</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://unbeliever.habrahabr.ru/">unbeliever</a>&nbsp;&rarr;</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/gadgets/">Гаджеты. Устройства для гиков</a>&nbsp;&rarr;</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/gadgets/98775/#comment_3047606">RetroN 3 — универсальная игровая консоль для ностальгирующих геймеров</a>&nbsp;<span class="total">95</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://andorro.habrahabr.ru/">andorro</a>&nbsp;&rarr;</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/social_networks/">Социальные сети</a>&nbsp;&rarr;</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/social_networks/98530/#comment_3047602">Что, где, куда: обзор туристических блогосервисов</a>&nbsp;<span class="total">36</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://k4shik.habrahabr.ru/">k4shik</a>&nbsp;&rarr;</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/i_am_advertising/">Я пиарюсь</a>&nbsp;&rarr;</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/i_am_advertising/98705/#comment_3047601">Моя ИТ-головоломка</a>&nbsp;<span class="total">529</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<!-- // Строчка в прямом эфире -->
+		<div class="all">&#171; <a href="/live/">весь прямой эфир</a></div>
+		
+			
+		</div>
+		</div><!-- // for bottom rounded corners -->
+</div>
+
+
+		
+	
+	
+		<div class="live dailybest">
+
+			<div class="bg-bott-r"><!-- for bottom rounded corners -->
+			<div class="bg-bott-l">
+	
+			<h3>Лучшее <sup>за 24 часа</sup>&nbsp;&#8595;</h3>
+
+			
+				<dl class="air-comment">
+					<dd>
+						<dl>
+							<dt><a class="where" href="http://habrahabr.ru/blogs/ad_blog/">Реклама глазами рекламиста</a>&nbsp;&rarr;</dt>
+							<dd><a class="topic" href="http://habrahabr.ru/blogs/ad_blog/98809/">В Европе и США опробуют новый вид уличной рекламы</a>&nbsp;</dd>
+						</dl>
+					</dd>
+				</dl>
+			
+				<dl class="air-comment">
+					<dd>
+						<dl>
+							<dt><a class="where" href="http://habrahabr.ru/blogs/DIY/">DIY или Сделай Сам</a>&nbsp;&rarr;</dt>
+							<dd><a class="topic" href="http://habrahabr.ru/blogs/DIY/98812/">Прошивка DD-WRT на домашнем роутере</a>&nbsp;</dd>
+						</dl>
+					</dd>
+				</dl>
+			
+				<dl class="air-comment">
+					<dd>
+						<dl>
+							<dt><a class="where" href="http://habrahabr.ru/blogs/games/">Игры</a>&nbsp;&rarr;</dt>
+							<dd><a class="topic" href="http://habrahabr.ru/blogs/games/98819/">Музыкант в костюме Скорпиона играет тему Mortal Kombat на баяне</a>&nbsp;</dd>
+						</dl>
+					</dd>
+				</dl>
+			
+				<dl class="air-comment">
+					<dd>
+						<dl>
+							<dt><a class="where" href="http://habrahabr.ru/blogs/nokia/">I &#9829; Nokia</a>&nbsp;&rarr;</dt>
+							<dd><a class="topic" href="http://habrahabr.ru/blogs/nokia/98827/">Некоторые мысли о конфликте Нокии и Эльдара Муртазина</a>&nbsp;</dd>
+						</dl>
+					</dd>
+				</dl>
+			
+				<dl class="air-comment">
+					<dd>
+						<dl>
+							<dt><a class="where" href="http://habrahabr.ru/blogs/startup/">Стартапы</a>&nbsp;&rarr;</dt>
+							<dd><a class="topic" href="http://habrahabr.ru/blogs/startup/98797/">Eventr.com доступен в режиме beta-тестирования</a>&nbsp;</dd>
+						</dl>
+					</dd>
+				</dl>
+			
+				<dl class="air-comment">
+					<dd>
+						<dl>
+							<dt><a class="where" href="http://habrahabr.ru/blogs/success_stories/">Истории успеха</a>&nbsp;&rarr;</dt>
+							<dd><a class="topic" href="http://habrahabr.ru/blogs/success_stories/98801/">Tesla и Toyota работают над двумя «зелеными» прототипами</a>&nbsp;</dd>
+						</dl>
+					</dd>
+				</dl>
+			
+				<dl class="air-comment">
+					<dd>
+						<dl>
+							<dt><a class="where" href="http://habrahabr.ru/blogs/research/">Исследования и прогнозы</a>&nbsp;&rarr;</dt>
+							<dd><a class="topic" href="http://habrahabr.ru/blogs/research/98808/">Метаматериалы или какие возможности нас ждут в будущем</a>&nbsp;</dd>
+						</dl>
+					</dd>
+				</dl>
+			
+				<dl class="air-comment">
+					<dd>
+						<dl>
+							<dt><a class="where" href="http://habrahabr.ru/blogs/vs/">Visual Studio</a>&nbsp;&rarr;</dt>
+							<dd><a class="topic" href="http://habrahabr.ru/blogs/vs/98785/">Расширение Regex Tester для Visual Studio 2010</a>&nbsp;</dd>
+						</dl>
+					</dd>
+				</dl>
+			
+				<dl class="air-comment">
+					<dd>
+						<dl>
+							<dt><a class="where" href="http://habrahabr.ru/blogs/facebook/">Facebook</a>&nbsp;&rarr;</dt>
+							<dd><a class="topic" href="http://habrahabr.ru/blogs/facebook/98814/">Фейсбучные кнопки «Like» показываются 3 млрд раз в день</a>&nbsp;</dd>
+						</dl>
+					</dd>
+				</dl>
+			
+				<dl class="air-comment">
+					<dd>
+						<dl>
+							<dt><a class="where" href="http://habrahabr.ru/blogs/games/">Игры</a>&nbsp;&rarr;</dt>
+							<dd><a class="topic" href="http://habrahabr.ru/blogs/games/98833/">Starcraft2 возобновил тестирование</a>&nbsp;</dd>
+						</dl>
+					</dd>
+				</dl>
+			
+			<div class="all">&#171; <a href="/top/">все лучшие</a></div>
+
+			</div>
+			</div><!-- // for bottom rounded corners -->
+		</div>
+	
+
+
+		
+
+
+			
+		
+
+	
+	
+
+	</div>
+
+</div>
+
+<div id="footer">
+	<div class="footer-conttent">
+		<div class="bottom_menu">
+			
+			
+			<dl>
+				<dd><a href="http://habrahabr.ru/login/">Войти</a></dd>
+				<dd><a href="http://habrahabr.ru/register/">Регистрация</a></dd>
+			</dl>
+			
+			<dl class="sections">
+				<dt>Разделы</dt>
+				<dd><a href="http://habrahabr.ru/bloglist/">Блоги</a></dd>
+				<dd><a href="http://habrahabr.ru/people/">Люди</a></dd>
+				<dd><a href="http://habrahabr.ru/companies/">Компании</a></dd>
+				<dd><a href="http://habrahabr.ru/job/">Работа</a></dd>
+				<dd><a href="http://habrahabr.ru/top/">↑↓↑↓</a></dd>
+			</dl>
+			<dl>
+				<dt>Блоги</dt>
+				<dd><a href="http://habrahabr.ru/">Все</a></dd>
+				<dd><a href="http://habrahabr.ru/blogs/">Тематические</a></dd>
+				<dd><a href="http://habrahabr.ru/corporative/">Корпоративные</a></dd>
+				<dd><a href="http://habrahabr.ru/personal/">Личные</a></dd>
+				<dd><a href="http://habrahabr.ru/sandbox/">Песочница</a></dd>
+			</dl>
+			<dl>
+				<dt>Инфо</dt>
+				<dd><a href="http://habrahabr.ru/info/about/">О сайте</a></dd>
+				<dd><a href="http://habrahabr.ru/info/help/rules/">Правила</a></dd>
+				<dd><a href="http://habrahabr.ru/info/help/">Помощь</a></dd>
+				<dd><a href="http://habrahabr.ru/info/agreement/">Соглашение</a></dd>
+				<dd><a href="http://habrahabr.ru/info/stats/">Статистика</a></dd>
+			</dl>
+			<dl>
+				<dt>Услуги</dt>
+				<dd><a href="http://habrahabr.ru/info/advertising/">Реклама</a></dd>
+				<dd><a href="http://habrahabr.ru/info/advertising/corporate/">Корпоративные пакеты</a></dd>
+			</dl>
+		</div>
+
+		<a class="footer_logo" href="http://thematicmedia.ru/">Тематические Медиа</a>
+		<div id="about">
+			<span style="margin-left:4px;">© 2006&#8211;2010</span> <br/>«<a href="http://www.thematicmedia.ru/">Тематические Медиа</a>»<br/>
+			<div style="margin-top: 10px; margin-left:6px;">
+				Офис Чипа и Дэйла:<br/>
+				<a href="mailto:support@habrahabr.ru" title="адрес службы поддержки пользователей">support@habrahabr.ru</a>
+			</div> 
+		</div>
+		
+	</div>
+	
+</div>
+
+
+
+	
+
+
+	
+
+<script type="text/javascript">
+/*<![CDATA[*/
+var _gaq = _gaq || [];
+_gaq.push(
+    ['_setAccount', 'UA-726094-1'],
+    ['_setDomainName', '.habrahabr.ru'],
+    ["_addOrganic", "mail.ru", "q"],
+    ["_addOrganic","rambler.ru", "words"],
+    ["_addOrganic","nigma.ru", "s"],
+    ["_addOrganic","blogs.yandex.ru", "text"],
+    ["_addOrganic","webalta.ru", "q"],
+    ["_addOrganic","aport.ru", "r"],
+    ["_addOrganic","akavita.by", "z"],
+    ["_addOrganic","meta.ua", "q"],
+    ["_addOrganic","bigmir.net", "q"],
+    ["_addOrganic","tut.by", "query"],
+    ["_addOrganic","all.by", "query"],
+    ["_addOrganic","i.ua", "q"],
+    ["_addOrganic","online.ua", "q"],
+    ["_addOrganic","a.ua", "s"],
+    ["_addOrganic","ukr.net", "search_query"],
+    ["_addOrganic","search.com.ua", "q"],
+    ["_addOrganic","search.ua", "query"],
+    ["_addOrganic","poisk.ru", "text"],
+    ["_addOrganic","km.ru", "sq"],
+    ["_addOrganic","liveinternet.ru", "ask"],
+    ["_addOrganic","gogo.ru", "q"],
+    ["_addOrganic","gde.ru", "keywords"],
+    ["_addOrganic","quintura.ru", "request"],
+    ['_trackPageview']
+);
+document.documentElement.firstChild.appendChild(ga);
+/* ]]>*/
+</script>
+
+
+
+
+
+</body>
+</html>
