@@ -15,3 +15,11 @@ syntax: regexp
 ^1$
 syntax: regexp
 ^all1\.gif$
+syntax: regexp
+^1\.js\.props$
+syntax: regexp
+^11$
+syntax: regexp
+^111$
+syntax: regexp
+^deploy$
