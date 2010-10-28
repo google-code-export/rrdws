@@ -392,9 +392,10 @@ public class UrlFetchTest implements Serializable{
 				} else {
 					if (key.equals("expires")) // Wdy, DD-Mon-YY HH:MM:SS GMT
 					{
-						String comma = tokenizer.nextToken();
-						String rest = tokenizer.nextToken();
 						try {
+							String comma = tokenizer.nextToken();
+							String rest = tokenizer.nextToken();
+						
 							Date date = mFormat.parse(value + comma + rest);
 							// http://download.oracle.com/javaee/1.4/api/javax/servlet/http/Cookie.html#setMaxAge(int)
 							// cookie.setMaxAge((int) (date.getTime() - System
