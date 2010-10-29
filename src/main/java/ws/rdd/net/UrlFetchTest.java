@@ -405,9 +405,8 @@ public class UrlFetchTest implements Serializable{
 						{
 							// ok now set it to 1 day!
 							// cookie.setMaxAge(24 * 60 * 60);
-							cookie.setExpiryDate(new Date(System
-									.currentTimeMillis()
-									+ 1000 * 24 * 60 * 60));
+							long morgenTmp = System .currentTimeMillis() + 1000 * 24 * 60 * 60;
+							cookie.setExpiryDate(new Date(morgenTmp));
 						}
 					} else if (key.equals("domain"))
 						cookie.setDomain(value);
