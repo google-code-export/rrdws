@@ -8,16 +8,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
-
-import org.apache.catalina.util.RequestUtil;
+ 
 import org.vietspider.chars.TextVerifier; 
-import org.vietspider.chars.ValueVerifier; 
-import org.vietspider.common.util.Queue;
-import org.vietspider.common.util.Stack;
+import org.vietspider.chars.ValueVerifier;  
 import org.vietspider.html.HTMLNode; 
 import org.vietspider.html.Name;
-import org.vietspider.html.NodeIterator;
-import org.vietspider.html.Tag;
+import org.vietspider.html.NodeIterator; 
 import org.vietspider.html.parser.NodeImpl; 
 import org.vietspider.token.TypeToken;
 import org.vietspider.token.attribute.Attribute;
@@ -25,11 +21,10 @@ import org.vietspider.token.attribute.Attributes;
 
 import cc.co.llabor.cache.css.CSStore;
 import cc.co.llabor.cache.js.Item;
-import cc.co.llabor.cache.js.JSStore;
+import cc.co.llabor.cache.js.JSStore; 
  
 import ws.rrd.server.Base64Coder;
-import ws.rrd.server.LServlet;
-import ws.rrd.server.SServlet;
+import ws.rrd.server.LServlet; 
 
  
 public class HyperLinkUtil {   
@@ -187,7 +182,9 @@ private static final boolean TRACE = false;
 				//String  value = verifier.eval (n, null, null);
 		        //value = prepareLinkValue(home , value);
 		        //value = encode(swapServletUrl2, value);
-		        verifier.modi(n, swapServletUrl2, home.toString(),home.toExternalForm()  ); 
+		        String sHome = home.toString();
+				String externalFormHome = home.toExternalForm();
+				verifier.modi(n, swapServletUrl2, sHome, externalFormHome  ); 
 		      } 
 	  } 
   } 
@@ -419,21 +416,27 @@ private static final boolean TRACE = false;
 			// #3
 		} else if (value.startsWith(".."))  {
 			String uri = home.toString(); 
-			int srvUrlLen = (home.getProtocol().length()+home.getHost().length());
-			if (uri.length() > srvUrlLen ){
-				if (uri.endsWith("/")) // home hase no file in name
-					uri = uri.substring(0, uri.lastIndexOf("/"));
-				else{ // trunc file also
-					//uri = uri.substring(0, uri.lastIndexOf("/"));
-					uri = uri.substring(0, uri.lastIndexOf("/"));
-					if(1==2)RequestUtil.normalize(uri);
+			while(value.startsWith("..")){
+				int srvUrlLen = (home.getProtocol()+"/"+home.getHost()+"/" ).length();
+				if (uri.length() > srvUrlLen ){ // avoid cut http://www.hp.ag/ -> http:// 
+					if (uri.endsWith("/")) // home hase no file in name : http://www.hp.ag/a/ -> http://www.hp.ag/ 
+						uri = uri.substring(0, uri.substring(0,uri.length()-1).lastIndexOf("/")+1);
+					else{ // trunc file also // http://www.hp.ag/a/file.html
+						//uri = uri.substring(0, uri.lastIndexOf("/"));
+						uri = uri.substring(0, uri.lastIndexOf("/"))+"/"; // normilize http://www.hp.ag/a/file.html -> http://www.hp.ag/a/
+						uri = uri.substring(0, uri.substring(0,uri.length()-1).lastIndexOf("/")+1);
+					}
 				}
+				value = value.substring(3);
 			}
 			//if (uri.length() > srvUrlLen )uri = uri.substring(0, uri.lastIndexOf("/") );
-			uri += value.substring(2);
+			uri += "/"+value;
 			uri += "";
 			value = uri;
 			// #2
+		} else if (value.startsWith("javascript:"))  {
+			//
+			System.out.println("SCRIPTLINK::"+value);
 		} else {
 			if (homeStr.lastIndexOf("/")>7)
 				homeStr = homeStr.substring(0, homeStr.lastIndexOf("/") + 1); //extract domain + full path
@@ -555,37 +558,38 @@ private static final boolean TRACE = false;
 			return retval;
 		}
 		
-		private String  clearBody(HTMLNode node, final String scriptValue, String xRef) {
-			node.clearChildren();// setChild(0, new
-			String retval= LServlet.calcBase()+"S/"+"l"+ scriptValue.length() +"@"+ xRef.hashCode() + ".js";			
-			String stringTmp = "SCRIPT SRC=\""+retval +"\"";
-			
-			// HTMLNode(){})getChildren().clear()setValue("/*
-			// 8-X */".toCharArray());
-			final String scriptAliasTmp = (stringTmp);
-			// replace Script-Content by link to cached value
-			//ScriptItem siTmp = ssTmp.getByValue();
-			node.setValue(scriptAliasTmp.toCharArray());
-			//System.out.println("" + node.getTextValue());
+		/**
+		 * calculate and gives back SServlet-URL
+		 * clean childrens for script-node, if any
+		 * 
+ 		 * @param node
+		 * @param scriptValue
+		 * @param xRef
+		 * @return
+		 */
+		private String  replaceByRef(HTMLNode node, final String scriptValue, String xRef) {
+			node.clearChildren(); 
+			final String aliasTmp = ".zZ"+ scriptValue.length() +"_"+ xRef.length();//scriptStore
+			final String SSERVLET = LServlet.calcBase() + "S/";
+			String retval= SSERVLET + aliasTmp + ".js";			
+			String stringTmp = "SCRIPT SRC=\""+retval +"\""; 
+			final String scriptAliasTmp = (stringTmp); 
+			node.setValue(scriptAliasTmp.toCharArray()); 
 			return retval;
 			
 		}
 		@Override
 		public void modi(HTMLNode node, String rootServletPar, String refPar, String refPar2) {
 	        Attributes attrs = node.getAttributes();  
-			String newValue = null; 	
-			String value =  node.getTextValue() ;
-			if (verify(value)){
-				String cacheKey = clearBody(node, value, refPar);//clearBody(node, scriptOnBody);
-
+			String cacheKey = null; 	
+			String scriptValTmp =  node.getTextValue() ;
+			if (verify(scriptValTmp)){ 
+				cacheKey = replaceByRef(node, scriptValTmp, refPar); 
 				JSStore ssTmp = JSStore.getInstanse();
-				Item scriptTmp =  ssTmp .putOrCreate(cacheKey, value ,refPar);
-				if (1==2) System.out.println(scriptTmp);
-				
-				String newLink = cacheKey;
-				newValue = newLink;
+				Item scriptTmp =  ssTmp .putOrCreate(cacheKey, scriptValTmp ,refPar);
+				if (1==2) System.out.println(""+scriptTmp + attrs);  
 				//node.setValue(  newLink.toCharArray() ); 
-				if(LServlet.TRACE)System.out.println("NEW VAL for SCRIPT   : ["+value+"]=>"+newValue);
+				if(LServlet.TRACE)System.out.println("NEW VAL for SCRIPT   : ["+scriptValTmp+"]=>"+cacheKey);
 			}else{
 				if(LServlet.TRACE)System.out.println(" no changes for "+node.getName());
 			}
@@ -593,6 +597,7 @@ private static final boolean TRACE = false;
 	        
 		}		
 	}
+ 
   
   
   public static class StyleVerifier extends TextVerifier implements ValueVerifier {
@@ -672,8 +677,14 @@ private static final boolean TRACE = false;
 			Attribute attr = attrs.get(attrName);		
 			String value = attr.getValue();
 			if(LServlet.TRACE)System.out.println("NEW VAL for "+nodeName+".."+attrName+" : ["+value+"]=>"+newValue + " := "+nodeName+"["+attrName+"]");
-	        attr.setValue(  newValue);       
-	        attrs.set(attr);
+			if ((""+value).toLowerCase().startsWith("javascript:")){
+				// ignore. TODO  - should "javascript:"  be wrapped ?
+			}else{
+				attr.setValue(  newValue);
+				attrs.set(attr);
+			}
+	               
+	        
 		}
 	   
 	  }

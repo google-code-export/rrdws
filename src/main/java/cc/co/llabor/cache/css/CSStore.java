@@ -60,27 +60,35 @@ public class CSStore {
 				actual = actual.replace("<", "\n<");
 			}
 			String out = "";
+			int lnCnt = 0;
 			for (String line:actual.split("\n")){
-				if (line.startsWith("@import")){
-					int iStart = line.indexOf("\"");
-					int iEnd = line.lastIndexOf( "\"");
-					String urlTmp = line.substring(iStart+1,iEnd );
-					try{
-						urlTmp = HyperLinkUtil.encodeLink(new URL(refPar), urlTmp);
-					}catch(Throwable e){}
-					out += "\n"; 
-					out += line.substring(0,iStart); 
-					out += " \""; 
-					out += urlTmp; 
-					out += line.substring(iEnd); 
-										
-				}else if (line.startsWith("<")){
-					// http://www.w3.org/TR/CSS21/syndata.html#comments
-					out+= "/* <!-- "+line+" -->  */";
-				}else{
-					out+=line;
+				lnCnt++;
+				try{
+					if (line.startsWith("@import")){
+						int iStart = line.indexOf("\"");
+						int iEnd = line.lastIndexOf( "\"");
+						String urlTmp = line.substring(iStart+1,iEnd );
+						try{
+							urlTmp = HyperLinkUtil.encodeLink(new URL(refPar), urlTmp);
+						}catch(Throwable e){}
+						out += "\n"; 
+						out += line.substring(0,iStart); 
+						out += "  \""; 
+						out += "  "+urlTmp; 
+						out += line.substring(iEnd); 
+											
+					}else if (line.startsWith("<")){
+						// http://www.w3.org/TR/CSS21/syndata.html#comments
+						out+= "/* <!-- "+line+" -->  */";
+					}else{
+						out+=line;
+					}
+				}catch(Throwable e){
+					out+="//* ln:"+lnCnt+":"+line + e.getMessage() +"*/";
 				}
+				
 				out+="\n";
+				
 			}
 
 			cssItem = new Item(out); 
@@ -95,8 +103,11 @@ public class CSStore {
 			//String actual = b.cleanCSS( value );				
 			cssItem.addReffer(refPar); 
 			cssItem.setValue(value); 
-			reformat(cacheKey, cssItem);
-			cssItem.setReadOnly(true);
+			try{
+				reformat(cacheKey, cssItem);
+				cssItem.setReadOnly(true);
+			}catch(Throwable e ){}
+			
 			
 		}
 		

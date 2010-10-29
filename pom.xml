@@ -13,32 +13,33 @@
 	<packaging>war</packaging>
 
 	<dependencies>
-	<!-- tomcat -->
+	<!-- tomcat 
 	<dependency>
 		<groupId>org.apache.tomcat</groupId>
 		<artifactId>catalina</artifactId>
 		<version>6.0.29</version>
 		<scope>provided</scope>
-	</dependency>	
+	</dependency>
+	-->
 	<!-- javax MAIL 
 		<dependency>
-			<groupId>org.subethamail</groupId>
-			<artifactId>subethasmtp</artifactId>
-			<version>2.0.1</version>
+		<groupId>org.subethamail</groupId>
+		<artifactId>subethasmtp</artifactId>
+		<version>2.0.1</version>
 		</dependency>
 	-->
 	<dependency>
 		<groupId>gnu.inet.encoding</groupId>
-		<artifactId>libidn</artifactId> 
+		<artifactId>libidn</artifactId>
 		<version>1.19</version>
-	</dependency>	
+	</dependency>
 	<dependency>
-    <groupId>rhino</groupId>
-    <artifactId>js</artifactId>
-    <version>1.7R2</version>
-</dependency>
-	
-		<dependency>
+		<groupId>rhino</groupId>
+		<artifactId>js</artifactId>
+		<version>1.7R2</version>
+	</dependency>
+
+	<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>jsr107cache</artifactId>
 			<version>${gae.version}</version>

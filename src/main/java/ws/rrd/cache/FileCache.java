@@ -24,6 +24,8 @@ import java.util.logging.Logger;
 
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.net.QuotedPrintableCodec;
+
+import cc.co.llabor.cache.css.Item;
  
 
 import net.sf.jsr107cache.Cache;
@@ -124,6 +126,12 @@ public class FileCache implements Cache {
 			if ((""+key).endsWith(".properties")){
 				retval = new Properties();
 				((Properties)retval).load(fis);
+			}else  if ((""+key).endsWith(".css")){
+				String valTmp = readFile( fis);
+				retval = new Item(valTmp);
+			}else  if ((""+key).endsWith(".js")){
+				String valTmp = readFile( fis);
+				retval = new cc.co.llabor.cache.js.Item(valTmp);
 			}else{
 				ObjectInputStream ois = new ObjectInputStream(fis);
 				retval = ois.readObject();		
@@ -145,6 +153,15 @@ public class FileCache implements Cache {
 	}
 
 	
+	private String readFile(FileInputStream fis) throws IOException {
+		byte[] buf = new byte[fis.available()];
+		int lenTmp = fis.read(buf);
+		String retval = new String(buf);
+		return retval;
+		 
+	}
+
+
 	public Map getAll(Collection arg0) throws CacheException {
 		// TODO Auto-generated method stub
 		if (1 == 1)
@@ -245,6 +262,9 @@ public class FileCache implements Cache {
 				{"\t", "=!T!="},
 				//{"/", "=!s!="},
 				{"\"", "=!!="},
+				{"*", "=!X!="},
+				{"?", "=!Q!="},
+				{"&", "=!A!="},
 				{"\'", "=!="} 
 		};
 		for (String[]from2to:from2){
@@ -271,6 +291,14 @@ public class FileCache implements Cache {
 			if (arg1 instanceof Properties){
 				Properties prps = (Properties) arg1;
 				prps.store(fout, "CacheEntry stored at " +System.currentTimeMillis());
+				fout.close();
+			}else if (arg1 instanceof cc.co.llabor.cache.css.Item ){
+				cc.co.llabor.cache.css.Item i = (cc.co.llabor.cache.css.Item)arg1;
+				fout.write(i.getValue().getBytes());
+				fout.close();
+			}else if (arg1 instanceof cc.co.llabor.cache.js.Item ){
+				cc.co.llabor.cache.js.Item i = (cc.co.llabor.cache.js.Item)arg1;
+				fout.write(i.getValue().getBytes());
 				fout.close();
 			}else{
 				ObjectOutputStream wr = new ObjectOutputStream(fout);

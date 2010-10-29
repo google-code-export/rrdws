@@ -1,19 +1,19 @@
 package cc.co.llabor.cache.replace;  
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Date;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.regex.Pattern; 
 
-import org.apache.catalina.util.RequestUtil;
+import org.vietspider.html.util.HyperLinkUtil;
+
+import ws.rrd.server.LServlet;
  
 
 import com.no10x.cache.Manager;  
@@ -34,7 +34,7 @@ public class ReplaceStore {
 	private static final String ReplaceStore = "ReplaceStore";
 	private static final ReplaceStore me = new ReplaceStore();
 	Map<String, Properties>  replaceStore  = null;
-	private boolean collectParents = false;
+	private boolean collectParents = true;
 	@SuppressWarnings("unchecked")
 	ReplaceStore() {
 		this.replaceStore = Manager.getCache(ReplaceStore);		
@@ -53,12 +53,14 @@ public class ReplaceStore {
 	 */
 	public Properties getByURL(String scriptURL) {
 		
-		String path = RequestUtil.normalize( scriptURL.replace("%2F", "/"));
+		String path = normalize( scriptURL.replace("%2F", "/"));
 		
 		String key = scriptURL + REPLACE_PROPERTIES_FILE_EXTENSION;
 		Properties retval = (Properties) replaceStore.get(key );
 		if (retval == null){
 			retval = new Properties();
+			// create placeholder for replacer
+			replaceStore.put(key, retval);
 		}
 		if (collectParents )
 		try {
@@ -82,9 +84,69 @@ public class ReplaceStore {
 		return retval;
 	}
 
+ 
+	    /**
+	     * Normalize a relative URI path that may have relative values ("/./",
+	     * "/../", and so on ) it it. <strong>WARNING</strong> - This method is
+	     * useful only for normalizing application-generated paths. It does not try
+	     * to perform security checks for malicious input.
+	     * 
+	     * @param path
+	     *      Relative path to be normalized
+	     */
+	    public static String normalize(String path) {
+
+	        if (path == null)
+	            return null;
+
+	        // Create a place for the normalized path
+	        String normalized = path;
+
+	        if (normalized.equals("/."))
+	            return "/";
+
+	        // Add a leading "/" if necessary
+	        if (!normalized.startsWith("/"))
+	            normalized = "/" + normalized;
+
+	        // Resolve occurrences of "//" in the normalized path
+	        while (true) {
+	            int index = normalized.indexOf("//");
+	            if (index < 0)
+	                break;
+	            normalized = normalized.substring(0, index)
+	                    + normalized.substring(index + 1);
+	        }
+
+	        // Resolve occurrences of "/./" in the normalized path
+	        while (true) {
+	            int index = normalized.indexOf("/./");
+	            if (index < 0)
+	                break;
+	            normalized = normalized.substring(0, index)
+	                    + normalized.substring(index + 2);
+	        }
+
+	        // Resolve occurrences of "/../" in the normalized path
+	        while (true) {
+	            int index = normalized.indexOf("/../");
+	            if (index < 0)
+	                break;
+	            if (index == 0)
+	                return (null); // Trying to go outside our context
+	            int index2 = normalized.lastIndexOf('/', index - 1);
+	            normalized = normalized.substring(0, index2)
+	                    + normalized.substring(index + 3);
+	        }
+
+	        // Return the normalized path that we have completed
+	        return (normalized);
+
+	    }
+
 
 	public Properties putOrCreate(String cacheKey, Properties value  ) { 
-		cacheKey = RequestUtil.normalize( cacheKey.replace("%2F", "/"));
+		cacheKey = normalize( cacheKey.replace("%2F", "/"));
 		cacheKey += REPLACE_PROPERTIES_FILE_EXTENSION;
 		Properties repTmp =  replaceStore.get(cacheKey);
 		if (repTmp == null){  
@@ -144,31 +206,53 @@ public class ReplaceStore {
 		    Matcher matcher = pattern.matcher(aHtmlTextWithLinks);
 		    return matcher.replaceAll(fFRAGMENT);
 	}
-	public String replaceByRules(String rulesUrl, String scriptIn) {
+	
+	/**
+	 * make the job!
+	 * 1) replace <b>"$referer"</b> by HTTP-referer if any
+	 * 
+	 * 2) use .filecache/ReplaceStore/http=..=\<hostname>\rrdsaas\pathtoRepaceCong.properties 
+	 * 	and all parent XXX.properties for replacements
+	 * 
+	 * @author vipup
+	 * @param rulesUrl
+	 * @param scriptIn
+	 * @param refererTmp
+	 * @return
+	 */
+	public String replaceByRules(String rulesUrl, String scriptIn, String refererTmp) {
 		Properties props = getByURL(rulesUrl);
 		String retval = scriptIn;
 		Set<Object> keySet = props.keySet();
 		String[] keys = keySet.toArray(new String[]{});
+		if ( LServlet.TRACE ) putOrCreate(rulesUrl, props);
+
 		for (String key:keys){
 			String val = props.getProperty(key);
-			retval = replaceLinks(retval, key, val );props.put(key, val);putOrCreate(rulesUrl, props);
+			retval = replaceLinks(retval, key, val );
+			props.put(key, val); 
+		}	
+		if (null != refererTmp){
+			String xrefTmp = HyperLinkUtil.decode(refererTmp.substring(refererTmp.indexOf("/aH")+1)); 
+			xrefTmp = ""+xrefTmp;
+			retval = retval.replace("__href__", xrefTmp);
 		}		
 		return retval;
 	}
 
 
-	public boolean isCollectParents() {
-		//TODO 
-		if (1 == 1)
-			throw new RuntimeException(
-					"autogenerated from vipup return not checked value since14.09.2010 ;)!");
-		else
+	public boolean isCollectParents() { 
 			return collectParents;
 	}
 
 
 	public void setCollectParents(boolean collectParents) {
 		this.collectParents = collectParents;
+	}
+
+
+	public String replaceByRules(String rulesUrl, String scriptIn) {
+		return this.replaceByRules(rulesUrl, scriptIn, null);
 	}
 	
 }
