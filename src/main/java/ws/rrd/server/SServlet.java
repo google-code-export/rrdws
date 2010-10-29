@@ -4,6 +4,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse; 
+
+import org.vietspider.html.util.HyperLinkUtil;
   
 
 import cc.co.llabor.cache.js.Item;
@@ -23,13 +25,37 @@ public class SServlet extends HttpServlet{ /* SCRIPT-mastering servlet*/
 		// assumes already cached
 		final JSStore instanse = JSStore.getInstanse();//http://ejohn.org/blog/bringing-the-browser-to-the-server/
 		Item scriptTmp = instanse.getByURL(uriTmp); // http://www.snible.org/java2/uni2java.html
-		scriptValue = scriptTmp.getValue() ;//http://realcode.ru/regexptester/ 
-		ReplaceStore replacerTmp = ReplaceStore.getInstanse();//replacerTmp.putOrCreate(cacheKey, value)
-		String newValue = replacerTmp.replaceByRules(uriTmp,scriptValue);
-		
-		out.write(newValue.getBytes()); 
-		out.flush();
-		instanse.putOrCreate(uriTmp, scriptValue, scriptTmp.getRefs().toArray(new String[]{})[0] );
+		try{
+			scriptValue = scriptTmp.getValue() ;//http://realcode.ru/regexptester/ 
+			ReplaceStore replacerTmp = ReplaceStore.getInstanse();//replacerTmp.putOrCreate(cacheKey, value)
+			String refererTmp = null;
+			try{
+				refererTmp  = ""+req.getHeaders("referer").nextElement();
+				// DECODE BASE64 -> plain URL
+				refererTmp   = ""+ refererTmp   ;
+			}catch(Throwable e){}
+			String newValue = replacerTmp.replaceByRules(uriTmp,scriptValue, refererTmp);
+			
+			out.write(newValue.getBytes()); 
+			out.flush();
+			final String statTmp = "/* "+scriptTmp.isReadOnly() +"" +
+			":" + scriptTmp .getAccessCount()+
+			":" + scriptTmp .getChangeCount()+
+			":" + scriptTmp .getChanged() +
+			":" + scriptTmp .getCreated()+
+			":" + scriptTmp .getRefs()+
+			":" + scriptTmp .getRefs().size()+
+			" */";
+	out.write( statTmp.getBytes());
+	out.flush();
+			String refTmp = ""+req.getHeaders("referer").nextElement();
+			instanse.putOrCreate(uriTmp, scriptValue, refTmp   );
+		}catch(NullPointerException e){
+			// ignore NO_REFFERs - org.apache.tomcat.util.http.ValuesEnumerator.nextElement(MimeHeaders.java:443)
+		}catch(Exception e){
+			System.out.println("NOSCRIPT in the store! URL=["+uriTmp+"]");
+			e.printStackTrace();
+		}
 	}
 
 	 

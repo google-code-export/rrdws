@@ -6,7 +6,7 @@
 //test jsp for fetching-tech -  TODO : clean
 UrlFetchTest o =  new UrlFetchTest();
 String urlTmp = request.getParameter("url");
-String refTmp =  "http://localhost:8888/get.jsp"+"?url="+"http://www.fiducia.de/"; 
+String refTmp =  "http://localhost:8888/get.jsp"+"?url="+"http://www.fid"+"ucia.de/"; 
 HttpResponse respTmp =o.fetchGetResp(urlTmp);
 HttpEntity eTmp = ((BasicHttpResponse )respTmp).getEntity();
 Header ctTmp = eTmp.getContentType();

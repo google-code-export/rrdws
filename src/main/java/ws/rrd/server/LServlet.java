@@ -63,9 +63,13 @@ public class LServlet extends HttpServlet {
 	private static final Logger log = Logger.getLogger(LServlet.class
 			.getName());
 
+	public static final String BEAUTIFY = "BEAUTIFY";
+	public static final String REPLACER = "REPLACER";
+	public static final String TRACER = "TRACER";
+
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-		this.doGetPost(req, resp);
+		this.doPost(req, resp);
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -75,40 +79,42 @@ public class LServlet extends HttpServlet {
 
 	  private static HyperLinkUtil handler  = new HyperLinkUtil();
 
-	public static boolean TRACE = false;
+	public static boolean TRACE = true;
  
 
 	  public static void testCreateFullLink(HTMLNode node, String swapServletUrl2, URL home){
-		    handler.createFullNormalLink(node,  swapServletUrl2,  home);
+	    handler.createFullNormalLink(node,  swapServletUrl2,  home);
+	    List<String> list  = handler.scanSiteLink(node);
+	    if (TRACE)
+	    	for(String ele : list)
+	    		System.out.println(ele);
+	  }
+		  
+	  public static void testCreateScriptLink(HTMLNode node, String swapServletUrl2, URL home){
+	    handler.createScriptLink( node,  swapServletUrl2,  home);
+	    if (TRACE){
+	    	//List<String> list  = handler.scanScriptLink(node );
+	    	//for(String ele : list)
+	    	//	System.out.println(ele);
+	    }
+	  }	  
+	  public static void testCreateStyleLink(HTMLNode node, String swapServletUrl2, URL home){
+	    handler.createStyleLink( node,  swapServletUrl2,  home);
+	    if (TRACE){
+	    	//List<String> list  = handler.scanScriptLink(node );
+	    	//for(String ele : list)
+	    	//	System.out.println(ele);
+	    }
+	  }
+		  
+	  public static void testCreateMetaLink(HTMLNode node, String swapServletUrl2, URL home){
+	    handler.createMetaLink(node,  swapServletUrl2,  home);
+	    if (TRACE){
 		    List<String> list  = handler.scanSiteLink(node);
 		    for(String ele : list)
 		    	if (TRACE) System.out.println(ele);
-		  }
-		  
-	  public static void testCreateScriptLink(HTMLNode node, String swapServletUrl2, URL home){
-		    handler.createScriptLink( node,  swapServletUrl2,  home);
-		    if (TRACE){
-		    	//List<String> list  = handler.scanScriptLink(node );
-		    	//for(String ele : list)
-		    	//	System.out.println(ele);
-		    }
-		  }	  public static void testCreateStyleLink(HTMLNode node, String swapServletUrl2, URL home){
-			    handler.createStyleLink( node,  swapServletUrl2,  home);
-			    if (TRACE){
-			    	//List<String> list  = handler.scanScriptLink(node );
-			    	//for(String ele : list)
-			    	//	System.out.println(ele);
-			    }
-			  }
-		  
-	  public static void testCreateMetaLink(HTMLNode node, String swapServletUrl2, URL home){
-		    handler.createMetaLink(node,  swapServletUrl2,  home);
-		    if (TRACE){
-			    List<String> list  = handler.scanSiteLink(node);
-			    for(String ele : list)
-			    	if (TRACE) System.out.println(ele);
-		    }
-		  }	  
+	    }
+	  }	  
  
 	
 	public void doGetPost(HttpServletRequest req, HttpServletResponse resp)
@@ -124,12 +130,24 @@ public class LServlet extends HttpServlet {
 		try {
 			StringBuffer requestURL = req.getRequestURL();
 			String rurlTmp = ""+req.getRequestURL()+""; 
-			SwapServletUrl  = rurlTmp.substring(0, rurlTmp.indexOf(req.getServletPath()+"/") )+req.getServletPath()+"/";
-			String decodedUrl = requestURL.substring( SwapServletUrl.length());
+			String baseURL =  System .getProperty("l.baseURL");
+			String decodedUrl = rurlTmp;
+			if (baseURL == null){
+				SwapServletUrl  = rurlTmp.substring(0, rurlTmp.indexOf(req.getServletPath()+"/") )+req.getServletPath()+"/";
+				decodedUrl = requestURL.substring( SwapServletUrl.length());
+			}else{
+				SwapServletUrl  = baseURL;
+				decodedUrl = requestURL.substring( requestURL.lastIndexOf("/l/")+3 );
+				
+			}
+				
+			 
 			
 			try{
+				if (TRACE){System.out.println("DECODE :"+decodedUrl);}
 				urlStr = HyperLinkUtil.decode(decodedUrl);
 			}catch(Throwable e){
+				if (TRACE){e.printStackTrace();}
 				outTmp = resp.getOutputStream();
 				PrintWriter pw = new PrintWriter(outTmp, true);
 				pw.println( requestURL);
@@ -194,6 +212,10 @@ public class LServlet extends HttpServlet {
 			    }				
 				Map parameterMap = req.getParameterMap();
 				xRespTmp = urlFetcherTmp.fetchPostResp(urlStr, headsToResend,	parameterMap, items);
+				// HOTFIX for Login-redirect
+				if (xRespTmp.getLastHeader("X-MOVED")!=null){
+					urlStr = ""+xRespTmp.getLastHeader("X-MOVED").getValue();
+				}
 			}				
 			else{ // GET
 				if (urlStr.indexOf("?goto=")>0) // f.ex. https://www.ccc.de/Wxby7/Lswdn.ipx?goto=../Mdfsus/Rsdfrts.usbx 
@@ -205,30 +227,34 @@ public class LServlet extends HttpServlet {
 				xRespTmp = urlFetcherTmp.fetchGetResp(urlStr, headsToResend);
 			}
 			final StatusLine statusLine = xRespTmp.getStatusLine();
-			if (statusLine.getStatusCode() == 401){
-				resp.setStatus(401);
-				resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
-				return;
-			}else if (statusLine.getStatusCode() == 301){
-				resp.setStatus(301);
-				resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
-				return;
-			}else if (statusLine.getStatusCode() == 302){
-				resp.setStatus(302);//xRespTmp.getAllHeaders()
-				resp.setHeader(  "Location", requestURL.toString()  );
-				return;
-			}else if (statusLine.getStatusCode() == 303){
-				resp.setStatus(303);
-				resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
-				return;
-			}else if (statusLine.getStatusCode() == 304){
-				resp.setStatus(304);
-				resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
-				return;
-			}else if (statusLine.getStatusCode() == 305){
-				resp.setStatus(305);
-				resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
-				return;
+			try{
+				if (statusLine.getStatusCode() == 401){
+					resp.setStatus(401);
+					resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
+					return;
+				}else if (statusLine.getStatusCode() == 301){
+					resp.setStatus(301);
+					resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
+					return;
+				}else if (statusLine.getStatusCode() == 302){
+					resp.setStatus(302);//xRespTmp.getAllHeaders()
+					resp.setHeader(  "Location", requestURL.toString()  );
+					return;
+				}else if (statusLine.getStatusCode() == 303){
+					resp.setStatus(303);
+					resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
+					return;
+				}else if (statusLine.getStatusCode() == 304){
+					resp.setStatus(304);
+					resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
+					return;
+				}else if (statusLine.getStatusCode() == 305){
+					resp.setStatus(305);
+					resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
+					return;
+				}
+			}catch(Exception e){
+				if (TRACE)e.printStackTrace();
 			}
 			HttpEntity entity = xRespTmp.getEntity();
 			contextTypeStr = ""+entity.getContentType();
@@ -317,6 +343,12 @@ public class LServlet extends HttpServlet {
 	    	URL realURL = new URL(urlStr); // new String( oaos.toString(contextEncStr).getBytes(), contextEncStr)
 	    	 
 	    	HTMLNode rootTmp = documentTmp.getRoot();
+	    	if ("true".equals(  sessionTmp.getAttribute(BEAUTIFY) )){
+	    		rootTmp.setBeautify(true);
+	    	}else{
+	    		rootTmp.setBeautify(false);
+	    	}
+	    	
 			testCreateFullLink(rootTmp, SwapServletUrl, realURL);
 //	    	testCreateImageLink(documentTmp.getRoot(), SwapServletUrl, realURL);
 	    	
@@ -438,6 +470,7 @@ public class LServlet extends HttpServlet {
 			// 	rel-ref from './'	
 			.replace("url(", "url  (    "+SwapServletUrl.replace("/l/",undescoredProtocol(urlStr))+stripFileName(  stripProtocol(urlStr)))
 			; 
+			xCSS = xCSS.replace(" url  (    http", "url(http");
 			String refPar = urlStr;
 			try{
 				xRespTmp.getHeaders("Refferer")[0].getValue();
@@ -451,7 +484,7 @@ public class LServlet extends HttpServlet {
 		outTmp = resp.getOutputStream();
 		outTmp.write(xCSS.getBytes());
 		outTmp.flush();
-		store.putOrCreate(urlStr, xCSS, urlStr);
+		//store.putOrCreate(urlStr, xCSS, urlStr);
 		return outTmp;
 	}
 
@@ -472,7 +505,7 @@ public class LServlet extends HttpServlet {
 		if (! "null".equals( contextTypeStr )){
 			String contypeTmp = contextTypeStr.substring("Content-Type:".length());
 			resp.setContentType(contypeTmp);
-			//setupResponseProperty( resp,  xRespTmp);
+			setupResponseProperty( resp,  xRespTmp);
 		}
 		//log.warning("HTML contextTypeStr||contextEncStr:["+contextTypeStr+"||"+contextEncStr+"]  URL =:["+urlStr+"]");
 		outTmp = resp.getOutputStream();
@@ -667,6 +700,7 @@ public class LServlet extends HttpServlet {
 //			"Content-Type",
 			"Content-Language",
 //			"Content-Encoding",
+			"Content-Disposition",// : attachment; filename=Personalakte.pdf
 			"Date",
 			"Last-Modified" ,
 			"Accept",
@@ -678,7 +712,8 @@ public class LServlet extends HttpServlet {
 			"Cache-Control",
 			"User-Agent",
 			"Cookie2",
-			"Cookie2",
+//			"X-Powered-By", //: ASP.NET
+//			"X-AspNet-Version",//: 2.0.50727
 			"Expires",
 			"TE",
 			"Server",

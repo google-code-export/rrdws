@@ -29,23 +29,31 @@ public class Item implements Serializable{
 	}
 
 	public String getValue() { 
+			accessCount ++;
 			return value;
 	}
 
 	public void setValue(String value) {
+		changed = System.currentTimeMillis();
+		changeCount++;
 		this.value = value;
 	}
 	
-	Set<String> refs = new HashSet<String>();
+	volatile Set<String> refs = new HashSet<String>();
 	boolean readOnly = false;
 
+	volatile long created = System.currentTimeMillis();
+	volatile long changed = System.currentTimeMillis();
+	volatile long changeCount = 0;
+	volatile long accessCount = 0;
+	
+	
 	public void addReffer(String refPar) {
-		refs.add(refPar); 
-		// TODO - search for identical Entries with diff xRef in the Cache
+		changeCount++;
+		refs.add(refPar);  
 	}
 
-	public Set<String> getRefs() {
- 
+	public Set<String> getRefs() { 
 			return refs;
 	}
 
@@ -56,6 +64,42 @@ public class Item implements Serializable{
 	public void setReadOnly(boolean readOnly) {
 		if (!this.readOnly)
 			this.readOnly = readOnly;
+	}
+
+	public long getCreated() {
+ 
+			return created;
+	}
+
+	public void setCreated(long created) {
+		this.created = created;
+	}
+
+	public long getChanged() {
+ 
+			return changed;
+	}
+
+	public void setChanged(long changed) {
+		this.changed = changed;
+	}
+
+	public long getChangeCount() {
+ 
+			return changeCount;
+	}
+
+	public void setChangeCount(long changeCount) {
+		this.changeCount = changeCount;
+	}
+
+	public long getAccessCount() {
+ 
+			return accessCount;
+	}
+
+	public void setAccessCount(long accessCount) {
+		this.accessCount = accessCount;
 	}
 
 }
