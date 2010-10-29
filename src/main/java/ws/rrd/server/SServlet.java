@@ -38,6 +38,16 @@ public class SServlet extends HttpServlet{ /* SCRIPT-mastering servlet*/
 			
 			out.write(newValue.getBytes()); 
 			out.flush();
+			final String statTmp = "/* "+scriptTmp.isReadOnly() +"" +
+			":" + scriptTmp .getAccessCount()+
+			":" + scriptTmp .getChangeCount()+
+			":" + scriptTmp .getChanged() +
+			":" + scriptTmp .getCreated()+
+			":" + scriptTmp .getRefs()+
+			":" + scriptTmp .getRefs().size()+
+			" */";
+	out.write( statTmp.getBytes());
+	out.flush();
 			String refTmp = ""+req.getHeaders("referer").nextElement();
 			instanse.putOrCreate(uriTmp, scriptValue, refTmp   );
 		}catch(NullPointerException e){

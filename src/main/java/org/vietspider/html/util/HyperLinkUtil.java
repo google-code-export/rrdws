@@ -558,32 +558,38 @@ private static final boolean TRACE = false;
 			return retval;
 		}
 		
-		private String  clearBody(HTMLNode node, final String scriptValue, String xRef) {
-			node.clearChildren();// setChild(0, new
-			String cacheKey= LServlet.calcBase()+"S/"+"l"+ scriptValue.length() +"@"+ xRef.hashCode() + ".js";			
-			String stringTmp = "SCRIPT SRC=\""+cacheKey +"\"";
-
-			JSStore ssTmp = JSStore.getInstanse();
-			Item scriptTmp =  ssTmp .putOrCreate(cacheKey, scriptValue  ,xRef);
-			if (LServlet.TRACE) System.out.println(scriptTmp);
-			
-			// HTMLNode(){})getChildren().clear()setValue("/*
-			// 8-X */".toCharArray());
-			final String scriptAliasTmp = (stringTmp);
-			// replace Script-Content by link to cached value
-			//ScriptItem siTmp = ssTmp.getByValue();
-			node.setValue(scriptAliasTmp.toCharArray());
-			//System.out.println("" + node.getTextValue());
-			return cacheKey;
+		/**
+		 * calculate and gives back SServlet-URL
+		 * clean childrens for script-node, if any
+		 * 
+ 		 * @param node
+		 * @param scriptValue
+		 * @param xRef
+		 * @return
+		 */
+		private String  replaceByRef(HTMLNode node, final String scriptValue, String xRef) {
+			node.clearChildren(); 
+			final String aliasTmp = ".zZ"+ scriptValue.length() +"_"+ xRef.length();//scriptStore
+			final String SSERVLET = LServlet.calcBase() + "S/";
+			String retval= SSERVLET + aliasTmp + ".js";			
+			String stringTmp = "SCRIPT SRC=\""+retval +"\""; 
+			final String scriptAliasTmp = (stringTmp); 
+			node.setValue(scriptAliasTmp.toCharArray()); 
+			return retval;
 			
 		}
 		@Override
-		public void modi(HTMLNode node, String rootServletPar, String refPar, String refPar2) { 
-			String newValue = null; 	
-			String value =  node.getTextValue() ;
-			if (verify(value)){
-				String cacheKey = clearBody(node, value, refPar);  
-				if(LServlet.TRACE)System.out.println("NEW VAL for SCRIPT   : ["+value+"]=>"+cacheKey);
+		public void modi(HTMLNode node, String rootServletPar, String refPar, String refPar2) {
+	        Attributes attrs = node.getAttributes();  
+			String cacheKey = null; 	
+			String scriptValTmp =  node.getTextValue() ;
+			if (verify(scriptValTmp)){ 
+				cacheKey = replaceByRef(node, scriptValTmp, refPar); 
+				JSStore ssTmp = JSStore.getInstanse();
+				Item scriptTmp =  ssTmp .putOrCreate(cacheKey, scriptValTmp ,refPar);
+				if (1==2) System.out.println(""+scriptTmp + attrs);  
+				//node.setValue(  newLink.toCharArray() ); 
+				if(LServlet.TRACE)System.out.println("NEW VAL for SCRIPT   : ["+scriptValTmp+"]=>"+cacheKey);
 			}else{
 				if(LServlet.TRACE)System.out.println(" no changes for "+node.getName());
 			}
@@ -591,6 +597,7 @@ private static final boolean TRACE = false;
 	        
 		}		
 	}
+ 
   
   
   public static class StyleVerifier extends TextVerifier implements ValueVerifier {

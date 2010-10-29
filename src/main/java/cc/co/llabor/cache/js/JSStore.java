@@ -57,35 +57,35 @@ public class JSStore {
 				}
 			}
 			
-			synchronized (SCRIPTSTORE) {
-				Object o = scriptStore.peek(cacheKey); 
-				if (jsItem != o) {// check similarity
-					try{
-						o = scriptStore.remove(cacheKey);// if (o.hashCode() == jsItem.hashCode());
-					}catch(NullPointerException e){
-						e.printStackTrace();
+			 { /*synchronized (SCRIPTSTORE)*/
+					Object o = scriptStore.peek(cacheKey); 
+					if (jsItem != o) {// check similarity
+						try{
+							//o = scriptStore.remove(cacheKey);// if (o.hashCode() == jsItem.hashCode());
+						}catch(NullPointerException e){
+							e.printStackTrace();
+						}
+						if (1==2)System.out.println(o);
+						
+						boolean changed = true;
+						try{
+							final String valTmp = jsItem.getValue();
+							final String cachedVTmp = ((Item)o).getValue();
+							changed = !cachedVTmp.equals(valTmp);
+						}catch(NullPointerException e){
+							e.printStackTrace();
+						}
+						if (changed){
+							scriptStore.remove( cacheKey );
+							scriptStore.put(cacheKey, jsItem );
+						}
 					}
-					if (1==2)System.out.println(o);
-					
-					boolean changed = true;
-					try{
-						changed = !((Item)o).getValue().equals(jsItem.getValue());
-					}catch(NullPointerException e){
-						e.printStackTrace();
-					}
-					if (changed){
-						scriptStore.put(cacheKey, jsItem );
-					}
-				}
-			} 
+				} 
 		}catch(Throwable e){
-			// ignore
-		}finally{
-			
+			e.printStackTrace();
 		}
 		return jsItem;
 	}
-
 
 	/**
 	 * @author vipup
