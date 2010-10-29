@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream; 
 import java.io.PrintWriter; 
+import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.HttpURLConnection; 
@@ -218,10 +219,7 @@ public class LServlet extends HttpServlet {
 				}
 			}				
 			else{ // GET
-				if (urlStr.indexOf("?goto=")>0) // f.ex. https://www.ccc.de/Wxby7/Lswdn.ipx?goto=../Mdfsus/Rsdfrts.usbx 
-				{
-					urlStr = HyperLinkUtil.prepareLinkValue( new URL(urlStr.substring(0,urlStr.indexOf("?goto="))), urlStr.substring(urlStr.indexOf("?goto=")+6 )) ;
-				}
+				urlStr = checkGOTO(urlStr);
 				
 				
 				xRespTmp = urlFetcherTmp.fetchGetResp(urlStr, headsToResend);
@@ -431,6 +429,27 @@ public class LServlet extends HttpServlet {
 				//outTmp.flush();
 				//ExceptionUtils.swapFailedException(resp, e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}  
+	}
+
+	/**
+	 * @author vipup
+	 * @param urlPar
+	 * @return
+	 * @throws MalformedURLException
+	 */
+	private static final String checkGOTO(String urlPar)
+			throws MalformedURLException {
+		// f.ex.
+		// https://www.ccc.de/Wxby7/Lswdn.ipx?goto=../Mdfsus/Rsdfrts.usbx
+		String GOTO = "?goto=";
+		int gotoPos = urlPar.indexOf(GOTO);
+		if (gotoPos > 0) {
+			String prefixTmp = urlPar.substring(0, gotoPos);
+			URL urlTmp = new URL(prefixTmp);
+			String suffTmp = urlPar.substring(gotoPos + GOTO.length());
+			urlPar = HyperLinkUtil.prepareLinkValue(urlTmp, suffTmp);
+		}
+		return urlPar;
 	}
 
 	static ServletOutputStream performCSS(HttpServletResponse resp,

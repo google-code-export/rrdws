@@ -68,6 +68,7 @@ public class JSStore {
 						if (1==2)System.out.println(o);
 						
 						boolean changed = true;
+						if (o!=null)
 						try{
 							final String valTmp = jsItem.getValue();
 							final String cachedVTmp = ((Item)o).getValue();
