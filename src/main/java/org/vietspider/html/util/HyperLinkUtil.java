@@ -1,5 +1,6 @@
 package org.vietspider.html.util;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -472,13 +473,44 @@ private static final boolean TRACE = false;
 				charArray = decodedUrl.substring(0, indexOfSLASH +1 ).toCharArray();
 				final byte[] decodedTmp = Base64Coder.decode(charArray);
 				urlStr = ""+ new String(decodedTmp);//+decodedUrl.substring(indexOfSLASH+1);
-			}catch (Throwable e1 ){ 
+			}catch (Throwable e1 ){
 				e1.printStackTrace();
+				try {
+					String lastChanse =  checkGOTO(urlStr);
+					urlStr = lastChanse;
+				} catch (MalformedURLException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+				
 			}
 		}
 		return urlStr;
 	}
   
+	/**
+	 * @author vipup
+	 * @param urlPar
+	 * @return
+	 * @throws MalformedURLException
+	 * 
+	 * @see LServlet.checkGOTO()
+	 */
+	private static final String checkGOTO(String urlPar)
+			throws MalformedURLException {
+		// f.ex.
+		// https://www.ccc.de/Wxby7/Lswdn.ipx?goto=../Mdfsus/Rsdfrts.usbx
+		String GOTO = "?goto=";
+		int gotoPos = urlPar.indexOf(GOTO);
+		if (gotoPos > 0) {
+			String prefixTmp = urlPar.substring(0, gotoPos);
+			URL urlTmp = new URL(decode( prefixTmp ));
+			String suffTmp = urlPar.substring(gotoPos + GOTO.length());
+			urlPar = HyperLinkUtil.prepareLinkValue(urlTmp, suffTmp);
+		}
+		return urlPar;
+	}	
+	
   public static class SiteLinkVerifier extends TextVerifier implements ValueVerifier{
       String start[]={"mailto", "javascript", "window", "history", "#"};
       String end[]={"css", "js", "jpg", "png", "gif", "jpeg", "bmp", "dat", "exe", "txt", 
