@@ -1,6 +1,8 @@
 package cc.co.llabor.cache.js; 
 import java.io.IOException; 
 import javax.script.ScriptException;
+
+import ws.rrd.server.LServlet;
 import ws.rrd.server.SServlet;
 import cc.co.llabor.script.Beauty;
 
@@ -56,32 +58,28 @@ public class JSStore {
 					jsItem.setReadOnly(true);
 				}
 			}
-			
-			 { /*synchronized (SCRIPTSTORE)*/
-					Object o = scriptStore.peek(cacheKey); 
-					if (jsItem != o) {// check similarity
-						try{
-							//o = scriptStore.remove(cacheKey);// if (o.hashCode() == jsItem.hashCode());
-						}catch(NullPointerException e){
-							e.printStackTrace();
-						}
-						if (1==2)System.out.println(o);
-						
-						boolean changed = true;
-						if (o!=null)
-						try{
-							final String valTmp = jsItem.getValue();
-							final String cachedVTmp = ((Item)o).getValue();
-							changed = !cachedVTmp.equals(valTmp);
-						}catch(NullPointerException e){
-							e.printStackTrace();
-						}
-						if (changed){
-							scriptStore.remove( cacheKey );
-							scriptStore.put(cacheKey, jsItem );
+			// TODO Refactor for gae-cache
+			synchronized (SCRIPTSTORE) { 
+				{ 
+						Object o = scriptStore.peek(cacheKey); 
+						boolean changed = false;
+						if (jsItem != o) {// check similarity 
+							
+							if (o!=null)
+							try{
+								final String valTmp = jsItem.getValue();
+								final String cachedVTmp = ((Item)o).getValue();
+								changed = !cachedVTmp.equals(valTmp);
+							}catch(NullPointerException e){
+								  e.printStackTrace();
+							}
+							if (changed){
+								scriptStore.remove( cacheKey );
+								scriptStore.put(cacheKey, jsItem );
+							}
 						}
 					}
-				} 
+			}/*synchronized (SCRIPTSTORE)*/
 		}catch(Throwable e){
 			e.printStackTrace();
 		}

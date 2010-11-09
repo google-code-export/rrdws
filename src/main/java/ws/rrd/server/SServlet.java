@@ -17,6 +17,13 @@ public class SServlet extends HttpServlet{ /* SCRIPT-mastering servlet*/
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException{
 		ServletOutputStream out = resp.getOutputStream();
 		String uriTmp =   req.getRequestURL().toString() ;
+		String baseURL =  System .getProperty("S.baseURL");
+		String aliasURL =  System .getProperty("S.aliasURL");
+		try{
+			uriTmp = uriTmp.replace(aliasURL, baseURL);
+		}catch(Throwable e){
+			e.printStackTrace();
+		}
 		System.out.println("sendback "+uriTmp+" ...");
 		
 		resp.setContentType("text/javascript");
@@ -33,7 +40,9 @@ public class SServlet extends HttpServlet{ /* SCRIPT-mastering servlet*/
 				refererTmp  = ""+req.getHeaders("referer").nextElement();
 				// DECODE BASE64 -> plain URL
 				refererTmp   = ""+ refererTmp   ;
-			}catch(Throwable e){}
+			}catch(Throwable e){
+				e.printStackTrace();
+			}
 			String newValue = replacerTmp.replaceByRules(uriTmp,scriptValue, refererTmp);
 			
 			out.write(newValue.getBytes()); 
@@ -52,6 +61,7 @@ public class SServlet extends HttpServlet{ /* SCRIPT-mastering servlet*/
 			instanse.putOrCreate(uriTmp, scriptValue, refTmp   );
 		}catch(NullPointerException e){
 			// ignore NO_REFFERs - org.apache.tomcat.util.http.ValuesEnumerator.nextElement(MimeHeaders.java:443)
+			e.printStackTrace();
 		}catch(Exception e){
 			System.out.println("NOSCRIPT in the store! URL=["+uriTmp+"]");
 			e.printStackTrace();
