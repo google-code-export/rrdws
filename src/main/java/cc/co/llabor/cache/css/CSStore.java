@@ -85,12 +85,9 @@ public class CSStore {
 					}
 				}catch(Throwable e){
 					out+="//* ln:"+lnCnt+":"+line + e.getMessage() +"*/";
-				}
-				
-				out+="\n";
-				
+				}				
+				out+="\n";				
 			}
-
 			cssItem = new Item(out); 
 			cssItem.addReffer(refPar); 
 			
@@ -106,16 +103,12 @@ public class CSStore {
 			try{
 				reformat(cacheKey, cssItem);
 				cssItem.setReadOnly(true);
-			}catch(Throwable e ){}
-			
-			
-		}
-		
+			}catch(Throwable e ){} 
+		} 
 		synchronized (CSSSTORE) {
 			Object o = store.peek(cacheKey); 
 			if (cssItem != o) {// check similarity
-				o = store.remove(cacheKey);
-				if (1==2)System.out.println(o);
+				o = store.remove(cacheKey); 
 				store.put(cacheKey, cssItem );
 			}
 		} 

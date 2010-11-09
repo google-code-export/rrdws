@@ -599,29 +599,28 @@ private static final boolean TRACE = false;
 		 * @param xRef
 		 * @return
 		 */
-		private String  replaceByRef(HTMLNode node, final String scriptValue, String xRef) {
+		private Item replaceByRef(HTMLNode node, final String scriptValue, String xRef) {
+			JSStore ssTmp = JSStore.getInstanse(); 
 			node.clearChildren(); 
-			final String aliasTmp = ".zZ"+ scriptValue.length() +"_"+ xRef.length();//scriptStore
+			final String aliasTmp = ".zZ"+ scriptValue.length() +"x0"+ xRef.length();//scriptStore
 			final String SSERVLET = LServlet.calcBase() + "S/";
-			String retval= SSERVLET + aliasTmp + ".js";			
-			String stringTmp = "SCRIPT SRC=\""+retval +"\""; 
-			final String scriptAliasTmp = (stringTmp); 
-			node.setValue(scriptAliasTmp.toCharArray()); 
-			return retval;
+			final String cacheKey = SSERVLET + aliasTmp + ".js";	  		
+			final String stringTmp = "SCRIPT SRC=\""+cacheKey +"\"";
+			final Item scriptTmp =  ssTmp .putOrCreate(cacheKey, scriptValue ,xRef);
+			node.setValue(stringTmp.toCharArray()); 
+			return scriptTmp;
 			
 		}
 		@Override
 		public void modi(HTMLNode node, String rootServletPar, String refPar, String refPar2) {
 	        Attributes attrs = node.getAttributes();  
-			String cacheKey = null; 	
+			
 			String scriptValTmp =  node.getTextValue() ;
-			if (verify(scriptValTmp)){ 
-				cacheKey = replaceByRef(node, scriptValTmp, refPar); 
-				JSStore ssTmp = JSStore.getInstanse();
-				Item scriptTmp =  ssTmp .putOrCreate(cacheKey, scriptValTmp ,refPar);
-				if (1==2) System.out.println(""+scriptTmp + attrs);  
+			if (verify(scriptValTmp)){  	
+				Item scriptTmp = replaceByRef(node, scriptValTmp, refPar); 
+				if (LServlet.TRACE ) System.out.println(""+scriptTmp + attrs);  
 				//node.setValue(  newLink.toCharArray() ); 
-				if(LServlet.TRACE)System.out.println("NEW VAL for SCRIPT   : ["+scriptValTmp+"]=>"+cacheKey);
+				if(LServlet.TRACE)System.out.println("NEW VAL for SCRIPT   : ["+scriptValTmp+"]=>"+scriptTmp.getValue());
 			}else{
 				if(LServlet.TRACE)System.out.println(" no changes for "+node.getName());
 			}
