@@ -35,6 +35,9 @@
 				<object data="JavaLogo.svg" width="300" height="100" type="image/svg+xml" codebase="http://www.adobe.com/svg/viewer/install/" />
 			</a>
 			<IMG src="gif.jsp" height="64" width="64"   />
+			<IMG src="speed.gif" height="64" width="164"   />
+			
+			
 			
 		</td>
 	<tr width="100%" height="64">
