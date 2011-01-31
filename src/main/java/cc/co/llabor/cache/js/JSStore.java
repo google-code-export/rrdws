@@ -1,9 +1,5 @@
 package cc.co.llabor.cache.js; 
-import java.io.IOException; 
-import javax.script.ScriptException;
-
-import ws.rrd.server.LServlet;
-import ws.rrd.server.SServlet;
+import java.io.IOException;  
 import cc.co.llabor.script.Beauty;
 
 import com.no10x.cache.Manager;  

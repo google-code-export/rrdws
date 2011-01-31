@@ -34,12 +34,12 @@
 		<servlet-name>C</servlet-name>
 		<servlet-class>ws.rrd.server.CSServlet</servlet-class>
 	</servlet>	
-
+<!-- 
 	<servlet>
 		<servlet-name>greetServlet</servlet-name>
 		<servlet-class>ws.rrd.server.GreetingServiceImpl</servlet-class>
 	</servlet>
-
+ -->
 	<servlet>
 	  <servlet-name>mailhandler</servlet-name>
 	  <servlet-class>cc.co.llabor.mail.MailHandlerServlet</servlet-class>
@@ -85,10 +85,15 @@
 	  </auth-constraint
 	</security-constraint>
 -->
+
+<!-- 
 	<servlet-mapping>
 		<servlet-name>greetServlet</servlet-name>
 		<url-pattern>/rrd/greet</url-pattern>
+		
 	</servlet-mapping>
+ -->
+ 	
 	<servlet-mapping>
 		<servlet-name>info</servlet-name>
 		<url-pattern>/info.htm</url-pattern>
