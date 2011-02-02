@@ -383,14 +383,9 @@ public class LServlet extends HttpServlet {
 	    	}
 	    	//new String(documentTmp.getTextValue().getBytes("ISO-8859-1"), contextEncStr);// "windows-1251" textValue.toUpperCase().substring( 12430)
 
-	    	if ("KOI8-R".equals(contextEncStr)) {
-	    		textValue = documentTmp.getTextValue(); 
-	    	}else{
-	    		HTMLNode doctype = documentTmp.getDoctype();
-	    		String sDoctype = (doctype==null?"":doctype.getTextValue());
-	    		textValue = sDoctype  + documentTmp.getRoot().getTextValue();
-	    		 
-	    	} 
+	    	textValue = renderDocument(documentTmp, contextEncStr); 
+	    	
+	    	
 	    	if (!"null".equals(""+contextEncStr)){
 	    		outTmp.write(textValue.getBytes(contextEncStr)); 
 	    	}else{
@@ -429,6 +424,25 @@ public class LServlet extends HttpServlet {
 				//outTmp.flush();
 				//ExceptionUtils.swapFailedException(resp, e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}  
+	}
+
+	/**
+	 * @author vipup
+	 * @param documentTmp
+	 * @param contextEncStr
+	 * @return
+	 */
+	public String renderDocument(HTMLDocument documentTmp, String contextEncStr) {
+		String textValue;
+		if ("KOI8-R".equals(contextEncStr)) {
+			textValue = documentTmp.getTextValue(); 
+		}else{
+			HTMLNode doctype = documentTmp.getDoctype();
+			String sDoctype = (doctype==null?"":doctype.getTextValue());
+			textValue = sDoctype  + documentTmp.getRoot().getTextValue();
+			 
+		}
+		return textValue;
 	}
 
 	/**
