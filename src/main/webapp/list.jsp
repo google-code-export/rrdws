@@ -15,14 +15,20 @@
  
 Cache cache = Manager.getCache();
 Registry reg = (Registry) cache.get("REGISTRY");
-if (null != reg)
+if (null != reg){
+int i=0;
 for (String key:reg.getPath2db().keySet() ){
-%><tr><td><%=key %> </td><td>==</td><td> 
+i++;
+%>
+
+<tr>
+<td><%=i %> </td><td><%=key %> </td><td>==</td><td> 
 <%=reg.getPath2db().get(key) %></td>
 <td><img src="gen.jsp?db=<%=reg.getPath2db().get(key) %>"/>
 </td>
 </tr>
 <%
+}
 }
 %>
    
