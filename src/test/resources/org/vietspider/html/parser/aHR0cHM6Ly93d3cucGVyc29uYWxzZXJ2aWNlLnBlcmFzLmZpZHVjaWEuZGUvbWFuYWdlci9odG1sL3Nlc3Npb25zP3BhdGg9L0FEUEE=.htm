@@ -1,0 +1,294 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="content-type" content="text/html; charset=UTF-8"><meta http-equiv="pragma" content="no-cache"><meta http-equiv="cache-control" content="no-cache,must-revalidate"><meta http-equiv="expires" content="0"><meta http-equiv="content-language" content="en"><meta name="author" content="Cedrik LIME"><meta name="copyright" content="copyright 2005-2007 the Apache Software Foundation"><meta name="robots" content="noindex,nofollow,noarchive"><title>Sessions Administration for /ADPA</title><!--
+ Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+--><!-- HTTP 1.0 --><!-- HTTP 1.1 --><!-- 0 is an invalid value and should be treated as 'now' --></head><body><h1>Sessions Administration for /ADPA</h1><p>Tips:</p><ul><li>Click on a column to sort.</li><li>To view a session details and/or remove a session attributes, click on its id.</li></ul><div class="error"></div><div class="message"></div><form action="http://pegasus01-peras.noc.fiducia.de:8080/rrdWU27/l/aHR0cDovL3BhaXN5LWFwcC1rYTo4MDgwL21hbmFnZXIvaHRtbC9zZXNzaW9ucz9wYXRoPS9BRFBB" method="post" id="sessionsForm"><fieldset><legend>Active HttpSessions informations</legend><input name="action" id="sessionsFormAction" value="injectSessions" type="hidden"><input name="sort" id="sessionsFormSort" value="null" type="hidden"><input name="order" id="sessionsFormSortOrder" value="ASC" type="hidden"><input name="refresh" id="refreshButton" value="Refresh Sessions list" onclick="document.getElementById('sessionsFormAction').value='refreshSessions'; return true;" type="submit">11 active Sessions<br><table border="1" cellpadding="2" cellspacing="2" width="100%"><thead><tr><th><a onclick="document.getElementById('sessionsFormSort').value='id'; document.getElementById('refreshButton').click(); return true;">Session Id</a></th><th><a onclick="document.getElementById('sessionsFormSort').value='locale'; document.getElementById('refreshButton').click(); return true;">Guessed Locale</a></th><th><a onclick="document.getElementById('sessionsFormSort').value='user'; document.getElementById('refreshButton').click(); return true;">Guessed User name</a></th><th><a onclick="document.getElementById('sessionsFormSort').value='CreationTime'; document.getElementById('refreshButton').click(); return true;">Creation Time</a></th><th><a onclick="document.getElementById('sessionsFormSort').value='LastAccessedTime'; document.getElementById('refreshButton').click(); return true;">Last Accessed Time</a></th><th><a onclick="document.getElementById('sessionsFormSort').value='UsedTime'; document.getElementById('refreshButton').click(); return true;">Used Time</a></th><th><a onclick="document.getElementById('sessionsFormSort').value='InactiveTime'; document.getElementById('refreshButton').click(); return true;">Inactive Time</a></th><th><a onclick="document.getElementById('sessionsFormSort').value='TTL'; document.getElementById('refreshButton').click(); return true;"><span title="Time To Live">TTL</span></a></th></tr></thead><tfoot><tr><th><a onclick="document.getElementById('sessionsFormSort').value='id'; document.getElementById('refreshButton').click(); return true;">Session Id</a></th><th><a onclick="document.getElementById('sessionsFormSort').value='locale'; document.getElementById('refreshButton').click(); return true;">Guessed Locale</a></th><th><a onclick="document.getElementById('sessionsFormSort').value='user'; document.getElementById('refreshButton').click(); return true;">Guessed User name</a></th><th><a onclick="document.getElementById('sessionsFormSort').value='CreationTime'; document.getElementById('refreshButton').click(); return true;">Creation Time</a></th><th><a onclick="document.getElementById('sessionsFormSort').value='LastAccessedTime'; document.getElementById('refreshButton').click(); return true;">Last Accessed Time</a></th><th><a onclick="document.getElementById('sessionsFormSort').value='UsedTime'; document.getElementById('refreshButton').click(); return true;">Used Time</a></th><th><a onclick="document.getElementById('sessionsFormSort').value='InactiveTime'; document.getElementById('refreshButton').click(); return true;">Inactive Time</a></th><th><a onclick="document.getElementById('sessionsFormSort').value='TTL'; document.getElementById('refreshButton').click(); return true;"><span title="Time To Live">TTL</span></a></th></tr></tfoot><tbody><tr><td><input name="sessionIds" value="B7B521BFDE71C9C04EC7D9D37716499D" type="checkbox"><a href="http://pegasus01-peras.noc.fiducia.de:8080/rrdWU27/l/aHR0cDovL3BhaXN5LWFwcC1rYTo4MDgwL21hbmFnZXIvaHRtbC9zZXNzaW9ucz9wYXRoPS9BRFBBJmFtcDthY3Rpb249c2Vzc2lvbkRldGFpbCZhbXA7c2Vzc2lvbklkPUI3QjUyMUJGREU3MUM5QzA0RUM3RDlEMzc3MTY0OTlE" target="_new">B7B521BFDE71C9C04EC7D9D37716499D</a></td><td style="text-align: center;" text-align=" center;"></td><td style="text-align: center;" text-align=" center;"></td><td style="text-align: center;" text-align=" center;">2011-02-02 16:44:16</td><td style="text-align: center;" text-align=" center;">2011-02-02 16:44:16</td><td style="text-align: center;" text-align=" center;">00:00:00</td><td style="text-align: center;" text-align=" center;">00:00:24</td><td style="text-align: center;" text-align=" center;">00:14:35</td></tr><tr><td><input name="sessionIds" value="1B5FBCDCF50CFEC57DAD05C58D8A29B4" type="checkbox"><a href="http://pegasus01-peras.noc.fiducia.de:8080/rrdWU27/l/aHR0cDovL3BhaXN5LWFwcC1rYTo4MDgwL21hbmFnZXIvaHRtbC9zZXNzaW9ucz9wYXRoPS9BRFBBJmFtcDthY3Rpb249c2Vzc2lvbkRldGFpbCZhbXA7c2Vzc2lvbklkPTFCNUZCQ0RDRjUwQ0ZFQzU3REFEMDVDNThEOEEyOUI0" target="_new">1B5FBCDCF50CFEC57DAD05C58D8A29B4</a></td><td style="text-align: center;" text-align=" center;"></td><td style="text-align: center;" text-align=" center;"></td><td style="text-align: center;" text-align=" center;">2011-02-02 16:41:55</td><td style="text-align: center;" text-align=" center;">2011-02-02 16:41:55</td><td style="text-align: center;" text-align=" center;">00:00:00</td><td style="text-align: center;" text-align=" center;">00:02:44</td><td style="text-align: center;" text-align=" center;">00:12:15</td></tr><tr><td><input name="sessionIds" value="F4AA00C56587F658B028C22B46969A9A" type="checkbox"><a href="http://pegasus01-peras.noc.fiducia.de:8080/rrdWU27/l/aHR0cDovL3BhaXN5LWFwcC1rYTo4MDgwL21hbmFnZXIvaHRtbC9zZXNzaW9ucz9wYXRoPS9BRFBBJmFtcDthY3Rpb249c2Vzc2lvbkRldGFpbCZhbXA7c2Vzc2lvbklkPUY0QUEwMEM1NjU4N0Y2NThCMDI4QzIyQjQ2OTY5QTlB" target="_new">F4AA00C56587F658B028C22B46969A9A</a></td><td style="text-align: center;" text-align=" center;">de</td><td style="text-align: center;" text-align=" center;">User
+[id = 002; name = PAISY; uid = xco5030; alias = null; client =
+Client[name = 0010 clientKey = 0010 featureKey =
+FeatureKey[allowFulltextSearch = true allowFulltextSystemSearch = false
+allowDocumentNotifications = true allowMasterAdministration = false
+allowMasterArchiving = true allowRemoteApi = true allowHistoryLog =
+false allowLookupValue01 = false allowNote2 = false
+allowMessageArchiving = false allowGDPdU = false maxDocs = 0
+maxScanSessions = 0 maxSessions = 5000 useNamedUserLicenseModel =
+false] minDocumentNotificationAge = 0]; lastLoginDate = Wed Feb 02
+16:36:26 MET 2011; credentials = PasswordCredentials [password = ***;
+invalidLoginCount = 0; modificationDate = 2008-04-05 10:09:09.0;
+lockoutDate = null; userCannotChange = true; neverExpires = true;
+sendByEmail = false; sendBySms = false; ]; functionRights =
+FunctionRights [allowAdd = true; allowDelete = false; allowScan = true;
+allowSearch = true; allowSend = true; allowPrint = true; allowRearchive
+= true; allowAdministration = false; allowLogin = true; allowHistoryLog
+= false; allowLookupValue01 = false; allowNote2 = false; maxSessions =
+0; fieldEditRights = {SUBJECT=true, COMPANY=false, SUBARCHIVE=false,
+SURNAME=false, EMPNO=false, DOCDATE=true, ARBITRARY01=false,
+FIRSTNAME=false, DOCTYPE=true, TRAVELNO=false, LOOKUPVALUE01=false,
+ARBITRARY=true, TRAVELDATE=false, NOTE2=false, ARCHIVENO=false}; ];
+attributePermissionSets = [AttributeSet[attributes =
+[subarchive=&gt;Firmenakte, company=&gt;0012000, docType=&gt;=SV=/,
+docType=&gt;SVBE/SV-Beitraege, docType=&gt;SVDB/,
+docType=&gt;SVFM/Beitragsliste, docType=&gt;SVVE/BeitragslisteVE,
+docType=&gt;SVKA/Kassen/firmen, docType=&gt;SVNA/Beitrgnach.STVK,
+docType=&gt;SVUM/Umlagenachweis, docType=&gt;DVPR/DUEVO-Protokoll,
+docType=&gt;KONT/Kont.Beitragsna, docType=&gt;=LS=/,
+docType=&gt;DELJ/LSt.Besch.Proto, docType=&gt;ELAN/Lohnsteueranmel,
+docType=&gt;LSAN/LohnsteuanSumm, docType=&gt;PREL/Protok.Elsterlo,
+docType=&gt;=BU=/, docType=&gt;BARL/BarzahlungListe,
+docType=&gt;KOST/Kostenstellen, docType=&gt;SUMM/Summenprotokoll,
+docType=&gt;FUEB/Firmenuebersich, docType=&gt;LJOU/Lohnjournal,
+docType=&gt;LART/Lohnarten, docType=&gt;NBS/, docType=&gt;=BL=/,
+docType=&gt;BINH/Bankliste, docType=&gt;NUEB/Nichtueberwiese,
+docType=&gt;MDTA/DTA Begleit., docType=&gt;UWTR/Ueberweis.Traeg,
+docType=&gt;=LK=/, docType=&gt;LKTP/Lohnkonto,
+docType=&gt;LKTF/Lohnkonto, docType=&gt;=MA=/,
+docType=&gt;VERD/Verdienstabr., docType=&gt;ELST/Elster,
+docType=&gt;DUEV/DUEV, docType=&gt;=LP=/, docType=&gt;FDPR/Fehlerprot.
+FX, docType=&gt;LAUE/Abteilungsueber, docType=&gt;ZEPR/Zeitermittlung,
+docType=&gt;ZEVD/, docType=&gt;STAM/Stammblaetter,
+docType=&gt;LPZE/Laufprot.Zeiter, docType=&gt;LPVD/Laufprot.Verdie,
+docType=&gt;LPAW/Laufprot.Auswer, docType=&gt;LPDE/Laufprot.DEUV,
+docType=&gt;LPLZ/Laufprot.Zeitko, docType=&gt;LPLD/Laufp.LKT Druck,
+docType=&gt;ELEN/Elena L-FProtok, docType=&gt;=SO=/,
+docType=&gt;SONS/sonstige Belege, docType=&gt;SOFA/Sonstige FA Lst,
+docType=&gt;SOVE/SonsVertraulich, docType=&gt;VERT/Vertraege,
+docType=&gt;ZERT/Zertifikate, docType=&gt;LA00/Listart 00,
+docType=&gt;EPBW/Prot.Bewegung, docType=&gt;EPFA/Prot.Firmenstam,
+docType=&gt;EPPS/Prot.Persstamm, docType=&gt;ZVBE/VBL-/ZVK-Listen]]];
+documentNotifications = null; personalData = null;
+messageArchiveSettings = null; source = null; ]</td><td style="text-align: center;" text-align=" center;">2011-02-02 16:36:26</td><td style="text-align: center;" text-align=" center;">2011-02-02 16:39:58</td><td style="text-align: center;" text-align=" center;">00:03:31</td><td style="text-align: center;" text-align=" center;">00:04:42</td><td style="text-align: center;" text-align=" center;">00:10:17</td></tr><tr><td><input name="sessionIds" value="E91C0988D8227658A1E8925DD712895C" type="checkbox"><a href="http://pegasus01-peras.noc.fiducia.de:8080/rrdWU27/l/aHR0cDovL3BhaXN5LWFwcC1rYTo4MDgwL21hbmFnZXIvaHRtbC9zZXNzaW9ucz9wYXRoPS9BRFBBJmFtcDthY3Rpb249c2Vzc2lvbkRldGFpbCZhbXA7c2Vzc2lvbklkPUU5MUMwOTg4RDgyMjc2NThBMUU4OTI1REQ3MTI4OTVD" target="_new">E91C0988D8227658A1E8925DD712895C</a></td><td style="text-align: center;" text-align=" center;"></td><td style="text-align: center;" text-align=" center;"></td><td style="text-align: center;" text-align=" center;">2011-02-02 16:37:12</td><td style="text-align: center;" text-align=" center;">2011-02-02 16:37:12</td><td style="text-align: center;" text-align=" center;">00:00:00</td><td style="text-align: center;" text-align=" center;">00:07:28</td><td style="text-align: center;" text-align=" center;">00:07:31</td></tr><tr><td><input name="sessionIds" value="B24BBE5DCEF1ED43E4BE1AA01747EEC1" type="checkbox"><a href="http://pegasus01-peras.noc.fiducia.de:8080/rrdWU27/l/aHR0cDovL3BhaXN5LWFwcC1rYTo4MDgwL21hbmFnZXIvaHRtbC9zZXNzaW9ucz9wYXRoPS9BRFBBJmFtcDthY3Rpb249c2Vzc2lvbkRldGFpbCZhbXA7c2Vzc2lvbklkPUIyNEJCRTVEQ0VGMUVENDNFNEJFMUFBMDE3NDdFRUMx" target="_new">B24BBE5DCEF1ED43E4BE1AA01747EEC1</a></td><td style="text-align: center;" text-align=" center;">de_DE</td><td style="text-align: center;" text-align=" center;">User
+[id = 002; name = PAISY; uid = 018463; alias = null; client =
+Client[name = 0010 clientKey = 0010 featureKey =
+FeatureKey[allowFulltextSearch = true allowFulltextSystemSearch = false
+allowDocumentNotifications = true allowMasterAdministration = false
+allowMasterArchiving = true allowRemoteApi = true allowHistoryLog =
+false allowLookupValue01 = false allowNote2 = false
+allowMessageArchiving = false allowGDPdU = false maxDocs = 0
+maxScanSessions = 0 maxSessions = 5000 useNamedUserLicenseModel =
+false] minDocumentNotificationAge = 0]; lastLoginDate = Wed Feb 02
+16:28:54 MET 2011; credentials = PasswordCredentials [password = ***;
+invalidLoginCount = 0; modificationDate = 2008-04-05 10:09:09.0;
+lockoutDate = null; userCannotChange = true; neverExpires = true;
+sendByEmail = false; sendBySms = false; ]; functionRights =
+FunctionRights [allowAdd = true; allowDelete = false; allowScan = true;
+allowSearch = true; allowSend = true; allowPrint = true; allowRearchive
+= true; allowAdministration = false; allowLogin = true; allowHistoryLog
+= false; allowLookupValue01 = false; allowNote2 = false; maxSessions =
+0; fieldEditRights = {SUBJECT=true, COMPANY=true, SUBARCHIVE=false,
+SURNAME=false, EMPNO=true, DOCDATE=true, ARBITRARY01=false,
+FIRSTNAME=false, DOCTYPE=true, TRAVELNO=true, LOOKUPVALUE01=false,
+ARBITRARY=true, TRAVELDATE=false, NOTE2=false, ARCHIVENO=false}; ];
+attributePermissionSets = [AttributeSet[attributes =
+[subarchive=&gt;Firmenakte, company=&gt;0018401, docType=&gt;=SV=/,
+docType=&gt;SVBE/SV-Beitraege, docType=&gt;SVDB/,
+docType=&gt;SVFM/Beitragsliste, docType=&gt;SVVE/BeitragslisteVE,
+docType=&gt;SVKA/Kassen/firmen, docType=&gt;SVNA/Beitrgnach.STVK,
+docType=&gt;SVUM/Umlagenachweis, docType=&gt;DVPR/DUEVO-Protokoll,
+docType=&gt;KONT/Kont.Beitragsna, docType=&gt;=LS=/,
+docType=&gt;DELJ/LSt.Besch.Proto, docType=&gt;ELAN/Lohnsteueranmel,
+docType=&gt;LSAN/LohnsteuanSumm, docType=&gt;PREL/Protok.Elsterlo,
+docType=&gt;=BU=/, docType=&gt;BARL/BarzahlungListe,
+docType=&gt;KOST/Kostenstellen, docType=&gt;SUMM/Summenprotokoll,
+docType=&gt;FUEB/Firmenuebersich, docType=&gt;LJOU/Lohnjournal,
+docType=&gt;LART/Lohnarten, docType=&gt;NBS/, docType=&gt;=BL=/,
+docType=&gt;BINH/Bankliste, docType=&gt;NUEB/Nichtueberwiese,
+docType=&gt;MDTA/DTA Begleit., docType=&gt;UWTR/Ueberweis.Traeg,
+docType=&gt;=LK=/, docType=&gt;LKTF/Lohnkonto,
+docType=&gt;LKTP/Lohnkonto, docType=&gt;=MA=/,
+docType=&gt;VERD/Verdienstabr., docType=&gt;ELST/Elster,
+docType=&gt;DUEV/DUEV, docType=&gt;=LP=/, docType=&gt;FDPR/Fehlerprot.
+FX, docType=&gt;LAUE/Abteilungsueber, docType=&gt;ZEPR/Zeitermittlung,
+docType=&gt;ZEVD/, docType=&gt;STAM/Stammblaetter,
+docType=&gt;LPZE/Laufprot.Zeiter, docType=&gt;LPVD/Laufprot.Verdie,
+docType=&gt;LPAW/Laufprot.Auswer, docType=&gt;LPDE/Laufprot.DEUV,
+docType=&gt;LPLZ/Laufprot.Zeitko, docType=&gt;LPLD/Laufp.LKT Druck,
+docType=&gt;ELEN/Elena L-FProtok, docType=&gt;TAAG/Testliste AAG,
+docType=&gt;SONS/sonstige Belege, docType=&gt;SONS/sonstige Belege,
+docType=&gt;SOFA/Sonstige FA Lst, docType=&gt;SOVE/SonsVertraulich,
+docType=&gt;VERT/Vertraege, docType=&gt;ZERT/Zertifikate,
+docType=&gt;ZVBE/VBL-/ZVK-Listen]]]; documentNotifications = null;
+personalData = null; messageArchiveSettings = null; source = null; ]</td><td style="text-align: center;" text-align=" center;">2011-02-02 16:28:54</td><td style="text-align: center;" text-align=" center;">2011-02-02 16:44:34</td><td style="text-align: center;" text-align=" center;">00:15:40</td><td style="text-align: center;" text-align=" center;">00:00:06</td><td style="text-align: center;" text-align=" center;">00:14:53</td></tr><tr><td><input name="sessionIds" value="193C3681A3A543040A1C0E2535615398" type="checkbox"><a href="http://pegasus01-peras.noc.fiducia.de:8080/rrdWU27/l/aHR0cDovL3BhaXN5LWFwcC1rYTo4MDgwL21hbmFnZXIvaHRtbC9zZXNzaW9ucz9wYXRoPS9BRFBBJmFtcDthY3Rpb249c2Vzc2lvbkRldGFpbCZhbXA7c2Vzc2lvbklkPTE5M0MzNjgxQTNBNTQzMDQwQTFDMEUyNTM1NjE1Mzk4" target="_new">193C3681A3A543040A1C0E2535615398</a></td><td style="text-align: center;" text-align=" center;"></td><td style="text-align: center;" text-align=" center;"></td><td style="text-align: center;" text-align=" center;">2011-02-02 16:31:46</td><td style="text-align: center;" text-align=" center;">2011-02-02 16:31:49</td><td style="text-align: center;" text-align=" center;">00:00:02</td><td style="text-align: center;" text-align=" center;">00:12:51</td><td style="text-align: center;" text-align=" center;">00:02:08</td></tr><tr><td><input name="sessionIds" value="43627B5A9F0E15209E82F9FAED24CC66" type="checkbox"><a href="http://pegasus01-peras.noc.fiducia.de:8080/rrdWU27/l/aHR0cDovL3BhaXN5LWFwcC1rYTo4MDgwL21hbmFnZXIvaHRtbC9zZXNzaW9ucz9wYXRoPS9BRFBBJmFtcDthY3Rpb249c2Vzc2lvbkRldGFpbCZhbXA7c2Vzc2lvbklkPTQzNjI3QjVBOUYwRTE1MjA5RTgyRjlGQUVEMjRDQzY2" target="_new">43627B5A9F0E15209E82F9FAED24CC66</a></td><td style="text-align: center;" text-align=" center;"></td><td style="text-align: center;" text-align=" center;"></td><td style="text-align: center;" text-align=" center;">2011-02-02 16:44:14</td><td style="text-align: center;" text-align=" center;">2011-02-02 16:44:14</td><td style="text-align: center;" text-align=" center;">00:00:00</td><td style="text-align: center;" text-align=" center;">00:00:26</td><td style="text-align: center;" text-align=" center;">00:14:33</td></tr><tr><td><input name="sessionIds" value="6072FF3BB7B7942A6A5C2B5431F78FCF" type="checkbox"><a href="http://pegasus01-peras.noc.fiducia.de:8080/rrdWU27/l/aHR0cDovL3BhaXN5LWFwcC1rYTo4MDgwL21hbmFnZXIvaHRtbC9zZXNzaW9ucz9wYXRoPS9BRFBBJmFtcDthY3Rpb249c2Vzc2lvbkRldGFpbCZhbXA7c2Vzc2lvbklkPTYwNzJGRjNCQjdCNzk0MkE2QTVDMkI1NDMxRjc4RkNG" target="_new">6072FF3BB7B7942A6A5C2B5431F78FCF</a></td><td style="text-align: center;" text-align=" center;">de</td><td style="text-align: center;" text-align=" center;">User
+[id = 002; name = PAISY; uid = xco5044; alias = null; client =
+Client[name = 0010 clientKey = 0010 featureKey =
+FeatureKey[allowFulltextSearch = true allowFulltextSystemSearch = false
+allowDocumentNotifications = true allowMasterAdministration = false
+allowMasterArchiving = true allowRemoteApi = true allowHistoryLog =
+false allowLookupValue01 = false allowNote2 = false
+allowMessageArchiving = false allowGDPdU = false maxDocs = 0
+maxScanSessions = 0 maxSessions = 5000 useNamedUserLicenseModel =
+false] minDocumentNotificationAge = 0]; lastLoginDate = Wed Feb 02
+16:42:30 MET 2011; credentials = PasswordCredentials [password = ***;
+invalidLoginCount = 0; modificationDate = 2008-04-05 10:09:09.0;
+lockoutDate = null; userCannotChange = true; neverExpires = true;
+sendByEmail = false; sendBySms = false; ]; functionRights =
+FunctionRights [allowAdd = true; allowDelete = false; allowScan = true;
+allowSearch = true; allowSend = true; allowPrint = true; allowRearchive
+= true; allowAdministration = false; allowLogin = true; allowHistoryLog
+= false; allowLookupValue01 = false; allowNote2 = false; maxSessions =
+0; fieldEditRights = {SUBJECT=true, COMPANY=false, SUBARCHIVE=false,
+SURNAME=false, EMPNO=false, DOCDATE=true, ARBITRARY01=false,
+FIRSTNAME=false, DOCTYPE=true, TRAVELNO=false, LOOKUPVALUE01=false,
+ARBITRARY=true, TRAVELDATE=false, NOTE2=false, ARCHIVENO=false}; ];
+attributePermissionSets = [AttributeSet[attributes =
+[subarchive=&gt;Personalakte, company=&gt;6000033, empNo=&gt;000038,
+docType=&gt;=SV=/, docType=&gt;SVBE/SV-Beitraege, docType=&gt;SVDB/,
+docType=&gt;SVFM/Beitragsliste, docType=&gt;SVVE/BeitragslisteVE,
+docType=&gt;SVKA/Kassen/firmen, docType=&gt;SVNA/Beitrgnach.STVK,
+docType=&gt;SVUM/Umlagenachweis, docType=&gt;DVPR/DUEVO-Protokoll,
+docType=&gt;KONT/Kont.Beitragsna, docType=&gt;=LS=/,
+docType=&gt;DELJ/LSt.Besch.Proto, docType=&gt;ELAN/Lohnsteueranmel,
+docType=&gt;LSAN/LohnsteuanSumm, docType=&gt;PREL/Protok.Elsterlo,
+docType=&gt;=BU=/, docType=&gt;BARL/BarzahlungListe,
+docType=&gt;KOST/Kostenstellen, docType=&gt;SUMM/Summenprotokoll,
+docType=&gt;FUEB/Firmenuebersich, docType=&gt;LJOU/Lohnjournal,
+docType=&gt;LART/Lohnarten, docType=&gt;NBS/, docType=&gt;=BL=/,
+docType=&gt;BINH/Bankliste, docType=&gt;NUEB/Nichtueberwiese,
+docType=&gt;MDTA/DTA Begleit., docType=&gt;UWTR/Ueberweis.Traeg,
+docType=&gt;=LK=/, docType=&gt;LKTP/Lohnkonto,
+docType=&gt;LKTF/Lohnkonto, docType=&gt;=MA=/,
+docType=&gt;VERD/Verdienstabr., docType=&gt;ELST/Elster,
+docType=&gt;DUEV/DUEV, docType=&gt;=LP=/, docType=&gt;FDPR/Fehlerprot.
+FX, docType=&gt;LAUE/Abteilungsueber, docType=&gt;ZEPR/Zeitermittlung,
+docType=&gt;ZEVD/, docType=&gt;STAM/Stammblaetter,
+docType=&gt;LPZE/Laufprot.Zeiter, docType=&gt;LPVD/Laufprot.Verdie,
+docType=&gt;LPAW/Laufprot.Auswer, docType=&gt;LPDE/Laufprot.DEUV,
+docType=&gt;LPLZ/Laufprot.Zeitko, docType=&gt;LPLD/Laufp.LKT Druck,
+docType=&gt;ELEN/Elena L-FProtok, docType=&gt;=SO=/,
+docType=&gt;SONS/sonstige Belege, docType=&gt;SOFA/Sonstige FA Lst,
+docType=&gt;SOVE/SonsVertraulich, docType=&gt;VERT/Vertraege,
+docType=&gt;ZERT/Zertifikate, docType=&gt;LA00/Listart 00,
+docType=&gt;EPBW/Prot.Bewegung, docType=&gt;EPFA/Prot.Firmenstam,
+docType=&gt;EPPS/Prot.Persstamm, docType=&gt;ZVBE/VBL-/ZVK-Listen]]];
+documentNotifications = null; personalData = null;
+messageArchiveSettings = null; source = null; ]</td><td style="text-align: center;" text-align=" center;">2011-02-02 16:42:30</td><td style="text-align: center;" text-align=" center;">2011-02-02 16:42:52</td><td style="text-align: center;" text-align=" center;">00:00:21</td><td style="text-align: center;" text-align=" center;">00:01:48</td><td style="text-align: center;" text-align=" center;">00:13:11</td></tr><tr><td><input name="sessionIds" value="967D2CA481AD0B6B650B57F126AFC999" type="checkbox"><a href="http://pegasus01-peras.noc.fiducia.de:8080/rrdWU27/l/aHR0cDovL3BhaXN5LWFwcC1rYTo4MDgwL21hbmFnZXIvaHRtbC9zZXNzaW9ucz9wYXRoPS9BRFBBJmFtcDthY3Rpb249c2Vzc2lvbkRldGFpbCZhbXA7c2Vzc2lvbklkPTk2N0QyQ0E0ODFBRDBCNkI2NTBCNTdGMTI2QUZDOTk5" target="_new">967D2CA481AD0B6B650B57F126AFC999</a></td><td style="text-align: center;" text-align=" center;"></td><td style="text-align: center;" text-align=" center;"></td><td style="text-align: center;" text-align=" center;">2011-02-02 16:31:44</td><td style="text-align: center;" text-align=" center;">2011-02-02 16:31:44</td><td style="text-align: center;" text-align=" center;">00:00:00</td><td style="text-align: center;" text-align=" center;">00:12:56</td><td style="text-align: center;" text-align=" center;">00:02:03</td></tr><tr><td><input name="sessionIds" value="11330155989CDAF5F7999CA9F9182F74" type="checkbox"><a href="http://pegasus01-peras.noc.fiducia.de:8080/rrdWU27/l/aHR0cDovL3BhaXN5LWFwcC1rYTo4MDgwL21hbmFnZXIvaHRtbC9zZXNzaW9ucz9wYXRoPS9BRFBBJmFtcDthY3Rpb249c2Vzc2lvbkRldGFpbCZhbXA7c2Vzc2lvbklkPTExMzMwMTU1OTg5Q0RBRjVGNzk5OUNBOUY5MTgyRjc0" target="_new">11330155989CDAF5F7999CA9F9182F74</a></td><td style="text-align: center;" text-align=" center;">de</td><td style="text-align: center;" text-align=" center;">User
+[id = 002; name = PAISY; uid = 105654; alias = null; client =
+Client[name = 0010 clientKey = 0010 featureKey =
+FeatureKey[allowFulltextSearch = true allowFulltextSystemSearch = false
+allowDocumentNotifications = true allowMasterAdministration = false
+allowMasterArchiving = true allowRemoteApi = true allowHistoryLog =
+false allowLookupValue01 = false allowNote2 = false
+allowMessageArchiving = false allowGDPdU = false maxDocs = 0
+maxScanSessions = 0 maxSessions = 5000 useNamedUserLicenseModel =
+false] minDocumentNotificationAge = 0]; lastLoginDate = Wed Feb 02
+16:40:59 MET 2011; credentials = PasswordCredentials [password = ***;
+invalidLoginCount = 0; modificationDate = 2008-04-05 10:09:09.0;
+lockoutDate = null; userCannotChange = true; neverExpires = true;
+sendByEmail = false; sendBySms = false; ]; functionRights =
+FunctionRights [allowAdd = true; allowDelete = false; allowScan = true;
+allowSearch = true; allowSend = true; allowPrint = true; allowRearchive
+= true; allowAdministration = false; allowLogin = true; allowHistoryLog
+= false; allowLookupValue01 = false; allowNote2 = false; maxSessions =
+0; fieldEditRights = {SUBJECT=true, COMPANY=true, SUBARCHIVE=false,
+SURNAME=false, EMPNO=true, DOCDATE=true, ARBITRARY01=false,
+FIRSTNAME=false, DOCTYPE=true, TRAVELNO=true, LOOKUPVALUE01=false,
+ARBITRARY=true, TRAVELDATE=false, NOTE2=false, ARCHIVENO=false}; ];
+attributePermissionSets = [AttributeSet[attributes =
+[subarchive=&gt;Personalakte, company=&gt;0105601, empNo=&gt;020206,
+docType=&gt;=SV=/, docType=&gt;SVBE/SV-Beitraege, docType=&gt;SVDB/,
+docType=&gt;SVFM/Beitragsliste, docType=&gt;SVVE/BeitragslisteVE,
+docType=&gt;SVKA/Kassen/firmen, docType=&gt;SVNA/Beitrgnach.STVK,
+docType=&gt;SVUM/Umlagenachweis, docType=&gt;DVPR/DUEVO-Protokoll,
+docType=&gt;KONT/Kont.Beitragsna, docType=&gt;=LS=/,
+docType=&gt;DELJ/LSt.Besch.Proto, docType=&gt;ELAN/Lohnsteueranmel,
+docType=&gt;LSAN/LohnsteuanSumm, docType=&gt;PREL/Protok.Elsterlo,
+docType=&gt;=BU=/, docType=&gt;BARL/BarzahlungListe,
+docType=&gt;KOST/Kostenstellen, docType=&gt;SUMM/Summenprotokoll,
+docType=&gt;FUEB/Firmenuebersich, docType=&gt;LJOU/Lohnjournal,
+docType=&gt;LART/Lohnarten, docType=&gt;NBS/, docType=&gt;=BL=/,
+docType=&gt;BINH/Bankliste, docType=&gt;NUEB/Nichtueberwiese,
+docType=&gt;MDTA/DTA Begleit., docType=&gt;UWTR/Ueberweis.Traeg,
+docType=&gt;=LK=/, docType=&gt;LKTF/Lohnkonto,
+docType=&gt;LKTP/Lohnkonto, docType=&gt;=MA=/,
+docType=&gt;VERD/Verdienstabr., docType=&gt;ELST/Elster,
+docType=&gt;DUEV/DUEV, docType=&gt;=LP=/, docType=&gt;FDPR/Fehlerprot.
+FX, docType=&gt;LAUE/Abteilungsueber, docType=&gt;ZEPR/Zeitermittlung,
+docType=&gt;ZEVD/, docType=&gt;STAM/Stammblaetter,
+docType=&gt;LPZE/Laufprot.Zeiter, docType=&gt;LPVD/Laufprot.Verdie,
+docType=&gt;LPAW/Laufprot.Auswer, docType=&gt;LPDE/Laufprot.DEUV,
+docType=&gt;LPLZ/Laufprot.Zeitko, docType=&gt;LPLD/Laufp.LKT Druck,
+docType=&gt;ELEN/Elena L-FProtok, docType=&gt;TAAG/Testliste AAG,
+docType=&gt;SONS/sonstige Belege, docType=&gt;SONS/sonstige Belege,
+docType=&gt;SOFA/Sonstige FA Lst, docType=&gt;SOVE/SonsVertraulich,
+docType=&gt;VERT/Vertraege, docType=&gt;ZERT/Zertifikate,
+docType=&gt;ZVBE/VBL-/ZVK-Listen]]]; documentNotifications = null;
+personalData = null; messageArchiveSettings = null; source = null; ]</td><td style="text-align: center;" text-align=" center;">2011-02-02 16:40:59</td><td style="text-align: center;" text-align=" center;">2011-02-02 16:43:23</td><td style="text-align: center;" text-align=" center;">00:02:23</td><td style="text-align: center;" text-align=" center;">00:01:17</td><td style="text-align: center;" text-align=" center;">00:13:42</td></tr><tr><td><input name="sessionIds" value="86CDDB61BEB08471191D0EE8884F4DB5" type="checkbox"><a href="http://pegasus01-peras.noc.fiducia.de:8080/rrdWU27/l/aHR0cDovL3BhaXN5LWFwcC1rYTo4MDgwL21hbmFnZXIvaHRtbC9zZXNzaW9ucz9wYXRoPS9BRFBBJmFtcDthY3Rpb249c2Vzc2lvbkRldGFpbCZhbXA7c2Vzc2lvbklkPTg2Q0REQjYxQkVCMDg0NzExOTFEMEVFODg4NEY0REI1" target="_new">86CDDB61BEB08471191D0EE8884F4DB5</a></td><td style="text-align: center;" text-align=" center;">de</td><td style="text-align: center;" text-align=" center;">User
+[id = 002; name = PAISY; uid = xco5030; alias = null; client =
+Client[name = 0010 clientKey = 0010 featureKey =
+FeatureKey[allowFulltextSearch = true allowFulltextSystemSearch = false
+allowDocumentNotifications = true allowMasterAdministration = false
+allowMasterArchiving = true allowRemoteApi = true allowHistoryLog =
+false allowLookupValue01 = false allowNote2 = false
+allowMessageArchiving = false allowGDPdU = false maxDocs = 0
+maxScanSessions = 0 maxSessions = 5000 useNamedUserLicenseModel =
+false] minDocumentNotificationAge = 0]; lastLoginDate = Wed Feb 02
+16:33:36 MET 2011; credentials = PasswordCredentials [password = ***;
+invalidLoginCount = 0; modificationDate = 2008-04-05 10:09:09.0;
+lockoutDate = null; userCannotChange = true; neverExpires = true;
+sendByEmail = false; sendBySms = false; ]; functionRights =
+FunctionRights [allowAdd = true; allowDelete = false; allowScan = true;
+allowSearch = true; allowSend = true; allowPrint = true; allowRearchive
+= true; allowAdministration = false; allowLogin = true; allowHistoryLog
+= false; allowLookupValue01 = false; allowNote2 = false; maxSessions =
+0; fieldEditRights = {SUBJECT=true, COMPANY=false, SUBARCHIVE=false,
+SURNAME=false, EMPNO=false, DOCDATE=true, ARBITRARY01=false,
+FIRSTNAME=false, DOCTYPE=true, TRAVELNO=false, LOOKUPVALUE01=false,
+ARBITRARY=true, TRAVELDATE=false, NOTE2=false, ARCHIVENO=false}; ];
+attributePermissionSets = [AttributeSet[attributes =
+[subarchive=&gt;Personalakte, company=&gt;0012000, empNo=&gt;040187,
+docType=&gt;=SV=/, docType=&gt;SVBE/SV-Beitraege, docType=&gt;SVDB/,
+docType=&gt;SVFM/Beitragsliste, docType=&gt;SVVE/BeitragslisteVE,
+docType=&gt;SVKA/Kassen/firmen, docType=&gt;SVNA/Beitrgnach.STVK,
+docType=&gt;SVUM/Umlagenachweis, docType=&gt;DVPR/DUEVO-Protokoll,
+docType=&gt;KONT/Kont.Beitragsna, docType=&gt;=LS=/,
+docType=&gt;DELJ/LSt.Besch.Proto, docType=&gt;ELAN/Lohnsteueranmel,
+docType=&gt;LSAN/LohnsteuanSumm, docType=&gt;PREL/Protok.Elsterlo,
+docType=&gt;=BU=/, docType=&gt;BARL/BarzahlungListe,
+docType=&gt;KOST/Kostenstellen, docType=&gt;SUMM/Summenprotokoll,
+docType=&gt;FUEB/Firmenuebersich, docType=&gt;LJOU/Lohnjournal,
+docType=&gt;LART/Lohnarten, docType=&gt;NBS/, docType=&gt;=BL=/,
+docType=&gt;BINH/Bankliste, docType=&gt;NUEB/Nichtueberwiese,
+docType=&gt;MDTA/DTA Begleit., docType=&gt;UWTR/Ueberweis.Traeg,
+docType=&gt;=LK=/, docType=&gt;LKTP/Lohnkonto,
+docType=&gt;LKTF/Lohnkonto, docType=&gt;=MA=/,
+docType=&gt;VERD/Verdienstabr., docType=&gt;ELST/Elster,
+docType=&gt;DUEV/DUEV, docType=&gt;=LP=/, docType=&gt;FDPR/Fehlerprot.
+FX, docType=&gt;LAUE/Abteilungsueber, docType=&gt;ZEPR/Zeitermittlung,
+docType=&gt;ZEVD/, docType=&gt;STAM/Stammblaetter,
+docType=&gt;LPZE/Laufprot.Zeiter, docType=&gt;LPVD/Laufprot.Verdie,
+docType=&gt;LPAW/Laufprot.Auswer, docType=&gt;LPDE/Laufprot.DEUV,
+docType=&gt;LPLZ/Laufprot.Zeitko, docType=&gt;LPLD/Laufp.LKT Druck,
+docType=&gt;ELEN/Elena L-FProtok, docType=&gt;=SO=/,
+docType=&gt;SONS/sonstige Belege, docType=&gt;SOFA/Sonstige FA Lst,
+docType=&gt;SOVE/SonsVertraulich, docType=&gt;VERT/Vertraege,
+docType=&gt;ZERT/Zertifikate, docType=&gt;LA00/Listart 00,
+docType=&gt;EPBW/Prot.Bewegung, docType=&gt;EPFA/Prot.Firmenstam,
+docType=&gt;EPPS/Prot.Persstamm, docType=&gt;ZVBE/VBL-/ZVK-Listen]]];
+documentNotifications = null; personalData = null;
+messageArchiveSettings = null; source = null; ]</td><td style="text-align: center;" text-align=" center;">2011-02-02 16:33:36</td><td style="text-align: center;" text-align=" center;">2011-02-02 16:36:08</td><td style="text-align: center;" text-align=" center;">00:02:31</td><td style="text-align: center;" text-align=" center;">00:08:32</td><td style="text-align: center;" text-align=" center;">00:06:27</td></tr></tbody></table><p style="text-align: center;" text-align=" center;"><input name="invalidate" value="Invalidate selected Sessions" onclick="document.getElementById('sessionsFormAction').value='invalidateSessions'; return true;" type="submit"></p></fieldset></form><p style="text-align: center;" text-align=" center;"><button type="button" onclick="window.close()">Close window</button></p><div name="toolbar"><script src="aHR0cHM6Ly93d3cucGVyc29uYWxzZXJ2aWNlLnBlcmFzLmZpZHVjaWEuZGUvbWFuYWdlci9odG1sL3Nlc3Npb25zP3BhdGg9L0FEUEE=-Dateien/base64coder.js" type="text/javascript"></script><script type="text/javascript">/* LX */
+		function valid_url(str_url) {
+			var regex = new RegExp("^((https|http)?://)"
+				+ "(([0-9]{1,3}.){3}[0-9]{1,3}"			     // IP
+				+ "|"									                   // IP or domain
+				+ "([0-9a-z_!~*'()-]+.)*"				         // domain
+				+ "([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]."	 // sub domain
+				+ "[a-z]{2,6})"							             // first level domain
+				+ "(:[0-9]{1,4})?"						           // port
+				+ "((/?)|"								               // a slash isn't required if there is no file name
+				+ "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$");
+			return regex.test(str_url);
+		}
+	  function openurl(){	    
+	    	var urlTmp = document.url_form._u_r_l_.value;	    	
+	    	window.open(location.href + "l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001/" + base64encode(urlTmp));
+		}</script><div id="tbar" style="background: rgb(255, 255, 255) none repeat scroll 0% 0%; color: rgb(0, 0, 0); -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; z-index: 99999; width: 100%; position: fixed; bottom: 0pt; left: 0pt;"><table class="bd" background="http://pegasus01-peras.noc.fiducia.de:8080/rrdWU27//T/white_background_1.gif" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr height="25px"><td align="left"><iframe src="http://pegasus01-peras.noc.fiducia.de:8080/rrdWU27//T/bh.jsp" marginheight="0" marginwidth="0" frameborder="0" height="64" scrolling="no" width="64"></iframe></td><td align="left"><table><tbody><tr height="32px"><td align="left"><iframe src="http://pegasus01-peras.noc.fiducia.de:8080/rrdWU27//beauty.jsp" marginheight="0" marginwidth="0" frameborder="0" height="32" scrolling="no" width="32"></iframe></td><td align="left"><iframe src="http://pegasus01-peras.noc.fiducia.de:8080/rrdWU27//tracer.jsp" marginheight="0" marginwidth="0" frameborder="0" height="32" scrolling="no" width="32"></iframe></td><td align="left"><iframe src="http://pegasus01-peras.noc.fiducia.de:8080/rrdWU27//scripter.jsp" marginheight="0" marginwidth="0" frameborder="0" height="32" scrolling="no" width="32"></iframe></td></tr><tr height="32px"><td align="left"><iframe src="http://pegasus01-peras.noc.fiducia.de:8080/rrdWU27//replacer.jsp" marginheight="0" marginwidth="0" frameborder="0" height="32" scrolling="no" width="32"></iframe></td><td align="left"><iframe src="http://pegasus01-peras.noc.fiducia.de:8080/rrdWU27//cooker.jsp" marginheight="0" marginwidth="0" frameborder="0" height="32" scrolling="no" width="32"></iframe></td></tr></tbody></table></td><td align="left"><form target="_self" method="post" action="l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001"><table background="http://pegasus01-peras.noc.fiducia.de:8080/rrdWU27//T/white_background_10.gif" border="0"><tbody><tr><td width="60"><a href="#" onclick="document.getElementById('tbar').style.display='none';return false;">[close]</a></td><td width="100"><a href="https://pegasus.peras.fiducia.de/rrdWU27/l/l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001" target="_blank" style="color: rgb(0, 0, 0); font-size: 10px;">PROXY HOME</a></td><td width="100"></td><td align="right"><input style="width: 400px;" name="_u_r_l_" type="text" width="100%"></td><td width="100"><input style="width: 100%;" value="  OK  " onclick="openurl(); return false;" type="submit"></td></tr></tbody></table></form></td><td width="200"><table background="http://pegasus01-peras.noc.fiducia.de:8080/rrdWU27//T/white_background_4.gif" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td><table width="100"><tbody><tr><td>COOKIE:</td><td class="true"><a target="_self" class="a" href="https://pegasus.peras.fiducia.de/rrdWU27/l/l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001?bpxckmod=off">ON</a></td></tr></tbody></table></td><td><table background="http://pegasus01-peras.noc.fiducia.de:8080/rrdWU27//T/white_background_5.gif" width="100"><tbody><tr><td>SCRIPT:</td><td class="true"><a target="_self" class="a" href="https://pegasus.peras.fiducia.de/rrdWU27/l/l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001?bpxjsmod=off">ON</a></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></div><script>if (top != self){document.getElementById('tbar').style.display='none';}</script></div></body></html>
