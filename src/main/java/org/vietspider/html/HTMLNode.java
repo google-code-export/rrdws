@@ -85,8 +85,21 @@ public abstract class HTMLNode implements Node<Name>, Serializable {
     }
     return list;
   } 
+  
 
-  public String getTextValue(){
+  public String asXHTML(){
+	    StringBuilder builder = new StringBuilder();
+	    String xmlHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+	    xmlHeader += "<!DOCTYPE html>\n";
+	    builder .append(xmlHeader);
+	    builXHTML(builder);
+	    return builder.toString();
+  }  
+
+  abstract public StringBuilder builXHTML(StringBuilder builder)  ;
+  abstract public StringBuilder builXHTML(StringBuilder builder, int LEVEL);
+
+public String getTextValue(){
     StringBuilder builder = new StringBuilder();
     buildValue(builder);
     return builder.toString();

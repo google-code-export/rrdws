@@ -351,6 +351,77 @@ public class NodeImpl extends HTMLNode {
   
   public String name() { return name.name(); }
 
+@Override
+public StringBuilder builXHTML(StringBuilder builder) {
+	return  builXHTML( builder, 0);
+}
+String TABBEDCHARS = "  ";
+public StringBuilder builXHTML(StringBuilder builder, int LEVEL) {
+	
+	// if(value.length < 1) return builder;
+	if (isBeautify() && builder.length() > 0) { 
+		builder.append(SpecChar.n);
+	}
+	String nameTmp = getName().toString();
+	boolean isTag = name != Name.CONTENT && name != Name.COMMENT && name != Name.CODE_CONTENT;
+	
+	// <.... ??
+	if (isTag && Name.DOCTYPE != this.name)  
+	{
+		builder.append('<');
+		char[] startTmp = getValue();
+		String startUp = new String(startTmp);
+		
+		int cutStart = startUp.toUpperCase().indexOf(nameTmp.toUpperCase());
+		int cutEnd = cutStart + nameTmp.length();
+		try{
+			startUp  = startUp .substring(0, cutStart)+
+					   nameTmp +
+					   startUp .substring( cutEnd );
+		}catch(java.lang.StringIndexOutOfBoundsException e){
+			System.out.println("!!!!!!!!!"+cutStart+">>>"+cutEnd+">>>"+startUp);
+			e.printStackTrace();
+		}
+		builder.append(startUp);
+		builder.append('>');
+	}
+	if (children == null) {
+		if (!isTag  )  {
+			char[] startTmp = getValue();
+			String startUp = new String(startTmp);
+			builder.append(startUp);
+		}
+		//return builder;
+	}else{
+		for (HTMLNode ele : children) {
+			if (isBeautify()) {
+				StringBuilder tmpBuilder = new StringBuilder();  
+				ele.builXHTML(tmpBuilder,LEVEL+1);
+				for (String nextLine:tmpBuilder.toString().split("\n")){
+					builder.append("\n"+TABBEDCHARS+nextLine+"");
+				}
+			}else{
+				ele.builXHTML(builder,LEVEL+1);
+			}
+		}
+	}
+	
+	// </... ???
+	if (isTag && Name.DOCTYPE != this.name)  
+	{
+		if (isBeautify()) {
+			builder.append("\n");
+//			for (int i=0;i<LEVEL-1;i++){
+//				builder.append(TABBEDCHARS);
+//			}
+		}
+		builder.append("</");
+		builder.append(nameTmp);
+		builder.append('>');
+	}
+	return builder;
+}
+
   /*public static void next(NodeImpl node) {
 //  System.out.println(node.getName() + "  : " + node.hashCode() 
 //  + " | " + node.nextNode.getName() + " : " + node.nextNode.hashCode());

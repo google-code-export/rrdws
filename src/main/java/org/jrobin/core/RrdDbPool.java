@@ -80,7 +80,13 @@ public class RrdDbPool {
 		String canonicalPath = Util.getCanonicalPath(path);
 		while (!rrdMap.containsKey(canonicalPath) && rrdMap.size() >= capacity) {
 			try {
-				wait();
+				Thread.sleep(1000); // wait a bit before cleaning-try
+				if (rrdMap.size() >= capacity){
+					// Brute-force attack ! clean the middle element...
+					Object keyTmp = rrdMap.keySet().toArray()[rrdMap.size()/2];
+					RrdEntry dbTmp =  rrdMap.remove( keyTmp );
+					if (1==2)System.out.println(dbTmp);
+				} 
 			}
 			catch (InterruptedException e) {
 				throw new RrdException(e);
