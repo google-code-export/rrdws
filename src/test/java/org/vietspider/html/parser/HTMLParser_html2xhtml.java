@@ -66,7 +66,7 @@ public class HTMLParser_html2xhtml {
 	public void testCreateTokens() throws Exception {
 		HTMLParser2 p2 = new HTMLParser2();
 		List<NodeImpl> toksTmp = p2.createTokens(HTML.toCharArray());
-		assertEquals("" + toksTmp.size(), "" + 18);
+		assertEquals("" + toksTmp.size(), "" + 17);
 	}
 
 	@Test
@@ -145,6 +145,8 @@ public class HTMLParser_html2xhtml {
 
 			String asXHTML = htmldocTmp.getRoot().asXHTML();
 			asXHTML = asXHTML.replace("&nbsp;", "&#160;");
+			asXHTML = asXHTML.replace("&copy;", "&#169;");
+			
 			fout.write(asXHTML.getBytes());
 			fout.flush();
 			fout.close();
