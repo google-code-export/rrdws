@@ -144,7 +144,7 @@ public class HTMLParser_html2xhtml {
 			htmldocTmp.getRoot().setBeautify(true);
 
 			String asXHTML = htmldocTmp.getRoot().asXHTML();
-			asXHTML = asXHTML.replace("&nbsp;", "&#169;");
+			asXHTML = asXHTML.replace("&nbsp;", "&#160;");
 			fout.write(asXHTML.getBytes());
 			fout.flush();
 			fout.close();
@@ -159,6 +159,84 @@ public class HTMLParser_html2xhtml {
 		InputSource in = new InputSource(fileInputStream);
 		reader.parse(in);
 		System.out.println(" is well-formed!");
+	}
+
+	@Test
+	public void testWellformed2() throws SAXException, IOException {
+		HTMLParser2 p2 = new HTMLParser2();
+	
+		InputStream input = this.getClass().getClassLoader()
+				.getResourceAsStream(
+						"org/vietspider/html/parser/Html2Xhtml.htm");
+	
+		String charset = "UTF-8";
+		HTMLDocument htmldocTmp;
+		File fileTmp = File.createTempFile(
+				"JUNIT" + System.currentTimeMillis(), "html");
+		try {
+			htmldocTmp = p2.createDocument(input, charset);
+			
+			System.out.println(p2);
+	
+			FileOutputStream fout = new FileOutputStream(fileTmp);
+			htmldocTmp.getRoot().setBeautify(true);
+	
+			String asXHTML = htmldocTmp.getRoot().asXHTML();
+			asXHTML = asXHTML.replace("&nbsp;", "&#160;");
+			fout.write(asXHTML.getBytes());
+			fout.flush();
+			fout.close();
+	
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		XMLReader reader = XMLReaderFactory.createXMLReader();
+		FileInputStream fileInputStream = new FileInputStream(fileTmp);
+		InputSource in = new InputSource(fileInputStream);
+		reader.parse(in);
+		System.out.println(" is well-formed!");
+	}
+
+	@Test
+	public void testWellformed3() throws SAXException, IOException {
+		HTMLParser2 p2 = new HTMLParser2();
+	
+		InputStream input = this.getClass().getClassLoader()
+				.getResourceAsStream(
+						"org/vietspider/html/parser/aHR0cHM6Ly93d3cucGVyc29uYWxzZXJ2aWNlLnBlcmFzLmZpZHVjaWEuZGUvbWFuYWdlci9odG1sL3Nlc3Npb25zP3BhdGg9L0FEUEE=.htm");
+	
+		String charset = "UTF-8";
+		HTMLDocument htmldocTmp;
+		File fileTmp = File.createTempFile(
+				"JUNIT" + System.currentTimeMillis(), "html");
+		try {
+			htmldocTmp = p2.createDocument(input, charset);
+			
+			System.out.println(p2);
+	
+			FileOutputStream fout = new FileOutputStream(fileTmp);
+			htmldocTmp.getRoot().setBeautify(true);
+	
+			String asXHTML = htmldocTmp.getRoot().asXHTML();
+			asXHTML = asXHTML.replace("&nbsp;", "&#160;");
+			fout.write(asXHTML.getBytes());
+			fout.flush();
+			fout.close();
+	
+			XMLReader reader = XMLReaderFactory.createXMLReader();
+			FileInputStream fileInputStream = new FileInputStream(fileTmp);
+			InputSource in = new InputSource(fileInputStream);
+			reader.parse(in);
+			System.out.println(" is well-formed!");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+
+		
 	}
 
 	// builXHTML

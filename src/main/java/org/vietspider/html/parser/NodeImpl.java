@@ -24,7 +24,6 @@ import org.vietspider.html.NodeConfig;
 import org.vietspider.html.NodeIterator;
 import org.vietspider.html.Tag;
 import org.vietspider.token.TypeToken;
-import org.vietspider.token.attribute.Attributes;
 
 /**
  * Created by VietSpider
@@ -44,8 +43,7 @@ public class NodeImpl extends HTMLNode {
   protected byte [] byteValue ;
   
   protected volatile List<HTMLNode> cachedTokens;
-  
-  protected transient Attributes attributes;
+ 
   
   public NodeImpl(char[] value, Name name){ 
     super(name);
@@ -384,6 +382,10 @@ public StringBuilder builXHTML(StringBuilder builder, int LEVEL) {
 		}
 		builder.append(startUp);
 		builder.append('>');
+		//http://xhtml.com/en/xhtml/reference/script/
+		if ("SCRIPT".equals( nameTmp.toUpperCase() ) ){
+			builder.append("\n//<![CDATA[");
+		}
 	}
 	if (children == null) {
 		if (!isTag  )  {
@@ -409,12 +411,18 @@ public StringBuilder builXHTML(StringBuilder builder, int LEVEL) {
 	// </... ???
 	if (isTag && Name.DOCTYPE != this.name)  
 	{
+
 		if (isBeautify()) {
 			builder.append("\n");
 //			for (int i=0;i<LEVEL-1;i++){
 //				builder.append(TABBEDCHARS);
 //			}
 		}
+		//http://xhtml.com/en/xhtml/reference/script/
+		if ("SCRIPT".equals( nameTmp.toUpperCase() ) ){
+			builder.append("//]]>");
+		}
+		
 		builder.append("</");
 		builder.append(nameTmp);
 		builder.append('>');
