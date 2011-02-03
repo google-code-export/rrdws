@@ -125,6 +125,7 @@ public class HTMLParser_html2xhtml {
 
 	@Test
 	public void testWellformed() throws SAXException, IOException {
+		String expected = " is well-formed!";		Object actual=null;
 		HTMLParser2 p2 = new HTMLParser2();
 
 		InputStream input = this.getClass().getClassLoader()
@@ -152,19 +153,18 @@ public class HTMLParser_html2xhtml {
 			fout.close();
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			actual = e.getMessage();
 		}
 
 		XMLReader reader = XMLReaderFactory.createXMLReader();
 		FileInputStream fileInputStream = new FileInputStream(fileTmp);
 		InputSource in = new InputSource(fileInputStream);
-		reader.parse(in);
-		System.out.println(" is well-formed!");
+		reader.parse(in);  
 	}
 
 	@Test
-	public void testWellformed2() throws SAXException, IOException {
+	public void testWellformed2() throws Exception { 
 		HTMLParser2 p2 = new HTMLParser2();
 	
 		InputStream input = this.getClass().getClassLoader()
@@ -175,7 +175,7 @@ public class HTMLParser_html2xhtml {
 		HTMLDocument htmldocTmp;
 		File fileTmp = File.createTempFile(
 				"JUNIT" + System.currentTimeMillis(), "html");
-		try {
+		 {
 			htmldocTmp = p2.createDocument(input, charset);
 			
 			System.out.println(p2);
@@ -189,20 +189,16 @@ public class HTMLParser_html2xhtml {
 			fout.flush();
 			fout.close();
 	
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		}  
 	
 		XMLReader reader = XMLReaderFactory.createXMLReader();
 		FileInputStream fileInputStream = new FileInputStream(fileTmp);
 		InputSource in = new InputSource(fileInputStream);
-		reader.parse(in);
-		System.out.println(" is well-formed!");
+		reader.parse(in); 
 	}
 
 	@Test
-	public void testWellformed3() throws SAXException, IOException {
+	public void testWellformed3() throws Exception { 
 		HTMLParser2 p2 = new HTMLParser2();
 	
 		InputStream input = this.getClass().getClassLoader()
@@ -212,8 +208,7 @@ public class HTMLParser_html2xhtml {
 		String charset = "UTF-8";
 		HTMLDocument htmldocTmp;
 		File fileTmp = File.createTempFile(
-				"JUNIT" + System.currentTimeMillis(), "html");
-		try {
+				"JUNIT" + System.currentTimeMillis(), "html"); 
 			htmldocTmp = p2.createDocument(input, charset);
 			
 			System.out.println(p2);
@@ -230,19 +225,11 @@ public class HTMLParser_html2xhtml {
 			XMLReader reader = XMLReaderFactory.createXMLReader();
 			FileInputStream fileInputStream = new FileInputStream(fileTmp);
 			InputSource in = new InputSource(fileInputStream);
-			reader.parse(in);
-			System.out.println(" is well-formed!");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	
-
-		
+			reader.parse(in);  
 	}
 
 	@Test
-	public void testWellformed_P() throws SAXException, IOException {
+	public void testWellformed_P() throws Exception { 
 		HTMLParser2 p2 = new HTMLParser2();
 	
 		InputStream input = this.getClass().getClassLoader()
@@ -252,8 +239,7 @@ public class HTMLParser_html2xhtml {
 		String charset = "UTF-8";
 		HTMLDocument htmldocTmp;
 		File fileTmp = File.createTempFile(
-				"JUNIT" + System.currentTimeMillis(), "html");
-		try {
+				"JUNIT" + System.currentTimeMillis(), "html"); 
 			htmldocTmp = p2.createDocument(input, charset);
 			
 			System.out.println(p2);
@@ -269,19 +255,44 @@ public class HTMLParser_html2xhtml {
 			XMLReader reader = XMLReaderFactory.createXMLReader();
 			FileInputStream fileInputStream = new FileInputStream(fileTmp);
 			InputSource in = new InputSource(fileInputStream);
-			reader.parse(in);
-			System.out.println(" is well-formed!");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	
-	
+			reader.parse(in);   
 		
 	}
 
 	@Test
-	public void testWellformed_DIVNAME() throws SAXException, IOException {
+	public void testWellformed_COLOR() throws Exception { 
+		HTMLParser2 p2 = new HTMLParser2();
+	
+		InputStream input = this.getClass().getClassLoader()
+				.getResourceAsStream(
+						"org/vietspider/html/parser/color.htm");
+	
+		String charset = "UTF-8";
+		HTMLDocument htmldocTmp;
+		File fileTmp = File.createTempFile(
+				"JUNIT" + System.currentTimeMillis(), "html");
+	 
+			htmldocTmp = p2.createDocument(input, charset);
+			
+			System.out.println(p2);
+	
+			FileOutputStream fout = new FileOutputStream(fileTmp);
+			htmldocTmp.getRoot().setBeautify(true);
+	
+			String asXHTML = htmldocTmp.getRoot().asXHTML();
+			fout.write(asXHTML.getBytes());
+			fout.flush();
+			fout.close();
+	
+			XMLReader reader = XMLReaderFactory.createXMLReader();
+			FileInputStream fileInputStream = new FileInputStream(fileTmp);
+			InputSource in = new InputSource(fileInputStream);
+			reader.parse(in); 
+		
+	}
+
+	@Test
+	public void testWellformed_DIVNAME() throws Exception { 
 		HTMLParser2 p2 = new HTMLParser2();
 	
 		InputStream input = this.getClass().getClassLoader()
@@ -292,7 +303,7 @@ public class HTMLParser_html2xhtml {
 		HTMLDocument htmldocTmp;
 		File fileTmp = File.createTempFile(
 				"JUNIT" + System.currentTimeMillis(), "html");
-		try {
+ 
 			htmldocTmp = p2.createDocument(input, charset);
 			
 			System.out.println(p2);
@@ -308,19 +319,7 @@ public class HTMLParser_html2xhtml {
 			XMLReader reader = XMLReaderFactory.createXMLReader();
 			FileInputStream fileInputStream = new FileInputStream(fileTmp);
 			InputSource in = new InputSource(fileInputStream);
-			reader.parse(in);
-			System.out.println(" is well-formed!");
-						 	
-		} catch (org.xml.sax.SAXParseException e) {
-			assertEquals(e.getMessage(), 1,2);
-		} catch (java.net.ConnectException e) {
-			assertEquals(e.getMessage(), 1,2);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	
-	
+			reader.parse(in); 
 		
 	}
 
