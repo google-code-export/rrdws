@@ -24,6 +24,7 @@ import org.vietspider.html.NodeConfig;
 import org.vietspider.html.NodeIterator;
 import org.vietspider.html.Tag;
 import org.vietspider.token.TypeToken;
+import org.vietspider.token.attribute.AttributeParser;
 
 /**
  * Created by VietSpider
@@ -367,15 +368,20 @@ public StringBuilder builXHTML(StringBuilder builder, int LEVEL) {
 	if (isTag && Name.DOCTYPE != this.name)  
 	{
 		builder.append('<');
-		char[] startTmp = getValue();
+		char[] startTmp = getValue(); 
+		
 		String startUp = new String(startTmp);
 		
 		int cutStart = startUp.toUpperCase().indexOf(nameTmp.toUpperCase());
 		int cutEnd = cutStart + nameTmp.length();
 		try{
-			startUp  = startUp .substring(0, cutStart)+
+			String prefixTmp = startUp .substring(0, cutStart);
+			String suffixTmp = startUp .substring( cutEnd );
+			// replace by formatted attts
+			suffixTmp  = " "+AttributeParser.parse(this); 
+			startUp  = prefixTmp+
 					   nameTmp +
-					   startUp .substring( cutEnd );
+					   suffixTmp;
 		}catch(java.lang.StringIndexOutOfBoundsException e){
 			System.out.println("!!!!!!!!!"+cutStart+">>>"+cutEnd+">>>"+startUp);
 			e.printStackTrace();
