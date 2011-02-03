@@ -106,7 +106,10 @@ public abstract class HTMLNode implements Node<Name>, Serializable {
 	    String xmlHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 	    xmlHeader += "<!DOCTYPE html \n";
 	    xmlHeader += "PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" ";
-	    xmlHeader += "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">";	    
+	    //xmlHeader += "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\""; 
+	    //xmlHeader += "\"xhtml1-transitional.dtd\""; 
+	    xmlHeader += "\"target/classes/DTD/xhtml1-transitional.dtd\""; 
+	    xmlHeader +=		">";	    
 	    builder .append(xmlHeader);
 	    builXHTML(builder);
 	    String retval = builder.toString();

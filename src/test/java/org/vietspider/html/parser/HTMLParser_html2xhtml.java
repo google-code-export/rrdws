@@ -241,6 +241,89 @@ public class HTMLParser_html2xhtml {
 		
 	}
 
+	@Test
+	public void testWellformed_P() throws SAXException, IOException {
+		HTMLParser2 p2 = new HTMLParser2();
+	
+		InputStream input = this.getClass().getClassLoader()
+				.getResourceAsStream(
+						"org/vietspider/html/parser/P!.htm");
+	
+		String charset = "UTF-8";
+		HTMLDocument htmldocTmp;
+		File fileTmp = File.createTempFile(
+				"JUNIT" + System.currentTimeMillis(), "html");
+		try {
+			htmldocTmp = p2.createDocument(input, charset);
+			
+			System.out.println(p2);
+	
+			FileOutputStream fout = new FileOutputStream(fileTmp);
+			htmldocTmp.getRoot().setBeautify(true);
+	
+			String asXHTML = htmldocTmp.getRoot().asXHTML();
+			fout.write(asXHTML.getBytes());
+			fout.flush();
+			fout.close();
+	
+			XMLReader reader = XMLReaderFactory.createXMLReader();
+			FileInputStream fileInputStream = new FileInputStream(fileTmp);
+			InputSource in = new InputSource(fileInputStream);
+			reader.parse(in);
+			System.out.println(" is well-formed!");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+	
+		
+	}
+
+	@Test
+	public void testWellformed_DIVNAME() throws SAXException, IOException {
+		HTMLParser2 p2 = new HTMLParser2();
+	
+		InputStream input = this.getClass().getClassLoader()
+				.getResourceAsStream(
+						"org/vietspider/html/parser/DIVNAME.htm");
+	
+		String charset = "UTF-8";
+		HTMLDocument htmldocTmp;
+		File fileTmp = File.createTempFile(
+				"JUNIT" + System.currentTimeMillis(), "html");
+		try {
+			htmldocTmp = p2.createDocument(input, charset);
+			
+			System.out.println(p2);
+	
+			FileOutputStream fout = new FileOutputStream(fileTmp);
+			htmldocTmp.getRoot().setBeautify(true);
+	
+			String asXHTML = htmldocTmp.getRoot().asXHTML();
+			fout.write(asXHTML.getBytes());
+			fout.flush();
+			fout.close();
+	
+			XMLReader reader = XMLReaderFactory.createXMLReader();
+			FileInputStream fileInputStream = new FileInputStream(fileTmp);
+			InputSource in = new InputSource(fileInputStream);
+			reader.parse(in);
+			System.out.println(" is well-formed!");
+						 	
+		} catch (org.xml.sax.SAXParseException e) {
+			assertEquals(e.getMessage(), 1,2);
+		} catch (java.net.ConnectException e) {
+			assertEquals(e.getMessage(), 1,2);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+	
+		
+	}
+
 	// builXHTML
 
 }
