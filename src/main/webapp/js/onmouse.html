@@ -1,0 +1,46 @@
+<HTML>
+<HEAD>
+<TITLE>Displaying text on the status line with Mouseover
+</TITLE>
+<script type="text/javascript">
+var msg = ""; 
+function jo(){
+	msg ="..."+ jo.txt +" ...";
+	window.status = msg;
+	//alert(msg);
+}
+</script>
+<script type="text/javascript">
+//<!--
+function statwords(message){
+msg = message;
+jo.txt = msg;
+var t=setTimeout("jo()" ,1111);
+}
+// -->
+</script>
+</HEAD>
+<A NAME="TOP"></A>                              
+<BODY BGCOLOR="#FFFFFF">
+
+<form action="">
+<div style="text-align:center;">
+<input type="button" name="DoIt" value="Write a status bar message" onclick="statwords('This is my message');" />
+<input type="button" name="Gone" value="Erase the status bar message" onclick="statwords('');" />
+</div></form>
+ <B>
+ <a href="/index.shtml" 
+      onMouseOver="statwords( ' Return to the HOME Page'); "     onMouseOut="statwords('');"
+>
+     HOME</a></B>
+  <P>
+  <a href="/html.shtml" onmouseover=
+    "window.status=' Return to the HTML TRICKS Page';return true"
+     onMouseOut="window.status='';return true">
+      <B>HTML TRICKS</B>              
+
+
+<img src="image_w3default.gif" name="mousetest" onMouseOver="statwords( ' Return to the HOME Page'); "   
+onMouseOut="statwords('');" width="234" height="91" /></A> 
+</BODY>
+</HTML>
