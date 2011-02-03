@@ -41,6 +41,10 @@ public final class AttributeParser {
     nodeName = nodeName.toLowerCase();
     
     text = text.substring(nodeName.length());
+    text = text.replace('\r', ' ');
+    text = text.replace('\n', ' ');
+    text = text.replace('\b', ' ');
+    text = text.replace('\t', ' ');
     text = trimText(text);
 
     RefsDecoder refsDecoder = new RefsDecoder();
@@ -70,9 +74,11 @@ public final class AttributeParser {
       }
       list.addElement(new Attribute(name, value, mark));
     }
-    parseStyle(list);
+    // disable forever
+    if (1==2)parseStyle(list);
     return list;
   }
+  
   
   final static private void parseStyle(Attributes list) {
     Attribute attribute = list.get("style");
