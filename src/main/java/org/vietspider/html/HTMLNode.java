@@ -93,7 +93,16 @@ public abstract class HTMLNode implements Node<Name>, Serializable {
 	    xmlHeader += "<!DOCTYPE html>\n";
 	    builder .append(xmlHeader);
 	    builXHTML(builder);
-	    return builder.toString();
+	    String retval = builder.toString();
+	    // TODO refactor 	    
+	    retval = retval.replace("&nbsp;", "&#160;");
+	    // TODO refactor 	    
+	    retval = retval.replace("&copy;", "&#169;");
+	    
+	    //http://www.velocityreviews.com/forums/t118003-nowrap-not-xhtml-1-0-compliant.html
+	    // TODO refactor 
+	    retval = retval.replace(" nowrap>", " nowrap=\"nowrap\">");
+		return retval;
   }  
 
   abstract public StringBuilder builXHTML(StringBuilder builder)  ;
