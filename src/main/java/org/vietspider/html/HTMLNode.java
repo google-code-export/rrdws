@@ -87,10 +87,26 @@ public abstract class HTMLNode implements Node<Name>, Serializable {
   } 
   
 
+  /**
+   * 
+   * <!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+
+
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+   * @author vipup
+   * @return
+   */
   public String asXHTML(){
 	    StringBuilder builder = new StringBuilder();
 	    String xmlHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-	    xmlHeader += "<!DOCTYPE html>\n";
+	    xmlHeader += "<!DOCTYPE html \n";
+	    xmlHeader += "PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" ";
+	    xmlHeader += "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">";	    
 	    builder .append(xmlHeader);
 	    builXHTML(builder);
 	    String retval = builder.toString();
