@@ -4,32 +4,38 @@
     "http://java.sun.com/dtd/web-app_2_3.dtd">
 
 <web-app>
+	<description>RRD4J @GAE/J2EE</description>
+	<display-name>RRD4J-${buildNumber}</display-name>
+	<context-param>
+		<param-name>buildNumber</param-name>
+		<param-value>${buildNumber}</param-value>
+	</context-param>
 	<servlet>
-	<servlet-name>info</servlet-name>
-	<jsp-file>/info.jsp</jsp-file>
+		<servlet-name>info</servlet-name>
+		<jsp-file>/info.jsp</jsp-file>
 	</servlet>
 	<servlet>
-	<servlet-name>L</servlet-name>
-	<jsp-file>/T/L.jsp</jsp-file>
+		<servlet-name>L</servlet-name>
+		<jsp-file>/T/L.jsp</jsp-file>
 	</servlet>
 	<servlet>
-	<servlet-name>speed.gif</servlet-name>
-	<jsp-file>/speed.jsp</jsp-file>
+		<servlet-name>speed.gif</servlet-name>
+		<jsp-file>/speed.jsp</jsp-file>
 	</servlet>
-	
- 	<!-- Servlets -->
+
+	<!-- Servlets -->
 	<servlet>
 		<servlet-name>x</servlet-name>
 		<servlet-class>ws.rrd.server.XServlet</servlet-class>
-	</servlet>	 	
+	</servlet>
 	<servlet>
 		<servlet-name>l</servlet-name>
 		<servlet-class>ws.rrd.server.LServlet</servlet-class>
-	</servlet>	
+	</servlet>
 	<servlet>
 		<servlet-name>F</servlet-name>
 		<servlet-class>ws.rrd.server.FServlet</servlet-class>
-	</servlet>	
+	</servlet>
 	<servlet>
 		<servlet-name>S</servlet-name>
 		<servlet-class>ws.rrd.server.SServlet</servlet-class>
@@ -37,71 +43,75 @@
 	<servlet>
 		<servlet-name>C</servlet-name>
 		<servlet-class>ws.rrd.server.CSServlet</servlet-class>
-	</servlet>	
-<!-- 
-	<servlet>
+	</servlet>
+	<!-- 
+		<servlet>
 		<servlet-name>greetServlet</servlet-name>
 		<servlet-class>ws.rrd.server.GreetingServiceImpl</servlet-class>
-	</servlet>
- -->
+		</servlet>
+	-->
 	<servlet>
-	  <servlet-name>mailhandler</servlet-name>
-	  <servlet-class>cc.co.llabor.mail.MailHandlerServlet</servlet-class>
+		<servlet-name>mailhandler</servlet-name>
+		<servlet-class>
+			cc.co.llabor.mail.MailHandlerServlet
+		</servlet-class>
 	</servlet>
-	
-
-  <servlet> 
-    <servlet-name>_ah_sessioncleanup</servlet-name> 
-
- <servlet-class>com.google.apphosting.utils.servlet.SessionCleanupServlet</servlet-class> 
-  </servlet> 
 
 
-	
+	<servlet>
+		<servlet-name>_ah_sessioncleanup</servlet-name>
 
-  <servlet-mapping> 
-    <servlet-name>speed.gif</servlet-name> 
-    <url-pattern>/speed.gif</url-pattern> 
-  </servlet-mapping> 
+		<servlet-class>
+			com.google.apphosting.utils.servlet.SessionCleanupServlet
+		</servlet-class>
+	</servlet>
 
-<!-- 
-  <security-constraint> 
-    <web-resource-collection> 
-      <web-resource-name>session-cleanup</web-resource-name> 
-      <url-pattern>/_ah/sessioncleanup</url-pattern> 
-    </web-resource-collection> 
-    <auth-constraint> 
-      <role-name>admin</role-name> 
-    </auth-constraint> 
-  </security-constraint>
- -->  	
+
+
+
 	<servlet-mapping>
-	  <servlet-name>mailhandler</servlet-name>
-	  <url-pattern>/_ah/mail/*</url-pattern>
+		<servlet-name>speed.gif</servlet-name>
+		<url-pattern>/speed.gif</url-pattern>
 	</servlet-mapping>
-<!-- 
-	<security-constraint>
-	  <web-resource-collection>
-	    <url-pattern>/_ah/mail/*</url-pattern>
-	  </web-resource-collection>
-	  auth-constraint>
-	    <role-name>admin</role-name>
-	  </auth-constraint
-	</security-constraint>
--->
 
-<!-- 
+	<!-- 
+		<security-constraint> 
+		<web-resource-collection> 
+		<web-resource-name>session-cleanup</web-resource-name> 
+		<url-pattern>/_ah/sessioncleanup</url-pattern> 
+		</web-resource-collection> 
+		<auth-constraint> 
+		<role-name>admin</role-name> 
+		</auth-constraint> 
+		</security-constraint>
+	-->
 	<servlet-mapping>
+		<servlet-name>mailhandler</servlet-name>
+		<url-pattern>/_ah/mail/*</url-pattern>
+	</servlet-mapping>
+	<!-- 
+		<security-constraint>
+		<web-resource-collection>
+		<url-pattern>/_ah/mail/*</url-pattern>
+		</web-resource-collection>
+		auth-constraint>
+		<role-name>admin</role-name>
+		</auth-constraint
+		</security-constraint>
+	-->
+
+	<!-- 
+		<servlet-mapping>
 		<servlet-name>greetServlet</servlet-name>
 		<url-pattern>/rrd/greet</url-pattern>
 		
-	</servlet-mapping>
- -->
- 	
+		</servlet-mapping>
+	-->
+
 	<servlet-mapping>
 		<servlet-name>info</servlet-name>
 		<url-pattern>/info.htm</url-pattern>
-	</servlet-mapping>	
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>l</servlet-name>
 		<url-pattern>/l/*</url-pattern>
@@ -117,7 +127,7 @@
 	<servlet-mapping>
 		<servlet-name>C</servlet-name>
 		<url-pattern>/C/*</url-pattern>
-	</servlet-mapping>	
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>F</servlet-name>
 		<url-pattern>/F/*</url-pattern>
@@ -125,7 +135,7 @@
 	<servlet-mapping>
 		<servlet-name>L</servlet-name>
 		<url-pattern>/T</url-pattern>
-	</servlet-mapping>	
+	</servlet-mapping>
 	<!-- Default page to serve -->
 	<welcome-file-list>
 		<welcome-file>rrd.jsp</welcome-file>
