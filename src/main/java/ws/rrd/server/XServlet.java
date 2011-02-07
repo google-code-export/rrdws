@@ -17,6 +17,10 @@ public class XServlet extends LServlet {
 	 */
 	private static final long serialVersionUID = 2011044130158675841L;
 
+	public String getMYALIAS() {
+		 return "/x/";
+	}	
+	
 	/**
 	 * @author vipup
 	 * @param documentTmp

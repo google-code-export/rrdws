@@ -131,14 +131,14 @@ public class LServlet extends HttpServlet {
 		try {
 			StringBuffer requestURL = req.getRequestURL();
 			String rurlTmp = ""+req.getRequestURL()+""; 
-			String baseURL =  System .getProperty("l.baseURL");
+			final String baseURL =  System .getProperty("l.baseURL");
 			String decodedUrl = rurlTmp;
-			if (baseURL == null){
+			if (baseURL == null){  
 				SwapServletUrl  = rurlTmp.substring(0, rurlTmp.indexOf(req.getServletPath()+"/") )+req.getServletPath()+"/";
 				decodedUrl = requestURL.substring( SwapServletUrl.length());
-			}else{
+			}else{// redefine server/host-based intra.PEGA001.fidu.com -> GLOBaserv.com
 				SwapServletUrl  = baseURL;
-				decodedUrl = requestURL.substring( requestURL.lastIndexOf("/l/")+3 );
+				decodedUrl = requestURL.substring( requestURL.lastIndexOf(getMYALIAS()) + getMYALIAS().length() );
 				
 			}
 				
@@ -424,6 +424,11 @@ public class LServlet extends HttpServlet {
 				//outTmp.flush();
 				//ExceptionUtils.swapFailedException(resp, e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}  
+	}
+
+	// any servlet have web.xml alias @see web.xml
+	public String getMYALIAS() {
+		 return "/l/";
 	}
 
 	/**
