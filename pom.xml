@@ -317,7 +317,19 @@ batik-xml-1.6.jar
 
 	<build>
 		<plugins>
-		
+		<plugin>
+				<artifactId>
+					maven-mercurial-build-number-plugin
+				</artifactId>
+				<version>1.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>set-build-number</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -332,7 +344,65 @@ batik-xml-1.6.jar
           </systemProperties>
         </configuration>
       </plugin>		
-		
+			<!-- begin - precompiling jsps -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jspc-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>jspc</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<source>1.6</source>
+					<target>1.5</target>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging-api</artifactId>
+						<version>1.1</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+				    <!-- precompiled JSPs --> 
+					<webXml>${basedir}/target/jspweb.xml</webXml>
+					 
+					
+				    <webResources>
+				        <resource>
+				                <directory>${basedir}/target/</directory>
+				                <filtering>true</filtering>
+				                <targetPath>WEB-INF</targetPath>
+				                <includes>
+				                        <include>**/*.xml</include>
+				                </includes>
+				        </resource>
+				    </webResources>
+					<archive>
+						<manifest>
+							<addDefaultImplementationEntries>
+								true
+							</addDefaultImplementationEntries>
+						</manifest>
+						<manifestEntries>
+							<Build-Number>${buildNumber} </Build-Number>
+							<Implementation-Build> ${buildNumber}</Implementation-Build>
+							<pomVersion>${pom.version}</pomVersion>
+							<artifactId>${pom.artifactId}</artifactId>
+							<groupId>${pom.groupId}</groupId>
+							<!--  <basedir>${basedir}</basedir>  -->
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>		
 
 
 			<!-- plugin>
