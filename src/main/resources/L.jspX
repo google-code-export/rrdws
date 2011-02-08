@@ -62,7 +62,11 @@
 				<td width="100"><a href="l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001" target="_blank" 	style="color: #000; font-size: 10px">PROXY HOME</a></td>
 				<td width="100"> </td>
 				<td align="right"><input  type="text" id="I01lOO10lOO11I" style="width: 400px" name="_u_r_l_" value="l1lll1l1ll1l1lll1l1lll1l1ll1ll11lll111111l1l11ll1l1l1l1l1l11l1" width="100%" /></td>
-				<td width="100"><input type="submit" id="OO0O0OOO00O" style="width: 100%" value="  OK  " onclick="openurl(document.getElementById('I01lOO10lOO11I').value); return false;" />				</td>
+				<td width="100">
+					<input type="submit" id="OO0O0OOO00O" style="width: 100%" value="  OK  " onclick="openurl(document.getElementById('I01lOO10lOO11I').value); return false;" />
+					<a href="#" onclick="document.getElementById('F01lOO10lOO11').submit()">SForm</a>
+					<a href="#" onclick="document.getElementById('F01lOO10lOO11').submit()">SForm</a>
+				</td>
 			</tr>
 		</table>
 		</form>
