@@ -128,7 +128,7 @@ public class UrlFetchTest implements Serializable{
 		if (statusTmp.indexOf("200 OK") > 0) {
 			System.out.println("resp.:" + statusLine);
 
-		} else if ("HTTP/1.1 401 Unauthorized".equals(statusTmp)) {
+		} else if ("HTTP/1.1 401 Unauthorized".equals(statusTmp) || "HTTP/1.0 401 Unauthorized".equals(statusTmp)) {
 			String basicAuth = searchForAuth(toFetchStr, m);
 			
 			if (basicAuth != null) {// go forward with cached
