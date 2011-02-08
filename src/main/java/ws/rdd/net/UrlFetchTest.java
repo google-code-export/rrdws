@@ -10,15 +10,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
-
-import org.htmlparser.http.Cookie; //import javax.servlet.http.Cookie; - setMaxAge >8E
+import java.util.StringTokenizer; 
+import org.htmlparser.http.Cookie; 
+//import javax.servlet.http.Cookie; - setMaxAge >8E
 //import org.apache.commons.httpclient.Cookie;
 //import org.apache.http.cookie.Cookie;
-import javax.servlet.http.HttpSession;
-
-import net.sf.jsr107cache.Cache;
-
+import javax.servlet.http.HttpSession; 
+import net.sf.jsr107cache.Cache; 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -29,14 +27,12 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.client.methods.HttpUriRequest; 
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.conn.ssl.SSLSocketFactory;
-
+import org.apache.http.conn.ssl.SSLSocketFactory; 
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.ContentBody;
@@ -47,7 +43,11 @@ import org.apache.http.message.BasicHttpResponse;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.esxx.js.protocol.GAEConnectionManager;
-import org.jrobin.cmd.RrdCommander;
+import org.jrobin.cmd.RrdCommander; 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ws.rrd.server.LServlet;
 
 import com.no10x.cache.Manager;
 import com.no10x.cache.MemoryFileItem;
@@ -67,6 +67,7 @@ public class UrlFetchTest implements Serializable{
 	 * @author vipup
 	 */
 	private static final long serialVersionUID = 1L;
+	private static final Logger log = LoggerFactory.getLogger(LServlet.class .getName());
 
 	private static final String COOKIES_STORE = "COOKIES_STORE";
 
@@ -98,7 +99,16 @@ public class UrlFetchTest implements Serializable{
 		int readedTmp = contentTmp.read(buf);
 		return new String(buf, 0, readedTmp);
 	}
-
+	public static void System_out_print(String txt){
+		log.trace(txt);
+	}
+	public static void System_out_println(Object txt){
+		log.trace( ""+ txt);
+	}
+	public static void System_out_println(String txt){
+		log.trace(txt);
+	}
+	
 	/**
 	 * @author vipup
 	 * @param toFetchStr
@@ -122,12 +132,14 @@ public class UrlFetchTest implements Serializable{
 			Header header = m.getHeaders("Authorization")[0];
 			String basicAuth = searchForAuth(toFetchStr, m);
 			if (basicAuth == null){
+				log.trace("store AUTH to cache :{}", header);
 				cacheAuth.put(appUri,""+header.getValue() );
+			}else{
+				log.trace("ignore caching auth.");
 			}
 		}
 		if (statusTmp.indexOf("200 OK") > 0) {
-			System.out.println("resp.:" + statusLine);
-
+			System_out_println("resp.:" + statusLine);
 		} else if ("HTTP/1.1 401 Unauthorized".equals(statusTmp) || "HTTP/1.0 401 Unauthorized".equals(statusTmp)) {
 			String basicAuth = searchForAuth(toFetchStr, m);
 			
@@ -141,8 +153,7 @@ public class UrlFetchTest implements Serializable{
 					bRealm = bRealm.replace("$$$$$$", "Tomcat Manager Application");
 				else
 					bRealm = bRealm.replace("$$$$$$", ""+hTmp);
-				respTmp.addHeader("WWW-Authenticate",
-						bRealm);
+				respTmp.addHeader("WWW-Authenticate", bRealm);
 				respTmp.setStatusCode(401);
 				respTmp.setStatusLine(statusLine);
 			}
@@ -210,8 +221,13 @@ public class UrlFetchTest implements Serializable{
 				? "http://www.fidu"+"cia.de/service/suchergebnis.html?searchTerm=java"
 				: toFetchStr;
 		HttpUriRequest m = new HttpGet(fetchUrl);
-		for (String[] nextHeader : headers)
-			m.addHeader(nextHeader[0], nextHeader[1]);
+		for (String[] nextHeader : headers){
+			String headerNameTmp = nextHeader[0];
+			String headerValTmp = nextHeader[1];
+			log.trace("HEADER{}={}", headerNameTmp, headerValTmp);
+			m.addHeader(headerNameTmp, headerValTmp);
+			
+		}
 		addCookies(m);
 		m.addHeader("Host", m.getURI().getHost());
 		HttpResponse respTmp = httpClient.execute(m);
@@ -348,7 +364,7 @@ public class UrlFetchTest implements Serializable{
 			strCookieHeader = strCookieHeader.substring(strCookieHeader
 					.indexOf("Set-Cookie: ")
 					+ "Set-Cookie: ".length());
-			System.out.println("\"Set-Cookie: " + strCookieHeader + "\"");
+			System_out_println("\"Set-Cookie: " + strCookieHeader + "\"");
 			StringTokenizer tokenizer = new StringTokenizer(strCookieHeader,
 					";,", true);
 			cookie = null;

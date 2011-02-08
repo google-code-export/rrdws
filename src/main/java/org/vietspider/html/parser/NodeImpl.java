@@ -390,7 +390,7 @@ public StringBuilder builXHTML(StringBuilder builder, int LEVEL) {
 		builder.append('>');
 		//http://xhtml.com/en/xhtml/reference/script/
 		if ("SCRIPT".equals( nameTmp.toUpperCase()) &&  this.getTextValue().indexOf("<![CDATA[")==-1  ){
-			builder.append("\n//<![CDATA[");
+			builder.append("\n//<![CDATA[\n");
 		}
 	}
 	if (children == null) {
@@ -426,7 +426,7 @@ public StringBuilder builXHTML(StringBuilder builder, int LEVEL) {
 		}
 		//http://xhtml.com/en/xhtml/reference/script/
 		if ("SCRIPT".equals( nameTmp.toUpperCase() ) &&  this.getTextValue().indexOf("<![CDATA[")==-1  ){
-			builder.append("//]]>");
+			builder.append("\n//]]>");
 		}
 		
 		builder.append("</");
