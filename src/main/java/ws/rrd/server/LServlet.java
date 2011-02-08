@@ -162,7 +162,10 @@ public class LServlet extends HttpServlet {
 			try{
 				if (TRACE){System_out_println("DECODE :"+decodedUrl);}
 				if (decodedUrl.indexOf("/")>0){
-					urlStr = HyperLinkUtil.decode(decodedUrl.substring(0,decodedUrl.indexOf("/")));
+					String []urls = decodedUrl.split("/");
+					for (String urlTmp:urls){
+						urlStr = HyperLinkUtil.decode(urlTmp);
+					}
 				}else{
 					urlStr = HyperLinkUtil.decode(decodedUrl);
 					
@@ -246,13 +249,15 @@ public class LServlet extends HttpServlet {
 			}
 			final StatusLine statusLine = xRespTmp.getStatusLine();
 			try{
+				String wwwAuthTmp = xRespTmp.getHeaders("WWW-Authenticate")[0].getValue();
+				wwwAuthTmp = wwwAuthTmp.lastIndexOf("\"")==wwwAuthTmp.length()-1?wwwAuthTmp.substring(0, wwwAuthTmp.length()-1)+"@"+targetUrl+"\"":wwwAuthTmp;
 				if (statusLine.getStatusCode() == 401){
 					resp.setStatus(401);
-					resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
+					resp.setHeader( "WWW-Authenticate", wwwAuthTmp );
 					return;
 				}else if (statusLine.getStatusCode() == 301){
 					resp.setStatus(301);
-					resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
+					resp.setHeader( "WWW-Authenticate", wwwAuthTmp);
 					return;
 				}else if (statusLine.getStatusCode() == 302){
 					resp.setStatus(302);//xRespTmp.getAllHeaders()
@@ -260,15 +265,15 @@ public class LServlet extends HttpServlet {
 					return;
 				}else if (statusLine.getStatusCode() == 303){
 					resp.setStatus(303);
-					resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
+					resp.setHeader( "WWW-Authenticate", wwwAuthTmp);
 					return;
 				}else if (statusLine.getStatusCode() == 304){
 					resp.setStatus(304);
-					resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
+					resp.setHeader( "WWW-Authenticate", wwwAuthTmp);
 					return;
 				}else if (statusLine.getStatusCode() == 305){
 					resp.setStatus(305);
-					resp.setHeader( "WWW-Authenticate", xRespTmp.getHeaders("WWW-Authenticate")[0].getValue());
+					resp.setHeader( "WWW-Authenticate", wwwAuthTmp);
 					return;
 				}
 			}catch(Exception e){
@@ -797,8 +802,12 @@ public class LServlet extends HttpServlet {
 	protected static void setupResponseProperty(HttpServletResponse aPar,
 			HttpResponse bPar) throws IOException {
 		for (String headerName :headersToSet)
-		for (Header next: bPar.getHeaders(headerName) )
-			aPar.setHeader(next.getName(), next.getValue()); 
+		for (Header next: bPar.getHeaders(headerName) ){
+			String name = next.getName();
+			String value = next.getValue();
+			aPar.setHeader(name, value);
+			log.debug("${}->{}",name, value);
+		}
 		
 	}
 	

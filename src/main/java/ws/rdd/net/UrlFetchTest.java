@@ -132,10 +132,12 @@ public class UrlFetchTest implements Serializable{
 			Header header = m.getHeaders("Authorization")[0];
 			String basicAuth = searchForAuth(toFetchStr, m);
 			if (basicAuth == null){
-				log.trace("store AUTH to cache :{}", header);
+				log.debug("store AUTH to cache :{}", header);
 				cacheAuth.put(appUri,""+header.getValue() );
-			}else{
-				log.trace("ignore caching auth.");
+			}else{ // onerwrite AUTH
+				log.debug("onerwrite AUTH  4 {}", appUri);
+				cacheAuth.put("~"+appUri,""+basicAuth );
+				cacheAuth.put(appUri,""+header.getValue() );
 			}
 		}
 		if (statusTmp.indexOf("200 OK") > 0) {
