@@ -16,8 +16,7 @@ import java.nio.charset.Charset;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List; 
-import java.util.Map; 
-import java.util.logging.Logger;
+import java.util.Map;  
 import java.util.zip.GZIPInputStream;
  
 import javax.servlet.ServletOutputStream; 
@@ -27,6 +26,8 @@ import org.apache.http.Header;
 import org.apache.http.HttpEntity; 
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vietspider.html.HTMLDocument;
 import org.vietspider.html.HTMLNode;
 import org.vietspider.html.parser.HTMLParser2;
@@ -48,6 +49,18 @@ public class LServlet extends HttpServlet {
 	public static final String _U_R_L_ = "_u_r_l_";
 	
 	public static final String SYSTEM_EXIT_RESETED = ExitTrappedException.isReseted()? "YES":"no";
+	
+	private static final Logger log = LoggerFactory.getLogger(LServlet.class .getName());
+	
+	public static void System_out_print(String txt){
+		log.trace(txt);
+	}
+	public static void System_out_println(Object txt){
+		log.trace( ""+ txt);
+	}
+	public static void System_out_println(String txt){
+		log.trace(txt);
+	}
 
 	private static final String CHARSET_PREFIX = "charset=";
 
@@ -64,8 +77,7 @@ public class LServlet extends HttpServlet {
 
 	public static short FWSwaperAppVersion = 1;
 
-	private static final Logger log = Logger.getLogger(LServlet.class
-			.getName());
+
 
 	public static final String BEAUTIFY = "BEAUTIFY";
 	public static final String REPLACER = "REPLACER";
@@ -91,7 +103,7 @@ public class LServlet extends HttpServlet {
 	    List<String> list  = handler.scanSiteLink(node);
 	    if (TRACE)
 	    	for(String ele : list)
-	    		System.out.println(ele);
+	    		System_out_println(ele);
 	  }
 		  
 	  public static void testCreateScriptLink(HTMLNode node, String swapServletUrl2, URL home){
@@ -99,7 +111,7 @@ public class LServlet extends HttpServlet {
 	    if (TRACE){
 	    	//List<String> list  = handler.scanScriptLink(node );
 	    	//for(String ele : list)
-	    	//	System.out.println(ele);
+	    	//	System_out_println(ele);
 	    }
 	  }	  
 	  public static void testCreateStyleLink(HTMLNode node, String swapServletUrl2, URL home){
@@ -107,7 +119,7 @@ public class LServlet extends HttpServlet {
 	    if (TRACE){
 	    	//List<String> list  = handler.scanScriptLink(node );
 	    	//for(String ele : list)
-	    	//	System.out.println(ele);
+	    	//	System_out_println(ele);
 	    }
 	  }
 		  
@@ -116,7 +128,7 @@ public class LServlet extends HttpServlet {
 	    if (TRACE){
 		    List<String> list  = handler.scanSiteLink(node);
 		    for(String ele : list)
-		    	if (TRACE) System.out.println(ele);
+		    	if (TRACE) System_out_println(ele);
 	    }
 	  }	  
  
@@ -148,8 +160,13 @@ public class LServlet extends HttpServlet {
 			 
 			
 			try{
-				if (TRACE){System.out.println("DECODE :"+decodedUrl);}
-				urlStr = HyperLinkUtil.decode(decodedUrl);
+				if (TRACE){System_out_println("DECODE :"+decodedUrl);}
+				if (decodedUrl.indexOf("/")>0){
+					urlStr = HyperLinkUtil.decode(decodedUrl.substring(0,decodedUrl.indexOf("/")));
+				}else{
+					urlStr = HyperLinkUtil.decode(decodedUrl);
+					
+				}
 			}catch(Throwable e){
 				if (TRACE){e.printStackTrace();}
 				outTmp = resp.getOutputStream();
@@ -168,7 +185,7 @@ public class LServlet extends HttpServlet {
 			
 			// normalize non-protocol-ADDRESS
 			urlStr = (""+urlStr ).startsWith("http")? urlStr:"http://"+urlStr;			
-			if (TRACE) System.out.println(_U_R_L_ + " := "+ urlStr);
+			if (TRACE) System_out_println(_U_R_L_ + " := "+ urlStr);
 			targetUrl = new StringBuilder(urlStr);
 
 			if ((targetUrl.length() > 0) && (req.getQueryString() != null)
@@ -267,7 +284,7 @@ public class LServlet extends HttpServlet {
 					
 					contextEncStr = contextTypeStr.substring(encPos+CHARSET_PREFIX.length());
 					contextEncStr = contextEncStr .toUpperCase();
-					if (TRACE) log.warning(contextEncStr + "  }} ENC :=  {  "+contextTypeStr+" } ::: enc ::: "+contextEncStr +"["+urlStr+"]");
+					if (TRACE) log.warn(contextEncStr + "  }} ENC :=  {  "+contextTypeStr+" } ::: enc ::: "+contextEncStr +"["+urlStr+"]");
 
 				}else{
 					
@@ -275,11 +292,11 @@ public class LServlet extends HttpServlet {
 					try{
 						contextEncStr =  contextEncHeaders[0].getValue();
 					}catch(Throwable e){}
-					if (TRACE) log.warning("Content-Encoding[0]::== {"+ contextEncStr + "  }" );
+					if (TRACE) log.warn("Content-Encoding[0]::== {"+ contextEncStr + "  }" );
 					 
 				}
 			}else{
-				if (TRACE) log.warning("nonull::::"+ contextEncStr + " ::::: "+ contextTypeStr );
+				if (TRACE) log.warn("nonull::::"+ contextEncStr + " ::::: "+ contextTypeStr );
 			}
 			
 			if ( isCSS(contextTypeStr)  )
@@ -296,8 +313,8 @@ public class LServlet extends HttpServlet {
 			}	else{
 			 
 				String xEncTmp = getXEnc(xRespTmp); 
-				if (TRACE) log.warning("x---HTML--- x  contextTypeStr/contextEncStr:"+contextTypeStr+" : :  enc : : "+contextEncStr +"["+urlStr+"]   XXX::"+xEncTmp);
-				if (TRACE) System.out.println("=====!!!======"+contextTypeStr +"::::"+contextEncStr);
+				if (TRACE) log.warn("x---HTML--- x  contextTypeStr/contextEncStr:"+contextTypeStr+" : :  enc : : "+contextEncStr +"["+urlStr+"]   XXX::"+xEncTmp);
+				if (TRACE) log.warn("=====!!!======"+contextTypeStr +"::::"+contextEncStr);
 			}
 			 
 			ByteArrayOutputStream oaos = new ByteArrayOutputStream();
@@ -337,10 +354,10 @@ public class LServlet extends HttpServlet {
 			try{
 				documentTmp = parser2.createDocument(dataBuf, contextEncStr );// "utf-8"
 			}catch(Exception e){
-				if (TRACE) log.warning("createDocument EXCEPTION!" +e.getMessage()+" contextTypeStr||contextEncStr:["+contextTypeStr+"||"+contextEncStr+"]  URL =:["+urlStr+"]");
+				if (TRACE) log.warn("createDocument EXCEPTION!" +e.getMessage()+" contextTypeStr||contextEncStr:["+contextTypeStr+"||"+contextEncStr+"]  URL =:["+urlStr+"]");
 				documentTmp = parser2.createDocument(dataBuf, null );// "utf-8"
 			}
-			 
+			
 	    	URL realURL = new URL(urlStr); // new String( oaos.toString(contextEncStr).getBytes(), contextEncStr)
 	    	 
 	    	HTMLNode rootTmp = documentTmp.getRoot();
@@ -351,10 +368,8 @@ public class LServlet extends HttpServlet {
 	    	}
 	    	
 			testCreateFullLink(rootTmp, SwapServletUrl, realURL);
-//	    	testCreateImageLink(documentTmp.getRoot(), SwapServletUrl, realURL);
-	    	
-	    	testCreateMetaLink(rootTmp, SwapServletUrl, realURL);
-	    	
+//	    	testCreateImageLink(documentTmp.getRoot(), SwapServletUrl, realURL);	    	
+	    	testCreateMetaLink(rootTmp, SwapServletUrl, realURL);	    	
 	    	testCreateScriptLink(rootTmp, SwapServletUrl, realURL);	    	
 	    	testCreateStyleLink(rootTmp, SwapServletUrl, realURL);	    	
 	    	
@@ -364,77 +379,69 @@ public class LServlet extends HttpServlet {
 	    	resp.setContentType(contextTypeStr.substring(beginIndex));
 	    	if (!"null".equals(""+contextEncStr)){
 	    		resp.setCharacterEncoding(contextEncStr);
-	    	}
-	    	
-	    	outTmp = resp.getOutputStream();
-	    	
+	    	}	    	
+	    	outTmp = resp.getOutputStream();	    	
 	    	String textValue = null;
 	    	
-	    	try{ // TODO see hg hi 
+	    	try{ 
 	    		HTMLNode bodyTmp = documentTmp.getRoot().getChild(1);
-				String strTmp = "<body><div  name=toolbar>"+ new String(getResourceAsBA("L.jspX") ) +"</div></body>";
-				strTmp = strTmp.replace(
-						"B8b8B8Bbbb888B", 
-						calcBase() 
-						); 			
-				String toURL = "l1lll1l1ll1l1lll1l1lll1l1ll1ll11lll111111l1l11ll1l1l1l1l1l11l1";
-				String encodedURL = url2html( urlStr );
-				strTmp = strTmp.replace(
-						toURL, 
-						encodedURL 
-						); 			
-				
-				HTMLDocument htmlTmp = parser2.createDocument(strTmp);
+				HTMLDocument htmlTmp = buildToolbar(urlStr, parser2);
 				HTMLNode myIFrame = htmlTmp.getRoot().getChild(1).getChild(0);
 				bodyTmp.addChild(myIFrame);
 	    	}catch(Exception e){
 	    		e.printStackTrace();
 	    		include(resp, "L.jspX");
-	    	}
-	    	//new String(documentTmp.getTextValue().getBytes("ISO-8859-1"), contextEncStr);// "windows-1251" textValue.toUpperCase().substring( 12430)
-
-	    	textValue = renderDocument(documentTmp, contextEncStr); 
-	    	
-	    	
+	    	} 
+	    	textValue = renderDocument(documentTmp, contextEncStr);  
 	    	if (!"null".equals(""+contextEncStr)){
 	    		outTmp.write(textValue.getBytes(contextEncStr)); 
 	    	}else{
 	    		outTmp.write(textValue.getBytes()); 
-	    	}
-			//outTmp.write(string2.getBytes(contextEncStr));
-			//outTmp.flush();
+	    	} 
 		} catch (java.lang.NoClassDefFoundError e) {
-			if (TRACE) System.out.println(contextTypeStr +" ===============  "+e.getMessage());e.printStackTrace();
-			if (TRACE) System.out.println(documentTmp);
+			if (TRACE) System_out_println(contextTypeStr +" ===============  "+e.getMessage());e.printStackTrace();
+			if (TRACE) System_out_println(documentTmp);
 		} catch (Exception e) {
-			
-			
 			if (!"".equals(""+targetUrl  ) && targetUrl != null){
 				ExceptionUtils.swapFailedException(targetUrl.toString(), resp,
 						e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 				outTmp = resp.getOutputStream();
-				e.printStackTrace(new PrintWriter(outTmp, true));
-				 
+				e.printStackTrace(new PrintWriter(outTmp, true)); 
 			}
-			else
-				outTmp = resp.getOutputStream();
-			
-				InputStream in = this.getClass().getClassLoader().getResourceAsStream("index.html");
-				byte buf[] = new byte[in.available()];
-				String magik = "l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001/";
-				int readRetVal = in.read(buf);
-				String toBrowser = new String (buf,0, readRetVal );
-				toBrowser = toBrowser.replace(magik,SwapServletUrl );// SwapServletUrl
-				toBrowser = toBrowser.replace("B8b8B8Bbbb888B", SwapServletUrl.subSequence(0, SwapServletUrl.length()-2) );//				
-				outTmp.write(toBrowser.getBytes());
-				
+			else {
+				outTmp = include(resp, "index.html");
 				outTmp.write("<pre>".getBytes());
 				outTmp.write((""+e.getMessage()+"\n\n\n\n"+e.getStackTrace()).getBytes());
 				e.printStackTrace(new PrintWriter(outTmp, true));
-				//outTmp.flush();
-				//ExceptionUtils.swapFailedException(resp, e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			}
+			
 		}  
 	}
+	/**
+	 * @author vipup
+	 * @param urlStr
+	 * @param parser2
+	 * @return
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 * @throws Exception
+	 */
+	private HTMLDocument buildToolbar(String urlStr, HTMLParser2 parser2)
+			throws IOException, URISyntaxException, Exception {
+		if (commonToolbar!=null)return commonToolbar;
+		String strTmp = "<body><div  name=toolbar>"+ new String(getResourceAsBA("L.jspX") ) +"</div></body>";
+		strTmp = strTmp.replace( "B8b8B8Bbbb888B", calcBase() ); 			
+		// addressBAR
+		String toURL = "l1lll1l1ll1l1lll1l1lll1l1ll1ll11lll111111l1l11ll1l1l1l1l1l11l1";
+		String encodedURL = url2html( urlStr );
+		strTmp = strTmp.replace( toURL,  encodedURL  ); 			
+		
+		HTMLDocument htmlTmp = parser2.createDocument(strTmp);
+		commonToolbar = htmlTmp;
+		return htmlTmp;
+	}
+	
+	private static HTMLDocument commonToolbar = null;
 
 	private String url2html(String urlStr) throws URISyntaxException {
 		URI uri = new URI(urlStr );
@@ -493,7 +500,7 @@ public class LServlet extends HttpServlet {
 		
 		
 		
-		if (TRACE) log.warning("CSS contextTypeStr / contextEncStr:{"+contextTypeStr+" / "+contextEncPar +"}, url== ["+urlStr+"]");
+		if (TRACE) log.warn("CSS contextTypeStr / contextEncStr:{"+contextTypeStr+" / "+contextEncPar +"}, url== ["+urlStr+"]");
 		CSStore store = CSStore.getInstanse();
 		cc.co.llabor.cache.css.Item itemTmp =  store.getByURL(urlStr);
 		String xCSS = null;
@@ -572,7 +579,7 @@ public class LServlet extends HttpServlet {
 			String contextTypeStr, String urlStr, HttpEntity entity,
 			String contextEncPar) throws IOException {
 		ServletOutputStream outTmp;
-		if (TRACE) log.warning("JS contextTypeStr||contextEncStr:["+contextTypeStr+"||"+contextEncPar+"]  URL =:["+urlStr+"]");
+		if (TRACE) log.warn("JS contextTypeStr||contextEncStr:["+contextTypeStr+"||"+contextEncPar+"]  URL =:["+urlStr+"]");
 		
 		JSStore ssTmp = JSStore.getInstanse();
 		Item scriptTmp = ssTmp.getByURL( urlStr);
@@ -648,25 +655,29 @@ public class LServlet extends HttpServlet {
 
 
 
-	private void include(HttpServletResponse resp, String resourceName) {
+	private ServletOutputStream include(HttpServletResponse resp, String resourceName) {
+		ServletOutputStream out = null;
 		try {
-			ServletOutputStream out;
-			out = resp.getOutputStream();			
 			byte[] b = getResourceAsBA(resourceName);
-			String newVal = new String(b);
-			newVal  = newVal .replace( 
-					"l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001",
-					SwapServletUrl
-					);	
-			newVal = newVal.replace(
-					"B8b8B8Bbbb888B", 
-					calcBase() 
-					); 
-			b = newVal.getBytes();
-			out.write(b );
-		} catch (IOException e) { 
+			out = include(resp, b);
+		} catch (IOException e) {
 			e.printStackTrace();
-		}  	
+		}
+		return out;
+		
+	}
+
+	private ServletOutputStream include(HttpServletResponse resp, byte[] bytes)
+			throws IOException {
+		ServletOutputStream out = resp.getOutputStream(); 
+		String newVal = new String(bytes);
+		String L1111 = "l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001";
+		newVal = newVal.replace(L1111, SwapServletUrl);
+		String B8b8b = "B8b8B8Bbbb888B";
+		newVal = newVal.replace(B8b8b, calcBase());
+		bytes = newVal.getBytes();
+		out.write(bytes);
+		return out;
 	}
 
 	public static final String calcBase(){
@@ -800,7 +811,8 @@ public class LServlet extends HttpServlet {
 		for(String  nextKey:headersTmp.keySet()){
 			retval[i][0] = nextKey;
 			retval[i][1] = headersTmp.get(nextKey);
-			i++;
+			log.debug("# : {}=[{}]",  retval[i][0], retval[i][1] );
+			i++;			
 		}
 		return   retval;
 	}

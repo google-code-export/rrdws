@@ -13,9 +13,13 @@
 				+ "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$");
 			return regex.test(str_url);
 		}
-	  function openurl(){	    
-	    	var urlTmp = document.url_form._u_r_l_.value;	    	
-	    	window.open(location.href + "l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001/" + base64encode(urlTmp));
+</script>		
+<script type="text/javascript">
+	  function openurl(toURL){	    
+	        var toCODED = location.href ;
+	        toCODED = toCODED  + "/" ;
+	        toCODED = toCODED  +  base64encode(toURL) ; 
+	    	window.open( toCODED);
 		}
 </script>
 <div id="tbar"
@@ -51,14 +55,14 @@
 			</table>		
 		</td>
 		<td align="left">
-		<form target="_self" method="post" action="l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001">
+		<form id="F01lOO10lOO11" target="_self" method="post" action="l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001">
 		<table border="0" background="B8b8B8Bbbb888B/T/white_background_10.gif">
 			<tr>
 				<td width="60"><a href="#" 	onclick="document.getElementById('tbar').style.display='none';return false;">[close]</a></td>
 				<td width="100"><a href="l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001" target="_blank" 	style="color: #000; font-size: 10px">PROXY HOME</a></td>
 				<td width="100"> </td>
-				<td align="right"><input type="text" style="width: 400px" name="_u_r_l_" value="l1lll1l1ll1l1lll1l1lll1l1ll1ll11lll111111l1l11ll1l1l1l1l1l11l1" width="100%" /></td>
-				<td width="100"><input type="submit" style="width: 100%" value="  OK  " onclick="openurl(); return false;" />				</td>
+				<td align="right"><input  type="text" id="I01lOO10lOO11I" style="width: 400px" name="_u_r_l_" value="l1lll1l1ll1l1lll1l1lll1l1ll1ll11lll111111l1l11ll1l1l1l1l1l11l1" width="100%" /></td>
+				<td width="100"><input type="submit" id="OO0O0OOO00O" style="width: 100%" value="  OK  " onclick="openurl(document.getElementById('I01lOO10lOO11I').value); return false;" />				</td>
 			</tr>
 		</table>
 		</form>
