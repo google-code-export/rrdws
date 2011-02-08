@@ -7,8 +7,11 @@ import java.io.InputStream;
 import java.io.PrintWriter; 
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.HttpURLConnection; 
+import java.net.URLEncoder;
 import java.nio.charset.Charset; 
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -373,7 +376,14 @@ public class LServlet extends HttpServlet {
 				strTmp = strTmp.replace(
 						"B8b8B8Bbbb888B", 
 						calcBase() 
-						); 				
+						); 			
+				String toURL = "l1lll1l1ll1l1lll1l1lll1l1ll1ll11lll111111l1l11ll1l1l1l1l1l11l1";
+				String encodedURL = url2html( urlStr );
+				strTmp = strTmp.replace(
+						toURL, 
+						encodedURL 
+						); 			
+				
 				HTMLDocument htmlTmp = parser2.createDocument(strTmp);
 				HTMLNode myIFrame = htmlTmp.getRoot().getChild(1).getChild(0);
 				bodyTmp.addChild(myIFrame);
@@ -424,6 +434,11 @@ public class LServlet extends HttpServlet {
 				//outTmp.flush();
 				//ExceptionUtils.swapFailedException(resp, e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}  
+	}
+
+	private String url2html(String urlStr) throws URISyntaxException {
+		URI uri = new URI(urlStr );
+		return uri.toString();
 	}
 
 	// any servlet have web.xml alias @see web.xml
