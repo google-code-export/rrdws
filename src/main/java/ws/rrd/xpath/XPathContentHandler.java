@@ -1,8 +1,9 @@
-package org.vietspider.html.parser;
+package ws.rrd.xpath;
 
 import gnu.inet.encoding.Punycode;
 import gnu.inet.encoding.PunycodeException;
 
+import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.util.Date; 
 
@@ -74,17 +75,19 @@ public class XPathContentHandler implements ContentHandler {
 	}
 	
 	private final Object mutex = this;
+	private PrintWriter out;
 	
 	@Override
 	public void endElement(String uri, String localName, String name)
 			throws SAXException {
+		Object o = null;
 		synchronized (mutex) {
 			String data = (""+line).trim();
 			// ignore empty super-nodes
 			if (!"".equals( data) ){
 				log.trace("[{}]",data);
 				String timestamp = this.timestamp ;
-				this.action.perform(xpath, timestamp , data);
+				o =  this.action.perform(xpath, timestamp , data); 
 				// 	clean data for filtering last-Node-value
 				line = new StringBuffer();
 			}else{
@@ -92,6 +95,13 @@ public class XPathContentHandler implements ContentHandler {
 			}
 			xpath = xpath.substring(0, xpath.lastIndexOf("/"));
 		}
+		if (out!=null){ 
+			try{
+				out.append( ""+ ("" + o).replace(", \\\\", ",\n \\\\"));
+			}catch (Exception e) {
+				// fully ignore erroes
+			}
+		}		
 		log.trace("end {}{}", uri,name+"="+line);
 	}
 
@@ -144,6 +154,14 @@ public class XPathContentHandler implements ContentHandler {
 	public void startPrefixMapping(String prefix, String uri)
 			throws SAXException {
 		log.trace("startPrefixMapping {},{}",  prefix,   uri);
+	}
+
+	public PrintWriter getOut() { 
+			return out;
+	}
+
+	public void setOut(PrintWriter out) {
+		this.out = out;
 	}
 
 }

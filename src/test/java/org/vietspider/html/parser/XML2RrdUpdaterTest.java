@@ -1,5 +1,8 @@
 package org.vietspider.html.parser;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.Writer;
 
 import org.junit.Test;
 import org.xml.sax.ContentHandler;
@@ -11,6 +14,7 @@ import ws.rrd.csv.Action;
 import ws.rrd.csv.RrdUpdateAction;
 import ws.rrd.csv.SystemOutPrintlnAction;
 import ws.rrd.csv.ToStringPrintlnAction;
+import ws.rrd.xpath.XPathContentHandler;
 
 /**
  * <b>Description:TODO</b>
@@ -40,6 +44,25 @@ public class XML2RrdUpdaterTest {
 	}
 	
 	@Test
+	public void testOUT() throws Exception {
+		ClassLoader classLoader = this.getClass().getClassLoader();
+		InputStream input = classLoader.getResourceAsStream("xpath/exist1.xml");
+
+		XMLReader reader = XMLReaderFactory.createXMLReader(); 
+		Action rrdActioner = new  SystemOutPrintlnAction();
+		ContentHandler handler = new XPathContentHandler(rrdActioner);
+		ByteArrayOutputStream buff = new ByteArrayOutputStream();
+		PrintWriter barr = new PrintWriter(buff ,true);
+		((XPathContentHandler)handler).setOut(barr );
+		reader.setContentHandler(handler );
+		InputSource in = new InputSource(input);
+		org.junit.Assert.assertEquals( buff.size(),0);
+		reader.parse(in); 
+		barr.flush();
+		org.junit.Assert.assertTrue( buff.size()>0); 
+	}	
+	
+	@Test
 	public void testXPATH2HASH() throws Exception {
 		ClassLoader classLoader = this.getClass().getClassLoader();
 		InputStream input = classLoader.getResourceAsStream("xpath/exist0.xml");
@@ -51,6 +74,7 @@ public class XML2RrdUpdaterTest {
 		reader.setContentHandler(handler );
 		InputSource in = new InputSource(input);
 		reader.parse(in); 
+		
 /**
  * java.lang.AssertionError: /peras-intranet.noc.fiducia.de/manager/html/app[body='%2Frrd']/sessions-->
 rrdtool create X-1293157220.rrd --start 1297216082 --step 60 				DS:data:GAUGE:240:U:U 				RRA:AVERAGE:0.5:3:480 				RRA:AVERAGE:0.5:17:592 				RRA:AVERAGE:0.5:131:340 				RRA:AVERAGE:0.5:731:719 				RRA:AVERAGE:0.5:10000:273 				RRA:MAX:0.5:3:480 				RRA:MAX:0.5:17:592 				RRA:MAX:0.5:131:340 				RRA:MAX:0.5:731:719 				RRA:MAX:0.5:10000:273 				RRA:MIN:0.5:3:480 				RRA:MIN:0.5:17:592 				RRA:MIN:0.5:131:340 				RRA:MIN:0.5:731:719 				RRA:MIN:0.5:10000:273  
