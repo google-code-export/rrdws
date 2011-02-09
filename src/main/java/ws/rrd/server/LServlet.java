@@ -277,7 +277,7 @@ public class LServlet extends HttpServlet {
 					return;
 				}
 			}catch(Exception e){
-				if (TRACE)e.printStackTrace();
+				if (TRACE)log.trace("WWW-Authenticate",e);
 			}
 			HttpEntity entity = xRespTmp.getEntity();
 			contextTypeStr = ""+entity.getContentType();
@@ -387,14 +387,14 @@ public class LServlet extends HttpServlet {
 	    	}	    	
 	    	outTmp = resp.getOutputStream();	    	
 	    	String textValue = null;
-	    	
+	    	// wrap
 	    	try{ 
 	    		HTMLNode bodyTmp = documentTmp.getRoot().getChild(1);
 				HTMLDocument htmlTmp = buildToolbar(urlStr, parser2);
 				HTMLNode myIFrame = htmlTmp.getRoot().getChild(1).getChild(0);
 				bodyTmp.addChild(myIFrame);
 	    	}catch(Exception e){
-	    		e.printStackTrace();
+	    		if (TRACE) log.trace("wrap",e);
 	    		include(resp, "L.jspX");
 	    	} 
 	    	textValue = renderDocument(documentTmp, contextEncStr);  
@@ -537,6 +537,7 @@ public class LServlet extends HttpServlet {
 			; 
 			xCSS = xCSS.replace(" url  (    http", "url(http");
 			String refPar = urlStr;
+			if (1==2)
 			try{
 				xRespTmp.getHeaders("Refferer")[0].getValue();
 			}catch(Throwable e){}
@@ -666,7 +667,7 @@ public class LServlet extends HttpServlet {
 			byte[] b = getResourceAsBA(resourceName);
 			out = include(resp, b);
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.trace("include:",e);
 		}
 		return out;
 		
