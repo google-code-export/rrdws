@@ -359,6 +359,11 @@ batik-xml-1.6.jar
 				<configuration>
 					<source>1.6</source>
 					<target>1.5</target>
+
+ 
+				    <!-- webXml>${basedir}/target/jspCweb.xml</webXml> -->
+				    <injectString>&lt;!-- [INSERT FRAGMENT HERE] --&gt;</injectString> 
+					
 				</configuration>
 				<dependencies>
 					<dependency>
@@ -372,20 +377,24 @@ batik-xml-1.6.jar
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
-				    <!-- precompiled JSPs --> 
+				    <!-- precompiled JSPs   
 					<webXml>${basedir}/target/jspweb.xml</webXml>
-					 
-					
+					-->
 				    <webResources>
-				        <resource>
+				        <resource> 
+				        <!--  
 				                <directory>${basedir}/target/</directory>
-				                <filtering>true</filtering>
-				                <targetPath>WEB-INF</targetPath>
+				                <directory>${basedir}/target/${pom.artifactId}-${pom.version}/WEB-INF</directory>
+				        -->				                
+				                <directory>${basedir}/target/</directory>
+						        <filtering>true</filtering>
+				                <targetPath>WEB-INF/</targetPath>
 				                <includes>
-				                        <include>**/*.xml</include>
+				                        <include>jspweb.xml</include>
 				                </includes>
 				        </resource>
 				    </webResources>
+				    <webXml>${basedir}/target/${pom.artifactId}-${pom.version}/WEB-INF/jspweb.xml</webXml>
 					<archive>
 						<manifest>
 							<addDefaultImplementationEntries>
