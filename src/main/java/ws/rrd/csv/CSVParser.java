@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.TreeMap;  
 
 /** 
- * <b>Description:TODO</b>
+ * <b>takes CSV InputStream as source and perform update for any line into correspondent RRD-DB</b>
  * @author      vipup<br>
  * <br>
  * <b>Copyright:</b>     Copyright (c) 2006-2008 Monster AG <br>
@@ -25,9 +25,8 @@ public class CSVParser {
 	private boolean ignoreWrongLine;
 	
 	public CSVParser(InputStream in) throws IOException{
-        
-		rdr  = new BufferedReader( new InputStreamReader ( in ) );
-        
+		InputStreamReader inputStreamReader = new InputStreamReader ( in );
+		rdr  = new BufferedReader( inputStreamReader );
         headersStr  = rdr.readLine();
         init();
  
@@ -93,7 +92,7 @@ public class CSVParser {
 	public Object perform(Action a) throws IOException{
 		Map retval = new TreeMap();
 		long start = System.currentTimeMillis();
-		
+		// label A:
         for (String nextLineStr = rdr.readLine();nextLineStr != null;nextLineStr = rdr.readLine()){
         	lineCount++;
         	if (nextLineStr.equals(headersStr))continue;

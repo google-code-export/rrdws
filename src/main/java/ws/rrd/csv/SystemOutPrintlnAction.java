@@ -14,11 +14,12 @@ import java.text.SimpleDateFormat;
  */
 public class SystemOutPrintlnAction implements Action {
  
-			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss.SSS");
+			public static final String MM_DD_YYYY_HH_MM_SS_SSS = "MM/dd/yyyy hh:mm:ss.SSS";
+			public static final SimpleDateFormat SDF = new SimpleDateFormat(MM_DD_YYYY_HH_MM_SS_SSS);
 			@Override
 			public Object perform(String xpath, String timestamp, String data) {
 				try {
-					long timestampTmp =  sdf.parse(timestamp).getTime();
+					long timestampTmp =  SDF.parse(timestamp).getTime();
 					String cmdTmp = "rrdtool update \""+xpath+" .rdd\" "+(timestampTmp/1000L) +":"+ data;
 					System.out.println( cmdTmp  );
 					return cmdTmp;
