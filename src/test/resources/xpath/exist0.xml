@@ -1,0 +1,11 @@
+<peras-intranet.noc.fiducia.de>
+	<manager>
+		<html> 
+			<app>
+				/rrd
+				<sessions>10212</sessions>
+			</app>
+		</html>
+	</manager>
+</peras-intranet.noc.fiducia.de>
+ 

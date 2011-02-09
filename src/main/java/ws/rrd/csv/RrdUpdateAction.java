@@ -132,7 +132,13 @@ public class RrdUpdateAction implements Action {
 				
 		}
  
-
+		/**
+		 * BE CAREFULL WITH reimpelmentation THIS METHOD! The risk is to look all exisitng RRD-Databases
+		 * 
+		 * @author vipup
+		 * @param xpath
+		 * @return
+		 */
 		private static final String xpath2Hash(String xpath) {
 			String rrddb = "X"+xpath.hashCode()+".rrd";
 			checkReg(rrddb, xpath);
