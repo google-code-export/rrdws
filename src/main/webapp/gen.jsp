@@ -1,8 +1,13 @@
-<%@page import="org.jrobin.cmd.RrdCommander"%>
-<%@page import="java.io.FileInputStream"%>
-<%@page import="java.io.ByteArrayInputStream"%><%@page  contentType="image/gif"%><%
+<%@page import="java.io.File"%><%@page import="java.io.OutputStream"%><%@page import="org.jrobin.cmd.RrdCommander"%><%@page import="java.io.FileInputStream"%><%@page import="java.io.ByteArrayInputStream"%><%@page  contentType="image/gif"%><%
 response.setContentType("image/gif");
 %><%
+// init tmDIR
+try{
+	File tmpDir = new File("./img.tmp/");
+	tmpDir.mkdirs();
+}catch(Throwable e){ 
+	e.printStackTrace(response.getWriter());
+}
 // gen.jsp generates gif.preview by RRD-name. 
 // known usage: list.jsp
 String dbParName = request.getParameter("db");
@@ -11,7 +16,6 @@ String EXT = ".rrd";
 dbName = dbName.toLowerCase().indexOf(EXT)>0?dbName.substring(0,dbName.length()-EXT.length()):dbName; 
 String _h = " 32 ";
 String _w = " 64 ";
-
 String cmdTmp = "rrdtool graph ./img.tmp/"+dbName+".gif --color BACK#11111111 --only-graph  -o -h "+ _h +" -w  "+_w+" --start=end-1week  DEF:dbdata="+dbName+".rrd:data:AVERAGE  LINE2:dbdata#44EE4499  LINE1:dbdata#003300AA ";
 RrdCommander.execute(cmdTmp);
 response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
@@ -22,10 +26,12 @@ response.setHeader("Content-Disposition", "inline;filename="+dbName+".gif");
 try{
 	FileInputStream fio = new  FileInputStream("./img.tmp/"+dbName+".gif");
 	byte[]buf = new byte[1023];
+	OutputStream respOutTmp = response.getOutputStream();
 	for (int i=fio.read(buf);i>0;i=fio.read(buf)){
-		response.getOutputStream().write(buf,0,i);
-		response.getOutputStream().flush();
+		respOutTmp.write(buf,0,i);
+		respOutTmp.flush();
 	}
+	fio.close();
 }catch(Throwable e){ 
 		e.printStackTrace(response.getWriter());
 }
