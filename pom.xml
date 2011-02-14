@@ -13,40 +13,44 @@
 	<packaging>war</packaging>
 
 	<dependencies>
-	
-	<dependency>
-      <groupId>cc.co.llabor</groupId>
-      <artifactId>jdo</artifactId>
-      <version>1.1.1</version>
-    </dependency>
-	
-	<!-- tomcat 
-	<dependency>
-		<groupId>org.apache.tomcat</groupId>
-		<artifactId>catalina</artifactId>
-		<version>6.0.29</version>
-		<scope>provided</scope>
-	</dependency>
-	-->
-	<!-- javax MAIL 
 		<dependency>
-		<groupId>org.subethamail</groupId>
-		<artifactId>subethasmtp</artifactId>
-		<version>2.0.1</version>
+			<groupId>cc.co.llabor</groupId>
+			<artifactId>cachefs</artifactId> 
+			<version>0.0.3</version>
 		</dependency>
-	-->
-	<dependency>
-		<groupId>gnu.inet.encoding</groupId>
-		<artifactId>libidn</artifactId>
-		<version>1.19</version>
-	</dependency>
-	<dependency>
-		<groupId>rhino</groupId>
-		<artifactId>js</artifactId>
-		<version>1.7R2</version>
-	</dependency>
+		<dependency>
+			<groupId>cc.co.llabor</groupId>
+			<artifactId>jdo</artifactId>
+			<version>1.1.1</version>
+		</dependency>
 
-	<dependency>
+		<!-- tomcat 
+			<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>catalina</artifactId>
+			<version>6.0.29</version>
+			<scope>provided</scope>
+			</dependency>
+		-->
+		<!-- javax MAIL 
+			<dependency>
+			<groupId>org.subethamail</groupId>
+			<artifactId>subethasmtp</artifactId>
+			<version>2.0.1</version>
+			</dependency>
+		-->
+		<dependency>
+			<groupId>gnu.inet.encoding</groupId>
+			<artifactId>libidn</artifactId>
+			<version>1.19</version>
+		</dependency>
+		<dependency>
+			<groupId>rhino</groupId>
+			<artifactId>js</artifactId>
+			<version>1.7R2</version>
+		</dependency>
+
+		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>jsr107cache</artifactId>
 			<version>${gae.version}</version>
@@ -59,48 +63,92 @@
 			<version>1.0</version>
 		</dependency>
 		<!-- TODO WEB-INF/lib 
-		<dependency>
+			<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.2.1</version>
-		</dependency>
+			</dependency>
 		-->
 		<!-- 
-batik-awt-util-1.6.jar
-batik-bridge-1.6.jar
-batik-css-1.6.jar 
-batik-dom-1.6.jar 
-batik-ext-1.6-1.jar 
-batik-gvt-1.6.jar 
-batik-parser-1.6.jar 
-batik-script-1.6.jar 
-batik-svg-dom-1.6.jar 
-batik-transcoder-1.6.jar 
-batik-util-1.6.jar 
-batik-xml-1.6.jar
-		 -->
-		<dependency><groupId>batik</groupId><artifactId>batik-awt-util</artifactId>
-		<version>${batik.version}</version><optional>true</optional></dependency>
-		<dependency><groupId>batik</groupId><artifactId>batik-bridge</artifactId>
-		<version>${batik.version}</version><optional>true</optional></dependency>
-		<dependency><groupId>batik</groupId><artifactId>batik-css</artifactId>
-		<version>${batik.version}</version><optional>true</optional></dependency>
-		<dependency><groupId>batik</groupId><artifactId>batik-dom</artifactId>
-		<version>${batik.version}</version><optional>true</optional></dependency>
-		<dependency><groupId>batik</groupId><artifactId>batik-gvt</artifactId>
-		<version>${batik.version}</version><optional>true</optional></dependency>
-		<dependency><groupId>batik</groupId><artifactId>batik-parser</artifactId>
-		<version>${batik.version}</version><optional>true</optional></dependency>
-		<dependency><groupId>batik</groupId><artifactId>batik-script</artifactId>
-		<version>${batik.version}</version><optional>true</optional></dependency>
-		<dependency><groupId>batik</groupId><artifactId>batik-svg-dom</artifactId>
-		<version>${batik.version}</version><optional>true</optional></dependency>
-		<dependency><groupId>batik</groupId><artifactId>batik-transcoder</artifactId>
-		<version>${batik.version}</version><optional>true</optional></dependency>
-		<dependency><groupId>batik</groupId><artifactId>batik-util</artifactId>
-		<version>${batik.version}</version><optional>true</optional></dependency>
-		<dependency><groupId>batik</groupId><artifactId>batik-xml</artifactId>
-		<version>${batik.version}</version><optional>true</optional></dependency>
+			batik-awt-util-1.6.jar
+			batik-bridge-1.6.jar
+			batik-css-1.6.jar 
+			batik-dom-1.6.jar 
+			batik-ext-1.6-1.jar 
+			batik-gvt-1.6.jar 
+			batik-parser-1.6.jar 
+			batik-script-1.6.jar 
+			batik-svg-dom-1.6.jar 
+			batik-transcoder-1.6.jar 
+			batik-util-1.6.jar 
+			batik-xml-1.6.jar
+		-->
+		<dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-awt-util</artifactId>
+			<version>${batik.version}</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-bridge</artifactId>
+			<version>${batik.version}</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-css</artifactId>
+			<version>${batik.version}</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-dom</artifactId>
+			<version>${batik.version}</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-gvt</artifactId>
+			<version>${batik.version}</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-parser</artifactId>
+			<version>${batik.version}</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-script</artifactId>
+			<version>${batik.version}</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-svg-dom</artifactId>
+			<version>${batik.version}</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-transcoder</artifactId>
+			<version>${batik.version}</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-util</artifactId>
+			<version>${batik.version}</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-xml</artifactId>
+			<version>${batik.version}</version>
+			<optional>true</optional>
+		</dependency>
 
 		<dependency>
 			<groupId>xerces</groupId>
@@ -112,76 +160,76 @@ batik-xml-1.6.jar
 			<artifactId>xmlParserAPIs</artifactId>
 			<version>2.0.2</version>
 		</dependency>
-<dependency>
-    <groupId>junit</groupId>
-    <artifactId>junit</artifactId>
-    <version>3.8.1</version>
-</dependency>
-<dependency>
-    <groupId>junit</groupId>
-    <artifactId>junit</artifactId>
-    <version>4.8.1</version>
-</dependency>
-<dependency>
-    <groupId>commons-fileupload</groupId>
-    <artifactId>commons-fileupload</artifactId>
-    <version>1.2.1</version>
-</dependency>
-<dependency>
-    <groupId>commons-io</groupId>
-    <artifactId>commons-io</artifactId>
-    <version>1.3.2</version>
-</dependency>
-<dependency>
-    <groupId>commons-logging</groupId>
-    <artifactId>commons-logging</artifactId>
-    <version>1.0.4</version>
-</dependency>
-<dependency>
-    <groupId>org.apache.httpcomponents</groupId>
-    <artifactId>httpclient</artifactId>
-    <version>4.0.1</version>
-</dependency>
-<dependency>
-    <groupId>org.apache.httpcomponents</groupId>
-    <artifactId>httpcore</artifactId>
-    <version>4.0.1</version>
-</dependency>
-<dependency>
-    <groupId>org.apache.httpcomponents</groupId>
-    <artifactId>httpmime</artifactId>
-    <version>4.0.1</version>
-</dependency>
-<dependency>
-    <groupId>com.google.appengine</groupId>
-    <artifactId>appengine-jsr107cache</artifactId>
-    <version>1.3.1</version>
-</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.0.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+			<version>4.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpmime</artifactId>
+			<version>4.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-jsr107cache</artifactId>
+			<version>1.3.1</version>
+		</dependency>
 
 
-<dependency>
-    <groupId>org.headvances.core</groupId>     
-    <version>1.0</version>
-    <artifactId>headvances.core.vietspider.common</artifactId>
-</dependency>
-<dependency>   
-	<groupId>gaehttp</groupId>
-	<artifactId>gaehttp</artifactId>
-	<version>4.0.1</version>  
-</dependency>  
-		
+		<dependency>
+			<groupId>org.headvances.core</groupId>
+			<version>1.0</version>
+			<artifactId>headvances.core.vietspider.common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>gaehttp</groupId>
+			<artifactId>gaehttp</artifactId>
+			<version>4.0.1</version>
+		</dependency>
+
 
 
 		<!--
-		 		<dependency><groupId>batik</groupId><artifactId>batik-ext</artifactId>
-		<version>${batik.version}</version><optional>true</optional></dependency>
-		 
-		 -->
-  
-  
-  
-		
- 
+			<dependency><groupId>batik</groupId><artifactId>batik-ext</artifactId>
+			<version>${batik.version}</version><optional>true</optional></dependency>
+			
+		-->
+
+
+
+
+
 
 		<dependency>
 			<groupId>javax.transaction</groupId>
@@ -192,7 +240,7 @@ batik-xml-1.6.jar
 		<dependency>
 			<groupId>com.google.appengine.orm</groupId>
 			<artifactId>datanucleus-appengine</artifactId>
-			 
+
 			<version>1.0.6.final</version>
 		</dependency>
 

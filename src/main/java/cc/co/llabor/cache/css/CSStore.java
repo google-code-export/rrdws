@@ -4,9 +4,9 @@ import java.net.URL;
 
 import org.vietspider.html.util.HyperLinkUtil;
  
+import cc.co.llabor.cache.Manager;
 import cc.co.llabor.script.Beauty;
-
-import com.no10x.cache.Manager;  
+  
 import net.sf.jsr107cache.Cache; 
   
 /** 
@@ -24,7 +24,7 @@ public class CSStore {
 	private static final CSStore me = new CSStore();
 	Cache  store  = null;
 	CSStore() {
-		this.store = Manager.getCache(CSSSTORE);		
+		this.store =  Manager.getCache(CSSSTORE);		
 	}
   
 

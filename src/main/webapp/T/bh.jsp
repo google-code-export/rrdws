@@ -23,8 +23,8 @@ if (banlistTmp.indexOf(newbanTmp) == -1){
 }
 
 %>
-<%@page import="com.no10x.cache.MemoryFileCache"%>
-<%@page import="com.no10x.cache.Manager"%>
+<%@page import="cc.co.llabor.cache.MemoryFileCache"%>
+<%@page import="cc.co.llabor.cache.Manager"%>
 <script language="javascript">
     function DoCheckLength(aTextBox) {
       if (aTextBox.value.length>13) {

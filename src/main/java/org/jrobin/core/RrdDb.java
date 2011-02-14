@@ -30,7 +30,9 @@ import java.net.URI;
 import java.net.URISyntaxException; 
 import java.util.Date;
 
-import com.no10x.cache.MemoryFileCache;
+import cc.co.llabor.cache.MemoryFileCache;
+import cc.co.llabor.cache.MemoryFileItem;
+ 
  
 
 /**
@@ -413,7 +415,7 @@ public class RrdDb implements RrdUpdater {
 		DataImporter reader;
 		if (externalPath.startsWith(PREFIX_MEM)) {
 			String nameTmp = externalPath.substring(PREFIX_MEM.length());
-			com.no10x.cache.MemoryFileItem item = MemoryFileCache.get (nameTmp );
+			MemoryFileItem item = MemoryFileCache.getInstance(this.getClass().getName()).get (nameTmp );
 			InputStream in = item.getInputStream();
 			reader = new XmlReader(in);
 			

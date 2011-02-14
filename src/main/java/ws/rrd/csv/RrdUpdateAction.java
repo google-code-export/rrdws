@@ -14,7 +14,7 @@ import net.sf.jsr107cache.CacheManager;
 import org.jrobin.cmd.RrdCommander;
 import org.jrobin.core.RrdException;
 
-import com.no10x.cache.Manager;
+import cc.co.llabor.cache.Manager;
  
 
 /** 

@@ -1,8 +1,9 @@
 package cc.co.llabor.cache.js; 
 import java.io.IOException;  
-import cc.co.llabor.script.Beauty;
 
-import com.no10x.cache.Manager;  
+import cc.co.llabor.cache.Manager;
+import cc.co.llabor.script.Beauty;
+ 
 import net.sf.jsr107cache.Cache; 
   
 /** 

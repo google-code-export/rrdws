@@ -34,9 +34,10 @@ import org.jrobin.svg.awt.Paint;
 import org.jrobin.svg.awt.RenderingHints;
 import org.jrobin.svg.awt.Stroke;
 
-import com.no10x.cache.MemoryFileCache;
-import com.no10x.cache.MemoryFileItem;
-import com.no10x.cache.MemoryFileItemFactory;
+import cc.co.llabor.cache.MemoryFileCache;
+import cc.co.llabor.cache.MemoryFileItem;
+import cc.co.llabor.cache.MemoryFileItemFactory;
+ 
  
 
 import java.io.*;
@@ -201,8 +202,9 @@ class ImageWorker {
 	 		out.write("</svg>".getBytes());
 		} 
 		item.flush();
-		String nameTmp = MemoryFileCache. put( item  );
-		System.out.println("store data '"+nameTmp+"'::["+type+"]("+item.getSize()+") into["+path+"]:={"+(new String(MemoryFileCache.get(nameTmp ).get())+"3.1415926535897932384626433832795028841971693993751058209749445923078167932384626433832795028841971693993751058209749445923078167932384626433832795028841971693993751058209749445923078164062862").substring(0,80)+"...}");
+		MemoryFileCache instance = MemoryFileCache.getInstance(this.getClass().getName());
+		String nameTmp = instance. put( item  );
+		//System.out.println("store data '"+nameTmp+"'::["+type+"]("+item.getSize()+") into["+path+"]:={"+(new String(MemoryFileCache.get(nameTmp ).get())+"3.1415926535897932384626433832795028841971693993751058209749445923078167932384626433832795028841971693993751058209749445923078167932384626433832795028841971693993751058209749445923078164062862").substring(0,80)+"...}");
 		
  		return bytes;
  	}

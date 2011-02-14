@@ -49,8 +49,8 @@ import org.slf4j.LoggerFactory;
 
 import ws.rrd.server.LServlet;
 
-import com.no10x.cache.Manager;
-import com.no10x.cache.MemoryFileItem;
+import cc.co.llabor.cache. Manager;
+import cc.co.llabor.cache.MemoryFileItem;
 
 /**
  * <b>Description:TODO</b>
@@ -274,7 +274,7 @@ public class UrlFetchTest implements Serializable{
 		if (items != null) {// Multipart
 			MultipartEntity entity = new MultipartEntity(
 					HttpMultipartMode.BROWSER_COMPATIBLE);
-			for (final com.no10x.cache.MemoryFileItem item : items) {
+			for (final MemoryFileItem item : items) {
 				final ContentBody contentBody = new InputStreamBody(item
 						.getInputStream(), item.getName());
 				String name = item.getName();
