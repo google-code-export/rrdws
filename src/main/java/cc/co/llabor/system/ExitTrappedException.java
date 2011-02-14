@@ -1,8 +1,7 @@
 package cc.co.llabor.system; 
 
 import java.util.logging.Logger;
-
-import cc.co.llabor.mail.MailHandlerServlet;
+ 
 
 /**
  * <b>Description:TODO</b>
