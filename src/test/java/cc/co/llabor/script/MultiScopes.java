@@ -1,10 +1,6 @@
-package cc.co.llabor.script;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.io.Writer;
+package cc.co.llabor.script; 
+import java.io.ByteArrayOutputStream; 
+import java.io.PrintWriter; 
 
 import javax.script.*;
 

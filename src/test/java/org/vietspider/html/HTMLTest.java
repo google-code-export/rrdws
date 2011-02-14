@@ -1,8 +1,6 @@
 package org.vietspider.html;
-
-import java.io.IOException;
-import java.net.URL;
-
+ 
+import java.net.URL; 
 import org.vietspider.html.parser.HTMLParser2;
 import org.vietspider.html.util.HyperLinkUtil;
  
@@ -22,10 +20,8 @@ import junit.framework.TestCase;
 public class HTMLTest extends TestCase{
 	public void testAHREF() throws Exception{
 		HTMLParser2 parser2 = new HTMLParser2();
-		String contextEncStr = "UTF-8";
-		String contextTypeStr = "text/html";
-		String a = "a.htm";//"0_aHR0cDovL2hhYnJhaGFici5ydS8=.htm";//
-		String b =  "aHR0cDovL2hhYnJhaGFici5ydS8=.htm";		
+		String contextEncStr = "UTF-8"; 
+		String a = "a.htm"; 	
 		HTMLDocument documentTmp;
 		HyperLinkUtil handler  = new HyperLinkUtil();
 		java.io.InputStream in =  this.getClass().getClassLoader().getResourceAsStream(a);
@@ -36,8 +32,7 @@ public class HTMLTest extends TestCase{
 		}catch(Exception e){					
 			documentTmp = parser2.createDocument(dataBuf, null );// "utf-8"
 		}		
-
-    	HTMLNode rootTmp = documentTmp.getRoot();
+ 
 		URL realURL = new URL("http://jUnIt.net/");
 		String SwapServletUrl = "J://";
 		HTMLNode node = documentTmp.getRoot();

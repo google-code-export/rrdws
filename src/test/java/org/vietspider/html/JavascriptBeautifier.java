@@ -1,10 +1,8 @@
-package org.vietspider.html;
-import java.io.BufferedReader;
+package org.vietspider.html; 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.InputStream; 
 import java.io.PrintStream;
 
 import junit.framework.TestCase;
@@ -13,9 +11,7 @@ import org.mozilla.javascript.Context;
 import org.mozilla.javascript.ContextFactory;
 import org.mozilla.javascript.Script;
 import org.mozilla.javascript.Scriptable;
-import org.mozilla.javascript.tools.shell.Main;
-
-import ws.rrd.server.LServlet;
+import org.mozilla.javascript.tools.shell.Main; 
 
 /** 
  * <b>Description:TODO</b>
@@ -40,12 +36,12 @@ public class JavascriptBeautifier extends TestCase{
 //		scriptSource += " print(js_beautify('http://www.google-analytics.com/ga.js'));";
 
 // 		String  scriptURL =  "http://www.google-analytics.com/ga.js";
-		ContextFactory cf = ContextFactory.getGlobal();
-		Context cx = cf.enterContext(); 		
-		Scriptable scope = cx.initStandardObjects();
-		Script script = Main.loadScriptFromSource(cx, scriptSource, null , 11110, null);
-		final String scriptPath = this.getClass().getResource("/beautifyALL.js").toExternalForm();
-		String[] args = new String[]{scriptPath, "-i", "1", "http://localhost:9090/zazki/jsupload/jsupload.nocache.js"};
+//		ContextFactory cf = ContextFactory.getGlobal();
+//		Context cx = cf.enterContext(); 		
+//		Scriptable scope = cx.initStandardObjects();
+//		Script script = Main.loadScriptFromSource(cx, scriptSource, null , 11110, null);
+//		final String scriptPath = this.getClass().getResource("/beautifyALL.js").toExternalForm();
+//		String[] args = new String[]{scriptPath, "-i", "1", "http://localhost:9090/zazki/jsupload/jsupload.nocache.js"};
 		ByteArrayOutputStream baOut = new ByteArrayOutputStream();
 		PrintStream myOut = new PrintStream(baOut,true);
 		Main.setOut(myOut );

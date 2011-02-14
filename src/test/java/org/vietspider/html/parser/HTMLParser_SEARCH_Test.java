@@ -102,18 +102,8 @@ public class HTMLParser_SEARCH_Test  {
 		LServlet.testCreateMetaLink(rootTmp, SwapServletUrl, realURL);
     	
 		LServlet.testCreateScriptLink(rootTmp, SwapServletUrl, realURL);	
-		rootTmp.setBeautify(true);
-		String textValue = rootTmp.getTextValue();
-		
-		
-		//System.out.println(textValue);
-		
-		
-		Object  expected = HTML.replace( "\n","").replace( " ","");
-		Object  actual = textValue.replace( "\n","").replace( " ","" )  ;
-		// TODO
-		//assertEquals((""+expected).substring(100).indexOf((""+actual).substring(100)) >=0, true);
-	 
+		rootTmp.setBeautify(true); 
+ 
 		
 	}
 
