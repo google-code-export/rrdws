@@ -616,8 +616,19 @@ public class RrdDb implements RrdUpdater {
 		long newTime = sample.getTime();
 		long lastTime = header.getLastUpdateTime();
 		if (lastTime >= newTime) {
-			throw new RrdException("Bad sample timestamp " + newTime +
-					". Last update time was " + lastTime + ", at least one second step is required");
+			Date newDate = new Date(newTime*1000);
+			Date lastDate = new Date(lastTime*1000);
+			double diffS = lastTime-newTime;
+			double diffM = diffS/60;
+			double diffH = diffM/60;
+			double diffD = diffH/60;
+			String msgTmp = "Bad sample timestamp " + newTime +"["+ newDate +"]"+
+					". Last update time was " + lastTime + "{"+lastDate+"}, at least one second step is required. Diff is "
+					+diffS+" secs|"
+					+diffM+"mins|"
+					+diffH+"hours|"
+					+diffD+"days";
+			throw new RrdException(msgTmp);
 		}
 		double[] newValues = sample.getValues();
 		for (int i = 0; i < datasources.length; i++) {

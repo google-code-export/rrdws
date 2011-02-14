@@ -28,7 +28,8 @@ import com.no10x.cache.Manager;
  */
 public class RrdUpdateAction implements Action {
 
-	    final static SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SSS");
+	    public static final String MM_DD_YYYY_HH_MM_SS_SSS = "MM/dd/yyyy HH:mm:ss.SSS";
+		final static SimpleDateFormat sdf = new SimpleDateFormat(MM_DD_YYYY_HH_MM_SS_SSS);
 
 		@Override
 		public Object perform(String xpath, String timestamp, String data) {
