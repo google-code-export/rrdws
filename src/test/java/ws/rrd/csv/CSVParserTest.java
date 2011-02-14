@@ -1,6 +1,5 @@
 package ws.rrd.csv;
 
-import java.io.File;
 import java.io.IOException;
 
 import junit.framework.TestCase;
