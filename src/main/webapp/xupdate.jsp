@@ -7,9 +7,9 @@
 <%@page import="org.apache.commons.fileupload.FileUploadException"%>
 <%@page import="java.io.IOException"%> 
 <%@page import="ws.rrd.csv.RrdUpdateAction"%>
-<%@page import="com.no10x.cache.MemoryFileItemFactory"%>
-<%@page import="com.no10x.cache.MemoryFileItem"%>
-<%@page import="com.no10x.cache.MemoryFileCache"%>
+<%@page import="cc.co.llabor.cache.MemoryFileItemFactory"%>
+<%@page import="cc.co.llabor.cache.MemoryFileItem"%>
+<%@page import="cc.co.llabor.cache.MemoryFileCache"%>
 <%@page import="org.xml.sax.XMLReader"%>
 <%@page import="org.xml.sax.helpers.XMLReaderFactory"%>
 <%@page import="org.xml.sax.ContentHandler"%> 
@@ -39,7 +39,7 @@ try{
                     response.getWriter().append( "<br>FN:::::"+ item.getFieldName() );
                     response.getWriter().append( "<br>ContentType:::::"+ item.getContentType() );                    
                     session.setAttribute(item.getName(),item );                
-                    nameTmp = MemoryFileCache. put( item  );
+                    nameTmp = MemoryFileCache.getInstance("DEFAULT.BAK"). put( item  );
 					System.out.println( "stored into memcache as ::["+nameTmp +"]");
 					// process last XML-data
 					XMLReader reader = XMLReaderFactory.createXMLReader();

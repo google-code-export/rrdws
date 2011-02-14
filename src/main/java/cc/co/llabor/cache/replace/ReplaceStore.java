@@ -13,10 +13,11 @@ import java.util.regex.Pattern;
 
 import org.vietspider.html.util.HyperLinkUtil;
 
+import cc.co.llabor.cache.Manager;
+
 import ws.rrd.server.LServlet;
  
-
-import com.no10x.cache.Manager;  
+   
 import net.sf.jsr107cache.Cache; 
   
 /** 

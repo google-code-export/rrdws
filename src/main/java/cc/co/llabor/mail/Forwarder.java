@@ -23,8 +23,9 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart; 
 import javax.mail.util.ByteArrayDataSource;
 
-import com.no10x.cache.MemoryFileItem;
-import com.no10x.cache.MemoryFileItemFactory;
+import cc.co.llabor.cache.MemoryFileItem;
+import cc.co.llabor.cache.MemoryFileItemFactory;
+ 
 /** 
  * <b>Description:TODO</b>
  * @author      vipup<br>

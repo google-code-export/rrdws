@@ -38,8 +38,8 @@ import cc.co.llabor.cache.js.Item;
 import cc.co.llabor.cache.js.JSStore;
 import cc.co.llabor.system.ExitTrappedException;
 
-import com.no10x.cache.MemoryFileItem;
-import com.no10x.cache.MemoryFileItemFactory;
+import cc.co.llabor.cache.MemoryFileItem;
+import cc.co.llabor.cache.MemoryFileItemFactory;
 
 import ws.rdd.net.UrlFetchTest;  
 

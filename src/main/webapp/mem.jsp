@@ -1,5 +1,5 @@
-<%@page import="com.no10x.cache.MemoryFileCache"%>
-<%@page import="com.no10x.cache.MemoryFileItem"%>
+<%@page import="cc.co.llabor.cache.MemoryFileCache"%>
+<%@page import="cc.co.llabor.cache.MemoryFileItem"%>
  
 <%@page import="java.io.OutputStream"%>
 <%@page import="org.apache.commons.fileupload.FileItem"%>
@@ -10,7 +10,7 @@ deliver stored by <b>push.jsp</b> data-File (!) via name:
  mime-type are stored from upload PUSH.JSP).
 */
 String nameTmp = request.getParameter("name");
-MemoryFileItem item = MemoryFileCache. get ( nameTmp  );
+MemoryFileItem item = MemoryFileCache.getInstance("DEFAULT.BAK"). get ( nameTmp  );
 response.setContentType(item.getContentType());//"image/svg+xml;charset=UTF-8"
 %><%
 response.setHeader("Cache-Control","no-cache"); //HTTP 1.1

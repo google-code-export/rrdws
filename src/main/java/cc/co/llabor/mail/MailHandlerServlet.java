@@ -20,9 +20,10 @@ import javax.mail.internet.MimeMessage;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.servlet.ServletFileUpload; 
 
-import com.no10x.cache.MemoryFileCache;
-import com.no10x.cache.MemoryFileItem;
-import com.no10x.cache.MemoryFileItemFactory;
+import cc.co.llabor.cache.MemoryFileCache;
+import cc.co.llabor.cache.MemoryFileItem;
+import cc.co.llabor.cache.MemoryFileItemFactory;
+ 
 
 /** 
  * <b>Description:TODO</b>
@@ -117,7 +118,7 @@ public class MailHandlerServlet extends HttpServlet {
 	                    log.finer( "Date:::::"+ item.getDate() );
 	                    log.finer( "FN:::::"+ item.getFieldName() );
 	                    log.finer( "ContentType:::::"+ item.getContentType() );
-						String nameTmp = MemoryFileCache. put( item  );
+						String nameTmp = MemoryFileCache.getInstance(this.getClass().getName()). put( item  );
 						log.finer( "stored into memcache as ::["+nameTmp +"]");
 	                    //pm.makePersistent(item);
 		            }

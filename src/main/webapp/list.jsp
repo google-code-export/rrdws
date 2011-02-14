@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><meta http-equiv=Content-Type content="text/html;charset=utf-8">
 <%@page import="ws.rrd.csv.Registry"%> 
 <%@page import="net.sf.jsr107cache.Cache"%>
-<%@page import="com.no10x.cache.Manager"%>
+<%@page import="cc.co.llabor.cache.Manager"%>
 <html><head><title>intro to JRRD...</title>
 <link rel="stylesheet" type="text/css" media="screen,print" href="//www.ibm.com/common/v14/table.css" /> 
 <link rel="stylesheet" type="text/css" href="//www.ibm.com/common/v14/main.css" />

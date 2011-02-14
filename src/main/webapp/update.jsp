@@ -9,9 +9,9 @@
 <%@page import="ws.rrd.csv.CSVParser"%>
 <%@page import="ws.rrd.csv.Action"%>
 <%@page import="ws.rrd.csv.RrdUpdateAction"%>
-<%@page import="com.no10x.cache.MemoryFileItemFactory"%>
-<%@page import="com.no10x.cache.MemoryFileItem"%>
-<%@page import="com.no10x.cache.MemoryFileCache"%>
+<%@page import="cc.co.llabor.cache.MemoryFileItemFactory"%>
+<%@page import="cc.co.llabor.cache.MemoryFileItem"%>
+<%@page import="cc.co.llabor.cache.MemoryFileCache"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>    <title>RDD UPDATE PAGE</title>  </head>
 <%
@@ -36,7 +36,7 @@ try{
                     response.getWriter().append( "<br>FN:::::"+ item.getFieldName() );
                     response.getWriter().append( "<br>ContentType:::::"+ item.getContentType() );                    
                     session.setAttribute(item.getName(),item );                
-                    nameTmp = MemoryFileCache. put( item  );
+                    nameTmp = MemoryFileCache.getInstance("DEFAULT.BAK"). put( item  );
 					System.out.println( "stored into memcache as ::["+nameTmp +"]");
 					// process last CSV-data
 					CSVParser csv = new CSVParser( item.getInputStream());
