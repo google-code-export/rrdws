@@ -125,7 +125,7 @@ public class HTMLParser_html2xhtml {
 
 	@Test
 	public void testWellformed() throws SAXException, IOException {
-		String expected = " is well-formed!";		Object actual=null;
+		 
 		HTMLParser2 p2 = new HTMLParser2();
 
 		InputStream input = this.getClass().getClassLoader()
@@ -153,8 +153,7 @@ public class HTMLParser_html2xhtml {
 			fout.close();
 
 		} catch (Exception e) {
-			e.printStackTrace();
-			actual = e.getMessage();
+			e.printStackTrace();			 
 		}
 
 		XMLReader reader = XMLReaderFactory.createXMLReader();

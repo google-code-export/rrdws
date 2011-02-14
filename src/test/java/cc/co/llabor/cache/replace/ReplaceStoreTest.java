@@ -81,7 +81,7 @@ public class ReplaceStoreTest extends TestCase {
 				.getPackage().getName().replace(".", "/")
 				+ "/" + "myMouseOut.js"));
 		String rulesUrl = "http://www.google.de/images?um=1&hl=en&safe=active&client=firefox-a&rls=org.mozilla:de:official&tbs=isch:1,isz:i&aq=f&aqi=&oq=&gs_rfai=&q=cookie%2F2%2FGoogle%2520Code%2520Playground-Dateien%2FgetTOC.js".replace("%2F", "/");
-		String rulesUrlParent = "http://www.google.de/images?um=1&hl=en&safe=active&client=firefox-a&rls=org.mozilla:de:official&tbs=isch:1,isz:i&aq=f&aqi=&oq=&gs_rfai=&q=cookie".replace("%2F", "/");
+//		String rulesUrlParent = "http://www.google.de/images?um=1&hl=en&safe=active&client=firefox-a&rls=org.mozilla:de:official&tbs=isch:1,isz:i&aq=f&aqi=&oq=&gs_rfai=&q=cookie".replace("%2F", "/");
 	
 		//Properties value1 = new Properties();
 		//replacer.putOrCreate(rulesUrlParent, value1);
