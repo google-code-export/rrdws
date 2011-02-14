@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;  
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ws.rrd.server.LServlet;
+
 /** 
  * <b>takes CSV InputStream as source and perform update for any line into correspondent RRD-DB</b>
  * @author      vipup<br>
@@ -18,6 +23,18 @@ import java.util.TreeMap;
  * Creation:  20.04.2010::11:48:50<br> 
  */
 public class CSVParser {
+	
+	private static final Logger log = LoggerFactory.getLogger(CSVParser.class .getName());
+	public static void System_out_print(String txt){
+		log.trace(txt);
+	}
+	public static void System_out_println(Object txt){
+		log.trace( ""+ txt);
+	}
+	public static void System_out_println(String txt){
+		log.trace(txt);
+	}	
+	
 	private String headersStr = null;
 	String[] heads = null;
 	final String DELIM = ",";
@@ -104,8 +121,8 @@ public class CSVParser {
         		dataTmp = combineChains(dataTmp);
         		if (dataTmp.length>this.heads.length){
         			//WOW!!! new headers!!!
-        			System.out.println("HEADS == "+headersStr );
-        			System.out.println("nextLineStr == "+nextLineStr);
+        			System_out_println("HEADS == "+headersStr );
+        			System_out_println("nextLineStr == "+nextLineStr);
         			
         			this.headersStr = nextLineStr;
         			init();
@@ -154,13 +171,13 @@ public class CSVParser {
 	        		i++; 
 	        	}
         	}catch(ArrayIndexOutOfBoundsException e){
-        		System.out.println( e.getMessage() + "::::"+i+" ["+nextLineStr);
+        		System_out_println( e.getMessage() + "::::"+i+" ["+nextLineStr);
         	}
         	if (lineCount%100 == 0  || lineCount%100 == 1){
-        		System.out.println( "#" +lineCount +"done with "+(1000.00*(1+lineCount)/((System.currentTimeMillis()-start)+1) ) +" lps.");
+        		System_out_println( "#" +lineCount +"done with "+(1000.00*(1+lineCount)/((System.currentTimeMillis()-start)+1) ) +" lps.");
         	}
         }
-        System.out.println("done "+lineCount+" lines in "+(System.currentTimeMillis()-start)+" ms. ::= "+(1000.00*(1+lineCount)/((System.currentTimeMillis()-start)+1) ) +" lps.");
+        System_out_println("done "+lineCount+" lines in "+(System.currentTimeMillis()-start)+" ms. ::= "+(1000.00*(1+lineCount)/((System.currentTimeMillis()-start)+1) ) +" lps.");
         return retval;
 	}
 	public void setIgnoreWrongLine(boolean b) {
