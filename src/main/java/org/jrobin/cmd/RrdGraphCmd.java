@@ -48,9 +48,10 @@ public class RrdGraphCmd extends RrdToolCmd implements RrdGraphConstants {
 		gdef.setSignature("Created by rrdWS");
 		
 		// create diagram finally
-		RrdGraphInfo info = new RrdGraph(gdef).getRrdGraphInfo();
+		RrdGraph rrdGraph = new RrdGraph(gdef);
+		RrdGraphInfo info = rrdGraph.getRrdGraphInfo();
 		if (info.getFilename().equals(RrdGraphConstants.IN_MEMORY_IMAGE)) {
-			println(new String(info.getBytes()));
+			println(info.getImgInfo());//println(new String(info.getBytes()));
 		}
 		else {
 			println(info.getWidth() + "x" + info.getHeight());

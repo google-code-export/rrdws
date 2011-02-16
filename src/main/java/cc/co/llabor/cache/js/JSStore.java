@@ -40,8 +40,16 @@ public class JSStore {
 	}
 
 	public Item putOrCreate(String cacheKey, String value, String refPar ) { 
-		Item jsItem = (Item) scriptStore.get(cacheKey);
+		Object jsItemTmp = scriptStore.get(cacheKey);
+		Item jsItem = null;
+		if (jsItemTmp instanceof Item){
+			jsItem = (Item)jsItemTmp;
+		}else{
+			// TODO
+			System.out.println(jsItemTmp);
+		}
 		try{
+			
 			if (jsItem == null){  
 				value = checkHeadAndFoot(value);			
 				jsItem = new Item(value); 
