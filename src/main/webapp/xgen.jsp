@@ -1,6 +1,10 @@
-<%@page import="org.jrobin.GraphInfo"%>
-<%@page import="org.jrobin.graph.RrdGraphInfo"%>
-<%@page import="java.io.File"%><%@page import="java.io.OutputStream"%><%@page import="org.jrobin.cmd.RrdCommander"%><%@page import="java.io.FileInputStream"%><%@page import="java.io.ByteArrayInputStream"%><%@page  contentType="image/gif"%><%
+<%@page import="org.jrobin.GraphInfo"
+%><%@page import="java.io.File"
+%><%@page import="java.io.OutputStream"
+%><%@page import="org.jrobin.cmd.RrdCommander"
+%><%@page import="java.io.FileInputStream"
+%><%@page  contentType="image/gif"
+%><%
 response.setContentType("image/gif");
 %><%
 // init tmDIR
@@ -29,14 +33,9 @@ response.setDateHeader ("Expires", 0); //prevents caching at the proxy server
 response.setHeader("Content-Disposition", "inline;filename="+dbName+".gif");
 %><%
 try{
-	FileInputStream fio = new  FileInputStream("./img.tmp/"+dbName+".gif");
-	byte[]buf = new byte[1023];
+	byte[]buf = img.getBytes();
 	OutputStream respOutTmp = response.getOutputStream();
-	for (int i=fio.read(buf);i>0;i=fio.read(buf)){
-		respOutTmp.write(buf,0,i);
-		respOutTmp.flush();
-	}
-	fio.close();
+	respOutTmp.write(buf);
 }catch(Throwable e){ 
 		e.printStackTrace(response.getWriter());
 }
