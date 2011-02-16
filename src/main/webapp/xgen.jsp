@@ -8,12 +8,7 @@
 response.setContentType("image/gif");
 %><%
 // init tmDIR
-try{
-	File tmpDir = new File("./img.tmp/");
-	tmpDir.mkdirs();
-}catch(Throwable e){ 
-	e.printStackTrace(response.getWriter());
-}
+ 
 // gen.jsp generates gif.preview by RRD-name. 
 // known usage: list.jsp
 String dbParName = request.getParameter("db");
@@ -23,8 +18,11 @@ dbName = dbName.toLowerCase().indexOf(EXT)>0?dbName.substring(0,dbName.length()-
 String _h = request.getParameter("_h");
 _h = _h == null? "132":_h;
 String _w = request.getParameter("_w");
-_w = _w == null? "164":_h;
-String cmdTmp = "rrdtool graph - -h "+ _h +" -w  "+_w+" --start=end-1hour  DEF:dbdata="+dbName+".rrd:data:AVERAGE  LINE2:dbdata#44EE4499  LINE1:dbdata#003300AA ";
+_w = _w == null? "164":_w;
+String _end = request.getParameter("_end");
+_end  = _end  == null? "end-1hour":_end ;
+
+String cmdTmp = "rrdtool graph - -h "+ _h +" -w  "+_w+" --start="+_end+"  DEF:dbdata="+dbName+".rrd:data:AVERAGE  LINE2:dbdata#44EE4499  LINE1:dbdata#003300AA ";
 // bikoz of '-' in the filename :
 GraphInfo img = (GraphInfo)RrdCommander.execute(cmdTmp);
 response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
