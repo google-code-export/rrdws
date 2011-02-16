@@ -48,6 +48,7 @@ public class RrdSvgCmd extends RrdToolCmd implements RrdGraphConstants {
 
 	Object execute() throws RrdException, IOException {
 		gdef = getGraphDef();
+		gdef.setSignature("Created by rrdWS");
 		
 		// create diagram finally
 		RrdGraphInfo info = new RrdGraph(gdef).getRrdGraphInfo();
