@@ -25,6 +25,8 @@
 
 package org.jrobin.cmd;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
 import org.jrobin.core.RrdException;
 import org.jrobin.core.Util;
 import org.jrobin.graph.RrdGraph;
@@ -32,12 +34,27 @@ import org.jrobin.graph.RrdGraphConstants;
 import org.jrobin.graph.RrdGraphDef;
 import org.jrobin.graph.RrdGraphInfo;
 
+import ws.rdd.net.UrlFetchTest;
+
 import java.awt.*;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class RrdGraphCmd extends RrdToolCmd implements RrdGraphConstants {
 	static final Color BLIND_COLOR = new Color(0, 0, 0, 0);
 	private RrdGraphDef gdef;
+	private static String signature = "Created by rrdWS";
+	static {
+		try{
+			HttpResponse xRespTmp = new UrlFetchTest().fetchGetResp("http://zkoss.googlecode.com/svn/release-repository/REPO/rrd.signature");
+			HttpEntity entity = xRespTmp.getEntity();
+			ByteArrayOutputStream oaos = new ByteArrayOutputStream();
+			entity.writeTo(oaos) ;	
+			oaos.flush();
+			oaos.close();
+			signature = new String(oaos.toByteArray());
+		}catch(Exception e){}
+	}
 
 	String getCmdType() {
 		return "graph";
@@ -45,7 +62,7 @@ public class RrdGraphCmd extends RrdToolCmd implements RrdGraphConstants {
 
 	Object execute() throws RrdException, IOException {
 		gdef = getGraphDef();
-		gdef.setSignature("Created by rrdWS");
+		gdef.setSignature(signature );
 		
 		// create diagram finally
 		RrdGraph rrdGraph = new RrdGraph(gdef);
