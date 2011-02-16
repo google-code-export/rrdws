@@ -396,21 +396,20 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jspc-maven-plugin</artifactId>
-				<executions>
+				<executions><!-- 
 					<execution>
 						<id>jspc</id>
 						<goals>
 							<goal>compile</goal>
 						</goals>
-					</execution>
+						
+					</execution> -->
 				</executions>
 				<configuration>
 					<source>1.6</source>
-					<target>1.5</target>
-
- 
-				    <!-- webXml>${basedir}/target/jspCweb.xml</webXml> -->
-				    <injectString>&lt;!-- [INSERT FRAGMENT HERE] --&gt;</injectString> 
+					<target>1.5</target> 
+  
+					<injectString>&lt;!-- [INSERT FRAGMENT HERE] --&gt;</injectString>  
 					
 				</configuration>
 				<dependencies>
@@ -442,7 +441,6 @@
 				                </includes>
 				        </resource>
 				    </webResources>
-				    <webXml>${basedir}/target/${pom.artifactId}-${pom.version}/WEB-INF/jspweb.xml</webXml>
 					<archive>
 						<manifest>
 							<addDefaultImplementationEntries>

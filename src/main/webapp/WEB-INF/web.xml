@@ -154,4 +154,6 @@ StartStopServlet
 <!-- http://mojo.codehaus.org/jspc-maven-plugin/usage.html -->
 <!-- [INSERT FRAGMENT HERE] -->
 
+<!--[disabled FRAGMENT HERE]-->
+
 </web-app>

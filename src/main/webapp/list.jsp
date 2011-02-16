@@ -22,9 +22,12 @@ i++;
 %>
 
 <tr>
-<td><%=i %> </td><td><%=key %> </td><td>==</td><td> 
-<%=reg.getPath2db().get(key) %></td>
-<td><img src="gen.jsp?db=<%=reg.getPath2db().get(key) %>"/>
+<td><%=i %></td><td><%=key %></td><td>==</td>
+<td><%=reg.getPath2db().get(key)%></td>
+<td>
+	<a href="xgen.jsp?db=<%=reg.getPath2db().get(key)%>&_h=200&w=320">
+		<img src="gen.jsp?db=<%=reg.getPath2db().get(key) %>"/>.
+	</a>	
 </td>
 </tr>
 <%

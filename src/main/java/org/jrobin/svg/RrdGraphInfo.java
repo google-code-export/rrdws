@@ -27,11 +27,13 @@ package org.jrobin.svg;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jrobin.GraphInfo;
+
 /**
  * Class to represent successfully created JRobin graph. Objects of this class are created by method
  * {@link RrdGraph#getRrdGraphInfo()}.
  */
-public class RrdGraphInfo {
+public class RrdGraphInfo implements GraphInfo{
 	String filename;
 	int width, height;
 	byte[] bytes;

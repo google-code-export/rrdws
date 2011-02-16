@@ -1,3 +1,0 @@
-# --- setenv.bat --
-#set CATALINA_OPTS=-Dset net.sf.jsr107cache.CacheFactory=ws.rrd.cache.BasicCacheFactory %CATALINA_OPTS%
-#ws.rrd.cache.BasicCacheFactory
