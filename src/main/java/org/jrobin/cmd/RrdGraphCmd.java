@@ -46,7 +46,7 @@ public class RrdGraphCmd extends RrdToolCmd implements RrdGraphConstants {
 	private static String signature = "Created by rrdWS";
 	static {
 		try{
-			HttpResponse xRespTmp = new UrlFetchTest().fetchGetResp("http://zkoss.googlecode.com/svn/release-repository/REPO/rrd.signature");
+			HttpResponse xRespTmp = new UrlFetchTest().fetchGetResp("https://zkoss.googlecode.com/svn/release-repository/REPO/rrd.signature");
 			HttpEntity entity = xRespTmp.getEntity();
 			ByteArrayOutputStream oaos = new ByteArrayOutputStream();
 			entity.writeTo(oaos) ;	
