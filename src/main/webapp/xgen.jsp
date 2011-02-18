@@ -16,13 +16,15 @@ String dbName = dbParName==null?"X-1979395149":dbParName;
 String EXT = ".rrd";
 dbName = dbName.toLowerCase().indexOf(EXT)>0?dbName.substring(0,dbName.length()-EXT.length()):dbName; 
 String _h = request.getParameter("_h");
-_h = _h == null? "132":_h;
+_h = _h == null? "100":_h;
 String _w = request.getParameter("_w");
 _w = _w == null? "164":_w;
 String _end = request.getParameter("_end");
-_end  = _end  == null? "end-1hour":_end ;
+_end  = _end  == null? "now":_end ;
+String _start = request.getParameter("_start");
+_start  = _start  == null? "end-1hour":_start ;
 
-String cmdTmp = "rrdtool graph - -h "+ _h +" -w  "+_w+" --start="+_end+"  DEF:dbdata="+dbName+".rrd:data:AVERAGE  LINE2:dbdata#44EE4499  LINE1:dbdata#003300AA ";
+String cmdTmp = "rrdtool graph - -h "+ _h +" -w  "+_w+" --start="+_start+"   --end="+_end+"  DEF:dbdata="+dbName+".rrd:data:AVERAGE  LINE2:dbdata#44EE4499  LINE1:dbdata#003300AA ";
 // bikoz of '-' in the filename :
 GraphInfo img = (GraphInfo)RrdCommander.execute(cmdTmp);
 response.setHeader("Cache-Control","no-cache"); //HTTP 1.1

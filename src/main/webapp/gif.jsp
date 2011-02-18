@@ -1,5 +1,6 @@
-<%@page import="java.io.FileInputStream"%>
-<%@page import="java.io.ByteArrayInputStream"%><%@page  contentType="image/gif"%><%
+<%@page import="java.io.FileInputStream"
+%><%@page import="java.io.ByteArrayInputStream"
+%><%@page  contentType="image/gif"%><%
 response.setContentType("image/gif");
 %><%
 response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
