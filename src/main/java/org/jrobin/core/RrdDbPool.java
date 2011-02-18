@@ -189,7 +189,8 @@ public class RrdDbPool {
 			throw new RrdException("Could not release [" + canonicalPath + "], the file was never requested");
 		}
 		RrdEntry entry = rrdMap.get(canonicalPath);
-		if (--entry.count < 0) {
+		--entry.count ;
+		if (entry.count == 0) {
 			// no longer used
 			rrdMap.remove(canonicalPath); 
 			entry.rrdDb.close();
