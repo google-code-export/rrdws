@@ -25,7 +25,7 @@ i++;
 <td><%=i %></td><td><%=key %></td><td>==</td>
 <td><%=reg.getPath2db().get(key)%></td>
 <td>
-	<a href="xgen.jsp?db=<%=reg.getPath2db().get(key)%>&_h=200&w=320">
+	<a href="xgen.jsp?db=<%=reg.getPath2db().get(key)%>&_h=200&_w=320&_end=end-1day">
 		<img src="gen.jsp?db=<%=reg.getPath2db().get(key) %>"/>.
 	</a>	
 </td>
