@@ -1,19 +1,23 @@
 <%@page import="java.text.SimpleDateFormat"%><%@page import="java.util.Date"%>
 <%
 	//acm721
-  String dbTmp = "X-2113039516.rrd";
-  dbTmp = 	request.getParameter("db")  == null? dbTmp : request.getParameter("db");
-  String _h = "320";
-  _h = 	request.getParameter("_h")  == null? _h : request.getParameter("_h");
-  String _w = "640";
-  _w = 	request.getParameter("_w")  == null? _w : request.getParameter("_w");
-  String _end = "now";
-  _end = 	request.getParameter("_end")  == null? _end : request.getParameter("_end");
-  String _start = "end-1day";
-  _start = 	request.getParameter("_start")  == null? _start : request.getParameter("_start");
-  
-  SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-  String startDate = sdf.format(new Date());
+	String _t = request.getParameter("_t");
+	_t  = _t  == null? "-":_t ;
+	String _v = request.getParameter("_v");
+	_v  = _v  == null? "- ":_v ; 	
+	String dbTmp = "X-2113039516.rrd";
+	dbTmp = 	request.getParameter("db")  == null? dbTmp : request.getParameter("db");
+	String _h = "320";
+	_h = 	request.getParameter("_h")  == null? _h : request.getParameter("_h");
+	String _w = "640";
+	_w = 	request.getParameter("_w")  == null? _w : request.getParameter("_w");
+	String _end = "now";
+	_end = 	request.getParameter("_end")  == null? _end : request.getParameter("_end");
+	String _start = "end-1day";
+	_start = 	request.getParameter("_start")  == null? _start : request.getParameter("_start");
+	
+	SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+	String startDate = sdf.format(new Date());
 %>
 <HTML><HEAD>
 <TITLE>Seminarverwaltung</TITLE>
@@ -30,7 +34,7 @@
 </SCRIPT>
 </HEAD>
 <body>
-	<img src="xgen.jsp?db=<%=dbTmp%>&_h=<%=_h%>&_w=<%=_w%>&_start=<%=_start%>&_end=<%=_end%>"/>.
+	<img src="xgen.jsp?db=<%=dbTmp%>&_h=<%=_h%>&_w=<%=_w%>&_start=<%=_start%>&_end=<%=_end%>&_v=<%=_v%>&_t=<%=_t%>"/>.
 	<form name= "RRD" method="post">
 		 <input class="input" type=text name=_start value="<%=startDate%>">
 		 
@@ -47,9 +51,9 @@
 		 <input type="submit">
 	 </form>
 	
-	<img src="xgen.jsp?db=<%=dbTmp%>&_start=end-2day"/>.
-	<img src="xgen.jsp?db=<%=dbTmp%>&_start=end-1week"/>.
-	<img src="xgen.jsp?db=<%=dbTmp%>&_start=end-2week"/>. 
+	<img src="xgen.jsp?db=<%=dbTmp%>&_start=end-2day&_t=end-2day"/>.
+	<img src="xgen.jsp?db=<%=dbTmp%>&_start=end-1week&_t=end-1week"/>.
+	<img src="xgen.jsp?db=<%=dbTmp%>&_start=end-2week&_t=end-2week"/>. 
 	 
  </body>
 </HTML>
