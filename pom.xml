@@ -16,7 +16,7 @@
 		<dependency>
 			<groupId>cc.co.llabor</groupId>
 			<artifactId>cachefs</artifactId> 
-			<version>0.0.3</version>
+			<version>0.0.5-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>cc.co.llabor</groupId>
