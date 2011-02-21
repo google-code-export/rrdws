@@ -2,6 +2,8 @@ package ws.rrd.csv;
 
 import java.io.IOException;
 
+import cc.co.llabor.cache.BasicCacheFactory;
+
 import junit.framework.TestCase;
  
 
@@ -20,7 +22,7 @@ public class CSVParserTest extends TestCase{
 
 	public CSVParserTest() {
 		System.setProperty("net.sf.jsr107cache.CacheFactory",
-				"ws.rrd.cache.BasicCacheFactory");
+				BasicCacheFactory.class.getName());
 	}
  
 	public void testCSVParserToLowErr() throws IOException {
