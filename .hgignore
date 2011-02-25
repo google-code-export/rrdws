@@ -25,3 +25,9 @@ syntax: regexp
 ^deploy$
 syntax: regexp
 ^.settings$ 
+syntax: glob
+*.log
+*.rrd
+effective-pom.xml
+release.properties
+
