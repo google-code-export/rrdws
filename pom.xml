@@ -3,11 +3,19 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<!--  ((( this section is common for all l-parent childs -->
 	<parent>
 		<groupId>cc.co.llabor</groupId>
 		<artifactId>l-parent</artifactId>
 		<version>1.6</version>
 	</parent>	
+	  <scm>
+	    <connection>scm:hg:${scm.base}/${pom.artifactId}</connection>
+	    <developerConnection>scm:hg:${scm.base}/${pom.artifactId}</developerConnection>
+	    <url>${l.base}/JSPWiki/Wiki.jsp?page=${pom.artifactId}</url>
+	  </scm>
+	<!-- this section is common for all l-parent childs ))) -->
+
 	<groupId>com.appspot</groupId>
 	<artifactId>rrdsaas</artifactId>
 	<version>1.0-SNAPSHOT</version>
@@ -20,7 +28,7 @@
 		<dependency>
 			<groupId>cc.co.llabor</groupId>
 			<artifactId>cachefs</artifactId> 
-			<version>0.0.5-SNAPSHOT</version>
+			<version>0.0.5</version>
 		</dependency>
 		<dependency>
 			<groupId>cc.co.llabor</groupId>
