@@ -584,13 +584,10 @@
 			<!--
 				Upload application to the appspot automatically, during
 				release:perform
-			-->
-			<plugin>
-				<artifactId>maven-release-plugin</artifactId>
-				<configuration>
-					<goals>gae:deploy</goals>
-				</configuration>
-			</plugin>
+				Opppppppppps.......
+				...really it is ness???!!
+ 			-->
+			
 
 			<!-- Java compiler version -->
 			<plugin>
