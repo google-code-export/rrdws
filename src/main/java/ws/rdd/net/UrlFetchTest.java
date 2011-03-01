@@ -256,31 +256,37 @@ public class UrlFetchTest implements Serializable{
 		addCookies(m);  
  
 		m.addHeader("Host", m.getURI().getHost()); 
-		if (items != null) {// Multipart 
-			for (final MemoryFileItem item : items) {
-				final ContentBody contentBody = new InputStreamBody(item
-						.getInputStream(), item.getName());
-				final StringBody comment = new StringBody("Filename: " + item.getName());
-				MultipartEntity reqEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-				reqEntity.addPart("comment", comment);
-				reqEntity.addPart("bin", contentBody);
-				
-				  
+		if (items != null) {// Multipart
+			MultipartEntity reqEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+			for (final MemoryFileItem item : items) { 
+				final ContentBody contentBody = new InputStreamBody(item .getInputStream(), item.getName());
+				final StringBody comment = new StringBody("Filename: " + item.getName()); 
+				reqEntity.addPart("comment# "+item.getName(), comment);
+				reqEntity.addPart(item.getFieldName(), contentBody); 
 				// For File parameters
 				m.setEntity(reqEntity); 
+			}
+			// Params for multipart
+			for (Object nextParName : parameterMap.keySet()) {
+				String parName = "" + nextParName;
+				Object aString = parameterMap.get(parName);
+				String valueTmp =  ((String[])  aString)[0]; //(((String[]) parameterMap.get(parName))[0]); 
+				final StringBody comment = new StringBody( valueTmp ); 
+				reqEntity.addPart(parName, comment);
 			}
 			
 		}else{
 			validateContentType(parameterMap, m);
+			HttpParams arg0 = httpClient.getParams();
+			for (Object nextParName : parameterMap.keySet()) {
+				String parName = "" + nextParName;
+				Object aString = parameterMap.get(parName);
+				String valueTmp =  ((String[])  aString)[0]; //(((String[]) parameterMap.get(parName))[0]); 
+				arg0.setParameter(parName, valueTmp);
+			}
+			m.setParams(arg0);
 		}
-		HttpParams arg0 = httpClient.getParams();
-		for (Object nextParName : parameterMap.keySet()) {
-			String parName = "" + nextParName;
-			Object aString = parameterMap.get(parName);
-			String valueTmp =  ((String[])  aString)[0]; //(((String[]) parameterMap.get(parName))[0]); 
-			arg0.setParameter(parName, valueTmp);
-		}
-		m.setParams(arg0);
+
 		HttpResponse respTmp = httpClient.execute(m);
 		respTmp = makeAuth(toFetchStr, httpClient, m, respTmp);
 		StatusLine statusLine = respTmp.getStatusLine();
