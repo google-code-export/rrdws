@@ -50,8 +50,9 @@ try{
                     <tr><td>FN </td><td><%= item.getFieldName()%></td></tr>
                     <tr><td>ContentType </td><td><%=item.getContentType() %></td></tr>
 <%                       
-                    session.setAttribute(item.getName(),item );
-					String nameTmp = MemoryFileCache.getInstance("DEFAULT.BAK"). put( item  );
+					String nameTmp = ""+item.getName();
+                    session.setAttribute(nameTmp,item );
+					nameTmp = MemoryFileCache.getInstance("DEFAULT.BAK"). put( item  );
 					System.out.println( "stored into memcache as ::["+nameTmp +"]");
                     //pm.makePersistent(item);
             }
