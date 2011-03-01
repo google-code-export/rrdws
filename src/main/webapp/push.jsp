@@ -8,7 +8,8 @@
 <%@page import="cc.co.llabor.cache.MemoryFileItemFactory"%>
 <%@page import="cc.co.llabor.cache.MemoryFileItem"%>
 <%@page import="cc.co.llabor.cache.MemoryFileCache"%>
-<html xmlns="http://www.w3.org/1999/xhtml"> <head> <title>RDD UPDATE PAGE</title> </head> 
+<html xmlns="http://www.w3.org/1999/xhtml"> <head> <title>RDD UPDATE PAGE</title> </head>
+<body> 
 <%
 try{
     // Check that we have a file upload request
