@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE web-appPUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"  >
-
+<?xml version="1.0" encoding="UTF-8"?> 
 <web-app>
 	<description>RRD4J @GAE/J2EE</description>
 	<display-name>RRD4J-${buildNumber}</display-name>
