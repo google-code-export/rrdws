@@ -5,7 +5,8 @@ import="org.apache.commons.fileupload.FileItem"%>
 <% 
 String nameTmp = request.getParameter("name");
 try{
-	MemoryFileItem item = MemoryFileCache.getInstance("DEFAULT.BAK"). get ( nameTmp  );
+	MemoryFileCache cacheTmp = MemoryFileCache.getInstance("DEFAULT.BAK");
+	MemoryFileItem item = cacheTmp. get ( nameTmp  );
 	response.setContentType(item.getContentType());//"image/svg+xml;charset=UTF-8"
 	%><%
 	response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
