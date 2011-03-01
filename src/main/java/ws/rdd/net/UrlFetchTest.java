@@ -3,6 +3,7 @@ package ws.rdd.net;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,7 +37,9 @@ import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.ContentBody;
+import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.InputStreamBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.message.BasicHttpResponse;
@@ -252,36 +255,22 @@ public class UrlFetchTest implements Serializable{
 			m.addHeader(nextHeader[0], nextHeader[1]);
 		addCookies(m);  
  
-		m.addHeader("Host", m.getURI().getHost());
-		Header[] ctTmp = m.getHeaders("Content-Type");
-		if(ctTmp.length == 0){ 
-			m.addHeader("Content-Type", "application/x-www-form-urlencoded");
-			List<NameValuePair> listTmp= new ArrayList<NameValuePair>();
-			for (Object nextParName : parameterMap.keySet()) {
-				final String parName = "" + nextParName;
-				Object aString = parameterMap.get(parName);
-				final String valueTmp =  ((String[])  aString)[0]; //(((String[]) parameterMap.get(parName))[0]); 
-				NameValuePair newPaar = new  NameValuePair (){ 
-					public String getName() { return parName;  } 
-					public String getValue() {return valueTmp;  }
-				};
-				listTmp.add(newPaar );
-			}
-			HttpEntity entity =  new UrlEncodedFormEntity (listTmp);
-			m.setEntity(entity ); //sData = URLEncodedUtils.format(listTmp , "utf-8");
-		}
-
-		if (items != null) {// Multipart
-			MultipartEntity entity = new MultipartEntity(
-					HttpMultipartMode.BROWSER_COMPATIBLE);
+		m.addHeader("Host", m.getURI().getHost()); 
+		if (items != null) {// Multipart 
 			for (final MemoryFileItem item : items) {
 				final ContentBody contentBody = new InputStreamBody(item
 						.getInputStream(), item.getName());
-				String name = item.getName();
+				//final StringBody comment = new StringBody("Filename: " + item.getName());
+				MultipartEntity reqEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+				reqEntity.addPart("bin", contentBody);
+				//reqEntity.addPart("comment", comment);
+				  
 				// For File parameters
-				entity.addPart(name, contentBody);
+				m.setEntity(reqEntity); 
 			}
-			m.setEntity(entity);
+			
+		}else{
+			validateContentType(parameterMap, m);
 		}
 		HttpParams arg0 = httpClient.getParams();
 		for (Object nextParName : parameterMap.keySet()) {
@@ -307,6 +296,33 @@ public class UrlFetchTest implements Serializable{
 		}
 		
 		return respTmp;
+	}
+
+	/**
+	 * @author vipup
+	 * @param parameterMap
+	 * @param m
+	 * @throws UnsupportedEncodingException
+	 */
+	private void validateContentType(Map parameterMap, HttpPost m)
+			throws UnsupportedEncodingException {
+		Header[] ctTmp = m.getHeaders("Content-Type");
+		if(ctTmp.length == 0){ 
+			m.addHeader("Content-Type", "application/x-www-form-urlencoded");
+			List<NameValuePair> listTmp= new ArrayList<NameValuePair>();
+			for (Object nextParName : parameterMap.keySet()) {
+				final String parName = "" + nextParName;
+				Object aString = parameterMap.get(parName);
+				final String valueTmp =  ((String[])  aString)[0]; //(((String[]) parameterMap.get(parName))[0]); 
+				NameValuePair newPaar = new  NameValuePair (){ 
+					public String getName() { return parName;  } 
+					public String getValue() {return valueTmp;  }
+				};
+				listTmp.add(newPaar );
+			}
+			HttpEntity entity =  new UrlEncodedFormEntity (listTmp);
+			m.setEntity(entity ); //sData = URLEncodedUtils.format(listTmp , "utf-8");
+		}
 	}
 
 	/**

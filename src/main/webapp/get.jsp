@@ -1,12 +1,15 @@
-<%@page import="org.apache.http.Header"%><%@page import="java.io.InputStream"%><%@page import="java.io.OutputStream"%>
-<%@page import="org.apache.http.message.BasicHttpResponse"%>
-<%@page import="org.apache.http.HttpEntity"%>
-<%@page import="org.apache.http.HttpResponse"%>
-<%@page import="ws.rdd.net.UrlFetchTest"%><%
-//test jsp for fetching-tech -  TODO : clean
+<%@page import="org.apache.http.Header"%><%@page 
+import="java.io.InputStream"%><%@page 
+import="java.io.OutputStream"%><%@page 
+import="org.apache.http.message.BasicHttpResponse"%><%@page 
+import="org.apache.http.HttpEntity"%><%@page 
+import="org.apache.http.HttpResponse"%><%@page 
+import="ws.rdd.net.UrlFetchTest"%><%
+// returns content of given URL 
+// @param: url :: URL
 UrlFetchTest o =  new UrlFetchTest();
 String urlTmp = request.getParameter("url");
-String refTmp =  "http://localhost:8888/get.jsp"+"?url="+"http://www.fid"+"ucia.de/"; 
+String refTmp =  request.getQueryString(); 
 HttpResponse respTmp =o.fetchGetResp(urlTmp);
 HttpEntity eTmp = ((BasicHttpResponse )respTmp).getEntity();
 Header ctTmp = eTmp.getContentType();
