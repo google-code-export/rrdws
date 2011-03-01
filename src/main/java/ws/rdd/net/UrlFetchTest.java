@@ -257,12 +257,19 @@ public class UrlFetchTest implements Serializable{
  
 		m.addHeader("Host", m.getURI().getHost()); 
 		if (items != null) {// Multipart
-			MultipartEntity reqEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+			MultipartEntity reqEntity = new MultipartEntity(HttpMultipartMode.STRICT);//HttpMultipartMode.BROWSER_COMPATIBLE
 			for (final MemoryFileItem item : items) { 
-				final ContentBody contentBody = new InputStreamBody(item .getInputStream(), item.getName());
-				final StringBody comment = new StringBody("Filename: " + item.getName()); 
-				reqEntity.addPart("comment# "+item.getName(), comment);
-				reqEntity.addPart(item.getFieldName(), contentBody); 
+				String contentType = item.getContentType();
+				try{
+					contentType = contentType.substring(0, contentType.indexOf(";"));
+				}catch (Exception e) {
+					// TODO: handle exception
+				}
+				final ContentBody contentBody = new InputStreamBody(item .getInputStream(), contentType, item.getName());
+				final StringBody comment = new StringBody("Filename:" + item.getName());  
+				
+				reqEntity.addPart(item.getFieldName(), contentBody);
+				reqEntity.addPart("file#"+item.getName(), comment);
 				// For File parameters
 				m.setEntity(reqEntity); 
 			}
