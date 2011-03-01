@@ -260,10 +260,11 @@ public class UrlFetchTest implements Serializable{
 			for (final MemoryFileItem item : items) {
 				final ContentBody contentBody = new InputStreamBody(item
 						.getInputStream(), item.getName());
-				//final StringBody comment = new StringBody("Filename: " + item.getName());
+				final StringBody comment = new StringBody("Filename: " + item.getName());
 				MultipartEntity reqEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+				reqEntity.addPart("comment", comment);
 				reqEntity.addPart("bin", contentBody);
-				//reqEntity.addPart("comment", comment);
+				
 				  
 				// For File parameters
 				m.setEntity(reqEntity); 
