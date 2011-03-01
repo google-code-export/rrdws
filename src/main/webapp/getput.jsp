@@ -53,6 +53,8 @@ if (urlFROM!= null && urlTO!=null){
 			
 			};
 	Properties paramsTmp = new Properties();
+	paramsTmp .putAll( request.getParameterMap());
+	
 	List<MemoryFileItem> itemsTmp = new ArrayList<MemoryFileItem>();
 	itemsTmp.add(cacheTmp.get(nameTmp));
 	HttpResponse respToTmp =o.fetchPostResp(urlTO, headersTmp, paramsTmp, itemsTmp);
