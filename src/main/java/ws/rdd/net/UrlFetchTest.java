@@ -265,11 +265,12 @@ public class UrlFetchTest implements Serializable{
 				}catch (Exception e) {
 					// TODO: handle exception
 				}
-				final ContentBody contentBody = new InputStreamBody(item .getInputStream(), contentType, item.getName());
-				final StringBody comment = new StringBody("Filename:" + item.getName());  
+				String nameTmp = item.getName();
+				final ContentBody contentBody = new InputStreamBody(item .getInputStream(), contentType, nameTmp);
+				final StringBody comment = new StringBody("Filename:" + nameTmp);  
 				
 				reqEntity.addPart(item.getFieldName(), contentBody);
-				reqEntity.addPart("file#"+item.getName(), comment);
+				reqEntity.addPart("file#"+nameTmp, comment);
 				// For File parameters
 				m.setEntity(reqEntity); 
 			}
