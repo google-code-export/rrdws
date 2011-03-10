@@ -28,14 +28,17 @@
 	<tr width="100%" height="64">
 		<td width="100%" height="64">
 			<a href="https://rrdsaas.appspot.com/rrd.jsp"  title=" RRD Java impl ">
-			RRDSAAS <%=System.currentTimeMillis() %>>
-			<img src="JavaLogo.svg" height="64" width="64" /> 
-			<embed src="JavaLogo.svg" type="image/svg+xml" height="64" width="64" />
-				<embed src="JavaLogo.svg" height="64" width="64"  type="image/svg+xml"  pluginspage="http://www.adobe.com/svg/viewer/install/" /> 
-				<object data="JavaLogo.svg" width="300" height="100" type="image/svg+xml" codebase="http://www.adobe.com/svg/viewer/install/" />
+			RRDSAAS <%=System.currentTimeMillis() %>
+			<img src="JavaLogo.svg" height="64" width="64" alt="javalogo as img.svg" /> 
+			<embed src="JavaLogo.svg" type="image/svg+xml" height="64" width="64"  scale=true alt="javalogo as embed.svg" />
+			<embed src="JavaLogo.svg" height="64" width="64"  type="image/svg+xml" scale=true alt="javalogo as embed+plug.svg"  pluginspage="http://www.adobe.com/svg/viewer/install/" /> 
+			<object data="JavaLogo.svg" width="300" height="100" type="image/svg+xml" alt="javalogo as object+plug.svg" codebase="http://www.adobe.com/svg/viewer/install/" />
 			</a>
 			<IMG src="gif.jsp" height="64" width="64"   />
-			<IMG src="speed.gif" height="64" width="164"   />
+			TCJ:
+			<IMG src="speed.gif" height="64" width="164"  alt="tomcat/jee rrdoutput" />
+			GAE:
+			<embed src="svg.jsp" type="image/svg+xml" height="100%" width="100%"  alt="gae rrdoutput" />
 			
 			
 			
@@ -83,7 +86,7 @@ String testCMD = " rrdtool graph speed.gif  --start 920804400 --end 920808000  D
 					session.setAttribute("svg", oInf.getBytes());
 				}
 			}
-		%> 	<embed src="svg.jsp" type="image/svg+xml" height="100%" width="100%" />
+		%> 	
 		
 		<form method="post">Execution result::: <textarea
 			readonly="readonly"  name="result"  cols="60" rows="4">
