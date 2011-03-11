@@ -63,7 +63,7 @@ String testCMD = " rrdtool graph speed.gif  --start 920804400 --end 920808000  D
 	<tr >
 		<td width="100%">
 			<iframe src="man/man.html" width="93%" height="133">
-				a lot of thanks to Alex van den Bogaerdt for this very kindly checked documetation. Unfortunately this page is dropped from original https://rrd4j.dev.java.net/tutorial.html...
+				a lot of thanks to Alex van den Bogaerdt for this very kindly checked documentation. Unfortunately this page is dropped from original https://rrd4j.dev.java.net/tutorial.html...
 				... but __fortunately___ I backuped it! :)
 				
 			</iframe>
