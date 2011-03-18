@@ -433,7 +433,14 @@ public class LServlet extends HttpServlet {
 	 */
 	private HTMLDocument buildToolbar(String urlStr, HTMLParser2 parser2)
 			throws IOException, URISyntaxException, Exception {
-		if (commonToolbar!=null)return commonToolbar;
+		// CACHING is disabled - TODO check possibility to modify only one ATTRIBUTE from object.
+		// at the moment much faster(for CPU as well as implementation) goes to build new commonToolbar as modify Memory-cached-Obj.
+		if (1==2 && commonToolbar!=null){
+			HTMLNode urlTextTmp = commonToolbar.getRoot().getById("I01lOO10lOO11I");
+			urlTextTmp.getAttributes().get("value").setValue(urlStr );
+			urlTextTmp.setValue(urlTextTmp.getTextValue().toCharArray());
+			return commonToolbar;
+		}
 		String strTmp = "<body><div  name=toolbar>"+ new String(getResourceAsBA("L.jspX") ) +"</div></body>";
 		strTmp = strTmp.replace( "B8b8B8Bbbb888B", calcBase() ); 			
 		// addressBAR

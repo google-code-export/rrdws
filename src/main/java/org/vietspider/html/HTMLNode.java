@@ -171,5 +171,29 @@ public void setBeautify(boolean isBeautify) {
 	if (this.parent!=null) parent.setBeautify( isBeautify );
 	this.isBeautify = isBeautify;
 }
+
+/**
+ * search for Node by id. First attribute __id__ with value ${id} will be returned
+ * @author vipup
+ * @param id
+ * @return Node or null
+ */
+public HTMLNode getById(String id) {
+	HTMLNode retval = null;
+	try{
+		if (this.getAttributes().get("id").getValue().equals(id)){
+			retval = this;
+		}
+	}catch(NullPointerException e){}
+	if(retval==null)
+	try{
+		for (HTMLNode childTmp:this.getChildren()){
+			retval = childTmp.getById(id);
+			if (retval!=null)break;
+		}
+		
+	}catch(NullPointerException e){}
+	return retval;
+}
   
 }
