@@ -1,5 +1,8 @@
 package ws.rdd.net;
 
+import gnu.inet.encoding.Punycode;
+import gnu.inet.encoding.PunycodeException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -127,27 +130,34 @@ public class UrlFetchTest implements Serializable{
 			ClientProtocolException {
 		StatusLine statusLine = respTmp.getStatusLine();
 		String statusTmp = statusLine.toString();
-		if (m.getHeaders("Authorization").length>0){
+		String toFetchKey = null;
+		try {
+			toFetchKey = toKey(toFetchStr);
+		} catch (PunycodeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		Header[] headers = m.getHeaders("Authorization");
+		if (headers.length>0){
 			Cache cacheAuth = Manager.getCache(CACHE_NAME);
 			String uri = toFetchStr;
 			int appUrlLen = uri.lastIndexOf( "/");				
 			String appUri = uri.substring(0, appUrlLen);
-			Header header = m.getHeaders("Authorization")[0];
-			String basicAuth = searchForAuth(toFetchStr, m);
-			if (basicAuth == null){
-				log.debug("store AUTH to cache :{}", header);
-				cacheAuth.put(appUri,""+header.getValue() );
-			}else{ // onerwrite AUTH
-				log.debug("onerwrite AUTH  4 {}", appUri);
-				cacheAuth.put("~"+appUri,""+basicAuth );
-				cacheAuth.put(appUri,""+header.getValue() );
-			}
+			Header header = headers[0]; 
+				String basicAuth = searchForAuth(toFetchKey, m); 
+				if (basicAuth == null){
+					log.debug("store AUTH to cache :{}", header);
+					cacheAuth.put(toFetchKey,""+header.getValue() );
+				}else{ // onerwrite AUTH
+					log.debug("onerwrite AUTH  4 {}", appUri);
+					cacheAuth.put("~"+toFetchKey,""+basicAuth );
+					cacheAuth.put(toFetchKey,""+header.getValue() );
+				} 
 		}
 		if (statusTmp.indexOf("200 OK") > 0) {
 			System_out_println("resp.:" + statusLine);
-		} else if ("HTTP/1.1 401 Unauthorized".equals(statusTmp) || "HTTP/1.0 401 Unauthorized".equals(statusTmp)) {
-			String basicAuth = searchForAuth(toFetchStr, m);
-			
+		} else if ("HTTP/1.1 401 Unauthorized".equals(statusTmp) || "HTTP/1.0 401 Unauthorized".equals(statusTmp) || "HTTP/1.1 401 Authorization Required".equals(statusTmp)) {			 
+			String basicAuth = searchForAuth(toFetchKey, m);		 
 			if (basicAuth != null) {// go forward with cached
 				m.addHeader("Authorization", (basicAuth.startsWith("Basic ")?"":"Basic ") + basicAuth);
 				respTmp = httpClient.execute(m);
@@ -165,6 +175,11 @@ public class UrlFetchTest implements Serializable{
 		}
 		return respTmp;
 	}
+	
+	private String toKey(String value) throws PunycodeException{
+		String eKey = Punycode.encode(value);
+		return eKey;
+	}
 
 	/**
 	 * @author vipup
@@ -172,16 +187,17 @@ public class UrlFetchTest implements Serializable{
 	 * @param m
 	 * @return
 	 */
-	private String searchForAuth(String toFetchStr, HttpUriRequest m) {
+	private String searchForAuth(String toFetchKey, HttpUriRequest m) {
 		Cache cacheAuth = Manager.getCache(CACHE_NAME);
-		String toFetchKey = toFetchStr.substring(0,toFetchStr.lastIndexOf("/") );
-		String basicAuth = (String) cacheAuth.get(toFetchKey); // auth is path (NOT File) related!
+		 
+		String basicAuth = null; 
+		basicAuth = (String) cacheAuth.get(toFetchKey); // auth is path (NOT File) related!
 		String uri = m.getURI().toString();
 		int domainUrlLen = uri.indexOf( m.getURI().getPath());			
 		while(basicAuth == null && toFetchKey.length()> domainUrlLen ){
-			toFetchKey = toFetchStr.substring(0,toFetchKey.lastIndexOf("/") );
+			toFetchKey = toFetchKey.substring(0,toFetchKey.lastIndexOf("/") );
 			basicAuth = (String) cacheAuth.get(toFetchKey);
-		}
+		} 
 		return basicAuth;
 	}
 	public static final String CACHE_NAME = UrlFetchTest.class.getName()
