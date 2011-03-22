@@ -1,5 +1,8 @@
 package cc.co.llabor.cache.js; 
+import java.io.BufferedInputStream;
 import java.io.IOException;  
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 
 import cc.co.llabor.cache.Manager;
 import cc.co.llabor.script.Beauty;
@@ -30,15 +33,101 @@ public class JSStore {
 		return me;
 	}
 
-	public Item getByValue(String scriptValue) { 
+	/**
+	 * @deprecated
+	 * @author vipup
+	 * @param scriptValue
+	 * @return
+	 */
+	public Item _getByValue(String scriptValue) { 
 		return (Item) scriptStore.get(scriptValue);
 	}
 	
 	public Item getByURL(String scriptURL) { 
 		String key = scriptURL;
-		return (Item) scriptStore.get(key );
+		Item retval = null;
+		Object objectTmp = scriptStore.get(key );
+		retval = chekOut(scriptURL, retval, objectTmp);
+		return  retval;
 	}
 
+
+	/**
+	 * try to load Item from Cache by URL as a Key.
+	 * 1) as a stored Obj:Item
+	 * 2) as a plain bytes->new Item(${bytes}). 
+	 * 
+	 * @author vipup
+	 * @param scriptURL
+	 * @param retval
+	 * @param objectTmp
+	 * @return
+	 */
+	private Item chekOut(String scriptURL, Item retval, Object objectTmp) {
+		if (objectTmp ==null)return null;
+		if (objectTmp instanceof Item)return (Item)objectTmp;
+		
+		BufferedInputStream bin  = null;
+		try{
+			bin = new BufferedInputStream ((InputStream)objectTmp );
+			bin .mark(Integer.MAX_VALUE); 
+			ObjectInputStream oin = new ObjectInputStream(bin); 
+			objectTmp = oin.readObject();
+			oin.close();
+			bin.close();
+			 
+		}catch(IOException e){
+			try { // go back and read from start
+				bin.reset();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} 
+			String value =  readFully((InputStream)bin);
+//			/String cacheKey = scriptURL;
+			String refPar = null;
+			//objectTmp =  putOrCreate(  cacheKey ,   value,   refPar  ) ;
+			retval  = new Item(value);
+			retval  .addReffer(refPar);  
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 	 
+		if (objectTmp instanceof Item){ 
+			retval =(Item ) objectTmp;
+		}
+		return retval;
+	}
+
+	private String readFully(InputStream inPar) {
+		StringBuffer sb = new StringBuffer();
+		byte[] buf = new byte[1024];
+		int l = -1;
+		try {
+			for (l = inPar.read(buf);l>=0;l = inPar.read(buf)){
+				String s = new String(buf, 0, l);
+				sb.append(s );
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return sb.toString();
+	}
+
+	
+	/**
+	 * store the Script-Item as a CacheItem into JSCacheStore.
+	 * -before store value will be checked/transformed for links in the :
+	 *    a) header
+	 * -stored value will be reformatted ( 2nd pass) by beautifyer   
+	 * 
+	 * @author vipup
+	 * @param cacheKey
+	 * @param value
+	 * @param refPar
+	 * @return
+	 */
 	public Item putOrCreate(String cacheKey, String value, String refPar ) { 
 		Object jsItemTmp = scriptStore.get(cacheKey);
 		Item jsItem = null;
@@ -48,8 +137,7 @@ public class JSStore {
 			// TODO
 			System.out.println(jsItemTmp);
 		}
-		try{
-			
+		try{ 
 			if (jsItem == null){  
 				value = checkHeadAndFoot(value);			
 				jsItem = new Item(value); 
@@ -64,31 +152,44 @@ public class JSStore {
 				}
 			}
 			// TODO Refactor for gae-cache
-			synchronized (SCRIPTSTORE) { 
-				{ 
-						Object o = scriptStore.peek(cacheKey); 
-						boolean changed = false;
-						if (jsItem != o) {// check similarity 
-							
-							if (o!=null)
-							try{
-								final String valTmp = jsItem.getValue();
-								final String cachedVTmp = ((Item)o).getValue();
-								changed = !cachedVTmp.equals(valTmp);
-							}catch(NullPointerException e){
-								  e.printStackTrace();
-							}
-							if (changed){
-								scriptStore.remove( cacheKey );
-								scriptStore.put(cacheKey, jsItem );
-							}
-						}
-					}
-			}/*synchronized (SCRIPTSTORE)*/
+			chekIn(cacheKey, jsItem);
 		}catch(Throwable e){
 			e.printStackTrace();
 		}
 		return jsItem;
+	}
+
+
+	/**
+	 * synchronized store into Cache-Facility
+	 *.. just avoid storing the same. The price for PUT is much more as for GET==THIS?IGNORE:PUT;
+	 * 
+	 * @author vipup
+	 * @param cacheKey
+	 * @param jsItem
+	 */
+	private void chekIn(String cacheKey, Item jsItem) {
+		synchronized (SCRIPTSTORE) { 
+			{ 
+				Object o = scriptStore.peek(cacheKey);
+				o = chekOut(cacheKey, jsItem, o);
+				boolean changed = false;
+				if (jsItem != o) {// check similarity 
+					if (o != null)
+						try {
+							final String valTmp = jsItem.getValue();
+							final String cachedVTmp = ((Item) o).getValue();
+							changed = !cachedVTmp.equals(valTmp);
+						} catch (NullPointerException e) {
+							e.printStackTrace();
+						}
+					if (changed) {
+						scriptStore.remove(cacheKey);
+						scriptStore.put(cacheKey, jsItem);
+					}
+				}
+			}
+		}/* synchronized (SCRIPTSTORE) */
 	}
 
 	/**
