@@ -733,6 +733,9 @@
 			</properties>
 			<build>
 				<resources>
+			    	<resource>
+			        	<directory>src/main/resources</directory>
+			        </resource>				
 					<resource>
 						<filtering>true</filtering>
 						<directory>
