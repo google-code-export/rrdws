@@ -34,7 +34,10 @@ if (urlFROM!= null && urlTO!=null){
 	MemoryFileItemFactory factory = MemoryFileItemFactory.getInstance();
 	Header ctTmp = eTmp.getContentType();
 	String contentTypeTmp = ctTmp.getValue();
-	MemoryFileItem dataTmp = factory.createItem("get.dat"+System.currentTimeMillis(), contentTypeTmp, false, "GET_dat"+System.currentTimeMillis());
+	String name2Tmp =  "GET_dat";
+	// 100 seconds
+	name2Tmp += (""+System.currentTimeMillis()).substring(8);
+	MemoryFileItem dataTmp = factory.createItem(name2Tmp, contentTypeTmp, false, name2Tmp);
 	eTmp.writeTo(  dataTmp .getOutputStream() );
 	dataTmp.flush();
 	MemoryFileCache cacheTmp = MemoryFileCache.getInstance("DEFAULT.BAK");
