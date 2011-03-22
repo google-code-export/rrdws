@@ -116,6 +116,8 @@ public class UrlFetchTest implements Serializable{
 	}
 	
 	/**
+	 * perform authorisation for not-autorised requests.
+	 * for HTTP-200 -nothig todo, just store success.
 	 * @author vipup
 	 * @param toFetchStr
 	 * @param httpClient
@@ -136,27 +138,27 @@ public class UrlFetchTest implements Serializable{
 		} catch (PunycodeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
-		Header[] headers = m.getHeaders("Authorization");
-		if (headers.length>0){
-			Cache cacheAuth = Manager.getCache(CACHE_NAME);
-			String uri = toFetchStr;
-			int appUrlLen = uri.lastIndexOf( "/");				
-			String appUri = uri.substring(0, appUrlLen);
-			Header header = headers[0]; 
-				String basicAuth = searchForAuth(toFetchKey, m); 
-				if (basicAuth == null){
-					log.debug("store AUTH to cache :{}", header);
-					cacheAuth.put(toFetchKey,""+header.getValue() );
-				}else{ // onerwrite AUTH
-					log.debug("onerwrite AUTH  4 {}", appUri);
-					cacheAuth.put("~"+toFetchKey,""+basicAuth );
-					cacheAuth.put(toFetchKey,""+header.getValue() );
-				} 
-		}
-		if (statusTmp.indexOf("200 OK") > 0) {
-			System_out_println("resp.:" + statusLine);
-		} else if ("HTTP/1.1 401 Unauthorized".equals(statusTmp) || "HTTP/1.0 401 Unauthorized".equals(statusTmp) || "HTTP/1.1 401 Authorization Required".equals(statusTmp)) {			 
+		}			
+		if (statusTmp.indexOf("200 OK") > 0) { 
+			System_out_println("Authorisation is succesful. Store success..." + statusLine); 
+			Header[] headers = m.getHeaders("Authorization");
+			if (headers.length>0){
+				Cache cacheAuth = Manager.getCache(CACHE_NAME);
+				String uri = toFetchStr;
+				int appUrlLen = uri.lastIndexOf( "/");				
+				String appUri = uri.substring(0, appUrlLen);
+				Header header = headers[0]; 
+					String basicAuth = searchForAuth(toFetchKey, m); 
+					if (basicAuth == null){
+						log.debug("store AUTH to cache :{}", header);
+						cacheAuth.put(toFetchKey,""+header.getValue() );
+					}else{ // onerwrite AUTH
+						log.debug("onerwrite AUTH  4 {}", appUri);
+						cacheAuth.put("~"+toFetchKey,""+basicAuth );
+						cacheAuth.put(toFetchKey,""+header.getValue() );
+					} 
+			}			
+		} else if (statusLine.getStatusCode() == 401 ||"HTTP/1.1 401 Unauthorized".equals(statusTmp) || "HTTP/1.0 401 Unauthorized".equals(statusTmp) || "HTTP/1.1 401 Authorization Required".equals(statusTmp)) {			 
 			String basicAuth = searchForAuth(toFetchKey, m);		 
 			if (basicAuth != null) {// go forward with cached
 				m.addHeader("Authorization", (basicAuth.startsWith("Basic ")?"":"Basic ") + basicAuth);
