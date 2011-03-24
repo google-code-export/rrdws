@@ -35,7 +35,7 @@ if (urlFROM!= null && urlTO!=null){
 	Header ctTmp = eTmp.getContentType();
 	String contentTypeTmp = ctTmp.getValue();
 	String name2Tmp =  "GET_dat";
-	// 100 seconds
+	// capacity ~ 100 seconds X 1000 requests
 	name2Tmp += (""+System.currentTimeMillis()).substring(8);
 	MemoryFileItem dataTmp = factory.createItem(name2Tmp, contentTypeTmp, false, name2Tmp);
 	eTmp.writeTo(  dataTmp .getOutputStream() );
