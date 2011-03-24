@@ -723,7 +723,7 @@
 		 
 		<profile>
 			<id>profile-FILECACHE</id>
-			<activation>
+			<activation><activeByDefault>true</activeByDefault>
 				<property>
 					<name>cccache</name>
 				</property>
