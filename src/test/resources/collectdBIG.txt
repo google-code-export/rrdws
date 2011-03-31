@@ -1,0 +1,114 @@
+[Thu Mar 31 16:54:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/Heap_init=[value=1.6777216E7]gauge.Heap_init := 1.6777216E7
+[Thu Mar 31 16:54:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_committed=[value=3.6175872E7]gauge.NonHeap_committed := 3.6175872E7
+[Thu Mar 31 16:54:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/Heap_committed=[value=1.6252928E7]gauge.Heap_committed := 1.6252928E7
+[Thu Mar 31 16:54:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_used=[value=1.5527576E7]gauge.NonHeap_used := 1.5527576E7
+[Thu Mar 31 16:54:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/Heap_max=[value=2.5952256E8]gauge.Heap_max := 2.5952256E8
+[Thu Mar 31 16:54:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_init=[value=3.5815424E7]gauge.NonHeap_init := 3.5815424E7
+[Thu Mar 31 16:54:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_max=[value=1.23731968E8]gauge.NonHeap_max := 1.23731968E8
+[Thu Mar 31 16:54:07 CEST 2011] c1263ce0/java.lang/hudson-GC Copy/counter/CollectionTime=[value=7]counter.CollectionTime := 7
+[Thu Mar 31 16:54:07 CEST 2011] c1263ce0/java.lang/hudson-GC Copy/counter/CollectionCount=[value=1]counter.CollectionCount := 1
+[Thu Mar 31 16:54:07 CEST 2011] c1263ce0/java.lang/hudson-GC MarkSweepCompact/counter/CollectionTime=[value=0]counter.CollectionTime := 0
+[Thu Mar 31 16:54:07 CEST 2011] c1263ce0/java.lang/hudson-GC MarkSweepCompact/counter/CollectionCount=[value=0]counter.CollectionCount := 0
+[Thu Mar 31 16:54:07 CEST 2011] c1263ce0/java.lang/hudson-ClassLoading/gauge/TotLoadedClasses=[value=1088.0]gauge.TotLoadedClasses := 1088.0
+[Thu Mar 31 16:54:07 CEST 2011] c1263ce0/java.lang/hudson-ClassLoading/gauge/LoadedClasses=[value=1088.0]gauge.LoadedClasses := 1088.0
+[Thu Mar 31 16:54:07 CEST 2011] c1263ce0/java.lang/hudson-ClassLoading/gauge/UnloadedClasses=[value=0.0]gauge.UnloadedClasses := 0.0
+[Thu Mar 31 16:54:07 CEST 2011] c1263ce0/java.lang/hudson-Threading/gauge/DaemonThreads=[value=5.0]gauge.DaemonThreads := 5.0
+[Thu Mar 31 16:54:07 CEST 2011] c1263ce0/java.lang/hudson-Threading/gauge/Threads=[value=7.0]gauge.Threads := 7.0
+[Thu Mar 31 16:54:34 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/Heap_used=[value=955864.0]gauge.Heap_used := 955864.0
+[Thu Mar 31 16:54:34 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/Heap_init=[value=1.6777216E7]gauge.Heap_init := 1.6777216E7
+[Thu Mar 31 16:54:34 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_committed=[value=3.6438016E7]gauge.NonHeap_committed := 3.6438016E7
+[Thu Mar 31 16:54:34 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/Heap_committed=[value=1.6252928E7]gauge.Heap_committed := 1.6252928E7
+[Thu Mar 31 16:54:34 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_used=[value=1.5801944E7]gauge.NonHeap_used := 1.5801944E7
+[Thu Mar 31 16:54:34 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/Heap_max=[value=2.5952256E8]gauge.Heap_max := 2.5952256E8
+[Thu Mar 31 16:54:34 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_init=[value=3.5815424E7]gauge.NonHeap_init := 3.5815424E7
+[Thu Mar 31 16:54:34 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_max=[value=1.23731968E8]gauge.NonHeap_max := 1.23731968E8
+[Thu Mar 31 16:54:34 CEST 2011] c1263ce0/java.lang/hudson-GC Copy/counter/CollectionTime=[value=9332]counter.CollectionTime := 9332
+[Thu Mar 31 16:54:34 CEST 2011] c1263ce0/java.lang/hudson-GC Copy/counter/CollectionCount=[value=2]counter.CollectionCount := 2
+[Thu Mar 31 16:54:34 CEST 2011] c1263ce0/java.lang/hudson-GC MarkSweepCompact/counter/CollectionTime=[value=0]counter.CollectionTime := 0
+[Thu Mar 31 16:54:34 CEST 2011] c1263ce0/java.lang/hudson-GC MarkSweepCompact/counter/CollectionCount=[value=0]counter.CollectionCount := 0
+[Thu Mar 31 16:54:34 CEST 2011] c1263ce0/java.lang/hudson-ClassLoading/gauge/TotLoadedClasses=[value=1097.0]gauge.TotLoadedClasses := 1097.0
+[Thu Mar 31 16:54:34 CEST 2011] c1263ce0/java.lang/hudson-ClassLoading/gauge/LoadedClasses=[value=1097.0]gauge.LoadedClasses := 1097.0
+[Thu Mar 31 16:54:34 CEST 2011] c1263ce0/java.lang/hudson-ClassLoading/gauge/UnloadedClasses=[value=0.0]gauge.UnloadedClasses := 0.0
+[Thu Mar 31 16:54:34 CEST 2011] c1263ce0/java.lang/hudson-Threading/gauge/DaemonThreads=[value=5.0]gauge.DaemonThreads := 5.0
+[Thu Mar 31 16:54:34 CEST 2011] c1263ce0/java.lang/hudson-Threading/gauge/Threads=[value=7.0]gauge.Threads := 7.0
+[Thu Mar 31 16:55:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/Heap_used=[value=2383432.0]gauge.Heap_used := 2383432.0
+[Thu Mar 31 16:55:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/Heap_init=[value=1.6777216E7]gauge.Heap_init := 1.6777216E7
+[Thu Mar 31 16:55:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_committed=[value=3.6175872E7]gauge.NonHeap_committed := 3.6175872E7
+[Thu Mar 31 16:55:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/Heap_committed=[value=1.6252928E7]gauge.Heap_committed := 1.6252928E7
+[Thu Mar 31 16:55:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_used=[value=1.5531544E7]gauge.NonHeap_used := 1.5531544E7
+[Thu Mar 31 16:55:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/Heap_max=[value=2.5952256E8]gauge.Heap_max := 2.5952256E8
+[Thu Mar 31 16:55:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_init=[value=3.5815424E7]gauge.NonHeap_init := 3.5815424E7
+[Thu Mar 31 16:55:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_max=[value=1.23731968E8]gauge.NonHeap_max := 1.23731968E8
+[Thu Mar 31 16:55:07 CEST 2011] c1263ce0/java.lang/hudson-GC Copy/counter/CollectionTime=[value=7]counter.CollectionTime := 7
+[Thu Mar 31 16:55:07 CEST 2011] c1263ce0/java.lang/hudson-GC Copy/counter/CollectionCount=[value=1]counter.CollectionCount := 1
+[Thu Mar 31 16:55:07 CEST 2011] c1263ce0/java.lang/hudson-GC MarkSweepCompact/counter/CollectionTime=[value=0]counter.CollectionTime := 0
+[Thu Mar 31 16:55:07 CEST 2011] c1263ce0/java.lang/hudson-GC MarkSweepCompact/counter/CollectionCount=[value=0]counter.CollectionCount := 0
+[Thu Mar 31 16:55:07 CEST 2011] c1263ce0/java.lang/hudson-ClassLoading/gauge/TotLoadedClasses=[value=1090.0]gauge.TotLoadedClasses := 1090.0
+[Thu Mar 31 16:55:07 CEST 2011] c1263ce0/java.lang/hudson-ClassLoading/gauge/LoadedClasses=[value=1090.0]gauge.LoadedClasses := 1090.0
+[Thu Mar 31 16:55:07 CEST 2011] c1263ce0/java.lang/hudson-ClassLoading/gauge/UnloadedClasses=[value=0.0]gauge.UnloadedClasses := 0.0
+[Thu Mar 31 16:55:07 CEST 2011] c1263ce0/java.lang/hudson-Threading/gauge/DaemonThreads=[value=5.0]gauge.DaemonThreads := 5.0
+[Thu Mar 31 16:55:07 CEST 2011] c1263ce0/java.lang/hudson-Threading/gauge/Threads=[value=7.0]gauge.Threads := 7.0
+[Thu Mar 31 17:20:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/Heap_used=[value=3291472.0]gauge.Heap_used := 3291472.0
+[Thu Mar 31 17:20:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/Heap_init=[value=1.6777216E7]gauge.Heap_init := 1.6777216E7
+[Thu Mar 31 17:20:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_committed=[value=3.6274176E7]gauge.NonHeap_committed := 3.6274176E7
+[Thu Mar 31 17:20:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/Heap_committed=[value=1.6252928E7]gauge.Heap_committed := 1.6252928E7
+[Thu Mar 31 17:20:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_used=[value=1.5638352E7]gauge.NonHeap_used := 1.5638352E7
+[Thu Mar 31 17:20:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/Heap_max=[value=2.5952256E8]gauge.Heap_max := 2.5952256E8
+[Thu Mar 31 17:20:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_init=[value=3.5815424E7]gauge.NonHeap_init := 3.5815424E7
+[Thu Mar 31 17:20:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_max=[value=1.23731968E8]gauge.NonHeap_max := 1.23731968E8
+[Thu Mar 31 17:20:07 CEST 2011] c1263ce0/java.lang/hudson-GC Copy/counter/CollectionTime=[value=7]counter.CollectionTime := 7
+[Thu Mar 31 17:20:07 CEST 2011] c1263ce0/java.lang/hudson-GC Copy/counter/CollectionCount=[value=1]counter.CollectionCount := 1
+[Thu Mar 31 17:20:07 CEST 2011] c1263ce0/java.lang/hudson-GC MarkSweepCompact/counter/CollectionTime=[value=0]counter.CollectionTime := 0
+[Thu Mar 31 17:20:07 CEST 2011] c1263ce0/java.lang/hudson-GC MarkSweepCompact/counter/CollectionCount=[value=0]counter.CollectionCount := 0
+[Thu Mar 31 17:20:07 CEST 2011] c1263ce0/java.lang/hudson-ClassLoading/gauge/TotLoadedClasses=[value=1097.0]gauge.TotLoadedClasses := 1097.0
+[Thu Mar 31 17:20:07 CEST 2011] c1263ce0/java.lang/hudson-ClassLoading/gauge/LoadedClasses=[value=1097.0]gauge.LoadedClasses := 1097.0
+[Thu Mar 31 17:20:07 CEST 2011] c1263ce0/java.lang/hudson-ClassLoading/gauge/UnloadedClasses=[value=0.0]gauge.UnloadedClasses := 0.0
+[Thu Mar 31 17:20:07 CEST 2011] c1263ce0/java.lang/hudson-Threading/gauge/DaemonThreads=[value=5.0]gauge.DaemonThreads := 5.0
+[Thu Mar 31 17:20:07 CEST 2011] c1263ce0/java.lang/hudson-Threading/gauge/Threads=[value=7.0]gauge.Threads := 7.0
+
+[Thu Mar 31 17:17:34 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/Heap_used=[value=1789072.0]gauge.Heap_used := 1789072.0
+[Thu Mar 31 17:17:34 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/Heap_init=[value=1.6777216E7]gauge.Heap_init := 1.6777216E7
+[Thu Mar 31 17:17:34 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_committed=[value=3.6438016E7]gauge.NonHeap_committed := 3.6438016E7
+[Thu Mar 31 17:17:34 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/Heap_committed=[value=1.6252928E7]gauge.Heap_committed := 1.6252928E7
+[Thu Mar 31 17:17:34 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_used=[value=1.5811544E7]gauge.NonHeap_used := 1.5811544E7
+[Thu Mar 31 17:17:34 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/Heap_max=[value=2.5952256E8]gauge.Heap_max := 2.5952256E8
+[Thu Mar 31 17:17:34 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_init=[value=3.5815424E7]gauge.NonHeap_init := 3.5815424E7
+[Thu Mar 31 17:17:34 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_max=[value=1.23731968E8]gauge.NonHeap_max := 1.23731968E8
+[Thu Mar 31 17:17:34 CEST 2011] c1263ce0/java.lang/hudson-GC Copy/counter/CollectionTime=[value=9332]counter.CollectionTime := 9332
+[Thu Mar 31 17:17:34 CEST 2011] c1263ce0/java.lang/hudson-GC Copy/counter/CollectionCount=[value=2]counter.CollectionCount := 2
+[Thu Mar 31 17:17:34 CEST 2011] c1263ce0/java.lang/hudson-GC MarkSweepCompact/counter/CollectionTime=[value=0]counter.CollectionTime := 0
+[Thu Mar 31 17:17:34 CEST 2011] c1263ce0/java.lang/hudson-GC MarkSweepCompact/counter/CollectionCount=[value=0]counter.CollectionCount := 0
+[Thu Mar 31 17:17:34 CEST 2011] c1263ce0/java.lang/hudson-ClassLoading/gauge/TotLoadedClasses=[value=1097.0]gauge.TotLoadedClasses := 1097.0
+[Thu Mar 31 17:17:34 CEST 2011] c1263ce0/java.lang/hudson-ClassLoading/gauge/LoadedClasses=[value=1097.0]gauge.LoadedClasses := 1097.0
+[Thu Mar 31 17:17:34 CEST 2011] c1263ce0/java.lang/hudson-ClassLoading/gauge/UnloadedClasses=[value=0.0]gauge.UnloadedClasses := 0.0
+[Thu Mar 31 17:17:34 CEST 2011] c1263ce0/java.lang/hudson-Threading/gauge/DaemonThreads=[value=5.0]gauge.DaemonThreads := 5.0
+[Thu Mar 31 17:17:34 CEST 2011] c1263ce0/java.lang/hudson-Threading/gauge/Threads=[value=7.0]gauge.Threads := 7.0
+
+[Thu Mar 31 17:20:34 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_max=[value=1.23731968E8]gauge.NonHeap_max := 1.23731968E8
+[Thu Mar 31 17:20:34 CEST 2011] c1263ce0/java.lang/hudson-GC Copy/counter/CollectionTime=[value=9332]counter.CollectionTime := 9332
+[Thu Mar 31 17:20:34 CEST 2011] c1263ce0/java.lang/hudson-GC Copy/counter/CollectionCount=[value=2]counter.CollectionCount := 2
+[Thu Mar 31 17:20:34 CEST 2011] c1263ce0/java.lang/hudson-GC MarkSweepCompact/counter/CollectionTime=[value=0]counter.CollectionTime := 0
+[Thu Mar 31 17:20:34 CEST 2011] c1263ce0/java.lang/hudson-GC MarkSweepCompact/counter/CollectionCount=[value=0]counter.CollectionCount := 0
+[Thu Mar 31 17:20:34 CEST 2011] c1263ce0/java.lang/hudson-ClassLoading/gauge/TotLoadedClasses=[value=1097.0]gauge.TotLoadedClasses := 1097.0
+[Thu Mar 31 17:20:34 CEST 2011] c1263ce0/java.lang/hudson-ClassLoading/gauge/LoadedClasses=[value=1097.0]gauge.LoadedClasses := 1097.0
+[Thu Mar 31 17:20:34 CEST 2011] c1263ce0/java.lang/hudson-ClassLoading/gauge/UnloadedClasses=[value=0.0]gauge.UnloadedClasses := 0.0
+[Thu Mar 31 17:20:34 CEST 2011] c1263ce0/java.lang/hudson-Threading/gauge/DaemonThreads=[value=5.0]gauge.DaemonThreads := 5.0
+[Thu Mar 31 17:20:34 CEST 2011] c1263ce0/java.lang/hudson-Threading/gauge/Threads=[value=7.0]gauge.Threads := 7.0
+
+[Thu Mar 31 17:21:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/Heap_used=[value=3291472.0]gauge.Heap_used := 3291472.0
+[Thu Mar 31 17:21:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/Heap_init=[value=1.6777216E7]gauge.Heap_init := 1.6777216E7
+[Thu Mar 31 17:21:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_committed=[value=3.6274176E7]gauge.NonHeap_committed := 3.6274176E7
+[Thu Mar 31 17:21:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/Heap_committed=[value=1.6252928E7]gauge.Heap_committed := 1.6252928E7
+[Thu Mar 31 17:21:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_used=[value=1.56388E7]gauge.NonHeap_used := 1.56388E7
+[Thu Mar 31 17:21:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/Heap_max=[value=2.5952256E8]gauge.Heap_max := 2.5952256E8
+[Thu Mar 31 17:21:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_init=[value=3.5815424E7]gauge.NonHeap_init := 3.5815424E7
+[Thu Mar 31 17:21:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_max=[value=1.23731968E8]gauge.NonHeap_max := 1.23731968E8
+[Thu Mar 31 17:21:07 CEST 2011] c1263ce0/java.lang/hudson-GC Copy/counter/CollectionTime=[value=7]counter.CollectionTime := 7
+[Thu Mar 31 17:21:07 CEST 2011] c1263ce0/java.lang/hudson-GC Copy/counter/CollectionCount=[value=1]counter.CollectionCount := 1
+[Thu Mar 31 17:21:07 CEST 2011] c1263ce0/java.lang/hudson-GC MarkSweepCompact/counter/CollectionTime=[value=0]counter.CollectionTime := 0
+[Thu Mar 31 17:21:07 CEST 2011] c1263ce0/java.lang/hudson-GC MarkSweepCompact/counter/CollectionCount=[value=0]counter.CollectionCount := 0
+[Thu Mar 31 17:21:07 CEST 2011] c1263ce0/java.lang/hudson-ClassLoading/gauge/TotLoadedClasses=[value=1097.0]gauge.TotLoadedClasses := 1097.0
+[Thu Mar 31 17:21:07 CEST 2011] c1263ce0/java.lang/hudson-ClassLoading/gauge/LoadedClasses=[value=1097.0]gauge.LoadedClasses := 1097.0
+[Thu Mar 31 17:21:07 CEST 2011] c1263ce0/java.lang/hudson-ClassLoading/gauge/UnloadedClasses=[value=0.0]gauge.UnloadedClasses := 0.0
+[Thu Mar 31 17:21:07 CEST 2011] c1263ce0/java.lang/hudson-Threading/gauge/DaemonThreads=[value=5.0]gauge.DaemonThreads := 5.0
+[Thu Mar 31 17:21:07 CEST 2011] c1263ce0/java.lang/hudson-Threading/gauge/Threads=[value=7.0]gauge.Threads := 7.0

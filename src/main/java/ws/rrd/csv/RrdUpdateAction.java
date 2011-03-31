@@ -2,6 +2,7 @@ package ws.rrd.csv;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -29,7 +30,13 @@ import cc.co.llabor.cache.Manager;
 public class RrdUpdateAction implements Action {
 
 	    public static final String MM_DD_YYYY_HH_MM_SS_SSS = "MM/dd/yyyy HH:mm:ss.SSS";
-		final static SimpleDateFormat sdf = new SimpleDateFormat(MM_DD_YYYY_HH_MM_SS_SSS);
+		SimpleDateFormat sdf = new SimpleDateFormat(MM_DD_YYYY_HH_MM_SS_SSS);
+		public RrdUpdateAction(){
+			
+		}
+		public RrdUpdateAction(SimpleDateFormat sdf){
+			this.sdf = sdf;
+		}
 
 		@Override
 		public Object perform(String xpath, String timestamp, String data) {
