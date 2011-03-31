@@ -1,5 +1,6 @@
 package ws.rrd.csv;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat; 
 
@@ -22,14 +23,19 @@ public class ToStringPrintlnAction implements Action {
 				return sb.toString();
 			}
  
-			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss.SSS");
+			DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss.SSS");
+			public ToStringPrintlnAction(){
+				
+			}
+			
+			public ToStringPrintlnAction(DateFormat dateFormat){
+				this.sdf = dateFormat;
+			}
 			Registry reg ;
 			@Override
 			public Object perform(String xpath, String timestamp, String data) {
 				try {
-					long timestampTmp =  sdf.parse(timestamp).getTime();
-					
-					
+					long timestampTmp =  sdf.parse(timestamp).getTime(); 
 					if (reg == null || reg.getPath2db() ==null || reg.getPath2db().get(xpath) == null){
 						System_out_println( xpath + "-->"  );  
 						String cmdCreateTmp = RrdUpdateAction.makeCreateCMD(timestampTmp, xpath) ;
