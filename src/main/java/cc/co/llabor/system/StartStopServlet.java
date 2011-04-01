@@ -2,11 +2,15 @@
 package cc.co.llabor.system;   
 
 import java.io.IOException; 
+import java.lang.instrument.Instrumentation;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;  
 
 import org.collectd.QueueWorker;
+import org.collectd.mx.MBeanReceiver;
+import org.collectd.mx.RemoteMBeanSender;
 import org.jrobin.core.RrdDb;
 import org.jrobin.core.RrdDbPool;
 import org.jrobin.core.RrdException;
@@ -29,6 +33,29 @@ public class StartStopServlet extends HttpServlet {
 			log.error("RRD initShutdownHook : ", e);
 		}		
 		
+		String[] arg0=new String[]{};
+		// Main-Class: org.collectd.mx.MBeanReceiver
+		// start collectd MBeanReceiver
+		try {
+			MBeanReceiver.main(arg0);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		// start collectd MBeanSender
+		//
+		//Premain-Class: org.collectd.mx.RemoteMBeanSender
+		try {
+			Instrumentation instr = null;
+			String args = "";
+			RemoteMBeanSender.premain(args , instr);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+				
+		// start collectd queue-worker
 		try{
 			worker = new QueueWorker();
 			new Thread(worker, "rrd QueueWorker").start();
