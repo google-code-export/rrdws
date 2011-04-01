@@ -22,13 +22,14 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Queue;
  
 
+import ws.rrd.collectd.TextLineIterator;
 import ws.rrd.csv.Action;
 import ws.rrd.csv.RrdUpdateAction;
-import ws.rrd.csv.TextLineIterator;
 
 import cc.co.llabor.cache.Manager;
 
@@ -41,11 +42,20 @@ import net.sf.jsr107cache.Cache;
 public class   QueueWorker implements Runnable{
 
     	private java.util.Queue<String> queue;
+		private boolean isAlive = true;
     	QueueWorker ( Queue<String> q){
     		this.queue = q;
     	}
-    	public void run() {
-    		while(true){
+    	
+    	public void kill(){
+    		isAlive = true;
+    	}
+    	
+    	public QueueWorker() {
+    		queue = new LinkedList<String>();
+		}
+		public void run() {
+    		while(isAlive ){
     			if (queue.isEmpty()){
     				try {
     					Thread.sleep(100);
@@ -55,10 +65,11 @@ public class   QueueWorker implements Runnable{
     				}
     			}else{
 					try {
-	    				String data = queue.peek();
+	    				String data = queue.poll();//queue.peek();
 						byte[] b = data.getBytes();
 						InputStream in = new ByteArrayInputStream(b ); 
 						processData(in );
+						//queue.remove(data);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -68,12 +79,12 @@ public class   QueueWorker implements Runnable{
     			}
     			Cache cache = Manager.getCache("collectd");
     			Object key ="collectd_4_RRD_data";
-    			String o = ""+cache.get(key);
+    			Object  o = cache.get(key);
     			// TODO Lock + synch
     			if (o!=null){
     				o = ""+cache.remove(key);
-					queue.offer(o);
-    				
+					queue.offer(""+o);
+					cache.remove(key);
     			}
 
     		}

@@ -5,6 +5,8 @@ import java.io.IOException;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;  
+
+import org.collectd.QueueWorker;
 import org.jrobin.core.RrdDb;
 import org.jrobin.core.RrdDbPool;
 import org.jrobin.core.RrdException;
@@ -19,12 +21,21 @@ public class StartStopServlet extends HttpServlet {
 	private static final long serialVersionUID = -3432681267977857824L;
 	private static final Logger log = LoggerFactory.getLogger(StartStopServlet.class .getName());
 
+	QueueWorker worker = null;
 	public void init(ServletConfig config) throws ServletException{
 		try {
 			initShutdownHook();  
 		} catch (Exception e) {
 			log.error("RRD initShutdownHook : ", e);
 		}		
+		
+		try{
+			worker = new QueueWorker();
+			new Thread(worker, "rrd QueueWorker").start();
+		}catch(Throwable e){
+			e.printStackTrace();
+		}
+		
 		super.init(config); 
 	}
 
@@ -65,6 +76,7 @@ public class StartStopServlet extends HttpServlet {
 					log.error("failed", e);
 				}
 			}
+			worker.kill();
 		} catch (RrdException e1) {
 			log.error("doStop() failed", e1);
 		}

@@ -6,6 +6,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+import ws.rrd.collectd.TextLineIterator;
+
 import cc.co.llabor.cache.BasicCacheFactory;
 
 import junit.framework.TestCase;

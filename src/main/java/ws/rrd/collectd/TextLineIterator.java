@@ -1,4 +1,4 @@
-package ws.rrd.csv;
+package ws.rrd.collectd;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,9 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.text.SimpleDateFormat; 
 
 /** 
  * <b>Description:TODO</b>
@@ -27,7 +25,7 @@ public class TextLineIterator {
 		this.in = new BufferedReader (new InputStreamReader(resourceAsStream));
 	}
 
-	public void perform(Action a) throws IOException {
+	public void perform(ws.rrd.csv.Action a) throws IOException {
 		int lineCounter = 0;
 		String line  = null;
 		for(line = in.readLine();line != null; line = in.readLine(), lineCounter++){
@@ -40,7 +38,9 @@ public class TextLineIterator {
 				timestamp = timestamp.replace("  ", " ");
 				timestamp = timestamp.substring(4);
 				String xpath = line.substring(  p2+2, line.lastIndexOf("=["));
-				String data =line. substring( line.lastIndexOf(" := ")+4 );
+				String STARTDATA = "[value=";
+				int istart = line.lastIndexOf(STARTDATA)+STARTDATA.length();
+				String data =line. substring( istart, line.length() -1);
 				String partsTmp []= line.split("[ ]");
 				
 				try {// Do Mrz 31 18:05:47 Zentraleuropäische Sommerzeit 2011  SDF.format(new Date())
@@ -52,6 +52,7 @@ public class TextLineIterator {
 				
 				a.perform(xpath, timestamp, data);
 			}catch(Exception e){
+				e.printStackTrace();
 				System.out.println(e.getMessage()+"#"+lineCounter+"#{"+line+"}");
 				//throw new ArrayIndexOutOfBoundsException(lineCounter);
 			}
