@@ -23,6 +23,13 @@
 	<packaging>war</packaging>
 
 	<dependencies>
+	
+		<dependency>
+			<groupId>cc.co.llabor</groupId>
+			<artifactId>jcollectd</artifactId> 
+			<version>0.1.0</version>
+		</dependency>
+	
 		<dependency>
 			<groupId>cc.co.llabor</groupId>
 			<artifactId>cachefs</artifactId> 
