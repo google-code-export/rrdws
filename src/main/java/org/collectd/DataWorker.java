@@ -39,11 +39,11 @@ import net.sf.jsr107cache.Cache;
  * collectd UDP protocol receiver.
  * See collectd/src/network.c:parse_packet
  */
-public class   QueueWorker implements Runnable{
+public class   DataWorker implements Runnable{
 
     	private java.util.Queue<String> queue;
 		private boolean isAlive = true;
-    	QueueWorker ( Queue<String> q){
+    	DataWorker ( Queue<String> q){
     		this.queue = q;
     	}
     	
@@ -51,7 +51,7 @@ public class   QueueWorker implements Runnable{
     		isAlive = true;
     	}
     	
-    	public QueueWorker() {
+    	public DataWorker() {
     		queue = new LinkedList<String>();
 		}
 		public void run() {
@@ -65,11 +65,11 @@ public class   QueueWorker implements Runnable{
     				}
     			}else{
 					try {
-	    				String data = queue.poll();//queue.peek();
+	    				String data = queue.poll();//queue.peek();queue.queue.clear()
 						byte[] b = data.getBytes();
 						InputStream in = new ByteArrayInputStream(b ); 
 						processData(in );
-						//queue.remove(data);
+						queue.remove(data);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -82,9 +82,15 @@ public class   QueueWorker implements Runnable{
     			Object  o = cache.get(key);
     			// TODO Lock + synch
     			if (o!=null){
-    				o = ""+cache.remove(key);
-					queue.offer(""+o);
-					cache.remove(key);
+    				cache.put(key, "");
+					if (!"".equals(o))
+						queue.offer(""+o);
+    				try {
+    					Thread.sleep(1001);
+    				} catch (InterruptedException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				}
     			}
 
     		}

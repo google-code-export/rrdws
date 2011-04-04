@@ -8,7 +8,7 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;  
 
-import org.collectd.QueueWorker;
+import org.collectd.DataWorker;
 import org.collectd.mx.MBeanReceiver;
 import org.collectd.mx.RemoteMBeanSender;
 import org.jrobin.core.RrdDb;
@@ -24,8 +24,13 @@ public class StartStopServlet extends HttpServlet {
 	 */
 	private static final long serialVersionUID = -3432681267977857824L;
 	private static final Logger log = LoggerFactory.getLogger(StartStopServlet.class .getName());
+	private static int groupCounter = 0;
+	ThreadGroup mythreads = new ThreadGroup("rrd@"+groupCounter++);
+	
+	ServerLauncher serverLauncher;
+	 
 
-	QueueWorker worker = null;
+	DataWorker worker = null;
 	public void init(ServletConfig config) throws ServletException{
 		try {
 			initShutdownHook();  
@@ -34,36 +39,49 @@ public class StartStopServlet extends HttpServlet {
 		}		
 		
 		String[] arg0=new String[]{};
-		// Main-Class: org.collectd.mx.MBeanReceiver
-		// start collectd MBeanReceiver
-		try {
-			MBeanReceiver.main(arg0);
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		// collectd SERVER
+		startCollectdServer(arg0);
 		
-		// start collectd MBeanSender
-		//
-		//Premain-Class: org.collectd.mx.RemoteMBeanSender
-		try {
-			Instrumentation instr = null;
-			String args = "";
-			RemoteMBeanSender.premain(args , instr);
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		// collectd CLIENT
+		startColelctdClient();
 				
 		// start collectd queue-worker
-		try{
-			worker = new QueueWorker();
-			new Thread(worker, "rrd QueueWorker").start();
-		}catch(Throwable e){
-			e.printStackTrace();
-		}
+		startCollectdWorker();
 		
 		super.init(config); 
+	}
+
+	/**
+	 * @author vipup
+	 */
+	private void startCollectdWorker() { 
+			worker = new DataWorker(); 
+			Thread t1 = new Thread(mythreads, worker, "rrd DataWorker");
+			t1.setDaemon(true);
+			t1.start(); 
+	}
+
+	
+	/**
+	 * @author vipup
+	 * @param arg0
+	 */
+	private void startCollectdServer(final String[] arg0) {
+		serverLauncher = new ServerLauncher(arg0);
+		Thread t1 = new Thread ( this.mythreads, serverLauncher, "collectdServer");
+		t1.setDaemon(true);
+		t1.start();		
+	}
+
+	ClientLauncher clientLauncher;
+	/**
+	 * @author vipup
+	 */
+	private void startColelctdClient() {
+		ClientLauncher clientLauncher = new ClientLauncher() ;
+		Thread t1 = new Thread ( this.mythreads, clientLauncher, "collectdCLIENT");
+		t1.setDaemon(true);
+		t1.start();
 	}
 
     /**
@@ -86,6 +104,7 @@ public class StartStopServlet extends HttpServlet {
     
     public void doStop() {
 		log.info("Shutting down...");
+		serverLauncher.destroyServer();
 		// close all RRDs..
 		RrdDbPool instance;
 		try {
@@ -107,6 +126,9 @@ public class StartStopServlet extends HttpServlet {
 		} catch (RrdException e1) {
 			log.error("doStop() failed", e1);
 		}
+		
+		
+		
 		log.info("Stoped");
 	}
 }
