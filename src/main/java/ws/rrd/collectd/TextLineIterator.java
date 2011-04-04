@@ -28,7 +28,9 @@ public class TextLineIterator {
 	public void perform(ws.rrd.csv.Action a) throws IOException {
 		int lineCounter = 0;
 		String line  = null;
-		for(line = in.readLine();line != null; line = in.readLine(), lineCounter++){
+		for(line = in.readLine();line != null ; line = in.readLine(), lineCounter++){
+			if ( "null".equals(line))continue;
+			if ( "" .equals(line))continue;
 			try{
 				DateFormat SDF = new SimpleDateFormat("EEE MMM dd HH:mm:ss  yyyy");//SimpleDateFormat.getInstance();/
 				int p2 = line.indexOf("] ");
