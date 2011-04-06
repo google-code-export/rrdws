@@ -32,6 +32,7 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.zip.ZipEntry;
@@ -61,7 +62,7 @@ class Resources {
 				return jarResources.getResource(path);
 			} else {
 				ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-				FileInputStream inStream = new FileInputStream(path);
+				InputStream inStream = (new LinkInfo()).getClass().getClassLoader().getResourceAsStream(path );
 				int b;
 				while((b = inStream.read()) != -1) {
 					outStream.write(b);
