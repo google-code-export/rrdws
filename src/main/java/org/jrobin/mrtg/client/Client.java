@@ -374,6 +374,7 @@ class Client extends JFrame {
 			mrtgData.reload();
 			reloadData();
 		} catch (Exception e) {
+			e.printStackTrace();
 			clearUI();
 			handleException("Could not reload data from host", e);
 		}
@@ -388,6 +389,7 @@ class Client extends JFrame {
 				mainTree.expandRow(i);
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			clearUI();
 			handleException("Could not reload data from host", e);
 		}
