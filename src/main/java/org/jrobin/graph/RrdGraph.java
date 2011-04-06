@@ -671,5 +671,9 @@ public class RrdGraph implements RrdGraphConstants {
 		image.paintIcon(null, g, 0, 0);
 	}
 
+	public byte[] getPNGBytes(int graphWidth, int graphHeight) {
+		return getRrdGraphInfo().getBytes();
+	}
+
  
 }

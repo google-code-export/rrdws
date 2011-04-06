@@ -94,6 +94,7 @@ public class RrdDb implements RrdUpdater {
 
 	// static final String RRDTOOL = "rrdtool";
 	static final int XML_INITIAL_BUFFER_CAPACITY = 100000; // bytes
+	public static final String NO_LOCKS = "NO_LOCKS";
 
 	private RrdBackend backend;
 	private RrdAllocator allocator = new RrdAllocator();
