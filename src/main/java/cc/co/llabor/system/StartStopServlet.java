@@ -109,19 +109,8 @@ public class StartStopServlet extends HttpServlet {
 		RrdDbPool instance;
 		try {
 			instance = RrdDbPool.getInstance();
+			instance.reset();
 
-			for (String rrdName : instance.getOpenFiles()) {
-				try {
-					log.info("cleaning rrd=[{}]..",rrdName);
-					RrdDb rrdDb = instance.requestRrdDb(rrdName); 
-					instance.release(rrdDb);
-					log.info("compleete.");
-				} catch (RrdException e) {
-					log.error("failed", e);
-				} catch (IOException e) {
-					log.error("failed", e);
-				}
-			}
 			worker.kill();
 		} catch (RrdException e1) {
 			log.error("doStop() failed", e1);

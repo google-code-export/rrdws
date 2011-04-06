@@ -1,0 +1,3236 @@
+Content-Type: multipart/related; start=<op.mhtml.1302013644088.ede1e4552a669631@10.2.212.206>; boundary=----------drxm0nufRslT8Rx2t6uJ1l
+Content-Location: http://www.webnms.com/webnms/help/developer_guide/self_monitoring/be_jvm_monitoring.html
+Subject: =?utf-8?Q?BE=20JVM=20Monitoring?=
+MIME-Version: 1.0
+
+------------drxm0nufRslT8Rx2t6uJ1l
+Content-Disposition: inline; filename=be_jvm_monitoring.html
+Content-Type: text/html; charset=UTF-8; name=be_jvm_monitoring.html
+Content-ID: <op.mhtml.1302013644088.ede1e4552a669631@10.2.212.206>
+Content-Location: http://www.webnms.com/webnms/help/developer_guide/self_monitoring/be_jvm_monitoring.html
+Content-Transfer-Encoding: Quoted-Printable
+
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D)-->
+<!--(Document created with RoboEditor. )=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D-->
+<!--(=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D)-->
+
+<head>
+
+<title>BE JVM Monitoring</title>
+
+<!--(Meta)=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D-->
+
+<meta http-equiv=3Dcontent-type content=3D"text/html; charset=3Dwindows-=
+1252">
+<meta name=3DMS-HKWD content=3Dmailer.conf>
+<meta name=3DMS-HKWD content=3DWebNMSMgmtBEProcess>
+<meta name=3DMS-HKWD content=3DWebNMSMgmtFEProcess>
+<meta name=3DMS-HKWD content=3DMONITOR_FE_MEMORY_USAGE>
+<meta name=3DMS-HKWD content=3DMONITOR_BE_MEMORY_USAGE>
+<meta name=3DMS-HKWD content=3DLog4j>
+<meta name=3DMS-HKWD content=3DP6Spy>
+<meta name=3DMS-HKWD content=3Dlog4j_conf.xml>
+<meta name=3DMS-HKWD content=3D"Rolling File Appender">
+<meta name=3DMS-HKWD content=3D"SMTP Appender">
+<meta name=3DMS-HKWD content=3DMailMessage.conf>
+<meta name=3DMS-HKWD content=3D"JVM Monitoring">
+<meta name=3DMS-HKWD content=3Dclientparameters.conf>
+<meta name=3Dgenerator content=3D"RoboHELP by eHelp Corporation - www.eh=
+elp.com">
+<meta name=3Dgenerator-major-version content=3D0.1>
+<meta name=3Dgenerator-minor-version content=3D1>
+<meta name=3Dfiletype content=3Dkadov>
+<meta name=3Dfiletype-version content=3D1>
+<meta name=3Dpage-count content=3D1>
+<meta name=3Dlayout-height content=3D6599>
+<meta name=3Dlayout-width content=3D879>
+
+
+<!--(Links)=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D-->
+
+ <link rel=3D'stylesheet' href=3D'../adventnet1_ns.css'>
+<script type=3D"text/javascript" language=3D"JavaScript" title=3D"WebHel=
+pSplitCss">
+<!--
+if (navigator.appName !=3D"Netscape")
+{   document.write("<link rel=3D'stylesheet' href=3D'../adventnet1.css'>=
+");}
+//-->
+</script>
+<style type=3D"text/css">
+<!--
+hr.whs1 {text-align: justify; color: #000000; float: alignleft;}
+ul.whs2 {list-style: disc;}
+table.whs3 {x-cell-content-align: top; margin-left: 40px; border-spacing=
+: 0px; border-spacing: 0px;}
+col.whs4 {width: 25%;}
+tr.whs5 {x-cell-content-align: top;}
+td.whs6 {width: 25%; padding-right: 10px; padding-left: 10px; background=
+-color: #cccccc; border-left-color: #000000; border-left-style: Solid; b=
+order-top-style: Solid; border-top-color: #000000; border-right-color: #=
+000000; border-right-style: Solid; border-bottom-style: Solid; border-bo=
+ttom-color: #000000; border-right-width: 1px; border-left-width: 1px; bo=
+rder-top-width: 1px; border-bottom-width: 1px; x-cell-content-align: cen=
+ter;}
+p.whs7 {font-weight: bold; text-align: center;}
+td.whs8 {width: 75%; padding-right: 10px; padding-left: 10px; background=
+-color: #cccccc; border-top-style: Solid; border-top-color: #000000; bor=
+der-right-color: #000000; border-right-style: Solid; border-bottom-style=
+: Solid; border-bottom-color: #000000; border-top-width: 1px; border-bot=
+tom-width: 1px; border-right-width: 1px;}
+td.whs9 {width: 25%; padding-right: 10px; padding-left: 10px; background=
+-color: #cccccc; border-right-width: 1px; border-right-style: Solid; bor=
+der-right-color: #000000; border-bottom-width: 1px; border-bottom-color:=
+ #000000; border-bottom-style: Solid;}
+p.whs10 {font-weight: bold;}
+td.whs11 {width: 25%; padding-right: 10px; padding-left: 10px; border-le=
+ft-width: 1px; border-left-color: #000000; border-left-style: Solid; bor=
+der-right-width: 1px; border-right-color: #000000; border-right-style: S=
+olid; border-bottom-style: Solid; border-bottom-color: #000000; border-b=
+ottom-width: 1px;}
+td.whs12 {width: 25%; padding-right: 10px; padding-left: 10px; border-ri=
+ght-width: 1px; border-right-color: #000000; border-right-style: Solid; =
+border-bottom-style: Solid; border-bottom-color: #000000; border-bottom-=
+width: 1px;}
+td.whs13 {width: 25%; border-left-width: 1px; border-left-color: #000000=
+; border-left-style: Solid; border-right-width: 1px; border-right-color:=
+ #000000; border-right-style: Solid; border-bottom-style: Solid; border-=
+bottom-color: #000000; border-bottom-width: 1px; padding-right: 10px; pa=
+dding-left: 10px;}
+td.whs14 {width: 25%; border-right-width: 1px; border-right-color: #0000=
+00; border-right-style: Solid; border-bottom-style: Solid; border-bottom=
+-color: #000000; border-bottom-width: 1px; padding-right: 10px; padding-=
+left: 10px;}
+td.whs15 {width: 25%; padding-right: 10px; padding-left: 10px; border-le=
+ft-style: Solid; border-left-color: #000000; border-left-width: 1px; bor=
+der-right-style: Solid; border-right-color: #000000; border-right-width:=
+ 1px; border-bottom-width: 1px; border-bottom-color: #000000; border-bot=
+tom-style: Solid;}
+td.whs16 {width: 25%; padding-right: 10px; padding-left: 10px; border-ri=
+ght-style: Solid; border-right-color: #000000; border-right-width: 1px; =
+border-bottom-width: 1px; border-bottom-color: #000000; border-bottom-st=
+yle: Solid;}
+p.whs17 {margin-left: 0px;}
+table.whs18 {x-cell-content-align: top; width: 87.684%; margin-left: 40p=
+x; border-spacing: 0px; border-spacing: 0px;}
+col.whs19 {width: 41.472%;}
+col.whs20 {width: 12.172%;}
+col.whs21 {width: 10.929%;}
+tr.whs22 {x-cell-content-align: top; height: 36px;}
+td.whs23 {width: 41.472%; padding-right: 10px; padding-left: 10px; backg=
+round-color: #cccccc; border-top-style: Solid; border-top-color: #000000=
+; border-right-color: #000000; border-right-style: Solid; border-bottom-=
+style: Solid; border-bottom-color: #000000; border-top-width: 1px; borde=
+r-bottom-width: 1px; border-right-width: 1px; x-cell-content-align: cent=
+er;}
+td.whs24 {width: 12.172%; padding-right: 10px; padding-left: 10px; backg=
+round-color: #cccccc; border-top-style: Solid; border-top-color: #000000=
+; border-right-color: #000000; border-right-style: Solid; border-bottom-=
+style: Solid; border-bottom-color: #000000; border-top-width: 1px; borde=
+r-bottom-width: 1px; border-right-width: 1px; x-cell-content-align: cent=
+er;}
+td.whs25 {width: 10.929%; padding-right: 10px; padding-left: 10px; backg=
+round-color: #cccccc; border-top-style: Solid; border-top-color: #000000=
+; border-right-color: #000000; border-right-style: Solid; border-bottom-=
+style: Solid; border-bottom-color: #000000; border-top-width: 1px; borde=
+r-bottom-width: 1px; border-right-width: 1px; x-cell-content-align: cent=
+er;}
+tr.whs26 {x-cell-content-align: top; height: 100px;}
+td.whs27 {width: 41.472%; padding-right: 10px; padding-left: 10px; borde=
+r-right-width: 1px; border-right-color: #000000; border-right-style: Sol=
+id; border-bottom-style: Solid; border-bottom-color: #000000; border-bot=
+tom-width: 1px;}
+td.whs28 {width: 12.172%; padding-right: 10px; padding-left: 10px; borde=
+r-right-width: 1px; border-right-color: #000000; border-right-style: Sol=
+id; border-bottom-style: Solid; border-bottom-color: #000000; border-bot=
+tom-width: 1px;}
+td.whs29 {width: 10.929%; padding-right: 10px; padding-left: 10px; borde=
+r-right-width: 1px; border-right-color: #000000; border-right-style: Sol=
+id; border-bottom-style: Solid; border-bottom-color: #000000; border-bot=
+tom-width: 1px;}
+td.whs30 {width: 41.472%; border-right-width: 1px; border-right-color: #=
+000000; border-right-style: Solid; border-bottom-style: Solid; border-bo=
+ttom-color: #000000; border-bottom-width: 1px; padding-right: 10px; padd=
+ing-left: 10px;}
+td.whs31 {width: 12.172%; border-right-width: 1px; border-right-color: #=
+000000; border-right-style: Solid; border-bottom-style: Solid; border-bo=
+ttom-color: #000000; border-bottom-width: 1px; padding-right: 10px; padd=
+ing-left: 10px;}
+td.whs32 {width: 10.929%; border-right-width: 1px; border-right-color: #=
+000000; border-right-style: Solid; border-bottom-style: Solid; border-bo=
+ttom-color: #000000; border-bottom-width: 1px; padding-right: 10px; padd=
+ing-left: 10px;}
+tr.whs33 {x-cell-content-align: top; height: 84px;}
+td.whs34 {width: 41.472%; padding-right: 10px; padding-left: 10px; borde=
+r-right-style: Solid; border-right-color: #000000; border-right-width: 1=
+px; border-bottom-width: 1px; border-bottom-color: #000000; border-botto=
+m-style: Solid;}
+td.whs35 {width: 12.172%; padding-right: 10px; padding-left: 10px; borde=
+r-right-style: Solid; border-right-color: #000000; border-right-width: 1=
+px; border-bottom-width: 1px; border-bottom-color: #000000; border-botto=
+m-style: Solid;}
+td.whs36 {width: 10.929%; padding-right: 10px; padding-left: 10px; borde=
+r-right-style: Solid; border-right-color: #000000; border-right-width: 1=
+px; border-bottom-width: 1px; border-bottom-color: #000000; border-botto=
+m-style: Solid;}
+tr.whs37 {x-cell-content-align: top; height: 42px;}
+table.whs38 {x-cell-content-align: top; width: 90.331%; margin-left: 40p=
+x; border-spacing: 0px; border-spacing: 0px;}
+col.whs39 {width: 43.106%;}
+col.whs40 {width: 11.814%;}
+col.whs41 {width: 10.607%;}
+td.whs42 {width: 43.106%; padding-right: 10px; padding-left: 10px; backg=
+round-color: #cccccc; border-top-style: Solid; border-top-color: #000000=
+; border-right-color: #000000; border-right-style: Solid; border-bottom-=
+style: Solid; border-bottom-color: #000000; border-top-width: 1px; borde=
+r-bottom-width: 1px; border-right-width: 1px; x-cell-content-align: cent=
+er;}
+td.whs43 {width: 11.814%; padding-right: 10px; padding-left: 10px; backg=
+round-color: #cccccc; border-top-style: Solid; border-top-color: #000000=
+; border-right-color: #000000; border-right-style: Solid; border-bottom-=
+style: Solid; border-bottom-color: #000000; border-top-width: 1px; borde=
+r-bottom-width: 1px; border-right-width: 1px; x-cell-content-align: cent=
+er;}
+td.whs44 {width: 10.607%; padding-right: 10px; padding-left: 10px; backg=
+round-color: #cccccc; border-top-style: Solid; border-top-color: #000000=
+; border-right-color: #000000; border-right-style: Solid; border-bottom-=
+style: Solid; border-bottom-color: #000000; border-top-width: 1px; borde=
+r-bottom-width: 1px; border-right-width: 1px; x-cell-content-align: cent=
+er;}
+td.whs45 {width: 43.106%; padding-right: 10px; padding-left: 10px; borde=
+r-right-width: 1px; border-right-color: #000000; border-right-style: Sol=
+id; border-bottom-style: Solid; border-bottom-color: #000000; border-bot=
+tom-width: 1px;}
+td.whs46 {width: 11.814%; padding-right: 10px; padding-left: 10px; borde=
+r-right-width: 1px; border-right-color: #000000; border-right-style: Sol=
+id; border-bottom-style: Solid; border-bottom-color: #000000; border-bot=
+tom-width: 1px;}
+td.whs47 {width: 10.607%; padding-right: 10px; padding-left: 10px; borde=
+r-right-width: 1px; border-right-color: #000000; border-right-style: Sol=
+id; border-bottom-style: Solid; border-bottom-color: #000000; border-bot=
+tom-width: 1px;}
+td.whs48 {width: 43.106%; border-right-width: 1px; border-right-color: #=
+000000; border-right-style: Solid; border-bottom-style: Solid; border-bo=
+ttom-color: #000000; border-bottom-width: 1px; padding-right: 10px; padd=
+ing-left: 10px;}
+td.whs49 {width: 11.814%; border-right-width: 1px; border-right-color: #=
+000000; border-right-style: Solid; border-bottom-style: Solid; border-bo=
+ttom-color: #000000; border-bottom-width: 1px; padding-right: 10px; padd=
+ing-left: 10px;}
+td.whs50 {width: 10.607%; border-right-width: 1px; border-right-color: #=
+000000; border-right-style: Solid; border-bottom-style: Solid; border-bo=
+ttom-color: #000000; border-bottom-width: 1px; padding-right: 10px; padd=
+ing-left: 10px;}
+td.whs51 {width: 43.106%; padding-right: 10px; padding-left: 10px; borde=
+r-right-style: Solid; border-right-color: #000000; border-right-width: 1=
+px; border-bottom-width: 1px; border-bottom-color: #000000; border-botto=
+m-style: Solid;}
+td.whs52 {width: 11.814%; padding-right: 10px; padding-left: 10px; borde=
+r-right-style: Solid; border-right-color: #000000; border-right-width: 1=
+px; border-bottom-width: 1px; border-bottom-color: #000000; border-botto=
+m-style: Solid;}
+td.whs53 {width: 10.607%; padding-right: 10px; padding-left: 10px; borde=
+r-right-style: Solid; border-right-color: #000000; border-right-width: 1=
+px; border-bottom-width: 1px; border-bottom-color: #000000; border-botto=
+m-style: Solid;}
+tr.whs54 {x-cell-content-align: top; height: 53px;}
+table.whs55 {x-cell-content-align: top; margin-left: 80px; width: 90.331=
+%; border-spacing: 0px; border-spacing: 0px;}
+col.whs56 {width: 39.269%;}
+td.whs57 {width: 39.269%; padding-right: 10px; padding-left: 10px; backg=
+round-color: #cccccc; border-top-style: Solid; border-top-color: #000000=
+; border-right-color: #000000; border-right-style: Solid; border-bottom-=
+style: Solid; border-bottom-color: #000000; border-top-width: 1px; borde=
+r-bottom-width: 1px; border-right-width: 1px; x-cell-content-align: cent=
+er;}
+td.whs58 {width: 39.269%; padding-right: 10px; padding-left: 10px; borde=
+r-right-width: 1px; border-right-color: #000000; border-right-style: Sol=
+id; border-bottom-style: Solid; border-bottom-color: #000000; border-bot=
+tom-width: 1px;}
+tr.whs59 {x-cell-content-align: top; height: 52px;}
+td.whs60 {width: 39.269%; border-right-width: 1px; border-right-color: #=
+000000; border-right-style: Solid; border-bottom-style: Solid; border-bo=
+ttom-color: #000000; border-bottom-width: 1px; padding-right: 10px; padd=
+ing-left: 10px;}
+tr.whs61 {x-cell-content-align: top; height: 78px;}
+table.whs62 {border-spacing: 0px; border-spacing: 0px;}
+col.whs63 {width: 44px;}
+col.whs64 {width: 792px;}
+td.whs65 {width: 44px;}
+p.whs66 {text-align: center;}
+img_whs67 {border-style: none; border: none; width: 42px; height: 42px; =
+float: none;}
+td.whs68 {width: 792px;}
+-->
+</style>
+<script type=3D"text/javascript" language=3D"JavaScript">
+<!--
+if ((navigator.appName =3D=3D "Netscape") && (parseInt(navigator.appVers=
+ion) =3D=3D 4))
+{
+  var strNSS =3D "<style type=3D'text/css'>";
+  strNSS +=3D "p.whs17 {margin-left:1; }";
+  strNSS +=3D"</style>";
+  document.write(strNSS);
+}
+//-->
+</script>
+<script type=3D"text/javascript" language=3D"JavaScript" title=3D"WebHel=
+pInlineScript">
+<!--
+function reDo() {
+  if (innerWidth !=3D origWidth || innerHeight !=3D origHeight)
+     location.reload();
+}
+if ((parseInt(navigator.appVersion) =3D=3D 4) && (navigator.appName =3D=3D=
+ "Netscape")) {
+	origWidth =3D innerWidth;
+	origHeight =3D innerHeight;
+	onresize =3D reDo;
+}
+onerror =3D null; =
+
+//-->
+</script>
+<style type=3D"text/css">
+<!--
+  div.WebHelpPopupMenu {position:absolute; left:0px; top:0px; z-index:4;=
+ visibility:hidden;}
+-->
+</style>
+<script type=3D"text/javascript" language=3D"javascript1.2" src=3D"../wh=
+msg.js"></script>
+<script type=3D"text/javascript" language=3D"javascript" src=3D"../whver=
+.js"></script>
+<script type=3D"text/javascript" language=3D"javascript1.2" src=3D"../wh=
+proxy.js"></script>
+<script type=3D"text/javascript" language=3D"javascript1.2" src=3D"../wh=
+utils.js"></script>
+<script type=3D"text/javascript" language=3D"javascript1.2" src=3D"../wh=
+topic.js"></script>
+</head>
+
+<!--(Body)=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D-->
+
+
+<body>
+<table BORDER=3D0 WIDTH=3D"100%" class=3Dnavigator>
+<tr>
+<td ALIGN=3DRIGHT class=3Dnavigator>
+<a href=3D"../../index.html" target=3D_blank><img SRC=3D"../nav_home.jpg=
+" border=3D0 ></a>
+<a href=3D"../self_monitoring/nms_management.html"><img SRC=3D"../nav_pr=
+ev.jpg" border=3D0></a>
+<a href=3D"../self_monitoring/web_nms_jvm_management.html"><img SRC=3D".=
+./nav_next.jpg" border=3D0></a>
+</td></tr></table>
+
+<script type=3D"text/javascript" language=3D"javascript1.2">
+<!--
+if (window.gbWhTopic)
+{
+	if (window.addTocInfo)
+	{
+	addTocInfo("NMS Management\nWeb NMS JVM Monitoring");
+addButton("show",BTN_TEXT,"Show","","","","",0,0,"","","");
+
+	}
+	if (window.writeBtnStyle)
+		writeBtnStyle();
+
+	if (window.writeIntopicBar)
+		writeIntopicBar(1);
+
+	if (window.setRelStartPage)
+	{
+	setRelStartPage("../index.html");
+addSearchFormHref("javascript:document.ehelpform.submit()");
+
+		autoSync(1);
+		sendSyncInfo();
+		sendAveInfoOut();
+	}
+}
+else
+	document.location.reload();
+//-->
+</script>
+<h1>5.30.1 &nbsp;Web =
+
+ NMS JVM Monitoring</h1>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+
+<!--(HR)=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D-->
+<hr color=3D"#000000" align=3D"left" class=3D"whs1">
+
+
+<ul type=3D"disc" class=3D"whs2">
+	=
+
+	<li class=3Dkadov-p-CBulletted><p class=3DBulletted><a href=3D"#monitor=
+ing_mgmt">JVM =
+
+ Monitoring</a></p></li>
+	=
+
+	<li class=3Dkadov-p-CSub-level-Bullet><p class=3DSub-level-Bullet><a hr=
+ef=3D"#system_props">System =
+
+ Properties for JVM Monitoring</a></p></li>
+	=
+
+	<li class=3Dkadov-p-CBulletted><p class=3DBulletted><a href=3D"#viewing=
+_details">Viewing =
+
+ JVM Monitoring Details</a></p></li>
+	=
+
+	<li class=3Dkadov-p-CBulletted><p class=3DBulletted><a href=3D"#jvm_mon=
+itoring">Configuration</a></p></li>
+	=
+
+	<li class=3Dkadov-p-CSub-level-Bullet><p class=3DSub-level-Bullet><a hr=
+ef=3D"#jvm_monitoring">Web =
+
+ NMS JVM Monitoring</a> </p></li>
+	=
+
+	<li class=3Dkadov-p-CSub-level-Bullet><p class=3DSub-level-Bullet><a hr=
+ef=3D"#be_jvm">BE =
+
+ Server</a></p></li>
+	=
+
+	<li class=3Dkadov-p-CSub-level-Bullet><p class=3DSub-level-Bullet><a hr=
+ef=3D"#fe_jvm">FE =
+
+ Server</a></p></li>
+	=
+
+	<li class=3Dkadov-p-CSub-level-Bullet><p class=3DSub-level-Bullet><a hr=
+ef=3D"#client_jvm">Client</a></p></li>
+	=
+
+	<li class=3Dkadov-p-CSub-level-Bullet><p class=3DSub-level-Bullet><a hr=
+ef=3D"#script_config">Start =
+
+ up Script</a></p></li>
+	=
+
+	<li class=3Dkadov-p-CSub-level-Bullet><p class=3DSub-level-Bullet><a hr=
+ef=3D"#launcher">Launcher</a></p></li>
+	=
+
+	<li class=3Dkadov-p-CSub-level-Bullet><p class=3DSub-level-Bullet><a hr=
+ef=3D"#windows_service">Windows =
+
+ Service</a></p></li>
+</ul>
+
+
+<!--(HR)=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D-->
+<hr color=3D"#000000" align=3D"left" class=3D"whs1">
+
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p class=3DSub-topic-1><a name=3Dmonitoring_mgmt></a>JVM Monitoring</p>
+
+<p>&nbsp;</p>
+
+<p>Monitoring of JVM parameters such as Memory Usage and Thread count is=
+ =
+
+ an important process using which the VM performance can be improved and=
+ =
+
+ problems such as VM crash could be prevented. &nbsp;In =
+
+ earlier JDK releases, these parameters could be monitored only using pr=
+ofiling =
+
+ tools or some scripting languages which were turning out to be extra ov=
+erheads =
+
+ to the application. JDK 1.5 provides features to monitor and manage the=
+ =
+
+ JVM. Web NMS uses the SNMP mode to store historic information about the=
+ =
+
+ Web NMS JVM parameters so that administrators can monitor the condition=
+ =
+
+ of the Web NMS VM memory usage at any point of time.<span style=3D"colo=
+r: #008080;"> =
+
+ <font color=3Dteal ></font></span>JMX MBeans is not supported currently=
+.</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p class=3DSub-topic-2><a name=3Dsystem_props></a>System Properties for =
+JVM =
+
+ Monitoring</p>
+
+<p>&nbsp;</p>
+
+<p class=3DSub-topic2-Content>J2SE 1.5 provides system properties to ena=
+ble =
+
+ VM monitoring of Java applications. The following table lists down the =
+
+ properties and their default values in the various Web NMS startup scri=
+pts.</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<!--(Table)=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D-->
+<table border=3D1 bordercolor=3D#000000 x-use-null-cells cellspacing=3D"=
+0" class=3D"whs3">
+<col class=3D"whs4">
+<col class=3D"whs4">
+<col class=3D"whs4">
+<col class=3D"whs4">
+
+<tr valign=3D"top" class=3D"whs5">
+<td colspan=3D"1" rowspan=3D"2" valign=3D"middle" bgcolor=3D"#CCCCCC" wi=
+dth=3D"25%" class=3D"whs6">
+<p align=3D"center" class=3D"whs7">System Property</td>
+<td colspan=3D"3" rowspan=3D"1" bgcolor=3D"#CCCCCC" width=3D"75%" class=3D=
+"whs8">
+<p align=3D"center" class=3D"whs7">Default Values</td>
+</tr>
+
+<tr valign=3D"top" class=3D"whs5">
+<td colspan=3D"1" rowspan=3D"1" bgcolor=3D"#CCCCCC" width=3D"25%" class=3D=
+"whs9">
+<p class=3D"whs10"><span style=3D"font-weight: bold;"><B>startnms.bat/sh=
+</B></span></td>
+<td colspan=3D"1" rowspan=3D"1" bgcolor=3D"#CCCCCC" width=3D"25%" class=3D=
+"whs9">
+<p class=3D"whs10">startnmsFE.bat/sh</td>
+<td colspan=3D"1" rowspan=3D"1" bgcolor=3D"#CCCCCC" width=3D"25%" class=3D=
+"whs9">
+<p class=3D"whs10">startApplicationClient.bat/sh</td></tr>
+
+<tr valign=3D"top" class=3D"whs5">
+<td width=3D"25%" class=3D"whs11">
+<p>com.sun.management.jmxremote.port</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"25%" class=3D"whs12">
+<p>16000</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"25%" class=3D"whs12">
+<p>15000</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"25%" class=3D"whs12">
+<p>14000</td></tr>
+
+<tr valign=3D"top" class=3D"whs5">
+<td width=3D"25%" class=3D"whs13">
+<p>com.sun.management.jmxremote.authenticate</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"25%" class=3D"whs14">
+<p>false</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"25%" class=3D"whs14">
+<p>false</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"25%" class=3D"whs14">
+<p>false</td></tr>
+
+<tr valign=3D"top" class=3D"whs5">
+<td colspan=3D"1" rowspan=3D"1" width=3D"25%" class=3D"whs15">
+<p>com.sun.management.jmxremote.ssl</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"25%" class=3D"whs16">
+<p>false</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"25%" class=3D"whs16">
+<p>false</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"25%" class=3D"whs16">
+<p>false</td></tr>
+
+<tr valign=3D"top" class=3D"whs5">
+<td colspan=3D"1" rowspan=3D"1" width=3D"25%" class=3D"whs11">
+<p>com.sun.management.snmp.interface</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"25%" class=3D"whs12">
+<p>%COMPUTERNAME% (Windows)</p>
+<p>`hostname` (Linux/Solaris)</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"25%" class=3D"whs12">
+<p>%COMPUTERNAME% (Windows)</p>
+<p>`hostname`<br>
+(Linux/Solaris)</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"25%" class=3D"whs12">
+<p>%COMPUTERNAME% (Windows)</p>
+<p>`hostname`<br>
+(Linux/Solaris)</td></tr>
+
+<tr valign=3D"top" class=3D"whs5">
+<td colspan=3D"1" rowspan=3D"1" width=3D"25%" class=3D"whs15">
+<p>com.sun.management.snmp.acl</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"25%" class=3D"whs16">
+<p>false</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"25%" class=3D"whs16">
+<p>false</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"25%" class=3D"whs16">
+<p>false</td></tr>
+
+<tr valign=3D"top" class=3D"whs5">
+<td colspan=3D"1" rowspan=3D"1" width=3D"25%" class=3D"whs11">
+<p>com.sun.management.snmp.port</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"25%" class=3D"whs12">
+<p>16500</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"25%" class=3D"whs12">
+<p>15500</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"25%" class=3D"whs12">
+<p>14500</td></tr>
+</table>
+
+<p>&nbsp;</p>
+
+<p class=3DSub-topic2-Content>Visit the following links for information =
+on =
+
+ the purpose of these properties :</p>
+
+<p class=3DSub-topic2-Content>&nbsp;</p>
+
+<p class=3DSub-topic2-Content><a href=3D"http://java.sun.com/j2se/1.5.0/=
+docs/guide/management/agent.html#properties"
+								target=3D_blank>http://java.sun.com/j2se/1.5.0/docs/guide/manage=
+ment/agent.html#properties</a></p>
+
+<p class=3DSub-topic2-Content><a href=3D"http://java.sun.com/j2se/1.5.0/=
+docs/guide/management/SNMP.html#snmp_properties"
+								target=3D_blank>http://java.sun.com/j2se/1.5.0/docs/guide/manage=
+ment/SNMP.html#snmp_properties</a></p>
+
+<p class=3Dsub-topic2-content>&nbsp;</p>
+
+<p class=3Dsub-topic2-content>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><span style=3D"font-weight: bold;"><B>Web NMS JVM Monitoring</B></spa=
+n> collects, =
+
+ stores, and display the following System and Server parameters as graph=
+s =
+
+ by default:</p>
+
+<ul>
+	=
+
+	<li class=3Dkadov-p-CBulletted><p class=3DBulletted>For JVMs BE server,=
+ =
+
+ FE server(s) and Client(s)</p></li>
+	=
+
+	<li class=3Dkadov-p-CSub-level-Bullet><p class=3DSub-level-Bullet>CPU U=
+tilization</p></li>
+	=
+
+	<li class=3Dkadov-p-CSub-level-Bullet><p class=3DSub-level-Bullet>Memor=
+y =
+
+ Usage</p></li>
+	=
+
+	<li class=3Dkadov-p-CSub-level-Bullet><p class=3DSub-level-Bullet>Numbe=
+r =
+
+ of threads spawned &nbsp;</p></li>
+</ul>
+
+<ul>
+	=
+
+	<li class=3Dkadov-p-CBulletted><p class=3DBulletted>For BE server alone=
+ =
+
+ </p></li>
+	=
+
+	<li class=3Dkadov-p-CSub-level-Bullet><p class=3DSub-level-Bullet>Statu=
+s =
+
+ Polling Rate</p></li>
+	=
+
+	<li class=3Dkadov-p-CSub-level-Bullet><p class=3DSub-level-Bullet>Trap =
+
+ Processing Rate</p></li>
+	=
+
+	<li class=3Dkadov-p-CSub-level-Bullet><p class=3DSub-level-Bullet>Event=
+ =
+
+ Processing Rate</p></li>
+	=
+
+	<li class=3Dkadov-p-CSub-level-Bullet><p class=3DSub-level-Bullet>Alert=
+ =
+
+ Processing Rate</p></li>
+	=
+
+	<li class=3Dkadov-p-CSub-level-Bullet><p class=3DSub-level-Bullet>Data =
+
+ Collection Rate</p></li>
+</ul>
+
+<p>&nbsp;</p>
+
+<p>The polled data of each resource will be added for performance monito=
+ring =
+
+ and the Performance module handles the data collection and storage. For=
+ =
+
+ each type of JVM i.e., BE, FE, and Client, there is a class to add the =
+
+ polled data namely, <span style=3D"font-weight: bold;"><B>WebNMSBEResou=
+rceMonitoring</B></span>, =
+
+ <span style=3D"font-weight: bold;"><B>WebNMSFEResourceMonitoring</B></s=
+pan>, and =
+
+ <span style=3D"font-weight: bold;"><B>WebNMSClientResourceMonitoring</B=
+></span>. =
+
+ </p>
+
+<p>The <span style=3D"font-weight: bold;"><B>WebNMSJVMMonitoring.xml</B>=
+</span> =
+
+ file is a configuration file for Web NMS JVM Monitoring. The <span styl=
+e=3D"font-weight: bold;"><B>ResourceMonitoringFilter</B></span> =
+
+ is an event filter, which filters out events related to JVM monitoring.=
+ =
+
+ &nbsp;For the =
+
+ resource of the filtered event, the filter will parse the <span style=3D=
+"font-weight: bold;"><B>WebNMSJVMMonitoring.xml</B></span> =
+
+ file and invoke action specified for the resource.</p>
+
+<p>&nbsp;</p>
+
+<p>To monitor CPU Utilization, SNMP agent should be running in the machi=
+ne, =
+
+ in which the JVM is started.</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p class=3DSub-topic-1><a name=3Dviewing_details></a>Viewing JVM Monitor=
+ing =
+
+ Details</p>
+
+<p>&nbsp;</p>
+
+<p>The collected information about the Web NMS JVM can be viewed in the =
+
+ following graph/table formats: </p>
+
+<ul>
+	=
+
+	<li class=3Dkadov-p-CBulletted><p class=3DBulletted>Line Chart</p></li>=
+
+	=
+
+	<li class=3Dkadov-p-CBulletted><p class=3DBulletted>Bar Chart</p></li>
+	=
+
+	<li class=3Dkadov-p-CBulletted><p class=3DBulletted>Area Chart</p></li>=
+
+	=
+
+	<li class=3Dkadov-p-CBulletted><p class=3DBulletted>Scatter Chart</p></=
+li>
+	=
+
+	<li class=3Dkadov-p-CBulletted><p class=3DBulletted>XY Step Chart</p></=
+li>
+	=
+
+	<li class=3Dkadov-p-CBulletted><p class=3DBulletted>Table</p></li>
+</ul>
+
+<p class=3D"whs10">Web Client</p>
+
+<p>&nbsp;</p>
+
+<p>The collected data will be displayed as graphs, in the Web Client. Th=
+e =
+
+ graphs display is invoked using the procedure given below: </p>
+
+<ul>
+	=
+
+	<li class=3Dkadov-p-CBulletted><p class=3DBulletted>Connect the server =
+
+ with Web Client.</p></li>
+	=
+
+	<li class=3Dkadov-p-CBulletted><p class=3DBulletted>Click the <span sty=
+le=3D"font-weight: bold;"><B>Admin =
+
+ &gt; Complete View &gt; Monitor/Management &gt; JVM Management</B></spa=
+n> =
+
+ node on the left-side tree of the client screen.</p></li>
+	=
+
+	<li class=3Dkadov-p-CBulletted><p class=3DBulletted>Alternatively, clic=
+k =
+
+ <span style=3D"font-weight: bold;"><B>JVM Management</B></span> link in=
+ the <span =
+
+ style=3D"font-weight: bold;"><B>Monitor/Management</B></span> section o=
+n the right-side =
+
+ of the client screen.</p></li>
+</ul>
+
+<p class=3D"whs10"><span style=3D"font-weight: bold;"><B>Java Client</B>=
+</span></p>
+
+<p>&nbsp;</p>
+
+<p>The collected data will be displayed as graphs in Java Application/Ap=
+plet/Web =
+
+ Start Client. The graphs display is invoked using the procedure given =
+
+ below:</p>
+
+<ul>
+	=
+
+	<li class=3Dkadov-p-CBulletted><p class=3DBulletted>Connect the server =
+
+ with Java Client.</p></li>
+	=
+
+	<li class=3Dkadov-p-CBulletted><p class=3DBulletted>Click <span style=3D=
+"font-weight: bold;"><B>Tools =
+
+ &gt; JVM Monitoring Details</B></span> menu item to bring up the <span =
+style=3D"font-weight: bold;"><B>JVM =
+
+ Monitoring Details</B></span> screen.</p></li>
+</ul>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p class=3DSub-topic-1
+	style=3D"margin-left: 0px;"><a name=3Djvm_monitoring></a>Configuration =
+
+ </p>
+
+<p class=3DSub-topic-1
+	style=3D"margin-left: 0px;">&nbsp;</p>
+
+<p class=3DSub-topic-1
+	style=3D"margin-left: 0px;">Web NMS JVM Monitoring </p>
+
+<p class=3D"whs17">&nbsp;</p>
+
+<p class=3D"whs17">You can configure the parameters to be monitored =
+
+ as per your requirement, in the <span style=3D"font-weight: bold;"><B>W=
+ebNMSJVMMonitoring.xml</B></span> =
+
+ file available in the <span style=3D"font-style: italic;"><I>&lt;Web NM=
+S Home&gt;/conf</I></span> =
+
+ directory. </p>
+
+<p class=3D"whs17">The file consists of the following:</p>
+
+<ul>
+	=
+
+	<li class=3Dkadov-p-CBulletted><p class=3DBulletted>Mail Notification -=
+ =
+
+ Action parameters</p></li>
+	=
+
+	<li class=3Dkadov-p-CBulletted><p class=3DBulletted>Three resource moni=
+toring =
+
+ parameters for BE, FE, and Client</p></li>
+	=
+
+	<li class=3Dkadov-p-CSub-level-Bullet><p class=3DSub-level-Bullet>CPU U=
+sage</p></li>
+	=
+
+	<li class=3Dkadov-p-CSub-level-Bullet><p class=3DSub-level-Bullet>Memor=
+y =
+
+ Usage</p></li>
+	=
+
+	<li class=3Dkadov-p-CSub-level-Bullet><p class=3DSub-level-Bullet>Threa=
+d =
+
+ Count</p></li>
+	=
+
+	<li class=3Dkadov-p-CBulletted><p class=3DBulletted>Other Web NMS serve=
+r =
+
+ performance monitoring parameters for BE alone </p></li>
+	=
+
+	<li class=3Dkadov-p-CSub-level-Bullet><p class=3DSub-level-Bullet>Statu=
+s =
+
+ Polling Rate</p></li>
+	=
+
+	<li class=3Dkadov-p-CSub-level-Bullet><p class=3DSub-level-Bullet>Trap =
+
+ Processing Rate</p></li>
+	=
+
+	<li class=3Dkadov-p-CSub-level-Bullet><p class=3DSub-level-Bullet>Event=
+ =
+
+ Processing Rate</p></li>
+	=
+
+	<li class=3Dkadov-p-CSub-level-Bullet><p class=3DSub-level-Bullet>Alert=
+ =
+
+ Processing Rate</p></li>
+	=
+
+	<li class=3Dkadov-p-CSub-level-Bullet><p class=3DSub-level-Bullet>Data =
+
+ Collection Rate</p></li>
+</ul>
+
+<p class=3D"whs17">You can also configure the threshold name =
+
+ and action to be taken, if the threshold is crossed, for each polled da=
+ta.</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p class=3DSub-topic-2
+	style=3D"margin-left: 13px;"><a name=3Dbe_jvm></a>BE Server</p>
+
+<p>&nbsp;</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">The <span style=3D"font-style: italic;"><I=
+>WebNMSMgmtBEProcess</I></span> =
+
+ process defined in <span style=3D"font-weight: bold;"><B>NmsProcessesBE=
+.conf</B></span> =
+
+ file takes care of the following functions:</p>
+
+<ul>
+	=
+
+	<li class=3Dkadov-p-CBulletted><p class=3DBulletted>Monitors memory usa=
+ge =
+
+ of the BE Server </p></li>
+	=
+
+	<li class=3Dkadov-p-CBulletted><p class=3DBulletted>Monitors JVM resour=
+ce =
+
+ usage of the BE Server periodically</p></li>
+	=
+
+	<li class=3Dkadov-p-CBulletted><p class=3DBulletted>Monitors JVM resour=
+ce =
+
+ usage of the FE Server JVM periodically. The BE Server starts monitorin=
+g =
+
+ the FE server JVM as and when a FE gets connected to the BE. This funct=
+ion =
+
+ will be disabled if the MONITOR_FE_JVM argument of the process <span st=
+yle=3D"font-style: italic;"><I>WebNMSMgmtBEProcess</I></span> =
+
+ is set to <span style=3D"font-style: italic;"><I>false</I></span> in th=
+e <span =
+
+ style=3D"font-weight: bold;"><B>NmsProcessesBE.conf</B></span> file of =
+the BE server</p></li>
+</ul>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;"><span style=3D"font-weight: bold;"><B>PROC=
+ESS</B></span> =
+
+ com.adventnet.nms.management.WebNMSMgmtBEProcess<br>&nbsp;</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"font-weight: bold; margin-left: 13px;">ARGUMENTS</p>
+
+<p>&nbsp;</p>
+
+<!--(Table)=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D-->
+<table border=3D1 bordercolor=3D#000000 x-use-null-cells cellspacing=3D"=
+0" width=3D"87.684%" class=3D"whs18">
+<script language=3D'JavaScript'><!--
+if ((navigator.appName =3D=3D "Netscape") && (parseInt(navigator.appVers=
+ion) =3D=3D 4)) document.write("</table><table border=3D1 bordercolor=3D=
+#000000 x-use-null-cells cellspacing=3D'0' width=3D'87.684%' border=3D'1=
+' bordercolor=3D'black' bordercolorlight=3D'black' bordercolordark=3D'bl=
+ack'>");
+//--></script>
+<col class=3D"whs4">
+<col class=3D"whs19">
+<col class=3D"whs20">
+<col class=3D"whs21">
+
+<tr valign=3D"top" class=3D"whs22">
+<td valign=3D"middle" bgcolor=3D"#CCCCCC" width=3D"25%" class=3D"whs6">
+<p align=3D"center" class=3D"whs7">Argument</td>
+<td colspan=3D"1" rowspan=3D"1" valign=3D"middle" bgcolor=3D"#CCCCCC" wi=
+dth=3D"41.472%" class=3D"whs23">
+<p align=3D"center" class=3D"whs7">Purpose</td>
+<td colspan=3D"1" rowspan=3D"1" valign=3D"middle" bgcolor=3D"#CCCCCC" wi=
+dth=3D"12.172%" class=3D"whs24">
+<p align=3D"center" class=3D"whs7">Possible Values</td>
+<td colspan=3D"1" rowspan=3D"1" valign=3D"middle" bgcolor=3D"#CCCCCC" wi=
+dth=3D"10.929%" class=3D"whs25">
+<p align=3D"center" class=3D"whs7">Default Value</td></tr>
+
+<tr valign=3D"top" class=3D"whs26">
+<td width=3D"25%" class=3D"whs11">
+<p>MEMORY_USAGE_THRESHOLD</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"41.472%" class=3D"whs27">
+<p>Indicates the threshold value of memory usage of BE Server. When the =
+
+ memory usage exceeds this value, actions such as email notification, th=
+read =
+
+ dump generation and garbage collection are triggered</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"12.172%" class=3D"whs28">
+<p>Within the Range 0.1 and 1.0</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"10.929%" class=3D"whs29">
+<p>0.7</td></tr>
+
+<tr valign=3D"top" class=3D"whs22">
+<td width=3D"25%" class=3D"whs13">
+<p>MONITOR_BE_MEMORY_USAGE</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"41.472%" class=3D"whs30">
+<p>Determines whether the memory usage of the BE server is to be monitor=
+ed =
+
+ or not</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"12.172%" class=3D"whs31">
+<p>true or false</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"10.929%" class=3D"whs32">
+<p>true</td></tr>
+
+<tr valign=3D"top" class=3D"whs33">
+<td colspan=3D"1" rowspan=3D"1" width=3D"25%" class=3D"whs15">
+<p>MONITOR_FE_JVM</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"41.472%" class=3D"whs34">
+<p>Determines whether the FE server JVM is to monitored or not. If this =
+
+ is set to true, the BE Server starts gathering the JVM details of FE se=
+rver =
+
+ whenever the BE is notified of a new FE connected to it</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"12.172%" class=3D"whs35">
+<p>true or false</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"10.929%" class=3D"whs36">
+<p>true</td></tr>
+
+<tr valign=3D"top" class=3D"whs37">
+<td colspan=3D"1" rowspan=3D"1" width=3D"25%" class=3D"whs11">
+<p><a name=3Drun_gc></a>RUN_GARBAGE_COLLECTOR</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"41.472%" class=3D"whs27">
+<p>Determines whether Java GC is to be run or not. If this argument is =
+
+ set to true, Java GC is automatically run when the BE JVM exceeds the =
+
+ configured threshold</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"12.172%" class=3D"whs28">
+<p>true or false</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"10.929%" class=3D"whs29">
+<p>false</td></tr>
+<script language=3D'JavaScript'><!--
+if ((navigator.appName =3D=3D "Netscape") && (parseInt(navigator.appVers=
+ion) =3D=3D 4)) document.write("</table></table><table>");
+//--></script>
+</table>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">When the memory usage of the BE Server exc=
+eeds =
+
+ 0.7, an email notification is sent according to the configurations made=
+ =
+
+ in the <span style=3D"font-weight: bold; font-style: italic;"><I><B>Act=
+ion Name=3D&quot;MailNotification&quot;</B></I></span> =
+
+ parameter of <span style=3D"font-weight: bold;"><B>WebNMSJVMMonitoring.=
+xml</B></span> =
+
+ file. Also, if RUN_GARBAGE_COLLECTOR is set to <span style=3D"font-styl=
+e: italic;"><I>true</I></span>, =
+
+ Web NMS runs the garbage collector to free up the unused objects.</p>
+
+<p class=3Dsub-topic2-content
+	style=3D"margin-left: 13px;">Further, thread dumps are generated when =
+
+ initiated from the Web Client and stored in the <span style=3D"font-wei=
+ght: bold;"><B>JVMThreadDump.txt</B></span> =
+
+ file. </p>
+
+<p>&nbsp;</p>
+
+<p class=3DSub-topic-2
+	style=3D"margin-left: 13px;"><a name=3Dfe_jvm></a>FE Server</p>
+
+<p>&nbsp;</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">The <span style=3D"font-style: italic;"><I=
+>WebNMSMgmtFEProcess</I></span> =
+
+ process defined in <span style=3D"font-weight: bold;"><B>NmsProcessesFE=
+.conf</B></span> =
+
+ file takes care of the following functions:</p>
+
+<ul>
+	=
+
+	<li class=3Dkadov-p-CBulletted><p class=3DBulletted>Monitors memory usa=
+ge =
+
+ of the FE Server </p></li>
+	=
+
+	<li class=3Dkadov-p-CBulletted><p class=3DBulletted>Monitors JVM resour=
+ce =
+
+ usage of the Clients periodically. The FE Server starts monitoring the =
+
+ Client JVM as and when a client gets connected to the FE. This function=
+ =
+
+ will be disabled if the MONITOR_CLIENT_JVM argument of the process <spa=
+n =
+
+ style=3D"font-style: italic;"><I>WebNMSMgmtFEProcess</I></span> is set =
+to <span =
+
+ style=3D"font-style: italic;"><I>false</I></span> in the <span style=3D=
+"font-weight: bold;"><B>NmsProcessesFE.conf</B></span> =
+
+ file</p></li>
+</ul>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;"><span style=3D"font-weight: bold;"><B>PROC=
+ESS</B></span> =
+
+ com.adventnet.nms.management.WebNMSMgmtFEProcess<br>&nbsp;</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"font-weight: bold; margin-left: 13px;">ARGUMENTS</p>
+
+<p>&nbsp;</p>
+
+<!--(Table)=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D-->
+<table border=3D1 bordercolor=3D#000000 x-use-null-cells cellspacing=3D"=
+0" width=3D"90.331%" class=3D"whs38">
+<script language=3D'JavaScript'><!--
+if ((navigator.appName =3D=3D "Netscape") && (parseInt(navigator.appVers=
+ion) =3D=3D 4)) document.write("</table><table border=3D1 bordercolor=3D=
+#000000 x-use-null-cells cellspacing=3D'0' width=3D'90.331%' border=3D'1=
+' bordercolor=3D'black' bordercolorlight=3D'black' bordercolordark=3D'bl=
+ack'>");
+//--></script>
+<col class=3D"whs4">
+<col class=3D"whs39">
+<col class=3D"whs40">
+<col class=3D"whs41">
+
+<tr valign=3D"top" class=3D"whs22">
+<td valign=3D"middle" bgcolor=3D"#CCCCCC" width=3D"25%" class=3D"whs6">
+<p align=3D"center" class=3D"whs7">Argument</td>
+<td colspan=3D"1" rowspan=3D"1" valign=3D"middle" bgcolor=3D"#CCCCCC" wi=
+dth=3D"43.106%" class=3D"whs42">
+<p align=3D"center" class=3D"whs7">Purpose</td>
+<td colspan=3D"1" rowspan=3D"1" valign=3D"middle" bgcolor=3D"#CCCCCC" wi=
+dth=3D"11.814%" class=3D"whs43">
+<p align=3D"center" class=3D"whs7">Possible Values</td>
+<td colspan=3D"1" rowspan=3D"1" valign=3D"middle" bgcolor=3D"#CCCCCC" wi=
+dth=3D"10.607%" class=3D"whs44">
+<p align=3D"center" class=3D"whs7">Default Value</td></tr>
+
+<tr valign=3D"top" class=3D"whs33">
+<td width=3D"25%" class=3D"whs11">
+<p>MEMORY_USAGE_THRESHOLD</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"43.106%" class=3D"whs45">
+<p>Indicates the threshold value of memory usage of FE Server. When the =
+
+ memory usage exceeds this value, actions such as email notification, th=
+read =
+
+ dump generation and garbage collection are triggered</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"11.814%" class=3D"whs46">
+<p>Within the Range 0.1 and 1.0</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"10.607%" class=3D"whs47">
+<p>0.7</td></tr>
+
+<tr valign=3D"top" class=3D"whs22">
+<td width=3D"25%" class=3D"whs13">
+<p>MONITOR_FE_MEMORY_USAGE</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"43.106%" class=3D"whs48">
+<p>Determines whether the memory usage of the FE server is to be monitor=
+ed =
+
+ or not</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"11.814%" class=3D"whs49">
+<p>true or false</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"10.607%" class=3D"whs50">
+<p>true</td></tr>
+
+<tr valign=3D"top" class=3D"whs33">
+<td colspan=3D"1" rowspan=3D"1" width=3D"25%" class=3D"whs15">
+<p>MONITOR_CLIENT_JVM</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"43.106%" class=3D"whs51">
+<p>Determines whether the clients connected to this FE server should be =
+
+ monitored or not. If this is set to true, the FE Server will start gath=
+ering =
+
+ JVM information of all clients that are connected to it.</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"11.814%" class=3D"whs52">
+<p>true or false</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"10.607%" class=3D"whs53">
+<p>true</td></tr>
+
+<tr valign=3D"top" class=3D"whs54">
+<td colspan=3D"1" rowspan=3D"1" width=3D"25%" class=3D"whs11">
+<p>RUN_GARBAGE_COLLECTOR</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"43.106%" class=3D"whs45">
+<p>Determines whether Java GC is to be run or not. If this argument is =
+
+ set to true, Java GC is automatically run when the FE memory usage exce=
+eds =
+
+ the configured threshold</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"11.814%" class=3D"whs46">
+<p>true or false</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"10.607%" class=3D"whs47">
+<p>false</td></tr>
+<script language=3D'JavaScript'><!--
+if ((navigator.appName =3D=3D "Netscape") && (parseInt(navigator.appVers=
+ion) =3D=3D 4)) document.write("</table></table><table>");
+//--></script>
+</table>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">If the memory usage of the FE JVM exceeds =
+
+ 0.7, an email notification is sent according to the configuration made =
+
+ in the <span style=3D"font-weight: bold; font-style: italic;"><I><B>Act=
+ion Name=3D&quot;MailNotification&quot;</B></I></span> =
+
+ parameter of <span style=3D"font-weight: bold;"><B>WebNMSJVMMonitoring.=
+xml</B></span> =
+
+ file. Also, if RUN_GARBAGE_COLLECTOR is set to <span style=3D"font-styl=
+e: italic;"><I>true</I></span>, =
+
+ Web NMS runs the garbage collector to free up the unreferenced objects.=
+</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">Further, thread dumps are generated when =
+
+ initiated from the Web Client and stored in the <span style=3D"font-wei=
+ght: bold;"><B>JVMThreadDump.txt</B></span> =
+
+ file. </p>
+
+<p>&nbsp;</p>
+
+<p class=3DSub-topic-2
+	style=3D"margin-left: 13px;"><a name=3Dclient_jvm></a>Client</p>
+
+<p>&nbsp;</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">The Client monitors its own memory usage. =
+
+ If the memory usage exceeds the configured <a href=3D"#client_mem_usage=
+">threshold</a> =
+
+ limit, runs the garbage collector (if <a href=3D"#client_gc">configured=
+</a>). =
+
+ Parameters for Client monitoring are available in the <span style=3D"fo=
+nt-weight: bold;"><B>clientparameters.conf</B></span> =
+
+ file and can be configured according to the requirement. </p>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">Thread dumps are generated when initiated =
+
+ from the Web Client and stored in the <span style=3D"font-weight: bold;=
+"><B>JVMThreadDump.txt</B></span> =
+
+ file</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">The following table lists down the paramet=
+ers =
+
+ and their usage:</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">&nbsp;</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">&nbsp;</p>
+
+<!--(Table)=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D-->
+<table border=3D1 bordercolor=3D#000000 x-use-null-cells cellspacing=3D"=
+0" width=3D"90.331%" class=3D"whs55">
+<script language=3D'JavaScript'><!--
+if ((navigator.appName =3D=3D "Netscape") && (parseInt(navigator.appVers=
+ion) =3D=3D 4)) document.write("</table><table border=3D1 bordercolor=3D=
+#000000 x-use-null-cells cellspacing=3D'0' width=3D'90.331%' border=3D'1=
+' bordercolor=3D'black' bordercolorlight=3D'black' bordercolordark=3D'bl=
+ack'>");
+//--></script>
+<col class=3D"whs4">
+<col class=3D"whs56">
+<col class=3D"whs40">
+<col class=3D"whs41">
+
+<tr valign=3D"top" class=3D"whs22">
+<td valign=3D"middle" bgcolor=3D"#CCCCCC" width=3D"25%" class=3D"whs6">
+<p align=3D"center" class=3D"whs7">Argument</td>
+<td colspan=3D"1" rowspan=3D"1" valign=3D"middle" bgcolor=3D"#CCCCCC" wi=
+dth=3D"39.269%" class=3D"whs57">
+<p align=3D"center" class=3D"whs7">Purpose</td>
+<td colspan=3D"1" rowspan=3D"1" valign=3D"middle" bgcolor=3D"#CCCCCC" wi=
+dth=3D"11.814%" class=3D"whs43">
+<p align=3D"center" class=3D"whs7">Possible Values</td>
+<td colspan=3D"1" rowspan=3D"1" valign=3D"middle" bgcolor=3D"#CCCCCC" wi=
+dth=3D"10.607%" class=3D"whs44">
+<p align=3D"center" class=3D"whs7">Default Value</td></tr>
+
+<tr valign=3D"top" class=3D"whs26">
+<td width=3D"25%" class=3D"whs11">
+<p><a name=3Dclient_mem_usage></a>MEMORY_USAGE_THRESHOLD</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"39.269%" class=3D"whs58">
+<p>Indicates the threshold limit for the memory usage of Client. When th=
+e =
+
+ memory usage exceeds this value, actions such as email notification, th=
+read =
+
+ dump generation and garbage collection are triggered</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"11.814%" class=3D"whs46">
+<p>Within the Range 0.1 and 1.0</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"10.607%" class=3D"whs47">
+<p>0.7</td></tr>
+
+<tr valign=3D"top" class=3D"whs59">
+<td width=3D"25%" class=3D"whs13">
+<p>MONITOR_CLIENT_MEMORY_USAGE</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"39.269%" class=3D"whs60">
+<p>Determines whether the memory usage of the Client server is to be mon=
+itored =
+
+ or not</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"11.814%" class=3D"whs49">
+<p>true or false</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"10.607%" class=3D"whs50">
+<p>true</td></tr>
+
+<tr valign=3D"top" class=3D"whs61">
+<td colspan=3D"1" rowspan=3D"1" width=3D"25%" class=3D"whs11">
+<p><a name=3Dclient_gc></a>RUN_GARBAGE_COLLECTOR</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"39.269%" class=3D"whs58">
+<p>Determines whether Java GC is to be run or not. If this argument is =
+
+ set to true, Java GC is automatically run when the Client memory usage =
+
+ exceeds the configured threshold limit</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"11.814%" class=3D"whs46">
+<p>true or false</td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"10.607%" class=3D"whs47">
+<p>false</td></tr>
+<script language=3D'JavaScript'><!--
+if ((navigator.appName =3D=3D "Netscape") && (parseInt(navigator.appVers=
+ion) =3D=3D 4)) document.write("</table></table><table>");
+//--></script>
+</table>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">&nbsp;</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">When the memory usage of the client exceed=
+s =
+
+ the configured limit, an email notification is triggered by the BE Serv=
+er =
+
+ according to the configuration made in the <span style=3D"font-weight: =
+bold; font-style: italic;"><I><B>Action =
+
+ Name=3D&quot;MailNotification&quot;</B></I></span> parameter of <span s=
+tyle=3D"font-weight: bold;"><B>WebNMSJVMMonitoring.xml</B></span> =
+
+ file.</p>
+
+<p class=3Dsub-topic2-content
+	style=3D"margin-left: 13px;">&nbsp;</p>
+
+<!--(Table)=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D-->
+<table border=3D1 bordercolor=3D#000000 x-use-null-cells cellspacing=3D"=
+0" class=3D"whs62">
+<col class=3D"whs63">
+<col class=3D"whs64">
+
+<tr>
+<td colspan=3D"1" rowspan=3D"1" width=3D"44px" class=3D"whs65">
+<p align=3D"center" class=3D"whs66"><img src=3D"../images/note.jpg" x-ma=
+intain-ratio=3D"TRUE" width=3D"42px" height=3D"42px" border=3D"0" class=3D=
+"img_whs67"></td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"792px" class=3D"whs68">
+<p><b style=3D"font-weight: bold;">Note</b>: The Client JVM Monitoring i=
+s =
+
+ not supported in Java Web Start, Applet, and Web clients.</td></tr>
+</table>
+
+<p class=3Dsub-topic2-content
+	style=3D"margin-left: 13px;">&nbsp;</p>
+
+<p class=3Dsub-topic2-content
+	style=3D"margin-left: 13px;">&nbsp;</p>
+
+<p class=3DSub-topic-2
+	style=3D"margin-left: 13px;"><a name=3Dscript_config></a>Start up Scrip=
+t</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">&nbsp;</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"font-weight: bold; margin-left: 13px;">Server Configuration</p=
+>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">&nbsp;</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">When the server is started using script, =
+
+ configure JVM Monitoring using the properties highlighted in the follow=
+ing =
+
+ entry in the <span style=3D"font-weight: bold;"><B>startnms.bat</B></sp=
+an>/<span =
+
+ style=3D"font-weight: bold;"><B>startnms.sh</B></span> file present und=
+er <span =
+
+ style=3D"font-style: italic;"><I>&lt;Web NMS Home&gt;/bin</I></span>:</=
+p>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">&nbsp;</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;"><span style=3D"font-weight: bold;"><B>star=
+tnms.bat</B></span> =
+
+ file</p>
+
+<ol>
+	=
+
+	<!--(Table)=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D-->
+	<table border=3D1 bordercolor=3D#000000 x-use-null-cells cellspacing=3D=
+"0" class=3D"whs62">
+	<col>
+	=
+
+	<tr>
+	<td>
+	<p class=3DCode>:start1</p>
+	<p class=3DCode>%JAVA_HOME%\bin\java -cp %CLASS_PATH% -Dcatalina.home=3D=
+%TOMCAT_HOME% =
+
+ -Dcatalina.base=3D%TOMCAT_HOME% -Dmysql.home=3D%MYSQL_HOME% -Dwebserver=
+.port=3D%WEBSERVER_PORT% =
+
+ -Xmx100m -Dssl.port=3D%SSL_PORT% -Dresource_check=3D&quot;%WEBSERVER_PO=
+RT%,%WEBCONTAINER_PORT%,%TOMCAT_SHUTDOWNPORT%&quot; =
+
+ -Dwebserver.rootdir=3D%WEBSERVER_HOME% -Djava.rmi.server.codebase=3D%CO=
+DEBASE_LIST% =
+
+ &nbsp;<span style=3D"font-weight: bold;"><B><br>
+	-Dcom.sun.management.jmxremote.port=3D16000 <br>
+	-Dcom.sun.management.jmxremote.authenticate=3Dfalse <br>
+	-Dcom.sun.management.jmxremote.ssl=3Dfalse <br>
+	-Dcom.sun.management.snmp.interface=3D%COMPUTERNAME% <br>
+	-Dcom.sun.management.snmp.acl=3Dfalse -Dcom.sun.management.snmp.port=3D=
+16500</B></span> =
+
+ <br>
+	-Djava.util.logging.manager=3Dorg.apache.juli.ClassLoaderLogManager -Dj=
+ava.util.logging.config.file=3D%TOMCAT_HOME%\conf\logging.properties =
+
+ com.adventnet.nms.startnms.NmsMainBE NMS_BE_PORT 2000 ROOT_DIR %NMS_HOM=
+E% =
+
+ NATIVE_PING true SERVICE TRUE</p>
+	<p class=3DCode>set serverexit=3D%errorlevel%</p>
+	<p class=3DCode>&nbsp;</p>
+	<p class=3DCode><span style=3D"font-weight: bold;"><B>Note: %COMPUTERNA=
+ME%</B></span> =
+
+ should be replaced with the name of the machine where the Web NMS serve=
+r =
+
+ is installed.</td></tr>
+	</table>
+</ol>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;"><span style=3D"font-weight: bold;"><B>star=
+tnms.sh</B></span> =
+
+ file</p>
+
+<ol>
+	=
+
+	<!--(Table)=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D-->
+	<table border=3D1 bordercolor=3D#000000 x-use-null-cells cellspacing=3D=
+"0" class=3D"whs62">
+	<col>
+	=
+
+	<tr>
+	<td>
+	<p class=3DCode>$JAVA_HOME/bin/java -cp $CLASS_PATH -Dcatalina.home=3D$=
+TOMCAT_HOME =
+
+ <br>
+	-Dcatalina.base=3D$TOMCAT_HOME -Dmysql.home=3D$MYSQL_HOME <br>
+	-Dwebserver.port=3D$WEBSERVER_PORT -Dssl.port=3D$SSL_PORT <br>
+	-Dresource_check=3D&quot;$WEBSERVER_PORT,$WEBCONTAINER_PORT,$TOMCAT_SHU=
+TDOWNPORT&quot; =
+
+ <br>
+	-Dwebserver.rootdir=3D$WEBSERVER_HOME -Djava.rmi.server.codebase=3D&quo=
+t;$CODEBASE_LIST&quot; =
+
+ <br>
+	-mx100m <span style=3D"font-weight: bold;"><B>-Dcom.sun.management.jmxr=
+emote.port=3D16000 =
+
+ <br>
+	-Dcom.sun.management.jmxremote.authenticate=3Dfalse <br>
+	-Dcom.sun.management.jmxremote.ssl=3Dfalse <br>
+	-Dcom.sun.management.snmp.interface=3D`hostname` <br>
+	-Dcom.sun.management.snmp.acl=3Dfalse</B></span> -Dcom.sun.management.s=
+nmp.port=3D16500 =
+
+ <br>
+	-Djava.util.logging.manager=3Dorg.apache.juli.ClassLoaderLogManager <br=
+>
+	-Djava.util.logging.config.file=3D$TOMCAT_HOME/conf/logging.properties =
+
+ <br>
+	-Djava.awt.headless=3Dfalse com.adventnet.nms.startnms.NmsMainBE NMS_BE=
+_PORT =
+
+ 2000 ROOT_DIR $NMS_HOME $* SERVICE TRUE</p>
+	<p class=3DCode>&nbsp;</p>
+	<p class=3DCode><span style=3D"font-weight: bold;"><B>Note</B></span>:<=
+span style=3D"font-weight: bold;"> =
+
+ <B></B></span><span style=3D"font-weight: bold;"><B>`hostname` </B></sp=
+an>should be replaced =
+
+ with the name of the machine where the Web NMS server is installed.</td=
+></tr>
+	</table>
+</ol>
+
+<p class=3DCode-Level-1
+	style=3D"margin-left: 13px;">&nbsp;</p>
+
+<p class=3DCode-Level-1
+	style=3D"margin-left: 13px;">&nbsp;</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"font-weight: bold; margin-left: 13px;">Application Client Conf=
+iguration</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">&nbsp;</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">When the Application Client is started usi=
+ng =
+
+ script, configure Client JVM Monitoring using the properties highlighte=
+d =
+
+ in the following entry in the <span style=3D"font-weight: bold;"><B>sta=
+rtApplicationClient.bat</B></span>/<span =
+
+ style=3D"font-weight: bold;"><B>startApplicationClient.sh</B></span> fi=
+le present =
+
+ under <span style=3D"font-style: italic;"><I>&lt;Web NMS Home&gt;/bin</=
+I></span>:</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">&nbsp;</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;"><span style=3D"font-weight: bold;"><B>star=
+tApplicationClient.bat</B></span> =
+
+ file</p>
+
+<ol>
+	=
+
+	<!--(Table)=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D-->
+	<table border=3D1 bordercolor=3D#000000 x-use-null-cells cellspacing=3D=
+"0" class=3D"whs62">
+	<col>
+	=
+
+	<tr>
+	<td>
+	<p class=3DCode>:start</p>
+	<p class=3DCode>%JAVA_HOME%\bin\java &nbsp;<span =
+
+ style=3D"font-weight: bold;"><B>-Dcom.sun.management.jmxremote.port=3D1=
+4000 =
+
+ <br>
+	-Dcom.sun.management.jmxremote.authenticate=3Dfalse <br>
+	-Dcom.sun.management.jmxremote.ssl=3Dfalse <br>
+	-Dcom.sun.management.snmp.interface=3D%COMPUTERNAME% <br>
+	-Dcom.sun.management.snmp.acl=3Dfalse -Dcom.sun.management.snmp.port=3D=
+14500</B></span> =
+
+ com.adventnet.nms.startclient.WebNMSClient localhost %WEBSERVER_PORT%</=
+p>
+	<p class=3DCode>&nbsp;</p>
+	<p class=3DCode><span style=3D"font-weight: bold;"><B>Note: %COMPUTERNA=
+ME%</B></span> =
+
+ should be replaced with the name of application client machine.</td></t=
+r>
+	</table>
+</ol>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;"><span style=3D"font-weight: bold;"><B>star=
+tApplicationClient.sh</B></span> =
+
+ file</p>
+
+<ol>
+	=
+
+	<!--(Table)=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D-->
+	<table border=3D1 bordercolor=3D#000000 x-use-null-cells cellspacing=3D=
+"0" class=3D"whs62">
+	<col>
+	=
+
+	<tr>
+	<td>
+	<p class=3DCode>$JAVA_HOME/bin/java -Xmx200m &nbsp;<span =
+
+ style=3D"font-weight: bold;"><B>-Dcom.sun.management.jmxremote.port=3D1=
+4000 =
+
+ <br>
+	-Dcom.sun.management.jmxremote.authenticate=3Dfalse <br>
+	-Dcom.sun.management.jmxremote.ssl=3Dfalse <br>
+	-Dcom.sun.management.snmp.interface=3D`hostname` <br>
+	-Dcom.sun.management.snmp.acl=3Dfalse -Dcom.sun.management.snmp.port=3D=
+14500</B></span> =
+
+ com.adventnet.nms.startclient.WebNMSClient $host $WEBSERVER_PORT</p>
+	<p class=3DCode>&nbsp;</p>
+	<p class=3DCode><span style=3D"font-weight: bold;"><B>Note: %COMPUTERNA=
+ME%</B></span> =
+
+ should be replaced with the name of application client machine.</td></t=
+r>
+	</table>
+</ol>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">&nbsp;</p>
+
+<p class=3DSub-topic-2
+	style=3D"margin-left: 13px;"><a name=3Dlauncher></a>Launcher</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">&nbsp;</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"font-weight: bold; margin-left: 13px;">Server Configuration</p=
+>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">&nbsp;</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">When the server is started from the Web =
+
+ NMS Launcher, configure JVM Monitoring using the properties highlighted=
+ =
+
+ in the following entry in the <span style=3D"font-weight: bold;"><B>Sta=
+rt Web =
+
+ NMS Server</B></span> application of the <span style=3D"font-weight: bo=
+ld;"><B>launcher_conf.txt</B></span> =
+
+ file present under <span style=3D"font-style: italic;"><I>&lt;Web NMS H=
+ome&gt;/conf</I></span>:</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">&nbsp;</p>
+
+<ol>
+	=
+
+	<!--(Table)=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D-->
+	<table border=3D1 bordercolor=3D#000000 x-use-null-cells cellspacing=3D=
+"0" class=3D"whs62">
+	<col>
+	=
+
+	<tr>
+	<td>
+	<p class=3DCode>&lt;property name=3D&quot;AppJavaOption&quot; value=3D&=
+quot;<span =
+
+ style=3D"font-weight: bold;"><B>-Dcom.sun.management.jmxremote.port=3D1=
+6000 -Dcom.sun.management.jmxremote.authenticate=3Dfalse =
+
+ -Dcom.sun.management.jmxremote.ssl=3Dfalse -Dcom.sun.management.snmp.in=
+terface=3Dhostname =
+
+ -Dcom.sun.management.snmp.acl=3Dfalse -Dcom.sun.management.snmp.port=3D=
+16500</B></span> =
+
+ -Dmysql.home=3D./mysql -Dwebserver.port=3D9090 -mx100m -Dresource_check=
+=3D9090,8009 =
+
+ ......</p>
+	<p class=3DCode>&nbsp;</p>
+	<p class=3DCode><span style=3D"font-weight: bold;"><B>Note: hostname</B=
+></span> =
+
+ should be replaced with the name of the machine where the Web NMS serve=
+r =
+
+ is installed.</td></tr>
+	</table>
+</ol>
+
+<p class=3DCode-Level-1
+	style=3D"margin-left: 13px;">&nbsp;</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"font-weight: bold; margin-left: 13px;">Application Client Conf=
+iguration</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">&nbsp;</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">When the Application Client is started fro=
+m =
+
+ the Web NMS Launcher, configure Client JVM Monitoring using the propert=
+ies =
+
+ highlighted in the following entry in the <span style=3D"font-weight: b=
+old;"><B>Application =
+
+ Client</B></span> application of the <span style=3D"font-weight: bold;"=
+><B>launcher_conf.txt</B></span> =
+
+ file present under <span style=3D"font-style: italic;"><I>&lt;Web NMS H=
+ome&gt;/conf</I></span>:</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">&nbsp;</p>
+
+<ol>
+	=
+
+	<!--(Table)=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D-->
+	<table border=3D1 bordercolor=3D#000000 x-use-null-cells cellspacing=3D=
+"0" class=3D"whs62">
+	<col>
+	=
+
+	<tr>
+	<td>
+	<p class=3DCode>&lt;property name=3D&quot;AppJavaOption&quot; value=3D&=
+quot;<span =
+
+ style=3D"font-weight: bold;"><B>-Dcom.sun.management.jmxremote.port=3D1=
+4000 -Dcom.sun.management.jmxremote.authenticate=3Dfalse =
+
+ -Dcom.sun.management.jmxremote.ssl=3Dfalse -Dcom.sun.management.snmp.in=
+terface=3Dhostname =
+
+ -Dcom.sun.management.snmp.acl=3Dfalse -Dcom.sun.management.snmp.port=3D=
+14500</B></span>&quot;/&gt;</p>
+	<p class=3DCode>&nbsp;</p>
+	<p class=3DCode><span style=3D"font-weight: bold;"><B>Note: hostname</B=
+></span> =
+
+ should be replaced with the name of application client machine.</td></t=
+r>
+	</table>
+</ol>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">&nbsp;</p>
+
+<p class=3DSub-topic-2
+	style=3D"margin-left: 13px;"><a name=3Dwindows_service></a>Windows Serv=
+ice</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">&nbsp;</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"margin-left: 13px;">&nbsp;When =
+
+ the server is installed as a Windows Service, configure JVM Monitoring =
+
+ using the following system properties in the Java Additional Parameters=
+ =
+
+ of the <span style=3D"font-weight: bold;"><B>wrapper.conf</B></span> fi=
+le:</p>
+
+<ol>
+	=
+
+	<!--(Table)=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D-->
+	<table border=3D1 bordercolor=3D#000000 x-use-null-cells cellspacing=3D=
+"0" class=3D"whs62">
+	<col>
+	=
+
+	<tr>
+	<td>
+	<p class=3DCode>wrapper.java.additional.7=3D-Dcom.sun.management.jmxrem=
+ote.port=3D16000</p>
+	<p class=3DCode>wrapper.java.additional.8=3D-Dcom.sun.management.snmp.p=
+ort=3D16500</p>
+	<p class=3DCode>wrapper.java.additional.9=3D-Dcom.sun.management.jmxrem=
+ote.authenticate=3Dfalse</p>
+	<p class=3DCode>wrapper.java.additional.10=3D-Dcom.sun.management.jmxre=
+mote.ssl=3Dfalse</p>
+	<p class=3DCode>wrapper.java.additional.11=3D-Dcom.sun.management.snmp.=
+interface=3Dlocalhost</p>
+	<p class=3DCode>wrapper.java.additional.12=3D-Dcom.sun.management.snmp.=
+acl=3Dfalse</td></tr>
+	</table>
+</ol>
+
+<!--(Table)=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D-->
+<table border=3D1 bordercolor=3D#000000 x-use-null-cells cellspacing=3D"=
+0" class=3D"whs62">
+<col class=3D"whs63">
+<col class=3D"whs64">
+
+<tr>
+<td colspan=3D"1" rowspan=3D"1" width=3D"44px" class=3D"whs65">
+<p align=3D"center" class=3D"whs66"><img src=3D"../images/note.jpg" x-ma=
+intain-ratio=3D"TRUE" width=3D"42px" height=3D"42px" border=3D"0" class=3D=
+"img_whs67"></td>
+<td colspan=3D"1" rowspan=3D"1" width=3D"792px" class=3D"whs68">
+<p><b style=3D"font-weight: bold;">Note</b>: You will not be able to sta=
+rt =
+
+ more than one application client/BE JVM/FE JVM with the JVM Monitoring =
+
+ process enabled. To overcome this problem, you need to configure the va=
+lue =
+
+ of <span style=3D"font-weight: bold;"><B>com.sun.management.jmxremote.p=
+ort</B></span> =
+
+ and <span style=3D"font-weight: bold;"><B>com.sun.management.snmp.port<=
+/B></span> =
+
+ arguments to some other free ports in the respective startup script/con=
+figuration =
+
+ file.</td></tr>
+</table>
+
+<p class=3DSub-topic2-Content
+	style=3D"font-weight: bold; margin-left: 13px;">&nbsp;</p>
+
+<p class=3DSub-topic2-Content
+	style=3D"font-weight: bold; margin-left: 13px;">&nbsp;</p>
+
+<p class=3Dsub-topic2-content
+	style=3D"margin-left: 13px;">If you face server startup problems due =
+
+ to long class path in Windows, refer to the <a href=3D"../troubleshooti=
+ng_tips/input_line_long.html">Input =
+
+ Line Too Long</a> topic for a solution.</p>
+
+<p>&nbsp;</p>
+
+<script type=3D"text/javascript" language=3D"javascript1.2">
+<!--
+if (window.writeIntopicBar)
+	writeIntopicBar(0);
+//-->
+</script>
+<form method=3D"POST" action=3D"http://www.helpcommunity.com/ehelpapi.as=
+p?cmd=3DWebSave" name=3D"ehelpform" target=3D"_top" style=3D"display:'no=
+ne';">
+<input type=3D"hidden" name=3D"data" value=3D"2A0C02D8000000636C69656E74=
+706172616D65746572732E636F6E660A4A564D204D6F6E69746F72696E670A4C6F67346A=
+0A6C6F67346A5F636F6E662E786D6C0A6D61696C65722E636F6E660A4D61696C4D657373=
+6167652E636F6E660A4D4F4E49544F525F42455F4D454D4F52595F55534147450A4D4F4E=
+49544F525F46455F4D454D4F52595F55534147450A50365370790A526F6C6C696E672046=
+696C6520417070656E6465720A534D545020417070656E6465720A5765624E4D534D676D=
+74424550726F636573730A5765624E4D534D676D74464550726F636573730D0211000000=
+4245204A564D204D6F6E69746F72696E6711020E0000004E4D53204D616E6167656D656E=
+74120216000000576562204E4D53204A564D204D6F6E69746F72696E6713022600000057=
+65624E4D53204672616D65776F726B20352E30202D20446576656C6F7065722047756964=
+6515020A000000696E6465782E68746D6C1703930100003C3F786D6C2076657273696F6E=
+3D22312E30223E0A3C21444F43545950452053595354454D20226568656C706F70742E64=
+7464223E0A3C46494C452D4F5054494F4E532046494C452D56455253494F4E3D22342220=
+47454E455241544F523D22526F626F48454C5020666F722057696E48656C70203920392E=
+32302E353636222046494C452D4B45593D2232343231343034305F323235315F31313334=
+5F383034345F303038303438323035393239223E0A3C2F46494C452D4F5054494F4E533E=
+0A3C4548454C502D4F5054494F4E5320464F524D41542D56455253494F4E3D22312E3022=
+3E0A203C4F5054494F4E532046495253542D504147453D224E4F542D5345542220454E41=
+424C45443D224E4F2220454D4245444445443D2259455322204D41494E2D57494E444F57=
+2D4F4E4C593D224E4F2220434F4D4D554E4954592D4E4F544946593D224E4F223E0A203C=
+2F4F5054494F4E533E0A203C425554544F4E2D4C4142454C3E5765625365617263683C2F=
+425554544F4E2D4C4142454C3E0A3C2F4548454C502D4F5054494F4E533E180104000000=
+02000000702A">
+</form>
+<table BORDER=3D0 WIDTH=3D"100%" class=3Dnavigator>
+<tr>
+<td ALIGN=3DRIGHT class=3Dnavigator>
+<a href=3D"../../index.html" target=3D_blank><img SRC=3D"../nav_home.jpg=
+" border=3D0 ></a>
+<a href=3D"../self_monitoring/nms_management.html"><img SRC=3D"../nav_pr=
+ev.jpg" border=3D0></a>
+<a href=3D"../self_monitoring/web_nms_jvm_management.html"><img SRC=3D".=
+./nav_next.jpg" border=3D0></a>
+</td></tr></table>
+<br><hr width=3D100% size=3D1> <font color=3D"#666666" face=3D"arial,hel=
+vetica" size=3D-1>  Copyright &#169; 2010, <a href=3D"http://www.zohocor=
+p.com" target=3D_blank>ZOHO Corp.</a> All Rights Reserved.</font> </body=
+>
+
+</html>
+------------drxm0nufRslT8Rx2t6uJ1l
+Content-Disposition: inline; filename=adventnet1_ns.css
+Content-Type: text/css; charset=UTF-8; name=adventnet1_ns.css
+Content-Location: http://www.webnms.com/webnms/help/developer_guide/adventnet1_ns.css
+Content-Transfer-Encoding: 8bit
+
+BODY { 
+      background-color:#ffffff; 
+      color:#000000; 
+      font-size:10pt; 
+      font-family:Arial,Helvetica,Verdana;  }
+H1 { 
+    font-size:16pt; 
+    font-family:Arial,Helvetica,Verdana; 
+    font-weight:bold; 
+    margin-top:1; 
+    margin-bottom:1; 
+    color:#000000;  }
+LI.kadov-H1 { 
+             font-size:16pt; 
+             font-family:Arial,Helvetica,Verdana; 
+             font-weight:bold;  }
+P { 
+   font-size:10pt; 
+   font-family:Arial,Helvetica,Verdana; 
+   margin-top:1; 
+   margin-bottom:1; 
+   color:#000000;  }
+LI.kadov-P { 
+            font-size:10pt; 
+            font-family:Arial,Helvetica,Verdana;  }
+P.Sub-topic-1 { 
+               font-size:12pt; 
+               font-weight:bold; 
+               font-style:normal;  }
+LI.kadov-P-CSub-topic-1 { 
+                         font-size:12pt; 
+                         font-weight:bold; 
+                         font-style:normal;  }
+P.Sub-topic-2 { 
+               font-size:12pt; 
+               font-weight:bold; 
+               font-style:normal; 
+               margin-left:40pt;  }
+LI.kadov-P-CSub-topic-2 { 
+                         font-size:12pt; 
+                         font-weight:bold; 
+                         font-style:normal;  }
+P.Sub-topic2-Content { 
+                      margin-left:40pt;  }
+LI.kadov-P-CSub-topic2-Content {  }
+P.Sub-topic-3 { 
+               font-size:10pt; 
+               font-weight:bold; 
+               font-style:normal; 
+               margin-left:80pt;  }
+LI.kadov-P-CSub-topic-3 { 
+                         font-size:10pt; 
+                         font-weight:bold; 
+                         font-style:normal;  }
+P.Sub-topic3-content { 
+                      margin-left:80pt;  }
+LI.kadov-P-CSub-topic3-content {  }
+P.Sub-topic4-content { 
+                      margin-left:120pt;  }
+LI.kadov-P-CSub-topic4-content {  }
+P.Code { 
+        font-family:Courier New; 
+        margin-left:20pt;  }
+LI.kadov-P-CCode { 
+                  font-family:Courier New;  }
+P.Code-Level-1 { 
+                font-family:Courier New; 
+                margin-left:40pt;  }
+LI.kadov-P-CCode-Level-1 { 
+                          font-family:Courier New;  }
+P.Code-Level-2 { 
+                font-family:Courier New; 
+                margin-left:60pt;  }
+LI.kadov-P-CCode-Level-2 { 
+                          font-family:Courier New;  }
+P.Code-Level-3 { 
+                font-family:Courier New; 
+                margin-left:80pt;  }
+LI.kadov-P-CCode-Level-3 { 
+                          font-family:Courier New;  }
+P.Code-Level-4 { 
+                font-family:Courier New; 
+                margin-left:100pt;  }
+LI.kadov-P-CCode-Level-4 { 
+                          font-family:Courier New;  }
+P.Numbered { 
+            list-style:decimal; 
+            margin-top:5pt; 
+            margin-bottom:5pt; 
+            margin-left:1;  }
+LI.kadov-P-CNumbered { 
+                      list-style:decimal;  }
+P.Bulletted { 
+             list-style:disc; 
+             margin-top:5pt; 
+             margin-bottom:5pt; 
+             margin-left:1;  }
+LI.kadov-P-CBulletted { 
+                       list-style:disc;  }
+P.Sub-level-Bullet { 
+                    margin-top:1; 
+                    margin-bottom:5pt; 
+                    list-style:circle; 
+                    margin-left:20pt;  }
+LI.kadov-P-CSub-level-Bullet { 
+                              list-style:circle;  }
+P.Removing-Bullet-Number {  }
+LI.kadov-P-CRemoving-Bullet-Number {  }
+OL LI { 
+       font-size:10pt; 
+       font-family:Arial,Helvetica,Verdana;  }
+a:link { 
+        color:#0000ff;  }
+a:visited { 
+           color:#0000ff;  }
+a:active { 
+          color:#0000ff;  }
+.navigator { 
+            border-width:0; 
+            border-color:#000000; 
+            width:100%;  }
+LI.kadov-Cnavigator {  }
+table { 
+       border-width:1; 
+       border-color:#000000; 
+       border-style:solid; 
+       width:100%;  }
+td { 
+    color:#000000; 
+    font-family:Arial,Helvetica,Verdana; 
+    font-size:10pt; 
+    border-width:1; 
+    border-color:#000000; 
+    border-style:Solid; 
+    padding-right:5px; 
+    padding-left:5px;  }
+th { 
+    background-color:#cccccc; 
+    color:#000000; 
+    font-family:Arial,Helvetica,Verdana; 
+    font-size:10pt; 
+    font-style:bold; 
+    align:center; 
+    border-width:1; 
+    border-color:#000000; 
+    border-style:solid;  }
+H5 { 
+    font-size:10pt; 
+    font-weight:bold; 
+    font-style:normal; 
+    background-color:#ff0000; 
+    font-family:Arial,Helvetica,Verdana; 
+    color:#000000;  }
+LI.kadov-H5 { 
+             font-size:10pt; 
+             font-weight:normal; 
+             font-style:normal;  }
+H6 { 
+    font-size:10pt; 
+    font-weight:bold; 
+    font-style:normal; 
+    background-color:#ff0000; 
+    font-family:Arial,Helvetica,Verdana; 
+    color:#000000;  }
+LI.kadov-H6 { 
+             font-size:10pt; 
+             font-weight:normal; 
+             font-style:normal;  }
+H2 { 
+    font-size:10pt; 
+    font-weight:bold; 
+    font-style:normal; 
+    background-color:#ff0000; 
+    font-family:Arial,Helvetica,Verdana; 
+    color:#000000;  }
+LI.kadov-H2 { 
+             font-size:10pt; 
+             font-weight:normal; 
+             font-style:normal;  }
+H3 { 
+    font-size:10pt; 
+    font-weight:bold; 
+    font-style:normal; 
+    background-color:#ff0000; 
+    font-family:Arial,Helvetica,Verdana; 
+    color:#000000;  }
+LI.kadov-H3 { 
+             font-size:10pt; 
+             font-weight:normal; 
+             font-style:normal;  }
+H4 { 
+    font-size:10pt; 
+    font-weight:bold; 
+    font-style:normal; 
+    background-color:#ff0000; 
+    font-family:Arial,Helvetica,Verdana; 
+    color:#000000;  }
+LI.kadov-H4 { 
+             font-size:10pt; 
+             font-weight:normal; 
+             font-style:normal;  }
+ol ol { 
+       margin-top:1; 
+       margin-bottom:1;  }
+ol ul { 
+       margin-top:1; 
+       margin-bottom:1;  }
+ul ul { 
+       margin-top:1; 
+       margin-bottom:1;  }
+ul ol { 
+       margin-top:1; 
+       margin-bottom:1;  }
+
+------------drxm0nufRslT8Rx2t6uJ1l
+Content-Disposition: inline; filename=whmsg.js
+Content-Type: application/x-javascript; charset=UTF-8; name=whmsg.js
+Content-Location: http://www.webnms.com/webnms/help/developer_guide/whmsg.js
+Content-Transfer-Encoding: Base64
+
+dmFyIFdIX01TR19SRVNJWkVQQU5FCQk9MHgwMTAwOw0KdmFyIFdIX01TR19TSE9X
+UEFORQkJCT0weDAxMDE7DQp2YXIgV0hfTVNHX0hJREVQQU5FCQkJPTB4MDEwMjsN
+CnZhciBXSF9NU0dfU1lOQ1RPQwkJCT0weDAxMDM7DQp2YXIgV0hfTVNHX05FWFQJ
+CQkJPTB4MDEwNDsNCnZhciBXSF9NU0dfUFJFVgkJCQk9MHgwMTA1Ow0KdmFyIFdI
+X01TR19FTkFCTEVQUkVWCQk9MHgwMTA2Ow0KdmFyIFdIX01TR19FTkFCTEVTWU5D
+CQk9MHgwMTA3Ow0KdmFyIFdIX01TR19FTkFCTEVXRUJTRUFSQ0ggCT0weDAxMDg7
+DQoNCnZhciBXSF9NU0dfSVNQQU5FVklTSUJMRQk9MHgwMTA5Ow0KdmFyIFdIX01T
+R19QQU5FU1RBVFVFCQk9MHgwMTBhOw0KDQp2YXIJV0hfTVNHX1NZTkNJTkZPCQkJ
+PTB4MDEwYjsNCnZhciBXSF9NU0dfUEFORUlORk8JCQk9MHgwMTBjOw0KdmFyIFdI
+X01TR19XRUJTRUFSQ0gJCT0weDAxMGQ7DQoNCnZhciBXSF9NU0dfU0VBUkNISU5E
+RVhLRVkgCT0weDAyMDE7DQoNCnZhciBXSF9NU0dfU0VBUkNIRlRTS0VZIAk9MHgw
+MjBhOw0KDQp2YXIgV0hfTVNHX1BST0pFQ1RSRUFEWQkJPTB4MDMwMTsNCnZhciBX
+SF9NU0dfR0VUUFJPSklORk8gCQk9MHgwMzAyOw0KDQp2YXIgV0hfTVNHX1NIT1dU
+T0MgCQkJPTB4MDQwMTsNCnZhciBXSF9NU0dfU0hPV0lEWCAJCQk9MHgwNDAyOw0K
+dmFyIFdIX01TR19TSE9XRlRTIAkJCT0weDA0MDM7DQp2YXIgV0hfTVNHX1NIT1dH
+TE8gCQkJPTB4MDQwNDsNCg0KdmFyIFdIX01TR19TSE9XR0xPREVGIAkJPTB4MDUw
+MDsNCg0KdmFyIFdIX01TR19HRVRUT0NQQVRIUyAJCT0weDA2MDA7DQp2YXIgV0hf
+TVNHX0dFVEFWSUFWRU5VRVMgCT0weDA2MDE7DQp2YXIgV0hfTVNHX0dFVENVUlJF
+TlRBVkVOVUUgPTB4MDYwMjsNCnZhciBXSF9NU0dfR0VUUEFORUlORk8JCT0weDA2
+MDM7DQp2YXIgV0hfTVNHX0FWRU5VRUlORk8JCT0weDA2MDQ7DQoNCnZhciBXSF9N
+U0dfR0VUU1RBUlRGUkFNRSAJPTB4MDcwMTsNCnZhciBXSF9NU0dfR0VUREVGQVVM
+VFRPUElDCT0weDA3MDI7DQoNCnZhciBXSF9NU0dfU0VBUkNIVEhJUwkJPTB4MDgw
+MTsNCnZhciBXSF9NU0dfR0VUU0VBUkNIUwkJPTB4MDgwMjsNCg0KdmFyIFdIX01T
+R19JU0lORlJBTUVTRVQJCT0weDA5MDA7DQoNCnZhciBXSF9NU0dfVE9PTEJBUk9S
+REVSCQk9MHgwYTAwOw0KdmFyIFdIX01TR19NSU5JQkFST1JERVIJCT0weDBhMDE7
+DQp2YXIgV0hfTVNHX0lTU1lOQ1NTVVBQT1JUCT0weDBhMDI7DQp2YXIgV0hfTVNH
+X0lTU0VBUkNIU1VQUE9SVAk9MHgwYTAzOw0KdmFyIFdIX01TR19HRVRQQU5FVFlQ
+RQkJPTB4MGEwNDsNCnZhciBXSF9NU0dfQkFDS1VQU0VBUkNICQk9MHgwYTA1Ow0K
+dmFyIFdIX01TR19HRVRQQU5FUwkJCT0weDBhMDY7DQp2YXIgV0hfTVNHX0lOSVRT
+RUFSQ0hTVFJJTkcgPTB4MGEwNzsNCnZhciBXSF9NU0dfUkVMT0FETlM2CQk9MHgw
+YTA4Ow0KdmFyIFdIX01TR19JU0FWRU5VRVNVUFBPUlQJPTB4MGEwOTsNCg0KZnVu
+Y3Rpb24gd2hNZXNzYWdlKG5NZXNzYWdlSWQsd1NlbmRlcixuVmVyc2lvbixvUGFy
+YW0pDQp7DQoJdGhpcy5uTWVzc2FnZUlkPW5NZXNzYWdlSWQ7DQoJdGhpcy53U2Vu
+ZGVyPXdTZW5kZXI7DQoJdGhpcy5uVmVyc2lvbj1uVmVyc2lvbjsNCgl0aGlzLm9Q
+YXJhbT1vUGFyYW07DQp9DQp2YXIgZ2JXaE1zZz10cnVlOw==
+
+------------drxm0nufRslT8Rx2t6uJ1l
+Content-Disposition: inline; filename=whver.js
+Content-Type: application/x-javascript; charset=UTF-8; name=whver.js
+Content-Location: http://www.webnms.com/webnms/help/developer_guide/whver.js
+Content-Transfer-Encoding: Base64
+
+dmFyIGdiTmF2Nj1mYWxzZTsNCnZhciBnYk5hdjYxPWZhbHNlOw0KdmFyIGdiTmF2
+ND1mYWxzZTsNCnZhciBnYklFND1mYWxzZTsNCnZhciBnYklFPWZhbHNlOw0KdmFy
+IGdiSUU1PWZhbHNlOw0KdmFyIGdiSUU1NT1mYWxzZTsNCg0KdmFyIGdBZ2VudD1u
+YXZpZ2F0b3IudXNlckFnZW50LnRvTG93ZXJDYXNlKCk7DQp2YXIgZ2JNYWM9KGdB
+Z2VudC5pbmRleE9mKCJtYWMiKSE9LTEpOw0KdmFyIGdiU3VuT1M9KGdBZ2VudC5p
+bmRleE9mKCJzdW5vcyIpIT0tMSk7DQp2YXIgZ2JPcGVyYT0oZ0FnZW50LmluZGV4
+T2YoIm9wZXJhIikhPS0xKTsNCg0KdmFyIGdWZXJzaW9uPW5hdmlnYXRvci5hcHBW
+ZXJzaW9uLnRvTG93ZXJDYXNlKCk7DQoNCnZhciBnblZlck1ham9yPXBhcnNlSW50
+KGdWZXJzaW9uKTsNCnZhciBnblZlck1pbm9yPXBhcnNlRmxvYXQoZ1ZlcnNpb24p
+Ow0KDQpnYklFPShuYXZpZ2F0b3IuYXBwTmFtZS5pbmRleE9mKCJNaWNyb3NvZnQi
+KSE9LTEpOw0KaWYoZ25WZXJNYWpvcj49NCkNCnsNCglpZihuYXZpZ2F0b3IuYXBw
+TmFtZT09Ik5ldHNjYXBlIikNCgl7DQoJCWdiTmF2ND10cnVlOw0KCQlpZihnblZl
+ck1ham9yPj01KQ0KCQkJZ2JOYXY2PXRydWU7DQoJfQ0KCWdiSUU0PShuYXZpZ2F0
+b3IuYXBwTmFtZS5pbmRleE9mKCJNaWNyb3NvZnQiKSE9LTEpOw0KfQ0KaWYoZ2JO
+YXY2KQ0Kew0KCWRvY3VtZW50LmduUGFnZVdpZHRoPWlubmVyV2lkdGg7DQoJZG9j
+dW1lbnQuZ25QYWdlSGVpZ2h0PWlubmVySGVpZ2h0Ow0KCXZhciBuUG9zPWdBZ2Vu
+dC5pbmRleE9mKCJuZXRzY2FwZSIpOw0KCWlmKG5Qb3MhPS0xKQ0KCXsNCgkJdmFy
+IG5WZXJzaW9uPXBhcnNlRmxvYXQoZ0FnZW50LnN1YnN0cmluZyhuUG9zKzEwKSk7
+DQoJCWlmKG5WZXJzaW9uPj02LjEpDQoJCQlnYk5hdjYxPXRydWU7DQoJfQ0KfWVs
+c2UgaWYoZ2JJRTQpDQp7DQoJdmFyIG5Qb3M9Z0FnZW50LmluZGV4T2YoIm1zaWUi
+KTsNCglpZihuUG9zIT0tMSkNCgl7DQoJCXZhciBuVmVyc2lvbj1wYXJzZUZsb2F0
+KGdBZ2VudC5zdWJzdHJpbmcoblBvcys1KSk7DQoJCWlmKG5WZXJzaW9uPj01KQ0K
+CQkJZ2JJRTU9dHJ1ZTsNCgkJaWYoblZlcnNpb24+PTUuNSkNCgkJCWdiSUU1NT10
+cnVlOw0KCX0NCn0NCg0KdmFyIGdiV2hWZXI9dHJ1ZTs=
+
+------------drxm0nufRslT8Rx2t6uJ1l
+Content-Disposition: inline; filename=whproxy.js
+Content-Type: application/x-javascript; charset=UTF-8; name=whproxy.js
+Content-Location: http://www.webnms.com/webnms/help/developer_guide/whproxy.js
+Content-Transfer-Encoding: Base64
+
+dmFyIGdiSW5pdGVkPWZhbHNlOw0KdmFyIGdXbmRTdHViUGFnZT1udWxsOw0KZnVu
+Y3Rpb24gZ2V0U3R1YlBhZ2UoKQ0Kew0KCWlmKCFnYkluaXRlZCkNCgl7DQoJCWdX
+bmRTdHViUGFnZT1nZXRTdHViUGFnZV9pbnRlcih3aW5kb3cpOw0KCQlnYkluaXRl
+ZD10cnVlOw0KCX0NCglyZXR1cm4gZ1duZFN0dWJQYWdlOw0KfQ0KDQpmdW5jdGlv
+biBnZXRTdHViUGFnZV9pbnRlcih3Q3VycmVudCkNCnsNCglpZihudWxsPT13Q3Vy
+cmVudC5wYXJlbnR8fHdDdXJyZW50LnBhcmVudD09d0N1cnJlbnQpDQoJCXJldHVy
+biBudWxsOw0KDQoJaWYodHlwZW9mKHdDdXJyZW50LnBhcmVudC53aG5hbWUpPT0i
+c3RyaW5nIiYmIndoX3N0dWIiPT13Q3VycmVudC5wYXJlbnQud2huYW1lKQ0KCQly
+ZXR1cm4gd0N1cnJlbnQucGFyZW50Ow0KCWVsc2UNCgkJaWYod0N1cnJlbnQucGFy
+ZW50LmZyYW1lcy5sZW5ndGghPTAmJndDdXJyZW50LnBhcmVudCE9d0N1cnJlbnQp
+DQoJCQlyZXR1cm4gZ2V0U3R1YlBhZ2VfaW50ZXIod0N1cnJlbnQucGFyZW50KTsN
+CgkJZWxzZQ0KCQkJcmV0dXJuIG51bGw7DQp9DQoNCmZ1bmN0aW9uIFJlZ2lzdGVy
+TGlzdGVuZXIoZnJhbWVuYW1lLG5NZXNzYWdlSWQpDQp7DQoJdmFyIHdTUD1nZXRT
+dHViUGFnZSgpOw0KCWlmKHdTUCYmd1NQIT10aGlzKQ0KCQlyZXR1cm4gd1NQLlJl
+Z2lzdGVyTGlzdGVuZXIoZnJhbWVuYW1lLG5NZXNzYWdlSWQpOw0KCWVsc2UNCgkJ
+cmV0dXJuIGZhbHNlOw0KfQ0KDQpmdW5jdGlvbiBSZWdpc3Rlckxpc3RlbmVyMihv
+ZnJhbWUsbk1lc3NhZ2VJZCkNCnsNCgl2YXIgd1NQPWdldFN0dWJQYWdlKCk7DQoJ
+aWYod1NQJiZ3U1AhPXRoaXMpDQoJCXJldHVybiB3U1AuUmVnaXN0ZXJMaXN0ZW5l
+cjIob2ZyYW1lLG5NZXNzYWdlSWQpOw0KCWVsc2UNCgkJcmV0dXJuIGZhbHNlOw0K
+fQ0KDQpmdW5jdGlvbiBVblJlZ2lzdGVyTGlzdGVuZXIyKG9mcmFtZSxuTWVzc2Fn
+ZUlkKQ0Kew0KCXZhciB3U1A9Z2V0U3R1YlBhZ2UoKTsNCglpZih3U1AmJndTUCE9
+dGhpcyYmd1NQLlVuUmVnaXN0ZXJMaXN0ZW5lcjIpDQoJCXJldHVybiB3U1AuVW5S
+ZWdpc3Rlckxpc3RlbmVyMihvZnJhbWUsbk1lc3NhZ2VJZCk7DQoJZWxzZQ0KCQly
+ZXR1cm4gZmFsc2U7DQp9DQoNCmZ1bmN0aW9uIFNlbmRNZXNzYWdlKG9NZXNzYWdl
+KQ0Kew0KCXZhciB3U1A9Z2V0U3R1YlBhZ2UoKTsNCglpZih3U1AmJndTUCE9dGhp
+cyYmd1NQLlNlbmRNZXNzYWdlKQ0KCQlyZXR1cm4gd1NQLlNlbmRNZXNzYWdlKG9N
+ZXNzYWdlKTsNCgllbHNlDQoJCXJldHVybiBmYWxzZTsNCn0NCg0KdmFyIGdiV2hQ
+cm94eT10cnVlOw0KDQp2YXIgZ2JQcmV2aWV3PWZhbHNlOw0KZ2JQcmV2aWV3PWZh
+bHNlOyANCmlmIChnYlByZXZpZXcpDQoJZG9jdW1lbnQub25jb250ZXh0bWVudT1j
+b250ZXh0TWVudTsNCg0KZnVuY3Rpb24gY29udGV4dE1lbnUoKQ0Kew0KCXJldHVy
+biBmYWxzZTsNCn0NCg==
+
+------------drxm0nufRslT8Rx2t6uJ1l
+Content-Disposition: inline; filename=whutils.js
+Content-Type: application/x-javascript; charset=UTF-8; name=whutils.js
+Content-Location: http://www.webnms.com/webnms/help/developer_guide/whutils.js
+Content-Transfer-Encoding: Base64
+
+dmFyIGdzRmlsZU5hbWU9IiI7DQp2YXIgeG1sRG9jPW51bGw7DQp2YXIgc2RvY1Bh
+dGg9bnVsbDsNCnZhciBnc0luc2VydEJlZm9yZUVuZEhUTUw9IiI7DQp2YXIgc1Jl
+cGxhY2VTdHJpbmdzU3JjPW5ldyBBcnJheSgpOw0Kc1JlcGxhY2VTdHJpbmdzU3Jj
+WzBdPSImYW1wOyI7DQpzUmVwbGFjZVN0cmluZ3NTcmNbMV09IiZndDsiOw0Kc1Jl
+cGxhY2VTdHJpbmdzU3JjWzJdPSImbHQ7IjsNCnNSZXBsYWNlU3RyaW5nc1NyY1sz
+XT0iJnF1b3Q7IjsNCnNSZXBsYWNlU3RyaW5nc1NyY1s0XT0iJm5ic3A7IjsNCnZh
+ciBzUmVwbGFjZVN0cmluZ3NEc3Q9bmV3IEFycmF5KCk7DQpzUmVwbGFjZVN0cmlu
+Z3NEc3RbMF09IiYiOw0Kc1JlcGxhY2VTdHJpbmdzRHN0WzFdPSI+IjsNCnNSZXBs
+YWNlU3RyaW5nc0RzdFsyXT0iPCI7DQpzUmVwbGFjZVN0cmluZ3NEc3RbM109Ilwi
+IjsNCnNSZXBsYWNlU3RyaW5nc0RzdFs0XT0iICI7DQp2YXIgZ29IaWdoTGlnaHRl
+ZD1udWxsOw0KDQpmdW5jdGlvbiBfZ2V0UmVsYXRpdmVQYXRoKHN0clBhcmVudFBh
+dGgsc3RyQ3VycmVudFBhdGgpDQp7DQoJaWYoX2lzQWJzUGF0aChzdHJDdXJyZW50
+UGF0aCkpIHJldHVybiBfZ2V0UGF0aChzdHJDdXJyZW50UGF0aCk7DQoJc3RyUGFy
+ZW50UGF0aD1fcmVwbGFjZVNsYXNoKHN0clBhcmVudFBhdGgpOw0KCXN0clBhcmVu
+dFBhdGg9X2dldFBhdGgoc3RyUGFyZW50UGF0aCk7DQoJc3RyQ3VycmVudFBhdGg9
+X3JlcGxhY2VTbGFzaChzdHJDdXJyZW50UGF0aCk7DQoJc3RyQ3VycmVudFBhdGg9
+X2dldFBhdGgoc3RyQ3VycmVudFBhdGgpOw0KCWZvcih2YXIgaT0wO2k8c3RyUGFy
+ZW50UGF0aC5sZW5ndGgmJmk8c3RyQ3VycmVudFBhdGgubGVuZ3RoO2krKykNCgl7
+DQoJCWlmKHN0clBhcmVudFBhdGguY2hhckF0KGkpIT1zdHJDdXJyZW50UGF0aC5j
+aGFyQXQoaSkpDQoJCQlicmVhazsNCgl9DQoJDQoJc3RyUGFyZW50UGF0aD1zdHJQ
+YXJlbnRQYXRoLnN1YnN0cmluZyhpKTsNCglzdHJDdXJyZW50UGF0aD1zdHJDdXJy
+ZW50UGF0aC5zdWJzdHJpbmcoaSk7CQ0KCQ0KCXZhciBuUGF0aFBvcz0wOw0KCXdo
+aWxlKG5QYXRoUG9zIT0tMSkNCgl7DQoJCW5QYXRoUG9zPXN0clBhcmVudFBhdGgu
+aW5kZXhPZigiLyIpOw0KCQlpZihuUGF0aFBvcyE9LTEpDQoJCXsNCgkJCXN0clBh
+cmVudFBhdGg9c3RyUGFyZW50UGF0aC5zdWJzdHJpbmcoblBhdGhQb3MrMSk7DQoJ
+CQlzdHJDdXJyZW50UGF0aD0iLi4vIitzdHJDdXJyZW50UGF0aDsNCgkJfQ0KCX0N
+CglyZXR1cm4gc3RyQ3VycmVudFBhdGg7DQp9DQoNCmZ1bmN0aW9uIF9nZXRSZWxh
+dGl2ZUZpbGVOYW1lKHN0clBhcmVudFBhdGgsIHN0ckN1cnJlbnRQYXRoKQ0Kew0K
+CXN0clBhcmVudFBhdGg9X3JlcGxhY2VTbGFzaChzdHJQYXJlbnRQYXRoKTsNCglz
+dHJQYXJlbnRQYXRoPV9nZXRQYXRoKHN0clBhcmVudFBhdGgpOw0KCXN0ckN1cnJl
+bnRQYXRoPV9yZXBsYWNlU2xhc2goc3RyQ3VycmVudFBhdGgpOw0KCWZvcih2YXIg
+aT0wO2k8c3RyUGFyZW50UGF0aC5sZW5ndGgmJmk8c3RyQ3VycmVudFBhdGgubGVu
+Z3RoO2krKykNCgl7DQoJCWlmKHN0clBhcmVudFBhdGguY2hhckF0KGkpIT1zdHJD
+dXJyZW50UGF0aC5jaGFyQXQoaSkpDQoJCQlicmVhazsNCgl9DQoJDQoJc3RyUGFy
+ZW50UGF0aD1zdHJQYXJlbnRQYXRoLnN1YnN0cmluZyhpKTsNCglzdHJDdXJyZW50
+UGF0aD1zdHJDdXJyZW50UGF0aC5zdWJzdHJpbmcoaSk7CQ0KCQ0KCXZhciBuUGF0
+aFBvcz0wOw0KCXdoaWxlKG5QYXRoUG9zIT0tMSkNCgl7DQoJCW5QYXRoUG9zPXN0
+clBhcmVudFBhdGguaW5kZXhPZigiLyIpOw0KCQlpZihuUGF0aFBvcyE9LTEpDQoJ
+CXsNCgkJCXN0clBhcmVudFBhdGg9c3RyUGFyZW50UGF0aC5zdWJzdHJpbmcoblBh
+dGhQb3MrMSk7DQoJCQlzdHJDdXJyZW50UGF0aD0iLi4vIitzdHJDdXJyZW50UGF0
+aDsNCgkJfQ0KCX0NCglyZXR1cm4gc3RyQ3VycmVudFBhdGg7DQp9DQoNCmZ1bmN0
+aW9uIF9pc0Fic1BhdGhUb0hvc3Qoc1BhdGgpDQp7DQoJcmV0dXJuIChzUGF0aC5p
+bmRleE9mKCIvIik9PTApOw0KfQ0KDQpmdW5jdGlvbiBfZ2V0SG9zdChzUGF0aCkN
+CnsNCgl2YXIgblBvcz1zUGF0aC5pbmRleE9mKCIvLyIpOw0KCWlmKG5Qb3M+MCkN
+Cgl7DQoJCXZhciBuUG9zeD1zUGF0aC5pbmRleE9mKCIvIixuUG9zKzIpOw0KCQlp
+ZihuUG9zeD4wKQ0KCQkJcmV0dXJuIHNQYXRoLnN1YnN0cmluZygwLG5Qb3N4KTsN
+CgkJZWxzZQ0KCQkJcmV0dXJuIHNQYXRoOw0KCX0NCglyZXR1cm4gc1BhdGg7DQp9
+DQoNCmZ1bmN0aW9uIF9nZXRGdWxsUGF0aChzUGF0aCxzUmVsUGF0aCkNCnsNCglp
+ZihfaXNBYnNQYXRoKHNSZWxQYXRoKSkNCgkJcmV0dXJuIHNSZWxQYXRoOw0KCWVs
+c2UgaWYoX2lzQWJzUGF0aFRvSG9zdChzUmVsUGF0aCkpDQoJCXJldHVybiBfZ2V0
+SG9zdChzUGF0aCkrc1JlbFBhdGg7DQoJZWxzZQ0KCXsNCgkJdmFyIHNGdWxsUGF0
+aD1zUGF0aDsNCgkJdmFyIG5QYXRoUG9zPTA7DQoJCXdoaWxlKG5QYXRoUG9zIT0t
+MSkNCgkJew0KCQkJdmFyIG5QYXRoUG9zPXNSZWxQYXRoLmluZGV4T2YoIi4uLyIp
+Ow0KCQkJaWYoblBhdGhQb3MhPS0xKQ0KCQkJew0KCQkJCXNSZWxQYXRoPXNSZWxQ
+YXRoLnN1YnN0cmluZyhuUGF0aFBvcyszKTsNCgkJCQlzRnVsbFBhdGg9c0Z1bGxQ
+YXRoLnN1YnN0cmluZygwLHNGdWxsUGF0aC5sZW5ndGgtMSk7DQoJCQkJdmFyIG5Q
+b3MyID0gc0Z1bGxQYXRoLmxhc3RJbmRleE9mKCIvIik7DQoJCQkJaWYoblBvczIh
+PS0xKQ0KCQkJCQlzRnVsbFBhdGg9c0Z1bGxQYXRoLnN1YnN0cmluZygwLG5Qb3My
+KzEpOw0KCQkJCWVsc2UNCgkJCQkJYnJlYWs7DQoJCQl9DQoJCX0NCgkJc0Z1bGxQ
+YXRoKz1zUmVsUGF0aDsNCgkJcmV0dXJuIHNGdWxsUGF0aDsNCgl9CQ0KfQ0KDQpm
+dW5jdGlvbiBfaXNBYnNQYXRoKHN0clBhdGgpDQp7DQoJdmFyIHN0clVwcGVyPXN0
+clBhdGgudG9VcHBlckNhc2UoKTsNCglyZXR1cm4gKHN0clVwcGVyLmluZGV4T2Yo
+IjoiKSE9LTEpOw0KfQ0KDQpmdW5jdGlvbiBfcmVwbGFjZVNsYXNoKHN0clVSTCkN
+CnsJDQoJdmFyIHJlPW5ldyBSZWdFeHAoIlxcXFwiLCJnIik7DQoJdmFyIHN0clJl
+cGxhY2VkVVJMPXN0clVSTC5yZXBsYWNlKHJlLCIvIik7DQoJcmV0dXJuIHN0clJl
+cGxhY2VkVVJMOw0KfQ0KDQpmdW5jdGlvbiBfZ2V0UGF0aChzdHJVUkwpDQp7DQoJ
+cGF0aHBvcz1zdHJVUkwubGFzdEluZGV4T2YoIi8iKTsNCglpZihwYXRocG9zPjAp
+DQoJCXJldHVybiBzdHJVUkwuc3Vic3RyaW5nKDAscGF0aHBvcysxKTsNCgllbHNl
+DQoJCXJldHVybiAiIjsNCn0NCg0KZnVuY3Rpb24gcmVtb3ZlSXRlbUZyb21BcnJh
+eShvQXJyYXksaSkNCnsNCglpZihvQXJyYXkubGVuZ3RoJiZpPj0wJiZpPG9BcnJh
+eS5sZW5ndGgpDQoJew0KCQl2YXIgbGVuPW9BcnJheS5sZW5ndGg7DQoJCWZvcih2
+YXIgcz1pO3M8bGVuLTE7cysrKQ0KCQkJb0FycmF5W3NdPW9BcnJheVtzKzFdOw0K
+CQlvQXJyYXkubGVuZ3RoPWxlbi0xOw0KCX0NCn0NCg0KZnVuY3Rpb24gaW5zZXJ0
+SXRlbUludG9BcnJheShvQXJyYXksaSxvYmopDQp7DQoJaWYob0FycmF5Lmxlbmd0
+aCYmaT49MCYmaTw9b0FycmF5Lmxlbmd0aCkNCgl7DQoJCXZhciBsZW49b0FycmF5
+Lmxlbmd0aDsNCgkJZm9yKHZhciBzPWxlbjtzPmk7cy0tKQ0KCQkJb0FycmF5W3Nd
+PW9BcnJheVtzLTFdOw0KCQlvQXJyYXlbaV09b2JqOwkJDQoJfQ0KfQ0KDQpmdW5j
+dGlvbiBsb2FkRGF0YShzRmlsZU5hbWUpDQp7DQoJaWYoIWdldEVsZW1lbnQoImRh
+dGFEaXYiKSkNCgl7DQoJCWlmKCFpbnNlcnREYXRhRGl2KCkpDQoJCXsNCgkJCWdz
+RmlsZU5hbWU9c0ZpbGVOYW1lOw0KCQkJcmV0dXJuOw0KCQl9DQoJfQ0KCXZhciBz
+SFRNTD0iIjsNCglpZihnYk1hYykNCgkJc0hUTUwrPSI8aWZyYW1lIHNyYz0iK3NG
+aWxlTmFtZSsiPjwvaWZyYW1lPiI7DQoJZWxzZQ0KCQlzSFRNTCs9IjxpZnJhbWUg
+c3R5bGU9XCJ2aXNpYmlsaXR5OmhpZGRlbjt3aWR0aDowO2hlaWdodDowXCIgc3Jj
+PSIrc0ZpbGVOYW1lKyI+PC9pZnJhbWU+IjsNCgkNCgl2YXIgb0RpdkNvbj1nZXRF
+bGVtZW50KCJkYXRhRGl2Iik7DQoJaWYob0RpdkNvbikNCgl7DQoJCWlmKGdiTmF2
+NikNCgkJew0KCQkJaWYob0RpdkNvbi5nZXRFbGVtZW50c0J5VGFnTmFtZSYmb0Rp
+dkNvbi5nZXRFbGVtZW50c0J5VGFnTmFtZSgiaUZyYW1lIikubGVuZ3RoPjApDQoJ
+CQl7DQoJCQkJb0RpdkNvbi5nZXRFbGVtZW50c0J5VGFnTmFtZSgiaUZyYW1lIilb
+MF0uc3JjPXNGaWxlTmFtZTsNCgkJCX0NCgkJCWVsc2UNCgkJCQlvRGl2Q29uLmlu
+bmVySFRNTD1zSFRNTDsNCgkJfQ0KCQllbHNlDQoJCQlvRGl2Q29uLmlubmVySFRN
+TD1zSFRNTDsNCgl9DQp9DQoNCmZ1bmN0aW9uIGxvYWREYXRhWE1MKHNGaWxlTmFt
+ZSkNCnsNCgl2YXIgc0N1cnJlbnREb2NQYXRoPV9nZXRQYXRoKGRvY3VtZW50Lmxv
+Y2F0aW9uLmhyZWYpOw0KCXNkb2NQYXRoPV9nZXRGdWxsUGF0aChzQ3VycmVudERv
+Y1BhdGgsc0ZpbGVOYW1lKTsNCglpZihnYklFNSkNCgl7DQoJCXhtbERvYz1uZXcg
+QWN0aXZlWE9iamVjdCgiTWljcm9zb2Z0LlhNTERPTSIpOw0KCQl4bWxEb2MuYXN5
+bmM9dHJ1ZTsNCgkJeG1sRG9jLm9ucmVhZHlzdGF0ZWNoYW5nZT1jaGVja1N0YXRl
+Ow0KCQlpZihkb2N1bWVudC5ib2R5IT1udWxsKQ0KCQkJeG1sRG9jLmxvYWQoc2Rv
+Y1BhdGgpOw0KCX0NCgllbHNlIGlmKGdiTmF2NikNCgl7DQoJCXhtbERvYz1kb2N1
+bWVudC5pbXBsZW1lbnRhdGlvbi5jcmVhdGVEb2N1bWVudCgiIiwiIixudWxsKTsN
+CgkJeG1sRG9jLmFkZEV2ZW50TGlzdGVuZXIoImxvYWQiLGluaXRpYWxpemVEYXRh
+LGZhbHNlKTsNCgkJeG1sRG9jLmxvYWQoc2RvY1BhdGgsInRleHQveG1sIik7DQoJ
+fQ0KfQ0KDQpmdW5jdGlvbiBpbml0aWFsaXplRGF0YSgpDQp7DQoJaWYoeG1sRG9j
+IT1udWxsKQ0KCQlwdXREYXRhWE1MKHhtbERvYyxzZG9jUGF0aCk7DQp9DQoNCmZ1
+bmN0aW9uIGNoZWNrU3RhdGUoKQ0Kew0KCWlmKHhtbERvYyE9bnVsbCkNCgl7DQoJ
+CXZhciBzdGF0ZT14bWxEb2MucmVhZHlTdGF0ZTsNCgkJaWYoc3RhdGU9PTQpDQoJ
+CXsNCgkJCXZhciBlcnI9eG1sRG9jLnBhcnNlRXJyb3I7DQoJCQlpZihlcnIuZXJy
+b3JDb2RlIT0wKQ0KCQkJCWFsZXJ0KGVyci5yZWFzb24pOw0KCQkJZWxzZQ0KCQkJ
+CXB1dERhdGFYTUwoeG1sRG9jLHNkb2NQYXRoKTsNCgkJfQ0KCX0NCn0NCg0KZnVu
+Y3Rpb24gaW5zZXJ0RGF0YURpdigpDQp7DQoJdmFyIHNIVE1MPSIiOw0KCWlmKGdi
+TWFjKQ0KCQlzSFRNTCs9IjxkaXYgaWQ9ZGF0YURpdiBzdHlsZT1cImRpc3BsYXk6
+bm9uZTtcIj48L2Rpdj4iOw0KCWVsc2UNCgkJc0hUTUwrPSI8ZGl2IGlkPWRhdGFE
+aXYgc3R5bGU9XCJ2aXNpYmlsaXR5OmhpZGRlblwiPjwvZGl2PiI7DQoJaWYoKGdi
+SUU1fHxnYk5hdjYpJiZkb2N1bWVudC5ib2R5KQ0KCQlkb2N1bWVudC5ib2R5Lmlu
+c2VydEFkamFjZW50SFRNTCgiYmVmb3JlRW5kIixzSFRNTCk7DQoJZWxzZQ0KCXsN
+CgkJZ3NJbnNlcnRCZWZvcmVFbmRIVE1MPXNIVE1MOw0KCQlzZXRUaW1lb3V0KCJp
+bnNlcnRXaGVuQm9keVJlYWR5KCk7IiwxMDApOw0KCQlyZXR1cm4gZmFsc2U7DQoJ
+fQ0KCXJldHVybiB0cnVlOw0KfQ0KDQpmdW5jdGlvbiBpbnNlcnRXaGVuQm9keVJl
+YWR5KCkNCnsNCglpZihnc0luc2VydEJlZm9yZUVuZEhUTUw9PSIiKSByZXR1cm47
+DQoJaWYoZG9jdW1lbnQuYm9keSkNCgl7DQoJCWRvY3VtZW50LmJvZHkuaW5zZXJ0
+QWRqYWNlbnRIVE1MKCJiZWZvcmVFbmQiLGdzSW5zZXJ0QmVmb3JlRW5kSFRNTCk7
+DQoJCWdzSW5zZXJ0QmVmb3JlRW5kSFRNTD0iIjsNCgkJbG9hZERhdGEoZ3NGaWxl
+TmFtZSk7DQoJfQ0KCWVsc2UNCgl7DQoJCXNldFRpbWVvdXQoImluc2VydFdoZW5C
+b2R5UmVhZHkoKTsiLDEwMCk7DQoJfQ0KfQ0KDQpmdW5jdGlvbiB3aW5kb3dfQlVu
+bG9hZCgpDQp7DQoJdmFyIG9EaXZDb249Z2V0RWxlbWVudCgiZGF0YURpdiIpOw0K
+CWlmKG9EaXZDb24pDQoJCW9EaXZDb24uaW5uZXJIVE1MPSIiOw0KfQ0KDQpmdW5j
+dGlvbiByZW1vdmVUaGlzKG9iaikNCnsNCglpZihvYmoucGFyZW50Tm9kZSkNCgkJ
+b2JqLnBhcmVudE5vZGUucmVtb3ZlQ2hpbGQob2JqKTsNCgllbHNlDQoJCW9iai5v
+dXRlckhUTUw9IiI7DQp9DQoNCmZ1bmN0aW9uIGdldFBhcmVudE5vZGUob2JqKQ0K
+ew0KCWlmKG9iai5wYXJlbnROb2RlKQ0KCQlyZXR1cm4gb2JqLnBhcmVudE5vZGU7
+DQoJZWxzZSBpZihvYmoucGFyZW50RWxlbWVudCkNCgkJcmV0dXJuIG9iai5wYXJl
+bnRFbGVtZW50Ow0KCXJldHVybiBudWxsOw0KfQ0KDQpmdW5jdGlvbiBnZXRFbGVt
+ZW50KHNJRCkNCnsNCglpZihkb2N1bWVudC5nZXRFbGVtZW50QnlJZCkNCgkJcmV0
+dXJuIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKHNJRCk7DQoJZWxzZSBpZihkb2N1
+bWVudC5hbGwpDQoJCXJldHVybiBkb2N1bWVudC5hbGwoc0lEKTsNCglyZXR1cm4g
+bnVsbDsNCn0NCg0KZnVuY3Rpb24gZ2V0Q2hpbGRyZW5CeVRhZyhvYmosc1RhZ05h
+bWUpDQp7DQoJaWYob2JqLmdldEVsZW1lbnRzQnlUYWdOYW1lKQ0KCXsNCgkJdmFy
+IGFDaGlsZHJlbj1uZXcgQXJyYXkoKTsNCgkJdmFyIGFFbGVtZW50cz1nZXRFbGVt
+ZW50c0J5VGFnKG9iaixzVGFnTmFtZSk7DQoJCWlmKGFFbGVtZW50cyE9bnVsbCkN
+CgkJew0KCQkJZm9yKHZhciBpPTA7aTxhRWxlbWVudHMubGVuZ3RoO2krKykNCgkJ
+CXsNCgkJCQlpZihhRWxlbWVudHNbaV0ucGFyZW50Tm9kZT09b2JqKQ0KCQkJCQlh
+Q2hpbGRyZW5bYUNoaWxkcmVuLmxlbmd0aF09YUVsZW1lbnRzW2ldOw0KCQkJfQ0K
+CQkJcmV0dXJuIGFDaGlsZHJlbjsNCgkJfQ0KCQllbHNlDQoJCQlyZXR1cm4gbmV3
+IEFycmF5KCk7DQoJfQ0KCWVsc2UgaWYob2JqLmNoaWxkcmVuKQ0KCQlyZXR1cm4g
+b2JqLmNoaWxkcmVuLnRhZ3Moc1RhZ05hbWUpOw0KfQ0KDQpmdW5jdGlvbiBnZXRF
+bGVtZW50c0J5VGFnKG9iaixzVGFnTmFtZSkNCnsNCglpZihvYmouZ2V0RWxlbWVu
+dHNCeVRhZ05hbWUpDQoJCXJldHVybiBvYmouZ2V0RWxlbWVudHNCeVRhZ05hbWUo
+c1RhZ05hbWUpOw0KCWVsc2UgaWYob2JqLmFsbCkNCgkJcmV0dXJuIG9iai5hbGwu
+dGFncyhzVGFnTmFtZSk7DQoJcmV0dXJuIG51bGw7DQp9DQoNCmZ1bmN0aW9uIF9o
+dG1sVG9UZXh0KHNIVE1MKQ0Kew0KCWlmKHNIVE1MPT1udWxsKSByZXR1cm4gbnVs
+bDsNCgl2YXIgc1RleHQ9c0hUTUw7DQoJZm9yKHZhciBpPTA7aTxzUmVwbGFjZVN0
+cmluZ3NTcmMubGVuZ3RoO2krKykNCgl7DQoJCXZhciByZT1uZXcgUmVnRXhwKHNS
+ZXBsYWNlU3RyaW5nc1NyY1tpXSwiZyIpOw0KCQlzVGV4dD1zVGV4dC5yZXBsYWNl
+KHJlLHNSZXBsYWNlU3RyaW5nc0RzdFtpXSk7DQoJfQkNCglyZXR1cm4gc1RleHQ7
+DQp9DQoNCmZ1bmN0aW9uIF90ZXh0VG9IdG1sX25vbmJzcChzVGV4dCkNCnsNCglp
+ZihzVGV4dD09bnVsbCkgcmV0dXJuIG51bGw7DQoJdmFyIHNIVE1MPXNUZXh0Ow0K
+CWZvcih2YXIgaT0wO2k8c1JlcGxhY2VTdHJpbmdzU3JjLmxlbmd0aC0xO2krKykN
+Cgl7DQoJCXZhciByZT1uZXcgUmVnRXhwKHNSZXBsYWNlU3RyaW5nc0RzdFtpXSwi
+ZyIpOw0KCQlzSFRNTD1zSFRNTC5yZXBsYWNlKHJlLHNSZXBsYWNlU3RyaW5nc1Ny
+Y1tpXSk7DQoJfQkNCglyZXR1cm4gc0hUTUw7DQp9DQoNCmZ1bmN0aW9uIF90ZXh0
+VG9IdG1sKHNUZXh0KQ0Kew0KCWlmKHNUZXh0PT1udWxsKSByZXR1cm4gbnVsbDsN
+Cgl2YXIgc0hUTUw9c1RleHQ7DQoJZm9yKHZhciBpPTA7aTxzUmVwbGFjZVN0cmlu
+Z3NTcmMubGVuZ3RoO2krKykNCgl7DQoJCXZhciByZT1uZXcgUmVnRXhwKHNSZXBs
+YWNlU3RyaW5nc0RzdFtpXSwiZyIpOw0KCQlzSFRNTD1zSFRNTC5yZXBsYWNlKHJl
+LHNSZXBsYWNlU3RyaW5nc1NyY1tpXSk7DQoJfQkNCglyZXR1cm4gc0hUTUw7DQp9
+DQoNCg0KZnVuY3Rpb24gZ2V0SW5uZXJUZXh0KG9iaikNCnsNCgl2YXIgcmVuYnNw
+MnNwPW5ldyBSZWdFeHAoIlx4YTAiLCJnIik7DQoJaWYob2JqLmlubmVyVGV4dCkN
+Cgl7DQoJCXZhciBzVGV4dD1vYmouaW5uZXJUZXh0Ow0KCQlzVGV4dD1zVGV4dC5y
+ZXBsYWNlKHJlbmJzcDJzcCwiICIpOw0KCQlyZXR1cm4gc1RleHQ7DQoJfQ0KCWVs
+c2UNCgl7DQoJCWlmKG9iai5ub2RlVmFsdWUpDQoJCXsNCgkJCXZhciBzVmFsdWU9
+b2JqLm5vZGVWYWx1ZTsNCgkJCXNWYWx1ZT1zVmFsdWUucmVwbGFjZShyZW5ic3Ay
+c3AsIiAiKTsNCgkJCXJldHVybiBzVmFsdWU7DQoJCX0NCgkJZWxzZQ0KCQl7DQoJ
+CQl2YXIgc1RleHQ9IiI7DQoJCQl2YXIgb0NoaWxkPW9iai5maXJzdENoaWxkOw0K
+CQkJd2hpbGUob0NoaWxkIT1udWxsKQ0KCQkJew0KCQkJCXNUZXh0Kz1nZXRJbm5l
+clRleHQob0NoaWxkKTsNCgkJCQlvQ2hpbGQ9b0NoaWxkLm5leHRTaWJsaW5nOw0K
+CQkJfQ0KCQkJcmV0dXJuIHNUZXh0Ow0KCQl9DQoJfQ0KCQkNCn0NCg0KZnVuY3Rp
+b24gSGlnaExpZ2h0RWxlbWVudChvYmosc0hpZ2hMaWdodENvbG9yLHNOb3JtYWxD
+b2xvcikNCnsNCglpZihvYmohPW51bGwpDQoJew0KCQlyZXNldEhpZ2hMaWdodChz
+Tm9ybWFsQ29sb3IpOw0KCQlvYmouc3R5bGUuYmFja2dyb3VuZENvbG9yPXNIaWdo
+TGlnaHRDb2xvcjsNCgkJZ29IaWdoTGlnaHRlZD1vYmo7DQoJfQ0KfQ0KDQpmdW5j
+dGlvbiByZXNldEhpZ2hMaWdodChzTm9ybWFsQ29sb3IpDQp7DQoJaWYoZ29IaWdo
+TGlnaHRlZCE9bnVsbCkNCgl7DQoJCWdvSGlnaExpZ2h0ZWQuc3R5bGUuYmFja2dy
+b3VuZENvbG9yPXNOb3JtYWxDb2xvcjsNCgkJZ29IaWdoTGlnaHRlZD1udWxsOw0K
+CX0NCn0NCg0KZnVuY3Rpb24gd2hGb250KHNOYW1lLHNTaXplLHNDb2xvcixzU3R5
+bGUsc1dlaWdodCxzRGVjb3JhdGlvbikNCnsNCgl0aGlzLnNOYW1lPXNOYW1lOw0K
+CXRoaXMuc1NpemU9c1NpemU7DQoJdGhpcy5zQ29sb3I9c0NvbG9yOw0KCXRoaXMu
+c1N0eWxlPXNTdHlsZTsNCgl0aGlzLnNXZWlnaHQ9c1dlaWdodDsNCgl0aGlzLnNE
+ZWNvcmF0aW9uPXNEZWNvcmF0aW9uOw0KfQ0KDQpmdW5jdGlvbiBnZXRGb250U3R5
+bGUob0ZvbnQpDQp7DQoJdmFyIHNTdHlsZT0iIjsNCglpZihvRm9udCkNCgl7DQoJ
+CXNTdHlsZSs9ImZvbnQtZmFtaWx5OiIrb0ZvbnQuc05hbWUrIjsiOw0KCQlpZihn
+Yk1hYykNCgkJew0KCQkJdmFyIG5TaXplPXBhcnNlSW50KG9Gb250LnNTaXplKTsN
+CgkJCWlmKGdiSUU1KQ0KCQkJCW5TaXplKz0yOw0KCQkJZWxzZQ0KCQkJCW5TaXpl
+Kz00Ow0KCQkJc1N0eWxlKz0iZm9udC1zaXplOiIrblNpemUrInB0OyI7DQoJCX0N
+CgkJZWxzZQ0KCQkJc1N0eWxlKz0iZm9udC1zaXplOiIrb0ZvbnQuc1NpemUrIjsi
+Ow0KCQkJDQoJCXNTdHlsZSs9ImZvbnQtc3R5bGU6IitvRm9udC5zU3R5bGUrIjsi
+Ow0KCQlzU3R5bGUrPSJmb250LXdlaWdodDoiK29Gb250LnNXZWlnaHQrIjsiOw0K
+CQlzU3R5bGUrPSJ0ZXh0LWRlY29yYXRpb246IitvRm9udC5zRGVjb3JhdGlvbisi
+OyI7DQoJCXNTdHlsZSs9ImNvbG9yOiIrb0ZvbnQuc0NvbG9yKyI7IjsNCgl9DQoJ
+cmV0dXJuIHNTdHlsZTsNCn0NCg0KdmFyIGdiV2hVdGlsPXRydWU7
+
+------------drxm0nufRslT8Rx2t6uJ1l
+Content-Disposition: inline; filename=whtopic.js
+Content-Type: application/x-javascript; charset=UTF-8; name=whtopic.js
+Content-Location: http://www.webnms.com/webnms/help/developer_guide/whtopic.js
+Content-Transfer-Encoding: Base64
+
+dmFyIGdzUFBhdGggPSAiIjsNCnZhciBnYVBhdGhzID0gbmV3IEFycmF5KCk7DQp2
+YXIgZ2FBdmVudWVzID0gbmV3IEFycmF5KCk7DQoNCnZhciBnb0ZyYW1lID0gbnVs
+bDsNCnZhciBnc1N0YXJ0UGFnZSA9ICIiOw0KdmFyIGdzUmVsQ3VyUGFnZVBhdGgg
+PSAiIjsNCnZhciBnc1NlYXJjaEZvcm1IcmVmICA9ICIiOw0KdmFyIGduVG9waWNP
+bmx5ID0gLTE7DQp2YXIgZ25PdXRtb3N0VG9waWMgPSAtMTsNCg0KdmFyIEJUTl9U
+RVhUPTE7DQp2YXIgQlROX0lNRz0yOw0KDQp2YXIgZ29TeW5jID0gbnVsbDsNCg0K
+dmFyIGdvU2hvdyA9IG51bGw7DQp2YXIgZ29IaWRlID0gbnVsbDsNCg0KdmFyIGdv
+UHJldiA9IG51bGw7DQp2YXIgZ29OZXh0ID0gbnVsbDsNCnZhciBnbkZvcm0gPSAw
+Ow0KdmFyIGdvU2hvd05hdiA9IG51bGw7DQp2YXIgZ29IaWRlTmF2ID0gbnVsbDsN
+Cg0KdmFyIGdvV2ViU2VhcmNoID0gbnVsbDsNCg0KdmFyIGdzQnRuU3R5bGUgPSAi
+IjsNCnZhciBnYUJ1dHRvbnMgPSBuZXcgQXJyYXkoKTsNCnZhciBnYVR5cGVzID0g
+bmV3IEFycmF5KCk7DQp2YXIgd2h0b3BpY19mb2xkVW5sb2FkID0gbnVsbDsNCnZh
+ciBnYldoVG9waWM9ZmFsc2U7DQp2YXIgZ2JDaGVja1N5bmM9ZmFsc2U7DQp2YXIg
+Z2JTeW5jRW5hYmxlZD1mYWxzZTsNCg0KZnVuY3Rpb24gc2V0QnV0dG9uRm9udChz
+VHlwZSwgc0ZvbnROYW1lLHNGb250U2l6ZSxzRm9udENvbG9yLHNGb250U3R5bGUs
+c0ZvbnRXZWlnaHQsc0ZvbnREZWNvcmF0aW9uKQ0Kew0KCXZhciB2Rm9udD1uZXcg
+d2hGb250KHNGb250TmFtZSxzRm9udFNpemUsc0ZvbnRDb2xvcixzRm9udFN0eWxl
+LHNGb250V2VpZ2h0LHNGb250RGVjb3JhdGlvbik7DQoJZ3NCdG5TdHlsZSArPSAi
+LndodGJ0biIgKyBzVHlwZSArICJ7IitnZXRGb250U3R5bGUodkZvbnQpICsgIn0i
+Ow0KfQ0KDQpmdW5jdGlvbiB3cml0ZUJ0blN0eWxlKCkNCnsNCglpZiAoZ2FCdXR0
+b25zLmxlbmd0aCA+IDApDQoJew0KCQlpZiAoZ3NCdG5TdHlsZS5sZW5ndGggPiAw
+KQ0KCQl7DQoJCQl2YXIgc1N0eWxlID0gIjxzdHlsZSB0eXBlPSd0ZXh0L2Nzcyc+
+IjsNCgkJCXNTdHlsZSs9IGdzQnRuU3R5bGUgKyAiPC9zdHlsZT4iOw0KCQkJZG9j
+dW1lbnQud3JpdGUoc1N0eWxlKTsNCgkJfQ0KCX0NCn0NCg0KZnVuY3Rpb24gYnV0
+dG9uKHNUZXh0LCBuV2lkdGgsIG5IZWlnaHQpDQp7DQoJdGhpcy5zVGV4dCA9IHNU
+ZXh0Ow0KCXRoaXMubldpZHRoID0gbldpZHRoOw0KCXRoaXMubkhlaWdodCA9IG5I
+ZWlnaHQ7DQoJDQoJdGhpcy5hSW1ncyA9IG5ldyBBcnJheSgpOw0KCXZhciBpID0g
+MDsNCgl3aGlsZSAoYnV0dG9uLmFyZ3VtZW50cy5sZW5ndGggPiBpICsgMykNCgl7
+DQoJCXRoaXMuYUltZ3NbaV0gPSBidXR0b24uYXJndW1lbnRzWzMgKyBpXTsNCgkJ
+aSArKzsNCgl9DQp9DQoNCi8vIHByb2plY3QgaW5mbw0KZnVuY3Rpb24gc2V0UmVs
+U3RhcnRQYWdlKHNQYXRoKQ0Kew0KCWlmIChnc1BQYXRoLmxlbmd0aCA9PSAwKQ0K
+CXsNCgkJZ3NQUGF0aCA9IF9nZXRGdWxsUGF0aChfZ2V0UGF0aChkb2N1bWVudC5s
+b2NhdGlvbi5ocmVmKSwgIF9nZXRQYXRoKHNQYXRoKSk7DQoJCWdzU3RhcnRQYWdl
+ID0gX2dldEZ1bGxQYXRoKF9nZXRQYXRoKGRvY3VtZW50LmxvY2F0aW9uLmhyZWYp
+LCBzUGF0aCk7DQoJCWdzUmVsQ3VyUGFnZVBhdGggPSBfZ2V0UmVsYXRpdmVGaWxl
+TmFtZShnc1N0YXJ0UGFnZSwgZG9jdW1lbnQubG9jYXRpb24uaHJlZik7DQoJfQ0K
+fQ0KDQpmdW5jdGlvbiBnZXRJbWFnZShvSW1hZ2UsIHNUeXBlKQ0Kew0KCXZhciBz
+SW1nPSIiOw0KCWlmIChvSW1hZ2UgJiYgb0ltYWdlLmFJbWdzICYmIChvSW1hZ2Uu
+YUltZ3MubGVuZ3RoID4gMCkpDQoJew0KCQlzSW1nKz0iPGltZyBhbHQ9XCIiKyBz
+VHlwZSArICJcIiBzcmM9XCIiICsgb0ltYWdlLmFJbWdzWzBdICsgIlwiIjsNCgkJ
+aWYgKG9JbWFnZS5uV2lkdGggPiAwKQ0KCQkJc0ltZys9IiB3aWR0aD0iICsgb0lt
+YWdlLm5XaWR0aDsNCgkJaWYgKG9JbWFnZS5uSGVpZ2h0ID4gMCkNCgkJCXNJbWcr
+PSIgaGVpZ2h0PSIgKyBvSW1hZ2UubkhlaWdodDsNCgkJc0ltZys9IiBib3JkZXI9
+bm8+IjsNCgl9DQoJcmV0dXJuIHNJbWc7DQp9DQoNCmZ1bmN0aW9uIGFkZFRvY0lu
+Zm8oc1RvY1BhdGgpDQp7DQoJZ2FQYXRoc1tnYVBhdGhzLmxlbmd0aF0gPSBzVG9j
+UGF0aDsNCn0NCg0KZnVuY3Rpb24gYWRkQXZlbnVlSW5mbyhzTmFtZSwgc1ByZXYs
+IHNOZXh0KQ0Kew0KCWdhQXZlbnVlc1tnYUF2ZW51ZXMubGVuZ3RoXSA9IG5ldyBh
+dmVudWVJbmZvKHNOYW1lLCBzUHJldiwgc05leHQpOwkNCn0NCg0KZnVuY3Rpb24g
+YWRkQnV0dG9uKHNUeXBlLCBuU3R5bGUsIHNUZXh0LCBzSHJlZiwgc09uQ2xpY2ss
+IHNPbk1vdXNlT3Zlciwgc09uTG9hZCwgbldpZHRoLCBuSGVpZ2h0LCBzSW1nMSwg
+c0ltZzIsIHNJbWczKQ0Kew0KCXZhciBzQnV0dG9uID0gIiI7DQoJdmFyIG5CdG49
+Z2FCdXR0b25zLmxlbmd0aDsNCglpZiAoc1R5cGUgPT0gInByZXYiKQ0KCXsNCgkJ
+aWYgKGNhbkdvKGZhbHNlKSkNCgkJew0KCQkJdmFyIHNUaXRsZSA9ICJQcmV2aW91
+cyBUb3BpYyI7DQoJCQlnb1ByZXYgPSBuZXcgYnV0dG9uKHNUZXh0LCBuV2lkdGgs
+IG5IZWlnaHQsIHNJbWcxLCBzSW1nMiwgc0ltZzMpOw0KCQkJc0J1dHRvbiA9ICI8
+YSB0aXRsZT1cIiIgKyBzVGl0bGUgKyAiXCIgY2xhc3M9XCJ3aHRidG5wcmV2XCIg
+aHJlZj1cImphdmFzY3JpcHQ6dm9pZCgwKTtcIiBvbmNsaWNrPVwiZ29BdmVudWUo
+ZmFsc2UpO3JldHVybiBmYWxzZTtcIj4iOw0KCQkJaWYgKG5TdHlsZSA9PSBCVE5f
+VEVYVCkNCgkJCQlzQnV0dG9uICs9IGdvUHJldi5zVGV4dDsNCgkJCWVsc2UNCgkJ
+CQlzQnV0dG9uICs9IGdldEltYWdlKGdvUHJldiwgc1RpdGxlKTsNCgkJCXNCdXR0
+b24gKz0gIjwvYT4iOw0KCQl9DQoJfQ0KCWVsc2UgaWYgKHNUeXBlID09ICJuZXh0
+IikNCgl7DQoJCWlmIChjYW5Hbyh0cnVlKSkNCgkJew0KCQkJdmFyIHNUaXRsZSA9
+ICJOZXh0IFRvcGljIjsNCgkJCWdvTmV4dCA9IG5ldyBidXR0b24oc1RleHQsIG5X
+aWR0aCwgbkhlaWdodCwgc0ltZzEsIHNJbWcyLCBzSW1nMyk7DQoJCQlzQnV0dG9u
+ID0gIjxhIHRpdGxlPVwiIiArIHNUaXRsZSArICJcIiBjbGFzcz1cIndodGJ0bm5l
+eHRcIiBocmVmPVwiamF2YXNjcmlwdDp2b2lkKDApO1wiIG9uY2xpY2s9XCJnb0F2
+ZW51ZSh0cnVlKTtyZXR1cm4gZmFsc2U7XCI+IjsNCgkJCWlmIChuU3R5bGUgPT0g
+QlROX1RFWFQpDQoJCQkJc0J1dHRvbiArPSBnb05leHQuc1RleHQ7DQoJCQllbHNl
+DQoJCQkJc0J1dHRvbiArPSBnZXRJbWFnZShnb05leHQsIHNUaXRsZSk7DQoJCQlz
+QnV0dG9uICs9ICI8L2E+IjsNCgkJfQ0KCX0NCgllbHNlIGlmIChzVHlwZSA9PSAi
+c2hvdyIpDQoJew0KCQlpZiAoaXNUb3BpY09ubHkoKSkNCgkJew0KCQkJdmFyIHNU
+aXRsZSA9ICJTaG93IE5hdmlnYXRpb24gQ29tcG9uZW50IjsNCgkJCWdvU2hvdyA9
+IG5ldyBidXR0b24oc1RleHQsIG5XaWR0aCwgbkhlaWdodCwgc0ltZzEsIHNJbWcy
+LCBzSW1nMyk7DQoJCQlzQnV0dG9uID0gIjxhIHRpdGxlPVwiIiArIHNUaXRsZSAr
+ICJcIiBjbGFzcz1cIndodGJ0bnNob3dcIiBocmVmPVwiamF2YXNjcmlwdDp2b2lk
+KDApO1wiIG9uY2xpY2s9XCJzaG93KCk7cmV0dXJuIGZhbHNlO1wiPiI7DQoJCQlp
+ZiAoblN0eWxlID09IEJUTl9URVhUKQ0KCQkJCXNCdXR0b24gKz0gZ29TaG93LnNU
+ZXh0Ow0KCQkJZWxzZQ0KCQkJCXNCdXR0b24gKz0gZ2V0SW1hZ2UoZ29TaG93LCBz
+VGl0bGUpOw0KCQkJc0J1dHRvbiArPSAiPC9hPiI7DQoJCX0NCgl9DQoJZWxzZSBp
+ZiAoc1R5cGUgPT0gImhpZGUiKQ0KCXsNCgkJaWYgKCFpc1RvcGljT25seSgpKQ0K
+CQl7DQoJCQl2YXIgc1RpdGxlID0gIkhpZGUgTmF2aWdhdGlvbiBDb21wb25lbnQi
+Ow0KCQkJZ29IaWRlID0gbmV3IGJ1dHRvbihzVGV4dCwgbldpZHRoLCBuSGVpZ2h0
+LCBzSW1nMSwgc0ltZzIsIHNJbWczKTsNCgkJCXNCdXR0b24gPSAiPGEgdGl0bGU9
+XCIiICsgc1RpdGxlICsgIlwiIGNsYXNzPVwid2h0YnRuaGlkZVwiIGhyZWY9XCJq
+YXZhc2NyaXB0OnZvaWQoMCk7XCIgb25jbGljaz1cImhpZGUoKTtyZXR1cm4gZmFs
+c2U7XCI+IjsNCgkJCWlmIChuU3R5bGUgPT0gQlROX1RFWFQpDQoJCQkJc0J1dHRv
+biArPSBnb0hpZGUuc1RleHQ7DQoJCQllbHNlDQoJCQkJc0J1dHRvbiArPSBnZXRJ
+bWFnZShnb0hpZGUsIHNUaXRsZSk7DQoJCQlzQnV0dG9uICs9ICI8L2E+IjsNCgkJ
+fQ0KCX0NCgllbHNlIGlmIChzVHlwZSA9PSAic2hvd25hdiIpDQoJew0KCQkNCgkJ
+aWYgKGlzU2hvd0hpZGVFbmFibGUoKSkNCgkJew0KCQkJdmFyIHNUaXRsZSA9ICJT
+aG93IE5hdmlnYXRpb24gQ29tcG9uZW50IjsNCgkJCWdvU2hvd05hdiA9IG5ldyBi
+dXR0b24oc1RleHQsIG5XaWR0aCwgbkhlaWdodCwgc0ltZzEsIHNJbWcyLCBzSW1n
+Myk7DQoJCQlzQnV0dG9uID0gIjxhIHRpdGxlPVwiIiArIHNUaXRsZSArICJcIiBj
+bGFzcz1cIndodGJ0bnNob3duYXZcIiBocmVmPVwiamF2YXNjcmlwdDp2b2lkKDAp
+O1wiIG9uY2xpY2s9XCJzaG93SGlkZVBhbmUodHJ1ZSk7cmV0dXJuIGZhbHNlO1wi
+PiI7DQoJCQlpZiAoblN0eWxlID09IEJUTl9URVhUKQ0KCQkJCXNCdXR0b24gKz0g
+Z29TaG93TmF2LnNUZXh0Ow0KCQkJZWxzZQ0KCQkJCXNCdXR0b24gKz0gZ2V0SW1h
+Z2UoZ29TaG93TmF2LCBzVGl0bGUpOw0KCQkJc0J1dHRvbiArPSAiPC9hPiI7DQoJ
+CX0NCgl9DQoJZWxzZSBpZiAoc1R5cGUgPT0gImhpZGVuYXYiKQ0KCXsNCgkJaWYg
+KGlzU2hvd0hpZGVFbmFibGUoKSkNCgkJew0KCQkJdmFyIHNUaXRsZSA9ICJIaWRl
+IE5hdmlnYXRpb24gQ29tcG9uZW50IjsNCgkJCWdvSGlkZU5hdiA9IG5ldyBidXR0
+b24oc1RleHQsIG5XaWR0aCwgbkhlaWdodCwgc0ltZzEsIHNJbWcyLCBzSW1nMyk7
+DQoJCQlzQnV0dG9uID0gIjxhIHRpdGxlPVwiIiArIHNUaXRsZSArICJcIiBjbGFz
+cz1cIndodGJ0bmhpZGVuYXZcIiBocmVmPVwiamF2YXNjcmlwdDp2b2lkKDApO1wi
+IG9uY2xpY2s9XCJzaG93SGlkZVBhbmUoZmFsc2UpO3JldHVybiBmYWxzZTtcIj4i
+Ow0KCQkJaWYgKG5TdHlsZSA9PSBCVE5fVEVYVCkNCgkJCQlzQnV0dG9uICs9IGdv
+SGlkZU5hdi5zVGV4dDsNCgkJCWVsc2UNCgkJCQlzQnV0dG9uICs9IGdldEltYWdl
+KGdvSGlkZU5hdiwgc1RpdGxlKTsNCgkJCXNCdXR0b24gKz0gIjwvYT4iOw0KCQl9
+DQoJfQ0KCWVsc2UgaWYgKHNUeXBlID09ICJzeW5jdG9jIikNCgl7DQoJCWlmIChn
+YVBhdGhzLmxlbmd0aCA+IDApDQoJCXsNCgkJCXZhciBzVGl0bGUgPSAiU3luYyBU
+T0MiOw0KCQkJZ29TeW5jID0gbmV3IGJ1dHRvbihzVGV4dCwgbldpZHRoLCBuSGVp
+Z2h0LCBzSW1nMSwgc0ltZzIsIHNJbWczKTsNCgkJCXNCdXR0b24gPSAiPGEgdGl0
+bGU9XCIiKyBzVGl0bGUgKyAiXCIgY2xhc3M9XCJ3aHRidG5zeW5jdG9jXCIgaHJl
+Zj1cImphdmFzY3JpcHQ6dm9pZCgwKTtcIiBvbmNsaWNrPVwic3luY1dpdGhTaG93
+KCk7cmV0dXJuIGZhbHNlO1wiPiI7DQoJCQlpZiAoblN0eWxlID09IEJUTl9URVhU
+KQ0KCQkJCXNCdXR0b24gKz0gZ29TeW5jLnNUZXh0Ow0KCQkJZWxzZQ0KCQkJCXNC
+dXR0b24gKz0gZ2V0SW1hZ2UoZ29TeW5jLCBzVGl0bGUpOw0KCQkJc0J1dHRvbiAr
+PSAiPC9hPiI7DQoJCX0NCgl9DQoJZWxzZSBpZiAoc1R5cGUgPT0gIndlYnNlYXJj
+aCIpDQoJew0KCQlpZiAoZ3NTZWFyY2hGb3JtSHJlZi5sZW5ndGggPiAwKQ0KCQl7
+DQoJCQl2YXIgc1RpdGxlID0gIldlYlNlYXJjaCI7DQoJCQlnb1dlYlNlYXJjaCA9
+IG5ldyBidXR0b24oc1RleHQsIG5XaWR0aCwgbkhlaWdodCwgc0ltZzEsIHNJbWcy
+LCBzSW1nMyk7DQoJCQlzQnV0dG9uID0gIjxhIHRpdGxlPVwiIisgc1RpdGxlICsg
+IlwiIGNsYXNzPVwid2h0YnRud2Vic2VhcmNoXCIgaHJlZj1cIiIgKyBnc1NlYXJj
+aEZvcm1IcmVmICsgIlwiPiI7DQoJCQlpZiAoblN0eWxlID09IEJUTl9URVhUKQ0K
+CQkJCXNCdXR0b24gKz0gZ29XZWJTZWFyY2guc1RleHQ7DQoJCQllbHNlDQoJCQkJ
+c0J1dHRvbiArPSBnZXRJbWFnZShnb1dlYlNlYXJjaCwgc1RpdGxlKTsNCgkJCXNC
+dXR0b24gKz0gIjwvYT4iOw0KCQl9DQoJfQ0KCWVsc2UgaWYgKHNUeXBlID09ICJz
+ZWFyY2hmb3JtIikNCgl7DQoJCWdhQnV0dG9uc1tuQnRuXSA9ICJOZWVkU2VhcmNo
+Rm9ybSI7DQoJCWdhVHlwZXNbbkJ0bl0gPSBzVHlwZTsNCgl9DQoJaWYgKHNCdXR0
+b24ubGVuZ3RoICE9IDApDQoJew0KCQlpZiAoblN0eWxlID09IEJUTl9URVhUKQ0K
+CQkJc0J1dHRvbiArPSAiJm5ic3A7IjsNCgkJZ2FCdXR0b25zW25CdG5dID0gIjx0
+ZCBjbGFzcz1uYXZpZ2F0b3I+IiArIHNCdXR0b24gKyAiPC90ZD4iOw0KCQlnYVR5
+cGVzW25CdG5dID0gc1R5cGU7DQoJfQ0KfQ0KDQpmdW5jdGlvbiBpc1N5bmNFbmFi
+bGVkKCkNCnsNCglpZiAoIWdiQ2hlY2tTeW5jKQ0KCXsNCgkJdmFyIG9Nc2c9bmV3
+IHdoTWVzc2FnZShXSF9NU0dfSVNTWU5DU1NVUFBPUlQsdGhpcywxLG51bGwpOw0K
+CQlpZihTZW5kTWVzc2FnZShvTXNnKSkNCgkJew0KCQkJZ2JTeW5jRW5hYmxlZD1v
+TXNnLm9QYXJhbTsNCgkJfQ0KCQlnYkNoZWNrU3luYz10cnVlOw0KCX0NCglyZXR1
+cm4gZ2JTeW5jRW5hYmxlZDsNCn0NCg0KZnVuY3Rpb24gaXNJblBvcHVwKCkNCnsN
+CglyZXR1cm4gKHdpbmRvdy5uYW1lLmluZGV4T2YoIkJTU0NQb3B1cCIpICE9IC0x
+KTsNCn0NCg0KZnVuY3Rpb24gZ2V0SW50b3BpY0JhcihzQWxpZ24pDQp7DQoJdmFy
+IHNIVE1MID0gIiI7DQoJaWYgKGdhQnV0dG9ucy5sZW5ndGggPiAwKQ0KCXsNCgkJ
+c0hUTUwgKz0gIjxkaXYgYWxpZ249Iisgc0FsaWduICsgIj4iOw0KDQoJCXNIVE1M
+ICs9ICI8dGFibGUgY2VsbHBhZGRpbmc9XCIyXCIgY2xhc3M9bmF2aWdhdG9yICBj
+ZWxsc3BhY2luZz1cIjBcIiBib3JkZXI9XCIwXCI+PHRyPiI7DQoJCWZvciAodmFy
+IGkgPSAwOyBpIDwgZ2FCdXR0b25zLmxlbmd0aDsgaSsrKQ0KCQl7DQoJCQlpZiAo
+Z2FUeXBlc1tpXSE9InN5bmN0b2MiIHx8IGlzU3luY0VuYWJsZWQoKSkNCgkJCXsN
+CgkJCQlpZiAoZ2FCdXR0b25zW2ldID09ICJOZWVkU2VhcmNoRm9ybSIpDQoJCQkJ
+CXNIVE1MICs9IGdldFNlYXJjaEZvcm1IVE1MKCk7DQoJCQkJZWxzZQ0KCQkJCQlz
+SFRNTCArPSBnYUJ1dHRvbnNbaV07DQoJCQl9DQoJCX0NCgkJc0hUTUwgKz0gIjwv
+dHI+PC90YWJsZT4iOw0KDQoJCXNIVE1MICs9ICI8L2Rpdj4iOw0KCX0NCglyZXR1
+cm4gc0hUTUw7DQp9DQoNCg0KZnVuY3Rpb24gd3JpdGVJbnRvcGljQmFyKG5BbGln
+bnMpDQp7DQoJaWYgKGlzSW5Qb3B1cCgpKSByZXR1cm47DQoJaWYgKGdhQnV0dG9u
+cy5sZW5ndGggPiAwKQ0KCXsNCgkJdmFyIHNIVE1MID0gIiI7DQoJCWlmIChuQWxp
+Z25zICE9IDApDQoJCXsNCgkJCXNIVE1MICs9ICI8dGFibGUgd2lkdGg9MTAwJSBj
+bGFzcz1uYXZpZ2F0b3I+PHRyPiINCgkJCWlmIChuQWxpZ25zICYgMSkNCgkJCQlz
+SFRNTCArPSAiPHRkIHdpZHRoPTMzJSBjbGFzcz1uYXZpZ2F0b3I+IiArIGdldElu
+dG9waWNCYXIoImxlZnQiKSArICI8L3RkPiI7DQoJCQlpZiAobkFsaWducyAmIDIp
+DQoJCQkJc0hUTUwgKz0gIjx0ZCB3aWR0aD0zNCU+IiArIGdldEludG9waWNCYXIo
+ImNlbnRlciIpICsgIjwvdGQ+IjsNCgkJCWlmIChuQWxpZ25zICYgNCkNCgkJCQlz
+SFRNTCArPSAiPHRkIHdpZHRoPTMzJSBjbGFzcz1uYXZpZ2F0b3I+IiArIGdldElu
+dG9waWNCYXIoInJpZ2h0IikgKyAiPC90ZD4iOw0KCQkJc0hUTUwgKz0gIjwvdHI+
+PC90YWJsZT4iOw0KCQkJZG9jdW1lbnQud3JpdGUoc0hUTUwpOw0KCQl9DQoJfQ0K
+fQ0KDQpmdW5jdGlvbiBzZW5kQXZlSW5mb091dCgpDQp7DQoJaWYgKCFpc0luUG9w
+dXAoKSkNCgkJc2V0VGltZW91dCgic2VuZEF2ZUluZm8oKTsiLCAxMDApOw0KfQ0K
+DQpmdW5jdGlvbiBzZW5kQXZlSW5mbygpDQp7DQoJdmFyIG9Nc2cgPSBuZXcgd2hN
+ZXNzYWdlKFdIX01TR19BVkVOVUVJTkZPLCB0aGlzLCAxLCBnYUF2ZW51ZXMpOw0K
+CVNlbmRNZXNzYWdlKG9Nc2cpOw0KfQ0KDQoNCmZ1bmN0aW9uIG9uTmV4dCgpDQp7
+DQoJdmFyIG9Nc2cgPSBuZXcgd2hNZXNzYWdlKFdIX01TR19ORVhULCB0aGlzLCAx
+LCBudWxsKTsNCglTZW5kTWVzc2FnZShvTXNnKTsNCn0NCg0KZnVuY3Rpb24gb25Q
+cmV2KCkNCnsNCgl2YXIgb01zZyA9IG5ldyB3aE1lc3NhZ2UoV0hfTVNHX1BSRVYs
+IHRoaXMsIDEsIG51bGwpOw0KCVNlbmRNZXNzYWdlKG9Nc2cpOw0KfQ0KDQpmdW5j
+dGlvbiBjcmVhdGVTeW5jSW5mbygpDQp7DQoJdmFyIG9QYXJhbSA9IG5ldyBPYmpl
+Y3QoKTsNCglpZiAoZ3NQUGF0aC5sZW5ndGggPT0gMCkNCgkJZ3NQUGF0aCA9IF9n
+ZXRQYXRoKGRvY3VtZW50LmxvY2F0aW9uLmhyZWYpOw0KCW9QYXJhbS5zUFBhdGgg
+PSBnc1BQYXRoOw0KCW9QYXJhbS5zVFBhdGggPSBkb2N1bWVudC5sb2NhdGlvbi5o
+cmVmOw0KCW9QYXJhbS5hUGF0aHMgPSBnYVBhdGhzOw0KCXJldHVybiBvUGFyYW07
+DQp9DQoNCmZ1bmN0aW9uIHN5bmNXaXRoU2hvdygpDQp7DQoJaWYgKGlzVG9waWNP
+bmx5KCkpDQoJCXNob3coKTsNCgllbHNlIA0KCXsNCgkJc3luYygpOw0KCQlzaG93
+VG9jUGFuZSgpOw0KCX0NCn0NCg0KZnVuY3Rpb24gc2hvd1RvY1BhbmUoKQ0Kew0K
+CXZhciBvTXNnID0gbmV3IHdoTWVzc2FnZShXSF9NU0dfU0hPV1RPQywgdGhpcywg
+MSwgbnVsbCk7DQoJU2VuZE1lc3NhZ2Uob01zZyk7DQp9DQoNCmZ1bmN0aW9uIHNl
+bmRTeW5jSW5mbygpDQp7DQoJaWYgKCFpc0luUG9wdXAoKSkNCgl7DQoJCXZhciBv
+UGFyYW0gPSBudWxsOw0KCQlpZiAoZ2FQYXRocy5sZW5ndGggPiAwKQ0KCQl7DQoJ
+CQlvUGFyYW0gPSBjcmVhdGVTeW5jSW5mbygpOw0KCQl9DQoJCXZhciBvTXNnID0g
+bmV3IHdoTWVzc2FnZShXSF9NU0dfU1lOQ0lORk8sIHRoaXMsIDEsIG9QYXJhbSk7
+DQoJCVNlbmRNZXNzYWdlKG9Nc2cpOw0KCX0NCn0NCg0KZnVuY3Rpb24gc2VuZElu
+dmFsaWRTeW5jSW5mbygpDQp7DQoJaWYgKCFpc0luUG9wdXAoKSkNCgl7DQoJCXZh
+ciBvTXNnID0gbmV3IHdoTWVzc2FnZShXSF9NU0dfU1lOQ0lORk8sIHRoaXMsIDEs
+IG51bGwpOw0KCQlTZW5kTWVzc2FnZShvTXNnKTsNCgl9DQp9DQoNCmZ1bmN0aW9u
+IGVuYWJsZVdlYlNlYXJjaChiRW5hYmxlKQ0Kew0KCWlmICghaXNJblBvcHVwKCkp
+DQoJew0KCQl2YXIgb01zZyA9IG5ldyB3aE1lc3NhZ2UoV0hfTVNHX0VOQUJMRVdF
+QlNFQVJDSCwgdGhpcywgMSwgYkVuYWJsZSk7DQoJCVNlbmRNZXNzYWdlKG9Nc2cp
+Ow0KCX0NCn0NCg0KZnVuY3Rpb24gYXV0b1N5bmMoblN5bmMpDQp7DQoJaWYgKG5T
+eW5jID09IDApIHJldHVybjsNCglpZiAoaXNJblBvcHVwKCkpIHJldHVybjsNCglp
+ZiAoaXNPdXRNb3N0VG9waWMoKSkNCgkJc3luYygpOw0KfQ0KDQpmdW5jdGlvbiBp
+c091dE1vc3RUb3BpYygpDQp7DQoJaWYgKGduT3V0bW9zdFRvcGljID09IC0xKQ0K
+CXsNCgkJdmFyIG9NZXNzYWdlID0gbmV3IHdoTWVzc2FnZShXSF9NU0dfSVNJTkZS
+QU1FU0VULCB0aGlzLCAxICwgbnVsbCk7DQoJCWlmIChTZW5kTWVzc2FnZShvTWVz
+c2FnZSkpDQoJCQlnbk91dG1vc3RUb3BpYyA9IDA7DQoJCWVsc2UNCgkJCWduT3V0
+bW9zdFRvcGljID0gMTsNCgl9DQoJcmV0dXJuIChnbk91dG1vc3RUb3BpYyA9PSAx
+KTsNCn0NCg0KZnVuY3Rpb24gc3luYygpDQp7DQoJaWYgKGdhUGF0aHMubGVuZ3Ro
+ID4gMCkNCgl7DQoJCXZhciBvUGFyYW0gPSBjcmVhdGVTeW5jSW5mbygpOw0KCQl2
+YXIgb01lc3NhZ2UgPSBuZXcgd2hNZXNzYWdlKFdIX01TR19TWU5DVE9DLCB0aGlz
+LCAxLCBvUGFyYW0pOw0KCQlTZW5kTWVzc2FnZShvTWVzc2FnZSk7DQoJfQ0KfQ0K
+DQoNCmZ1bmN0aW9uIGF2ZW51ZUluZm8oc05hbWUsIHNQcmV2LCBzTmV4dCkNCnsN
+Cgl0aGlzLnNOYW1lID0gc05hbWU7DQoJdGhpcy5zUHJldiA9IHNQcmV2Ow0KCXRo
+aXMuc05leHQgPSBzTmV4dDsNCn0NCg0KZnVuY3Rpb24gZ2V0Q3VycmVudEF2ZW51
+ZSgpDQp7DQoJdmFyIG9QYXJhbSA9IG5ldyBPYmplY3QoKTsNCglvUGFyYW0uc0F2
+ZW51ZSA9IG51bGw7DQoJdmFyIG9NZXNzYWdlID0gbmV3IHdoTWVzc2FnZShXSF9N
+U0dfR0VUQ1VSUkVOVEFWRU5VRSwgdGhpcywgMSwgb1BhcmFtKTsNCglTZW5kTWVz
+c2FnZShvTWVzc2FnZSk7DQoJcmV0dXJuIG9QYXJhbS5zQXZlbnVlOw0KfQ0KDQpm
+dW5jdGlvbiB1blJlZ2lzdGVyTGlzdGVuZXIoKQ0Kew0KCXNlbmRJbnZhbGlkU3lu
+Y0luZm8oKTsNCgllbmFibGVXZWJTZWFyY2goZmFsc2UpOw0KCWlmICh3aHRvcGlj
+X2ZvbGRVbmxvYWQpDQoJCXdodG9waWNfZm9sZFVubG9hZCgpOw0KfQ0KDQpmdW5j
+dGlvbiBvblNlbmRNZXNzYWdlKG9Nc2cpDQp7DQoJdmFyIG5Nc2dJZCA9IG9Nc2cu
+bk1lc3NhZ2VJZDsNCglpZiAobk1zZ0lkID09IFdIX01TR19HRVRBVklBVkVOVUVT
+KQ0KCXsNCgkJb01zZy5vUGFyYW0uYUF2ZW51ZXMgPSBnYUF2ZW51ZXM7DQoJCXJl
+dHVybiBmYWxzZTsNCgl9DQoJZWxzZSBpZiAobk1zZ0lkID09IFdIX01TR19HRVRU
+T0NQQVRIUykNCgl7DQoJCWlmIChpc091dE1vc3RUb3BpYygpKQ0KCQl7DQoJCQlv
+TXNnLm9QYXJhbS5vVG9jSW5mbyA9IGNyZWF0ZVN5bmNJbmZvKCk7DQoJCQlyZXR1
+cm4gZmFsc2U7CQkNCgkJfQ0KCQllbHNlDQoJCQlyZXR1cm4gdHJ1ZTsNCgl9DQoJ
+ZWxzZSBpZiAobk1zZ0lkID09IFdIX01TR19ORVhUKQ0KCXsNCgkJZ29BdmVudWUo
+dHJ1ZSk7DQoJfQ0KCWVsc2UgaWYgKG5Nc2dJZCA9PSBXSF9NU0dfUFJFVikNCgl7
+DQoJCWdvQXZlbnVlKGZhbHNlKTsNCgl9DQoJZWxzZSBpZiAobk1zZ0lkID09IFdI
+X01TR19XRUJTRUFSQ0gpDQoJew0KCQl3ZWJzZWFyY2goKTsNCgl9DQoJcmV0dXJu
+IHRydWU7DQp9DQoNCmZ1bmN0aW9uIGdvQXZlbnVlKGJOZXh0KQ0Kew0KCXZhciBz
+VG9waWMgPSBudWxsOw0KCXZhciBzQXZlbnVlID0gZ2V0Q3VycmVudEF2ZW51ZSgp
+Ow0KCXZhciBuQXZlbnVlID0gLTE7DQoJaWYgKHNBdmVudWUgIT0gbnVsbCAmJiBz
+QXZlbnVlICE9ICIiKQ0KCXsNCgkJZm9yICh2YXIgaSA9IDA7IGkgPCBnYUF2ZW51
+ZXMubGVuZ3RoIDsgaSArKykNCgkJew0KCQkJaWYgKGdhQXZlbnVlc1tpXS5zTmFt
+ZSA9PSBzQXZlbnVlKQ0KCQkJew0KCQkJCW5BdmVudWUgPSBpOw0KCQkJCWJyZWFr
+Ow0KCQkJfQ0KCQl9DQoJCWlmIChuQXZlbnVlICE9IC0xKQ0KCQl7DQoJCQlpZiAo
+Yk5leHQpDQoJCQkJc1RvcGljID0gZ2FBdmVudWVzW25BdmVudWVdLnNOZXh0Ow0K
+CQkJZWxzZQ0KCQkJCXNUb3BpYyA9IGdhQXZlbnVlc1tuQXZlbnVlXS5zUHJldjsN
+CgkJfQ0KCX0NCgllbHNlDQoJeyANCgkJZm9yICh2YXIgaSA9IDA7IGkgPCBnYUF2
+ZW51ZXMubGVuZ3RoIDsgaSArKykNCgkJew0KCQkJaWYgKGdhQXZlbnVlc1tpXS5z
+TmV4dCAhPSBudWxsICYmIGdhQXZlbnVlc1tpXS5zTmV4dC5sZW5ndGggPiAwICYm
+IGJOZXh0KQ0KCQkJew0KCQkJCXNUb3BpYyA9IGdhQXZlbnVlc1tpXS5zTmV4dDsN
+CgkJCQlicmVhazsNCgkJCX0NCgkJCWVsc2UgaWYgKGdhQXZlbnVlc1tpXS5zUHJl
+diAhPSBudWxsICYmIGdhQXZlbnVlc1tpXS5zUHJldi5sZW5ndGggPiAwICYmICFi
+TmV4dCkNCgkJCXsNCgkJCQlzVG9waWMgPSBnYUF2ZW51ZXNbaV0uc1ByZXY7DQoJ
+CQkJYnJlYWs7DQoJCQl9DQoJCX0NCgl9DQoJDQoJaWYgKHNUb3BpYyAhPSBudWxs
+ICYmIHNUb3BpYyAhPSAiIikNCgl7DQoJCWlmIChnc1BQYXRoICE9IG51bGwgJiYg
+Z3NQUGF0aCAhPSAiIikNCgkJew0KCQkJc0Z1bGxUb3BpY1BhdGggPSBfZ2V0RnVs
+bFBhdGgoZ3NQUGF0aCwgc1RvcGljKTsNCgkJCWRvY3VtZW50LmxvY2F0aW9uID0g
+c0Z1bGxUb3BpY1BhdGg7DQoJCX0NCgl9DQp9DQoNCmZ1bmN0aW9uIGNhbkdvKGJO
+ZXh0KQ0Kew0KCWZvciAodmFyIGkgPSAwOyBpIDwgZ2FBdmVudWVzLmxlbmd0aCA7
+IGkgKyspDQoJew0KCQlpZiAoKGdhQXZlbnVlc1tpXS5zTmV4dCAhPSBudWxsICYm
+IGdhQXZlbnVlc1tpXS5zTmV4dC5sZW5ndGggPiAwICYmIGJOZXh0KSB8fA0KCQkJ
+KGdhQXZlbnVlc1tpXS5zUHJldiAhPSBudWxsICYmIGdhQXZlbnVlc1tpXS5zUHJl
+di5sZW5ndGggPiAwICYmICFiTmV4dCkpDQoJCQlyZXR1cm4gdHJ1ZTsNCgl9DQoJ
+cmV0dXJuIGZhbHNlOw0KfQ0KDQpmdW5jdGlvbiBzaG93KCkNCnsNCglpZiAoZ3NT
+dGFydFBhZ2UgIT0gIiIpDQoJCXdpbmRvdy5sb2NhdGlvbiA9ICBnc1N0YXJ0UGFn
+ZSArICIjIiArIGdzUmVsQ3VyUGFnZVBhdGg7DQp9DQoNCmZ1bmN0aW9uIGhpZGUo
+KQ0Kew0KCWlmIChnb0ZyYW1lICE9IG51bGwpDQoJew0KCQlnb0ZyYW1lLmxvY2F0
+aW9uID0gd2luZG93LmxvY2F0aW9uOw0KCX0NCn0NCg0KZnVuY3Rpb24gaXNUb3Bp
+Y09ubHkoKQ0Kew0KCWlmIChnblRvcGljT25seSA9PSAtMSkNCgl7DQoJCXZhciBv
+UGFyYW0gPSBuZXcgT2JqZWN0KCk7DQoJCW9QYXJhbS5vRnJhbWUgPSBudWxsOw0K
+CQl2YXIgb01zZyA9IG5ldyB3aE1lc3NhZ2UoV0hfTVNHX0dFVFNUQVJURlJBTUUs
+IHRoaXMsIDEsIG9QYXJhbSk7DQoJCWlmIChTZW5kTWVzc2FnZShvTXNnKSkNCgkJ
+ew0KCQkJZ29GcmFtZSA9IG9QYXJhbS5vRnJhbWU7DQoJCQlnblRvcGljT25seSA9
+IDA7DQoJCX0NCgkJZWxzZQ0KCQkJZ25Ub3BpY09ubHkgPSAxOw0KCX0NCglpZiAo
+Z25Ub3BpY09ubHkgPT0gMSkNCgkJcmV0dXJuIHRydWU7DQoJZWxzZQ0KCQlyZXR1
+cm4gZmFsc2U7DQp9DQoNCmZ1bmN0aW9uIHdlYnNlYXJjaCgpDQp7DQoJaWYgKGdi
+TmF2NCkNCgl7DQoJCWlmIChkb2N1bWVudC5laGVscGZvcm0pDQoJCQlkb2N1bWVu
+dC5laGVscGZvcm0uc3VibWl0KCk7DQoJfQ0KCWVsc2UNCgl7DQoJCWlmICh3aW5k
+b3cuZWhlbHBmb3JtKQ0KCQkJd2luZG93LmVoZWxwZm9ybS5zdWJtaXQoKTsNCgl9
+DQp9DQoNCmZ1bmN0aW9uIGFkZFNlYXJjaEZvcm1IcmVmKHNIcmVmKQ0Kew0KCWdz
+U2VhcmNoRm9ybUhyZWYgPSBzSHJlZjsNCgllbmFibGVXZWJTZWFyY2godHJ1ZSk7
+DQp9DQoNCmZ1bmN0aW9uIHNlYXJjaEIobkZvcm0pDQp7DQoJdmFyIHNWYWx1ZSA9
+IGV2YWwoImRvY3VtZW50LnNlYXJjaEZvcm0iICsgbkZvcm0gKyAiLnNlYXJjaFN0
+cmluZy52YWx1ZSIpOw0KCXZhciBvTXNnID0gbmV3IHdoTWVzc2FnZShXSF9NU0df
+U0VBUkNIVEhJUywgdGhpcywgMSwgc1ZhbHVlKTsNCglTZW5kTWVzc2FnZShvTXNn
+KTsNCn0NCg0KZnVuY3Rpb24gZ2V0U2VhcmNoRm9ybUhUTUwoKQ0Kew0KCXZhciBz
+SFRNTCA9ICIiOw0KCWduRm9ybSArKzsNCgl2YXIgc0Zvcm1OYW1lID0gInNlYXJj
+aEZvcm0iICsgZ25Gb3JtOw0KCXZhciBzQnV0dG9uID0gIjxmb3JtIG5hbWU9XCIi
+ICsgc0Zvcm1OYW1lICsgIlwiIG1ldGhvZD1cIlBPU1RcIiBhY3Rpb249XCJqYXZh
+c2NyaXB0OnNlYXJjaEIoIisgZ25Gb3JtICsgIilcIj4iDQoJc0J1dHRvbiArPSAi
+PGlucHV0IHR5cGU9XCJ0ZXh0XCIgbmFtZT1cInNlYXJjaFN0cmluZ1wiIHZhbHVl
+PVwiLSBGdWxsIFRleHQgc2VhcmNoIC1cIiBzaXplPVwiMjBcIi8+IjsNCglpZiAo
+IiIgPT0gInRleHQiKQ0KCXsNCgkJc0J1dHRvbis9IjxhIGNsYXNzPVwic2VhcmNo
+YnRuXCIgaHJlZj1cImphdmFzY3JpcHQ6dm9pZCgwKTtcIiBvbmNsaWNrPVwiIiAr
+IHNGb3JtTmFtZSArICIuc3VibWl0KCk7IHJldHVybiBmYWxzZTtcIj48L2E+IjsN
+Cgl9DQoJZWxzZSBpZiAoIiIgPT0gImltYWdlIikNCgl7DQoJCXNCdXR0b24rPSI8
+YSBjbGFzcz1cInNlYXJjaGJ0blwiIGhyZWY9XCJqYXZhc2NyaXB0OnZvaWQoMCk7
+XCIgb25jbGljaz1cIiIgKyBzRm9ybU5hbWUgKyAiLnN1Ym1pdCgpOyByZXR1cm4g
+ZmFsc2U7XCI+Ig0KCQlzQnV0dG9uKz0iPGltZyBzcmM9XCJcIiBib3JkZXI9MD48
+L2E+IjsNCgl9DQoJc0J1dHRvbiArPSAiPC9mb3JtPiI7DQoJc0hUTUwgPSI8dGQg
+YWxpZ249XCJjZW50ZXJcIj4iICsgc0J1dHRvbiArICI8L3RkPiI7DQoJcmV0dXJu
+IHNIVE1MOw0KfQ0KDQpmdW5jdGlvbiBzaG93SGlkZVBhbmUoYlNob3cpDQp7DQoJ
+dmFyIG9Nc2c9bnVsbDsNCglpZiAoYlNob3cpDQoJCW9Nc2c9bmV3IHdoTWVzc2Fn
+ZShXSF9NU0dfU0hPV1BBTkUsIHRoaXMsIDEsIG51bGwpOw0KCWVsc2UNCgkgCW9N
+c2c9bmV3IHdoTWVzc2FnZShXSF9NU0dfSElERVBBTkUsIHRoaXMsIDEsIG51bGwp
+Ow0KCVNlbmRNZXNzYWdlKG9Nc2cpOw0KfQ0KDQpmdW5jdGlvbiBpc1Nob3dIaWRl
+RW5hYmxlKCkNCnsNCglpZiAoZ2JJRTQpDQoJCXJldHVybiB0cnVlOw0KCWVsc2UN
+CgkJcmV0dXJuIGZhbHNlOw0KfQ0KDQppZih3aW5kb3cuZ2JXaFV0aWwmJndpbmRv
+dy5nYldoTXNnJiZ3aW5kb3cuZ2JXaFZlciYmd2luZG93LmdiV2hQcm94eSkNCnsN
+CglSZWdpc3Rlckxpc3RlbmVyKCJic3NjcmlnaHQiLCBXSF9NU0dfR0VUQVZJQVZF
+TlVFUyk7DQoJUmVnaXN0ZXJMaXN0ZW5lcigiYnNzY3JpZ2h0IiwgV0hfTVNHX0dF
+VFRPQ1BBVEhTKTsNCglSZWdpc3Rlckxpc3RlbmVyKCJic3NjcmlnaHQiLCBXSF9N
+U0dfTkVYVCk7DQoJUmVnaXN0ZXJMaXN0ZW5lcigiYnNzY3JpZ2h0IiwgV0hfTVNH
+X1BSRVYpOw0KCVJlZ2lzdGVyTGlzdGVuZXIoImJzc2NyaWdodCIsIFdIX01TR19X
+RUJTRUFSQ0gpOw0KCWlmIChnYk1hYyAmJiBnYklFNCkNCgl7DQoJCWlmICh0eXBl
+b2Yod2luZG93Lm9udW5sb2FkKSAhPSAidW5rbm93biIpDQoJCQl3aHRvcGljX2Zv
+bGRVbmxvYWQgPSB3aW5kb3cub251bmxvYWQ7DQoJfQ0KCWVsc2UNCgl7DQoJCWlm
+ICh3aW5kb3cub251bmxvYWQpDQoJCQl3aHRvcGljX2ZvbGRVbmxvYWQgPSB3aW5k
+b3cub251bmxvYWQ7DQoJfQ0KCXdpbmRvdy5vbnVubG9hZCA9IHVuUmVnaXN0ZXJM
+aXN0ZW5lcjsNCglzZXRCdXR0b25Gb250KCJzaG93IiwiIiwiMTBwdCIsIiIsIiIs
+IiIsIiIpOw0KDQoJZ2JXaFRvcGljPXRydWU7DQp9DQplbHNlDQoJZG9jdW1lbnQu
+bG9jYXRpb24ucmVsb2FkKCk7
+
+------------drxm0nufRslT8Rx2t6uJ1l
+Content-Disposition: inline; filename=nav_home.jpg
+Content-Type: image/jpeg; name=nav_home.jpg
+Content-Location: http://www.webnms.com/webnms/help/developer_guide/nav_home.jpg
+Content-Transfer-Encoding: Base64
+
+/9j/4AAQSkZJRgABAgEASABIAAD/7QYCUGhvdG9zaG9wIDMuMAA4QklNA+0AAAAA
+ABAASAAAAAEAAgBIAAAAAQACOEJJTQQNAAAAAAAEAAAAeDhCSU0EGQAAAAAABAAA
+AB44QklNA/MAAAAAAAkAAAAAAAAAAAEAOEJJTQQKAAAAAAABAAA4QklNJxAAAAAA
+AAoAAQAAAAAAAAACOEJJTQP1AAAAAABIAC9mZgABAGxmZgAGAAAAAAABAC9mZgAB
+AKGZmgAGAAAAAAABADIAAAABAFoAAAAGAAAAAAABADUAAAABAC0AAAAGAAAAAAAB
+OEJJTQP4AAAAAABwAAD/////////////////////////////A+gAAAAA////////
+/////////////////////wPoAAAAAP////////////////////////////8D6AAA
+AAD/////////////////////////////A+gAADhCSU0ECAAAAAAAEAAAAAEAAAJA
+AAACQAAAAAA4QklNBB4AAAAAAAQAAAAAOEJJTQQaAAAAAABpAAAABgAAAAAAAAAA
+AAAAHAAAABwAAAAEAGgAbwBtAGUAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAA
+AAAAAAAAABwAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADhC
+SU0EEQAAAAAAAQEAOEJJTQQUAAAAAAAEAAAAFzhCSU0EDAAAAAADaQAAAAEAAAAc
+AAAAHAAAAFQAAAkwAAADTQAYAAH/2P/gABBKRklGAAECAQBIAEgAAP/uAA5BZG9i
+ZQBkgAAAAAH/2wCEAAwICAgJCAwJCQwRCwoLERUPDAwPFRgTExUTExgRDAwMDAwM
+EQwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwBDQsLDQ4NEA4OEBQODg4UFA4O
+Dg4UEQwMDAwMEREMDAwMDAwRDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDP/A
+ABEIABwAHAMBIgACEQEDEQH/3QAEAAL/xAE/AAABBQEBAQEBAQAAAAAAAAADAAEC
+BAUGBwgJCgsBAAEFAQEBAQEBAAAAAAAAAAEAAgMEBQYHCAkKCxAAAQQBAwIEAgUH
+BggFAwwzAQACEQMEIRIxBUFRYRMicYEyBhSRobFCIyQVUsFiMzRygtFDByWSU/Dh
+8WNzNRaisoMmRJNUZEXCo3Q2F9JV4mXys4TD03Xj80YnlKSFtJXE1OT0pbXF1eX1
+VmZ2hpamtsbW5vY3R1dnd4eXp7fH1+f3EQACAgECBAQDBAUGBwcGBTUBAAIRAyEx
+EgRBUWFxIhMFMoGRFKGxQiPBUtHwMyRi4XKCkkNTFWNzNPElBhaisoMHJjXC0kST
+VKMXZEVVNnRl4vKzhMPTdePzRpSkhbSVxNTk9KW1xdXl9VZmdoaWprbG1ub2JzdH
+V2d3h5ent8f/2gAMAwEAAhEDEQA/APRc3qBZZ6FRhw+m7w8gquR1XCw2D13bnu12
+zLvisrOfnvrtdhGoZT5LHZBcGAn853pMte7+qvM+tdV6n07qN2N1C5t+SNX2Vklp
+n9ze2t3/AEElPrVfX8U5TacW4WPdX63pakbA70y7d9FvvWz9tp+y/aZ9kcd5/dXj
+X1Mq63m5T+q4FuM2usmi6vIdYC5p2Wu2elVb/IXovq2/ZvR/lbonSYjmP++pKf/Q
+7TMxHU5Tmx7XGWHyK5qz/F/Rn/WLI6p1RlOXgW07a8ffcyxtoLIsd6Hoe3YLG/z/
+AP1td/lfZ/T/AE8R28Z/kquyNp2fR7bufwSU8d0D6sv6AM2sOr+z5GS+7GqrL3en
+UYFVT3XDf6jGN2/Tt/4xdN+zbP2dvj9LO/b/ACY4Vmn7J6w9X+cn27vorRSU/wD/
+2QA4QklNBCEAAAAAAFUAAAABAQAAAA8AQQBkAG8AYgBlACAAUABoAG8AdABvAHMA
+aABvAHAAAAATAEEAZABvAGIAZQAgAFAAaABvAHQAbwBzAGgAbwBwACAANgAuADAA
+AAABADhCSU0EBgAAAAAABwAIAAAAAQEA/+4ADkFkb2JlAGRAAAAAAf/bAIQAAQEB
+AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQICAgICAgIC
+AgICAwMDAwMDAwMDAwEBAQEBAQEBAQEBAgIBAgIDAwMDAwMDAwMDAwMDAwMDAwMD
+AwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMD/8AAEQgAHAAcAwERAAIRAQMR
+Af/dAAQABP/EAaIAAAAGAgMBAAAAAAAAAAAAAAcIBgUECQMKAgEACwEAAAYDAQEB
+AAAAAAAAAAAABgUEAwcCCAEJAAoLEAACAQMEAQMDAgMDAwIGCXUBAgMEEQUSBiEH
+EyIACDEUQTIjFQlRQhZhJDMXUnGBGGKRJUOhsfAmNHIKGcHRNSfhUzaC8ZKiRFRz
+RUY3R2MoVVZXGrLC0uLyZIN0k4Rlo7PD0+MpOGbzdSo5OkhJSlhZWmdoaWp2d3h5
+eoWGh4iJipSVlpeYmZqkpaanqKmqtLW2t7i5usTFxsfIycrU1dbX2Nna5OXm5+jp
+6vT19vf4+foRAAIBAwIEBAMFBAQEBgYFbQECAxEEIRIFMQYAIhNBUQcyYRRxCEKB
+I5EVUqFiFjMJsSTB0UNy8BfhgjQlklMYY0TxorImNRlUNkVkJwpzg5NGdMLS4vJV
+ZXVWN4SFo7PD0+PzKRqUpLTE1OT0laW1xdXl9ShHV2Y4doaWprbG1ub2Z3eHl6e3
+x9fn90hYaHiImKi4yNjo+DlJWWl5iZmpucnZ6fkqOkpaanqKmqq6ytrq+v/aAAwD
+AQACEQMRAD8A3Ou7O/5sFuH/AEe7OqY4ctB4xuLNjRM2L8qCRMfQI2tBX+Fw0kjA
+mO4AGq5HuvdATv8A+VHTPSWFpn7DzUeU3Fk4xUR4tquLI7gqKd3ImyDx1c4NPSBg
+2mSRkR2UqhJBHv3Xugp278+urKjs7FbL6m7Not1bgynX8/bMmwBDmqugm2BS7og2
+dkMq2SkoDh8PkaXccyUppBUx1ylhL4GgOs+691Zd/pn2d/ov/wBKn3B/gn2ev7Ty
+RfefxXyfb/wS2rT9/wDe/t/0t6/0+/de6//QvL7xy3e+fwW+sl0RVdVU3cWenyVT
+gMr3jn96YTr/ABGQyE80jZLMybD2Rvzc+TegaQNHQwUkCzhdJqILAn3XutG75nfK
+T5MfGn5Gdl9VfI3s7bPZPbFBNSV24d4bEy24chtDKrlaf7mk/gMm5NsbKytPQU0T
+6FhkxlL4raQoNz7917o1X8mjbHzb767U3R8vPj1v74243aW0cvXdKdkbR763J2rh
+srvDbmWXZu9s7SbWfr7qjsKnoquAxY6enqqmppT93T+N1MBkD+691uaf3s3L/o5/
+uX+z4v7w/wB4PtP4lV/wT+N/wj7L7b+I/wAN+4+x8vPl+y16P3PBq9Hv3Xuv/9HZ
+v7i6myOy+zMti/A4w+YrqnLbfqrEwz0NbO0xphIFUeehkkMTKOQAD9CPfuvdUh7k
+/kBbF+Qf8xDtr5ZfLXb3UPfvxp3305HtvaHTTb3+Q2w+xtr9r0mf2fU47eWWrOrq
+rq7H1WDodq47NUXjXc9ajSZGJmoHZFmpvde6E74E/wAs3Nfy6Y/lFtqmzHXbdZ9u
+fJrsTtTpLYHXuR7GzzdXdRZo4zHbA2FurOdm4il3Fk917c27i4KKqYZDPRsYBIcl
+VyPJKfde6vB/2XHOf7Lx/Gfspv75/wAW/vf/AArSfuP4B9j9n/DvD4/J939p/lWj
+6/2b+/de6//S3ru0v9H/APd0f6QvtfsPN/kF7/xL7/Qbfwjx/wCUfdafrp9Nv18e
+/de6BfC+L7Gf+CW/hulvtf499v8AxHwc+PyfZft6rfS/P9fz7917pt2n/om/vfTf
+3x8n95/uh/B/419r/dz7nVH4vsvF+z955P0/c8X/AE829+690cPm/wCbX/33+N7/
+AOwt7917r//Z
+
+------------drxm0nufRslT8Rx2t6uJ1l
+Content-Disposition: inline; filename=nav_prev.jpg
+Content-Type: image/jpeg; name=nav_prev.jpg
+Content-Location: http://www.webnms.com/webnms/help/developer_guide/nav_prev.jpg
+Content-Transfer-Encoding: Base64
+
+/9j/4AAQSkZJRgABAgEASABIAAD/7QXyUGhvdG9zaG9wIDMuMAA4QklNA+0AAAAA
+ABAASAAAAAEAAgBIAAAAAQACOEJJTQQNAAAAAAAEAAAAeDhCSU0EGQAAAAAABAAA
+AB44QklNA/MAAAAAAAkAAAAAAAAAAAEAOEJJTQQKAAAAAAABAAA4QklNJxAAAAAA
+AAoAAQAAAAAAAAACOEJJTQP1AAAAAABIAC9mZgABAGxmZgAGAAAAAAABAC9mZgAB
+AKGZmgAGAAAAAAABADIAAAABAFoAAAAGAAAAAAABADUAAAABAC0AAAAGAAAAAAAB
+OEJJTQP4AAAAAABwAAD/////////////////////////////A+gAAAAA////////
+/////////////////////wPoAAAAAP////////////////////////////8D6AAA
+AAD/////////////////////////////A+gAADhCSU0ECAAAAAAAEAAAAAEAAAJA
+AAACQAAAAAA4QklNBB4AAAAAAAQAAAAAOEJJTQQaAAAAAABpAAAABgAAAAAAAAAA
+AAAAHAAAABwAAAAEAGIAYQBjAGsAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAA
+AAAAAAAAABwAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADhC
+SU0EEQAAAAAAAQEAOEJJTQQUAAAAAAAEAAAAFzhCSU0EDAAAAAADWQAAAAEAAAAc
+AAAAHAAAAFQAAAkwAAADPQAYAAH/2P/gABBKRklGAAECAQBIAEgAAP/uAA5BZG9i
+ZQBkgAAAAAH/2wCEAAwICAgJCAwJCQwRCwoLERUPDAwPFRgTExUTExgRDAwMDAwM
+EQwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwBDQsLDQ4NEA4OEBQODg4UFA4O
+Dg4UEQwMDAwMEREMDAwMDAwRDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDP/A
+ABEIABwAHAMBIgACEQEDEQH/3QAEAAL/xAE/AAABBQEBAQEBAQAAAAAAAAADAAEC
+BAUGBwgJCgsBAAEFAQEBAQEBAAAAAAAAAAEAAgMEBQYHCAkKCxAAAQQBAwIEAgUH
+BggFAwwzAQACEQMEIRIxBUFRYRMicYEyBhSRobFCIyQVUsFiMzRygtFDByWSU/Dh
+8WNzNRaisoMmRJNUZEXCo3Q2F9JV4mXys4TD03Xj80YnlKSFtJXE1OT0pbXF1eX1
+VmZ2hpamtsbW5vY3R1dnd4eXp7fH1+f3EQACAgECBAQDBAUGBwcGBTUBAAIRAyEx
+EgRBUWFxIhMFMoGRFKGxQiPBUtHwMyRi4XKCkkNTFWNzNPElBhaisoMHJjXC0kST
+VKMXZEVVNnRl4vKzhMPTdePzRpSkhbSVxNTk9KW1xdXl9VZmdoaWprbG1ub2JzdH
+V2d3h5ent8f/2gAMAwEAAhEDEQA/APQ87qBbb9npMEfTf/31qeqyqCHe50SZ1Oq4
+n62fWe3olAsrodbfkE7bXA+k0/8ACP8Azn/u1rk+n/X7qeI660ubdbkbS91oJI27
+oDNrmbfppKfW7MuzHfuqdp3YeCr32+n7J9q/N429937i8t+rv116r1rrlPT7W0tp
+sba5xa1wd+jrsu0O93+jXZ+o/wBL0p9m7dHnEJKf/9DsM/p9e+3EyK23Y12jq3iW
+uafH+r/0FjdJ/wAXfQcLIzLrqG5uNf6ZxqL53Ukep6zfUbHqVu3VbHfT/wDPj+2z
+Ps3pj7R4+3xn+Sq9f0Tt+j23c/gkpwauh9A6dd9owumU4+Q1rmstYXS3e01v5P7j
+1o/s5/7P9aP0k7tvfZ/r7laq+yesPtH059s/RWmkp//ZADhCSU0EIQAAAAAAVQAA
+AAEBAAAADwBBAGQAbwBiAGUAIABQAGgAbwB0AG8AcwBoAG8AcAAAABMAQQBkAG8A
+YgBlACAAUABoAG8AdABvAHMAaABvAHAAIAA2AC4AMAAAAAEAOEJJTQQGAAAAAAAH
+AAgAAAABAQD/7gAOQWRvYmUAZEAAAAAB/9sAhAABAQEBAQEBAQEBAQEBAQEBAQEB
+AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAgICAgICAgICAgIDAwMDAwMDAwMDAQEB
+AQEBAQEBAQECAgECAgMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMD
+AwMDAwMDAwMDAwMDAwP/wAARCAAcABwDAREAAhEBAxEB/90ABAAE/8QBogAAAAYC
+AwEAAAAAAAAAAAAABwgGBQQJAwoCAQALAQAABgMBAQEAAAAAAAAAAAAGBQQDBwII
+AQkACgsQAAIBAwQBAwMCAwMDAgYJdQECAwQRBRIGIQcTIgAIMRRBMiMVCVFCFmEk
+MxdScYEYYpElQ6Gx8CY0cgoZwdE1J+FTNoLxkqJEVHNFRjdHYyhVVlcassLS4vJk
+g3SThGWjs8PT4yk4ZvN1Kjk6SElKWFlaZ2hpanZ3eHl6hYaHiImKlJWWl5iZmqSl
+pqeoqaq0tba3uLm6xMXGx8jJytTV1tfY2drk5ebn6Onq9PX29/j5+hEAAgEDAgQE
+AwUEBAQGBgVtAQIDEQQhEgUxBgAiE0FRBzJhFHEIQoEjkRVSoWIWMwmxJMHRQ3Lw
+F+GCNCWSUxhjRPGisiY1GVQ2RWQnCnODk0Z0wtLi8lVldVY3hIWjs8PT4/MpGpSk
+tMTU5PSVpbXF1eX1KEdXZjh2hpamtsbW5vZnd4eXp7fH1+f3SFhoeIiYqLjI2Oj4
+OUlZaXmJmam5ydnp+So6SlpqeoqaqrrK2ur6/9oADAMBAAIRAxEAPwDcp7t+QNXj
+90SddbKrBRVFE6xbm3DEUeenqHQFsRiyQywzwI4883LpIdC6GVifde6y7W3Ftn7O
+aGtlp8nljTR1dY1fUisyLLVSVEcVZMZ5Jakx1E1PKqO3DMjAE2b37r3QVbg7Xz/X
+eZTKbSyUjUKz6qzb9XNJUYetiuDKn25c/bTyKpAlhKSKfyQSPfuvdGw/077O/wBE
+/wDpY1P/AA7xfbfwfyw/f/x/V4f7v6rafuPuOden/gN+9p08e/de6//QNT/Ng/mc
+br+BmysduLa/WO5N89lds5HMR4Pe+YxGQPU+zsq8klTUVO7M/B41ym56nXJNQYWO
+WGSqiilnklSKLRN7raipp1r0/H7+ff8AJvpqt7L3VPktr9hbw7UqNuVW5c92Pjct
+mKulba43CKCi29Dhs7gKHDYtxuGRXpY4jDElPAkKxIhVt9OaB1Y1/Lt/nTfKr51/
+OPrL45byxHTuN2Nu3bnce481WYLa+58fnlg606b3/wBmQQ4/IVW8MvSwS1VXtOOM
+iSldXVyt0uHX3VSgAqD1sw/3hyv92v7q/dz/AME/jf8AH/s9b+H+J/Y/w/z6Pp5f
+teL2v/sfeuqdf//R2Re++gcE+a3/ANMdj7KwG/upexKapo8lsveeLTM7R3ptCtqf
+uqSkyNHKIv8ALcPUKjQ1dO8Ndja+nWqpJoJ44pV917h1WX8Uf+E8PwR6L7A+R299
+69U7W+SXUnZknV1R0r1X3HLuKp3b0JWY1uzJ+y8LSbqwtZjod6bUy5ymBGMr6hUy
+aQ0pp6yOSWEV9d7q2s9HI2p8HPgN8ZN4r2X0T8GeoOpu08dgd4be2/2DtjLbyOb2
+/T732nmdlbgkoqbI5msx0r1u3twVVOwkiYaJTYqbEe60WJwT0cf/AGXTOf6Af77f
+YVH96/4p/eP+FeN/uv7mfafb6ftvF5vu/wDlN03/AOA/+1ce/da6/9Lef7f/ANG/
+934P9Ivi8X3DfwTw3/jn8Q0DV/BPF+95radd/wBj9Hl40+/de6B7Aa/4fUfwrw/w
+z1fZ/wAc8H8T+3ufH5/sf8m8un+nF/fuvdJ7bf8Aon/vhSf6RPJ/G/vE/g38V+2/
+uf8Ac+SL7XV4+fuvJ+n7v/J7/wCOn37r3R2eP9j/ALHTf/evr7917r//2Q==
+
+------------drxm0nufRslT8Rx2t6uJ1l
+Content-Disposition: inline; filename=nav_next.jpg
+Content-Type: image/jpeg; name=nav_next.jpg
+Content-Location: http://www.webnms.com/webnms/help/developer_guide/nav_next.jpg
+Content-Transfer-Encoding: Base64
+
+/9j/4AAQSkZJRgABAgEASABIAAD/7QXWUGhvdG9zaG9wIDMuMAA4QklNA+0AAAAA
+ABAASAAAAAEAAgBIAAAAAQACOEJJTQQNAAAAAAAEAAAAeDhCSU0EGQAAAAAABAAA
+AB44QklNA/MAAAAAAAkAAAAAAAAAAAEAOEJJTQQKAAAAAAABAAA4QklNJxAAAAAA
+AAoAAQAAAAAAAAACOEJJTQP1AAAAAABIAC9mZgABAGxmZgAGAAAAAAABAC9mZgAB
+AKGZmgAGAAAAAAABADIAAAABAFoAAAAGAAAAAAABADUAAAABAC0AAAAGAAAAAAAB
+OEJJTQP4AAAAAABwAAD/////////////////////////////A+gAAAAA////////
+/////////////////////wPoAAAAAP////////////////////////////8D6AAA
+AAD/////////////////////////////A+gAADhCSU0ECAAAAAAAEAAAAAEAAAJA
+AAACQAAAAAA4QklNBB4AAAAAAAQAAAAAOEJJTQQaAAAAAABpAAAABgAAAAAAAAAA
+AAAAHAAAABwAAAAEAG4AZQB4AHQAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAA
+AAAAAAAAABwAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADhC
+SU0EEQAAAAAAAQEAOEJJTQQUAAAAAAAEAAAAFzhCSU0EDAAAAAADPQAAAAEAAAAc
+AAAAHAAAAFQAAAkwAAADIQAYAAH/2P/gABBKRklGAAECAQBIAEgAAP/uAA5BZG9i
+ZQBkgAAAAAH/2wCEAAwICAgJCAwJCQwRCwoLERUPDAwPFRgTExUTExgRDAwMDAwM
+EQwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwBDQsLDQ4NEA4OEBQODg4UFA4O
+Dg4UEQwMDAwMEREMDAwMDAwRDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDP/A
+ABEIABwAHAMBIgACEQEDEQH/3QAEAAL/xAE/AAABBQEBAQEBAQAAAAAAAAADAAEC
+BAUGBwgJCgsBAAEFAQEBAQEBAAAAAAAAAAEAAgMEBQYHCAkKCxAAAQQBAwIEAgUH
+BggFAwwzAQACEQMEIRIxBUFRYRMicYEyBhSRobFCIyQVUsFiMzRygtFDByWSU/Dh
+8WNzNRaisoMmRJNUZEXCo3Q2F9JV4mXys4TD03Xj80YnlKSFtJXE1OT0pbXF1eX1
+VmZ2hpamtsbW5vY3R1dnd4eXp7fH1+f3EQACAgECBAQDBAUGBwcGBTUBAAIRAyEx
+EgRBUWFxIhMFMoGRFKGxQiPBUtHwMyRi4XKCkkNTFWNzNPElBhaisoMHJjXC0kST
+VKMXZEVVNnRl4vKzhMPTdePzRpSkhbSVxNTk9KW1xdXl9VZmdoaWprbG1ub2JzdH
+V2d3h5ent8f/2gAMAwEAAhEDEQA/APQs7qLm2/Z6TEaPf5/utT0Pr2y7UnknVcv9
+YeoZXT+j5nUqNrrscNf7wSDutrpdwW/6VcfT/jO6uB72UHy2u/8ASiSn1KzKdS4W
+UO9p128tIV79oU/ZPtXbjZ33fuLxjov15zcTJZjWMdlYthDRU3WxpP8AoP3v+KXo
+vru+z/nbP5zZBmY/c/fSU//Q7HNwMfffhZlDcnFvEGp8hrm7m2s+j+6+tVqvqf8A
+VR8D9j0NB0Jl2n/SXSZv2X0x9o/sR9Kf5Kr08ez6Pbdz+CSnkegfU7C+rtQsEZHU
+XCLMsj6M/SrxWn+bZ/wn89Z/I/ml0P7Of9g9eD6k7tv8j/X3K4z7L6o+0fSn2z9B
+aSSn/9kAOEJJTQQhAAAAAABVAAAAAQEAAAAPAEEAZABvAGIAZQAgAFAAaABvAHQA
+bwBzAGgAbwBwAAAAEwBBAGQAbwBiAGUAIABQAGgAbwB0AG8AcwBoAG8AcAAgADYA
+LgAwAAAAAQA4QklNBAYAAAAAAAcACAAAAAEBAP/uAA5BZG9iZQBkQAAAAAH/2wCE
+AAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQECAgIC
+AgICAgICAgMDAwMDAwMDAwMBAQEBAQEBAQEBAQICAQICAwMDAwMDAwMDAwMDAwMD
+AwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDA//AABEIABwAHAMBEQAC
+EQEDEQH/3QAEAAT/xAGiAAAABgIDAQAAAAAAAAAAAAAHCAYFBAkDCgIBAAsBAAAG
+AwEBAQAAAAAAAAAAAAYFBAMHAggBCQAKCxAAAgEDBAEDAwIDAwMCBgl1AQIDBBEF
+EgYhBxMiAAgxFEEyIxUJUUIWYSQzF1JxgRhikSVDobHwJjRyChnB0TUn4VM2gvGS
+okRUc0VGN0djKFVWVxqywtLi8mSDdJOEZaOzw9PjKThm83UqOTpISUpYWVpnaGlq
+dnd4eXqFhoeIiYqUlZaXmJmapKWmp6ipqrS1tre4ubrExcbHyMnK1NXW19jZ2uTl
+5ufo6er09fb3+Pn6EQACAQMCBAQDBQQEBAYGBW0BAgMRBCESBTEGACITQVEHMmEU
+cQhCgSORFVKhYhYzCbEkwdFDcvAX4YI0JZJTGGNE8aKyJjUZVDZFZCcKc4OTRnTC
+0uLyVWV1VjeEhaOzw9Pj8ykalKS0xNTk9JWltcXV5fUoR1dmOHaGlqa2xtbm9md3
+h5ent8fX5/dIWGh4iJiouMjY6Pg5SVlpeYmZqbnJ2en5KjpKWmp6ipqqusra6vr/
+2gAMAwEAAhEDEQA/ANxrvP5D19DuibrnY1b9g+Pl+33PuOBkaqjq2UeXD4qS0i0z
+0ge1ROP3lmui6CjM3uvdS9lZvApjnmySpX1U6NJVVeRkNXUSyNdnkmnqGkdmLEkk
+k/n37r3Qd7h7UymyK+n3DsPNI2NmMVZJiGqjXbcy9JMIpdYgWRolFTCBpqIGSXSb
+q1vr7r3RoP8AT/s//RJ/pX0yfbf8AP4B9xB9/wD3n/zf93fNbR5PL+55dF/tP39F
+vT7917r/0LRf5g3yB7O+OXw7+Snyh67fbmR3/wBU4jZm8I4950eSyuIyb7u7s626
+7ypqqPHV+Lq6uoaHf0ky/wCUwgOmos1tDe62oBND1rebO/4U2/LumpIf4vtToiZ4
+wuunOzN2CmnAADQzIOwPIYnHBAdTY2vce99OaB0FPww/nmd1dO9jbe6y3RgNzd5d
+M7rzVHhqfYeDhnzHY228jlqpKWnm6tj9cuVqKmpnH+4GX9islIWnelmkklk91plF
+Kjrc9/v1X/6P/L4tx/3f8P8Afn+7H8LyH8c++/gt/B/drxfxD+8n2X+T/a+P7jzf
+s6dXp966b6//0dkburonr4ZTs/ovu/qjCdwdN9k4uDGV2yd11OUo8FufbVNvHbu9
+9tVE9XiJKGulnwue2nRs4ikQLVUxB9Isfde4dAltj+UF/Kn3A1NTyfy5OgsVTV0k
+VNNkP4hvqY0EVQwikqg0+4bH7ZXLC/HHv3VtTevRLfgF/J06T/llbXp9y0j0PbHy
+ny2KnpN4/IHJ4t4ItrxZKmNPldodF4WuDVGydtyUsj01VmpQNxZuJ5BI9FRztjE9
+14sT9nVxf+y7Zz/QP/pD+xq/7x/xT+Ofwrxyef8AuN9p4fuftPD5fu/P/lv1t9l6
+vrx791Xr/9LeS7q/0Xf3dpv9JejT9xN/APtP+Pj/AIh418v8C8X72vT4/Lr/AMmv
+4/N/Z9+690DWy7/bzfwjxfw28n2X8c8H8Q+31HxfcfZf5P5dFtWn0/09+691gxX+
+jH+9dL/pM8n8Q+8X+E/f+H+5nn80X233nj/c83lv/wADP8jt+rm3v3Xujofj/G3+
+xt/vdv8Aef8AY+/de6//2Q==
+
+------------drxm0nufRslT8Rx2t6uJ1l
+Content-Disposition: inline; filename=note.jpg
+Content-Type: image/jpeg; name=note.jpg
+Content-Location: http://www.webnms.com/webnms/help/developer_guide/images/note.jpg
+Content-Transfer-Encoding: Base64
+
+/9j/4AAQSkZJRgABAgEASABIAAD/7QhCUGhvdG9zaG9wIDMuMAA4QklNA+0AAAAA
+ABAASAAAAAEAAQBIAAAAAQABOEJJTQQNAAAAAAAEAAAAeDhCSU0EGQAAAAAABAAA
+AB44QklNA/MAAAAAAAkAAAAAAAAAAAEAOEJJTQQKAAAAAAABAAA4QklNJxAAAAAA
+AAoAAQAAAAAAAAACOEJJTQP1AAAAAABIAC9mZgABAGxmZgAGAAAAAAABAC9mZgAB
+AKGZmgAGAAAAAAABADIAAAABAFoAAAAGAAAAAAABADUAAAABAC0AAAAGAAAAAAAB
+OEJJTQP4AAAAAABwAAD/////////////////////////////A+gAAAAA////////
+/////////////////////wPoAAAAAP////////////////////////////8D6AAA
+AAD/////////////////////////////A+gAADhCSU0EAAAAAAAAAgACOEJJTQQC
+AAAAAAAIAAAAAAAAAAA4QklNBAgAAAAAABAAAAABAAACQAAAAkAAAAAAOEJJTQQe
+AAAAAAAEAAAAADhCSU0EGgAAAAAAeQAAAAYAAAAAAAAAAAAAACoAAAAqAAAADABy
+AGUAdgBpAHMAZQBkAF8AbgBvAHQAZQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAQAA
+AAAAAAAAAAAAKgAAACoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+OEJJTQQRAAAAAAABAQA4QklNBBQAAAAAAAQAAAAFOEJJTQQMAAAAAAV4AAAAAQAA
+ACoAAAAqAAAAgAAAFQAAAAVcABgAAf/Y/+AAEEpGSUYAAQIBAEgASAAA/+4ADkFk
+b2JlAGSAAAAAAf/bAIQADAgICAkIDAkJDBELCgsRFQ8MDA8VGBMTFRMTGBEMDAwM
+DAwRDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAENCwsNDg0QDg4QFA4ODhQU
+Dg4ODhQRDAwMDAwREQwMDAwMDBEMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM
+/8AAEQgAKgAqAwEiAAIRAQMRAf/dAAQAA//EAT8AAAEFAQEBAQEBAAAAAAAAAAMA
+AQIEBQYHCAkKCwEAAQUBAQEBAQEAAAAAAAAAAQACAwQFBgcICQoLEAABBAEDAgQC
+BQcGCAUDDDMBAAIRAwQhEjEFQVFhEyJxgTIGFJGhsUIjJBVSwWIzNHKC0UMHJZJT
+8OHxY3M1FqKygyZEk1RkRcKjdDYX0lXiZfKzhMPTdePzRieUpIW0lcTU5PSltcXV
+5fVWZnaGlqa2xtbm9jdHV2d3h5ent8fX5/cRAAICAQIEBAMEBQYHBwYFNQEAAhED
+ITESBEFRYXEiEwUygZEUobFCI8FS0fAzJGLhcoKSQ1MVY3M08SUGFqKygwcmNcLS
+RJNUoxdkRVU2dGXi8rOEw9N14/NGlKSFtJXE1OT0pbXF1eX1VmZ2hpamtsbW5vYn
+N0dXZ3eHl6e3x//aAAwDAQACEQMRAD8A9J6r1XE6TiHKyiSCQyqlg3WW2O/m8fHr
+09S6yP8A0bb6dNdlizB9bQHN9XpOfVWT77Ix3hoH0nurxsy+9+1v5lNNt1n+Brss
+S+tTgy3orzoG57jOvbD6h+77k+SXtxsrLyG3U0Y9Flwh9jQNjd4fYWllztzR/Mf4
+P/D/AKb9FjkKRdX+seDdjVu6T1GjIi1rb2Y11T3ljpa3btc93876f0FrdMzW5OO3
+dpc0D1K3EbwD/NWWsaf0f2iv9Ntd++uUwB1bIxYzclrTdX7qwLS6t5G72vty7q3P
+os+g70lJlUdIF+I11Nodsygy25jt9YFI32Y91Ln7WMYhkMccscJXxZZcAl/k49uL
++tOSRIyxkgDhhqf856v+5e2SXH/U9+dkZ2TlW3W/Zsdpx/Tfddc19r/Tuc7bl5OR
+6bsaprPo1/pPtf0/0S67cpPa9fBbHx+nip//0Oz+uPHSf/Dr/wD2y6gsX6404v2+
+ur0aw/IeHPIaJ2Mc6+172x7227GY9v8A4Y/sLa+uPHSf/Dr/AP2y6gsH6zvtzvrL
+c2hpLMGtlDnGA1r3j7Tc71Po7XMfjM/Sf4Sqz/rk3Li8nkLY8pqH1TUZUDlWOmWM
+dl5GGf5vMYbGD/hG/wA7t/sfpFj1WsFwxcdr8/NIkU1AloBOzdYfbtr3nb61voU1
+/wCEWtV0rrFNDepZL2i7Gc21mHXDoYP55r7BtY1/pOf6tVHq/wA1/PXJvxDEJYJA
+HhnGp4/3+OPWKuVneSquEwYSP6Ou3/Oeh6VgtwsSrDad4qHufxue4my63bLtvq2u
+fZsWjtVTp+RTk1NuocLKnaNeNQQFdVf3Ze17tevh9zh/r1xcP+MzcHq4K/q0/wD/
+0e8+tHSc3qeJjfYLK2ZWHkDIrbaS1j/0d2K+t9jG3Or9mU6z+Zt3+n6P+E9RnP8A
+Tfqd1JxeeuZosa619poxS4Bxsd61m/ItDbGMsc61r6qamWf4T7Uu4PCD+d2UuL3K
+l7e//O/wVmTg049r67NXA6bi4VIx8OltFXJawQXGAz1LHfTttc1nvts/SPVxtICm
+3hSUZuze/W148Gnh4FWEx1VEiovc9rNA1m47jXXtDf0e76KtpJ03SvBPqvrf4v8A
+/9k4QklNBCEAAAAAAFUAAAABAQAAAA8AQQBkAG8AYgBlACAAUABoAG8AdABvAHMA
+aABvAHAAAAATAEEAZABvAGIAZQAgAFAAaABvAHQAbwBzAGgAbwBwACAANgAuADAA
+AAABADhCSU0EBgAAAAAABwAIAAAAAQEA/+4ADkFkb2JlAGRAAAAAAf/bAIQAAQEB
+AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQICAgICAgIC
+AgICAwMDAwMDAwMDAwEBAQEBAQEBAQEBAgIBAgIDAwMDAwMDAwMDAwMDAwMDAwMD
+AwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMD/8AAEQgAKgAqAwERAAIRAQMR
+Af/dAAQABv/EAaIAAAAGAgMBAAAAAAAAAAAAAAcIBgUECQMKAgEACwEAAAYDAQEB
+AAAAAAAAAAAABgUEAwcCCAEJAAoLEAACAQMEAQMDAgMDAwIGCXUBAgMEEQUSBiEH
+EyIACDEUQTIjFQlRQhZhJDMXUnGBGGKRJUOhsfAmNHIKGcHRNSfhUzaC8ZKiRFRz
+RUY3R2MoVVZXGrLC0uLyZIN0k4Rlo7PD0+MpOGbzdSo5OkhJSlhZWmdoaWp2d3h5
+eoWGh4iJipSVlpeYmZqkpaanqKmqtLW2t7i5usTFxsfIycrU1dbX2Nna5OXm5+jp
+6vT19vf4+foRAAIBAwIEBAMFBAQEBgYFbQECAxEEIRIFMQYAIhNBUQcyYRRxCEKB
+I5EVUqFiFjMJsSTB0UNy8BfhgjQlklMYY0TxorImNRlUNkVkJwpzg5NGdMLS4vJV
+ZXVWN4SFo7PD0+PzKRqUpLTE1OT0laW1xdXl9ShHV2Y4doaWprbG1ub2Z3eHl6e3
+x9fn90hYaHiImKi4yNjo+DlJWWl5iZmpucnZ6fkqOkpaanqKmqq6ytrq+v/aAAwD
+AQACEQMRAD8A3ZvlZ8q+pfh31LWdt9tVmZqYKrM43ZfXvXuzMdHuHtPurtPcUVY2
+zun+n9ntWUD7t7E3c9BO0EDT0tBj6Gmq8plKugxFBkMhS+AqQBT/AGPPrYBJAAqS
+fz6I7D/NpjpMhjU3Z/L2+f8As3bc9WRnt5S4v4bdhY/aODowZ83ubJbR6T+ZnaXa
++5KTCY2KWpGM21t3Pbiy3iFLicbka+anpJlH0stGIrgVyGHl81A/1HpoTRFiolSt
+aYYfy9fy6S3y5/mKdH70642Tkvh18z+gO2ZIe1dq4Xs/bXx87/6L3tvzIbM3PFkc
+Fiv4RUYrcO6crSSf3/rMNTtTY6kavyH3QgVhG0sUqVNp3nf5xs3LpU71JFLIketE
+dkhieeUprNCVhjd8d2kErUgAjrkK/wCRtt3tLn3AUDY6KodlleOOV5ERGkSEhmSr
+VavbQUYUOpbBvjN3VRdrdeYNchNPj99YPEYqPde1Nw5fb1T2FjsZkfvG2BvLe238
+Lkayp2lP27syjpdzUVDWpBWQUuREM8UdRDPFGY7lst3y7cxbPuF3FNfRwRl3jLMj
+NmOXQzAeII7iOaAypWN5IZDEzoAxCu47jtm7bnum47NatBtc1zI8URGkxxuxeNNJ
+JKgRsulWo4UrrVWqAZf2g6R9e9+691//0No3+allIsJuj+WZmp5hTwYj+YDuPKTV
+BauRaeHH/wAt/wDmHVcs7SYsjJRrDHCWvT/vi14/Vb3uimtSR6fbUdORV1ilOB48
+OB40IqPUeYxQ8OpXZVZl8Z1r3n3H2Thu3+veuepege0+28dDTdg9zbVpKH+5W2K7
+dWN3Tu2uxWT2z2LlMplcNjpZaXa1GgOGolkbNJLmauHGbfMdqs2v9y2/bYU1XFzM
+kVAU4u4QBS4ZATqrqYEcMUBBbvrv6GxurqJIzLFE7HUFYdoNBQHIOkElSMUAINWa
+snomL5Y9k9ZxU3efc238bN2H1zTfx3aGNxHfWY3J1dvfM4eHJUdXg90b4+XvZuzM
+puTq7dbxTUFc2Denlq8fFOqKdJEyzcsbLsO6225bBLd/VWs4dGkeNopArZWSJIIW
+MUyVSSPWNSMyk1JPUZjnHcb2GWC9trZoZBQ6UKMOGUJJ0kUBU0NGyQeHTtg9qvTf
+EXG796gw2e2BvelzkuzO/KXancfyK6+3Kd7dXYbEdbUAz+8unO3utc1uCbDbbwOL
+hLVlXWoZ6x3hZS0xkwQ+737yc37/APeh5x5A9/8Amt7/AJg3XbBDtqvb7bFaQ3ex
+yzNuFlBCYUCz3u3bjt+6ra2sDwo0G7yho1iKtOfvxyhtPK237TvXtvaPbco31vFe
+RfqzSOYbpAgbxHdnZILqC4tlkmbW6LAWU6uhC/k+5vvPsju7u7tvd3YXZx6k6r29
+W9Bw7S3P8hvkz3htzfXb28azrrs3K5iXEfIT5J9uvsvO9J7Cw+Lip6uhw9LHmIOx
+aiFK0vjaimGdXu6mwbTZ7Rsu32cH7xmb6hnW3tYHSIa4kTVb20OtZWJqGclTbhmU
+tJrMJciy7vuD3+4X1672i/popZmBftLHukYgoAAKrnWe7FBsUfxH/af90+b6N+n/
+AFX6/wBP+HuDtJ/jHGn+rHH+fy6kb8vLr//R2aP5wxIpf5fJB/7nb7BH0ve/8sr+
+YwP6j+vv1Aa1Of8AZHV4yQ4NfI/zB/1f4PTqsX+cRszrD/TxsrZ8fXnXlNn+3N74
+HMbmyFBtTbwyk+ztl7v3J2dv3PbhxseOjrdx4HfrbeoNoZ6oqJUpjNvKI1TVBmSi
+rMgfZ6OeWw3GbU+iCSSnGmto440ANaKwqZFpk+HilKiJPcCeZd4tE+obR9KmKtw1
+ydpB9OBHlkdOuxu00poYv8oAsqi2r/D/AF/Y0vds1E9vQSjmAHQyfGvcOJru2+5e
+lKoLDtf5CbOrOwtuU664qZOx9q0rUe/abFR0h8VPU5HbtTHmaqV42knrrOTIRp98
+i/vsbRu/sr7pcle/nKVqTuO2XEe7IirG7SyWEc6bpaRRupRTf7Bcbsk0x0SGZrXw
+5FkjjZcz+QLqD3K9jNz5cv217jsFwYyfMWN6USKR3JDMLe9W1S3iUlVQzMVoTW2z
+4q9G43ofqvr/AKXxOR/jsWx8TO2c3L9tVY5N4733FlchuzsPfIxFRls4uBO+t+57
+JZf+Gw1UtJjvvftabTTQxIuYk/MsHOUzc12t0k1lfqk0LoyuhhZFMGiRQBIvg6As
+lP1Fo5yx6iyysE2u0g25Fp4K6Tx+L8RNSSCWqSKmlaDo6X2Cf4/5jR9G+v8Atvr/
+AIe2ulPX/9LZn/nD/wDAX+Xz9b/7O32B9CR/3TL/AJi5P0I/A92BADA+dP8ACP2/
+6vPq8fxj7D/gPzH/ABXkeBqP/mb5zc3fv8ybsXGbBw1bXYL4yda7D6XyueyE2HxG
+1MBvnfGPoe5+xMjJutqqDExYrNbZ3JsrH+PK1MdZFmcBXwUtNGHaWuyo9pLO22nk
+kXt3Mvi7hdSSIi6mkKR0gC+GATUPHK3YCNDqWbyWDfcfdLZd5SORwgggRGLUAJLM
+4IOrh+pSp05qKcCQJ2tuXCUe7aHqnrPC7q+U3f1dTUtXTda9XYTN1u3sNQ1WXpdv
+RZ3duQRsPkMHstM9kaWiq9x56o2ttrDVVRG1fWfbnWR3uMNvYWjbrzLuMO0bPQkN
+IVM8lF16Y4+5S7KCURRI0gBClWHUaWl/vXMM4seVduedjgyGoRakKSSaYUsNRxTB
+qQerD9tfFT5g7I2VjflF2jntq4/f3T2d2n2RtX44bEjo84mD2LRy0U3Y2K3TvXGv
+hdt4zcqbJzmSjze39qUedoK+twUTUWXzL1dPHFgr96242D3I5Jutp5J5eee821mu
+YJJiVlvZYTqELaiSLafQgKuyuyO0Tqo6y/8Au07TNyLzRJHzjv1dv3uA2V2aaore
+OcFBOFpQyQNIxV8hWAkBqvV5fx97E2X2dtbGb12FnMfufaWRappsHuLGTx1WNzFD
+RTGCCqoaqNmjqYViCxmRSVd0JUstmMHfdu2e/wCWPaPl7k7cdyW7k2SW7sIpAKUs
+7W7nj2+BuxP1LWwFtazdtDNDIVaRSJGFnPOyXexb4Ir1VWa4t4rigOoUmXUGrU4f
++0X+i4HEEAzlx/vF/wDYe526B3X/09sr+aF8Tu6flX1P0zJ8eN2bD213F8e/kDje
+99n4vs/JZ/buwt9GfpzujoXP7R3NvHbO1Ow8vtOgTa3etdlxIu2dwwZSXEriJ6WG
+DIy5CiujKhq0YYU4f5ftAyPQ58uthmXUVIBoRUitKgiv2gZHoaVBGOqifjh/J0+R
+tfPuKq+fnydx26cfmu2OyOzq3qn40V+8qTF7rzHZe+qbsbd824u39+4vCbr27tje
+WVzmeospg9uYLFZqMPS5Gj3RBUmWET7fe9lrs+2Wu1chbIYp0to4jd3YR5lWOIxI
+EjQtHrQLG6TOzUfWDFp0jqJm9rLHdd6uN75km8VmkLC3jZvABqG4kBqHKlc1FKsT
+gXrdF/G3rLovZdN130p1xtfq7ZSVEGQrMVtfGrSVO4c5Hh8RgJ93b0zczT5/fm+s
+tisDRx5HP5qqr81lGp0erqp5BrMIbvvG7cw3826b7uM13uEhJLyMWPczOVUcEQMz
+MqIFRdXaAOpNsbCy223js9vtY4bZAAFQAAUAA+00AqTUmgqcdGZxe0qWiQFgDJa9
+yATc25F+AbXt7LaDhTt6V9BL030NtfobGZbaWwVqqHZldvLc+78JtY02Do8FsaLd
+deMtX7S2bR4PC4cUGzqPMzVNRQ0tQaqSiWqanilWkipaeBFY7dZ7cLhLOFY0lkMj
+BRRdTAAkAYANK44kk+fRjuW63+7PbS7hcNLLFEI1ZiSxRSxXUTkkaqVPlQeXRibN
+/j/mLfX+1/xX2u6Luv/U376v/MP+n6H9X0+h9+690Gh/4HH/AIt36/z+v6/n37r3
+Qg4//Nr/AJj6D/N/7D/effuvdOfv3XusJ/Uv+b/P+9e/de6ze/de6//Z
+
+------------drxm0nufRslT8Rx2t6uJ1l--

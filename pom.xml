@@ -23,6 +23,17 @@
 	<packaging>war</packaging>
 
 	<dependencies>
+<dependency>
+    <groupId>org.snmp4j</groupId>
+    <artifactId>snmp4j</artifactId>
+    <version>1.10.1</version>
+</dependency>	
+<dependency>
+ 
+    <groupId>xmlrpc</groupId>
+    <artifactId>xmlrpc</artifactId>
+    <version>1.2-b1</version>
+</dependency>		
 	
 		<dependency>
 			<groupId>cc.co.llabor</groupId>

@@ -27,6 +27,11 @@ package org.jrobin.core;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
+
+import org.jrobin.core.jrrd.RRDException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class should be used to synchronize access to RRD files
@@ -40,6 +45,8 @@ public class RrdDbPool {
 	 * never open too many RRD files at the same time.
 	 */
 	public static final int INITIAL_CAPACITY = 1000;
+	private static final Logger log = LoggerFactory
+			.getLogger(RrdDbPool.class.getName());
 	private static RrdDbPool instance = new RrdDbPool();
 	private RrdBackendFactory factory;
  
@@ -242,6 +249,26 @@ public class RrdDbPool {
 		RrdEntry(RrdDb rrdDb) {
 			this.rrdDb = rrdDb;
 			this.count = 1;
+		}
+	}
+
+	/**
+	 * Clears the internal state of the pool entirely. All open RRD files are closed.
+	 *
+	 * @throws IOException Thrown in case of I/O related error.
+	 */
+	public synchronized void reset() throws RrdException{
+		for (String rrdName : instance.getOpenFiles()) {
+			try {
+				log.info("cleaning rrd=[{}]..",rrdName);
+				RrdDb rrdDb = instance.requestRrdDb(rrdName); 
+				instance.release(rrdDb);
+				log.info("compleete.");
+			} catch (RrdException e) {
+				log.error("failed", e);
+			} catch (IOException e) {
+				log.error("failed", e);
+			}
 		}
 	}
 }
