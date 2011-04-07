@@ -26,15 +26,31 @@ package org.jrobin.mrtg.server;
 
 import snmp.*;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.URL;
 import java.util.*;
+
+import net.percederberg.mibble.Mib;
+import net.percederberg.mibble.MibLoader;
+import net.percederberg.mibble.MibLoaderException;
+import net.percederberg.mibble.MibSymbol;
+import net.percederberg.mibble.MibTypeSymbol;
+import net.percederberg.mibble.MibValueSymbol;
 
 class Poller {
 	static final int SNMP_TIMEOUT = 10; // seconds
 
 	static final String[][] OIDS = {
+		//OID	 .1.3.6.1.4.1.42.2.145.3.163.1 @ http://download.oracle.com/javase/1.5.0/docs/guide/management/SNMP.html
+		
+		{"jvmMgtMIB",      "1.3.6.1.4.1.42.2.145.3.163.1"       },
+		
 		{"sysDescr",      "1.3.6.1.2.1.1.1.0"       },
 		{"sysName",       "1.3.6.1.2.1.1.5.0"       },
 		{"ifDescr",       "1.3.6.1.2.1.2.2.1.2"     },
@@ -49,26 +65,29 @@ class Poller {
 		{"ifInDiscards",  "1.3.6.1.2.1.2.2.1.13"    },
 		{"ifOutDiscards", "1.3.6.1.2.1.2.2.1.19"    },
 		{"ifAlias",       "1.3.6.1.2.1.31.1.1.1.18" }
+
+		
+		
 	};
 
 	// state variables
 	private SNMPv1CommunicationInterface comm;
 
-    Poller(String host, String community)
+    Poller(String hostAndPort, String community)
 		throws IOException {
 		// check for port information
-		String snmpHost = host;
-		int snmpPort = SNMPv1CommunicationInterface.SNMPPORT;
-		int colonIndex = host.indexOf(":");
+		String snmpHost = hostAndPort;
+		int snmpPort = SNMPv1CommunicationInterface.SNMP_PORT;
+		int colonIndex = hostAndPort.indexOf(":");
 		if(colonIndex != -1) {
 			// port specified
-            snmpHost = host.substring(0, colonIndex);
-			String portStr = host.substring(colonIndex + 1);
+            snmpHost = hostAndPort.substring(0, colonIndex);
+			String portStr = hostAndPort.substring(colonIndex + 1);
 			snmpPort = Integer.parseInt(portStr);
 		}
 		InetAddress snmpHostAddress = InetAddress.getByName(snmpHost);
 		//TODO comm = new SNMPv1CommunicationInterface(0, snmpHostAddress, community, snmpPort);
-		comm = new SNMPv1CommunicationInterface(0, snmpHostAddress, community);
+		comm = new SNMPv1CommunicationInterface(0, snmpHostAddress, snmpPort,  community);
 		comm.setSocketTimeout(SNMP_TIMEOUT * 1000);
     }
 
@@ -87,7 +106,7 @@ class Poller {
 	String get(String oid) throws IOException {
 		String numericOid = getNumericOid(oid);
 		try {
-	    	SNMPVarBindList newVars = comm.getMIBEntry(numericOid);
+	    	SNMPVarBindList newVars = comm.getNextMIBEntry( numericOid);//comm.getMIBEntry(numericOid);
 		    SNMPSequence pair = (SNMPSequence)(newVars.getSNMPObjectAt(0));
 			SNMPObject snmpObject = pair.getSNMPObjectAt(1);
 			return snmpObject.toString().trim();
@@ -101,7 +120,8 @@ class Poller {
 	}
 
 	String get(String oid, int index) throws IOException {
-		return get(oid + "." + index);
+		String OID = oid + "." + index;
+		return get(OID);
 	}
 
 	String[] get(String[] oids) throws IOException {
@@ -113,43 +133,112 @@ class Poller {
 		return result;
 	}
 
+	Mib mib = null;
+	
 	SortedMap walk(String base) throws IOException {
 		SortedMap map = new TreeMap();
-		String baseOid = getNumericOid(base);
-		String currentOid = baseOid;
+		checkMIB( );
+		String baseOid =  getNumericOid(base);
+		String currentOid = baseOid;  
+		
+		
 		try {
-			while(true) { // ugly, but it works
-				SNMPVarBindList newVars = comm.getNextMIBEntry(currentOid);
-				SNMPSequence pair = (SNMPSequence)(newVars.getSNMPObjectAt(0));
-				currentOid = pair.getSNMPObjectAt(0).toString();
- 	 	  		String value = pair.getSNMPObjectAt(1).toString().trim();
-	 	 	  	if(currentOid.startsWith(baseOid)) {
-		   		 	// extract interface number from oid
-			    	int lastDot = currentOid.lastIndexOf(".");
-					String indexStr = currentOid.substring(lastDot + 1);
-					int index = Integer.parseInt(indexStr);
-					// store interface description
-					map.put(new Integer(index), value);
-		    	}
-				else {
-					break;
+			Collection syms = mib.getAllSymbols();
+			Collection impTmp = mib.getAllImports();
+			System.out.println(impTmp);
+			String path= ""+base+"/";
+			for( Object o : syms ) { // ugly, but it works
+				MibSymbol ms  = (MibSymbol)o;
+				System.out.println("@@@@"+ms.getName());
+				if (o instanceof  MibTypeSymbol){
+					MibTypeSymbol sym = (MibTypeSymbol)o;
+					System.out.println(currentOid+" :== "+sym.getName()+":"+sym.getType()+" =["+"]");
+					
+					//currentOid = sym.getName() ;
+		 	 	  	if(currentOid.startsWith(baseOid)) { 
+						// store interface description
+						map.put( currentOid ,  path);
+			    	}
+					else {
+						System.out.println("--"+ sym.getName());
+						continue;
+					}
+					
+				}else if (o instanceof  MibValueSymbol){
+					MibValueSymbol sym = (MibValueSymbol)o;
+					currentOid = sym.getValue().toString();
+					String name = sym.getName();
+					path = ""+base+"/"+name+"/";
+					//System.out.println("."+name+ ":"+currentOid);
+		 	 	  	if(currentOid.startsWith(baseOid)) {
+			   		 	// extract interface number from oid
+				    	int lastDot = currentOid.lastIndexOf(".");
+						String indexStr = currentOid.substring(lastDot + 1);
+						int index = Integer.parseInt(indexStr);
+						// store interface description
+						//map.put(new Integer(index),  name);
+						if (path.indexOf("jvmClassesLoadedCount")>=0){
+							//System.out.println("jvmClassesLoadedCount");
+							map.put( currentOid ,  "/jvmMgtMIB/jvmMgtMIBObjects/jvmClassLoading/jvmClassesLoadedCount" );
+						}
+						//System.out.println(":"+path+"index:"+index);
+			    	}
+					else {
+						//System.out.println("!!!--"+ sym.getName());
+						continue;
+					}
+				}else{
+					//System.out.println(o );
 				}
 			}
 		}
-		catch(SNMPBadValueException bve) { }
-		catch(SNMPGetException ge) { }
+		 
+		catch( Exception e) { e.printStackTrace(); }
 		return map;
 	}
 
+	/**
+	 * @author vipup
+	 * @param mibloader
+	 * @throws IOException
+	 */
+	private void checkMIB( ) throws IOException {
+		MibLoader mibloader = new MibLoader();
+		if (mib == null)
+		try {
+			String mibpath = "snmp/JVM-MANAGEMENT-MIB.mib";
+			ClassLoader classLoader = this.getClass().getClassLoader();
+			URL fi = classLoader.getResource(mibpath);
+			mibloader.addResourceDir(new File(fi.getFile()).getParent());
+			InputStream resourceAsStream = classLoader.getResourceAsStream(mibpath);
+			Reader in = new InputStreamReader(resourceAsStream);
+			mib = mibloader.load(in);
+		} catch (MibLoaderException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			
+			File file = new File("c:/Profile/xco5015/workspace/rrd/src/resources/snmp/JVM-MANAGEMENT-MIB.mib");
+			try {
+				mib = mibloader.load(file);
+			} catch (MibLoaderException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		System.out.println(mib);
+	}
+
 	SortedMap walkIfDescr() throws IOException {
-		SortedMap rawInterfacesMap = walk("ifDescr");
+		//Name	 jvmMgtMIB!@#.iso.org.dod.internet.private.enterprises.sun.products.jmgt.standard.jsr163.jvmMgtMIB
+		// @see http://download.oracle.com/javase/1.5.0/docs/guide/management/SNMP.html
+		SortedMap rawInterfacesMap = walk("jvmMgtMIB");
 		SortedMap enumeratedInterfacesMap = new TreeMap();
 		Collection enumeratedInterfaces = enumeratedInterfacesMap.values();
 		// check for duplicate interface names
 		// append integer suffix to duplicated name
 		Iterator iter = rawInterfacesMap.keySet().iterator();
 		while(iter.hasNext()) {
-			Integer ifIndex = (Integer) iter.next();
+			Object ifIndex =   iter.next();
 			String ifDescr = (String) rawInterfacesMap.get(ifIndex);
 			if(enumeratedInterfaces.contains(ifDescr)) {
 				int ifDescrSuffix = 1;
@@ -164,16 +253,24 @@ class Poller {
 	}
 
 	int getIfIndexByIfDescr(String ifDescr) throws IOException {
-		SortedMap map = walkIfDescr();
-		Iterator it = map.keySet().iterator();
-		while(it.hasNext()) {
-			Integer ix = (Integer) it.next();
-			String value = (String) map.get(ix);
-		    if(value.equalsIgnoreCase(ifDescr)) {
-				return ix.intValue();
-		    }
+		SortedMap map = walkIfDescr(); 
+		String OID  = "null";
+		try{
+			OID = ((MibValueSymbol)mib.getSymbol("jvmClassesLoadedCount")).getValue().toString();
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
-		return -1;
+		Object o = map.get(OID);
+		int retval = -1;		
+		if (o==null)return retval; 
+		Object[] arrTmp = map.keySet().toArray();
+		for (int i=0;i<arrTmp.length;i++){
+			if (OID.equals(arrTmp[i])){ 
+				retval = i;
+				break;
+			} 
+		}
+		return retval;
 	}
 
 	void close() {
