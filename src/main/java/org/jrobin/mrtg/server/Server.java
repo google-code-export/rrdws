@@ -273,6 +273,7 @@ public class Server implements MrtgConstants {
 				return null;
 			}
 		} catch (IOException e) {
+			if (2==2) e.printStackTrace();
 			throw new MrtgException(e);
 		}
 	}

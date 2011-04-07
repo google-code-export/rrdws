@@ -68,6 +68,8 @@ class SnmpReader extends Thread {
 			Debug.print("IOException on " + getLabel() + ": " + e);
 		} catch (MrtgException e) {
 			Debug.print("MrtgException on " + getLabel() + ": " + e);
+		} catch (ArrayIndexOutOfBoundsException e) {
+			Debug.print("MrtgException on " + getLabel() + ": " + e);
 		} finally {
 			if(comm != null) {
 				comm.close();

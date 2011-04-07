@@ -32,7 +32,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.Vector;
-
+@SuppressWarnings("unchecked")
 class RpcClient implements MrtgConstants {
 
 	private XmlRpcClient webClient;
@@ -82,6 +82,7 @@ class RpcClient implements MrtgConstants {
 		return ((Integer) webClient.execute("mrtg.removeRouter", params)).intValue();
 	}
 
+	
 	Vector getAvailableLinks(RouterInfo routerInfo)
 		throws IOException, XmlRpcException {
 		Vector params = new Vector();

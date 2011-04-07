@@ -32,7 +32,7 @@ import org.jrobin.mrtg.MrtgException;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.Vector;
-
+@SuppressWarnings("unchecked")
 class Listener implements MrtgConstants {
 	private WebServer webServer;
 
@@ -178,6 +178,7 @@ class Listener implements MrtgConstants {
 			return hash;
 		}
 
+		
 		public Hashtable getMrtgInfo() throws MrtgException {
 			Hashtable mrtgInfo = new Hashtable();
 			mrtgInfo.put("serverInfo", getServerInfo());
