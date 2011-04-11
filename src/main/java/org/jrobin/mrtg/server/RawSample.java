@@ -22,87 +22,32 @@
  * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  * Boston, MA 02111-1307, USA.
  */
-package org.jrobin.mrtg.server;
-
-import org.jrobin.core.Util;
-
+package org.jrobin.mrtg.server; 
 class RawSample {
 	private String host;
-	private String ifDescr = "";
-	private boolean valid = true;
-	private long timestamp = Util.getTime();
-	private long ifInOctets;
-	private long ifOutOctets;
-	private long sysUpTime;
-	private int ifOperStatus;
-
-	String getHost() {
-		return host;
+	private String ifDescr = null;
+	private String value = null;
+	public void setHost(String host2) {
+		this.host = host2;
 	}
-
-	void setHost(String host) {
-		this.host = host;
+	public String getIfDescr() { 
+			return ifDescr;
 	}
-
-	String getIfDescr() {
-		return ifDescr;
-	}
-
-	void setIfDescr(String ifDescr) {
+	public void setIfDescr(String ifDescr) {
 		this.ifDescr = ifDescr;
 	}
-
-	boolean isValid() {
-		return valid;
+	public String getValue() { 
+			return value;
 	}
-
-	void setValid(boolean valid) {
-		this.valid = valid;
+	public void setValue(String value) {
+		this.value = value;
 	}
-
-	long getTimestamp() {
-		return timestamp;
+	public String getHost() { 
+			return host;
 	}
-
-	void setTimestamp(long timestamp) {
-		this.timestamp = timestamp;
+ 
+	public String toString(){
+		//[Thu Mar 31 16:54:07 CEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/Heap_init=[value=1.6777216E7]gauge.Heap_init := 1.6777216E7
+		return ""+host+":"+ifDescr+"=[value="+value+"]";
 	}
-
-	long getIfInOctets() {
-		return ifInOctets;
-	}
-
-	void setIfInOctets(long ifInOctets) {
-		this.ifInOctets = ifInOctets;
-	}
-
-	long getIfOutOctets() {
-		return ifOutOctets;
-	}
-
-	void setIfOutOctets(long ifOutOctets) {
-		this.ifOutOctets = ifOutOctets;
-	}
-
-	long getSysUpTime() {
-		return sysUpTime;
-	}
-
-	void setSysUpTime(long sysUpTime) {
-		this.sysUpTime = sysUpTime;
-	}
-
-	int getIfOperStatus() {
-		return ifOperStatus;
-	}
-
-	void setIfOperStatus(int ifOperStatus) {
-		this.ifOperStatus = ifOperStatus;
-	}
-
-	public String toString() {
-		return ifDescr + "@" + host + ": timestamp=" + timestamp + " valid=" + valid +
-			" ifInOctets=" + ifInOctets + " ifOutOctets=" + ifOutOctets +
-			" sysUpTime=" + sysUpTime;
-	}
-}
+ }

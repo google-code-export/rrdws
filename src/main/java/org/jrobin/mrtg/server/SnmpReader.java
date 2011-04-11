@@ -29,7 +29,7 @@ import org.jrobin.mrtg.MrtgException;
 
 import java.io.IOException;
 
-class SnmpReader extends Thread {
+class SnmpReader  implements Runnable  {
 	static final int RECONFIGURE_RETRIES = 3;
 
 	private Device router;
@@ -38,7 +38,7 @@ class SnmpReader extends Thread {
 	private Poller comm;
 
 	SnmpReader(Device router, Port link) {
-		setDaemon(true);
+		
 		link.setSampling(true);
 		this.router = router;
 		this.link = link;
@@ -46,21 +46,20 @@ class SnmpReader extends Thread {
 
 	public void run() {
 		try {
-			comm = new Poller(router.getHost(), router.getCommunity());
-			if(link.getIfIndex() < 0) {
+			String community = router.getCommunity();
+			String host = router.getHost();
+			comm = new Poller(host, community);
+			int ifIndex = link.getIfIndex();
+			if(ifIndex < 0) {
 				findIfIndex();
 			}
-			if(link.getIfIndex() >= 0) {
-				Debug.print("Sampling: " + link.getIfDescr() + "@" + router.getHost() +
-					" [" + link.getIfIndex() + "]");
-				int ix = link.getIfIndex();
-				String[] oids = new String[] { // OIDS to catch
-					"sysUpTime", "ifDescr." + ix,
-					"ifInOctets." + ix, "ifOutOctets." + ix,
-					"ifOperStatus." + ix
-				};
-				String[] values = comm.get(oids);
-				RawSample sample = createRawSample(values);
+			if(ifIndex >= 0) {
+				String ifDescr = link.getIfDescr();
+				Debug.print("Sampling: " + ifDescr + "@" + host +
+					" [" + ifIndex + "]");
+ 
+				String value  = comm.get(ifDescr, ifIndex);
+				RawSample sample = createRawSample(value);
 				link.processSample(sample);
 			}
 		}
@@ -103,24 +102,15 @@ class SnmpReader extends Thread {
 		Debug.print("Link " + getLabel() + " not found, link deactivated");
 	}
 
-	private RawSample createRawSample(String[] values) {
+	private RawSample createRawSample(String value ) {
 		RawSample sample = new RawSample();
-		sample.setHost(router.getHost());
-		if(values[0] != null) {
-			sample.setSysUpTime(Long.parseLong(values[0]));
+		String host = router.getHost();
+		sample.setHost(host);
+		if(value != null) {
+			sample.setValue(value) ;
+			sample.setIfDescr(link.getIfDescr());
 		}
-		if(values[1] != null) {
-			sample.setIfDescr(values[1]);
-		}
-		if(values[2] != null) {
-			sample.setIfInOctets(Long.parseLong(values[2]));
-		}
-		if(values[3] != null) {
-			sample.setIfOutOctets(Long.parseLong(values[3]));
-		}
-		if(values[4] != null) {
-			sample.setIfOperStatus(Integer.parseInt(values[4]));
-		}
+ 
 		return sample;
 	}
 

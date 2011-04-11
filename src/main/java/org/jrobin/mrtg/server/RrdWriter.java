@@ -29,11 +29,20 @@ import org.jrobin.mrtg.Debug;
 import org.jrobin.mrtg.MrtgConstants;
 import org.jrobin.mrtg.MrtgException;
 
+import ws.rrd.collectd.TextLineIterator;
+import ws.rrd.csv.Action;
+import ws.rrd.csv.RrdUpdateAction;
+
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 class RrdWriter extends Thread implements MrtgConstants {
 	private RrdDefTemplate rrdDefTemplate;
@@ -71,7 +80,12 @@ class RrdWriter extends Thread implements MrtgConstants {
 			}
 			if(active && queue.size() > 0) {
 				RawSample rawSample = (RawSample) queue.remove(0);
-				process(rawSample);
+				try {
+					process(rawSample);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		Debug.print("Archiver ended");
@@ -83,45 +97,26 @@ class RrdWriter extends Thread implements MrtgConstants {
 			notify();
 		}
 	}
-
-	private void process(RawSample rawSample) {
-		RrdDb rrdDb = null;
-		try {
-			rrdDb = openRrdFileFor(rawSample);
-			Sample sample = rrdDb.createSample();
-			sample.setTime(rawSample.getTimestamp());
-			if(rawSample.isValid()) {
-				sample.setValue("in", rawSample.getIfInOctets());
-				sample.setValue("out", rawSample.getIfOutOctets());
-			}
-			sample.update();
-			goodSavesCount++;
-		} catch (IOException e) {
-			Debug.print(e.toString());
-			badSavesCount++;
-		} catch (RrdException e) {
-			Debug.print(e.toString());
-			badSavesCount++;
-		} finally {
-			try {
-				RrdDbPool pool = RrdDbPool.getInstance();
-				pool.release(rrdDb);
-			} catch (IOException e) {
-				Debug.print(e.toString());
-			} catch (RrdException e) {
-				Debug.print(e.toString());
-			}
-		}
+ 
+	private void process(RawSample rawSample) throws IOException {  			
+		Action a = new RrdUpdateAction();
+		String ifDescr = rawSample.getIfDescr();
+		long string =  System.currentTimeMillis();
+		String value = rawSample.getValue();
+		a.perform(  ifDescr , string , value );
 	}
 
 	private String getRrdFilenameFor(RawSample rawSample) {
-		return getRrdFilename(rawSample.getHost(), rawSample.getIfDescr());
+		String host = rawSample.getHost();
+		String ifDescr = rawSample.getIfDescr();
+		return getRrdFilename(host, ifDescr);
 	}
 
 	static String getRrdFilename(String host, String ifDescr) {
 		String filename = ifDescr.replaceAll("[^0-9a-zA-Z]", "_") +
 			"@" + host.replaceFirst(":", "_") + ".rrd";
-		return Config.getRrdDir() + filename;
+		String rrdDir = Config.getRrdDir();
+		return rrdDir + filename;
 	}
 
 	synchronized void store(RawSample sample) {
@@ -130,22 +125,7 @@ class RrdWriter extends Thread implements MrtgConstants {
 		notify();
 	}
 
-	private RrdDb openRrdFileFor(RawSample rawSample)
-		throws IOException, RrdException {
-		String rrdFile = getRrdFilenameFor(rawSample);
-		if(new File(rrdFile).exists()) {
-			RrdDbPool pool = RrdDbPool.getInstance();
-			return pool.requestRrdDb(rrdFile);
-		}
-		else {
-			// create RRD file first
-			rrdDefTemplate.setVariable("path", rrdFile);
-			RrdDef rrdDef = rrdDefTemplate.getRrdDef();
-			Debug.print("Creating: " + rrdFile);
-			RrdDbPool pool = RrdDbPool.getInstance();
-			return pool.requestRrdDb(rrdDef);
-		}
-	}
+ 
 
 	int getSampleCount() {
 		return sampleCount;

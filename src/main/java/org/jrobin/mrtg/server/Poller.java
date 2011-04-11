@@ -104,9 +104,10 @@ class Poller {
     }
 
 	String get(String oid) throws IOException {
-		String numericOid = getNumericOid(oid);
+		String numericOid = getNumericOid(oid);checkMIB( );
+		numericOid = ((MibValueSymbol) mib.getSymbol("jvmClassesLoadedCount")).getValue().toString();
 		try {
-	    	SNMPVarBindList newVars = comm.getNextMIBEntry( numericOid);//comm.getMIBEntry(numericOid);
+	    	SNMPVarBindList newVars = comm.getNextMIBEntry( numericOid); // comm.getMIBEntry(numericOid);
 		    SNMPSequence pair = (SNMPSequence)(newVars.getSNMPObjectAt(0));
 			SNMPObject snmpObject = pair.getSNMPObjectAt(1);
 			return snmpObject.toString().trim();
@@ -121,6 +122,7 @@ class Poller {
 
 	String get(String oid, int index) throws IOException {
 		String OID = oid + "." + index;
+		OID = oid;
 		return get(OID);
 	}
 

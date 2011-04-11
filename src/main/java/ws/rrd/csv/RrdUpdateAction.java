@@ -38,31 +38,15 @@ public class RrdUpdateAction implements Action {
 			this.sdf = sdf;
 		}
 
-		@Override
-		public Object perform(String xpath, String timestamp, String data) {
-			Object retval = "";
-			
-			long timestampTmp = 0;
-			try {
-				synchronized (RrdUpdateAction.class) { 
-					Date parseVal = sdf.parse(timestamp);
-					timestampTmp = parseVal.getTime();  
-				}
-			} catch (ParseException e1) { 
-				//e1.printStackTrace();
-				retval = e1;
-			} catch (java.lang.NumberFormatException e) {
-				retval = e;
-			}
-
-			
-			String cmdTmp = makeUpdateCMD(data, timestampTmp, xpath); 
+		public Object perform(String xpath, long timestamp, String data) {
+			Object retval = ""; 
+			String cmdTmp = makeUpdateCMD(data, timestamp, xpath); 
 			try {   
 				retval  = RrdCommander.execute(cmdTmp );
 			} catch (IOException e) { 
 				if (e instanceof FileNotFoundException){
 					try {
-						String cmdCreate = makeCreateCMD(timestampTmp, xpath);   
+						String cmdCreate = makeCreateCMD(timestamp, xpath);   
 						System.out.println(xpath +" --->  "+cmdCreate); 
 						retval  =RrdCommander.execute(cmdCreate);
 						retval  =RrdCommander.execute(cmdTmp );
@@ -77,7 +61,25 @@ public class RrdUpdateAction implements Action {
 			} catch (RrdException e) { 
 				//e.printStackTrace();
 				retval = e; 
-			} 
+			} 			
+			return retval;
+		}
+		public Object perform(String xpath, String timestamp, String data) {
+			Object retval = "";			
+			long timestampTmp = 0;
+			try {
+				synchronized (RrdUpdateAction.class) { 
+					Date parseVal = sdf.parse(timestamp);
+					timestampTmp = parseVal.getTime();  
+					retval= perform(xpath, timestampTmp, data); 
+				}
+			} catch (ParseException e1) { 
+				//e1.printStackTrace();
+				retval = e1;
+			} catch (java.lang.NumberFormatException e) {
+				retval = e;
+			}
+
 			return retval;
 		}
 

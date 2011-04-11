@@ -58,6 +58,15 @@ public class ToStringPrintlnAction implements Action {
 				sb.append(cmdTmp);
 				sb.append("\n");
 				
+			}
+
+			@Override
+			public Object perform(String xpath, long timestamp, String data) {
+				// TODO Auto-generated method stub
+				if (1==1)throw new RuntimeException("not yet implemented since 11.04.2011");
+				else {
+				return null;
+				}
 			}	
  
 }

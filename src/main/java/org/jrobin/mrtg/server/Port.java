@@ -179,7 +179,8 @@ class Port {
 
 	void switchToIfIndex(int ifIndex) throws MrtgException {
         this.ifIndex = ifIndex;
-		Server.getInstance().saveHardware();
+		Server instance = Server.getInstance();
+		instance.saveHardware();
 	}
 
 	void deactivate() throws MrtgException {
@@ -189,21 +190,20 @@ class Port {
 
 	void processSample(RawSample sample) throws MrtgException {
 		// check if ifDescr match
-        if(!getIfDescrCore().equals(sample.getIfDescr())) {
+        String sampleifDescr = sample.getIfDescr();
+		String myIfDescrCore = getIfDescrCore();
+		if(!myIfDescrCore.equals(sampleifDescr)) {
 			// something changed on the router
 			switchToIfIndex(-1);
 			return;
 		}
-		sample.setIfDescr(ifDescr);
-		if(lastSample != null && lastSample.getSysUpTime() >= sample.getSysUpTime() ) {
-            // sysUpTime decreased
-			sample.setValid(false);
-		}
+		sample.setIfDescr(ifDescr); 
 		Debug.print("Saving sample: " + sample);
-		Server.getInstance().getRrdWriter().store(sample);
+		Server instance = Server.getInstance();
+		RrdWriter rrdWriter = instance.getRrdWriter();
+		rrdWriter.store(sample);
 		sampleCount++;
-        lastSample = sample;
-		lastSampleTime = sample.getTimestamp();
+        lastSample = sample; 
 	}
 
 	Hashtable getLinkInfo() {
@@ -216,10 +216,7 @@ class Port {
 		link.put("active", new Boolean(active));
 		link.put("sampleCount", new Integer(sampleCount));
 		if(lastSample != null) {
-			link.put("lastSampleTime", new Date(lastSampleTime * 1000L));
-			link.put("ifInOctets", String.valueOf(lastSample.getIfInOctets()));
-			link.put("ifOutOctets", String.valueOf(lastSample.getIfOutOctets()));
-			link.put("ifOperStatus", String.valueOf(lastSample.getIfOperStatus()));
+			link.put("lastSampleTime", new Date(lastSampleTime * 1000L)); 
 		}
 		return link;
 	}
