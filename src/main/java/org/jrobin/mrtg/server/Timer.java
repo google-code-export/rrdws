@@ -55,7 +55,10 @@ class Timer extends Thread implements MrtgConstants {
 					Port link = (Port) links.get(j);
                     if(router.isActive() && link.isActive() &&
 						link.isDue() && !link.isSampling()) {
-						new SnmpReader(router, link).start();
+                    	SnmpReader snmpReader = new SnmpReader(router, link);
+						Thread readerTmp = new Thread(snmpReader, "SnmpReader");
+						readerTmp.setDaemon(true);
+                    	readerTmp.start();
 						try {
 							sleep((long)(1 + Math.random() * SCHEDULER_DELAY));
 						} catch (InterruptedException e) {

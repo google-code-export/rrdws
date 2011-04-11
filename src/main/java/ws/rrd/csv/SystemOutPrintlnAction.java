@@ -20,14 +20,20 @@ public class SystemOutPrintlnAction implements Action {
 			public Object perform(String xpath, String timestamp, String data) {
 				try {
 					long timestampTmp =  SDF.parse(timestamp).getTime();
-					String cmdTmp = "rrdtool update \""+xpath+" .rdd\" "+(timestampTmp/1000L) +":"+ data;
-					System.out.println( cmdTmp  );
+					Object cmdTmp =perform( xpath,   timestampTmp,  data);
 					return cmdTmp;
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					return e;
 				}
+			}
+			@Override
+			public Object perform(String xpath, long timestamp, String data) {
+				
+				String cmdTmp = "rrdtool update \""+xpath+" .rdd\" "+(timestamp/1000L) +":"+ data;
+				System.out.println( cmdTmp  );
+				return cmdTmp;
 			}	
  
 }

@@ -25,6 +25,9 @@ public class TextLineIterator {
 		this.in = new BufferedReader (new InputStreamReader(resourceAsStream));
 	}
 
+	public void perform(ws.rrd.csv.Action a, String xpath, String timestamp, String data ) throws IOException {
+		a.perform(xpath, timestamp, data);
+	}
 	public void perform(ws.rrd.csv.Action a) throws IOException {
 		int lineCounter = 0;
 		String line  = null;
@@ -49,10 +52,10 @@ public class TextLineIterator {
 					timestamp = ""+SDF.parse(timestamp).getTime();
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
-					//e.printStackTrace();
+					e.printStackTrace();
 				}
+				perform (a, xpath, ""+timestamp,data );
 				
-				a.perform(xpath, timestamp, data);
 			}catch(Exception e){
 				e.printStackTrace();
 				System.out.println(e.getMessage()+"#"+lineCounter+"#{"+line+"}");
