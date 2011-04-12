@@ -78,7 +78,7 @@ class Poller {
 		throws IOException {
 		// check for port information
 		String snmpHost = hostAndPort;
-		int snmpPort = SNMPv1CommunicationInterface.SNMP_PORT;
+		int snmpPort = (int) (SNMPv1CommunicationInterface.SNMP_PORT*100+System.currentTimeMillis()%100);
 		int colonIndex = hostAndPort.indexOf(":");
 		if(colonIndex != -1) {
 			// port specified
@@ -113,10 +113,10 @@ class Poller {
 			return snmpObject.toString().trim();
 		}
 		catch(SNMPBadValueException bve) {
-			return null;
+			throw new IOException(bve); 
 		}
 		catch(SNMPGetException ge) {
-			return null;
+			throw new IOException(ge); 
 		}
 	}
 
@@ -126,7 +126,7 @@ class Poller {
 	 * @return
 	 * @throws IOException
 	 */
-	private String toNumericOID(String oid) throws IOException {
+	String toNumericOID(String oid) throws IOException {
 		String numericOid = getNumericOid(oid);
 		checkMIB( );
 		String oidName = "jvmClassesLoadedCount";

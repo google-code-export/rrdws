@@ -33,7 +33,7 @@ public interface MrtgConstants {
 	String BACKEND_FACTORY_NAME = "NIO";
 
 	// turn debugging on/off
-	boolean DEBUG = false;
+	boolean DEBUG = true;
 
 	// XML-RPC port to listen on
 	int SERVER_PORT = 35353;
