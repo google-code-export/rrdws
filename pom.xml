@@ -27,8 +27,8 @@
 	<packaging>war</packaging>
 
 	<dependencies>
-	
-	<!-- mibble-mibs-2.9.2.jar mibble-parser-2.9.2.jar grammatica-1.5.jar --> 
+
+		<!-- mibble-mibs-2.9.2.jar mibble-parser-2.9.2.jar grammatica-1.5.jar -->
 		<dependency>
 			<groupId>mibble</groupId>
 			<artifactId>mibble-mibs</artifactId>
@@ -45,10 +45,21 @@
 			<version>1.5</version>
 		</dependency>
 		<dependency>
-			<groupId>org.snmp4j</groupId>
-			<artifactId>snmp4j</artifactId>
-			<version>1.10.1</version>
+			<groupId>cc.co.llabor</groupId>
+			<artifactId>snmp123</artifactId>
+			<version>6.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>tablelayout</groupId>
+					<artifactId>tablelayout</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>netscape</groupId>
+					<artifactId>tools</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
+
 		<dependency>
 
 			<groupId>xmlrpc</groupId>
@@ -785,13 +796,11 @@
 				<resources>
 					<resource>
 						<directory>src/main/resources</directory>
-					
+
 						<includes>
-							<include>
-								**/*
-							</include>
+							<include>**/*</include>
 						</includes>
-						</resource>					
+					</resource>
 					<resource>
 						<filtering>true</filtering>
 						<directory>
