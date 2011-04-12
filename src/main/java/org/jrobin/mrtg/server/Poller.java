@@ -134,9 +134,11 @@ class Poller {
 			int beginIndex = oid.lastIndexOf("/")+1;
 			oidName = oid.substring(beginIndex );
 		}catch(Exception e){}
-		MibValueSymbol mibValueSymbol = ((MibValueSymbol) mib.getSymbol(oidName));
-		MibValue mibValue = mibValueSymbol.getValue();
-		numericOid = mibValue.toString();
+		try{
+			MibValueSymbol mibValueSymbol = ((MibValueSymbol) mib.getSymbol(oidName));
+			MibValue mibValue = mibValueSymbol.getValue();
+			numericOid = mibValue.toString();
+		}catch(NullPointerException e){}
 		return numericOid;
 	}
 
@@ -172,10 +174,10 @@ class Poller {
 			String path= ""+base+"/";
 			for( Object o : syms ) { // ugly, but it works
 				MibSymbol ms  = (MibSymbol)o;
-				System.out.println("@@@@"+ms.getName());
+				//System.out.println("@@@@"+ms.getName());
 				if (o instanceof  MibTypeSymbol){
 					MibTypeSymbol sym = (MibTypeSymbol)o;
-					System.out.println(currentOid+" :== "+sym.getName()+":"+sym.getType().getName()+" =["+"]");
+					//System.out.println(currentOid+" :== "+sym.getName()+":"+sym.getType().getName()+" =["+"]");
 					
 					//currentOid = sym.getName() ;
 		 	 	  	if(currentOid.startsWith(baseOid)) { 
@@ -183,7 +185,7 @@ class Poller {
 						map.put( currentOid ,  path);
 			    	}
 					else {
-						System.out.println("--"+ sym.getName());
+						//System.out.println("--"+ sym.getName());
 						continue;
 					}
 					
@@ -200,18 +202,15 @@ class Poller {
 						int index = Integer.parseInt(indexStr);
 						// store interface description
 						//map.put(new Integer(index),  name);
-						if (path.indexOf("jvmClassesLoadedCount")>=0){
+						if (path.indexOf("jvmMgtMIB")>=0){
 							//System.out.println("jvmClassesLoadedCount");
 							String pathTmp = "/jvmMgtMIB/jvmMgtMIBObjects/jvmClassLoading/jvmClassesLoadedCount";
-							String sinPath = sym.getName();
-							
-							for (MibSymbol pTmp = sym.getParent();pTmp!=null;pTmp = sym.getParent()){
-								sinPath = pTmp.getName()+"/"+ sinPath; 
-							}
-							System.out.println(sinPath);
-							map.put( currentOid ,  pathTmp ); 
+							String xpath = calcXPath(sym);
+							//System.out.println("++:::"+currentOid+" PATH:"+xpath);
+							map.put( currentOid ,  xpath ); 
 						}else{
-							System.out.println("IG:::"+currentOid+" PATH:"+path);
+							String xpath = calcXPath(sym);
+							//System.out.println("--:::"+currentOid+" PATH:"+xpath);
 						}
 						//System.out.println(":"+path+"index:"+index);
 			    	}
@@ -227,6 +226,20 @@ class Poller {
 		 
 		catch( Exception e) { e.printStackTrace(); }
 		return map;
+	}
+
+	/**
+	 * @author vipup
+	 * @param sym
+	 */
+	private String calcXPath(MibValueSymbol sym) {
+		String sinPath = sym.getName();
+		
+		for (MibSymbol pTmp = sym.getParent();pTmp!=null;pTmp = ((MibValueSymbol) pTmp).getParent()){
+			sinPath = "/"+pTmp.getName()+ "/"+sinPath;
+			sinPath  = sinPath .replace("//","/");
+		}
+		return sinPath;
 	}
 
 	/**
