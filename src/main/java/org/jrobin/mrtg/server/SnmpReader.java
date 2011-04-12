@@ -80,10 +80,11 @@ class SnmpReader  implements Runnable  {
 	private void findIfIndex() throws MrtgException {
 		for(int i = 0; i < RECONFIGURE_RETRIES; i++) {
 			try {
-				int ifIndex = comm.getIfIndexByIfDescr(link.getIfDescr());
+				String ifDescr = link.getIfDescr();
+				int ifIndex = comm.getIfIndexByIfDescr(ifDescr);
 				if(ifIndex >= 0) {
 					// new port number found
-					String alias = comm.get("ifAlias", ifIndex);
+					String alias = comm.toNumericOID(  ifDescr ) +"."+ ifIndex ;
 					link.setIfAlias(alias);
 					link.switchToIfIndex(ifIndex);
 					return;

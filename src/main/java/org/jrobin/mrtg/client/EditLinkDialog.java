@@ -25,6 +25,7 @@
 package org.jrobin.mrtg.client;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -86,8 +87,16 @@ class EditLinkDialog extends JDialog {
 	private void constructUserInterface() {
 		JPanel content = (JPanel) getContentPane();
 		Box box = Box.createVerticalBox();
+		content .setLayout( new FlowLayout());
 		box.add(Util.getPanelFor(routerLabel, routerValueLabel));
-		box.add(Util.getPanelFor(linksListLabel, Util.standardScrollPane(linksList)));
+		//box.setLayout( new BoxLayout(content, 0));
+		 
+		JPanel panelForList = Util.getPanelFor(linksListLabel, Util.standardScrollPane(linksList));
+		Dimension minimumSize = new Dimension(320, 200);
+		panelForList.setMinimumSize(minimumSize );
+		box.setMinimumSize(minimumSize );
+		panelForList.setBounds(0, 0, 320, 200);
+		box.add(panelForList);
 		box.add(Util.getPanelFor(descrLabel, descrField));
 		box.add(Util.getPanelFor(samplingLabel, samplingField));
 		box.add(Util.getPanelFor(activeLabel, activeBox));
@@ -98,7 +107,7 @@ class EditLinkDialog extends JDialog {
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) { cancel(); }
 		});
-		content.add(box);
+		content.add(box, BorderLayout.PAGE_START);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		// populate controls
         routerValueLabel.setText(routerInfo.getHost());
