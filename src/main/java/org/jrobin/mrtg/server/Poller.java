@@ -41,6 +41,7 @@ import net.percederberg.mibble.MibLoader;
 import net.percederberg.mibble.MibLoaderException;
 import net.percederberg.mibble.MibSymbol;
 import net.percederberg.mibble.MibTypeSymbol;
+import net.percederberg.mibble.MibValue;
 import net.percederberg.mibble.MibValueSymbol;
 
 class Poller {
@@ -103,11 +104,10 @@ class Poller {
     	return oid;
     }
 
-	String get(String oid) throws IOException {
-		String numericOid = getNumericOid(oid);checkMIB( );
-		numericOid = ((MibValueSymbol) mib.getSymbol("jvmClassesLoadedCount")).getValue().toString();
+	String get(String numericOid) throws IOException {
+		
 		try {
-	    	SNMPVarBindList newVars = comm.getNextMIBEntry( numericOid); // comm.getMIBEntry(numericOid);
+	    	SNMPVarBindList newVars =  comm.getMIBEntry(numericOid );//comm.getNextMIBEntry( numericOid); //
 		    SNMPSequence pair = (SNMPSequence)(newVars.getSNMPObjectAt(0));
 			SNMPObject snmpObject = pair.getSNMPObjectAt(1);
 			return snmpObject.toString().trim();
@@ -120,10 +120,31 @@ class Poller {
 		}
 	}
 
+	/**
+	 * @author vipup
+	 * @param oid
+	 * @return
+	 * @throws IOException
+	 */
+	private String toNumericOID(String oid) throws IOException {
+		String numericOid = getNumericOid(oid);
+		checkMIB( );
+		String oidName = "jvmClassesLoadedCount";
+		try{
+			int beginIndex = oid.lastIndexOf("/")+1;
+			oidName = oid.substring(beginIndex );
+		}catch(Exception e){}
+		MibValueSymbol mibValueSymbol = ((MibValueSymbol) mib.getSymbol(oidName));
+		MibValue mibValue = mibValueSymbol.getValue();
+		numericOid = mibValue.toString();
+		return numericOid;
+	}
+
 	String get(String oid, int index) throws IOException {
-		String OID = oid + "." + index;
-		OID = oid;
-		return get(OID);
+		String OID = toNumericOID(oid); 
+		String numericOid = OID + "." + index;
+		String retval = get(numericOid);
+		return retval ;
 	}
 
 	String[] get(String[] oids) throws IOException {
@@ -135,7 +156,7 @@ class Poller {
 		return result;
 	}
 
-	Mib mib = null;
+	static Mib mib = null;
 	
 	SortedMap walk(String base) throws IOException {
 		SortedMap map = new TreeMap();
@@ -147,14 +168,14 @@ class Poller {
 		try {
 			Collection syms = mib.getAllSymbols();
 			Collection impTmp = mib.getAllImports();
-			System.out.println(impTmp);
+			//System.out.println(syms);
 			String path= ""+base+"/";
 			for( Object o : syms ) { // ugly, but it works
 				MibSymbol ms  = (MibSymbol)o;
 				System.out.println("@@@@"+ms.getName());
 				if (o instanceof  MibTypeSymbol){
 					MibTypeSymbol sym = (MibTypeSymbol)o;
-					System.out.println(currentOid+" :== "+sym.getName()+":"+sym.getType()+" =["+"]");
+					System.out.println(currentOid+" :== "+sym.getName()+":"+sym.getType().getName()+" =["+"]");
 					
 					//currentOid = sym.getName() ;
 		 	 	  	if(currentOid.startsWith(baseOid)) { 
@@ -181,7 +202,16 @@ class Poller {
 						//map.put(new Integer(index),  name);
 						if (path.indexOf("jvmClassesLoadedCount")>=0){
 							//System.out.println("jvmClassesLoadedCount");
-							map.put( currentOid ,  "/jvmMgtMIB/jvmMgtMIBObjects/jvmClassLoading/jvmClassesLoadedCount" );
+							String pathTmp = "/jvmMgtMIB/jvmMgtMIBObjects/jvmClassLoading/jvmClassesLoadedCount";
+							String sinPath = sym.getName();
+							
+							for (MibSymbol pTmp = sym.getParent();pTmp!=null;pTmp = sym.getParent()){
+								sinPath = pTmp.getName()+"/"+ sinPath; 
+							}
+							System.out.println(sinPath);
+							map.put( currentOid ,  pathTmp ); 
+						}else{
+							System.out.println("IG:::"+currentOid+" PATH:"+path);
 						}
 						//System.out.println(":"+path+"index:"+index);
 			    	}
@@ -206,28 +236,29 @@ class Poller {
 	 */
 	private void checkMIB( ) throws IOException {
 		MibLoader mibloader = new MibLoader();
-		if (mib == null)
-		try {
-			String mibpath = "snmp/JVM-MANAGEMENT-MIB.mib";
-			ClassLoader classLoader = this.getClass().getClassLoader();
-			URL fi = classLoader.getResource(mibpath);
-			mibloader.addResourceDir(new File(fi.getFile()).getParent());
-			InputStream resourceAsStream = classLoader.getResourceAsStream(mibpath);
-			Reader in = new InputStreamReader(resourceAsStream);
-			mib = mibloader.load(in);
-		} catch (MibLoaderException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			
-			File file = new File("c:/Profile/xco5015/workspace/rrd/src/resources/snmp/JVM-MANAGEMENT-MIB.mib");
+		if (mib == null){
 			try {
-				mib = mibloader.load(file);
-			} catch (MibLoaderException e) {
+				String mibpath = "snmp/JVM-MANAGEMENT-MIB.mib";
+				ClassLoader classLoader = this.getClass().getClassLoader();
+				URL fi = classLoader.getResource(mibpath);
+				mibloader.addResourceDir(new File(fi.getFile()).getParent());
+				InputStream resourceAsStream = classLoader.getResourceAsStream(mibpath);
+				Reader in = new InputStreamReader(resourceAsStream);
+				mib = mibloader.load(in);
+			} catch (MibLoaderException e1) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e1.printStackTrace();
+				
+				File file = new File("src/resources/snmp/JVM-MANAGEMENT-MIB.mib");
+				try {
+					mib = mibloader.load(file);
+				} catch (MibLoaderException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
+			System.out.println("MIB loaded:"+mib);
 		}
-		System.out.println(mib);
 	}
 
 	SortedMap walkIfDescr() throws IOException {
