@@ -24,11 +24,20 @@
  */
 package org.jrobin.mrtg.server;
 
+import net.sf.jsr107cache.Cache;
+
 import org.apache.xmlrpc.WebServer;
+import org.jrobin.GraphInfo;
+import org.jrobin.cmd.RrdCommander;
+import org.jrobin.core.RrdException;
 import org.jrobin.mrtg.Debug;
 import org.jrobin.mrtg.MrtgConstants;
 import org.jrobin.mrtg.MrtgException;
 
+import ws.rrd.csv.Registry;
+import cc.co.llabor.cache.Manager;
+
+import java.io.IOException;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -98,8 +107,9 @@ class Listener implements MrtgConstants {
 		public int addLink(String host, String ifDescr, String descr, int samplingInterval,
 						   boolean active) {
 			try {
+				Server instance = Server.getInstance();
 				int status =
-					Server.getInstance().addLink(host, ifDescr, descr, samplingInterval, active);
+					instance.addLink(host, ifDescr, descr, samplingInterval, active);
 				Debug.print("Interface " + ifDescr + "@" + host + " added [" + status + "]");
 				return status;
 			} catch (MrtgException e) {
@@ -137,12 +147,11 @@ class Listener implements MrtgConstants {
 			long start = startDate.getTime() / 1000L;
 			long stop = stopDate.getTime() / 1000L;
 			try {
-				graph = Server.getInstance().getPngGraph(host, ifDescr, start, stop);
+				Server instance = Server.getInstance();
+				graph = instance.getPngGraph(host, ifDescr, start, stop);
 			} catch (MrtgException e) {
 				Debug.print("Event handler error: " + e);
 			}
-			Debug.print("Graph for interface " + ifDescr + "@" + host +
-				" generated [" + graph.length + " bytes]");
 			return graph;
 		}
 
@@ -181,8 +190,10 @@ class Listener implements MrtgConstants {
 		
 		public Hashtable getMrtgInfo() throws MrtgException {
 			Hashtable mrtgInfo = new Hashtable();
-			mrtgInfo.put("serverInfo", getServerInfo());
-			mrtgInfo.put("routers", getRouters());
+			Hashtable serverInfo = getServerInfo();
+			mrtgInfo.put("serverInfo", serverInfo);
+			Vector routers = getRouters();
+			mrtgInfo.put("routers", routers);
 			return mrtgInfo;
 		}
 	}

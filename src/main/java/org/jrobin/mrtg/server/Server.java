@@ -24,14 +24,22 @@
  */
 package org.jrobin.mrtg.server;
 
+import net.sf.jsr107cache.Cache;
+
+import org.jrobin.GraphInfo;
+import org.jrobin.cmd.RrdCommander;
 import org.jrobin.core.RrdDb;
 import org.jrobin.core.RrdDbPool;
 import org.jrobin.core.RrdException;
+import org.jrobin.mrtg.Debug;
 import org.jrobin.mrtg.MrtgException;
 import org.jrobin.mrtg.MrtgConstants;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+
+import ws.rrd.csv.Registry;
+import cc.co.llabor.cache.Manager;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -255,9 +263,39 @@ public class Server implements MrtgConstants {
 
 	synchronized byte[] getPngGraph(String host, String ifDescr, long start, long stop)
 		throws MrtgException {
-		Plotter grapher = new Plotter(host, ifDescr);
-		return grapher.getPngGraphBytes(start, stop);
-	}
+		byte[] graph = new byte[0];
+		int _w = 480;
+		String _t = ""+host+":"+ifDescr;
+		String _v = "-";
+	    Cache cache = Manager.getCache();
+	    Registry reg = (Registry) cache.get("REGISTRY"); 			
+		String dbName = reg.getPath2db().get(ifDescr);
+		String _end = ""+stop;
+		String _start = ""+start;
+		int _h = 200;
+		String cmdTmp = "rrdtool graph - -v '"+_v+"' -t '"+_t+"'  -h "+ _h +" -w  "+_w+" --start="+_start+"   --end="+_end+"  DEF:dbdata="+dbName+":data:AVERAGE  LINE2:dbdata#44EE4499  LINE1:dbdata#003300AA ";
+		// bikoz of '-' in the filename :
+		GraphInfo img;
+		try {
+			img = (GraphInfo)RrdCommander.execute(cmdTmp);
+			graph = img.getBytes(); 
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (RrdException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+//		response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
+//		response.setHeader("Pragma","no-cache"); //HTTP 1.0
+//		response.setDateHeader ("Expires", 0); //prevents caching at the proxy server
+//		response.setHeader("Content-Disposition", "inline;filename="+dbName+".gif");
+//		%><%
+		
+		Debug.print("Graph for interface " + ifDescr + "@" + host +
+			" generated [" + graph.length + " bytes]");
+		return graph;
+ 	}
 
 	synchronized Device[] getRouters() {
 		return (Device[]) deviceList.getRouters().toArray(new Device[0]);
