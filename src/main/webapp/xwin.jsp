@@ -20,7 +20,7 @@
 	String startDate = sdf.format(new Date());
 %>
 <HTML><HEAD>
-<TITLE>Seminarverwaltung</TITLE>
+<TITLE>WebStatistik :<%=_t %></TITLE>
 <DIV ID="testdiv1" STYLE="position:absolute;visibility:hidden;background-color:white;layer-background-color:white;">
 </DIV>
 <SCRIPT LANGUAGE="JavaScript"  SRC="js/CalendarPopup.js"></SCRIPT>
