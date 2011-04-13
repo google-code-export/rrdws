@@ -8,6 +8,11 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat; 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ws.rrd.csv.CSVParser;
+
 /** 
  * <b>Description:TODO</b>
  * @author      vipup<br>
@@ -19,6 +24,8 @@ import java.text.SimpleDateFormat;
  */
 public class TextLineIterator {
 
+	private static final Logger log = LoggerFactory.getLogger(CSVParser.class
+			.getName());
 	private BufferedReader in;
 
 	public TextLineIterator(InputStream resourceAsStream) {
@@ -35,7 +42,7 @@ public class TextLineIterator {
 			if ( "null".equals(line))continue;
 			if ( "" .equals(line))continue;
 			try{
-				DateFormat SDF = new SimpleDateFormat("EEE MMM dd HH:mm:ss  yyyy");//SimpleDateFormat.getInstance();/
+				DateFormat SDF = new SimpleDateFormat("EEE MMM dd HH:mm:ss yyyy");//SimpleDateFormat.getInstance();/
 				int p2 = line.indexOf("] ");
 				String timestamp= line.substring(1, p2) ;
 				timestamp = timestamp.replace("CEST", "");
@@ -52,13 +59,14 @@ public class TextLineIterator {
 					timestamp = ""+SDF.parse(timestamp).getTime();
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//e.printStackTrace();
+					log.debug( "perform sample exception:{} at line #"+lineCounter+". {} #" + line +":"+((SimpleDateFormat)SDF).toPattern() , e ); 
 				}
 				perform (a, xpath, ""+timestamp,data );
 				
 			}catch(Exception e){
 				e.printStackTrace();
-				System.out.println(e.getMessage()+"#"+lineCounter+"#{"+line+"}");
+				log.warn( "perform sample exception:{} at line #"+lineCounter+". {} ", e , line );
 				//throw new ArrayIndexOutOfBoundsException(lineCounter);
 			}
 		}
