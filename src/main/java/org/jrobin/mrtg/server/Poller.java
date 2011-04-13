@@ -145,7 +145,12 @@ class Poller {
 	String get(String oid, int index) throws IOException {
 		String OID = toNumericOID(oid); 
 		String numericOid = OID + "." + index;
-		String retval = get(numericOid);
+		String retval = null;
+		try{
+			retval = get(numericOid);
+		}catch(IOException e){ //Workaround for SNMP v.1
+			retval = get(OID +"."+0);
+		}
 		return retval ;
 	}
 
