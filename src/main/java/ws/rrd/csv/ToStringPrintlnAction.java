@@ -35,7 +35,13 @@ public class ToStringPrintlnAction implements Action {
 			@Override
 			public Object perform(String xpath, String timestamp, String data) {
 				try {
-					long timestampTmp =  sdf.parse(timestamp).getTime(); 
+					long timestampTmp =  -1;
+					try{
+						timestampTmp = Long.parseLong( timestamp);
+					}catch(NumberFormatException e){
+						timestampTmp  =  sdf.parse(timestamp).getTime(); 
+					}
+					
 					if (reg == null || reg.getPath2db() ==null || reg.getPath2db().get(xpath) == null){
 						System_out_println( xpath + "-->"  );  
 						String cmdCreateTmp = RrdUpdateAction.makeCreateCMD(timestampTmp, xpath) ;
@@ -61,12 +67,8 @@ public class ToStringPrintlnAction implements Action {
 			}
 
 			@Override
-			public Object perform(String xpath, long timestamp, String data) {
-				// TODO Auto-generated method stub
-				if (1==1)throw new RuntimeException("not yet implemented since 11.04.2011");
-				else {
-				return null;
-				}
+			public Object perform(String xpath, long timestamp, String data) { 
+				return perform(xpath, ""+timestamp, data);
 			}	
  
 }
