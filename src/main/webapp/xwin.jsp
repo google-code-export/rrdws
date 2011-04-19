@@ -3,6 +3,13 @@
 	//acm721
 	String _t = request.getParameter("_t");
 	_t  = _t  == null? "-":_t ;
+	_t  = _t.replace(" ", "_");
+	_t  = _t.replace(":", "_");
+	_t  = _t.replace("\"", "_");
+	_t  = _t.replace("\'", "_");
+	_t  = _t.replace("\t", "_");
+	_t  = _t.replace("\b", "_");
+	_t  = _t.replace("\n", "_");
 	String _v = request.getParameter("_v");
 	_v  = _v  == null? "- ":_v ; 	
 	String dbTmp = "X-2113039516.rrd";
