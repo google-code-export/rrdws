@@ -68,7 +68,7 @@ public class StartStopServlet extends HttpServlet {
 	 */
 	private void startCollectdServer(final String[] arg0) {
 		serverLauncher = new ServerLauncher(arg0);
-		Thread t1 = new Thread ( this.mythreads, serverLauncher, "collectdServer");
+		Thread t1 = new Thread ( this.mythreads, serverLauncher, "jcollectd_Server");
 		t1.setDaemon(true);
 		t1.start();		
 	}

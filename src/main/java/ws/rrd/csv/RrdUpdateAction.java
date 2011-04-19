@@ -68,9 +68,13 @@ public class RrdUpdateAction implements Action {
 			Object retval = "";			
 			long timestampTmp = 0;
 			try {
-				synchronized (RrdUpdateAction.class) { 
+				try{
+					timestampTmp = Long.parseLong(timestamp);
+				}catch(NumberFormatException e){
 					Date parseVal = sdf.parse(timestamp);
-					timestampTmp = parseVal.getTime();  
+					timestampTmp = parseVal.getTime();
+				}
+				synchronized (RrdUpdateAction.class) {  
 					retval= perform(xpath, timestampTmp, data); 
 				}
 			} catch (ParseException e1) { 
