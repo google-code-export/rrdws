@@ -39,8 +39,8 @@ public class CollectDTest extends TestCase{
 			String out = a.toString();
 			 
 			assertTrue( out, out.indexOf("rrdtool create X-1722861190.rrd --start 1301583237 --step 60")>0);
-         	assertTrue(out, out.indexOf("rrdtool update X-779614068.rrd 1301583247:1.5527576E7")>0);
-			assertTrue(out, out.indexOf("rrdtool update X113390261.rrd 1301583247:1.23731968E8")>0);
+         	assertTrue(out, out.indexOf("rrdtool update X-1722861190.rrd 1301583247:1.6777216E7")>0);
+			assertTrue(out, out.indexOf("rrdtool update X-779976225.rrd 1301583247:3.5815424E7")>0);
  
 		}catch(Exception e){
 			e.printStackTrace();
@@ -60,15 +60,14 @@ public class CollectDTest extends TestCase{
 			p.perform(a);
 			String out = a.toString();
 			 
-			assertTrue(out,  out.indexOf("rrdtool create X-1722861190.rrd --start 1301583237 --step 60")>0);
-			assertTrue(out, out.indexOf("rrdtool update X-1781070033.rrd 1301583274:9332")>0);
-			assertTrue(out, out.indexOf("rrdtool update X-1261962686.rrd 1301584867:0.0")>0);
+			assertTrue(out,  out.indexOf("rrdtool create X-1722861190.rrd ")>0);
+			assertTrue(out, out.indexOf("rrdtool update X-779614068.rrd 1302694515:1.5527576E7")>0);
+			assertTrue(out, out.indexOf("rrdtool update X1191353274.rrd 1302694515:2.5952256E8")>0);
 		}catch(Exception e){
 			e.printStackTrace();
 			assertTrue(a.toString(), e instanceof ArrayIndexOutOfBoundsException);
 		}
 	}
-	 	
 	 
 	
 	public void testExecuteUpdate() throws IOException {
