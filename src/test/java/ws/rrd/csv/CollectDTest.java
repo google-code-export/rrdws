@@ -37,10 +37,11 @@ public class CollectDTest extends TestCase{
 		try{//p.setIgnoreWrongLine(true);
 			p.perform(a);
 			String out = a.toString();
-			System.out.println(out);
-			assertTrue( out.indexOf("rrdtool create X-1722861190.rrd --start 1301583237 --step 60")>0);
-			assertTrue(out.indexOf("rrdtool update X-1781070033.rrd 1301583274:9332")>0);
-			assertTrue(out.indexOf("rrdtool update X-1261962686.rrd 1301584867:0.0")>0);
+			 
+			assertTrue( out, out.indexOf("rrdtool create X-1722861190.rrd --start 1301583237 --step 60")>0);
+         	assertTrue(out, out.indexOf("rrdtool update X-779614068.rrd 1301583247:1.5527576E7")>0);
+			assertTrue(out, out.indexOf("rrdtool update X113390261.rrd 1301583247:1.23731968E8")>0);
+ 
 		}catch(Exception e){
 			e.printStackTrace();
 			assertTrue(a.toString(), e instanceof ArrayIndexOutOfBoundsException);
@@ -58,18 +59,20 @@ public class CollectDTest extends TestCase{
 		try{//p.setIgnoreWrongLine(true);
 			p.perform(a);
 			String out = a.toString();
-			System.out.println(out);
-			assertTrue( out.indexOf("rrdtool create X-1722861190.rrd --start 1301583237 --step 60")>0);
-			assertTrue(out.indexOf("rrdtool update X-1781070033.rrd 1301583274:9332")>0);
-			assertTrue(out.indexOf("rrdtool update X-1261962686.rrd 1301584867:0.0")>0);
+			 
+			assertTrue(out,  out.indexOf("rrdtool create X-1722861190.rrd --start 1301583237 --step 60")>0);
+			assertTrue(out, out.indexOf("rrdtool update X-1781070033.rrd 1301583274:9332")>0);
+			assertTrue(out, out.indexOf("rrdtool update X-1261962686.rrd 1301584867:0.0")>0);
 		}catch(Exception e){
 			e.printStackTrace();
 			assertTrue(a.toString(), e instanceof ArrayIndexOutOfBoundsException);
 		}
 	}
 	 	
+	 
 	
 	public void testExecuteUpdate() throws IOException {
+ 
 		ClassLoader classLoader = this.getClass().getClassLoader();
 		InputStream resourceAsStream = classLoader .getResourceAsStream("collectd.txt");
 		TextLineIterator p = new TextLineIterator(resourceAsStream);

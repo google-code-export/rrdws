@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat; 
+import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,9 +25,8 @@ import ws.rrd.csv.CSVParser;
  */
 public class TextLineIterator {
 
-	private static final Logger log = LoggerFactory.getLogger(CSVParser.class
-			.getName());
 	private BufferedReader in;
+	private static final Logger log = LoggerFactory.getLogger(CSVParser.class .getName());
 
 	public TextLineIterator(InputStream resourceAsStream) {
 		this.in = new BufferedReader (new InputStreamReader(resourceAsStream));
@@ -42,13 +42,14 @@ public class TextLineIterator {
 			if ( "null".equals(line))continue;
 			if ( "" .equals(line))continue;
 			try{
-				DateFormat SDF = new SimpleDateFormat("EEE MMM dd HH:mm:ss yyyy");//SimpleDateFormat.getInstance();/
+				DateFormat SDF = new SimpleDateFormat("EEE MMM dd HH:mm:ss yyyy", Locale.US);//SimpleDateFormat.getInstance();/
 				int p2 = line.indexOf("] ");
 				String timestamp= line.substring(1, p2) ;
 				timestamp = timestamp.replace("CEST", "");
+				timestamp = timestamp.replace("MEST", "");
 				timestamp = timestamp.replace("CET", "");
 				timestamp = timestamp.replace("  ", " ");
-				timestamp = timestamp.substring(4);
+				//timestamp = timestamp.substring(4);
 				String xpath = line.substring(  p2+2, line.lastIndexOf("=["));
 				String STARTDATA = "[value=";
 				int istart = line.lastIndexOf(STARTDATA)+STARTDATA.length();
@@ -56,16 +57,16 @@ public class TextLineIterator {
 				String partsTmp []= line.split("[ ]");
 				
 				try {// Do Mrz 31 18:05:47 Zentraleuropäische Sommerzeit 2011  SDF.format(new Date())
-					timestamp = ""+SDF.parse(timestamp).getTime();
+					log.trace( SDF.format(System.currentTimeMillis()));
+					timestamp = ""+SDF.parse(timestamp).getTime(); 
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
-					//e.printStackTrace();
-					log.debug( "perform sample exception:{} at line #"+lineCounter+". {} #" + line +":"+((SimpleDateFormat)SDF).toPattern() , e ); 
+					log.trace( "perform sample exception:{} at line #"+lineCounter+". {} #" + line +":"+((SimpleDateFormat)SDF).toPattern() , e ); 
 				}
-				perform (a, xpath, ""+timestamp,data );
+				perform (a, xpath, timestamp ,data );
 				
 			}catch(Exception e){
-				e.printStackTrace();
+				//e.printStackTrace();
 				log.warn( "perform sample exception:{} at line #"+lineCounter+". {} ", e , line );
 				//throw new ArrayIndexOutOfBoundsException(lineCounter);
 			}
