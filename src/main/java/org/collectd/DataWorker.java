@@ -48,7 +48,7 @@ public class   DataWorker implements Runnable{
     	}
     	
     	public void kill(){
-    		isAlive = true;
+    		isAlive = false;
     	}
     	
     	public DataWorker() {
