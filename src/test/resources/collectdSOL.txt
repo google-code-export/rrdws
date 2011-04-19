@@ -1,0 +1,8 @@
+[Apr 13 13:35:15 MEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/Heap_init=[value=1.6777216E7]gauge.Heap_init := 1.6777216E7
+[Apr 13 13:35:15 MEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_committed=[value=3.6175872E7]gauge.NonHeap_committed := 3.6175872E7
+[Apr 13 13:35:15 MEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/Heap_committed=[value=1.6252928E7]gauge.Heap_committed := 1.6252928E7
+[Apr 13 13:35:15 MEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_used=[value=1.5527576E7]gauge.NonHeap_used := 1.5527576E7
+[Apr 13 13:35:15 MEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/Heap_max=[value=2.5952256E8]gauge.Heap_max := 2.5952256E8
+[Apr 13 13:35:15 MEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_init=[value=3.5815424E7]gauge.NonHeap_init := 3.5815424E7
+[Apr 13 13:35:15 MEST 2011] c1263ce0/java.lang/hudson-Memory/gauge/NonHeap_max=[value=1.23731968E8]gauge.NonHeap_max := 1.23731968E8
+ 
