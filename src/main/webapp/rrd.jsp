@@ -26,6 +26,9 @@
 
 <table height="100%" width="100%">
 	<tr width="100%" height="64">
+	<td><iframe width="200" height="200" src="js/clock.html"></iframe></td>
+	</tr>
+	<tr width="100%" height="64">
 		<td width="100%" height="64">
 			<a href="https://rrdsaas.appspot.com/rrd.jsp"  title=" RRD Java impl ">
 			RRDSAAS <%=System.currentTimeMillis() %>
