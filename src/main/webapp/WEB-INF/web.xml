@@ -83,7 +83,10 @@ StartStopServlet
 		<url-pattern>/speed.gif</url-pattern>
 	</servlet-mapping>
 	
-
+  <servlet-mapping>
+    <servlet-name>_ah_sessioncleanup</servlet-name>
+    <url-pattern>/_ah/sessioncleanup</url-pattern>
+  </servlet-mapping> 
 	<!-- 
 		<security-constraint> 
 		<web-resource-collection> 

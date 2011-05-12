@@ -30,11 +30,15 @@ import org.jrobin.mrtg.MrtgException;
 
 import java.util.Vector;
 
-class Timer extends Thread implements MrtgConstants {
+class Timer  implements Runnable , MrtgConstants {
 	private volatile boolean active = true;
+	
+	Thread thr1 ;
 
 	Timer() {
-		start();
+		thr1 = new Thread(this, "mrtg.Timer");
+		// TODO =8-0
+		thr1 .start();
 	}
 
 	public void run() {
@@ -60,7 +64,7 @@ class Timer extends Thread implements MrtgConstants {
 						readerTmp.setDaemon(true);
                     	readerTmp.start();
 						try {
-							sleep((long)(1 + Math.random() * SCHEDULER_DELAY));
+							this.thr1.sleep((long)(1 + Math.random() * SCHEDULER_DELAY));
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}

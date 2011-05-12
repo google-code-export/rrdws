@@ -25,6 +25,8 @@ public class ServerLauncher implements Runnable {
 				// java -Dcom.sun.management.jmxremote.port=25826 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -jar collectd.jar
 				MBeanReceiver.main(arg0);
 			} catch (Exception e1) {
+				e1.printStackTrace();
+			} catch (Throwable e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}

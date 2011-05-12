@@ -44,7 +44,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-class RrdWriter extends Thread implements MrtgConstants {
+class RrdWriter  implements Runnable, MrtgConstants {
 	private RrdDefTemplate rrdDefTemplate;
 	private int sampleCount, badSavesCount, goodSavesCount;
 	private List queue = Collections.synchronizedList(new LinkedList());
@@ -52,7 +52,8 @@ class RrdWriter extends Thread implements MrtgConstants {
 	
 
 	private volatile boolean active = true;
-
+	Thread thr1 ;
+	
 	RrdWriter() throws MrtgException {
 		// get definition from template
 		try {
@@ -62,7 +63,10 @@ class RrdWriter extends Thread implements MrtgConstants {
 		} catch (RrdException e) {
 			throw new MrtgException(e);
 		}
-		start();
+		thr1 = new Thread(this, "mrtg.RRDWriter");
+		// TODO =8-0
+		thr1 .start();
+		
 	}
 
     public void run() {

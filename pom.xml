@@ -643,7 +643,7 @@
 					<jvmFlags>
 						<jvmFlag>-Dmyenviroment=local</jvmFlag>
 						<jvmFlag>
-							-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000
+							-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=60067
 						</jvmFlag>
 					</jvmFlags>
 
