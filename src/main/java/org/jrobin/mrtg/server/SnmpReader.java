@@ -45,19 +45,24 @@ class SnmpReader  implements Runnable  {
 	}
 
 	public void run() {
+		String community = null;
+		String host = null;
+		String ifDescr = null;
+		int ifIndex = -1 ;
+		
 		try {
-			String community = router.getCommunity();
-			String host = router.getHost();
+			community = router.getCommunity();
+			host = router.getHost();
 			comm = new Poller(host, community);
-			int ifIndex = link.getIfIndex();
+			ifIndex = link.getIfIndex();
 			if(ifIndex < 0) {
 				findIfIndex();
 			}
 			if(ifIndex >= 0) {
-				String ifDescr = link.getIfDescr();
-				Debug.print("Sampling: " + ifDescr + "@" + host +
-					" [" + ifIndex + "]");
- 
+				ifDescr = link.getIfDescr();
+				String oidTmp = comm.toNumericOID(ifDescr);
+				Debug.print("Sampling: " + ifDescr + "@" + host + 	" [" + ifIndex + "]{"+oidTmp+"}"); 
+				 
 				String value  = comm.get(ifDescr, ifIndex);
 				RawSample sample = createRawSample(value);
 				link.processSample(sample);

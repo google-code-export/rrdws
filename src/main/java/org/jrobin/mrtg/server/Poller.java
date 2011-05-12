@@ -104,7 +104,7 @@ class Poller {
     	return oid;
     }
 
-	String get(String numericOid) throws IOException {
+	String getSNMPv1(String numericOid) throws IOException {
 		
 		try {
 	    	SNMPVarBindList newVars =  comm.getMIBEntry(numericOid );//comm.getNextMIBEntry( numericOid); //
@@ -147,9 +147,9 @@ class Poller {
 		String numericOid = OID + "." + index;
 		String retval = null;
 		try{
-			retval = get(numericOid);
+			retval = getSNMPv1(numericOid);
 		}catch(IOException e){ //Workaround for SNMP v.1
-			retval = get(OID +"."+0);
+			retval = getSNMPv1(OID +"."+0);
 		}
 		return retval ;
 	}
@@ -158,7 +158,7 @@ class Poller {
 		int count = oids.length;
 		String[] result = new String[count];
 		for(int i = 0; i < count; i++) {
-			result[i] = get(oids[i]);
+			result[i] = getSNMPv1(oids[i]);
 		}
 		return result;
 	}
@@ -262,7 +262,9 @@ class Poller {
 				mibloader.addResourceDir(new File(fi.getFile()).getParent());
 				InputStream resourceAsStream = classLoader.getResourceAsStream(mibpath);
 				Reader in = new InputStreamReader(resourceAsStream);
-				mib = mibloader.load(in);
+				synchronized (MibLoader.class) {
+					mib = mibloader.load(in);
+				}
 			} catch (MibLoaderException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

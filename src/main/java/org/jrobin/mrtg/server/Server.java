@@ -113,6 +113,7 @@ public class Server implements MrtgConstants {
 		// create threads
 		rrdWriter = new RrdWriter();
 		timer = new Timer();
+		
 		listener = new Listener(acceptedClients);
 		startDate = new Date();
 		active = true;
