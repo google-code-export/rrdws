@@ -1,8 +1,6 @@
 package cc.co.llabor.system;
 
-import java.lang.instrument.Instrumentation;
 
-import org.collectd.mx.RemoteMBeanSender;
 
 /** 
  * <b>Description:TODO</b>
@@ -18,11 +16,11 @@ public class ClientLauncher implements Runnable {
 	@Override
 	public void run(){
 		try {
-			Instrumentation instr = null;
+		//java.lang.instrument.Instrumentation instr = null;
 		////java -javaagent:collectd.jar="udp://localhost#javalang" -jar sigar.jar
 		////java -javaagent:collectd.jar="udp://localhost#javalang" -jar sigar.jar					
 			String args = "udp://239.192.74.66:25826#javalang#tomcat";
-			RemoteMBeanSender.premain(args , instr);
+			org.collectd.mx.RemoteMBeanSender.premain(args , null);
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

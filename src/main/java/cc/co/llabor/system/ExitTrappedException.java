@@ -31,7 +31,7 @@ public class ExitTrappedException extends SecurityException {
 		}
 	}
 	public static void forbidSystemExitCall() {
-		
+		if (StartStopServlet.isGAE())return;
 		final SecurityManager securityManager = new SecurityManager() {
 			public void checkPermission(java.security.Permission permission) {
 				if ("exitVM".equals(permission.getName())) {

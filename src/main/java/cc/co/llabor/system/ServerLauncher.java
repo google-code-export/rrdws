@@ -1,7 +1,5 @@
 package cc.co.llabor.system;
 
-import org.collectd.mx.MBeanReceiver;
-
 /** 
  * <b>Description:TODO</b>
  * @author      vipup<br>
@@ -20,10 +18,12 @@ public class ServerLauncher implements Runnable {
 		}
 
 		public void run(){
+			
 			try {
 				// Listen on the default IPv4 multicast group and allow remote JMX connections to RMI/TCP port 25826:
 				// java -Dcom.sun.management.jmxremote.port=25826 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -jar collectd.jar
-				MBeanReceiver.main(arg0);
+
+				org.collectd.mx.MBeanReceiver.main(arg0);
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			} catch (Throwable e1) {
@@ -33,7 +33,7 @@ public class ServerLauncher implements Runnable {
 		}
 
 		public void destroyServer() {
-			MBeanReceiver.getInstance().kill();
+			org.collectd.mx.MBeanReceiver.getInstance().kill();
 		}
 	 
 

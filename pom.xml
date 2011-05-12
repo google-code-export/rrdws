@@ -362,8 +362,15 @@
 			<groupId>org.apache.geronimo.specs</groupId>
 			<artifactId>geronimo-servlet_2.5_spec</artifactId>
 			<version>1.2</version>
+<!-- 			 
 			<scope>provided</scope>
+			  -->
 		</dependency>
+<dependency>
+   <groupId>javax.servlet.jsp</groupId>
+   <artifactId>jsp-api</artifactId>
+   <version>2.1</version>
+</dependency>
 
 		<!--
 			Make use of JSP tags. Remove, if you don't use JSPs
@@ -779,7 +786,18 @@
 		</profile>
 
 
-
+		<profile>
+			<id>profile-GAE</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+				<property>
+					<name>gae</name>
+				</property>
+			</activation>
+			<properties>
+				<gae.application.version>1</gae.application.version>
+			</properties>
+		</profile>
 
 		<profile>
 			<id>profile-FILECACHE</id>
