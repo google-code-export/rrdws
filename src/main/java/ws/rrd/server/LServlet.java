@@ -158,13 +158,16 @@ public class LServlet extends HttpServlet {
 			}
 				
 			 
-			
+			String []decodedUrls ;
+			int ind=0;
 			try{
 				if (TRACE){System_out_println("DECODE :"+decodedUrl);}
-				if (decodedUrl.indexOf("/")>0){
+				if (decodedUrl.indexOf("/")>0 && HyperLinkUtil.decode(decodedUrl).length()==0){
 					String []urls = decodedUrl.split("/");
+					decodedUrls = new String[urls.length];
 					for (String urlTmp:urls){
 						urlStr = HyperLinkUtil.decode(urlTmp);
+						decodedUrls[ind++]=urlStr;
 					}
 				}else{
 					urlStr = HyperLinkUtil.decode(decodedUrl);

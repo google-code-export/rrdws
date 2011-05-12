@@ -26,23 +26,27 @@ public class StartStopServlet extends HttpServlet {
 	 
 
 	DataWorker worker = null;
+	public static boolean isGAE() {
+		return !(System.getProperty("com.google.appengine.runtime.version")==null);
+	}
+	
 	public void init(ServletConfig config) throws ServletException{
 		try {
 			initShutdownHook();  
 		} catch (Exception e) {
 			log.error("RRD initShutdownHook : ", e);
 		}		
-		
-		String[] arg0=new String[]{};
-		// collectd SERVER
-		startCollectdServer(arg0);
-		
-		// collectd CLIENT
-		startColelctdClient();
-				
-		// start collectd queue-worker
-		startCollectdWorker();
-		
+		if ( !isGAE()){
+			String[] arg0=new String[]{};
+			// collectd SERVER
+			startCollectdServer(arg0);
+			
+			// collectd CLIENT
+			startColelctdClient();
+					
+			// start collectd queue-worker
+			startCollectdWorker();
+		}			
 		super.init(config); 
 	}
 
