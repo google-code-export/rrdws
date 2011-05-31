@@ -1,6 +1,6 @@
  
-package cc.co.llabor.system;   
- 
+package cc.co.llabor.system;    
+import java.lang.reflect.InvocationTargetException;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -11,6 +11,12 @@ import org.jrobin.core.RrdDbPool;
 import org.jrobin.core.RrdException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;   
+
+import cc.co.llabor.watchdog.AbstractLimitWatchDog;
+import cc.co.llabor.watchdog.DogFarm;
+import cc.co.llabor.watchdog.HighLimitWatchDog;
+import cc.co.llabor.watchdog.LowLimitWatchDog;  
+import cc.co.llabor.watchdog.RRDHighLimitWatchDog;
 
 public class StartStopServlet extends HttpServlet {
 	
@@ -30,6 +36,9 @@ public class StartStopServlet extends HttpServlet {
 		return !(System.getProperty("com.google.appengine.runtime.version")==null);
 	}
 	
+	AbstractLimitWatchDog lTimer;
+	AbstractLimitWatchDog hTimer;
+	
 	public void init(ServletConfig config) throws ServletException{
 		try {
 			initShutdownHook();  
@@ -47,6 +56,75 @@ public class StartStopServlet extends HttpServlet {
 			// start collectd queue-worker
 			startCollectdWorker();
 		}			
+		  
+		try {
+			hTimer = DogFarm.startTimer( HighLimitWatchDog.class );
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			lTimer = DogFarm.startTimer( LowLimitWatchDog.class );
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		try {
+			lTimer = DogFarm.startTimer( RRDHighLimitWatchDog.class );
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		
+		
+		
 		super.init(config); 
 	}
 
@@ -113,8 +191,10 @@ public class StartStopServlet extends HttpServlet {
 			worker.kill();
 		} catch (RrdException e1) {
 			log.error("doStop() failed", e1);
-		}
+		} 
 		
+		DogFarm.stopTimer( lTimer  ); 
+		DogFarm.stopTimer( hTimer  );
 		
 		
 		log.info("Stoped");
