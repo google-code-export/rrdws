@@ -25,6 +25,8 @@ import cc.co.llabor.cache.Manager;
  
 public class RRDHighLimitWatchDog extends AbstractLimitWatchDog {
 	
+	private long hiLIMIT = 50;
+	private long lowLIMIT = 0;
 	private String toEXEC = "notepad.exe";
 	private String rrdPATH = "C0824CE0/java.lang/tc70/LOC/9090@C0824CE0-Memory/gauge/Heap_used";
 	
@@ -56,6 +58,8 @@ public class RRDHighLimitWatchDog extends AbstractLimitWatchDog {
 			rrdPATH = bTmp.getProperty("rrdPATH", rrdPATH);
 			this.WARN_MESSAGE = bTmp.getProperty("WARN_MESSAGE", WARN_MESSAGE);
 			this.errorCount = Integer.parseInt( bTmp.getProperty("errorCount", ""+errorCount) );
+			this.hiLIMIT = Long.parseLong( bTmp.getProperty("hiLIMIT", ""+hiLIMIT) );
+			this.lowLIMIT = Long.parseLong( bTmp.getProperty("lowLIMIT", ""+lowLIMIT) );
 				
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -120,7 +124,7 @@ public class RRDHighLimitWatchDog extends AbstractLimitWatchDog {
 
 	@Override
 	protected long getHiLimit() {
-		return 130000000 ; // 55 anon-users ;
+		return hiLIMIT ; // 55 anon-users ;
 	} 
 	@Override
 	protected void doDefault() {
@@ -170,6 +174,6 @@ public class RRDHighLimitWatchDog extends AbstractLimitWatchDog {
 	}
 	@Override
 	protected long getLowLimit() {
-		return 0;
+		return lowLIMIT;
 	}
 }
