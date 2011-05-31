@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<!-- ((( this section is common for all l-parent childs -->
+	<!--  ((( this section is common for all l-parent childs -->
 	<parent>
 		<groupId>cc.co.llabor</groupId>
 		<artifactId>l-parent</artifactId>
@@ -83,10 +84,21 @@
 			<version>1.1.1</version>
 		</dependency>
 
-		<!-- tomcat <dependency> <groupId>org.apache.tomcat</groupId> <artifactId>catalina</artifactId> 
-			<version>6.0.29</version> <scope>provided</scope> </dependency> -->
-		<!-- javax MAIL <dependency> <groupId>org.subethamail</groupId> <artifactId>subethasmtp</artifactId> 
-			<version>2.0.1</version> </dependency> -->
+		<!-- tomcat 
+			<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>catalina</artifactId>
+			<version>6.0.29</version>
+			<scope>provided</scope>
+			</dependency>
+		-->
+		<!-- javax MAIL 
+			<dependency>
+			<groupId>org.subethamail</groupId>
+			<artifactId>subethasmtp</artifactId>
+			<version>2.0.1</version>
+			</dependency>
+		-->
 		<dependency>
 			<groupId>gnu.inet.encoding</groupId>
 			<artifactId>libidn</artifactId>
@@ -110,11 +122,27 @@
 			<artifactId>jsr107cache</artifactId>
 			<version>1.0</version>
 		</dependency>
-		<!-- TODO WEB-INF/lib <dependency> <groupId>commons-fileupload</groupId> 
-			<artifactId>commons-fileupload</artifactId> <version>1.2.1</version> </dependency> -->
-		<!-- batik-awt-util-1.6.jar batik-bridge-1.6.jar batik-css-1.6.jar batik-dom-1.6.jar 
-			batik-ext-1.6-1.jar batik-gvt-1.6.jar batik-parser-1.6.jar batik-script-1.6.jar 
-			batik-svg-dom-1.6.jar batik-transcoder-1.6.jar batik-util-1.6.jar batik-xml-1.6.jar -->
+		<!-- TODO WEB-INF/lib 
+			<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.1</version>
+			</dependency>
+		-->
+		<!-- 
+			batik-awt-util-1.6.jar
+			batik-bridge-1.6.jar
+			batik-css-1.6.jar 
+			batik-dom-1.6.jar 
+			batik-ext-1.6-1.jar 
+			batik-gvt-1.6.jar 
+			batik-parser-1.6.jar 
+			batik-script-1.6.jar 
+			batik-svg-dom-1.6.jar 
+			batik-transcoder-1.6.jar 
+			batik-util-1.6.jar 
+			batik-xml-1.6.jar
+		-->
 		<dependency>
 			<groupId>batik</groupId>
 			<artifactId>batik-awt-util</artifactId>
@@ -252,8 +280,11 @@
 
 
 
-		<!-- <dependency><groupId>batik</groupId><artifactId>batik-ext</artifactId> 
-			<version>${batik.version}</version><optional>true</optional></dependency> -->
+		<!--
+			<dependency><groupId>batik</groupId><artifactId>batik-ext</artifactId>
+			<version>${batik.version}</version><optional>true</optional></dependency>
+			
+		-->
 
 
 
@@ -303,10 +334,12 @@
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-api-1.0-sdk</artifactId>
 			<version>${gae.version}</version>
-			<!-- <scope>test</scope> -->
+			<!--   <scope>test</scope> -->
 		</dependency>
 
-		<!-- GWT dependencies -->
+		<!-- 
+			GWT dependencies
+		-->
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
@@ -320,22 +353,23 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- J2EE Servlet API. We need it to compile IndexServlet class. You can 
-			probably remove it, if you don't explicitly use Servlets -->
+		<!--
+			J2EE Servlet API. We need it to compile IndexServlet class.
+			You can probably remove it, if you don't explicitly use
+			Servlets
+		-->
 		<dependency>
 			<groupId>org.apache.geronimo.specs</groupId>
 			<artifactId>geronimo-servlet_2.5_spec</artifactId>
 			<version>1.2</version>
+<!-- 			 
 			<scope>provided</scope>
-<!-- <scope>provided</scope> -->
+			  -->
 		</dependency>
-		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>jsp-api</artifactId>
-			<version>2.1</version>
-		</dependency>
-
-		<!-- Make use of JSP tags. Remove, if you don't use JSPs -->
+ 
+		<!--
+			Make use of JSP tags. Remove, if you don't use JSPs
+		-->
 		<dependency>
 			<artifactId>standard</artifactId>
 			<groupId>taglibs</groupId>
@@ -362,10 +396,13 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.5</version>
-			<!-- scope>test</scope> -->
+			<!-- scope>test</scope>  -->
 		</dependency>
 
-		<!-- GAE libraries for local testing as described here: http://code.google.com/appengine/docs/java/howto/unittesting.html -->
+		<!--
+			GAE libraries for local testing as described here:
+			http://code.google.com/appengine/docs/java/howto/unittesting.html
+		-->
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-api-labs</artifactId>
@@ -395,7 +432,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<!-- version>[2.1.3</version> -->
+				<!--  version>[2.1.3</version>  -->
 				<configuration>
 					<workingDirectory>
 						${basedir}/target
@@ -434,25 +471,24 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jspc-maven-plugin</artifactId>
-				<version>1.4.6</version>
 				<executions>
-				<!--
 					<execution>
-						<id>check-jsp-source</id>
-						<phase>process-sources</phase>
+						<id>jspc</id>
 						<goals>
 							<goal>compile</goal>
 						</goals>
-					</execution> -->
-					 <execution> <id>jspc</id> <goals> <goal>compile</goal> </goals> 
-						</execution>
+					</execution>
 				</executions>
 				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
+					<source>1.6</source>
+					<target>1.6</target>
+
+
 					<!-- webXml>${basedir}/target/jspCweb.xml</webXml> -->
 					<injectString>
-						&lt;!-- [INSERT FRAGMENT HERE] --&gt; </injectString>
+						&lt;!-- [INSERT FRAGMENT HERE] --&gt;
+					</injectString>
+
 				</configuration>
 				<dependencies>
 					<dependency>
@@ -462,16 +498,19 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
-					<!-- precompiled JSPs <webXml>${basedir}/target/jspweb.xml</webXml> -->
+					<!-- precompiled JSPs   
+						<webXml>${basedir}/target/jspweb.xml</webXml>
+					-->
 					<webResources>
 						<resource>
-							<!-- <directory>${basedir}/target/</directory> <directory>${basedir}/target/${pom.artifactId}-${pom.version}/WEB-INF</directory> -->
+							<!--  
+								<directory>${basedir}/target/</directory>
+								<directory>${basedir}/target/${pom.artifactId}-${pom.version}/WEB-INF</directory>
+							-->
 							<directory>${basedir}/target/</directory>
 							<filtering>true</filtering>
 							<targetPath>WEB-INF/</targetPath>
@@ -497,20 +536,35 @@
 							<pomVersion>${pom.version}</pomVersion>
 							<artifactId>${pom.artifactId}</artifactId>
 							<groupId>${pom.groupId}</groupId>
-							<!-- <basedir>${basedir}</basedir> -->
+							<!--  <basedir>${basedir}</basedir>  -->
 						</manifestEntries>
 					</archive>
 				</configuration>
 			</plugin>
 
 
-			<!-- plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-war-plugin</artifactId> 
-				<version>2.1-alpha-2</version> <configuration> <webResources> <resource> 
-				<directory>src/main/webapp</directory> <filtering>true</filtering> <includes> 
-				<include>**/appengine-web.xml</include> </includes> </resource> </webResources> 
-				</configuration> </plugin> -->
-			<!-- Maven GWT plugin (ex. http://gwt-maven.googlecode.com/svn/docs/maven-googlewebtoolkit2-plugin/index.html) 
-				http://mojo.codehaus.org/gwt-maven-plugin -->
+			<!-- plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1-alpha-2</version>
+				<configuration>
+				<webResources>
+				<resource>
+				<directory>src/main/webapp</directory>
+				<filtering>true</filtering>
+				<includes>
+				<include>**/appengine-web.xml</include>
+				</includes>
+				</resource>
+				</webResources>
+				</configuration>
+				</plugin>
+			-->
+			<!--
+				Maven GWT plugin (ex.
+				http://gwt-maven.googlecode.com/svn/docs/maven-googlewebtoolkit2-plugin/index.html)
+				http://mojo.codehaus.org/gwt-maven-plugin
+			-->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
@@ -530,11 +584,15 @@
 					<!-- <servicePattern>**/client/*Service.java</servicePattern> -->
 
 					<extraJvmArgs>-Xmx512m</extraJvmArgs>
-					<!--<jvm>${JAVA_HOME}/bin/java</jvm> -->
-					<!--<noServer>false</noServer> -->
+					<!--<jvm>${JAVA_HOME}/bin/java</jvm>-->
+					<!--<noServer>false</noServer>-->
 
-					<!-- TODO This should help running GAE stuff in hosted mode (when gwt-maven-plugin-1.2 
-						is released, see http://jira.codehaus.org/browse/MGWT-112) -->
+					<!--
+						TODO This should help running GAE stuff in
+						hosted mode (when gwt-maven-plugin-1.2 is
+						released, see
+						http://jira.codehaus.org/browse/MGWT-112)
+					-->
 					<server>
 						com.google.appengine.tools.development.gwt.AppEngineLauncher
 					</server>
@@ -542,15 +600,24 @@
 					<runTarget>/index.html</runTarget>
 					<style>DETAILED</style>
 					<webXml>war/WEB-INF/web.xml</webXml>
-					<!-- this parameter is VERY important with automatic mode - has to match 
-						the version in your declared deps -->
-					<!-- if this is set incorrect (not a match), or left out (default is 
-						1.5.2 for 2.0-beta23) you will have mysterious errors -->
+					<!--
+						this parameter is VERY important with automatic
+						mode - has to match the version in your declared
+						deps
+					-->
+					<!--
+						if this is set incorrect (not a match), or left
+						out (default is 1.5.2 for 2.0-beta23) you will
+						have mysterious errors
+					-->
 					<gwtVersion>${gwt.version}</gwtVersion>
 				</configuration>
 				<executions>
-					<!-- <execution> <id>generateAsynch</id> <phase>generate-sources</phase> 
-						<goals> <goal>generateAsync</goal> </goals> </execution> -->
+					<!--
+						<execution> <id>generateAsynch</id>
+						<phase>generate-sources</phase> <goals>
+						<goal>generateAsync</goal> </goals> </execution>
+					-->
 					<execution>
 						<phase>compile</phase>
 						<goals>
@@ -560,21 +627,36 @@
 				</executions>
 			</plugin>
 
-			<!-- The actual maven-gae-plugin. Type "mvn gae:run" to run project, "mvn 
-				gae:deploy" to upload to GAE. -->
+			<!--
+				The actual maven-gae-plugin. Type "mvn gae:run" to run
+				project, "mvn gae:deploy" to upload to GAE.
+			-->
 
 			<plugin>
 				<groupId>net.kindleit</groupId>
 				<artifactId>maven-gae-plugin</artifactId>
 				<version>0.5.9</version>
 				<configuration>
-					<!-- jvmFlags> <jvmFlag>-Xdebug</jvmFlag> <jvmFlag>-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000</jvmFlag> 
-						</jvmFlags> -->
+					<!-- jvmFlags>
+						<jvmFlag>-Xdebug</jvmFlag>
+						<jvmFlag>-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000</jvmFlag>
+						</jvmFlags>
+					-->
+					<jvmFlags>
+						<jvmFlag>-Dmyenviroment=local</jvmFlag>
+						<jvmFlag>
+							-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=60067
+						</jvmFlag>
+					</jvmFlags>
 
 				</configuration>
 			</plugin>
-			<!-- Upload application to the appspot automatically, during release:perform 
-				Opppppppppps....... ...really it is ness???!! -->
+			<!--
+				Upload application to the appspot automatically, during
+				release:perform
+				Opppppppppps.......
+				...really it is ness???!!
+			-->
 
 
 			<!-- Java compiler version -->
@@ -613,12 +695,17 @@
 
 
 	<properties>
-		<!-- This is just for "eclipse:eclipse" goal to always attempt downloading 
-			sources -->
+		<!--
+			This is just for "eclipse:eclipse" goal to always attempt
+			downloading sources
+		-->
 		<downloadSources>true</downloadSources>
 
-		<!-- Specify AppEngine version for your project. It should match SDK version 
-			pointed to by ${gae.home} property (Typically, one used by your Eclipse plug-in) -->
+		<!--
+			Specify AppEngine version for your project. It should match
+			SDK version pointed to by ${gae.home} property (Typically,
+			one used by your Eclipse plug-in)
+		-->
 		<gae.version>1.3.4</gae.version>
 
 		<!-- GWT version -->
@@ -628,21 +715,30 @@
 
 
 
-		<!-- Upload to http://0.latest.<applicationName>.appspot.com by default -->
+		<!--
+			Upload to http://0.latest.<applicationName>.appspot.com by
+			default
+		-->
 		<gae.application.version>0</gae.application.version>
 
 		<!-- port defaults to 8080 -->
 		<gae.port>8888</gae.port>
 
-		<!-- Produce detailed JS during GWT compilation for development environment -->
+		<!--
+			Produce detailed JS during GWT compilation for development
+			environment
+		-->
 		<gwt.style>DETAILED</gwt.style>
 	</properties>
 
 	<profiles>
 
-		<!-- We can configure our integration server to activate this profile and 
-			perform gae:deploy, thus uploading latest snapshot to the http://1.latest.<applicationName>.appspot.com 
-			automatically -->
+		<!--
+			We can configure our integration server to activate this
+			profile and perform gae:deploy, thus uploading latest
+			snapshot to the
+			http://1.latest.<applicationName>.appspot.com automatically
+		-->
 		<profile>
 			<id>integration-build</id>
 			<properties>
@@ -653,10 +749,13 @@
 			</properties>
 		</profile>
 
-		<!-- This profile will activate automatically during release and upload 
-			application to the http://2.latest.<applicationName>.appspot.com (We might 
-			want to set the 2nd version as our applications Default version to be accessible 
-			at http://<applicationName>.appspot.com) -->
+		<!--
+			This profile will activate automatically during release and
+			upload application to the
+			http://2.latest.<applicationName>.appspot.com (We might want
+			to set the 2nd version as our applications Default version
+			to be accessible at http://<applicationName>.appspot.com)
+		-->
 		<profile>
 			<id>release-build</id>
 			<activation>
@@ -667,11 +766,16 @@
 			</activation>
 
 			<properties>
-				<!-- During release, set application version in appengine-web.xml to 
-					2 -->
+				<!--
+					During release, set application version in
+					appengine-web.xml to 2
+				-->
 				<gae.application.version>2.1</gae.application.version>
 
-				<!-- Produce compressed JS during GWT compilation for production environment -->
+				<!--
+					Produce compressed JS during GWT compilation for
+					production environment
+				-->
 				<gwt.style>OBFUSCATED</gwt.style>
 			</properties>
 		</profile>
@@ -686,43 +790,26 @@
 				</property>
 			</activation>
 			<properties>
-				<gae.active>true</gae.active>
 				<gae.application.version>1</gae.application.version>
 			</properties>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugin</groupId>
-						<artifactId>echo-plugin</artifactId>
-						<version>1.0.0</version>
-						<configuration>
-							<info>BUILT %s %s CONFIGURATION</info>
-							<elements>
-								<param>with</param>
-								<param>ALPHA</param>
-							</elements>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
 		</profile>
 
 		<profile>
 			<id>profile-FILECACHE</id>
 			<activation>
-				<activeByDefault>false</activeByDefault>
+				<activeByDefault>true</activeByDefault>
 				<property>
 					<name>cccache</name>
 				</property>
 			</activation>
 			<properties>
-				<gae.active>false</gae.active>
 				<gae.application.version>xxx</gae.application.version>
 			</properties>
 			<build>
 				<resources>
 					<resource>
 						<directory>src/main/resources</directory>
+
 						<includes>
 							<include>**/*</include>
 						</includes>
