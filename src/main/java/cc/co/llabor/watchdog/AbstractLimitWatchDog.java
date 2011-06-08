@@ -49,7 +49,7 @@ public abstract class AbstractLimitWatchDog extends TimerTask {
 				limitCount = 0;
 			}else{ 
 				limitCount ++; 
-				doWarning(lowLimitTmp);				
+				doWarning(currentTmp);				
 			}
 			lastLimitTimestamp = currentTimeMillis;
 			if (limitCount >maxLimitCount) {
