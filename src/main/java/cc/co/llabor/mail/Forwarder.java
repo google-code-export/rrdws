@@ -12,6 +12,7 @@ import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;  
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
@@ -79,6 +80,62 @@ public class Forwarder {
 		log.warning(" done.");
 		
 	}
+	
+	/**
+	 * @deprecated
+	 * @author vipup
+	 * @param strTo
+	 * @param strToMemo
+	 * @param strFrom
+	 * @param strFromMemo
+	 * @param strSubject
+	 * @param strBody
+	 * @param attachmentName
+	 * @param attachmentData
+	 * @param strAttachContentType
+	 */
+	public void doPost(
+			String strTo, String strToMemo, 
+			String strFrom, String strFromMemo, 
+			String strSubject, String strBody, 
+			String attachmentName, byte[] attachmentData, String strAttachContentType   
+		){
+        Properties props = new Properties();
+        Session session = Session.getDefaultInstance(props, null);
+		
+        try {
+            Message msg = new MimeMessage(session);
+			InternetAddress toAddress = new InternetAddress(strTo, strToMemo);
+			InternetAddress fromAddress = new InternetAddress(strFrom, strFromMemo);
+			msg.setFrom(fromAddress); 
+			msg.addRecipient(Message.RecipientType.TO, toAddress);
+			
+			msg.setSubject(strSubject);
+            msg.setText(strBody);
+
+            Multipart mp = new MimeMultipart(); 
+            MimeBodyPart htmlPart = new MimeBodyPart();
+            htmlPart.setContent(strBody, "text/html");
+            mp.addBodyPart(htmlPart);
+
+            MimeBodyPart attachment = new MimeBodyPart();
+            attachment.setFileName(attachmentName);
+            attachment.setContent(attachmentData, strAttachContentType);
+            mp.addBodyPart(attachment); 
+            msg.setContent(mp);	 
+            Transport.send(msg);	
+        } catch (UnsupportedEncodingException e) {
+        	log.throwing(this.getClass().getName(), "doPost", e); 
+			e.printStackTrace();
+		} catch (MessagingException e) { 
+			log.throwing(this.getClass().getName(), "doPost", e);
+			e.printStackTrace();
+		}finally{
+			System.out.println("eOf"+strTo+strToMemo+strFrom+strFromMemo+strSubject+strBody);
+        } 
+	}
+	
+	
 		public void doPost(
 				String strTo, String strToMemo, 
 				String strFrom, String strFromMemo, 
@@ -208,7 +265,110 @@ public class Forwarder {
 		 
 	}
 
-  
+ 
+
+	
+	       public void emailList(byte[] attachmentData) {
+               Properties props = new Properties();
+               Session session = Session.getDefaultInstance(props,null);
+               session.setDebug(true);
+
+//              String msgBody = "Here is an encrypted copy of thepatient scut list you requested.  Enter your password to open the  attached file.";
+               String htmlBody = "<b>Hi</b>  Here is the encrypted ptscut list yourequested.  Please <b><i>enter your password</i></b> to open thedocument.\nCheers!";
+
+               MyData md = new DefaultMe();
+               try {
+
+                       Message msg = new MimeMessage(session);
+                       Multipart mp = new MimeMultipart();
+                       //we'll have an htmlpart and an attachment partin our mimemultipart message
+                       MimeBodyPart htmlPart = new MimeBodyPart();
+                       MimeBodyPart attachment = new MimeBodyPart();
+
+                       //setup message (from, to, subject, etc)
+                       msg.setFrom(new InternetAddress(md.getEmail()));
+                       msg.addRecipient(Message.RecipientType.TO, new InternetAddress(md.getEmail(), "Dr. " +md.getNickname()));
+                       msg.setSubject("Here is the patient list yourequested.");
+//                      msg.setText(msgBody);
+
+                       //prepare html part
+                       htmlPart.setContent(htmlBody, "text/html");
+
+                       //prepare attachment using abytearraydatasource
+                       DataSource src = new ByteArrayDataSource(attachmentData, "application/pdf");
+                       attachment.setFileName("ptlist.pdf");
+                       attachment.setDataHandler(new DataHandler(src));
+
+                       //put the parts together into a multipart
+                       mp.addBodyPart(htmlPart);
+                       mp.addBodyPart(attachment);
+
+                       //set the content of the message to be themultipart
+                       msg.setContent(mp);
+                       msg.saveChanges();//I think this is necessary,but, not sure....
+
+                       Transport.send(msg);
+               } catch (AddressException e) {
+                       e.printStackTrace();
+               } catch (MessagingException e) {
+                       e.printStackTrace();
+                       // c.sep("sfe: "+e.getInvalidAddresses()[0].toString());
+               } catch (UnsupportedEncodingException e) { 
+                       e.printStackTrace();
+               }
+       } 		
+	
+	       public void emailLists(byte[][] attachmentDatas) {
+               Properties props = new Properties();
+               Session session = Session.getDefaultInstance(props,null);
+               session.setDebug(true);
+
+//              String msgBody = "Here is an encrypted copy of thepatient scut list you requested.  Enter your password to open the  attached file.";
+               String htmlBody = "<b>Hi</b>  Here is the encrypted ptscut list yourequested.  Please <b><i>enter your password</i></b> to open thedocument.\nCheers!";
+
+               MyData md = new DefaultMe();
+               try {
+
+                       Message msg = new MimeMessage(session);
+                       Multipart mp = new MimeMultipart();
+                       //we'll have an htmlpart and an attachment partin our mimemultipart message
+                       MimeBodyPart htmlPart = new MimeBodyPart();
+                       //setup message (from, to, subject, etc)
+                       msg.setFrom(new InternetAddress(md.getEmail()));
+                       msg.addRecipient(Message.RecipientType.TO, new InternetAddress(md.getEmail(), "Dr. " +md.getNickname()));
+                       msg.setSubject("Here is the patient list yourequested.");
+//                      msg.setText(msgBody);
+
+                       //prepare html part
+                       htmlPart.setContent(htmlBody, "text/html");
+                       mp.addBodyPart(htmlPart);
+                       int i=0;
+                       for (byte[]attachmentData:attachmentDatas){
+                    	   final MimeBodyPart attachment = new MimeBodyPart();
+                    	   i++;
+	                       //prepare attachment using abytearraydatasource
+	                       DataSource src = new ByteArrayDataSource(attachmentData, "application/pdf");
+	                       attachment.setFileName("ptlist"+i+".pdf");
+	                       attachment.setDataHandler(new DataHandler(src));
+	
+	                       //put the parts together into a multipart 
+	                       mp.addBodyPart(attachment);
+                       }
+                       //set the content of the message to be themultipart
+                       msg.setContent(mp);
+                       msg.saveChanges();//I think this is necessary,but, not sure....
+
+                       Transport.send(msg);
+               } catch (AddressException e) {
+                       e.printStackTrace();
+               } catch (MessagingException e) {
+                       e.printStackTrace();
+                       // c.sep("sfe: "+e.getInvalidAddresses()[0].toString());
+               } catch (UnsupportedEncodingException e) { 
+                       e.printStackTrace();
+               }
+       } 		
+ 
 }
 
 

@@ -1,6 +1,10 @@
 package cc.co.llabor.mail;
  
 
+import java.io.IOException;
+
+import javax.mail.MessagingException;
+
 import org.junit.Test;
 
 /** 
@@ -17,7 +21,7 @@ public class ForwarderTest {
 	
  
 	@Test
-	public void testDoTestPost() {
+	public void testDoTestPost() throws IOException, MessagingException {
 		
 		Forwarder fwd = new Forwarder(); 
 
