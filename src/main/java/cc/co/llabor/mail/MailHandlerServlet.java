@@ -2,6 +2,7 @@ package cc.co.llabor.mail;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
@@ -102,9 +103,13 @@ public class MailHandlerServlet extends HttpServlet {
 		            List<MemoryFileItem> items = upload.parseRequest(request);  
 		            for(MemoryFileItem item : items) {
 		            	if ("null".equals(""+item.getContentType())){
-		            		if ("from".equals(  item.getFieldName() )) strFrom = item.getString();
+		            		if ("from".equals(  item.getFieldName() )){
+		            			strFrom = item.getString();
+		            			strFromMemo = item.getString();
+		            		}
 		            		if ("to".equals(  item.getFieldName() )) {
 		            			strTo = item.getString();
+		            			strToMemo = item.getString();
 		            		}
 		            		if ("body".equals(  item.getFieldName() )) strBody = item.getString();
 		            		if ("cap".equals(  item.getFieldName() )) strToMemo  += item.getString();
@@ -163,11 +168,13 @@ public class MailHandlerServlet extends HttpServlet {
 			    			include(resp, "uploadform.html");
 			    	}
 			    }
-			} catch(FileUploadException e){
-				e.printStackTrace( );
+			} catch(FileUploadException e){	
+				resp.sendError(501, e.getMessage());
+				e.printStackTrace( resp.getWriter());
 				throw new IOException("Unable to handle uploaded file"); 
 			} catch(Throwable e){ 
-				e.printStackTrace( ); 
+				resp.sendError(502, e.getMessage());
+				e.printStackTrace( resp.getWriter()); 
 			}
 			
 		}
@@ -207,12 +214,13 @@ public class MailHandlerServlet extends HttpServlet {
 	private void include(HttpServletResponse resp, String resourceName) {
 		try {
 			ServletOutputStream out;
+			resp.setContentType("text/html");
 			out = resp.getOutputStream();			
 			byte[] b = getResourceAsBA(resourceName);
 			String newVal = new String(b);
-			newVal.replace("123123123", ""+(""+System.currentTimeMillis()).hashCode());
-			b = newVal.getBytes();
-			out.write(b );
+			newVal.replace("123123123", ""+(""+System.currentTimeMillis()).hashCode());			
+			out.print( newVal );
+			out.flush();
 		} catch (IOException e) { 
 			e.printStackTrace();
 		}  	
