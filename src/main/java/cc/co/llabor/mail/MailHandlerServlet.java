@@ -213,9 +213,9 @@ public class MailHandlerServlet extends HttpServlet {
 	
 	private void include(HttpServletResponse resp, String resourceName) {
 		try {
-			ServletOutputStream out;
+			PrintWriter out;
 			resp.setContentType("text/html");
-			out = resp.getOutputStream();			
+			out = resp.getWriter();			
 			byte[] b = getResourceAsBA(resourceName);
 			String newVal = new String(b);
 			newVal.replace("123123123", ""+(""+System.currentTimeMillis()).hashCode());			
