@@ -80,7 +80,7 @@ public class RRDHighLimitWatchDog extends AbstractLimitWatchDog {
 	}
 	protected void doWarning(long lowMemory) {
 		// 		mfree1MB();
-		log.warn(this.WARN_MESSAGE +"::"+lowMemory); ;
+		log.warn(this.rrdPATH+" !!! "+ this.WARN_MESSAGE +":!!!:"+this.hiLIMIT+" <  "+lowMemory +" < " + this.lowLIMIT); ;
 	}
  
  
@@ -152,7 +152,7 @@ public class RRDHighLimitWatchDog extends AbstractLimitWatchDog {
 				limitCount = 0;
 			}else{ 
 				limitCount ++; 
-				doWarning(limitCount);				 
+				doWarning(currentTmp);				 
 			}
 			lastLimitTimestamp = currentTimeMillis;
 			if (limitCount >maxLimitCount) {
