@@ -645,7 +645,8 @@ public class LServlet extends HttpServlet {
 		"Content-Type: image/tiff".equalsIgnoreCase( contextTypeStr) ||
 		"Content-Type: image/ief".equalsIgnoreCase( contextTypeStr) ||
 		"Content-Type: image/g3fax".equalsIgnoreCase( contextTypeStr) ||
-		"Content-Type: application/x-shockwave-flash".equalsIgnoreCase( contextTypeStr);
+		"Content-Type: application/x-shockwave-flash".equalsIgnoreCase( contextTypeStr)||
+		(""+contextTypeStr).indexOf( "application/") >0;
 	}
 
 	static boolean isScript(String contextTypeStr) {
