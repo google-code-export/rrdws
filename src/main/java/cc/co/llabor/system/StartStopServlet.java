@@ -1,6 +1,9 @@
  
 package cc.co.llabor.system;    
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -9,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import org.collectd.DataWorker; 
 import org.jrobin.core.RrdDbPool;
 import org.jrobin.core.RrdException;
+import org.jrobin.mrtg.server.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;   
 
@@ -56,7 +60,11 @@ public class StartStopServlet extends HttpServlet {
 					
 			// start collectd queue-worker
 			startCollectdWorker();
-		}			
+		}		
+		
+		if (isMRTGEnabled()){
+			startMrtgServer();
+		}
 		  
 		try {
 			hTimer = DogFarm.startTimer( HighLimitWatchDog.class );
@@ -127,6 +135,34 @@ public class StartStopServlet extends HttpServlet {
 		
 		
 		super.init(config); 
+	}
+
+	private void startMrtgServer() {
+		log.info(Repo.getBanner("mrtgServer"));
+		 String[] acceptedClients = new String[]{};
+		//jrobin/mrtg/server/Server
+		try {
+			Server.main(acceptedClients);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private boolean isMRTGEnabled() {
+		RuntimeMXBean RuntimemxBean = ManagementFactory.getRuntimeMXBean();
+		
+		// grep com.sun.management.snmp
+		boolean retval = true; 
+		for(String arg:RuntimemxBean.getInputArguments()) {
+			System.out.println(arg);
+			if (arg.indexOf("com.sun.management.snmp")>0){
+				retval =true;
+			}
+		}
+		 
+		return retval;
+		
 	}
 
 	/**
