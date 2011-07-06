@@ -21,8 +21,11 @@ package org.collectd;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Queue;
  
@@ -55,7 +58,7 @@ public class   DataWorker implements Runnable{
     		queue = new LinkedList<String>();
 		}
 		public void run() {
-    		while(isAlive ){
+    		while(isAlive ){ 
     			if (queue.isEmpty()){
     				try {
     					Thread.sleep(100);
