@@ -334,7 +334,7 @@
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-api-1.0-sdk</artifactId>
 			<version>${gae.version}</version>
-			<!--   <scope>test</scope> -->
+			 
 		</dependency>
 
 		<!-- 
@@ -480,8 +480,8 @@
 					</execution>
 				</executions>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.5</source>
+					<target>1.5</target>
 
 
 					<!-- webXml>${basedir}/target/jspCweb.xml</webXml> -->

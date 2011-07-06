@@ -12,6 +12,7 @@ import org.jrobin.core.RrdException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;   
 
+import cc.co.llabor.features.Repo;
 import cc.co.llabor.watchdog.AbstractLimitWatchDog;
 import cc.co.llabor.watchdog.DogFarm;
 import cc.co.llabor.watchdog.HighLimitWatchDog;
@@ -132,6 +133,8 @@ public class StartStopServlet extends HttpServlet {
 	 * @author vipup
 	 */
 	private void startCollectdWorker() { 
+		//rrdDataWorker.dat
+		log.info(Repo.getBanner( "rrdDataWorker"));
 			worker = new DataWorker(); 
 			Thread t1 = new Thread(mythreads, worker, "rrd DataWorker");
 			t1.setDaemon(true);
@@ -144,6 +147,7 @@ public class StartStopServlet extends HttpServlet {
 	 * @param arg0
 	 */
 	private void startCollectdServer(final String[] arg0) {
+		log.info(Repo.getBanner( "collectServer"));
 		serverLauncher = new ServerLauncher(arg0);
 		Thread t1 = new Thread ( this.mythreads, serverLauncher, "jcollectd_Server");
 		t1.setDaemon(true);
@@ -155,6 +159,7 @@ public class StartStopServlet extends HttpServlet {
 	 * @author vipup
 	 */
 	private void startColelctdClient() {
+		log.info(Repo.getBanner( "collectClient"));
 		ClientLauncher clientLauncher = new ClientLauncher() ;
 		Thread t1 = new Thread ( this.mythreads, clientLauncher, "collectdCLIENT");
 		t1.setDaemon(true);
