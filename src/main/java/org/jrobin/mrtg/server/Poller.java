@@ -45,7 +45,7 @@ import net.percederberg.mibble.MibValue;
 import net.percederberg.mibble.MibValueSymbol;
 
 class Poller {
-	static final int SNMP_TIMEOUT = 10; // seconds
+	static final int SNMP_TIMEOUT = 60; // seconds
 
 	static final String[][] OIDS = {
 		//OID	 .1.3.6.1.4.1.42.2.145.3.163.1 @ http://download.oracle.com/javase/1.5.0/docs/guide/management/SNMP.html
@@ -128,9 +128,10 @@ class Poller {
 	 */
 	String toNumericOID(String oid) throws IOException {
 		String numericOid = getNumericOid(oid);
-		checkMIB( );
 		String oidName = "jvmClassesLoadedCount";
 		try{
+			checkMIB( );
+			
 			int beginIndex = oid.lastIndexOf("/")+1;
 			oidName = oid.substring(beginIndex );
 		}catch(Exception e){}

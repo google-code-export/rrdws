@@ -146,7 +146,7 @@ public class SNMPObjectIdentifier extends SNMPObject
 			convertDigitString((String)digits);
 		}
 		else
-			throw new SNMPBadValueException(" Object Identifier: bad object supplied to set value ");
+			throw new SNMPBadValueException(" ObjEct  Identifier: bad object supplied to set value ");
 	}
 	
 	
@@ -244,8 +244,7 @@ public class SNMPObjectIdentifier extends SNMPObject
 	private void convertDigitString(String digitString)
 		throws SNMPBadValueException
 	{
-		try
-		{
+		try{
 			StringTokenizer st = new StringTokenizer(digitString, " .");
 			int size = 0;
 			
@@ -264,15 +263,14 @@ public class SNMPObjectIdentifier extends SNMPObject
 			{
 				returnDigits[i] = Integer.parseInt(st.nextToken());
 				if (returnDigits[i] < 0)
-					throw new SNMPBadValueException(" Object Identifier: bad string supplied to set value ");
+					throw new SNMPBadValueException(" Object IdentifieR: bad string supplied to set value ");
 			}
 			
 			digits = returnDigits;
 			
-		}
-		catch (NumberFormatException e)
-		{
-			throw new SNMPBadValueException(" Object Identifier: bad string supplied for object identifier value ");
+		}catch (NumberFormatException e) {
+			e.printStackTrace();
+			throw new SNMPBadValueException(" Object IdentifiRr: bad string supplied for object identifier value ");
 		}
 		
 		
