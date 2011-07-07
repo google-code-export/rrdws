@@ -38,8 +38,8 @@ public interface MrtgConstants {
 	// XML-RPC port to listen on
 	int SERVER_PORT = 35353;
 
-	// run Scheduler each 5 seconds
-	int SCHEDULER_RESOLUTION = 5;
+	// run Scheduler each 60 seconds
+	int SCHEDULER_RESOLUTION = 60;
 
 	// pause between poller threads in milliseconds
 	int SCHEDULER_DELAY = 20;

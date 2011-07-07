@@ -38,6 +38,8 @@ class Timer  implements Runnable , MrtgConstants {
 
 	private Queue<SnmpReader> queue;
 
+	SnmpWorker readerTpp = null;
+	
 	Timer() {
 		// Init Clockwork as SNMP-initiator
 		Thread thr1 = new Thread(this, "mrtg.Timer");
@@ -46,7 +48,7 @@ class Timer  implements Runnable , MrtgConstants {
 		// Init SNMP-queue Reader
 		SnmpWorker readerTpp = new SnmpWorker();
 		// Init Clockwork as SNMP-initiator
-		Thread thr2 = new Thread(this, "mrtg.Timer");
+		Thread thr2 = new Thread(readerTpp, "mrtg.Worker");
 		this.queue = readerTpp.queue;
 		// ready to start....
 		thr2 .start();
@@ -98,6 +100,7 @@ class Timer  implements Runnable , MrtgConstants {
 
 	void terminate() {
     	active = false;
+    	this.readerTpp.kill();
 		synchronized(this) {
 			notify();
 		}
