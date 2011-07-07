@@ -70,15 +70,27 @@ class SnmpReader  implements Runnable  {
 		}
 		catch (IOException e) {
 			Debug.print("IOException on " + getLabel() + ": " + e);
+			deactivateLink(e);
 		} catch (MrtgException e) {
+			deactivateLink(e);			
 			Debug.print("MrtgException on " + getLabel() + ": " + e);
 		} catch (ArrayIndexOutOfBoundsException e) {
+			deactivateLink(e);
 			Debug.print("MrtgException on " + getLabel() + ": " + e);
 		} finally {
 			if(comm != null) {
 				comm.close();
 			}
 			link.setSampling(false);
+		}
+	}
+
+	private void deactivateLink(Exception e) {
+		try {
+			link.deactivate();
+			Debug.print(".. deactivated" + getLabel() + ": " + e);
+		} catch (MrtgException e1) {
+			e1.printStackTrace();
 		}
 	}
 

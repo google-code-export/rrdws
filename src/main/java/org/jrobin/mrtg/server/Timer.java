@@ -28,17 +28,29 @@ import org.jrobin.mrtg.Debug;
 import org.jrobin.mrtg.MrtgConstants;
 import org.jrobin.mrtg.MrtgException;
 
+import java.util.Queue;
 import java.util.Vector;
 
 class Timer  implements Runnable , MrtgConstants {
 	private volatile boolean active = true;
 	
-	Thread thr1 ;
+	
+
+	private Queue<SnmpReader> queue;
 
 	Timer() {
-		thr1 = new Thread(this, "mrtg.Timer");
+		// Init Clockwork as SNMP-initiator
+		Thread thr1 = new Thread(this, "mrtg.Timer");
 		// TODO =8-0
 		thr1 .start();
+		// Init SNMP-queue Reader
+		SnmpWorker readerTpp = new SnmpWorker();
+		// Init Clockwork as SNMP-initiator
+		Thread thr2 = new Thread(this, "mrtg.Timer");
+		this.queue = readerTpp.queue;
+		// ready to start....
+		thr2 .start();
+		
 	}
 
 	public void run() {
@@ -52,22 +64,23 @@ class Timer  implements Runnable , MrtgConstants {
 		Debug.print("Scheduler started");
 		while(active) {
 			Vector routers = deviceList.getRouters();
-			for(int i = 0; i < routers.size(); i++) {
-				Device router = (Device) routers.get(i);
+			for(Object routerO : routers.toArray() ) {
+				Device router = (Device)routerO;
 				Vector links = router.getLinks();
-				for (int j = 0; j < links.size(); j++) {
-					Port link = (Port) links.get(j);
+				for (Object linkO  :links.toArray() ) {
+					Port link = (Port) linkO;
                     if(router.isActive() && link.isActive() &&
 						link.isDue() && !link.isSampling()) {
                     	SnmpReader snmpReader = new SnmpReader(router, link);
-						Thread readerTmp = new Thread(snmpReader, "SnmpReader");
-						readerTmp.setDaemon(true);
-                    	readerTmp.start();
-						try {
-							this.thr1.sleep((long)(1 + Math.random() * SCHEDULER_DELAY));
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
+						//Thread readerTmp = new Thread(snmpReader, "SnmpReader");
+						//readerTmp.setDaemon(true);
+                    	//readerTmp.start();
+                    	this.queue.add(snmpReader);
+//						try {
+//							this.thr1.sleep((long)(1 + Math.random() * SCHEDULER_DELAY));
+//						} catch (InterruptedException e) {
+//							e.printStackTrace();
+//						}
 					}
 				}
 			}

@@ -148,7 +148,6 @@ public class StartStopServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-
 	private boolean isMRTGEnabled() {
 		RuntimeMXBean RuntimemxBean = ManagementFactory.getRuntimeMXBean();
 		
