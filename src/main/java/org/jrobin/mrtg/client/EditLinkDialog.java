@@ -87,15 +87,15 @@ class EditLinkDialog extends JDialog {
 	private void constructUserInterface() {
 		JPanel content = (JPanel) getContentPane();
 		Box box = Box.createVerticalBox();
-		content .setLayout( new FlowLayout());
+		content .setLayout(new GridLayout());
 		box.add(Util.getPanelFor(routerLabel, routerValueLabel));
 		//box.setLayout( new BoxLayout(content, 0));
 		 
 		JPanel panelForList = Util.getPanelFor(linksListLabel, Util.standardScrollPane(linksList));
-		Dimension minimumSize = new Dimension(320, 200);
+		Dimension minimumSize = new Dimension(640, 480);
 		panelForList.setMinimumSize(minimumSize );
 		box.setMinimumSize(minimumSize );
-		panelForList.setBounds(0, 0, 320, 200);
+		panelForList.setBounds(0, 0, 640, 480);
 		box.add(panelForList);
 		box.add(Util.getPanelFor(descrLabel, descrField));
 		box.add(Util.getPanelFor(samplingLabel, samplingField));
