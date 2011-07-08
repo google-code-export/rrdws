@@ -5,7 +5,7 @@
 <html><head><title>intro to JRRD...</title>
 <link rel="stylesheet" type="text/css" media="screen,print" href="css/table.css" /> 
 <link rel="stylesheet" type="text/css" href="css/main.css" />
-<link rel="stylesheet" type="text/css" media="all" href="css/v14/screen.css" />
+<link rel="stylesheet" type="text/css" media="all" href="css/screen.css" />
 <link rel="stylesheet" type="text/css" media="print" href="css/print.css" />
 <style> </style> </head>
 <body bgcolor=#FFFFFF link=#006890 vlink=#003860 alink=#800000 text=#000000 topmargin="0" marginheight="0">

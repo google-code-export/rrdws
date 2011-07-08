@@ -31,7 +31,7 @@ class Util {
 
 	static JPanel getPanelFor(JComponent comp1, JComponent comp2) {
 		JPanel panel = new JPanel();
-		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		panel.add(comp1);
 		panel.add(comp2);
 		return panel;
@@ -102,7 +102,7 @@ class Util {
 		return standardLabel("");
 	}
 
-	static final int INPUT_FIELD_SIZE = 20;
+	static final int INPUT_FIELD_SIZE = 60;
 
 	static JTextField standardTextField() {
 		JTextField textField = new JTextField();
@@ -116,7 +116,7 @@ class Util {
 		JTextField placeholder = Util.standardTextField();
 		int width = (int)placeholder.getPreferredSize().getWidth();
 		JScrollPane pane = new JScrollPane(component);
-		pane.setPreferredSize(new Dimension(width, 150));
+		pane.setPreferredSize(new Dimension(width, 450));
 		return pane;
 	}
 }
