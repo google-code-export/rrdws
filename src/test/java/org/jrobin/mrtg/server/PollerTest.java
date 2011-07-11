@@ -41,6 +41,30 @@ public class PollerTest {
 		System.out.println(p.getLastSymbol() +" == "+retvLTmp);
 		
 	}
+	
+	@Test
+	public void testWalk_v2() throws IOException {
+		Poller p = new Poller("localhost:1616","public");
+		String base = "jvmMgtMIB";
+		SortedMap oTmp = p.walk(base );
+		assertNotNull(oTmp);
+		
+		String numericOid = ""+oTmp.firstKey();
+		assertNotNull(numericOid);
+		String retvLTmp = null;
+		try{
+			retvLTmp = p.getSNMPv2(numericOid);
+			fail("root of jvmMgtMIB have to throw at least NoNumberException");
+		}catch(Exception e){
+			e.printStackTrace();
+			retvLTmp = p.getNextSNMPv2(numericOid);
+			
+		}
+		assertNotNull("NULL by retrieve {"+numericOid+"}!",retvLTmp );
+		System.out.println(p.getLastSymbol() +" == "+retvLTmp);
+		
+	}
+	
 	@Test
 	public void testWalkTree() throws IOException{
 		Poller p = new Poller("localhost:1616","public");
