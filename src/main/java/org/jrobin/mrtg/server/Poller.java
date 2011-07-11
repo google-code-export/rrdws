@@ -74,6 +74,8 @@ class Poller {
 	// state variables
 	private SNMPv1CommunicationInterface comm;
 
+	private SNMPObject lastOID;
+
     Poller(String hostAndPort, String community)
 		throws IOException {
 		// check for port information
@@ -103,13 +105,50 @@ class Poller {
     	// probably numerical
     	return oid;
     }
-
-	String getSNMPv1(String numericOid) throws IOException {
+    /**
+     * read SNMP-value for the passes OID
+     * 
+     * @author vipup
+     * @param numericOid
+     * @return
+     * @throws IOException
+     */
+	public String getSNMPv1(String numericOid) throws IOException {
 		
 		try {
 	    	SNMPVarBindList newVars =  comm.getMIBEntry(numericOid );//comm.getNextMIBEntry( numericOid); //
 		    SNMPSequence pair = (SNMPSequence)(newVars.getSNMPObjectAt(0));
 			SNMPObject snmpObject = pair.getSNMPObjectAt(1);
+			SNMPObject snmpKeyObject = pair.getSNMPObjectAt(0);
+			this.setLastOID(snmpKeyObject);
+			
+			return snmpObject.toString().trim();
+		}
+		catch(SNMPBadValueException bve) {
+			throw new IOException(bve); 
+		}
+		catch(SNMPGetException ge) {
+			throw new IOException(ge); 
+		}
+	}
+	
+    /**
+     * read next available SNMP-value for the passes OID
+     * 
+     * @author vipup
+     * @param numericOid
+     * @return
+     * @throws IOException
+     */
+	public String getNextSNMPv1(String numericOid) throws IOException {
+		
+		try {
+	    	SNMPVarBindList newVars =  comm.getNextMIBEntry( numericOid); //comm.getMIBEntry(numericOid );//
+	    	
+		    SNMPSequence pair = (SNMPSequence)(newVars.getSNMPObjectAt(0));
+			SNMPObject snmpObject = pair.getSNMPObjectAt(1);
+			SNMPObject snmpKeyObject = pair.getSNMPObjectAt(0);
+			this.setLastOID(snmpKeyObject);
 			return snmpObject.toString().trim();
 		}
 		catch(SNMPBadValueException bve) {
@@ -339,6 +378,18 @@ class Poller {
 
 	protected void finalize() {
 		close();
+	}
+
+	private void setLastOID(SNMPObject lastOID) { 
+		this.lastOID = lastOID;
+	}
+
+	public SNMPObject getLastOID() {
+		return lastOID;
+	}
+
+	public MibValueSymbol getLastSymbol(){
+		return mib.getSymbolByOid( ""+ this.getLastOID());
 	}
 
 }
