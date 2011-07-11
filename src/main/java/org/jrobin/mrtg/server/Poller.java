@@ -36,6 +36,27 @@ import java.net.SocketException;
 import java.net.URL;
 import java.util.*;
 
+import org.snmp4j.PDU;
+import org.snmp4j.ScopedPDU;
+import org.snmp4j.Snmp;
+import org.snmp4j.TransportMapping;
+import org.snmp4j.UserTarget;
+import org.snmp4j.event.ResponseEvent;
+import org.snmp4j.mp.MPv2c;
+import org.snmp4j.mp.SnmpConstants;
+import org.snmp4j.security.AuthMD5;
+import org.snmp4j.security.PrivDES;
+import org.snmp4j.security.SecurityLevel;
+import org.snmp4j.security.SecurityProtocols;
+import org.snmp4j.security.USM;
+import org.snmp4j.security.UsmUser;
+import org.snmp4j.smi.Address;
+import org.snmp4j.smi.GenericAddress;
+import org.snmp4j.smi.OID;
+import org.snmp4j.smi.OctetString;
+import org.snmp4j.smi.VariableBinding;
+import org.snmp4j.transport.DefaultUdpTransportMapping;
+
 import net.percederberg.mibble.Mib;
 import net.percederberg.mibble.MibLoader;
 import net.percederberg.mibble.MibLoaderException;
@@ -75,6 +96,9 @@ class Poller {
 	private SNMPv1CommunicationInterface comm;
 
 	private SNMPObject lastOID;
+
+	//http://www.snmp4j.org/doc/org/snmp4j/Snmp.html
+	private Snmp snmp;
 
     Poller(String hostAndPort, String community)
 		throws IOException {
@@ -130,6 +154,147 @@ class Poller {
 		catch(SNMPGetException ge) {
 			throw new IOException(ge); 
 		}
+	}
+	
+	
+
+	/**
+	 * SNMP v.2 via snmp4j
+	 */
+    /**
+     * read SNMP-value for the passes OID
+     * 
+     * @author vipup
+     * @param numericOid
+     * @return
+     * @throws IOException
+     */
+	public String getSNMPv2(String numericOid) throws IOException {
+		//http://www.snmp4j.org/doc/org/snmp4j/Snmp.html
+
+		//To setup a default SNMP session for UDP transport and with SNMPv3 support the following code snippet can be used:
+
+			   Address targetAddress = GenericAddress.parse("udp:127.0.0.1/161");
+			   TransportMapping transport = new DefaultUdpTransportMapping();
+			   snmp = new Snmp(transport);
+			   transport.listen();
+			 		
+		
+		//How a synchronous SNMPv3 message with authentication and privacy is then sent illustrates the following code snippet:
+
+			   // add user to the USM
+//			   snmp.getUSM().addUser(new OctetString("MD5DES"),
+//			                         new UsmUser(new OctetString("MD5DES"),
+//			                                     AuthMD5.ID,
+//			                                     new OctetString("MD5DESUserAuthPassword"),
+//			                                     PrivDES.ID,
+//			                                     new OctetString("MD5DESUserPrivPassword")));
+				OctetString secName = new OctetString("MD5DES");
+				OctetString passPhrase = new OctetString("MD5DESUserAuthPassword");
+				OctetString localizationId = new OctetString("MD5DESUserPrivPassword");
+				UsmUser usmUser = new UsmUser(secName, AuthMD5.ID, passPhrase, PrivDES.ID, localizationId);
+//				snmp.getUSM().addUser(secName, usmUser);
+			   
+			   // create the target
+			   UserTarget target = new UserTarget();
+			   target.setAddress(targetAddress);
+			   target.setRetries(1);
+			   target.setTimeout(5000);
+			   target.setVersion(SnmpConstants.version2c );
+//			   target.setSecurityLevel(SecurityLevel.AUTH_PRIV);
+//			   target.setSecurityName(new OctetString("MD5DES"));
+
+			   // create the PDU
+			   PDU pdu = new ScopedPDU();
+			   OID oid = new OID(numericOid);
+			   VariableBinding vb = new VariableBinding(oid );
+			   //	pdu.add(new VariableBinding(new OID("1.3.6")));
+			   pdu.add(vb );
+			   
+				// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||			   
+				// |||||||||||||||||                                |||||||||||||			   
+				// |||||||||||||||||                                |||||||||||||			   
+				// |||||||||||||||||                                |||||||||||||			   
+				// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||			   
+				   pdu.setType(PDU.GET);
+				// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||			   
+				// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||			   
+				// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||			   
+				// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||			   
+				// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||			   
+
+
+			   // send the PDU
+			   ResponseEvent response = snmp.send(pdu, target);
+			   // extract the response PDU (could be null if timed out)
+			   PDU responsePDU = response.getResponse();
+			   // extract the address used by the agent to send the response:
+			   Address peerAddress = response.getPeerAddress();
+			   VariableBinding retval = responsePDU.get(0);
+			   
+			   return ""+retval;
+			 
+	}	
+	
+	public String getNextSNMPv2(String numericOid) throws IOException {
+		//http://www.snmp4j.org/doc/org/snmp4j/Snmp.html
+
+		//To setup a default SNMP session for UDP transport and with SNMPv3 support the following code snippet can be used:
+
+			   Address targetAddress = GenericAddress.parse("udp:127.0.0.1/1616");
+			   TransportMapping transport = new DefaultUdpTransportMapping();
+			   snmp = new Snmp(transport);
+			   transport.listen();
+			 		
+		
+		//How a synchronous SNMPv3 message with authentication and privacy is then sent illustrates the following code snippet:
+
+			   // add user to the USM
+//			   snmp.getUSM().addUser(new OctetString("MD5DES"),
+//			                         new UsmUser(new OctetString("MD5DES"),
+//			                                     AuthMD5.ID,
+//			                                     new OctetString("MD5DESUserAuthPassword"),
+//			                                     PrivDES.ID,
+//			                                     new OctetString("MD5DESUserPrivPassword")));
+			   // create the target
+			   UserTarget target = new UserTarget();
+			   target.setAddress(targetAddress);
+			   target.setRetries(1);
+			   target.setTimeout(5000);
+			   target.setVersion(SnmpConstants.version2c );
+//			   target.setSecurityLevel(SecurityLevel.AUTH_PRIV);
+			   target.setSecurityLevel(SecurityLevel.AUTH_NOPRIV);
+//			   target.setSecurityName(new OctetString("MD5DES"));
+
+			   // create the PDU
+			   PDU pdu = new ScopedPDU();
+			   OID oid = new OID(numericOid);
+			   VariableBinding vb = new VariableBinding(oid );
+			   //	pdu.add(new VariableBinding(new OID("1.3.6")));
+			   pdu.add(vb );
+
+			// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||			   
+			// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||			   
+			// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||			   
+			// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||			   
+			// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||			   
+			   pdu.setType(PDU.GETNEXT);
+			// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||			   
+			// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||			   
+			// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||			   
+			// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||			   
+			// ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||			   
+
+			   // send the PDU
+			   ResponseEvent response = snmp.send(pdu, target);
+			   // extract the response PDU (could be null if timed out)
+			   PDU responsePDU = response.getResponse();
+			   // extract the address used by the agent to send the response:
+			   Address peerAddress = response.getPeerAddress();
+			   VariableBinding retval = responsePDU.get(0);
+			   
+			   return ""+retval;
+	
 	}
 	
     /**

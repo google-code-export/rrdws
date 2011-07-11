@@ -27,7 +27,11 @@
 	<packaging>war</packaging>
 
 	<dependencies>
- 
+		<dependency>
+			<groupId>org.snmp4j</groupId>
+			<artifactId>snmp4j</artifactId>
+			<version>1.10.1</version>
+		</dependency>
 
 		<!-- mibble-mibs-2.9.2.jar mibble-parser-2.9.2.jar grammatica-1.5.jar -->
 		<dependency>
