@@ -28,18 +28,20 @@ import net.sf.jsr107cache.Cache;
 
 import org.jrobin.GraphInfo;
 import org.jrobin.cmd.RrdCommander;
-import org.jrobin.core.RrdDb;
 import org.jrobin.core.RrdDbPool;
 import org.jrobin.core.RrdException;
 import org.jrobin.mrtg.Debug;
 import org.jrobin.mrtg.MrtgException;
-import org.jrobin.mrtg.MrtgConstants;
+import org.jrobin.mrtg.MrtgConstants; 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import ws.rrd.csv.Registry;
 import cc.co.llabor.cache.Manager;
+import cc.co.llabor.system.StartStopServlet;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -68,6 +70,8 @@ public class Server implements MrtgConstants {
 
 	private boolean active = false;
 
+	private static final Logger log = LoggerFactory.getLogger(StartStopServlet.class .getName());
+
 	public synchronized static Server getInstance() throws MrtgException {
 		if (instance == null) {
 			try {
@@ -89,11 +93,11 @@ public class Server implements MrtgConstants {
 			throw new MrtgException("Cannot start Server, already started");
 		}
 		// set default backend factory
-		try {
-			RrdDb.setDefaultFactory(BACKEND_FACTORY_NAME);
-		} catch (RrdException e) {
-			throw new MrtgException("Inavlide backend factory (" + BACKEND_FACTORY_NAME + ")");
-		}
+//		try {
+//			RrdDb.setDefaultFactory(BACKEND_FACTORY_NAME);
+//		} catch (RrdException e) {
+//			throw new MrtgException("Inavlide backend factory (" + BACKEND_FACTORY_NAME + ")");
+//		}
 		// create template files
 		try {
 			createXmlTemplateIfNecessary(Config.getRrdTemplateFile(), RRD_TEMPLATE_STR);
@@ -104,7 +108,8 @@ public class Server implements MrtgConstants {
 		}
 		// load configuration
 		String hwFile = Config.getHardwareFile();
-		if(new File(hwFile).exists()) {
+		File fileTmp = new File(hwFile);
+		if(fileTmp.exists()) {
 			loadHardware();
 		}
 		else {
@@ -171,10 +176,20 @@ public class Server implements MrtgConstants {
 			transformer.setOutputProperty(OutputKeys.MEDIA_TYPE, "text/xml");
 			transformer.setOutputProperty(OutputKeys.STANDALONE, "yes");
 			DOMSource source = new DOMSource(root);
-			FileOutputStream destination = new FileOutputStream(Config.getHardwareFile());
+			File fout = new File(Config.getHardwareFile());
+			File foutTmp = File.createTempFile("mrtgstage", ".xml", fout.getParentFile());
+			String msg = "store mrtg.conf into {"+fout.getAbsolutePath()+"}";
+			log.debug( msg); 
+			FileOutputStream destination = new FileOutputStream(foutTmp);
 			StreamResult result = new StreamResult(destination);
 			transformer.transform(source, result);
 			destination.close();
+			if (fout.exists()){// make backup
+				File dest = new File (fout.getAbsolutePath()+".bak"+System.currentTimeMillis());
+				fout.renameTo(dest );
+			}
+			foutTmp.renameTo(fout) ;
+
 		} catch (Exception e) {
 			throw new MrtgException(e);
 		}
