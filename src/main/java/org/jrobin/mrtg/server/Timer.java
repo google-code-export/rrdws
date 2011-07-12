@@ -34,6 +34,7 @@ import java.util.Vector;
 class Timer  implements Runnable , MrtgConstants {
 	private volatile boolean active = true;
 	
+	static final ThreadGroup defTG = new ThreadGroup( "mrtg" );
 	
 
 	private Queue<SnmpReader> queue;
@@ -41,14 +42,17 @@ class Timer  implements Runnable , MrtgConstants {
 	SnmpWorker readerTpp = null;
 	
 	Timer() {
+		this(defTG);
+	}
+	Timer(ThreadGroup tgPar) {
 		// Init Clockwork as SNMP-initiator
-		Thread thr1 = new Thread(this, "mrtg.Timer");
+		Thread thr1 = new Thread(tgPar, this, "mrtg.Timer");
 		// TODO =8-0
 		thr1 .start();
 		// Init SNMP-queue Reader
 		SnmpWorker readerTpp = new SnmpWorker();
 		// Init Clockwork as SNMP-initiator
-		Thread thr2 = new Thread(readerTpp, "mrtg.Worker");
+		Thread thr2 = new Thread(tgPar, readerTpp, "mrtg.Worker");
 		this.queue = readerTpp.queue;
 		// ready to start....
 		thr2 .start();

@@ -51,7 +51,7 @@ import net.percederberg.mibble.MibValue;
 import net.percederberg.mibble.MibValueSymbol;
 
 class Poller implements Observer {
-	static final int SNMP_TIMEOUT = 60; // seconds
+	static final int SNMP_TIMEOUT = 1; // seconds
 
 	static final String[][] OIDS = {
 			// OID .1.3.6.1.4.1.42.2.145.3.163.1 @
@@ -208,19 +208,21 @@ class Poller implements Observer {
 
 			pdu.send();
 		} catch (java.io.IOException exc) {
-//			System.out.println("IOException " + exc.getMessage());
+			System.out.println("IOException " + exc.getMessage());
 			// System.exit(0);
 		} catch (uk.co.westhawk.snmp.stack.PduException exc) {
-//			System.out.println("PduException " + exc.getMessage());
+			System.out.println("PduException " + exc.getMessage());
 			// System.exit(0);
 		}
 		String retval = null;
 		for (int i = 0; i < max_rep || !context.isDestroyed(); i++) {
-//			System.out.println("wait for snmp-resp..№" + i);
+			System.out.println("wait for snmp-resp..№" + i);
 			try {
-				Thread.sleep(100);
+				//Thread.sleep(100);
+				this.wait(SNMP_TIMEOUT*1000);
 			} catch (InterruptedException e) {
-				throw new IOException("SNMP wait-limit reached:" + i, e);
+				//throw new IOException("SNMP wait-limit reached:" + i, e);
+				break;
 			}
 		}
 		if (this.getLastOID().getValue() == numericOid){
@@ -586,6 +588,7 @@ class Poller implements Observer {
 					AsnObject value = var.getValue();
 					this.setLastValue(var.toString() );
 					System.out.println(i + " " + var.toString());
+					this.notify();
 				}
 			} catch (uk.co.westhawk.snmp.stack.PduException exc) {
 //				System.out.println("update2(): PduException " + exc.getMessage());

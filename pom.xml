@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>cc.co.llabor</groupId>
 		<artifactId>l-parent</artifactId>
-		<version>1.6</version>
+		<version>1.14</version>
 	</parent>
 	<scm>
 		<connection>scm:hg:${scm.base}/${pom.artifactId}</connection>
@@ -71,7 +71,7 @@
 		<dependency>
 			<groupId>cc.co.llabor</groupId>
 			<artifactId>jcollectd</artifactId>
-			<version>0.1.1-SNAPSHOT</version>
+			<version>0.1.3-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>

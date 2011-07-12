@@ -284,8 +284,9 @@ public class Server implements MrtgConstants {
 		String _t = ""+host+":"+ifDescr;
 		String _v = "-";
 	    Cache cache = Manager.getCache();
-	    Registry reg = (Registry) cache.get("REGISTRY"); 			
-		String dbName = reg.getPath2db().get(ifDescr);
+	    Registry reg = (Registry) cache.get("REGISTRY");
+	    String path2RRDb = calPath2RRDb(host, ifDescr);
+		String dbName = reg.getPath2db().get(path2RRDb);
 		String _end = ""+stop;
 		String _start = ""+start;
 		int _h = 200;
@@ -312,6 +313,11 @@ public class Server implements MrtgConstants {
 			" generated [" + graph.length + " bytes]");
 		return graph;
  	}
+
+	public static final String calPath2RRDb(String host, String ifDescr) {
+		String addrTmp =host .replace(":", "/");
+		return "mrtg4j/"+ addrTmp +"/" +ifDescr;
+	}
 
 	synchronized Device[] getRouters() {
 		return (Device[]) deviceList.getRouters().toArray(new Device[0]);

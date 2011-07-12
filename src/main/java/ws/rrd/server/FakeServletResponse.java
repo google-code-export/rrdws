@@ -5,8 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Locale;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.ServletResponse;
+import javax.servlet.ServletOutputStream; 
 import javax.servlet.http.Cookie;
 
 /** 
@@ -43,8 +42,7 @@ public class FakeServletResponse implements javax.servlet.http.HttpServletRespon
 	public String getCharacterEncoding() { 
 			return ce; 
 	}
-
-	@Override
+ 
 	public String getContentType() { 
 			return ct ; 
 	}
@@ -75,14 +73,12 @@ public class FakeServletResponse implements javax.servlet.http.HttpServletRespon
 
 	@Override
 	public void reset() {}
-
-	@Override
+ 
 	public void resetBuffer() {}
 
 	@Override
 	public void setBufferSize(int arg0) {bs = arg0;}
-
-	@Override
+ 
 	public void setCharacterEncoding(String arg0) {ce =arg0; }
 
 	@Override
