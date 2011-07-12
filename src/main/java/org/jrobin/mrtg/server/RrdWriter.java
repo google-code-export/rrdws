@@ -63,7 +63,7 @@ class RrdWriter  implements Runnable, MrtgConstants {
 		} catch (RrdException e) {
 			throw new MrtgException(e);
 		}
-		thr1 = new Thread(this, "mrtg.RRDWriter");
+		thr1 = new Thread(Timer.defTG, this, "mrtg.RRDWriter");
 		// TODO =8-0
 		thr1 .start();
 		
@@ -102,12 +102,15 @@ class RrdWriter  implements Runnable, MrtgConstants {
 		}
 	}
  
-	private void process(RawSample rawSample) throws IOException {  			
+	private void process(RawSample rawSample) throws IOException {  	
+		
+		
 		Action a = new RrdUpdateAction();
 		String ifDescr = rawSample.getIfDescr();
 		long string =  System.currentTimeMillis();
 		String value = rawSample.getValue();
-		a.perform(  ifDescr , string , value );
+		String pathTmp = Server.calPath2RRDb ( rawSample.getHost(),  ifDescr);
+		a.perform(  pathTmp , string , value );
 	}
 
 	private String getRrdFilenameFor(RawSample rawSample) {

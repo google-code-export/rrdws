@@ -38,12 +38,13 @@ import java.util.Hashtable;
 import java.util.Vector;
 @SuppressWarnings("unchecked")
 class Listener implements MrtgConstants {
+	private static final String MRTG = "mrtg";
 	private WebServer webServer;
 	private static final Logger log = LoggerFactory.getLogger(Listener.class .getName());
 
 	Listener(String[] clients) {
 		webServer = new WebServer(SERVER_PORT);
-		webServer.addHandler("mrtg", new EventHandler());
+		webServer.addHandler(MRTG, new EventHandler());
 		if(clients != null && clients.length > 0) {
 			webServer.setParanoid(true);
 			for(int i = 0; i < clients.length; i++) {
@@ -56,6 +57,7 @@ class Listener implements MrtgConstants {
 
 	void terminate() {
 		if(webServer != null) {
+			webServer.removeHandler(MRTG) ;
 			webServer.shutdown();
 			Debug.print(".w.w.w.w.w.w.w.w.w.w.w.w.w.w.w.   XmlRpcServer closed + + + + + + + + +  + ");
 			webServer = null;

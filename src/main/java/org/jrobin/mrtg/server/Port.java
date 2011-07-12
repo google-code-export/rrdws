@@ -50,6 +50,19 @@ class Port {
 	private RawSample lastSample;
 	private boolean sampling;
 
+	private volatile int errorCount;
+	private volatile int snmpVersion = 1;
+
+	public int getSnmpVersion() { 
+			return snmpVersion;
+	}
+
+	public void setSnmpVersion(int snmpVersion) {
+		this.snmpVersion = snmpVersion;
+	}
+
+	private volatile Exception lastError;
+
 	Port() { }
 
 	Port(Node linkNode) {
@@ -70,6 +83,9 @@ class Port {
 			}
 			else if(name.equals("description")) {
 				setDescr(value);
+			}
+			else if(name.equals("snmpVersion")) {
+				setSnmpVersion( Integer.parseInt(value));
 			}
 			else if(name.equals("samplingInterval")) {
 				setSamplingInterval(Integer.parseInt(value));
@@ -149,8 +165,9 @@ class Port {
 	}
 
 	public String toString() {
-		return ifDescr + " [" + ifIndex + "] " + descr + ", " + ifAlias + " (each " +
-			samplingInterval + "sec, active=" + active + ")";
+		return ifDescr + " [" + ifIndex + "] " + descr + ", " + 
+			ifAlias + " (each " +  samplingInterval + 
+			"sec, active=" + active + ")";
 	}
 
 	long getLastSampleTime() {
@@ -215,6 +232,7 @@ class Port {
 		link.put("samplingInterval", new Integer(samplingInterval));
 		link.put("active", new Boolean(active));
 		link.put("sampleCount", new Integer(sampleCount));
+		link.put("snmpVersion", this.snmpVersion);
 		if(lastSample != null) {
 			link.put("lastSampleTime", new Date(lastSampleTime * 1000L)); 
 		}
@@ -243,5 +261,22 @@ class Port {
 		Element activeElem = doc.createElement("active");
 		activeElem.appendChild(doc.createTextNode("" + active));
 		linkElem.appendChild(activeElem);
+	}
+
+	public void error(Exception e) {
+		this.errorCount ++;
+		this.setLastError(e);
+	}
+
+	public int getErrorCount() { 
+		return this.errorCount;		
+	}
+
+	public void setLastError(Exception lastError) {
+		this.lastError = lastError;
+	}
+
+	public Exception getLastError() { 
+		return lastError;
 	}
 }

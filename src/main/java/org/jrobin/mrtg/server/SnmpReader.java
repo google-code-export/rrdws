@@ -26,6 +26,9 @@ package org.jrobin.mrtg.server;
 
 import org.jrobin.mrtg.Debug;
 import org.jrobin.mrtg.MrtgException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+ 
 
 import java.io.IOException;
 
@@ -36,6 +39,8 @@ class SnmpReader  implements Runnable  {
 	private Port link;
 
 	private Poller comm;
+
+	private static final Logger log = LoggerFactory.getLogger(SnmpReader.class .getName());
 
 	SnmpReader(Device router, Port link) {
 		
@@ -86,11 +91,41 @@ class SnmpReader  implements Runnable  {
 	}
 
 	private void deactivateLink(Exception e) {
+		String mesTmp = e.getMessage();
+		String ifDescr= link.getIfAlias() ;
+		String host = router.getHost();
+		String theNext = null;
 		try {
-			link.deactivate();
-			Debug.print(".. deactivated" + getLabel() + ": " + e);
+			link.error(e);
+
+			if (mesTmp .indexOf( "not available for retrieval")>0){
+				link.deactivate();
+			}else  if (link.getErrorCount()>1 && mesTmp .indexOf( "timed out")>0){ // 2nd try via ver2
+				link.setSnmpVersion(2);
+				theNext = comm.getSNMPv2(ifDescr);				
+				String descr = comm.getLastSymbol().getComment();
+				int samplingInterval= 60;
+				boolean active = true;
+				Server.getInstance().addLink(host, ifDescr, descr, samplingInterval, active );
+			}else  if (link.getErrorCount()>5 && mesTmp .indexOf( "timed out")>0){ // autodiscover				
+				theNext = comm.getNextSNMPv2(ifDescr);				
+				String descr = comm.getLastSymbol().getComment();
+				int samplingInterval= 60;
+				boolean active = true;
+				Server.getInstance().addLink(host, ifDescr, descr, samplingInterval, active );
+			}else  if (link.getErrorCount()>32){
+				link.deactivate();
+				Debug.print(".. deactivated" + getLabel() + ": " + e);
+			}			
 		} catch (MrtgException e1) {
-			e1.printStackTrace();
+			log.error("deactivateLink(Exception e)"+theNext,  e1);
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			log.error("deactivateLink(IOException e)"+theNext,  e2);
+		}catch (Throwable  e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+			log.error("deactivateLink(IOException e)"+theNext,  e2);
 		}
 	}
 
@@ -112,7 +147,7 @@ class SnmpReader  implements Runnable  {
 				}
 			}
 			catch(IOException ioe) {
-				Debug.print("IOError while reconfiguring " + getLabel() + ": " + ioe);
+				log.error("IOError while reconfiguring " + getLabel() + ": " , ioe);
 			}
 		}
 		// new interface number not found after several retries
