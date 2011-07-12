@@ -508,7 +508,7 @@ class Poller implements Observer {
 				}
 				ifDescr += "#" + ifDescrSuffix;
 			}
-			enumeratedInterfacesMap.put(ifIndex, ifDescr);
+			enumeratedInterfacesMap.put(ifIndex, ifDescr);//this.getNextSNMPv2(""+ifIndex)
 		}
 		return enumeratedInterfacesMap;
 	}

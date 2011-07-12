@@ -25,6 +25,9 @@
 
 package org.jrobin.mrtg;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+ 
 /**
  * Created by IntelliJ IDEA.
  * User: Administrator
@@ -36,9 +39,11 @@ public class Debug implements MrtgConstants {
 
 	public static void print(String msg) {
 		if(DEBUG) {
-			System.out.println(msg);
+			log.debug(msg);
 		}
 	}
+
+	private static final Logger log = LoggerFactory.getLogger(Debug.class .getName());
 
 }
 

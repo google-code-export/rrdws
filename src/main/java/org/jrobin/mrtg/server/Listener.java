@@ -29,6 +29,9 @@ import org.apache.xmlrpc.WebServer;
 import org.jrobin.mrtg.Debug;
 import org.jrobin.mrtg.MrtgConstants;
 import org.jrobin.mrtg.MrtgException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+ 
   
 import java.util.Date;
 import java.util.Hashtable;
@@ -36,6 +39,7 @@ import java.util.Vector;
 @SuppressWarnings("unchecked")
 class Listener implements MrtgConstants {
 	private WebServer webServer;
+	private static final Logger log = LoggerFactory.getLogger(Listener.class .getName());
 
 	Listener(String[] clients) {
 		webServer = new WebServer(SERVER_PORT);
@@ -53,7 +57,7 @@ class Listener implements MrtgConstants {
 	void terminate() {
 		if(webServer != null) {
 			webServer.shutdown();
-			Debug.print("XmlRpcServer closed");
+			Debug.print(".w.w.w.w.w.w.w.w.w.w.w.w.w.w.w.   XmlRpcServer closed + + + + + + + + +  + ");
 			webServer = null;
 		}
 	}

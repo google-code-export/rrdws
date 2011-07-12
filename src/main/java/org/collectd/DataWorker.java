@@ -28,6 +28,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Queue;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
  
 
 import ws.rrd.collectd.TextLineIterator;
@@ -35,6 +38,8 @@ import ws.rrd.csv.Action;
 import ws.rrd.csv.RrdUpdateAction;
 
 import cc.co.llabor.cache.Manager;
+import cc.co.llabor.features.Repo;
+import cc.co.llabor.system.StartStopServlet;
 
 import net.sf.jsr107cache.Cache;
  
@@ -46,6 +51,7 @@ public class   DataWorker implements Runnable{
 
     	private java.util.Queue<String> queue;
 		private boolean isAlive = true;
+		private static final Logger log = LoggerFactory.getLogger(DataWorker.class .getName());
     	DataWorker ( Queue<String> q){
     		this.queue = q;
     	}
@@ -97,6 +103,7 @@ public class   DataWorker implements Runnable{
     			}
 
     		}
+    		log.info(Repo.getBanner( "+rrdDataWorker"));
     	}
 		private void processData(InputStream resourceAsStream) throws IOException {
             //

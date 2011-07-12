@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import org.collectd.DataWorker; 
 import org.jrobin.core.RrdDbPool;
 import org.jrobin.core.RrdException;
+import org.jrobin.mrtg.MrtgException;
 import org.jrobin.mrtg.server.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;   
@@ -234,9 +235,18 @@ public class StartStopServlet extends HttpServlet {
 		} 
 		
 		DogFarm.stopTimer( lTimer  ); 
+		log.info(Repo.getBanner( "+lTimer"));
 		DogFarm.stopTimer( hTimer  );
+		log.info(Repo.getBanner( "+hTimer"));
 		
+		try {
+			Server.getInstance().stop();
+		} catch (MrtgException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
+		log.info(Repo.getBanner( "+rrdws"));
 		log.info("Stoped");
 	}
 }
