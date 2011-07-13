@@ -56,7 +56,7 @@ public class PollerTest {
 			retvLTmp = p.getSNMPv2(numericOid);
 			fail("root of jvmMgtMIB have to throw at least NoNumberException for :"+numericOid+" == "+retvLTmp);
 		}catch(Exception e){
-			e.printStackTrace();
+			//e.printStackTrace();
 			retvLTmp = p.getNextSNMPv2(numericOid);
 			
 		}
@@ -98,28 +98,38 @@ public class PollerTest {
 	@Test
 	public void testWalkTree_v2() throws IOException{
 		Poller p = new Poller("localhost:1616","public");
-		System.out.println("SnmpPoolWalk  JUNit output.");
+		System.out.println("SnmpPoolWalk V2 V2 V2 V2 V2 V2 V2 JUNit output.");
 		String base = "jvmMgtMIB";
 		SortedMap oTmp = p.walk(base );		
 		String numericOid = ""+oTmp.firstKey();
 		// getting full tree...
 		String lastKey = null;
-		for (String retvLTmp = p.getNextSNMPv2(numericOid);lastKey !=""+p.getLastOID();numericOid = ""+p.getLastOID()){
-			MibType type = p.getLastSymbol().getType();
-			String typeName = type.toString().split(" ")[6] ;//getName();
-			// OctetString
-			typeName = typeName.equals("OCTET")? "OctetString":typeName;
-			// Type=OID
-			typeName = typeName.equals("OBJECT")?type.toString().split(" ")[7]:typeName;
-			typeName = typeName.equals("IDENTIFIER\n")?"OID":typeName;
-			
-			
-			System.out.println("OID=."+numericOid +", Type="+typeName+", Value="+retvLTmp );
-			try{
-				retvLTmp = p.getNextSNMPv2(numericOid);
-			}catch(Throwable e){
-				break;
+		String lastName = null;
+		try{
+			for (String retvLTmp = p.getNextSNMPv2(numericOid);lastKey !=""+p.getLastOID();numericOid = ""+p.getLastOID()){
+				MibType type = p.getLastSymbol().getType();
+				String typeName = type.toString().split(" ")[6] ;//getName();
+				// OctetString
+				typeName = typeName.equals("OCTET")? "OctetString":typeName;
+				// Type=OID
+				typeName = typeName.equals("OBJECT")?type.toString().split(" ")[7]:typeName;
+				typeName = typeName.equals("IDENTIFIER\n")?"OID":typeName;
+				
+				if (lastName != p.getLastSymbol().getName()){
+					lastName = p.getLastSymbol().getName();
+					System.out.println(  lastName);
+				}
+				System.out.println("OID=."+numericOid +", Type="+typeName+", Value="+retvLTmp );
+				try{
+					retvLTmp = p.getNextSNMPv2(numericOid);
+				}catch(Throwable e){
+	//				/e.printStackTrace();
+					break;
+				}
+				System.out.print("");
 			}
+		}catch(Throwable e){
+			e.printStackTrace();
 		}
 
 	}
