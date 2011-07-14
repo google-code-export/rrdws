@@ -43,6 +43,7 @@ import java.net.SocketException;
 import java.net.URL;
 import java.util.*;
 
+import org.apache.batik.dom.util.HashTable;
 import org.jrobin.mrtg.Debug;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -139,7 +140,7 @@ class Poller {
 							Poller.this.setLastValue(valTmp );
 						}
 						log.trace("SNMPv2.update#{}===={}", i ,var.toString());
-						System.out.println( "SNMPv2.update#{}===={}"+ i +"::"+oTmp+":::"+valTmp);
+						//System.out.println( "SNMPv2.update#{}===={}"+ i +"::"+oTmp+":::"+valTmp);
 						String MUTEX =  toMUTEXT(sOID);
 						synchronized (MUTEX) {
 							MUTEX.notify();
@@ -383,7 +384,7 @@ class Poller {
 	 */
 	public String getSNMPv2(String numericOid) throws IOException {
 		AsnObject.setDebug(1);
-		System.out.println("get:::"+numericOid+"...");
+		//System.out.println("get:::"+numericOid+"...");
 		try {
 			SnmpContextv2c contextTmp = checkinContext();
 
@@ -395,9 +396,9 @@ class Poller {
 			}
 			pdu.send();
 		} catch (java.io.IOException exc) {
-			System.out.println("IOException " + exc.getMessage());
+			log.debug("IOException " + exc.getMessage());
 		} catch (uk.co.westhawk.snmp.stack.PduException exc) {
-			System.out.println("PduException " + exc.getMessage());
+			log.debug("PduException " + exc.getMessage());
 		}
 		String retval = null;
   
@@ -419,10 +420,18 @@ class Poller {
 
 	}
 
+	private static Hashtable<String, SnmpContextv2c> contextV2Repo = new Hashtable<String, SnmpContextv2c>();
+	
 	private synchronized SnmpContextv2c checkinContext() throws IOException {
-		if (contex33t== null){
-			contex33t = new SnmpContextv2c(host, port, bindAddr, socketType);
-			contex33t.setCommunity(community);
+		String key = ""+host+","+ port+" ,"+ bindAddr+" ," +socketType+"";
+		SnmpContextv2c contextTmp = contextV2Repo.get(key);
+		if (contextTmp== null){
+			contextTmp = new SnmpContextv2c(host, port, bindAddr, socketType);
+			contextTmp.setCommunity(community);
+			contex33t =contextTmp ;
+			contextV2Repo .put(key , contex33t);
+		}else{
+			contex33t =contextTmp ;
 		}
 		return contex33t; 
 	}
@@ -451,9 +460,9 @@ class Poller {
 			}  
 			pdu.send();
 		} catch (java.io.IOException exc) {
-			System.out.println("IOException " + exc.getMessage()); 
+			log.debug("IOException " + exc.getMessage()); 
 		} catch (uk.co.westhawk.snmp.stack.PduException exc) {
-			System.out.println("PduException " + exc.getMessage());
+			log.debug("PduException " + exc.getMessage());
 		}
 		String retval = null;
 		String MUTEX =  toMUTEXT(numericOid);
