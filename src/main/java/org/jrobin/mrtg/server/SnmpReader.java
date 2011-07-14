@@ -69,10 +69,15 @@ class SnmpReader   {
 				Debug.print("Sampling: " + ifDescr + "@" + host + 	" [" + ifIndex + "]{"+oidTmp+"}"); 
 				 
 				String value  = null;
-				if (link.getSnmpVersion() == 0)
+				if ("DEV_MOD".length()==7){
+					value  = comm.getNextSNMPv2(oidTmp );
+					RawSample sample = createRawSample(value);
+					link.processSample(sample);
+				}
+				if (link.getSnmpVersion() == 1)
 					value  = comm.get(ifDescr, ifIndex);
 				else
-					value  = comm.getNextSNMPv2(oidTmp );
+					value  = comm.getSNMPv2(oidTmp );
 				RawSample sample = createRawSample(value);
 				link.processSample(sample);
 			}
@@ -86,6 +91,11 @@ class SnmpReader   {
 		} catch (ArrayIndexOutOfBoundsException e) {
 			deactivateLink(e);
 			Debug.print("MrtgException on " + getLabel() + ": " + e);
+		} catch (java.lang.IllegalArgumentException	 e) {
+			deactivateLink(e);
+			Debug.print("java.lang.IllegalArgumentException	" + getLabel() + ": " + e);
+			
+			
 		} finally {
 			if(comm != null) {
 				comm.close();
@@ -96,7 +106,7 @@ class SnmpReader   {
 
 	private void deactivateLink(Exception e) {
 		String mesTmp = e.getMessage();
-		String ifDescr= link.getIfAlias() ;
+		String ifDescr= link.getIfDescr() ;
 		String host = router.getHost();
 		String theNext = null;
 		try {
@@ -104,23 +114,28 @@ class SnmpReader   {
 
 			if (mesTmp .indexOf( "not available for retrieval")>0){
 				link.deactivate();
-			}else  if (link.getErrorCount()>5 && mesTmp .indexOf( "timed out")>0){ // autodiscover				
-				theNext = comm.getNextSNMPv2(ifDescr);				
-				String descr = comm.getLastSymbol().getComment();
-				int samplingInterval= 60;
-				boolean active = true;
-				Server.getInstance().addLink(host, ifDescr, descr, samplingInterval, active );
-			}else  if (link.getErrorCount()>1 && mesTmp .indexOf( "timed out")>0){ // 2nd try via ver2
-				link.setSnmpVersion(2);
-				theNext = comm.getSNMPv2(ifDescr);				
-				String descr = comm.getLastSymbol().getComment();
-				int samplingInterval= 60;
-				boolean active = true;
-				Server.getInstance().addLink(host, ifDescr, descr, samplingInterval, active );
+			} else {
+				Server instanceTmp = Server.getInstance();
+				if (link.getErrorCount()>5 && mesTmp .indexOf( "timed out")>0){ // autodiscover				
+					theNext = comm.getNextSNMPv2(ifDescr);				
+					String descr = comm.getLastSymbol().getComment();
+					int samplingInterval= 60;
+					boolean active = true;
+					instanceTmp.addLink(host, ifDescr, descr, samplingInterval, active );
+				}else  if (link.getErrorCount()>1 && (mesTmp .indexOf( "timed out")>0 || mesTmp.indexOf("No such instance")>=0)){ // 2nd try via ver2
+					link.setSnmpVersion(2);
+					String oid = link.getIfAlias();
+					theNext = comm.getNextSNMPv2(oid);				
+					String descr = comm.getLastSymbol().getComment();
+					descr = descr==null?comm.getLastSymbol().getName()+"!"+link.getErrorCount()+"]":descr ;
+					int samplingInterval= 60;
+					boolean active = true;
+					instanceTmp.addLink(host, ifDescr, descr, samplingInterval, active );
 
-			}else  if (link.getErrorCount()>32){
-				link.deactivate();
-				Debug.print(".. deactivated" + getLabel() + ": " + e);
+				}else  if (link.getErrorCount()>32){
+					link.deactivate();
+					Debug.print(".. deactivated" + getLabel() + ": " + e);
+				}
 			}			
 		} catch (MrtgException e1) {
 			log.error("deactivateLink(Exception e)"+theNext,  e1);
