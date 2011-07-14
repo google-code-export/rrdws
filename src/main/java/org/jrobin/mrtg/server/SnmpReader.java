@@ -72,7 +72,7 @@ class SnmpReader   {
 				if (link.getSnmpVersion() == 0)
 					value  = comm.get(ifDescr, ifIndex);
 				else
-					value  = comm.getSNMPv2(link.getIfAlias()+".0");
+					value  = comm.getNextSNMPv2(oidTmp );
 				RawSample sample = createRawSample(value);
 				link.processSample(sample);
 			}
