@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-class SnmpReader  implements Runnable  {
+class SnmpReader   {
 	static final int RECONFIGURE_RETRIES = 3;
 
 	private Device router;
@@ -68,7 +68,11 @@ class SnmpReader  implements Runnable  {
 				String oidTmp = comm.toNumericOID(ifDescr);
 				Debug.print("Sampling: " + ifDescr + "@" + host + 	" [" + ifIndex + "]{"+oidTmp+"}"); 
 				 
-				String value  = comm.get(ifDescr, ifIndex);
+				String value  = null;
+				if (link.getSnmpVersion() == 0)
+					value  = comm.get(ifDescr, ifIndex);
+				else
+					value  = comm.getSNMPv2(link.getIfAlias()+".0");
 				RawSample sample = createRawSample(value);
 				link.processSample(sample);
 			}
@@ -100,6 +104,12 @@ class SnmpReader  implements Runnable  {
 
 			if (mesTmp .indexOf( "not available for retrieval")>0){
 				link.deactivate();
+			}else  if (link.getErrorCount()>5 && mesTmp .indexOf( "timed out")>0){ // autodiscover				
+				theNext = comm.getNextSNMPv2(ifDescr);				
+				String descr = comm.getLastSymbol().getComment();
+				int samplingInterval= 60;
+				boolean active = true;
+				Server.getInstance().addLink(host, ifDescr, descr, samplingInterval, active );
 			}else  if (link.getErrorCount()>1 && mesTmp .indexOf( "timed out")>0){ // 2nd try via ver2
 				link.setSnmpVersion(2);
 				theNext = comm.getSNMPv2(ifDescr);				
@@ -107,12 +117,7 @@ class SnmpReader  implements Runnable  {
 				int samplingInterval= 60;
 				boolean active = true;
 				Server.getInstance().addLink(host, ifDescr, descr, samplingInterval, active );
-			}else  if (link.getErrorCount()>5 && mesTmp .indexOf( "timed out")>0){ // autodiscover				
-				theNext = comm.getNextSNMPv2(ifDescr);				
-				String descr = comm.getLastSymbol().getComment();
-				int samplingInterval= 60;
-				boolean active = true;
-				Server.getInstance().addLink(host, ifDescr, descr, samplingInterval, active );
+
 			}else  if (link.getErrorCount()>32){
 				link.deactivate();
 				Debug.print(".. deactivated" + getLabel() + ": " + e);

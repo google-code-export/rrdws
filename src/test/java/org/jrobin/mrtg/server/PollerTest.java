@@ -106,7 +106,7 @@ public class PollerTest {
 		String lastKey = null;
 		String lastName = null;
 		try{
-			for (String retvLTmp = p.getNextSNMPv2(numericOid);lastKey !=""+p.getLastOID();numericOid = ""+p.getLastOID()){
+			for (String retvLTmp = p.getNextSNMPv2( numericOid);lastKey !=""+p.getLastOID();numericOid = ""+p.getLastOID()){
 				MibType type = p.getLastSymbol().getType();
 				String typeName = type.toString().split(" ")[6] ;//getName();
 				// OctetString
@@ -121,7 +121,7 @@ public class PollerTest {
 				}
 				System.out.println("OID=."+numericOid +", Type="+typeName+", Value="+retvLTmp );
 				try{
-					retvLTmp = p.getNextSNMPv2(numericOid);
+					retvLTmp = p.getNextSNMPv2( numericOid);
 				}catch(Throwable e){
 	//				/e.printStackTrace();
 					break;
@@ -139,6 +139,51 @@ public class PollerTest {
 		Poller p = new Poller("localhost:1616","public");
 		SortedMap oTmp = p.walkIfDescr();
 		assertNotNull(oTmp);		
+	}
+
+	@Test
+	public void testWalkANDGETTree_v2() throws IOException{
+		Poller p = new Poller("localhost:1616","public");
+		System.out.println("SnmpPoolWalk V2 V2 V2 V2 V2 V2 V2 JUNit output.");
+		String base = "jvmMgtMIB";
+		SortedMap oTmp = p.walk(base );		
+		String numericOid = ""+oTmp.firstKey();
+		// getting full tree...
+		String lastKey = null;
+		String lastName = null;
+		try{
+			for (String retvLTmp = p.getNextSNMPv2( numericOid);lastKey !=""+p.getLastOID();numericOid = ""+p.getLastOID()){
+				MibType type = p.getLastSymbol().getType();
+				String typeName = type.toString().split(" ")[6] ;//getName();
+				// OctetString
+				typeName = typeName.equals("OCTET")? "OctetString":typeName;
+				// Type=OID
+				typeName = typeName.equals("OBJECT")?type.toString().split(" ")[7]:typeName;
+				typeName = typeName.equals("IDENTIFIER\n")?"OID":typeName;
+				
+				if (lastName != p.getLastSymbol().getName()){
+					lastName = p.getLastSymbol().getName();
+					System.out.println(  lastName);
+				}
+				System.out.println("OID=."+numericOid +", Type="+typeName+", Value="+retvLTmp );
+				
+				String justGetVal = p.getSNMPv2( ""+ p.getLastOID() );//p.getSNMPv2(numericOid+".0");
+				System.out.println("#2D=."+numericOid +", Type="+typeName+", Value="+justGetVal );
+				
+				//assertEquals(retvLTmp, justGetVal);
+				
+				try{
+					retvLTmp = p.getNextSNMPv2(numericOid);
+				}catch(Throwable e){
+	//				/e.printStackTrace();
+					break;
+				}
+				System.out.print("");
+			}
+		}catch(Throwable e){
+			e.printStackTrace();
+		}
+	
 	}
 
 }

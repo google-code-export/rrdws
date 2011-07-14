@@ -27,6 +27,9 @@ package org.jrobin.mrtg.server;
 import snmp.*; 
 import uk.co.westhawk.snmp.stack.AsnObject;
 import uk.co.westhawk.snmp.stack.GetBulkPdu; 
+import uk.co.westhawk.snmp.stack.GetNextPdu;
+import uk.co.westhawk.snmp.stack.GetPdu;
+import uk.co.westhawk.snmp.stack.PduException;
 import uk.co.westhawk.snmp.stack.SnmpContextv2c;
 import uk.co.westhawk.snmp.stack.varbind;
 
@@ -52,7 +55,7 @@ import net.percederberg.mibble.MibTypeSymbol;
 import net.percederberg.mibble.MibValue;
 import net.percederberg.mibble.MibValueSymbol;
 
-class Poller implements Observer {
+class Poller {
 	static final int SNMP_TIMEOUT = 5; // seconds
 	private static final Hashtable<String, String>mutexRepo = new Hashtable<String, String>();
 	private static final String S_MUX = "RELEASE"; 
@@ -99,15 +102,204 @@ class Poller implements Observer {
 
 	// SNMP v.2 vars
 	private String bindAddr = "0.0.0.0";
-	private SnmpContextv2c context;
+	private SnmpContextv2c contex33t;
 	private String socketType = "Standard";
 	private String host = "127.0.0.1";
 	private int port = 161;
-	private String community = "public";
-	private int non_rep= 2;
-	private int max_rep = 5;
+	private String community = "public"; 
 
 	private Object lastValue=null;
+
+	class GetObserver implements Observer{
+		@Override
+		/**
+		 * Implementing the Observer interface. Receiving the response from 
+		 * the Pdu. 
+		 */
+		public void update(Observable obs, Object ov) {
+			GetPdu pdu = (GetPdu) obs;
+			if (pdu.getErrorStatus() == AsnObject.SNMP_ERR_NOERROR) {
+				try {
+					varbind[] vars = pdu.getResponseVarbinds();
+					int sz = vars.length;
+	 				log.trace( "update2(): {} varbinds", sz );
+					for (int i = 0; i < sz; i++) {
+						varbind var = (varbind) vars[i];
+						SNMPObject oTmp = OID_v2tov1(var);
+						String sOID = ""+oTmp;
+						Poller.this .setLastOID(oTmp ); 
+						String valTmp = var.getValue().toString();
+						if (valTmp.endsWith("End of MIB view")){ // TODO goto exception
+							Poller.this.setLastOID(null); 
+							Poller.this.setLastValue(valTmp );
+						}else if(valTmp.endsWith( "No such instance") ){// TODO goto exception
+							Poller.this.setLastOID(null); 
+							Poller.this.setLastValue(valTmp );
+						}else{
+							Poller.this.setLastValue(valTmp );
+						}
+						log.trace("SNMPv2.update#{}===={}", i ,var.toString());
+						System.out.println( "SNMPv2.update#{}===={}"+ i +"::"+oTmp+":::"+valTmp);
+						String MUTEX =  toMUTEXT(sOID);
+						synchronized (MUTEX) {
+							MUTEX.notify();
+						}
+	 				}
+				} catch (uk.co.westhawk.snmp.stack.PduException exc) {
+					log.trace( "update2(): PduException {}", exc.getMessage());
+				} catch (SNMPBadValueException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			} else {
+				log.trace( "update2(): " , pdu.getErrorStatusString());
+			}
+			//context.destroy();
+			// System.exit(0);
+		}		
+	}
+	
+	// TODO - not used at the moment
+	class GetBulkObserver implements Observer{
+		@Override
+		/**
+		 * Implementing the Observer interface. Receiving the response from 
+		 * the Pdu. 
+		 */
+		public void update(Observable obs, Object ov) {
+			GetBulkPdu pdu = (GetBulkPdu) obs;
+			if (pdu.getErrorStatus() == AsnObject.SNMP_ERR_NOERROR) {
+				try {
+					varbind[] vars = pdu.getResponseVarbinds();
+					int sz = vars.length;
+	 				log.trace( "update2(): {} varbinds", sz );
+					for (int i = 0; i < sz; i++) {
+						varbind var = (varbind) vars[i];
+						SNMPObject oTmp = OID_v2tov1(var);
+						String sOID = ""+oTmp;
+						Poller.this .setLastOID(oTmp ); 
+						String valTmp = var.getValue().toString();
+						if (!valTmp.endsWith("End of MIB view"))
+							Poller.this.setLastValue(valTmp );
+						else{
+							Poller.this.setLastOID(null); 
+							Poller.this.setLastValue(valTmp );
+						}
+						//log.trace("SNMPv2.update#{}===={}", i ,var.toString());
+						System.out.println( "SNMPv2.update#{}===={}"+ i +"::"+oTmp+":::"+valTmp);
+						String MUTEX =  toMUTEXT(sOID);
+						synchronized (MUTEX) {
+							MUTEX.notify();
+						}
+	 				}
+				} catch (uk.co.westhawk.snmp.stack.PduException exc) {
+					log.trace( "update2(): PduException {}", exc.getMessage());
+				} catch (SNMPBadValueException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			} else {
+				log.trace( "update2(): " , pdu.getErrorStatusString());
+			}
+			//context.destroy();
+			// System.exit(0);
+		}		
+	}
+	class GetNextObserver implements Observer{ 
+		
+		int maxCount = 1;
+		int receiverCounter = 0;
+		
+		/**
+		 * Implementing the Observer interface. Receiving the response from 
+		 * the Pdu.
+		 * Note, what is different from SNMPv1 is that it tests for a (new) 
+		 * <code>'end of MIB view'</code> element.
+		 *
+		 * @param obs the GetNextPdu variable
+		 * @param ov the varbind
+		 *
+		 * @see uk.co.westhawk.snmp.stack.GetNextPdu
+		 * @see uk.co.westhawk.snmp.stack.varbind
+		 * @see SnmpConstants#SNMP_VAR_ENDOFMIBVIEW
+		 */
+		public void update(Observable obs, Object ov) {
+			boolean isFinished = false;
+			receiverCounter++;
+			GetNextPdu pdu = (GetNextPdu) obs;
+			isFinished = receiverCounter >= maxCount;
+			if (pdu.getErrorStatus() == AsnObject.SNMP_ERR_NOERROR) {
+				try {
+					varbind[] vars = pdu.getResponseVarbinds();
+					varbind var = vars[0];
+					AsnObject obj = var.getValue();
+					String valTmp = obj.toString();
+					SNMPObject oidTmp = Poller.OID_v2tov1(var);
+					Poller.this.setLastOID(oidTmp );
+					//System.out.println("getNEXT$"+oidTmp +":::" + valTmp);
+					
+					if ( "End of MIB view".equals( valTmp )){
+						//throw new eoMIBException
+						Poller.this.setLastOID(null); 
+						Poller.this.setLastValue(valTmp );
+						isFinished = true;
+					}else
+						Poller.this.setLastValue(valTmp);
+					
+
+					if (!isFinished
+							&& obj.getRespType() != AsnObject.SNMP_VAR_ENDOFMIBVIEW) {
+						System.out.println(var.toString());
+						String sOID = var.getOid().toString();
+						SnmpContextv2c contextV2 = checkinContext();
+						pdu = performReq(sOID,contextV2);
+					} else {
+						isFinished = true;
+					}
+
+				} catch (java.io.IOException exc) {
+					System.out.println("update(): IOException "							+ exc.getMessage());
+					isFinished = true;
+				} catch (uk.co.westhawk.snmp.stack.PduException exc) {
+					System.out.println("update(): PduException "							+ exc.getMessage());
+					isFinished = true;
+				} catch (SNMPBadValueException e) {
+					System.out.println("update(): PduException "							+ e.getMessage());
+					isFinished = true;
+					e.printStackTrace();
+				}
+			} else {
+				isFinished = true;
+			}
+
+			if (isFinished == true) {
+				// System.exit(0);
+				String sOID = pdu.getRequestVarbinds()[0].getOid().toString();
+				String MUTEX = toMUTEXT(sOID);
+				synchronized (MUTEX) {
+					receiverCounter = 0;
+					MUTEX.notify();
+				}
+			}
+		}
+
+		private GetNextPdu performReq(String sOID, SnmpContextv2c contextPar) throws IOException,
+				PduException {
+			GetNextPdu pdu;
+			pdu = new GetNextPdu(contextPar);
+			pdu.addObserver(this); 
+			pdu.addOid(sOID);
+			pdu.send();
+			return pdu;
+		}
+
+		
+	}
+	
+	private Observer getNextObserver = new GetNextObserver();
+	private Observer getObserver = new GetObserver();//GetBulkObserver();
 
 	private static final Logger log = LoggerFactory.getLogger(Debug.class .getName());
 
@@ -136,9 +328,7 @@ class Poller implements Observer {
 		// socketType;
 		host = snmpHost;
 		port = snmpPort;
-		community = communityPar;
-		non_rep = 2;
-		max_rep = 3;
+		community = communityPar; 
 	}
 
 	String getNumericOid(String oid) {
@@ -180,7 +370,7 @@ class Poller implements Observer {
 	}
 
 	/**
-	 * SNMP v.2 via snmp4j
+	 * SNMP v.2 via snmp123
 	 */
 	/**
 	 * read SNMP-value for the passes OID
@@ -192,45 +382,22 @@ class Poller implements Observer {
 	 * @throws InterruptedException
 	 */
 	public String getSNMPv2(String numericOid) throws IOException {
-		// AsnObject.setDebug(15);
 		AsnObject.setDebug(1);
-
-		// String host = util.getHost();
-		// String bindAddr = Util.getBindAddress();
-		// int port = util.getPort(SnmpContextBasisFace.DEFAULT_PORT);
-		// String socketType = util.getSocketType();
-		// String community = util.getCommunity();
-
-		// int non_rep = util.getIntParameter(NON, 0);
-		// int max_rep = util.getIntParameter(MAX, 0);
-
+		System.out.println("get:::"+numericOid+"...");
 		try {
-			context = new SnmpContextv2c(host, port, bindAddr, socketType);
-			context.setCommunity(community);
+			SnmpContextv2c contextTmp = checkinContext();
 
-			GetBulkPdu pdu = new GetBulkPdu(context);
-			pdu.addObserver(this);
-			pdu.setNonRepeaters(non_rep);
-			pdu.setMaxRepetitions(max_rep);
-
-//			System.out.println("Setting host " + host + ", non_rep " + non_rep+ ", max_rep " + max_rep);
-
-			//for (int i = 0; i < 10; i++) {
-				// String oid = util.getProperty(Util.OID + i);
-				String oid = numericOid;
-				if (oid != null) {
-//					System.err.println("Adding OID " + oid);
-					pdu.addOid(oid);
-				}
-			//}
-
+			GetPdu pdu = new GetPdu(contextTmp);
+			pdu.addObserver(this.getObserver);
+			String oid = numericOid;
+			if (oid != null) {
+				pdu.addOid(oid);
+			}
 			pdu.send();
 		} catch (java.io.IOException exc) {
 			System.out.println("IOException " + exc.getMessage());
-			// System.exit(0);
 		} catch (uk.co.westhawk.snmp.stack.PduException exc) {
 			System.out.println("PduException " + exc.getMessage());
-			// System.exit(0);
 		}
 		String retval = null;
   
@@ -239,83 +406,68 @@ class Poller implements Observer {
 			try {
 				MUTEX.wait(SNMP_TIMEOUT*1000);					
 			} catch (InterruptedException e) {
-				//throw new IOException("SNMP wait-limit reached:" + i, e);
 			}
 		}
-
-		 
-		if (this.getLastOID().getValue() == numericOid){
-			retval = this.lastValue.toString();
-		}else{
-			throw new IOException(" Error: No such name error. found :  "+this.getLastOID().getValue());
+		if (this.getLastOID() == null){
+			throw new IOException(" Error: No such name error. found :  "+this.lastValue );
+		}		
+		if (!getLastOID().toString().equals( numericOid.toString() )){
+			throw new IOException(" Error: wrong name error. found :  "+getLastOID() +"!="+numericOid);
 		}
-		return "" + retval;
+		retval = ""+this.lastValue;
+		return "" + retval; 
 
 	}
 
-	public String getNextSNMPv2(String numericOid) throws IOException {
-		// AsnObject.setDebug(15);
-		AsnObject.setDebug(1);
-
-		// String host = util.getHost();
-		// String bindAddr = util.getBindAddress();
-		// int port = util.getPort(SnmpContextBasisFace.DEFAULT_PORT);
-		// String socketType = util.getSocketType();
-		// String community = util.getCommunity();
-		//
-		// int non_rep = util.getIntParameter(NON, 0);
-		// int max_rep = util.getIntParameter(MAX, 0);
-
+	private synchronized SnmpContextv2c checkinContext() throws IOException {
+		if (contex33t== null){
+			contex33t = new SnmpContextv2c(host, port, bindAddr, socketType);
+			contex33t.setCommunity(community);
+		}
+		return contex33t; 
+	}
+	/**
+	 * SNMP v.2 via snmp123
+	 */
+	/**
+	 * read SNMP-value for the passes OID
+	 * 
+	 * @author vipup
+	 * @param numericOid
+	 * @return
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+	public String getNextSNMPv2(String numericOid) throws IOException { 
+		AsnObject.setDebug(1); 
 		try {
-			context = new SnmpContextv2c(host, port, bindAddr, socketType);
-			context.setCommunity(community);
-
-			GetBulkPdu pdu = new GetBulkPdu(context);
-			pdu.addObserver(this);
-			pdu.setNonRepeaters(non_rep);
-			pdu.setMaxRepetitions(max_rep);
-
-//			System.err.println("Setting host " + host + ", non_rep " + non_rep					+ ", max_rep " + max_rep);
-
-			//for (int i = 0; i < 10; i++) {
-				// String oid = util.getProperty(Util.OID + i);
-				String oid = numericOid;
-				if (oid != null) {
-//					System.err.println("Adding OID " + oid);
-					pdu.addOid(oid);
-				}
-			//}
-
+			SnmpContextv2c contextTmp = checkinContext();
+			GetNextPdu pdu = new GetNextPdu (contextTmp);
+			pdu.addObserver(this.getNextObserver);
+			String oid = numericOid;
+			
+			if (oid != null) { 
+				pdu.addOid(oid);
+			}  
 			pdu.send();
 		} catch (java.io.IOException exc) {
-			System.out.println("IOException " + exc.getMessage());
-			// System.exit(0);
+			System.out.println("IOException " + exc.getMessage()); 
 		} catch (uk.co.westhawk.snmp.stack.PduException exc) {
 			System.out.println("PduException " + exc.getMessage());
-			// System.exit(0);
 		}
-
 		String retval = null;
 		String MUTEX =  toMUTEXT(numericOid);
 		synchronized ( MUTEX ) {
 			try {
 				MUTEX.wait(SNMP_TIMEOUT*1000);					
 			} catch (InterruptedException e) {
-				//throw new IOException("SNMP wait-limit reached:" + i, e);
 			}
 		}
 		if (this.getLastOID() == null){
 			throw new IOException(" Error: No such name error. found :  "+this.lastValue );
-		}
-		
-//		if (this.getLastOID().getValue() == numericOid){
-			retval = ""+this.lastValue;
-// ++++++++++++++++++++++++++++++++++++   for _get_next_ it is not an error +++++++++++++++			
-//		}else{
-//			throw new IOException(" Error: No such name error. found :  "+this.getLastOID().toString());
-//		}
+		}		
+		retval = ""+this.lastValue;
 		return "" + retval;
-
 	}
 
 	/**
@@ -587,54 +739,16 @@ class Poller implements Observer {
 		return mib.getSymbolByOid("" + this.getLastOID());
 	}
 
-	@Override
-	/**
-	 * Implementing the Observer interface. Receiving the response from 
-	 * the Pdu. 
-	 */
-	public void update(Observable obs, Object ov) {
-		GetBulkPdu pdu = (GetBulkPdu) obs;
-		if (pdu.getErrorStatus() == AsnObject.SNMP_ERR_NOERROR) {
-			try {
-				varbind[] vars = pdu.getResponseVarbinds();
-				int sz = vars.length;
- 				log.trace( "update2(): {} varbinds", sz );
-				for (int i = 0; i < sz; i++) {
-					varbind var = (varbind) vars[i];
-					long[]ldigs = 	var.getOid().getOid();
-					int[]digs = new int[ldigs.length];
-					for (int j=0;j<ldigs.length;j++ ){
-						digs[j]=(int) ldigs[j];
-					}
-					SNMPObject oTmp = new SNMPObjectIdentifier(		digs		);
-					String sOID = ""+oTmp;
-					this.setLastOID(oTmp ); 
-					String valTmp = var.getValue().toString();
-					if (!valTmp.endsWith("End of MIB view"))
-						this.setLastValue(valTmp );
-					else{
-						this.setLastOID(null); 
-						this.setLastValue(valTmp );
-					}
-					log.trace("SNMPv2.update#{}===={}", i ,var.toString());
-					//System.out.println( "SNMPv2.update#{}===={}"+ i +":::::"+valTmp);
-					String MUTEX =  toMUTEXT(sOID);
-					synchronized (MUTEX) {
-						MUTEX.notify();
-					}
- 				}
-			} catch (uk.co.westhawk.snmp.stack.PduException exc) {
-				log.trace( "update2(): PduException {}", exc.getMessage());
-			} catch (SNMPBadValueException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 
-		} else {
-			log.trace( "update2(): " , pdu.getErrorStatusString());
+
+	private static SNMPObject OID_v2tov1(varbind var) throws SNMPBadValueException {
+		long[]ldigs = 	var.getOid().getOid();
+		int[]digs = new int[ldigs.length];
+		for (int j=0;j<ldigs.length;j++ ){
+			digs[j]=(int) ldigs[j];
 		}
-		context.destroy();
-		// System.exit(0);
+		SNMPObject oTmp = new SNMPObjectIdentifier(		digs		);
+		return oTmp;
 	}
 
 	private void setLastValue(Object value) {
