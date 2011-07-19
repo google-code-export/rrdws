@@ -16,67 +16,70 @@
     </div>
 <html >
 <head>
-    <title>rrd4u</title>
+    <title>rrd4 u</title>
     <link rel="Stylesheet" href="css/corner.css" type="text/css">
     
 </head>
 <body  onLoad="return 1;"> 
 <%@page import="org.jrobin.cmd.RrdCommander"%>
 <%@page import="org.jrobin.svg.RrdGraphInfo"%>
-
-<table height="100%" width="100%">
-	<tr width="100%" height="64">
-	<td><iframe width="200" height="200" src="js/clock.html"></iframe></td>
-	</tr>
-	<tr width="100%" height="64">
-		<td width="100%" height="64">
-			<a href="https://rrdsaas.appspot.com/rrd.jsp"  title=" RRD Java impl ">
-			RRDSAAS <%=System.currentTimeMillis() %>
-			<img src="JavaLogo.svg" height="64" width="64" alt="javalogo as img.svg" /> 
-			<embed src="JavaLogo.svg" type="image/svg+xml" height="64" width="64"  scale=true alt="javalogo as embed.svg" />
-			<embed src="JavaLogo.svg" height="64" width="64"  type="image/svg+xml" scale=true alt="javalogo as embed+plug.svg"  pluginspage="http://www.adobe.com/svg/viewer/install/" /> 
-			<object data="JavaLogo.svg" width="300" height="100" type="image/svg+xml" alt="javalogo as object+plug.svg" codebase="http://www.adobe.com/svg/viewer/install/" />
-			</a>
-			<IMG src="gif.jsp" height="64" width="64"   />
-			TCJ:
-			<IMG src="speed.gif" height="64" width="164"  alt="tomcat/jee rrdoutput" />
-			GAE:
-			<embed src="svg.jsp" type="image/svg+xml" height="100%" width="100%"  alt="gae rrdoutput" />
-			
-			
-			
+<table > 
+	<tr   >
+		<td width="100" height="64">
+						<a href="https://rrdsaas.appspot.com/rrd.jsp"  title=" RRD Java impl ">
+						RRDSAAS <%=System.currentTimeMillis() %>
+	
 		</td>
+					<td width="10%" height="64">
+						<img src="JavaLogo.svg" height="64" width="64" alt="javalogo as img.svg" /> 
+					</td><td width="10%" height="64">
+						EMBED :
+						<embed src="JavaLogo.svg" type="image/svg+xml" height="64" width="64"  scale=true alt="javalogo as embed.svg" />
+					</td><td width="10%" height="64">	
+						EMBED+p :
+						<embed src="JavaLogo.svg" height="64" width="64"  type="image/svg+xml" scale=true alt="javalogo as embed+plug.svg"  pluginspage="http://www.adobe.com/svg/viewer/install/" /> 
+					</td><td width="10%" height="64">	
+						OBJ :
+						<object data="JavaLogo.svg" width="300" height="100" type="image/svg+xml" alt="javalogo as object+plug.svg" codebase="http://www.adobe.com/svg/viewer/install/" />
+						</a>
+					</td><td width="10%" height="64">	
+						IMG :
+						<IMG src="gif.jsp" height="64" width="64"   />
+					</td><td width="10%" height="64">	
+						Tomcat RESULT Image:
+						<IMG src="speed.gif" height="64" width="164"  alt="tomcat/jee rrdoutput" />
+					</td><td width="10%" height="64">	
+						GAE RESULT Image:
+						<embed src="svg.jsp" type="image/svg+xml" height="100%" width="100%"  alt="gae rrdoutput" />
+					</td> 		
+	</tr>	
+	
+</table>
+<!-- TUTORIAL --->
+<table width="100%" >
 	<tr width="100%" height="64">
-	</tr>
-
-		<td width="200" >
-		<form method="post">
-<%
-String testCOLOR = "FFFFFF000000CCAA";
-testCOLOR  = testCOLOR   .substring(  (int)(System.currentTimeMillis()%10));
-testCOLOR   = testCOLOR  .substring(0,6);
-String testCMD = " rrdtool graph speed.gif  --start 920804400 --end 920808000  DEF:myspeed=test.rrd:speed:AVERAGE  LINE"+(((int)(System.currentTimeMillis()%3)+1))+":myspeed#"+testCOLOR;
-%>		
-			RddCommand:: <textarea name="cmd"  cols="160" rows="4" value="<%=testCMD%>"><%=testCMD%></textarea>
-			<<<-- if u don't know what to do -- just try the default action - press the button ;)  
-			<input type="submit" />
-		</form>
-		</td>
-	</tr>
-	<tr >
-		<td width="100%">
-			<iframe src="man/man.html" width="93%" height="133">
-				a lot of thanks to Alex van den Bogaerdt for this very kindly checked documentation. Unfortunately this page is dropped from original https://rrd4j.dev.java.net/tutorial.html...
-				... but __fortunately___ I backuped it! :)
-				
-			</iframe>
-		</td>
-	</tr>
-	<tr width="100%" height="333">
-
+		<td>
+			<table height="100%" width="100%">
+				<tr width="100%" height="64">
+					<td>
+						<iframe src="man/man.html" width="83%"  height="500"   >
+						a lot of thanks to Alex van den Bogaerdt for this very kindly checked documentation. Unfortunately this page is dropped from original https://rrd4j.dev.java.net/tutorial.html...
+						... but __fortunately___ I backuped it! :)
+						</iframe>
+					</td>	
+			</tr>				
+			</table>	 
+		</td>	
+	 
 		<td  >
+			<table height="100%" width="100%">
+				<tr width="100%" height="64">
+					<td>Execution result:</td>
+				</tr>
+				<tr>
+					<td height="100%">
 		<%
-			System.out.println("== Rrd4j's RRDTool commander ==");
+			System.out.println("== RrdWS/RRDTool commander exec...");
 			String cmdTmp = request.getParameter("cmd");
 			Object o = null;
 			if (cmdTmp != null) {
@@ -84,25 +87,49 @@ String testCMD = " rrdtool graph speed.gif  --start 920804400 --end 920808000  D
 				cmdTmp = cmdTmp.replace("\\", "\n");
 				//RrdCommander.setRrdDbPoolUsed(false);
 				o = RrdCommander.execute(cmdTmp);
+				
+				
 				if (o instanceof org.jrobin.svg.RrdGraphInfo) {
 					RrdGraphInfo oInf = (RrdGraphInfo) o;
 					session.setAttribute("svg", oInf.getBytes());
 				}
 			}
 		%> 	
-		
-		<form method="post">Execution result::: <textarea
-			readonly="readonly"  name="result"  cols="60" rows="4">
- <%=o%>
-</textarea></form>
-
-
-		</td>
+						<textarea> <%=o%> </textarea>
+					</td>	
+				</tr>		
+				<tr width="100%" height="64">
+					<td>LastCMD:</td>
+				</tr>
+				<tr width="100%" height="64">
+					<td>
+						<textarea> <%=cmdTmp%> </textarea>
+					</td>
+				</tr>
+				
+			</table>		
+		</td>	 		
 	</tr>
+</table>	
+<table>
+	<tr width="100%"  > 
+			<td  ><form method="post">
+<%
+String testCOLOR = "FFFFFF000000CCAA";
+testCOLOR  = testCOLOR   .substring(  (int)(System.currentTimeMillis()%10));
+testCOLOR   = testCOLOR  .substring(0,6);
+String testCMD = " rrdtool graph speed.gif  --start 920804400 --end 920808000  DEF:myspeed=test.rrd:speed:AVERAGE  LINE"+(((int)(System.currentTimeMillis()%3)+1))+":myspeed#"+testCOLOR;
+%> <textarea name="cmd"  cols="160" rows="4" value="<%=testCMD%>"><%=testCMD%></textarea>
+			<<<-- if u don't know what to do -- just try the default action - press the button ;)  
+			<input type="submit" />
+		</form>
+		</td>
+					<td>  <iframe width="200" height="200" src="js/clock.html"></iframe>
+			</td>
+	</tr> 
 
 	<tr>
 		<td> 
-
 		</embed> <!-- 
  <%=" "+System.getProperties()+" "%>
   --></td>
