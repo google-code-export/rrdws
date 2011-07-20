@@ -99,8 +99,21 @@ class DeviceList {
 		routers.remove(router);
 		return 0;
 	}
-
+	/**
+	 * @deprecated user have to specify SNMP-ver (now v.2 is dafault) 
+	 * 
+	 * @author vipup
+	 * @param host
+	 * @param ifDescr
+	 * @param descr
+	 * @param samplingInterval
+	 * @param active
+	 * @return
+	 */
 	int addLink(String host, String ifDescr, String descr, int samplingInterval, boolean active) {
+		return addLink(host, ifDescr, 2, descr, samplingInterval, active); 
+	}
+	int addLink(String host, String ifDescr, int snmpVersion, String descr, int samplingInterval, boolean active) {
         Device router = getRouterByHost(host);
 		if(router == null) {
 			// router not found, link cannot be added
@@ -113,9 +126,11 @@ class DeviceList {
 		}
         Port newLink = new Port();
 		newLink.setDescr(descr);
+		newLink.setIfAlias(descr);
 		newLink.setIfDescr(ifDescr);
 		newLink.setSamplingInterval(samplingInterval);
 		newLink.setActive(active);
+		newLink.setSnmpVersion(snmpVersion); 		
 		router.addLink(newLink);
 		return 0;
 	}

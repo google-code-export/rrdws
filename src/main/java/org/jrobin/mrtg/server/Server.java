@@ -179,13 +179,13 @@ public class Server implements MrtgConstants {
 			File fout = new File(Config.getHardwareFile());
 			File foutTmp = File.createTempFile("mrtgstage", ".xml", fout.getParentFile());
 			String msg = "store mrtg.conf into {"+fout.getAbsolutePath()+"}";
-			log.debug( msg); 
+			log.debug( "saveHardware::"+msg); 
 			FileOutputStream destination = new FileOutputStream(foutTmp);
 			StreamResult result = new StreamResult(destination);
 			transformer.transform(source, result);
 			destination.close();
 			if (fout.exists()){// make backup
-				File dest = new File (fout.getAbsolutePath()+".bak"+System.currentTimeMillis());
+				File dest = new File (fout.getAbsolutePath()+".bak"+((System.currentTimeMillis()/1000)%24*60*60 ));
 				fout.renameTo(dest );
 			}
 			foutTmp.renameTo(fout) ;
@@ -244,10 +244,25 @@ public class Server implements MrtgConstants {
 		return retCode;
 	}
 
-	synchronized int addLink(String host, String ifDescr, String descr, int samplingInterval,
-							 boolean active)
+	/**
+	 * @deprecated
+	 * 
+	 * @author vipup
+	 * @param host
+	 * @param ifDescr
+	 * @param descr
+	 * @param samplingInterval
+	 * @param active
+	 * @return
+	 * @throws MrtgException
+	 */
+	synchronized int addLink(String host, String ifDescr, String descr, int samplingInterval, boolean active)throws MrtgException{
+		return addLink(host, ifDescr, 2, descr, samplingInterval, active);
+	}
+	
+	synchronized int addLink(String host, String ifDescr, int snmpVer, String descr, int samplingInterval, boolean active)
 		throws MrtgException {
-		int retCode = deviceList.addLink(host, ifDescr, descr, samplingInterval, active);
+		int retCode = deviceList.addLink(host, ifDescr, snmpVer, descr, samplingInterval, active);
 		if(retCode == 0) {
 			saveHardware();
 		}
