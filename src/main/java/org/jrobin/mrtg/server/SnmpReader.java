@@ -116,21 +116,42 @@ class SnmpReader   {
 				link.deactivate();
 			} else {
 				Server instanceTmp = Server.getInstance();
-				if (link.getErrorCount()>5 && mesTmp .indexOf( "timed out")>0){ // autodiscover				
-					theNext = comm.getNextSNMPv2(ifDescr);				
-					String descr = comm.getLastSymbol().getComment();
-					int samplingInterval= 60;
-					boolean active = true;
-					instanceTmp.addLink(host, ifDescr, descr, samplingInterval, active );
-				}else  if (link.getErrorCount()>1 && (mesTmp .indexOf( "timed out")>0 || mesTmp.indexOf("No such instance")>=0)){ // 2nd try via ver2
-					link.setSnmpVersion(2);
-					String oid = link.getIfAlias();
-					theNext = comm.getNextSNMPv2(oid);				
-					String descr = comm.getLastSymbol().getComment();
+				if (link.getErrorCount()>5 && mesTmp .indexOf( "timed out")>0|| mesTmp.indexOf("Bad OID")>=0 || mesTmp.indexOf("No such instance")>=0){ // autodiscover	
+					String numericOid = link.getIfAlias(); if (numericOid == comm.toNumericOID(numericOid)) numericOid = comm.toNumericOID(numericOid.substring(0,numericOid.lastIndexOf("/"))); 	
+					theNext = comm. getNextSNMPv2(numericOid);				
+					String descr = comm.getLastSymbol().getName();
 					descr = descr==null?comm.getLastSymbol().getName()+"!"+link.getErrorCount()+"]":descr ;
 					int samplingInterval= 60;
 					boolean active = true;
-					instanceTmp.addLink(host, ifDescr, descr, samplingInterval, active );
+					link.deactivate();
+					//instanceTmp.addLink(host, ifDescr, descr, samplingInterval, active );
+					
+					String lastKey = null;
+					int retcode = -1;
+					for (String retvLTmp = comm.getNextSNMPv2( numericOid);lastKey !=""+comm.getLastOID();numericOid = ""+comm.getLastOID()){
+						String iPrefixTmp = ifDescr.substring(0, ifDescr.lastIndexOf("/"));
+						String ifPathTmp = iPrefixTmp+"/"+descr;
+						String chkOID = comm.toNumericOID(ifPathTmp);
+						numericOid = ""+comm.getLastOID();
+						retcode = instanceTmp.addLink(host, ifPathTmp, 2, numericOid, samplingInterval, active );
+						// skip (1)
+						retvLTmp = comm.getNextSNMPv2( numericOid);
+						System.out.println("chkOID:"+chkOID+"=="+retcode +"::"+retvLTmp +" ..........."+numericOid + "////"+ifPathTmp);
+					}
+					
+				}else  if (link.getErrorCount()>1 && (mesTmp .indexOf( "timed out")>0 || mesTmp.indexOf("No such instance")>=0)){ // 2nd try via ver2
+					link.setSnmpVersion(2);
+					String oid = link.getIfAlias();
+					theNext = comm.getNextSNMPv2(oid); //oid = 	comm.toNumericOID(oid)			
+					String descr = comm.getLastSymbol().getName();
+					descr = descr==null?comm.getLastSymbol().getName()+"!"+link.getErrorCount()+"]":descr ;
+					int samplingInterval= 60;
+					boolean active = true;
+					int retcode = instanceTmp.addLink(host, ifDescr, 2, descr, samplingInterval, active );
+					if (retcode == -2 ){ // already existing interface
+						retcode = instanceTmp.addLink(host, ifDescr+"/"+descr, 2, oid, samplingInterval, active );
+					}
+					System.out.println("added??:::"+retcode);
 
 				}else  if (link.getErrorCount()>32){
 					link.deactivate();
