@@ -19,8 +19,14 @@ import org.slf4j.LoggerFactory;
  * 
  * Creation:  22.07.2011::15:19:37<br> 
  */
-class IfDsicoverer implements Runnable{
-	
+public class IfDsicoverer implements Runnable{
+	private String host;
+	private String community;
+	private String numOID;
+	private String ifDescr;
+	private int id;
+	private String key;
+	private static  Logger log = LoggerFactory.getLogger(IfDsicoverer.class .getName());
 	
 
 	/**
@@ -33,16 +39,8 @@ class IfDsicoverer implements Runnable{
 		this.community = communityPar;
 		this.numOID = numericOid;
 		this.ifDescr = ifDescr;
-	}
-
-	private String host;
-	private String community;
-	private String numOID;
-	private String ifDescr;
-	private int id;
-	private String key;
-	private static  Logger log = LoggerFactory.getLogger(IfDsicoverer.class .getName());
-
+	} 
+	
 	@Override
 	public void run() {
 		Poller commPar;

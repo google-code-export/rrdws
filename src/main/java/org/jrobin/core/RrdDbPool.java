@@ -92,7 +92,7 @@ public class RrdDbPool {
 					// Brute-force attack ! clean the middle element...
 					Object keyTmp = rrdMap.keySet().toArray()[rrdMap.size()/2];
 					RrdEntry dbTmp =  rrdMap.remove( keyTmp );
-					if (1==2)System.out.println(dbTmp);
+					dbTmp.rrdDb.close(); 
 				} 
 			}
 			catch (InterruptedException e) {
