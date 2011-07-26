@@ -13,6 +13,7 @@ import org.collectd.DataWorker;
 import org.jrobin.core.RrdDbPool;
 import org.jrobin.core.RrdException;
 import org.jrobin.mrtg.MrtgException;
+import org.jrobin.mrtg.server.IfDsicoverer;
 import org.jrobin.mrtg.server.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;   
@@ -144,23 +145,84 @@ public class StartStopServlet extends HttpServlet {
 		//jrobin/mrtg/server/Server
 		try {
 			Server.main(acceptedClients);
+			
+
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	private void initAutoDiscover(String hostPar, String communityPar, String numericOid, String ifDescr){
+		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
+		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
+		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
+		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
+		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
+		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
+		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
+		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
+		IfDsicoverer.startDiscoverer(mythreads, hostPar, communityPar, numericOid, ifDescr);
 	}
 	private boolean isMRTGEnabled() {
 		RuntimeMXBean RuntimemxBean = ManagementFactory.getRuntimeMXBean();
 		
 		// grep com.sun.management.snmp
 		boolean retval = true; 
+		String ifDescr ="jvmMgtMIB";
+		String numericOid =".0";
+		String communityPar="public";
+		String hostPar="127.0.0.1:161";
 		for(String arg:RuntimemxBean.getInputArguments()) {
 			System.out.println(arg);
-			if (arg.indexOf("com.sun.management.snmp")>0){
+			
+/*
+ * 
+ * -Dcom.sun.management.snmp.port=1616, 
+-Dcom.sun.management.snmp.acl=false, 
+-Dcom.sun.management.snmp.interface=127.0.0.1
+#http://download.oracle.com/javase/1.5.0/docs/guide/management/SNMP.html#snmp_properties
+com.sun.management.snmp.port=portNum
+com.sun.management.snmp.acl.file=ACLFilePath
+com.sun.management.snmp.trap	Remote port to which the SNMP agent sends traps. 	162
+com.sun.management.snmp.interface	Optional. The local host InetAddress, to force the SNMP agent to bind to the given InetAddress. This is for multi-home hosts if one wants to listen to a specific subnet only.	N/A
+com.sun.management.snmp.acl.file	Path to a valid ACL file. After the JVM has started, modifying the ACL file has no effect.	JRE_HOME/lib/management/snmp.acl
+#http://download.oracle.com/javase/6/docs/technotes/guides/management/snmp.html
+Property Name	
+Description	
+Default
+
+com.sun.management.snmp.trap	
+Remote port to which the SNMP agent sends traps.	
+162
+
+com.sun.management.snmp. interface	
+Optional. The local host InetAddress, to force the SNMP agent to bind to the given InetAddress. This is for multi-home hosts if one wants to listen to a specific subnet only.	
+Not applicable
+
+com.sun.management.snmp.acl	
+Enables or disables SNMP ACL checks.	
+true
+
+com.sun.management.snmp. acl.file	
+Path to a valid ACL file. After the Java VM has started, modifying the ACL file has no effect.	
+JRE_HOME/lib/management/snmp.acl
+			
+ */		
+			if (arg.indexOf("com.sun.management.snmp.interface")>=0){
+				hostPar = arg.substring(arg.indexOf("=")+1)+ hostPar.substring(hostPar.indexOf(":"));
+			}
+			if (arg.indexOf("com.sun.management.snmp.port")>=0){
+				hostPar = hostPar.substring(0, hostPar.indexOf(":")+1)+arg.substring(arg.indexOf("=")+1);
+			}
+			if (arg.indexOf("com.sun.management.snmp")>=0){
 				retval =true;
+				// initiate own Autodiscover
+				int val = arg.indexOf("com.sun.management.snmp"); 
 			}
 		}
-		 
+		initAutoDiscover(hostPar, communityPar, numericOid, ifDescr);
 		return retval;
 		
 	}

@@ -78,7 +78,7 @@ class RrdWriter  implements Runnable, MrtgConstants {
 				try {
 					process(rawSample);
 				} catch (RrdException e) {
-					e.printStackTrace();
+					log.trace( "rrdWriter processing error", e);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block - has to react to the error and deactivate invalid SNMP-Ports.
 					e.printStackTrace();
