@@ -139,9 +139,16 @@ public class Server implements MrtgConstants {
 		if(!active) {
 			throw new MrtgException("Cannot stop Server, not started");
 		}
-		rrdWriter.terminate();
-		timer.terminate();
-		listener.terminate();
+		try {
+			rrdWriter.terminate();
+		} catch (Exception e) {e.printStackTrace();		}
+		try {
+			timer.terminate();
+		} catch (Exception e) {e.printStackTrace();		}
+		try {
+			listener.terminate();
+		} catch (Exception e) {e.printStackTrace();		}		
+		
 		active = false;
 		try {
 			RrdDbPool pool = RrdDbPool.getInstance();
@@ -150,8 +157,16 @@ public class Server implements MrtgConstants {
 			throw new MrtgException(e);
 		}
 	}
-
-	void saveHardware() throws MrtgException {
+	private static int revisionCout = 0;
+	private static long lastCommit = -1;
+	
+	synchronized void  saveHardware() throws MrtgException {
+		if ((System.currentTimeMillis()-lastCommit  )>60*1000){// onece per min
+			revisionCout ++;
+			lastCommit = System.currentTimeMillis();
+		}else{
+			return ; 
+		}
 		if(deviceList == null) {
 			deviceList = new DeviceList();
 		}
@@ -176,19 +191,23 @@ public class Server implements MrtgConstants {
 			transformer.setOutputProperty(OutputKeys.MEDIA_TYPE, "text/xml");
 			transformer.setOutputProperty(OutputKeys.STANDALONE, "yes");
 			DOMSource source = new DOMSource(root);
-			File fout = new File(Config.getHardwareFile());
-			File foutTmp = File.createTempFile("mrtgstage", ".xml", fout.getParentFile());
-			String msg = "store mrtg.conf into {"+fout.getAbsolutePath()+"}";
-			log.debug( "saveHardware::"+msg); 
-			FileOutputStream destination = new FileOutputStream(foutTmp);
-			StreamResult result = new StreamResult(destination);
-			transformer.transform(source, result);
-			destination.close();
-			if (fout.exists()){// make backup
-				File dest = new File (fout.getAbsolutePath()+".bak"+((System.currentTimeMillis()/1000)%24*60*60 ));
-				fout.renameTo(dest );
+			
+			synchronized (File.class) {
+				File fout = new File(Config.getHardwareFile());
+				File foutTmp = File.createTempFile("mrtgstage", ".xml", fout.getParentFile());
+				String msg = "store mrtg.conf into {"+fout.getAbsolutePath()+"}";
+				log.debug( "saveHardware::"+msg); 
+				FileOutputStream destination = new FileOutputStream(foutTmp);
+				StreamResult result = new StreamResult(destination);
+				transformer.transform(source, result);
+				destination.close();
+			
+				if (fout.exists()){// make backup
+					File dest = new File (fout.getAbsolutePath()+".bak"+((System.currentTimeMillis()/1000)%24*60*60 ));
+					fout.renameTo(dest );
+				}
+				foutTmp.renameTo(fout) ;
 			}
-			foutTmp.renameTo(fout) ;
 
 		} catch (Exception e) {
 			throw new MrtgException(e);

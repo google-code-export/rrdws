@@ -27,7 +27,7 @@ String _t = request.getParameter("_t");
 _t  = _t  == null? "-":_t ;
 String _v = request.getParameter("_v");
 _v  = _v  == null? "- ":_v ; 
-
+// ?? TODO  -image_info='xgen"+_h+"_"+_w+"'
 String cmdTmp = "rrdtool graph - -v '"+_v+"' -t '"+_t+"'  -h "+ _h +" -w  "+_w+" --start="+_start+"   --end="+_end+"  DEF:dbdata="+dbName+".rrd:data:AVERAGE  LINE2:dbdata#44EE4499  LINE1:dbdata#003300AA ";
 // bikoz of '-' in the filename :
 GraphInfo img = (GraphInfo)RrdCommander.execute(cmdTmp);

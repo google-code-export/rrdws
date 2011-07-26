@@ -31,5 +31,14 @@ Registry reg = (Registry) cache.get("REGISTRY");
 
 String key =  request.getParameter("rrd");
 String val = reg.getDb2path().get(key);
+System.out.println("String val = reg.getDb2path().get(key);"+val);
 reg.unregister(val, key);
+synchronized (cache) { 
+	cache.remove("REGISTRY");
+	cache.put("REGISTRY", new Registry( reg.getDb2path() ));
+	//last_clean=System.currentTimeMillis();					
+	System.out.println("REGISTRY ReFlush #" );
+}
 
+%>
+<%=val%>

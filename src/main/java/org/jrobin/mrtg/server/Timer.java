@@ -28,6 +28,7 @@ import org.jrobin.mrtg.Debug;
 import org.jrobin.mrtg.MrtgConstants;
 import org.jrobin.mrtg.MrtgException;
 
+import java.util.Collection;
 import java.util.Queue;
 import java.util.Vector;
 
@@ -72,21 +73,13 @@ class Timer  implements Runnable , MrtgConstants {
 			Vector routers = deviceList.getRouters();
 			for(Object routerO : routers.toArray() ) {
 				Device router = (Device)routerO;
-				Vector links = router.getLinks();
-				for (Object linkO  :links.toArray() ) {
+				Collection<Port> links = router.getLinks();
+				for (Object linkO  :links  ) {
 					Port link = (Port) linkO;
                     if(router.isActive() && link.isActive() &&
 						link.isDue() && !link.isSampling()) {
-                    	SnmpReader snmpReader = new SnmpReader(router, link);
-						//Thread readerTmp = new Thread(snmpReader, "SnmpReader");
-						//readerTmp.setDaemon(true);
-                    	//readerTmp.start();
-                    	this.queue.add(snmpReader);
-//						try {
-//							this.thr1.sleep((long)(1 + Math.random() * SCHEDULER_DELAY));
-//						} catch (InterruptedException e) {
-//							e.printStackTrace();
-//						}
+                    	SnmpReader snmpReader = new SnmpReader(router, link); 
+                    	this.queue.add(snmpReader); 
 					}
 				}
 			}

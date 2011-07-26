@@ -49,7 +49,14 @@ class SnmpReader   {
 		this.link = link;
 	}
 
+	/**
+	 * @deprecated
+	 * @author vipup
+	 */
 	public void run() {
+		this.run(Thread.currentThread().getThreadGroup());
+	}
+	public void run(ThreadGroup ownTG) {
 		String community = null;
 		String host = null;
 		String ifDescr = null;
@@ -64,8 +71,11 @@ class SnmpReader   {
 				findIfIndex();
 			}
 			if(ifIndex >= 0) {
-				ifDescr = link.getIfDescr();
-				String oidTmp = comm.toNumericOID(ifDescr);
+				String oidTmp = link.getDescr();
+				if (oidTmp .indexOf("/")>=0){ // have to be 1.3.6.1.4.1.42.2.145.3.163.1.1.3.10.1.8.0.0.0.0.0.0.6.88
+					ifDescr = link.getIfDescr();
+					oidTmp = comm.toNumericOID(ifDescr);
+				}
 				Debug.print("Sampling: " + ifDescr + "@" + host + 	" [" + ifIndex + "]{"+oidTmp+"}"); 
 				 
 				String value  = null;
@@ -84,15 +94,15 @@ class SnmpReader   {
 		}
 		catch (IOException e) {
 			Debug.print("IOException on " + getLabel() + ": " + e);
-			deactivateLink(e);
+			deactivateLink(e, ownTG);
 		} catch (MrtgException e) {
-			deactivateLink(e);			
+			deactivateLink(e, ownTG);			
 			Debug.print("MrtgException on " + getLabel() + ": " + e);
 		} catch (ArrayIndexOutOfBoundsException e) {
-			deactivateLink(e);
+			deactivateLink(e,ownTG);
 			Debug.print("MrtgException on " + getLabel() + ": " + e);
 		} catch (java.lang.IllegalArgumentException	 e) {
-			deactivateLink(e);
+			deactivateLink(e,ownTG);
 			Debug.print("java.lang.IllegalArgumentException	" + getLabel() + ": " + e);
 			
 			
@@ -104,49 +114,42 @@ class SnmpReader   {
 		}
 	}
 
-	private void deactivateLink(Exception e) {
+	private void deactivateLink(Exception e, ThreadGroup ownTG) {
 		String mesTmp = e.getMessage();
 		String ifDescr= link.getIfDescr() ;
 		String host = router.getHost();
-		String theNext = null;
+		String community = router.getCommunity() ;
+		
 		try {
 			link.error(e);
-
-			if (mesTmp .indexOf( "not available for retrieval")>0){
-				link.deactivate();
-			} else {
-				Server instanceTmp = Server.getInstance();
-				if (link.getErrorCount()>5 && mesTmp .indexOf( "timed out")>0|| mesTmp.indexOf("Bad OID")>=0 || mesTmp.indexOf("No such instance")>=0){ // autodiscover	
-					String numericOid = link.getIfAlias(); if (numericOid == comm.toNumericOID(numericOid)) numericOid = comm.toNumericOID(numericOid.substring(0,numericOid.lastIndexOf("/"))); 	
-					theNext = comm. getNextSNMPv2(numericOid);				
-					String descr = comm.getLastSymbol().getName();
-					descr = descr==null?comm.getLastSymbol().getName()+"!"+link.getErrorCount()+"]":descr ;
-					int samplingInterval= 60;
-					boolean active = true;
+ 				
+				if (
+						link.getErrorCount()>5 && 
+						mesTmp .indexOf( "timed out")>0|| 
+						mesTmp.indexOf("Bad OID")>=0 || 
+						mesTmp.indexOf("No such instance")>=0 ||
+						mesTmp.indexOf("No such name error")>=0 ||
+						mesTmp .indexOf( "not available for retrieval")>0
+					){ // autodiscover	
+					String numericOid = link.getIfAlias(); 
+					if (numericOid == comm.toNumericOID(numericOid) && numericOid .indexOf(".")==-1) {
+						int endOfAlias = numericOid.lastIndexOf("/");
+						String theOldOIDTmp = numericOid.substring(0,endOfAlias);
+						numericOid = comm.toNumericOID(theOldOIDTmp); 	
+					} 
 					link.deactivate();
 					//instanceTmp.addLink(host, ifDescr, descr, samplingInterval, active );
-					
-					String lastKey = null;
-					int retcode = -1;
-					for (String retvLTmp = comm.getNextSNMPv2( numericOid);lastKey !=""+comm.getLastOID();numericOid = ""+comm.getLastOID()){
-						String iPrefixTmp = ifDescr.substring(0, ifDescr.lastIndexOf("/"));
-						String ifPathTmp = iPrefixTmp+"/"+descr;
-						String chkOID = comm.toNumericOID(ifPathTmp);
-						numericOid = ""+comm.getLastOID();
-						retcode = instanceTmp.addLink(host, ifPathTmp, 2, numericOid, samplingInterval, active );
-						// skip (1)
-						retvLTmp = comm.getNextSNMPv2( numericOid);
-						System.out.println("chkOID:"+chkOID+"=="+retcode +"::"+retvLTmp +" ..........."+numericOid + "////"+ifPathTmp);
-					}
+					performAutoDiscovery( ownTG, host, community , ifDescr,  numericOid);
 					
 				}else  if (link.getErrorCount()>1 && (mesTmp .indexOf( "timed out")>0 || mesTmp.indexOf("No such instance")>=0)){ // 2nd try via ver2
 					link.setSnmpVersion(2);
 					String oid = link.getIfAlias();
-					theNext = comm.getNextSNMPv2(oid); //oid = 	comm.toNumericOID(oid)			
+					String theNext = comm.getNextSNMPv2(oid); //oid = 	comm.toNumericOID(oid)			
 					String descr = comm.getLastSymbol().getName();
 					descr = descr==null?comm.getLastSymbol().getName()+"!"+link.getErrorCount()+"]":descr ;
 					int samplingInterval= 60;
 					boolean active = true;
+					Server instanceTmp = Server.getInstance();
 					int retcode = instanceTmp.addLink(host, ifDescr, 2, descr, samplingInterval, active );
 					if (retcode == -2 ){ // already existing interface
 						retcode = instanceTmp.addLink(host, ifDescr+"/"+descr, 2, oid, samplingInterval, active );
@@ -157,17 +160,40 @@ class SnmpReader   {
 					link.deactivate();
 					Debug.print(".. deactivated" + getLabel() + ": " + e);
 				}
-			}			
+		 		
 		} catch (MrtgException e1) {
-			log.error("deactivateLink(Exception e)"+theNext,  e1);
+			log.error("deactivateLink(Exception e)" ,  e1);
 		} catch (IOException e2) {
 			// TODO Auto-generated catch block
-			log.error("deactivateLink(IOException e)"+theNext,  e2);
+			log.error("deactivateLink(IOException e)" ,  e2);
 		}catch (Throwable  e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
-			log.error("deactivateLink(IOException e)"+theNext,  e2);
+			log.error("deactivateLink(IOException e)" ,  e2);
 		}
+	}
+
+	/**
+	 * @deprecated
+	 * @author vipup
+	 * @param hostPar
+	 * @param communityPar
+	 * @param ifDescr
+	 * @param numericOid
+	 * @throws MrtgException
+	 * @throws IOException
+	 */
+	private static void performAutoDiscovery(String hostPar,
+			String communityPar, String ifDescr, String numericOid)
+			throws MrtgException, IOException {
+		performAutoDiscovery(Thread.currentThread().getThreadGroup(), hostPar,
+				communityPar, ifDescr, numericOid);
+	}
+	
+	
+	private static void performAutoDiscovery( ThreadGroup tgPar, String hostPar,  String communityPar, String ifDescr, String numericOid) throws MrtgException, IOException {
+		IfDsicoverer.startDiscoverer(tgPar, hostPar, communityPar, numericOid, ifDescr);
+
 	}
 
 	private void findIfIndex() throws MrtgException {

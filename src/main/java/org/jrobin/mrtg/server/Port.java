@@ -223,6 +223,12 @@ class Port {
         lastSample = sample; 
 	}
 
+	/**
+	 * @deprecated
+	 * 
+	 * @author vipup
+	 * @return
+	 */
 	Hashtable getLinkInfo() {
 		Hashtable link = new Hashtable();
 		link.put("ifIndex", new Integer(ifIndex));

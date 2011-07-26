@@ -336,7 +336,7 @@ class Poller {
 		int n = OIDS.length;
 		for (int i = 0; i < n; i++) {
 			String name = OIDS[i][0], value = OIDS[i][1];
-			if (oid.startsWith(name)) {
+			if ((""+oid).startsWith(name)) {
 				return oid.replaceFirst(name, value);
 			}
 		}
@@ -420,7 +420,7 @@ class Poller {
 
 	}
 
-	private static Hashtable<String, SnmpContextv2c> contextV2Repo = new Hashtable<String, SnmpContextv2c>();
+	private static final Hashtable<String, SnmpContextv2c> contextV2Repo = new Hashtable<String, SnmpContextv2c>();
 	
 	private synchronized SnmpContextv2c checkinContext() throws IOException {
 		String key = ""+host+","+ port+" ,"+ bindAddr+" ," +socketType+"";

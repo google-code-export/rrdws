@@ -49,6 +49,13 @@ i++;
 			<img src="gen.jsp?db=<%=reg.getPath2db().get(key) %>"/>.
 		</a>	
 	</td>
+	<td>
+			<a href="removeFromRegistry.jsp?rrd=<%=reg.getPath2db().get(key)%>&key='<%=key%>'" >
+			X
+		</a>
+	</td>
+
+	
 </tr>
 <%
 }

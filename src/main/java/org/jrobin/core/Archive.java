@@ -149,17 +149,19 @@ public class Archive implements RrdUpdater, ConsolFuns {
 			state.setNanSteps(state.getNanSteps() + 1);
 		}
 		else {
-			if (consolFun.get().equals(CF_MIN)) {
-				state.setAccumValue(Util.min(state.getAccumValue(), value));
+			double accumValue = state.getAccumValue();
+			String consolFunGetValTmp = consolFun.get();
+			if (consolFunGetValTmp.equals(CF_MIN)) {
+				state.setAccumValue(Util.min(accumValue, value));
 			}
-			else if (consolFun.get().equals(CF_MAX)) {
-				state.setAccumValue(Util.max(state.getAccumValue(), value));
+			else if (consolFunGetValTmp.equals(CF_MAX)) {
+				state.setAccumValue(Util.max(accumValue, value));
 			}
-			else if (consolFun.get().equals(CF_LAST)) {
+			else if (consolFunGetValTmp.equals(CF_LAST)) {
 				state.setAccumValue(value);
 			}
-			else if (consolFun.get().equals(CF_AVERAGE)) {
-				state.setAccumValue(Util.sum(state.getAccumValue(), value));
+			else if (consolFunGetValTmp.equals(CF_AVERAGE)) {
+				state.setAccumValue(Util.sum(accumValue, value));
 			}
 		}
 	}

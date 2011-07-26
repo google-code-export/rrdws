@@ -30,8 +30,13 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.Vector;
 
 class Device {
@@ -39,7 +44,7 @@ class Device {
 	private String community = "";
 	private String descr = "";
 	private boolean active = true;
-	private Vector links = new Vector();
+	private Map<String,  Port> links = new HashMap<String, Port>();
 
 	Device() { }
 
@@ -63,7 +68,9 @@ class Device {
 				setActive(new Boolean(node.getFirstChild().getNodeValue().trim()).booleanValue());
 			}
 			else if(name.equals("interface")) {
-				links.add(new Port(node));
+				Port pTmp= new Port(node);
+				//links.put(""+node.hashCode(),new Port(node));
+				addLink(pTmp);
 			}
 		}
 	}
@@ -110,13 +117,11 @@ class Device {
 		this.active = active;
 	}
 
-	Vector getLinks() {
-		return links;
+	Collection<Port> getLinks() {
+		return links.values();
 	}
 
-	void setLinks(Vector links) {
-		this.links = links;
-	}
+ 
 
 	public String toString() {
 		String buff = new String();
@@ -132,21 +137,18 @@ class Device {
 	}
 
 	Port getLinkByIfDescr(String ifDescr) {
-		for(int i = 0; i < links.size(); i++) {
-			Port link = (Port) links.get(i);
-            if(link.getIfDescr().equalsIgnoreCase(ifDescr)) {
-				return link;
-			}
-		}
-		return null;
+		Port retval =  links.get(ifDescr); //links.get("ifDescr");	 getRouterInfo() ;System.out.println( links.keySet().contains(ifDescr)); .contains( ifDescr);	
+		return retval ;
 	}
 
 	void addLink(Port link) {
-		links.add(link);
+		String ifDescrTmp = ""+link.getIfDescr();
+		links.put(ifDescrTmp,link);
 	}
 
 	void removeLink(Port link) {
-		links.remove(link);
+		String ifDescrTmp = ""+link.getIfDescr();
+		links.remove(ifDescrTmp );
 	}
 
 	int getLinkCount() {
@@ -158,7 +160,7 @@ class Device {
 		try {
 			comm = new Poller(host, community);
 			Map links = comm.walkIfDescr();
-			return (String[]) links.values().toArray(new String[0]);
+			return (String[]) links.values().toArray( new String[0]);
 		}
 		finally {
 			if(comm != null) {
@@ -167,6 +169,13 @@ class Device {
 		}
 	}
 
+	/**
+	 * @deprecated
+	 * 
+	 * 
+	 * @author vipup
+	 * @return
+	 */
 	Hashtable getRouterInfo() {
 		Hashtable table = new Hashtable();
 		table.put("host", host);
@@ -175,8 +184,7 @@ class Device {
 		table.put("active", new Boolean(active));
 		// add link info
 		Vector linkData = new Vector();
-		for (int i = 0; i < links.size(); i++) {
-			Port link = (Port) links.get(i);
+		for (Port link :links.values()) {			
 			linkData.add(link.getLinkInfo());
 		}
 		table.put("links", linkData);
@@ -199,8 +207,7 @@ class Device {
 		Element activeElem = doc.createElement("active");
 		activeElem.appendChild(doc.createTextNode("" + active));
 		routerElem.appendChild(activeElem);
-		for (int i = 0; i < links.size(); i++) {
-			Port link = (Port) links.elementAt(i);
+		for (Port link  : links.values() ) {			
 			link.appendXml(routerElem);
 		}
 	}

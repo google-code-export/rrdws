@@ -52,14 +52,16 @@ class Listener implements MrtgConstants {
 			}
 		}
 		webServer.start();
-		Debug.print("WWWWWWWWWWWWWWWWW XmlRpcServer started on port " + SERVER_PORT);
+		log.info("WWWWWWWWWWWWWWWWW XmlRpcServer started on port " + SERVER_PORT);
 	}
 
 	void terminate() {
 		if(webServer != null) {
 			webServer.removeHandler(MRTG) ;
 			webServer.shutdown();
-			Debug.print(".w.w.w.w.w.w.w.w.w.w.w.w.w.w.w.   XmlRpcServer closed + + + + + + + + +  + ");
+			log.info(".w.w.w.w.w.w.w.w.w.w.w.w.w.w.w.   XmlRpcServer closed + + + + + + + + +  + ");
+			log.info(".w.w.w.w.w.w.w.w.w.w.w.w.w.w.w.   XmlRpcServer closed + + + + + + + + +  + ");
+			log.info(".w.w.w.w.w.w.w.w.w.w.w.w.w.w.w.   XmlRpcServer closed + + + + + + + + +  + ");
 			webServer = null;
 		}
 	}
@@ -171,7 +173,8 @@ class Listener implements MrtgConstants {
 			Vector result = new Vector();
 			Device[] routers = Server.getInstance().getRouters();
 			for (int i = 0; i < routers.length; i++) {
-				result.add(routers[i].getRouterInfo());
+				Hashtable routerInfo = routers[i].getRouterInfo();
+				result.add(routerInfo);
 			}
 			Debug.print("Sending router data [" + result.size() + " routers found]");
 			return result;

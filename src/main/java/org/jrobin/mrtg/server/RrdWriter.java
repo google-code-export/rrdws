@@ -23,47 +23,38 @@
  * Boston, MA 02111-1307, USA.
  */
 package org.jrobin.mrtg.server;
-
-import org.jrobin.core.*;
+ 
+import org.jrobin.core.RrdException;
 import org.jrobin.mrtg.Debug;
 import org.jrobin.mrtg.MrtgConstants;
 import org.jrobin.mrtg.MrtgException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import ws.rrd.collectd.TextLineIterator;
+import cc.co.llabor.system.StartStopServlet;
+ 
+ 
 import ws.rrd.csv.Action;
 import ws.rrd.csv.RrdUpdateAction;
-
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Date;
+ 
+import java.io.IOException; 
+import java.util.Collections; 
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
+import java.util.List; 
 
 class RrdWriter  implements Runnable, MrtgConstants {
-	private RrdDefTemplate rrdDefTemplate;
-	private int sampleCount, badSavesCount, goodSavesCount;
-	private List queue = Collections.synchronizedList(new LinkedList());
+	
+ 	private int sampleCount, badSavesCount, goodSavesCount;
+	private List<RawSample> queue = Collections.synchronizedList(new LinkedList<RawSample>());
 
 	
 
 	private volatile boolean active = true;
 	Thread thr1 ;
+	private static final Logger log = LoggerFactory.getLogger(RrdWriter.class .getName());
 	
 	RrdWriter() throws MrtgException {
-		// get definition from template
-		try {
-			rrdDefTemplate = new RrdDefTemplate(new File(Config.getRrdTemplateFile()));
-		} catch (IOException e) {
-			throw new MrtgException(e);
-		} catch (RrdException e) {
-			throw new MrtgException(e);
-		}
-		thr1 = new Thread(Timer.defTG, this, "mrtg.RRDWriter");
+ 		thr1 = new Thread(Timer.defTG, this, "mrtg.RRDWriter");
 		// TODO =8-0
 		thr1 .start();
 		
@@ -83,13 +74,33 @@ class RrdWriter  implements Runnable, MrtgConstants {
 			   }
 			}
 			if(active && queue.size() > 0) {
-				RawSample rawSample = (RawSample) queue.remove(0);
+				RawSample rawSample = queue.remove(0);
 				try {
 					process(rawSample);
+				} catch (RrdException e) {
+					e.printStackTrace();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+					// TODO Auto-generated catch block - has to react to the error and deactivate invalid SNMP-Ports.
+					e.printStackTrace();
+					if (e.getMessage().contains("Bad sample timestamp"))
+					try {						
+						String host = rawSample.getHost();
+						String ifDescr = rawSample.getIfDescr();
+						DeviceList deviceList = Server.getInstance().getDeviceList();
+						Device routerByHost = deviceList.getRouterByHost( host);
+						Port link = routerByHost.getLinkByIfDescr(ifDescr);
+						link.deactivate();
+						
+					} catch (MrtgException e1) { 
+						e1.printStackTrace();
+					} catch (Throwable e2) {
+						e2.printStackTrace();
+					}
+				} catch (Throwable e) {
 					e.printStackTrace();
 				}
+			}else{ // if passivated || empty queue
+				System.out.println(" store statisctiv for RddWorker....");
 			}
 		}
 		Debug.print("Archiver ended");
@@ -102,7 +113,7 @@ class RrdWriter  implements Runnable, MrtgConstants {
 		}
 	}
  
-	private void process(RawSample rawSample) throws IOException {  	
+	private void process(RawSample rawSample) throws IOException, RrdException {  	
 		
 		
 		Action a = new RrdUpdateAction();
@@ -110,14 +121,16 @@ class RrdWriter  implements Runnable, MrtgConstants {
 		long string =  System.currentTimeMillis();
 		String value = rawSample.getValue();
 		String pathTmp = Server.calPath2RRDb ( rawSample.getHost(),  ifDescr);
-		a.perform(  pathTmp , string , value );
+		Object retval = a.perform(  pathTmp , string , value );
+		if (retval instanceof RrdException){
+			throw new RrdException( (Exception)retval);
+		}else if (retval instanceof Exception){
+				throw new IOException("RRD RawProcessing error with "+ifDescr+" =={"+value+"}",(Exception)retval);
+		}else{
+			log.debug("processed :{}=[{}]", pathTmp, value );
+		}
 	}
-
-	private String getRrdFilenameFor(RawSample rawSample) {
-		String host = rawSample.getHost();
-		String ifDescr = rawSample.getIfDescr();
-		return getRrdFilename(host, ifDescr);
-	}
+ 
 
 	static String getRrdFilename(String host, String ifDescr) {
 		String filename = ifDescr.replaceAll("[^0-9a-zA-Z]", "_") +
