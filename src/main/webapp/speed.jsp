@@ -11,6 +11,12 @@ if (inTmp == null){
 	inTmp = this.getClass().getClassLoader().getResourceAsStream("speed.gif"); 
 }
 int b = 0;
+
+try{
+	HttpSession sTmp = request.getSession(true); 
+}catch(Throwable e){ 
+	e.printStackTrace();//response.getWriter()
+}
 try{
 	for( b = inTmp.read();b>=0;b = inTmp.read()){
 		out.write(b);

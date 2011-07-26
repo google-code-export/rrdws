@@ -113,24 +113,31 @@ class DeviceList {
 	int addLink(String host, String ifDescr, String descr, int samplingInterval, boolean active) {
 		return addLink(host, ifDescr, 2, descr, samplingInterval, active); 
 	}
-	int addLink(String host, String ifDescr, int snmpVersion, String descr, int samplingInterval, boolean active) {
-        Device router = getRouterByHost(host);
+	int addLink(String hostPar, String ifDescrPar, int snmpVersionPar, String descrPar, int samplingIntervalPar, boolean isActivePar) {
+        Device router = getRouterByHost(hostPar);
 		if(router == null) {
 			// router not found, link cannot be added
             return -1;
 		}
-        Port link = router.getLinkByIfDescr(ifDescr);
-		if(link != null) {
+        Port link = null;
+        try{
+        	link = router.getLinkByIfDescr(ifDescrPar);
+        }catch(NullPointerException e){
+        	
+        }
+		if(link != null && link.getDescr().equals(descrPar) ) {
 			// such link already exists, link cannot be added
 			return -2;
+		}else if(link != null  ){// there are ling with path BUT! diff OID
+			return -255;
 		}
         Port newLink = new Port();
-		newLink.setDescr(descr);
-		newLink.setIfAlias(descr);
-		newLink.setIfDescr(ifDescr);
-		newLink.setSamplingInterval(samplingInterval);
-		newLink.setActive(active);
-		newLink.setSnmpVersion(snmpVersion); 		
+		newLink.setDescr(descrPar);
+		newLink.setIfAlias(descrPar);
+		newLink.setIfDescr(ifDescrPar);
+		newLink.setSamplingInterval(samplingIntervalPar);
+		newLink.setActive(isActivePar);
+		newLink.setSnmpVersion(snmpVersionPar); 		
 		router.addLink(newLink);
 		return 0;
 	}

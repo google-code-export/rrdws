@@ -36,9 +36,9 @@ import org.slf4j.LoggerFactory;
  * To change this template use Options | File Templates.
  */
 public class Debug implements MrtgConstants {
-	private static final Logger log = LoggerFactory.getLogger(Debug.class .getName());
+	private static Logger log = LoggerFactory.getLogger(""+Debug.class .getName());
 	public static void print(String msg) {
-		if(DEBUG) {
+		if(DEBUG && log!=null) {
 			log.debug(msg);
 		}
 	}

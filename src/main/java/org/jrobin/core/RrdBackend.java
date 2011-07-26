@@ -273,9 +273,19 @@ public abstract class RrdBackend {
 		b[3] = (byte) ((value) & 0xFF);
 		return b;
 	}
-
+	
+	// static alloc for bufs
+	static final private int MAX_CHUNKS = 1000*8;
+	static final byte[][]byteChunk = new byte[MAX_CHUNKS][8] ;
+	static int chunkCounter = 0;
+	
+	private static final boolean REUSE_STATIC_MEM = false;
+	
 	private static byte[] getLongBytes(long value) {
-		byte[] b = new byte[8];
+		chunkCounter ++;
+		byte[] b = REUSE_STATIC_MEM?
+			 new byte[8]:
+			byteChunk [chunkCounter %MAX_CHUNKS ];
 		b[0] = (byte) ((int) (value >>> 56) & 0xFF);
 		b[1] = (byte) ((int) (value >>> 48) & 0xFF);
 		b[2] = (byte) ((int) (value >>> 40) & 0xFF);

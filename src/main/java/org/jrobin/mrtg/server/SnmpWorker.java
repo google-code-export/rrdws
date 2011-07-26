@@ -53,9 +53,9 @@ public class   SnmpWorker implements Runnable{
     			}else{ 
 						SnmpReader data = queue.poll();//queue.peek();queue.queue.clear()
 						// here is not need to read it asynchronously - so __run__ can be called directly
-						// TODO - remove Runnable from SnmpReader
 						try{
-							data.run();
+							ThreadGroup tgTmp = Thread.currentThread().getThreadGroup();
+							data.run(tgTmp ); // assums the ru could create Threads...
 						}catch(Throwable e){
 							e.printStackTrace();
 						}
