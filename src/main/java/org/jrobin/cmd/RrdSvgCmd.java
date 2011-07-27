@@ -42,8 +42,17 @@ public class RrdSvgCmd extends RrdToolCmd implements RrdGraphConstants {
 	static final Color BLIND_COLOR = new Color(0, 0, 0, 0);
 	private RrdGraphDef gdef;
 
+	 
+	
+	String myCmd = "graph";
+	public RrdSvgCmd(String altCmd){
+		myCmd  = altCmd;
+	}
+	public RrdSvgCmd(){
+		// nothing to do...
+	}	
 	String getCmdType() {
-		return "graph";
+		return myCmd;
 	}
 
 	Object execute() throws RrdException, IOException {

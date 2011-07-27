@@ -47,7 +47,8 @@ public class RrdCommander {
 			new RrdXportCmd(),
 			new RrdTuneCmd(),
 			new RrdInfoCmd(),
-			getRrdCommender()
+			getRrdCommender(),
+			new RrdSvgCmd("graphsvg")// rrdtools command extension
  
 			
 	};
