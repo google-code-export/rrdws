@@ -380,6 +380,7 @@
 		</dependency>
 
 		<!-- These dependencies are here just for enabling logging -->
+<!-- 
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -391,7 +392,14 @@
 			<artifactId>logback-classic</artifactId>
 			<version>0.9.15</version>
 		</dependency>
- 
+  -->
+          <!-- lets use log4j! -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.6.1</version>
+            
+        </dependency>
 		<!-- Test scope -->
 		<dependency>
 			<groupId>junit</groupId>
