@@ -20,6 +20,8 @@ package org.jrobin.mrtg.server;
  
 import java.util.LinkedList;  
 import java.util.Queue;
+
+import org.mortbay.log.Log;
   
  
 /**
@@ -41,6 +43,8 @@ public class   SnmpWorker implements Runnable{
     	public SnmpWorker() {
     		queue = new LinkedList<SnmpReader>();
 		}
+    	public static final int MAX_ERRORS_ALLOWED = 1000;
+    	public static int ERROR_COUNT = 0;
 		public void run() {
     		while(isAlive ){ 
     			if (queue.isEmpty()){
@@ -57,10 +61,15 @@ public class   SnmpWorker implements Runnable{
 							ThreadGroup tgTmp = Thread.currentThread().getThreadGroup();
 							data.run(tgTmp ); // assums the ru could create Threads...
 						}catch(Throwable e){
+							ERROR_COUNT ++;
 							e.printStackTrace();
 						}
 						queue.remove(data); 
     			} 
+    			if (ERROR_COUNT > MAX_ERRORS_ALLOWED ){
+    				isAlive = false;
+    				Log.warn("MAX_ERROR_COUNT reached ->>>>>>>>>>>>>>>STOP all SnmpWorker!" );
+    			}
     		}
     	}
  

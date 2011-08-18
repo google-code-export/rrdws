@@ -24,9 +24,10 @@
  */
 package org.jrobin.mrtg.server;
 
-import org.jrobin.core.Util;
-import org.jrobin.mrtg.Debug;
+import org.jrobin.core.Util; 
 import org.jrobin.mrtg.MrtgException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -62,6 +63,8 @@ class Port {
 	}
 
 	private volatile Exception lastError;
+
+	private static final Logger log = LoggerFactory.getLogger("org.jrobin.mrtg.server.Port");
 
 	Port() { }
 
@@ -215,7 +218,7 @@ class Port {
 			return;
 		}
 		sample.setIfDescr(ifDescr); 
-		Debug.print("Saving sample: " + sample);
+		log.debug("Saving sample: " + sample);
 		Server instance = Server.getInstance();
 		RrdWriter rrdWriter = instance.getRrdWriter();
 		rrdWriter.store(sample);
@@ -229,6 +232,7 @@ class Port {
 	 * @author vipup
 	 * @return
 	 */
+	@SuppressWarnings({"rawtypes", "unchecked"})
 	Hashtable getLinkInfo() {
 		Hashtable link = new Hashtable();
 		link.put("ifIndex", new Integer(ifIndex));

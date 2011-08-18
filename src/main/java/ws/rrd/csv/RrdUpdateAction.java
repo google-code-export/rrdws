@@ -121,6 +121,7 @@ public class RrdUpdateAction implements Action {
 			if (reg == null){ 
 				reg = new Registry();
 			}	
+			if (cache == null) return; // GC/destroy-mode
 			if (changeCount >10 ||(last_clean +10000) < System.currentTimeMillis()){
 				synchronized (cache) { 
 					cache.remove("REGISTRY");

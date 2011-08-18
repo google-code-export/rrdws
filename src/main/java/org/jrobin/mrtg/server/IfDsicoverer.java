@@ -26,7 +26,7 @@ public class IfDsicoverer implements Runnable{
 	private String ifDescr;
 	private int id;
 	private String key;
-	private static  Logger log = LoggerFactory.getLogger(IfDsicoverer.class .getName());
+	private static  Logger log = LoggerFactory.getLogger("org.jrobin.mrtg.server.IfDsicoverer");
 	
 
 	/**
@@ -44,10 +44,15 @@ public class IfDsicoverer implements Runnable{
 	@Override
 	public void run() {
 		Poller commPar;
+		System.out.println("##"+id+"##"+key+" >;-o... >;-o... >;-o... >;-o... >;-o... >;-o... >;-o... >;-o... >;-o... >;-o... ");
+
 		try {
 			commPar = new Poller(host, community);
 			Server instanceTmp = Server.getInstance();
-			MibValueSymbol lastSymbol = commPar.getLastSymbol();
+			MibValueSymbol lastSymbol = null;
+			try{
+				lastSymbol  = commPar.getLastSymbol();
+			}catch(Throwable e){ }
 			if (lastSymbol==null){
 				try{// TODO lets statrt from start ?
 					commPar.getNextSNMPv2( commPar.getNumericOid( "jvmMgtMIB"));
@@ -104,13 +109,14 @@ public class IfDsicoverer implements Runnable{
 			e.printStackTrace();
 		}finally{
 			discovererPool.remove(key);
-			System.out.println("##"+id+"##"+key+" 8-))))  8-))))  8-))))  8-))))  8-))))  8-))))  8-))))  8-))))  8-))))  8-))))  8-))))  8-)))) ");
-			System.out.println("##"+id+"##"+key+" 8-))))  8-))))  8-))))  8-))))  8-))))  8-))))  8-))))  8-))))  8-))))  8-))))  8-))))  8-)))) ");
+			System.out.println("##"+id+"##"+key+" <8-)))) <8-)))) <8-)))) <8-)))) <8-)))) <8-)))) <8-)))) <8-)))) <8-)))) <8-)))) <8-)))) <8-)))  ");
+			//
+			System.out.println("##"+id+"##"+key+" |8-)))  |8-)))  |8-)))  |8-)))  |8-)))  |8-)))  |8-)))  |8-)))  |8-)))  |8-)))  |8-)))  |8-))) ");
 		}
 
 			
 	}
-	private String toXName(Poller commPar) {
+	private String toXName(Poller commPar) throws IOException {
 		MibValueSymbol lastSymbol;
 		String pathToAdd = "";
 		lastSymbol = commPar.getLastSymbol() ;
@@ -138,7 +144,13 @@ public class IfDsicoverer implements Runnable{
 				newDiscoverer.setKey(key);
 				Thread t2Run = new Thread(tgPar, newDiscoverer, "Discoverer#"+newDiscoverer.getId()+" :"+hostPar);
 				t2Run.setDaemon(false);
-				t2Run.start();
+				
+				
+				synchronized (key) {
+					
+					t2Run.start();
+				} 
+								
 			}else{
 				System.out.println("DUPLICATING Discovery quering of ///////////////////////"+key+"/////////// IGNORED.");
 			}

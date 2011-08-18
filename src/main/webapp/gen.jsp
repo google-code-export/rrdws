@@ -19,16 +19,23 @@ String _w = " 64 ";
 String fileNameTmp = "./img.tmp/"+dbName+".gif";
 String cmdTmp = "rrdtool graph "+ fileNameTmp +" --color BACK#11111111 --only-graph  -o -h "+ _h +" -w  "+_w+" --start=end-1week  DEF:dbdata="+dbName+".rrd:data:AVERAGE  LINE2:dbdata#44EE4499  LINE1:dbdata#003300AA ";
 java.io.File imgTmp = new java.io.File(fileNameTmp);
-boolean isExpired = imgTmp .exists() && (imgTmp .lastModified() + 1000*60*5) < System.currentTimeMillis() ;
+long lastMod = imgTmp .lastModified() ;
+boolean isExpired = imgTmp .exists() && (lastMod + 1000*60*5) < System.currentTimeMillis() ;
+
 if (!imgTmp .exists()  || isExpired){
-	System.out.println(""+imgTmp .lastModified()+"  1@@@@@@@@ "+(imgTmp .lastModified()  -System.currentTimeMillis() ) +" isExpired == "+isExpired);
+	System.out.println(""+lastMod+"  1@@@@@@@@ " +(lastMod -System.currentTimeMillis() ) +" isExpired == "+isExpired);
 	RrdCommander.execute(cmdTmp);
 }else{
 	//System.out.println("till update :"+ (imgTmp .lastModified() - System.currentTimeMillis() ) +" ms.");
 }
 response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
 response.setHeader("Pragma","no-cache"); //HTTP 1.0
-response.setDateHeader ("Expires", 0); //prevents caching at the proxy server
+//http://stackoverflow.com/questions/1930158/how-to-parse-date-from-http-last-modified-header
+//String dateString = "Wed, 09 Apr 2008 23:55:38 GMT";
+//SimpleDateFormat formatTmp = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
+//Date d = format.parse(dateString);
+ 
+response.setDateHeader ("Expires", lastMod+ 1000*60*5); //prevents caching at the proxy server
 response.setHeader("Content-Disposition", "inline;filename="+dbName+".gif");
 %><%
 try{

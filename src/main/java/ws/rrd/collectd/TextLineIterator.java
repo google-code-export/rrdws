@@ -26,7 +26,7 @@ import ws.rrd.csv.CSVParser;
 public class TextLineIterator {
 
 	private BufferedReader in;
-	private static final Logger log = LoggerFactory.getLogger(CSVParser.class .getName());
+	private static final Logger log = LoggerFactory.getLogger("CSVParser.class .getName()");
 
 	public TextLineIterator(InputStream resourceAsStream) {
 		this.in = new BufferedReader (new InputStreamReader(resourceAsStream));

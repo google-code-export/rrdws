@@ -28,49 +28,52 @@
 <body  onLoad="return 1;"> 
 <%@page import="org.jrobin.cmd.RrdCommander"%>
 <%@page import="org.jrobin.svg.RrdGraphInfo"%>
+<!--
 <table > 
 	<tr   >
-		<td width="100" height="64">
+		<td >
 						<a href="https://rrdsaas.appspot.com/rrd.jsp"  title=" RRD Java impl ">
 						RRDSAAS <%=System.currentTimeMillis() %>
 	
 		</td>
-					<td width="10%" height="64">
-						<img src="JavaLogo.svg" height="64" width="64" alt="javalogo as img.svg" /> 
-					</td><td width="10%" height="64">
-						EMBED :
-						<embed src="JavaLogo.svg" type="image/svg+xml" height="64" width="64"  scale=true alt="javalogo as embed.svg" />
-					</td><td width="10%" height="64">	
-						EMBED+p :
-						<embed src="JavaLogo.svg" height="64" width="64"  type="image/svg+xml" scale=true alt="javalogo as embed+plug.svg"  pluginspage="http://www.adobe.com/svg/viewer/install/" /> 
-					</td><td width="10%" height="64">	
-						OBJ :
-						<object data="JavaLogo.svg" width="300" height="100" type="image/svg+xml" alt="javalogo as object+plug.svg" codebase="http://www.adobe.com/svg/viewer/install/" />
-						</a>
-					</td><td width="10%" height="64">	
-						IMG :
-						<IMG src="gif.jsp" height="64" width="64"   />
-					</td> 	
+		<td height="64" width="64">
+			img.svg:<img src="JavaLogo.svg" height="64" width="64" alt="javalogo as img.svg" /> 
+		</td><td height="64" width="64">
+			embed.svg :
+			<embed src="JavaLogo.svg" type="image/svg+xml" height="64" width="64"  scale=true alt="javalogo as embed.svg" />
+		</td><td height="64" width="64">	
+			embed+p.svg :
+			<embed src="JavaLogo.svg" height="64" width="64"  type="image/svg+xml" 
+			scale=true alt="javalogo as embed+plug.svg"  pluginspage="http://www.adobe.com/svg/viewer/install/" /> 
+		</td><td height="64" width="64">	
+			object.svg :
+			<object data="JavaLogo.svg" height="64" width="64" type="image/svg+xml" alt="javalogo as object+plug.svg" 
+			codebase="http://www.adobe.com/svg/viewer/install/" />
+			</a>
+		</td><td height="64" width="64">	
+			IMG-X :
+			<IMG src="gif.jsp" height="64" width="64"   />
+		</td> 	
 	</tr>	
-	
 </table>
+-->
 <!-- TUTORIAL --->
 <table width="100%" >
 	<tr width="100%" height="64">
-		<td>
-			<table width="100%">
-				<tr>
-					<td>
-						<iframe src="man/man.html" width="1310%"  height="456">
+	<td>
+		<table width="100%">
+			<tr>
+				<td>
+					<iframe src="man/man.html" width="1310%"  height="456">
 						a lot of thanks to Alex van den Bogaerdt for this very kindly checked documentation. Unfortunately this page is dropped from original https://rrd4j.dev.java.net/tutorial.html...
 						... but __fortunately___ I backuped it! :)
-						</iframe>
-					</td>	
+					</iframe>
+				</td>	
 			</tr>				
-			</table>	 
-		</td>	
-		<td>
-			<table ><tr><th>1</th><th>2</th> </tr>
+		</table>	 
+	</td>	
+	<td>
+		<table ><tr><th>1</th><th>2</th> </tr>
 				<tr >
 					<td>Execution result:</td>
 				</tr>
@@ -124,12 +127,8 @@
 					</td>	<td width="10%" height="64">	
 								<embed src="svg.jsp" type="image/svg+xml" height="100%" width="100%"  alt="gae rrdoutput" />
 					</td>	
-			</tr > <tr > 
-			
-				<td  >  
-
-
-
+			</tr > <tr > 			
+				<td>  
 					<form method="post">
 						<table>
 							<tr > 
@@ -138,43 +137,41 @@
 										String testCOLOR = "FFFFFF000000CCAA";
 										testCOLOR  = testCOLOR   .substring(  (int)(System.currentTimeMillis()%10));
 										testCOLOR   = testCOLOR  .substring(0,6);
-										String testCMD = " rrdtool graph speed.gif  --start 920804400 --end 920808000  DEF:myspeed=test.rrd:speed:AVERAGE  LINE"+(((int)(System.currentTimeMillis()%3)+1))+":myspeed#"+testCOLOR;
+										String cccTMP = (""+cmdTmp).hashCode()%2==0?"graph":"graphsvg";
+										String lnnTMP = ""+ (((int)(System.currentTimeMillis()%3)+1));
+										String ttTMP = new String[]{"amazing","greate ", "fine", "super", "geil", "perfect", "bombastisch", "excelent", "ideal", "fantastic", "unique", "unreal"}[Math.abs((""+cmdTmp).hashCode()%11)];
+										String vvvTMP = new String[]{"vip","vasja ", "pupkin", "vasilij", "ivanovich", "!no pasaran!", "bl-ky!", "Gra-Vi-Ca pa", "KinDzaDza", "Ma-Ma, Ma-Ma, ..", "Ky!", " "}[Math.abs((""+cmdTmp).hashCode()%11)];
+										String testCMD = " rrdtool "+cccTMP + " speed.gif  -v '"+vvvTMP+"'  -t 'RRDWS is "+ttTMP+"!'  --start 920804400 --end 920808000  DEF:myspeed=test.rrd:speed:AVERAGE  LINE"+lnnTMP+":myspeed#"+testCOLOR;
 										%> <textarea name="cmd"  cols="60" rows="4" value="<%=testCMD%>"><%=testCMD%></textarea>
 									</td>
 							</tr > <tr > 
-
 									<td>	
-												<<<-- if u don't know what to do -- just try the default action - press the button ;)  
+										<<<-- if u don't know what to do -- just try the default action - press the button ;)  
 									</td>	
 							</tr > <tr > 
-									
 									<td>										
-												<input type="submit" />
+										<input type="submit" />
 									</td>	
-
-
 							</tr> 
 						</table>
-					</form>
-
-
-				
+					</form>	
 				</td>	<td width="10%" height="64">	
 				</td>	
-				</tr> 
-
-				
-			</table>		
-		</td>	
-							</tr > <tr > 
+			</tr> 
+		</table>		
+	</td>
+</tr>
+</table>		
+<!-- eo TUTORIAL -->
 	
-			<td    	>	
-							<iframe width="200" height="200" src="js/clock.html"></iframe>
-				</td> 	 
-					<td width="10%" height="64">	
-								<IMG src="speed.gif"   alt="tomcat/jee rrdoutput" />							
-					</td>	<td width="10%" height="64">	
-								<embed src="svg.jsp" type="image/svg+xml"   alt="gae rrdoutput" />
-					</td>	
-				</tr>
+<table>		
+	<tr> 
+		<td width="5%" valign="top" align="left" >	
+				<iframe width="200" height="200" src="js/clock.html"></iframe>
+		</td> <td  width="564"  valign="top" align="left" >
+				<img src="speed.svg"    height="164" width="564"   alt="gae rrdoutput" />
+		</td> <td width="51%" valign="top" align="left" >	
+				<IMG src="speed.gif"    alt="tomcat/jee rrdoutput" />							
+		</td>	
+	</tr>
 </table>	
