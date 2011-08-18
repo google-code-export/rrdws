@@ -40,7 +40,7 @@ class SnmpReader   {
 
 	private Poller comm;
 
-	private static final Logger log = LoggerFactory.getLogger(SnmpReader.class .getName());
+	private static final Logger log = LoggerFactory.getLogger("org.jrobin.mrtg.server.SnmpReader");
 
 	SnmpReader(Device router, Port link) {
 		

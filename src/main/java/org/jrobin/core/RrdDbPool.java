@@ -26,10 +26,7 @@
 package org.jrobin.core;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-
-import org.jrobin.core.jrrd.RRDException;
+import java.util.HashMap;  
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,7 +43,7 @@ public class RrdDbPool {
 	 */
 	public static final int INITIAL_CAPACITY = 1000;
 	private static final Logger log = LoggerFactory
-			.getLogger(RrdDbPool.class.getName());
+			.getLogger("org.jrobin.core.RrdDbPool");
 	private static RrdDbPool instance = new RrdDbPool();
 	private RrdBackendFactory factory;
  

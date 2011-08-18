@@ -70,7 +70,7 @@ public class Server implements MrtgConstants {
 
 	private boolean active = false;
 
-	private static final Logger log = LoggerFactory.getLogger(StartStopServlet.class .getName());
+	private static final Logger log = LoggerFactory.getLogger("org.jrobin.mrtg.server.Server");
 
 	public synchronized static Server getInstance() throws MrtgException {
 		if (instance == null) {
@@ -85,7 +85,8 @@ public class Server implements MrtgConstants {
 
 	private Server() throws RrdException {
 		//TODO RrdDb.setLockMode(RrdDb.NO_LOCKS);
-		RrdDbPool.getInstance().setCapacity(POOL_CAPACITY);
+		//RrdDbPool instance2 = RrdDbPool.getInstance();
+		//instance2.setCapacity(POOL_CAPACITY);
 	}
 
 	public synchronized void start(String[] acceptedClients) throws MrtgException {
@@ -384,6 +385,7 @@ public class Server implements MrtgConstants {
 		return startDate;
 	}
 
+	@SuppressWarnings({"rawtypes", "unchecked"})
 	Hashtable getServerInfo() {
 		Hashtable hash = new Hashtable();
 		hash.put("sampleCount", new Integer(rrdWriter.getSampleCount()));

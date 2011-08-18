@@ -31,7 +31,7 @@ public class StartStopServlet extends HttpServlet {
 	 * @author vipup
 	 */
 	private static final long serialVersionUID = -3432681267977857824L;
-	private static final Logger log = LoggerFactory.getLogger(StartStopServlet.class .getName());
+	private static Logger log = LoggerFactory.getLogger("cc.co.llabor.system.StartStopServlet");
 	private static int groupCounter = 0;
 	ThreadGroup mythreads = new ThreadGroup("rrd@"+groupCounter++);
 	
@@ -68,6 +68,7 @@ public class StartStopServlet extends HttpServlet {
 			startMrtgServer();
 		}
 		  
+		if(1==3)
 		try {
 			hTimer = DogFarm.startTimer( HighLimitWatchDog.class );
 		} catch (IllegalArgumentException e) {
@@ -89,6 +90,7 @@ public class StartStopServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		if(1==3)
 		try {
 			lTimer = DogFarm.startTimer( LowLimitWatchDog.class );
 		} catch (IllegalArgumentException e) {
@@ -169,8 +171,8 @@ public class StartStopServlet extends HttpServlet {
 		RuntimeMXBean RuntimemxBean = ManagementFactory.getRuntimeMXBean();
 		
 		// grep com.sun.management.snmp
-		boolean retval = true; 
-		String ifDescr ="jvmMgtMIB";
+		boolean retval = false; 
+		String ifDescr ="/jvmMgtMIB/";
 		String numericOid =".0";
 		String communityPar="public";
 		String hostPar="127.0.0.1:161";
@@ -217,12 +219,17 @@ JRE_HOME/lib/management/snmp.acl
 				hostPar = hostPar.substring(0, hostPar.indexOf(":")+1)+arg.substring(arg.indexOf("=")+1);
 			}
 			if (arg.indexOf("com.sun.management.snmp")>=0){
-				retval =true;
+				
 				// initiate own Autodiscover
 				int val = arg.indexOf("com.sun.management.snmp"); 
 			}
 		}
-		initAutoDiscover(hostPar, communityPar, numericOid, ifDescr);
+		
+		// TODO calculate enabling MRTG
+		//retval =true;
+		if (retval ){
+			initAutoDiscover(hostPar, communityPar, numericOid, ifDescr);
+		}
 		return retval;
 		
 	}

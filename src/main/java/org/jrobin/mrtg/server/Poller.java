@@ -744,7 +744,8 @@ class Poller {
 		return lastOID;
 	}
 
-	public MibValueSymbol getLastSymbol() {
+	public MibValueSymbol getLastSymbol() throws IOException {
+		checkMIB();
 		return mib.getSymbolByOid("" + this.getLastOID());
 	}
 
