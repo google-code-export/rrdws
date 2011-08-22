@@ -1,0 +1,14 @@
+<Context privileged='true' >
+  <Resource name='mail/Session' auth='Container' type='javax.mail.Session'/>
+  <ResourceParams name='mail/Session'>
+    <parameter>
+      <name>mail.smtp.host</name>
+      <value>localhost</value>
+    </parameter>
+    <parameter>
+      <name>mail.smtp.port</name>
+      <value>62525</value>
+    </parameter>    
+  </ResourceParams>
+</Context> 
+   
