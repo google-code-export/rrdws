@@ -3,7 +3,7 @@
 		<html> 
 			<app>
 				/rrd
-				<sessions>10212</sessions>
+				<sessions>10,212</sessions>
 			</app>
 		</html>
 	</manager>

@@ -21,7 +21,9 @@ package org.jrobin.mrtg.server;
 import java.util.LinkedList;  
 import java.util.Queue;
 
-import org.mortbay.log.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+ 
   
  
 /**
@@ -32,6 +34,7 @@ public class   SnmpWorker implements Runnable{
 
 		java.util.Queue<SnmpReader> queue;
 		private boolean isAlive = true;
+		private static Logger log = LoggerFactory.getLogger(SnmpWorker.class);
     	SnmpWorker ( Queue<SnmpReader> q){
     		this.queue = q;
     	}
@@ -49,26 +52,26 @@ public class   SnmpWorker implements Runnable{
     		while(isAlive ){ 
     			if (queue.isEmpty()){
     				try {
-    					Thread.sleep(100);
+    					Thread.sleep(1001);
     				} catch (InterruptedException e) {
     					// TODO Auto-generated catch block
     					e.printStackTrace();
     				}
     			}else{ 
-						SnmpReader data = queue.poll();//queue.peek();queue.queue.clear()
-						// here is not need to read it asynchronously - so __run__ can be called directly
 						try{
-							ThreadGroup tgTmp = Thread.currentThread().getThreadGroup();
+							SnmpReader data = queue.poll();//queue.peek();queue.queue.clear()
+							// here is not need to read it asynchronously - so __run__ can be called directly
+								ThreadGroup tgTmp = Thread.currentThread().getThreadGroup();
 							data.run(tgTmp ); // assums the ru could create Threads...
+							queue.remove(data); 
 						}catch(Throwable e){
 							ERROR_COUNT ++;
 							e.printStackTrace();
 						}
-						queue.remove(data); 
     			} 
     			if (ERROR_COUNT > MAX_ERRORS_ALLOWED ){
     				isAlive = false;
-    				Log.warn("MAX_ERROR_COUNT reached ->>>>>>>>>>>>>>>STOP all SnmpWorker!" );
+    				log.error( "MAX_ERROR_COUNT reached ->>>>>>>>>>>>>>>STOP all SnmpWorker!" );
     			}
     		}
     	}

@@ -1,5 +1,6 @@
  
 package cc.co.llabor.system;    
+import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.lang.reflect.InvocationTargetException;
@@ -63,9 +64,12 @@ public class StartStopServlet extends HttpServlet {
 			// start collectd queue-worker
 			startCollectdWorker();
 		}		
-		
-		if (isMRTGEnabled()){
-			startMrtgServer();
+		try{
+			if (isMRTGEnabled()){
+				startMrtgServer();
+			}
+		}catch(IOException e){
+			e.printStackTrace();
 		}
 		  
 		if(1==3)
@@ -156,7 +160,7 @@ public class StartStopServlet extends HttpServlet {
 		}
 	}
 	
-	private void initAutoDiscover(String hostPar, String communityPar, String numericOid, String ifDescr){
+	private void initAutoDiscover(String hostPar, String communityPar, String numericOid, String ifDescr) throws IOException{
 		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
 		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
 		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
@@ -167,7 +171,7 @@ public class StartStopServlet extends HttpServlet {
 		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
 		IfDsicoverer.startDiscoverer(mythreads, hostPar, communityPar, numericOid, ifDescr);
 	}
-	private boolean isMRTGEnabled() {
+	private boolean isMRTGEnabled() throws IOException {
 		RuntimeMXBean RuntimemxBean = ManagementFactory.getRuntimeMXBean();
 		
 		// grep com.sun.management.snmp

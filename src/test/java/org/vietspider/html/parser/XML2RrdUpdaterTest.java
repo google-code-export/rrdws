@@ -3,6 +3,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintWriter; 
 
+import org.jrobin.cmd.RrdCommander;
 import org.junit.Test;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
@@ -107,6 +108,13 @@ rrdtool update X-1293157220.rrd 1297216092:10212
 
  */		 
 		org.junit.Assert.assertEquals(rrdActioner.toString(), rrdActioner.toString().indexOf("X-1293157220.rrd"),DONT_CHANGE_THIS_VALUE_AS_WELL_AS_XPATH2HASH_IMPLEMENTATION);
+		
+		String cmdSet = rrdActioner.toString();
+		for (String cmdTmp: cmdSet .split("\n") ){
+			if (cmdTmp.startsWith("/") )continue;
+			Object retval = RrdCommander.execute(cmdTmp);
+			System.out.println(retval);
+		}
 	}	
 	
 	@Test

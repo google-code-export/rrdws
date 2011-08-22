@@ -2,8 +2,10 @@ package org.jrobin.mrtg.server;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
+import net.percederberg.mibble.Mib;
 import net.percederberg.mibble.MibValueSymbol;
 
 import org.jrobin.mrtg.MrtgException;
@@ -28,26 +30,58 @@ public class IfDsicoverer implements Runnable{
 	private String key;
 	private static  Logger log = LoggerFactory.getLogger("org.jrobin.mrtg.server.IfDsicoverer");
 	
+	//new Poller(host, community)
+	java.util.Queue<Poller> queue;
 
 	/**
 	 * @author vipup
 	 * @param snmpReader
+	 * @throws IOException 
 	 */
 	IfDsicoverer(String hostPar, String communityPar, String numericOid,
-			String ifDescr) {
+			String ifDescr) throws IOException {
+		queue = new LinkedList<Poller>();
+		
 		this.host = hostPar;
 		this.community = communityPar;
 		this.numOID = numericOid;
 		this.ifDescr = ifDescr;
+		
+		addTraper(this.host, this.community );
+	}
+	private void addTraper(String hostPar, String communityPar) throws IOException {
+		Poller theFirstOne = new Poller(hostPar, communityPar);
+		queue.add(theFirstOne);
 	} 
-	
-	@Override
+	 
+	boolean isAlive = true;
 	public void run() {
-		Poller commPar;
+		while(isAlive ){ 
+			if (queue.isEmpty()){
+				try {
+					Thread.sleep(1001);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else{ 
+				try{
+					Poller commTmp = queue.poll();
+					performDiscovery(commTmp);
+					
+				}catch (Throwable e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+				}	
+			}
+		}
+	}
+	private void performDiscovery(Poller commPar ) {	
+		
 		System.out.println("##"+id+"##"+key+" >;-o... >;-o... >;-o... >;-o... >;-o... >;-o... >;-o... >;-o... >;-o... >;-o... ");
 
 		try {
-			commPar = new Poller(host, community);
+			
 			Server instanceTmp = Server.getInstance();
 			MibValueSymbol lastSymbol = null;
 			try{
@@ -78,15 +112,17 @@ public class IfDsicoverer implements Runnable{
 					
 					while (retcode ==-255){// // there are ling with path BUT! diff OID
 					// try to combite path+OID as a new path...
-						Port pTmp = instanceTmp.getDeviceList().getRouterByHost(host).getLinkByIfDescr(pathToAdd);
+						DeviceList deviceList = instanceTmp.getDeviceList();
+						Device routerByHost = deviceList.getRouterByHost(host);
+						Port pTmp = routerByHost.getLinkByIfDescr(pathToAdd);
 						String pOIDTmp = pTmp.getIfAlias();
 						// logical numOID - pOIDTmp:
-						String prefixTmp = ""+commPar.getLastSymbol().getMib().getSymbolByOid(numOID).getValue();
+						Mib mib = commPar.getLastSymbol().getMib();
+						MibValueSymbol symbolByOid = mib.getSymbolByOid(numOID);
+						String prefixTmp = ""+symbolByOid.getValue();
 						String suffixTmp = numOID.substring(prefixTmp.length()) ;
-						pathToAdd = pathToAdd +"/["+suffixTmp+"]";
-						
-						retcode = instanceTmp.addLink(host, pathToAdd, 2, numOID, samplingInterval, active );
-												
+						pathToAdd = pathToAdd +"/["+suffixTmp+"]"; 
+						retcode = instanceTmp.addLink(host, pathToAdd, 2, numOID, samplingInterval, active ); 
 					}
 					if (retcode ==0)
 						log.debug("+++ chkOID:{}=={}::{}[5:{}]4:{}3:{}2:{}1:{} ",new Object[]{chkOID,retcode,retvLTmp, valTmp, numOID ,ifPathTmp});
@@ -94,12 +130,10 @@ public class IfDsicoverer implements Runnable{
 						log.trace( "... numOID:{} = {}" , numOID, retcode  );
 					
 				}catch(Throwable eDDD){
-					log.trace( chkOID, eDDD );
-					
+					log.trace( chkOID, eDDD );					
 				}
 				// skip (1)
 				retvLTmp = commPar.getNextSNMPv2( numOID);
-				
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -107,14 +141,7 @@ public class IfDsicoverer implements Runnable{
 		} catch (MrtgException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally{
-			discovererPool.remove(key);
-			System.out.println("##"+id+"##"+key+" <8-)))) <8-)))) <8-)))) <8-)))) <8-)))) <8-)))) <8-)))) <8-)))) <8-)))) <8-)))) <8-)))) <8-)))  ");
-			//
-			System.out.println("##"+id+"##"+key+" |8-)))  |8-)))  |8-)))  |8-)))  |8-)))  |8-)))  |8-)))  |8-)))  |8-)))  |8-)))  |8-)))  |8-))) ");
 		}
-
-			
 	}
 	private String toXName(Poller commPar) throws IOException {
 		MibValueSymbol lastSymbol;
@@ -132,27 +159,25 @@ public class IfDsicoverer implements Runnable{
 	private static int dCounter = 0;
 
 	final static Map<String, Thread> discovererPool = new HashMap<String, Thread>();
-	public static void startDiscoverer(ThreadGroup tgPar, String hostPar, String communityPar,	String numericOid, String ifDescrPar) {
+	public static void startDiscoverer(ThreadGroup tgPar, String hostPar, String communityPar,	String numericOid, String ifDescrPar) throws IOException {
 		String key = hostPar +"::"+communityPar;
 		synchronized (discovererPool) {
 			Thread theT  =  discovererPool.get(key );
 			if (theT  == null){
 				IfDsicoverer newDiscoverer = new IfDsicoverer(hostPar, communityPar, numericOid, ifDescrPar);
 				dCounter++;
-				
 				newDiscoverer.setId(dCounter);
 				newDiscoverer.setKey(key);
-				Thread t2Run = new Thread(tgPar, newDiscoverer, "Discoverer#"+newDiscoverer.getId()+" :"+hostPar);
+				String sDiscNameTmp = "Discoverer#"+newDiscoverer.getId()+" :"+hostPar;
+				Thread t2Run = new Thread(tgPar, newDiscoverer, sDiscNameTmp);
 				t2Run.setDaemon(false);
-				
-				
+				discovererPool.put(key, t2Run);
 				synchronized (key) {
-					
 					t2Run.start();
-				} 
-								
+				}
 			}else{
 				System.out.println("DUPLICATING Discovery quering of ///////////////////////"+key+"/////////// IGNORED.");
+				
 			}
 		}		
 	}
