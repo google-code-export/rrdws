@@ -2,11 +2,17 @@ package cc.co.llabor.mail;
  
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.mail.MessagingException;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
-
+import org.subethamail.smtp.MessageListener;
+import org.subethamail.smtp.server.SMTPServer;
+ 
 /** 
  * <b>Description:TODO</b>
  * @author      vipup<br>
@@ -18,6 +24,20 @@ import org.junit.Test;
  */
 public class ForwarderTest {
 
+	SMTPServer smtpServer = null;
+	@Before
+	public void setup( ){
+		// Send a test message mail-int.noc.fiducia.de 
+		Collection<MessageListener>listeners = new ArrayList<MessageListener>();
+		MessageListener l1 = new MyMessageListener();
+		listeners.add(l1 );
+		smtpServer = new SMTPServer(listeners );
+		smtpServer.start();
+	}
+	@After
+	public void teadDown( ){
+ 		smtpServer.stop();
+	}
 	
  
 	@Test
