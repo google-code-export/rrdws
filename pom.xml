@@ -93,13 +93,13 @@
 			<scope>provided</scope>
 			</dependency>
 		-->
-		<!-- javax MAIL 
+		<!-- javax MAIL 		-->
 			<dependency>
 			<groupId>org.subethamail</groupId>
 			<artifactId>subethasmtp</artifactId>
 			<version>2.0.1</version>
 			</dependency>
-		-->
+
 		<dependency>
 			<groupId>gnu.inet.encoding</groupId>
 			<artifactId>libidn</artifactId>
