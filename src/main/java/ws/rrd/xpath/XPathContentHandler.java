@@ -83,6 +83,13 @@ public class XPathContentHandler implements ContentHandler {
 		Object o = null;
 		synchronized (mutex) {
 			String data = (""+line).trim();
+			// TODO '10,111' -> '10111'
+			data =  data.replace(",", "");
+			// TODO "10'111" -> "10111"
+			data =  data.replace("'", "");
+			// TODO "10 111" -> "10111"
+			data =  data.replace(" ", "");
+			
 			// ignore empty super-nodes
 			if (!"".equals( data) ){
 				log.trace("[{}]",data);

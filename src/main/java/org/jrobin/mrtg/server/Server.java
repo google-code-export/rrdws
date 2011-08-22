@@ -65,7 +65,7 @@ public class Server implements MrtgConstants {
 	private Date startDate;
 
 	private Timer timer;
-	private RrdWriter rrdWriter;
+	//private RrdWriter rrdWriter;
 	private Listener listener;
 
 	private boolean active = false;
@@ -117,7 +117,7 @@ public class Server implements MrtgConstants {
 			saveHardware();
 		}
 		// create threads
-		rrdWriter = new RrdWriter();
+
 		timer = new Timer();
 		
 		listener = new Listener(acceptedClients);
@@ -140,9 +140,7 @@ public class Server implements MrtgConstants {
 		if(!active) {
 			throw new MrtgException("Cannot stop Server, not started");
 		}
-		try {
-			rrdWriter.terminate();
-		} catch (Exception e) {e.printStackTrace();		}
+
 		try {
 			timer.terminate();
 		} catch (Exception e) {e.printStackTrace();		}
@@ -378,7 +376,7 @@ public class Server implements MrtgConstants {
 	}
 
 	RrdWriter getRrdWriter() {
-		return rrdWriter;
+		return timer.getRrdWriter();
 	}
 
 	Date getStartDate() {
@@ -388,6 +386,7 @@ public class Server implements MrtgConstants {
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	Hashtable getServerInfo() {
 		Hashtable hash = new Hashtable();
+		RrdWriter rrdWriter = timer.getRrdWriter();
 		hash.put("sampleCount", new Integer(rrdWriter.getSampleCount()));
 		hash.put("savesCount", new Integer(rrdWriter.getSavesCount()));
 		hash.put("goodSavesCount", new Integer(rrdWriter.getGoodSavesCount()));

@@ -29,11 +29,7 @@ import org.jrobin.mrtg.Debug;
 import org.jrobin.mrtg.MrtgConstants;
 import org.jrobin.mrtg.MrtgException;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import cc.co.llabor.system.StartStopServlet;
- 
- 
+import org.slf4j.LoggerFactory; 
 import ws.rrd.csv.Action;
 import ws.rrd.csv.RrdUpdateAction;
  
@@ -53,12 +49,7 @@ class RrdWriter  implements Runnable, MrtgConstants {
 	Thread thr1 ;
 	private static final Logger log = LoggerFactory.getLogger(RrdWriter.class .getName());
 	
-	RrdWriter() throws MrtgException {
- 		thr1 = new Thread(Timer.defTG, this, "mrtg.RRDWriter");
-		// TODO =8-0
-		thr1 .start();
-		
-	}
+ 
 
     public void run() {
 		Debug.print("Archiver started");

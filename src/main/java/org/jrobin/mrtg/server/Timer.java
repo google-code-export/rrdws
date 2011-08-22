@@ -41,22 +41,33 @@ class Timer  implements Runnable , MrtgConstants {
 	private Queue<SnmpReader> queue;
 
 	SnmpWorker readerTpp = null;
+
+	private RrdWriter rrdWriter;
 	
 	Timer() {
 		this(defTG);
 	}
 	Timer(ThreadGroup tgPar) {
-		// Init Clockwork as SNMP-initiator
-		Thread thr1 = new Thread(tgPar, this, "mrtg.Timer");
-		// TODO =8-0
-		thr1 .start();
+
 		// Init SNMP-queue Reader
 		SnmpWorker readerTpp = new SnmpWorker();
 		// Init Clockwork as SNMP-initiator
-		Thread thr2 = new Thread(tgPar, readerTpp, "mrtg.Worker");
-		this.queue = readerTpp.queue;
+		Thread thr2 = new Thread(tgPar, readerTpp, "mrtg.SnmpWorker");
 		// ready to start....
+		
+		
+		this.queue = readerTpp.queue;
+		
+		// Init Clockwork as SNMP-initiator
+		Thread thr1 = new Thread(tgPar, this, "mrtg.TimerItself");
+		
+		thr1 .start();
 		thr2 .start();
+		
+		rrdWriter = new RrdWriter( );
+		// TODO =8-0
+		Thread thr3 = new Thread(tgPar , this, "mrtg.RRDWriter");
+		thr3 .start();
 		
 	}
 
@@ -98,8 +109,15 @@ class Timer  implements Runnable , MrtgConstants {
 	void terminate() {
     	active = false;
     	this.readerTpp.kill();
+		try {
+			rrdWriter.terminate();
+		} catch (Exception e) {e.printStackTrace();		}    	
+    	
 		synchronized(this) {
 			notify();
 		}
+	}
+	public RrdWriter getRrdWriter() { 
+		return rrdWriter;
 	}
 }
