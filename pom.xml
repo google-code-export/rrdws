@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<!--  ((( this section is common for all l-parent childs -->
 	<parent>
@@ -18,7 +20,7 @@
 
 	<groupId>com.appspot</groupId>
 	<artifactId>rrdsaas</artifactId>
-	<version>1.0.2</version>
+	<version>1.0.2-SNAPSHOT</version>
 
 	<name>rrdsaas</name>
 	<description>Google AppEngine rrd</description>
@@ -69,7 +71,7 @@
 		<dependency>
 			<groupId>cc.co.llabor</groupId>
 			<artifactId>jcollectd</artifactId>
-			<version>0.1.4</version>
+			<version>0.1.4-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
@@ -98,22 +100,6 @@
 			<version>2.0.1</version>
 			</dependency>
 		-->
-<!-- mail №2 -->
-		<dependency>
-			<groupId>org.subethamail</groupId>
-			<artifactId>subethasmtp</artifactId>
-			<version>2.0.1</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.geronimo.javamail</groupId>
-			<artifactId>geronimo-javamail_1.4_mail</artifactId>
-			<version>1.8.1</version>
-			<scope>test</scope>
-		</dependency>
-
-<!-- mail №2 -->
-		
 		<dependency>
 			<groupId>gnu.inet.encoding</groupId>
 			<artifactId>libidn</artifactId>
