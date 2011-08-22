@@ -518,8 +518,19 @@ public class UrlFetchTest implements Serializable{
 						}
 				}
 			}
-			if (0 != cookies.size())
+			if (0 != cookies.size()){
+				for(Cookie cTmp:cookies){ // store all new cookies into JAR-repo
+					String domainTmp = cTmp.getDomain();
+					List<Cookie> clistTmp = mCookieJar.get( domainTmp );
+					if(clistTmp == null){
+						clistTmp = new ArrayList<Cookie>();
+						mCookieJar.put(domainTmp, clistTmp);
+					}
+					clistTmp.add(cTmp);
+				}
+				
 				saveCookies(cookies, request);
+			}
 		}
 	}
 
@@ -636,10 +647,16 @@ public class UrlFetchTest implements Serializable{
 			path = url.getPath();
 			if (0 == path.length())
 				path = "/";
-			if (null != host) { // http://www.objectsdevelopment.com/portal/modules/freecontent/content/javawebserver.html
-				List<Cookie> cookListTmp = mCookieJar.get(host);
+			if (null != host) 
+			for(
+					String domainTmp =  host  ;
+					domainTmp .contains(".");
+					domainTmp = domainTmp.startsWith(".")? 
+							domainTmp.substring(domainTmp.indexOf(".")): 
+							domainTmp.substring(domainTmp.indexOf(".")+1)){ // http://www.objectsdevelopment.com/portal/modules/freecontent/content/javawebserver.html
+				List<Cookie> cookListTmp = mCookieJar.get(domainTmp);
 				list = mergeCookies(cookListTmp, path, list);
-				domain = getDomain(host);
+				domain = getDomain(domainTmp);
 				String keyCook = null;
 				if (null != domain)
 					// list = addCookies( mCookieJar.get(domain), path, list);
@@ -648,7 +665,7 @@ public class UrlFetchTest implements Serializable{
 					// maybe it is the domain we're accessing
 					// list = addCookies( mCookieJar.get("." + host), path,
 					// list);
-					keyCook = "." + host;
+					keyCook = "." + domainTmp;
 				cookListTmp = mCookieJar.get(keyCook);
 				list = mergeCookies(cookListTmp, path, list);
 			}
