@@ -26,6 +26,7 @@ import org.apache.http.Header;
 import org.apache.http.HttpEntity; 
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vietspider.html.HTMLDocument;
@@ -247,8 +248,14 @@ public class LServlet extends HttpServlet {
 			else{ // GET
 				urlStr = checkGOTO(urlStr);
 				
-				
-				xRespTmp = urlFetcherTmp.fetchGetResp(urlStr, headsToResend);
+				try{
+					xRespTmp = urlFetcherTmp.fetchGetResp(urlStr, headsToResend);
+				}catch(ClientProtocolException e){
+					log.error( "URL{"+urlStr+"}::",  e);
+					// last try 
+					xRespTmp =  urlFetcherTmp.fetchGetResp(urlStr+"/", headsToResend);
+					 
+				}
 			}
 			final StatusLine statusLine = xRespTmp.getStatusLine();
 			try{

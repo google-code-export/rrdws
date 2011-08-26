@@ -32,6 +32,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest; 
+import org.apache.http.client.params.ClientPNames;
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
@@ -226,6 +227,10 @@ public class UrlFetchTest implements Serializable{
 		}
 		HttpClient cliTmp = new DefaultHttpClient(cmTmp, parmsTmp);
 		setupProxy(cliTmp);
+		cliTmp.getParams().setParameter(ClientPNames.ALLOW_CIRCULAR_REDIRECTS, true); 
+		cliTmp.getParams().setParameter(ClientPNames.HANDLE_AUTHENTICATION , true); 
+		cliTmp.getParams().setParameter(ClientPNames.REJECT_RELATIVE_REDIRECT, true); 
+		cliTmp.getParams().setParameter(ClientPNames.MAX_REDIRECTS, 18); 
 		return cliTmp;
 	}
 
@@ -253,7 +258,14 @@ public class UrlFetchTest implements Serializable{
 			m.addHeader(headerNameTmp, headerValTmp);
 			
 		}
-		addCookies(m);
+		List<Cookie> cookListTmp = addCookies(m);
+		if (null!=cookListTmp)
+		for (Cookie c:cookListTmp){
+			try{
+				System.out.println(c);
+			}catch(Throwable e){}
+			
+		}
 		m.addHeader("Host", m.getURI().getHost());
 		if (this.socketTimeout !=null){
 			httpClient.getParams().setParameter("http.socket.timeout", new Integer(this.socketTimeout));
@@ -528,7 +540,7 @@ public class UrlFetchTest implements Serializable{
 					}
 					clistTmp.add(cTmp);
 				}
-				
+				 				
 				saveCookies(cookies, request);
 			}
 		}
@@ -631,16 +643,16 @@ public class UrlFetchTest implements Serializable{
 	 * @see <a href="http://www.ietf.org/rfc/rfc2109.txt">RFC 2109</a>
 	 * @see <a href="http://www.ietf.org/rfc/rfc2396.txt">RFC 2396</a>
 	 */
-	public void addCookies(HttpUriRequest request /* URLConnection connection */) {
-		List<Cookie> list;
+	public List<Cookie>  addCookies(HttpUriRequest request /* URLConnection connection */) {
+		List<Cookie> list = null;
 		URI url;
 		String host;
 		String path;
 		String domain;
-
+		
 		Map<String, List<Cookie>> mCookieJar = getOrCreateStore();
 		if (null != mCookieJar) {
-			list = null;
+			
 			// get the site from the URL
 			url = request.getURI();
 			host = url.getHost();
@@ -678,6 +690,7 @@ public class UrlFetchTest implements Serializable{
 				request.addHeader("Cookie", generateCookieProperty); // $Version="1";
 			}
 		}
+		return list;
 	}
 
 	/**
