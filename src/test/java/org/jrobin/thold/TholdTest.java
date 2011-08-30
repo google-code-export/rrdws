@@ -87,7 +87,7 @@ $ rrdtool fetch test.rrd AVERAGE --start 920804400 --end 920809200
 		RrdDb rrdDb = new RrdDb(rrdDef); 
 		
 		double hiLimit =  130; // should be smart enough ;)
-		int tenSecondds = 10; // 10 sec is maximal time to start to do something...
+		long tenSecondds = 1111; // 10 sec is maximal time to start to do something...
 		Threshold headHunter = new HighAlerter(TEST_RRD, hiLimit, tenSecondds);
 		AlertCaptain capTmp  =AlertCaptain .getInstance();   
 		
@@ -119,7 +119,7 @@ $ rrdtool fetch test.rrd AVERAGE --start 920804400 --end 920809200
 		graphDef.setTitle("not for dummies!");
 
 		graphDef.datasource("HighLIMIT", ""+hiLimit);
-		graphDef.line("HighLIMIT", new Color( 0, 0xFF, 0xAA), "minimal_IQ", 1);
+		graphDef.line("HighLIMIT", new Color( 0, 0x33, 0xAA), "minimal_IQ", 4);
 		
 		graphDef.datasource("myspeedMAX", TEST_RRD, "speed", ConsolFuns.CF_MAX);
 		graphDef.line("myspeedMAX", new Color( 0xFF,0xAF, 0xAF), "max", 2);
@@ -132,7 +132,7 @@ $ rrdtool fetch test.rrd AVERAGE --start 920804400 --end 920809200
  
 		//.stat.rrd				
 		graphDef.datasource("myspeedAlert", TEST_RRD+".stat.rrd", "speed", "AVERAGE");
-		graphDef.area("myspeedAlert", new Color(0,  0xFF,0 ), "recruit IT!" );
+		graphDef.line("myspeedAlert", new Color(0,  0xFF,0 ), "recruit IT!" ,4);
 		
 		RrdGraph graph = new RrdGraph(graphDef);
 		//graph.saveAsGIF("speed.gif");

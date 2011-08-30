@@ -114,7 +114,7 @@ public class AlertCaptain implements Runnable{
 			long inIncidentTime = toCheck.inIncidentTime();
 			long spanLength = toCheck.getSpanLength();
 			
-			if (inIncidentTime>0 && (inIncidentTime+ spanLength)>charlieTmp.timestamp){
+			if (inIncidentTime>0 && (inIncidentTime+ spanLength)<charlieTmp.timestamp){
 				doAlert(charlieTmp.timestamp, toCheck);
 			}else{
 				doSleep(charlieTmp.timestamp, toCheck);
@@ -132,14 +132,15 @@ public class AlertCaptain implements Runnable{
 	private void doSleep(long timestamp, Threshold toCheck) {
 		System.out.println("-"+timestamp);
 		//performAction - have to be called to activate rrd-Alert-mapping
-		toCheck.performAction(timestamp);		
+		toCheck.performSleep(timestamp);		
 		
 	}
 	private void doAlert(long timestamp, Threshold toCheck) {
-		String actionName = toCheck.getAction();
+		
 		//performAction - have to be called to activate rrd-Alert-mapping
 		toCheck.performAction(timestamp);
 		//TODO toCheck.getActionArgs()
+		String actionName = toCheck.getAction();
 		System.err.println("#"+timestamp+"!!!"+ toCheck +":::"+actionName +"{"+"}" );
 	}
 
