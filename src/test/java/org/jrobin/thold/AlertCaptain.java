@@ -130,18 +130,11 @@ public class AlertCaptain implements Runnable{
 	}
 	
 	private void doSleep(long timestamp, Threshold toCheck) {
-		System.out.println("-"+timestamp);
-		//performAction - have to be called to activate rrd-Alert-mapping
 		toCheck.performSleep(timestamp);		
 		
 	}
 	private void doAlert(long timestamp, Threshold toCheck) {
-		
-		//performAction - have to be called to activate rrd-Alert-mapping
 		toCheck.performAction(timestamp);
-		//TODO toCheck.getActionArgs()
-		String actionName = toCheck.getAction();
-		System.err.println("#"+timestamp+"!!!"+ toCheck +":::"+actionName +"{"+"}" );
 	}
 
 	static AlertCaptain myself = new AlertCaptain();
