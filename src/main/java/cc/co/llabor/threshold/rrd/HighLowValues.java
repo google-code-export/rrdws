@@ -9,7 +9,7 @@ package cc.co.llabor.threshold.rrd;
  * 
  *         Creation: 23.05.2011::14:07:14<br>
  */
-public class HighLowValues implements Threshold {
+public abstract class HighLowValues implements Threshold {
 	Type type = Type.HighLowValue;
 	double HighThreshold;
 	double LowThreshold;

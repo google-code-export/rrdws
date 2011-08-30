@@ -52,7 +52,10 @@ public class   DataWorker implements Runnable{
     	private java.util.Queue<String> queue;
 		private boolean isAlive = true;
 		private static final Logger log = LoggerFactory.getLogger(DataWorker.class .getName());
-    	DataWorker ( Queue<String> q){
+    	public DataWorker() {
+    		this( new LinkedList<String>());
+		}
+		DataWorker ( Queue<String> q){
     		this.queue = q;
     	}
     	
@@ -60,9 +63,7 @@ public class   DataWorker implements Runnable{
     		isAlive = false;
     	}
     	
-    	public DataWorker() {
-    		queue = new LinkedList<String>();
-		}
+
 		public void run() {
     		while(isAlive ){ 
     			if (queue.isEmpty()){

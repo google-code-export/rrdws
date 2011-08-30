@@ -8,8 +8,8 @@ package cc.co.llabor.threshold.rrd;
  * 
  * Creation:  23.05.2011::14:09:27<br> 
  */
-public class Baseline  implements Threshold {
-	Type type = Type.Baseline;
+public abstract class Baseline  implements Threshold {
+ 
 }
 
 
