@@ -88,17 +88,19 @@ public class DataProcessor implements ConsolFuns {
 	 * In that case, the class will try to find the optimal ending timestamp based on the last update time of
 	 * RRD files processed with the {@link #processData()} method.
 	 *
-	 * @param t1 Starting timestamp in seconds without milliseconds
-	 * @param t2 Ending timestamp in seconds without milliseconds
+	 * @param startTime Starting timestamp in seconds without milliseconds
+	 * @param endTime  Ending timestamp in seconds without milliseconds
 	 * @throws RrdException Thrown if invalid timestamps are supplied
 	 */
-	public DataProcessor(long t1, long t2) throws RrdException {
-		if ((t1 < t2 && t1 > 0 && t2 > 0) || (t1 > 0 && t2 == 0)) {
-			this.tStart = t1;
-			this.tEnd = t2;
+	public DataProcessor(long startTime, long endTime ) throws RrdException {
+		if ((startTime < endTime  && startTime > 0 && endTime  > 0) || (startTime > 0 && endTime  == 0)) {
+			this.tStart = startTime;
+			this.tEnd = endTime ;
 		}
 		else {
-			throw new RrdException("Invalid timestamps specified: " + t1 + ", " + t2);
+			Date sDate = new Date(startTime);
+			Date eDate = new Date(endTime);
+			throw new RrdException("Invalid timestamps specified: " + startTime + ", " + endTime +"{"+sDate +"-"+eDate+"}");
 		}
 	}
 

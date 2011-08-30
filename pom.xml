@@ -806,7 +806,7 @@
 		<profile>
 			<id>profile-FILECACHE</id>
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 				<property>
 					<name>cccache</name>
 				</property>
