@@ -27,6 +27,8 @@ public interface Threshold {
 // performAction	-  perform action from itself
 // TODO altertate for 2 prev-methods???
 	public void performAction(long timestampSec);
+// same with prev, just without AlertAction... ??	
+	public void performSleep(long timestamp); 	
 	
 //	<SPAN> := Spanning keyword: SPAN. Case insensitive.
 //	@deprecated ???<span-length> := Number of time spans a thresholds should fail before triggering an action. Number.
@@ -40,7 +42,8 @@ public interface Threshold {
 	// Start incident....
 	public void incident(long timestampSec);
 	// clear incident 
-	public void clear(); 
+	public void clear();
+
 
 }
 
