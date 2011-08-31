@@ -106,11 +106,20 @@ public class AlertCaptain implements Runnable{
 			Datasource dsTmp = rrd.getDatasource("speed");
 			double val = dsTmp.getLastValue();
 			//!!! HERE IS THE GENERAL CHECK!!!!  toCheck.getMonitorArgs()
-			if (val > ((HighAlerter)toCheck).getHiLimit()){
-				toCheck.incident(charlieTmp.timestamp);
-			}else{
-				toCheck.clear();
-			}
+			if (toCheck instanceof LowAlerter){
+				if (val < ((LowAlerter)toCheck).getLowLimit()){
+					toCheck.incident(charlieTmp.timestamp);
+				}else{
+					toCheck.clear();
+				}
+			}else if (toCheck instanceof HighAlerter){
+				if (val > ((HighAlerter)toCheck).getHiLimit()){
+					toCheck.incident(charlieTmp.timestamp);
+				}else{
+					toCheck.clear();
+				}
+				
+			} 
 			long inIncidentTime = toCheck.inIncidentTime();
 			long spanLength = toCheck.getSpanLength();
 			
