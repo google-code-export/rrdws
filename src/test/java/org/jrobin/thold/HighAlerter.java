@@ -54,7 +54,15 @@ public class HighAlerter implements Threshold {
 		rrdDef.addArchive(ConsolFuns.CF_AVERAGE, 0.1, 1, 3600);
 		rrdDef.addArchive(ConsolFuns.CF_AVERAGE , 0.5, 6, 700);
 		rrdDef.addArchive(ConsolFuns.CF_AVERAGE, 0.5, 24, 797);
-		rrdDef.addArchive(ConsolFuns.CF_AVERAGE, 0.5, 288, 775); 		 
+		rrdDef.addArchive(ConsolFuns.CF_AVERAGE, 0.5, 288, 775);
+		rrdDef.addArchive(ConsolFuns.CF_MAX, 0.1, 1, 3600);
+		rrdDef.addArchive(ConsolFuns.CF_MAX, 0.5, 6, 700);
+		rrdDef.addArchive(ConsolFuns.CF_MAX, 0.5, 24, 797);
+		rrdDef.addArchive(ConsolFuns.CF_MAX, 0.5, 288, 775); 			
+		rrdDef.addArchive(ConsolFuns.CF_MIN, 0.1, 1, 3600);
+		rrdDef.addArchive(ConsolFuns.CF_MIN, 0.5, 6, 700);
+		rrdDef.addArchive(ConsolFuns.CF_MIN, 0.5, 24, 797);
+		rrdDef.addArchive(ConsolFuns.CF_MIN, 0.5, 288, 775); 			
 		rrdDb = new RrdDb(rrdDef);  
 		sample = rrdDb.createSample(); 
 				

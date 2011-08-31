@@ -510,8 +510,8 @@ $ rrdtool fetch test.rrd AVERAGE --start 920804400 --end 920809200
 						long startTime = 920800000L; //920800000L == [Sun Mar 07 10:46:40 CET 1999] 
 				
 						rrdDef.setStartTime(startTime );
-						rrdDef.setStep(55);
-						int MAX_POSSIBLE_IQ = 200;
+						rrdDef.setStep(110);
+						int MAX_POSSIBLE_IQ = 140;
 						rrdDef.addDatasource("speed", "GAUGE", 600, Double.NaN, Double.NaN);
 						
 						rrdDef.addArchive("AVERAGE", 0.1, 1, 3600);
@@ -543,7 +543,8 @@ $ rrdtool fetch test.rrd AVERAGE --start 920804400 --end 920809200
 							 double d =  140 * Math.sin(  (.0001356*secTmp)   );
 							 lastSpeed  = d  *Math.sin( Math.E *.000531*secTmp *secTmp);
 							 
-							 lastSpeed += 10; 
+							 //lastSpeed = lastSpeed>0?lastSpeed:-lastSpeed;
+							  
 							 // Realdata production
 							 sample.setAndUpdate(""+(lastTimeTmp)+":"+(lastSpeed ));
 							 // observation of trarget rrd -- here will be simulation of Time!
@@ -563,12 +564,19 @@ $ rrdtool fetch test.rrd AVERAGE --start 920804400 --end 920809200
 						graphDef.datasource("HighLIMIT", ""+hiLimit);
 						graphDef.line("HighLIMIT", new Color( 0, 0x33, 0xAA), "minimal_IQ", 4);
 						
-						graphDef.datasource("myspeed", TEST_RRD, "speed", "AVERAGE");
-						graphDef.line("myspeed", new Color(0xFF, 0, 0), "F(t)", 2);
+
 				
 						//.stat.rrd				
 						graphDef.datasource("myspeedAlert", TEST_RRD+".stat.rrd", "speed", "AVERAGE");
-						graphDef.line("myspeedAlert", new Color(0,  0xFF,0 ), "recruit IT!" ,4);
+						graphDef.line("myspeedAlert", new Color(0,  0xFF,0 ), "recruit IT!" ,3);
+						graphDef.datasource("myspeedAlertMAX", TEST_RRD+".stat.rrd", "speed", ConsolFuns.CF_MAX);
+						graphDef.line("myspeedAlertMAX", new Color(0xAF,0xAF ,  0xFF ), "recruitMAX" ,2);
+						graphDef.datasource("myspeedAlertMIN", TEST_RRD+".stat.rrd", "speed", ConsolFuns.CF_MIN);
+						graphDef.line("myspeedAlertMIN", new Color(0,  0xFF,0xFF ), "recruitMIN" ,1);
+						
+						// f(x)
+						graphDef.datasource("myspeed", TEST_RRD, "speed", "AVERAGE");
+						graphDef.line("myspeed", new Color(0xFF, 0, 0), "F(t)", 1);
 						
 						RrdGraph graph = new RrdGraph(graphDef);
 						//graph.saveAsGIF("speed.gif");
