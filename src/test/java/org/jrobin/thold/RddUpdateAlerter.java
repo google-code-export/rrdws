@@ -98,4 +98,14 @@ public abstract class RddUpdateAlerter extends AbstractAlerter {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public void stop() { 
+		try {
+			rrdDb.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
