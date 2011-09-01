@@ -121,6 +121,12 @@ public class AlertCaptain implements Runnable{
 	 
 
 	static AlertCaptain myself = new AlertCaptain();
+	public void unregister(Threshold headHunter) {
+		if (ToDo.indexOf( headHunter )>=0){
+			boolean o = ToDo.remove(headHunter);
+			headHunter.stop();
+		}
+	}
 	
 }
 
