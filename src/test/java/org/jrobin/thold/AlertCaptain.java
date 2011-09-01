@@ -119,7 +119,21 @@ public class AlertCaptain implements Runnable{
 					toCheck.clear();
 				}
 				
-			} 
+			} //BaselineAlerter
+			else if (toCheck instanceof BaselineAlerter){
+				BaselineAlerter baselineAlerter = (BaselineAlerter)toCheck;
+				if (
+					val >  baselineAlerter.getBaseLine() +baselineAlerter.getDelta()
+					||
+					val <  baselineAlerter.getBaseLine() -baselineAlerter.getDelta()
+				){
+					toCheck.incident(charlieTmp.timestamp);
+				}else{
+					toCheck.clear();
+					
+				}
+				
+			}
 			long inIncidentTime = toCheck.inIncidentTime();
 			long spanLength = toCheck.getSpanLength();
 			
