@@ -11,24 +11,25 @@ import cc.co.llabor.threshold.rrd.Threshold;
  * 
  * Creation:  31.08.2011::21:33:50<br> 
  */
-public class LowAlerter extends HighAlerter implements Threshold {
+public class LowAlerter extends RddUpdateAlerter implements Threshold {
 
 	public LowAlerter(String rrdName, double lowLimit,
 			long activationTimeoutInSeconds) {
 		super(rrdName, lowLimit, activationTimeoutInSeconds);
 		 
 	}
-
-	public double getLowLimit() { 
-		return super.getHiLimit();
-	}
-	public double getHiLimit() {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 31.08.2011");
-		else {
-		return 0;
+ 
+	@Override
+	public void checkIncident(double val, long timestamp) {
+		if (
+				val <  this.getBaseLine()  
+			){
+					this.incident(timestamp);
+				}else{
+					this.clear();
 		}
 	}
+  
  
 }
 
