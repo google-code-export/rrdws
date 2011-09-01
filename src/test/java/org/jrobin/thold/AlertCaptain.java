@@ -106,42 +106,59 @@ public class AlertCaptain implements Runnable{
 			Datasource dsTmp = rrd.getDatasource("speed");
 			double val = dsTmp.getLastValue();
 			//!!! HERE IS THE GENERAL CHECK!!!!  toCheck.getMonitorArgs()
-			if (toCheck instanceof LowAlerter){
-				if (val < ((LowAlerter)toCheck).getLowLimit()){
-					toCheck.incident(charlieTmp.timestamp);
-				}else{
-					toCheck.clear();
-				}
+			//  !----- -10--- -9-----...------0-----1----2 F(t) ------3------5-----11 ..---!
+			//                >!<---------(lowLimit)
+			/// >>--- alert -->! 
+			if (toCheck instanceof LowAlerter){ 
+//				if (val < ((LowAlerter)toCheck).getLowLimit()){
+//					toCheck.incident(charlieTmp.timestamp);
+//				}else{
+//					toCheck.clear();
+//				}
+				toCheck.checkIncident(val, charlieTmp.timestamp);
+			//  !----- -10--- -9-----...------0-----1----2 F(t) ------3------5-----11 ..---!
+			//                (HiLimit)---------------->!<
+			///                                         !<--- alert ----------------------<< 
 			}else if (toCheck instanceof HighAlerter){
-				if (val > ((HighAlerter)toCheck).getHiLimit()){
-					toCheck.incident(charlieTmp.timestamp);
-				}else{
-					toCheck.clear();
-				}
+//				if (val > ((HighAlerter)toCheck).getHiLimit()){
+//					toCheck.incident(charlieTmp.timestamp);
+//				}else{
+//					toCheck.clear();
+//				}
+				toCheck.checkIncident(val, charlieTmp.timestamp);
 				
 			} //BaselineAlerter
-			else if (toCheck instanceof BaselineAlerter){
-				BaselineAlerter baselineAlerter = (BaselineAlerter)toCheck;
-				if (
-					val >  baselineAlerter.getBaseLine() +baselineAlerter.getDelta()
-					||
-					val <  baselineAlerter.getBaseLine() -baselineAlerter.getDelta()
-				){
-					toCheck.incident(charlieTmp.timestamp);
-				}else{
-					toCheck.clear();
-					
-				}
-				
-			}
-			long inIncidentTime = toCheck.inIncidentTime();
-			long spanLength = toCheck.getSpanLength();
+			//  !----- -10--- -9-----...------0-----1----2 F(t) ------3------5-----11 ..---!
+			//                (Baseline)-------->!<
+			//                (gap)-------->!<==>!<==>! 
+			/// >>------ alert ------------>!         !<--------------- alert ------------<<
 			
-			if (inIncidentTime>0 && (inIncidentTime+ spanLength)<charlieTmp.timestamp){
-				doAlert(charlieTmp.timestamp, toCheck);
-			}else{
-				doSleep(charlieTmp.timestamp, toCheck);
+			else if (toCheck instanceof BaselineAlerter){
+//				BaselineAlerter baselineAlerter = (BaselineAlerter)toCheck;
+//				if (
+//					val >  baselineAlerter.getBaseLine() +baselineAlerter.getDelta()
+//					||
+//					val <  baselineAlerter.getBaseLine() -baselineAlerter.getDelta()
+//				){
+//					toCheck.incident(charlieTmp.timestamp);
+//				}else{
+//					toCheck.clear();
+//				}
+				toCheck.checkIncident(val, charlieTmp.timestamp);
 			}
+			
+			// react for incident, if any...
+//			long inIncidentTime = toCheck.inIncidentTime();
+//			long spanLength = toCheck.getSpanLength();
+//			
+//			if (inIncidentTime>0 && (inIncidentTime+ spanLength)<charlieTmp.timestamp){
+//				toCheck.performAction(charlieTmp.timestamp);
+//			}else{
+//				toCheck.performSleep(charlieTmp.timestamp);
+//			}
+			
+			toCheck.reactIncidentIfAny(charlieTmp.timestamp);
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -151,14 +168,7 @@ public class AlertCaptain implements Runnable{
 		}
 
 	}
-	
-	private void doSleep(long timestamp, Threshold toCheck) {
-		toCheck.performSleep(timestamp);		
-		
-	}
-	private void doAlert(long timestamp, Threshold toCheck) {
-		toCheck.performAction(timestamp);
-	}
+	 
 
 	static AlertCaptain myself = new AlertCaptain();
 	
