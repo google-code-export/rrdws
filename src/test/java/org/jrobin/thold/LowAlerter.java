@@ -18,7 +18,10 @@ public class LowAlerter extends RddUpdateAlerter implements Threshold {
 		super(rrdName, lowLimit, activationTimeoutInSeconds);
 		 
 	}
- 
+	//!!! HERE IS THE GENERAL CHECK!!!!  toCheck.getMonitorArgs()
+	//  !----- -10--- -9-----...------0-----1----2 F(t) ------3------5-----11 ..---!
+	//                >!<---------(lowLimit)
+	/// >>--- alert -->! 
 	@Override
 	public void checkIncident(double val, long timestamp) {
 		if (
