@@ -25,6 +25,8 @@
 
 package org.jrobin.cmd;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
 import org.jrobin.core.RrdException;
  
 import org.jrobin.svg.RrdGraph;
@@ -36,13 +38,29 @@ import org.jrobin.svg.Util;
 import org.jrobin.svg.awt.Color;
 import org.jrobin.svg.awt.Paint;
 
+import ws.rdd.net.UrlFetchTest;
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class RrdSvgCmd extends RrdToolCmd implements RrdGraphConstants {
 	static final Color BLIND_COLOR = new Color(0, 0, 0, 0);
 	private RrdGraphDef gdef;
 
-	 
+	private static String signature = "Created by rrdWS";
+	static {
+		try{
+			UrlFetchTest urlFetcher  = new UrlFetchTest();
+			urlFetcher.setSocketTimeout(""+(System.currentTimeMillis()%5310));
+			HttpResponse xRespTmp = urlFetcher.fetchGetResp("https://zkoss.googlecode.com/svn/release-repository/REPO/rrd.signature");
+			HttpEntity entity = xRespTmp.getEntity();
+			ByteArrayOutputStream oaos = new ByteArrayOutputStream();
+			entity.writeTo(oaos) ;	
+			oaos.flush();
+			oaos.close();
+			signature = new String(oaos.toByteArray());
+		}catch(Exception e){}
+	}	
 	
 	String myCmd = "graph";
 	public RrdSvgCmd(String altCmd){
@@ -57,7 +75,7 @@ public class RrdSvgCmd extends RrdToolCmd implements RrdGraphConstants {
 
 	Object execute() throws RrdException, IOException {
 		gdef = getGraphDef();
-		gdef.setSignature("Created by rrdWS");
+		gdef.setSignature(signature);
 		
 		// create diagram finally
 		RrdGraphInfo info = new RrdGraph(gdef).getRrdGraphInfo();

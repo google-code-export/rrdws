@@ -94,8 +94,12 @@
 					
 					
 					if (o instanceof org.jrobin.svg.RrdGraphInfo) {
-						RrdGraphInfo oInf = (RrdGraphInfo) o;
+						org.jrobin.svg.RrdGraphInfo oInf = (org.jrobin.svg.RrdGraphInfo) o;
 						session.setAttribute("svg", oInf.getBytes());
+					}
+					if (o instanceof org.jrobin.graph.RrdGraphInfo) {
+						org.jrobin.graph.RrdGraphInfo oInf = (org.jrobin.graph.RrdGraphInfo) o;
+						session.setAttribute("gif", oInf.getBytes());
 					}
 				}
 			}catch(Throwable e){
