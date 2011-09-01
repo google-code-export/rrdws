@@ -26,7 +26,9 @@ public class HighAlerter extends RddUpdateAlerter implements Threshold {
 		super(rrdName, baseLine, activationTimeoutInSeconds);
 		 
 	}
-
+	//  !----- -10--- -9-----...------0-----1----2 F(t) ------3------5-----11 ..---!
+	//                (HiLimit)---------------->!<
+	///                                         !<--- alert ----------------------<< 
 	@Override
 	public void checkIncident(double val, long timestamp) {
 		if (val > this.getBaseLine()) {
