@@ -7,6 +7,7 @@ import java.util.Date;
 import junit.framework.TestCase;
 import org.jrobin.core.ConsolFuns;
 import org.jrobin.core.RrdDb;
+import org.jrobin.core.RrdDbPool;
 import org.jrobin.core.RrdDef;
 import org.jrobin.core.RrdException;
 import org.jrobin.core.Sample;
@@ -51,7 +52,13 @@ public class TholdTest extends TestCase {
 	@Override
 	protected void tearDown() throws Exception {
 		rrdDb.close();
-		super.tearDown();
+		// close all RRDs..
+		RrdDbPool instance;
+		 
+		instance = RrdDbPool.getInstance();
+		instance.reset();
+
+ 		 super.tearDown();
 
 	}
 	private static final String TEST_RRD = "test.rrd";
@@ -61,7 +68,7 @@ public class TholdTest extends TestCase {
 		double hiLimit = 130; // should be smart enough ;)
 		long tenSecondds = 1111; // 10 sec is maximal time to start to do
 									// something...
-		Threshold headHunter = new HighAlerter(this.getName()+TEST_RRD, hiLimit, tenSecondds);
+		Threshold headHunter = new HighAlerter(getRRDName(), hiLimit, tenSecondds);
 		AlertCaptain capTmp = AlertCaptain.getInstance();
 
 		capTmp.register(headHunter);
@@ -80,7 +87,7 @@ public class TholdTest extends TestCase {
 			capTmp.tick(lastTimeTmp);
 
 		}
-		capTmp.unregister(headHunter);
+		
 
 		RrdGraphDef graphDef = new RrdGraphDef();
 		graphDef.setStartTime(startTime - 10 * 60);// seconds!
@@ -95,11 +102,11 @@ public class TholdTest extends TestCase {
 		graphDef.datasource("HighLIMIT", "" + hiLimit);
 		graphDef.line("HighLIMIT", new Color(0, 0x33, 0xAA), "minimal_IQ", 4);
 
-		graphDef.datasource("myspeed", TEST_RRD, "speed", "AVERAGE");
+		graphDef.datasource("myspeed", getRRDName(), "speed", "AVERAGE");
 		graphDef.line("myspeed", new Color(0xFF, 0, 0), "F(t)", 2);
 
 		// .stat.rrd
-		graphDef.datasource("myspeedAlert", TEST_RRD + ".stat.rrd", "speed",
+		graphDef.datasource("myspeedAlert",  getTholdName(), "speed",
 				"AVERAGE");
 		graphDef.line("myspeedAlert", new Color(0, 0xFF, 0), "recruit IT!", 4);
 
@@ -111,7 +118,7 @@ public class TholdTest extends TestCase {
 		graph.render(bi.getGraphics());
 		// to save this graph as a PNG image (recommended file format)
 		// use the following code: System.out.println("--");
-
+		capTmp.unregister(headHunter);
 	}
 	public void testExecutePureSin() throws RrdException, IOException {
 
@@ -205,7 +212,7 @@ public class TholdTest extends TestCase {
 		graphDef.line("myspeed", new Color(0xFF, 0, 0), "F(t)", 2);
 
 		// .stat.rrd
-		graphDef.datasource("myspeedAlert", getRRDName() + ".stat.rrd", "speed",
+		graphDef.datasource("myspeedAlert", getTholdName(), "speed",
 				"AVERAGE");
 		graphDef.line("myspeedAlert", new Color(0, 0xFF, 0), "recruit IT!", 4);
 
@@ -264,14 +271,14 @@ public class TholdTest extends TestCase {
 		graphDef.line("HighLIMIT", new Color(0, 0x33, 0xAA), "minimal_IQ", 4);
 
 		// .stat.rrd
-		graphDef.datasource("myspeedAlert", getRRDName() + ".stat.rrd", "speed",
+		graphDef.datasource("myspeedAlert", getTholdName(), "speed",
 				"AVERAGE");
 		graphDef.line("myspeedAlert", new Color(0, 0xFF, 0), "recruit IT!", 3);
-		graphDef.datasource("myspeedAlertMAX", getRRDName() + ".stat.rrd", "speed",
+		graphDef.datasource("myspeedAlertMAX", getTholdName(), "speed",
 				ConsolFuns.CF_MAX);
 		graphDef.line("myspeedAlertMAX", new Color(0xAF, 0xAF, 0xFF),
 				"recruitMAX", 2);
-		graphDef.datasource("myspeedAlertMIN", getRRDName() + ".stat.rrd", "speed",
+		graphDef.datasource("myspeedAlertMIN", getTholdName(), "speed",
 				ConsolFuns.CF_MIN);
 		graphDef.line("myspeedAlertMIN", new Color(0, 0xFF, 0xFF),
 				"recruitMIN", 1);
@@ -289,6 +296,9 @@ public class TholdTest extends TestCase {
 		// to save this graph as a PNG image (recommended file format)
 		// use the following code: System.out.println("--");
 
+	}
+	private String getTholdName() {
+		return getRRDName() + ".Thold.RRD";
 	}
 
 	public void testExecuteSinLowAlert() throws RrdException, IOException {
@@ -337,7 +347,7 @@ public class TholdTest extends TestCase {
 		graphDef.line("myspeed", new Color(0xFF, 0, 0), "F(t)", 2);
 
 		// .stat.rrd
-		graphDef.datasource("myspeedAlert", getRRDName() + ".stat.rrd", "speed",
+		graphDef.datasource("myspeedAlert", getTholdName(), "speed",
 				"AVERAGE");
 		graphDef.line("myspeedAlert", new Color(0, 0xFF, 0), "terminate IT!", 4);
 
@@ -403,14 +413,14 @@ public class TholdTest extends TestCase {
 		graphDef.line("BaseLINELow", new Color(0, 0x66, 033), "lowest", 2);
 
 		// .stat.rrd
-		graphDef.datasource("myspeedAlert", getRRDName() + ".stat.rrd", "speed",
+		graphDef.datasource("myspeedAlert", getTholdName(), "speed",
 				"AVERAGE");
 		graphDef.area("myspeedAlert", new Color(0xFF, 0x5F, 0), "AA!");
-		graphDef.datasource("myspeedAlertMAX", getRRDName() + ".stat.rrd", "speed",
+		graphDef.datasource("myspeedAlertMAX", getTholdName(), "speed",
 				ConsolFuns.CF_MAX);
 		graphDef.line("myspeedAlertMAX", new Color(0xAF, 0x3F, 0x3F),
 				"countDown started", 1);
-		graphDef.datasource("myspeedAlertMIN", getRRDName() + ".stat.rrd", "speed",
+		graphDef.datasource("myspeedAlertMIN", getTholdName(), "speed",
 				ConsolFuns.CF_MIN);
 		graphDef.line("myspeedAlertMIN", new Color(0, 0xFF, 0xFF), "getReady",
 				1);
@@ -482,14 +492,14 @@ public class TholdTest extends TestCase {
 		graphDef.line("BaseLINELow", new Color(0, 0x66, 033), "lowest", 2);
 
 		// .stat.rrd
-		graphDef.datasource("myspeedAlert", getRRDName() + ".stat.rrd", "speed",
+		graphDef.datasource("myspeedAlert", getTholdName(), "speed",
 				"AVERAGE");
 		graphDef.area("myspeedAlert", new Color(0xFF, 0x5F, 0), "AA!");
-		graphDef.datasource("myspeedAlertMAX", getRRDName() + ".stat.rrd", "speed",
+		graphDef.datasource("myspeedAlertMAX", getTholdName(), "speed",
 				ConsolFuns.CF_MAX);
 		graphDef.line("myspeedAlertMAX", new Color(0xAF, 0x3F, 0x3F),
 				"countDown started", 1);
-		graphDef.datasource("myspeedAlertMIN", getRRDName() + ".stat.rrd", "speed",
+		graphDef.datasource("myspeedAlertMIN", getTholdName(), "speed",
 				ConsolFuns.CF_MIN);
 		graphDef.line("myspeedAlertMIN", new Color(0, 0xFF, 0xFF), "getReady",
 				1);

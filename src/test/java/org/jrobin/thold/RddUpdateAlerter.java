@@ -44,6 +44,7 @@ public abstract class RddUpdateAlerter extends AbstractAlerter {
 		rrdDef.addArchive(ConsolFuns.CF_MIN, 0.5, 24, 797);
 		rrdDef.addArchive(ConsolFuns.CF_MIN, 0.5, 288, 775);
 		rrdDb = new RrdDb(rrdDef);
+		
 		sample = rrdDb.createSample();
 
 	}
@@ -54,7 +55,7 @@ public abstract class RddUpdateAlerter extends AbstractAlerter {
 		this.baseLine = baseLine;
 		this.activationTimeoutInSeconds = activationTimeoutInSeconds;
 		try {
-			init(this.rrdName + ".stat.rrd");
+			init(this.rrdName + ".Thold.RRD");
 		} catch (RrdException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -96,13 +97,14 @@ public abstract class RddUpdateAlerter extends AbstractAlerter {
 		} catch (RrdException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+ 		}
 	}
 
 	@Override
 	public void stop() { 
 		try {
 			rrdDb.close();
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
