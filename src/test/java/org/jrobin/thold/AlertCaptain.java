@@ -2,6 +2,8 @@ package org.jrobin.thold;
  
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue; 
@@ -36,11 +38,32 @@ public class AlertCaptain implements Runnable{
 	
 	
 	private java.util.Queue<CheckPoint> queue;
+	private int wakeCounter;
+	private boolean isAsync = false;
+	
+	public boolean isAsync() { 
+			return isAsync;
+	}
+	public void setAsync(boolean isAsync) {
+		this.isAsync = isAsync;
+	}
+	public int getWakeCounter() { 
+			return wakeCounter;
+	}
+	public int getQueueLength(){
+		return queue.size(); 
+	}
 	public AlertCaptain() {
-		this( new LinkedList<CheckPoint>());
+		this( new LinkedList<CheckPoint>() );
 	}
 	AlertCaptain ( Queue<CheckPoint> q){
-		this.queue = q;
+		isAsync = true;
+		if (isAsync){
+			this.queue = q;
+			Thread th = new Thread(this, "AlertCaptain");
+			th .setPriority(Thread.MAX_PRIORITY/2+Thread.MAX_PRIORITY/4); // 75%
+			th.start();
+		}
 		log.info(Repo.getBanner( "AlertCaptain"));
 	}
 	public void register(Threshold e) {
@@ -48,23 +71,27 @@ public class AlertCaptain implements Runnable{
 	}
 	public void tick() {
 		long timestamp = System.currentTimeMillis();
-		this.tick(  timestamp );
+		this.tick(  timestamp /1000);
 	}
+	
 	public void tick(long timestamp) {
 		 wakeUp(timestamp);
 	}
-	
-	public static final boolean IS_ASYNC = false;
+	 
 	/**
 	 * put the time-related-job into queue
+	 * OR 
+	 * process it syncronously
+	 * 
 	 * 
 	 * @author vipup
 	 * @param timestamp
 	 */
 	private void wakeUp(long timestamp) {
+		wakeCounter++;
 		for (Threshold toCheck:this.ToDo){  
 			CheckPoint e = new CheckPoint(timestamp, toCheck );
-			if (IS_ASYNC){
+			if (this.isAsync){
 				queue.add(e);
 			}else{
 				processData(e ); 
@@ -84,12 +111,24 @@ public class AlertCaptain implements Runnable{
 					e.printStackTrace();
 				}
 			}else{
+				CheckPoint charlieTmp =null;
 				try {
-					CheckPoint charlieTmp = queue.poll();
+					charlieTmp = queue.peek() ;
+					if (charlieTmp ==null){
+						//notifyAll();
+						continue;
+					}
 					processData(charlieTmp ); 
+					queue.remove(charlieTmp);
+				} catch (	java.util.NoSuchElementException	e){
+					if (charlieTmp !=null)
+						charlieTmp.processError(e);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//charlieTmp.processError(e);
+					//e.printStackTrace();
+				}catch( Throwable e){
+					//e.printStackTrace();
 				} finally{
 					
 				}
@@ -103,8 +142,14 @@ public class AlertCaptain implements Runnable{
 		String rrdDef = toCheck.getDatasource();
 		try {
 			RrdDb rrd = RrdDbPool.getInstance().requestRrdDb(rrdDef );
-			Datasource dsTmp = rrd.getDatasource("speed");
-			double val = dsTmp.getLastValue(); 
+			double val  = 0;
+			// synch mode
+			if (this.isAsync){
+				val = charlieTmp.getValue();
+			}else{
+				Datasource dsTmp = rrd.getDatasource("speed");
+				val = dsTmp.getLastValue();
+			}
 			
 			toCheck.checkIncident(val, charlieTmp.timestamp);
 			toCheck.reactIncidentIfAny(charlieTmp.timestamp);
@@ -122,11 +167,16 @@ public class AlertCaptain implements Runnable{
 
 	static AlertCaptain myself = new AlertCaptain();
 	public void unregister(Threshold headHunter) {
-		if (ToDo.indexOf( headHunter )>=0){
-			boolean o = ToDo.remove(headHunter);
-			headHunter.stop();
+		try{
+			if (ToDo.indexOf( headHunter )>=0){
+				boolean o = ToDo.remove(headHunter);
+				headHunter.stop();
+			}
+		}catch(Throwable e){
+			e.printStackTrace();
 		}
 	}
+ 
 	
 }
 

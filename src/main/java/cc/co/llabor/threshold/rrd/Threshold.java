@@ -42,7 +42,7 @@ public interface Threshold {
 	// Start incident....
 	public void incident(long timestampSec);
 	// clear incident 
-	public void clear(); 
+	public void clear(long timestampSec); 
 	void checkIncident(double val, long timestamp); 
 	void reactIncidentIfAny(long timestamp);
 	public void stop();

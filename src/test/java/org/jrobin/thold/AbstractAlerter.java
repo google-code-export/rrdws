@@ -19,7 +19,7 @@ public abstract class AbstractAlerter implements Threshold {
 	protected String action;
 	protected String actionArgs;
 
-	long IncidentTime = -1;
+	long incidentTime = -1;
 	@Override
 	public long getSpanLength() {
 		return activationTimeoutInSeconds;
@@ -27,17 +27,18 @@ public abstract class AbstractAlerter implements Threshold {
 
 	@Override
 	public long inIncidentTime() {
-		return IncidentTime;
+		return incidentTime;
 	}
 
 	public void incident(long timestamp) {
-		if (IncidentTime == -1)
-			IncidentTime = timestamp;
+		if (incidentTime == -1)
+			incidentTime = timestamp;
 	}
 
+	
 	@Override
-	public void clear() {
-		IncidentTime = -1;
+	public void clear(long timestamp) {
+		incidentTime = -1;
 	}
 
 	@Override
