@@ -69,9 +69,9 @@ public abstract class RddUpdateAlerter extends AbstractAlerter {
 			long activatingTimepoint = this.inIncidentTime()
 					+ this.getSpanLength();
 			boolean isActivated = timestamp > activatingTimepoint;
-			int lowLevel = isActivated ? 44 : 111;
+			int lowLevel = isActivated ? ACTIVE_ALERT_VALUE:COUNTDOWN_TO_DEACTIVE_VALUE ;
 			String valTmp = ""
-					+ (this.IncidentTime == -1 ? lowLevel : this.baseLine);
+					+ (this.incidentTime == -1 ? lowLevel : lowLevel);
 			this.sample.setAndUpdate("" + (timestamp) + ":" + valTmp);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -82,14 +82,21 @@ public abstract class RddUpdateAlerter extends AbstractAlerter {
 		}
 	}
 
+	public static int PASSIVE_VALUE = 0;
+	public static int ACTIVE_ALERT_VALUE = 255;
+	public static int COUNTDOWN_VALUE = -256;
+	public static int COUNTDOWN_TO_DEACTIVE_VALUE = 100;
+	
+	
+	
 	public void performSleep(long timestamp) {
 		try {
 			long activatingTimepoint = this.inIncidentTime()
 					+ this.getSpanLength();
 			boolean isActivated = timestamp > activatingTimepoint;
-			int lowLevel = isActivated ? 0 : -111;
+			int lowLevel = isActivated ? PASSIVE_VALUE : COUNTDOWN_VALUE;
 			String valTmp = ""
-					+ (this.IncidentTime == -1 ? lowLevel : lowLevel);
+					+ (this.incidentTime == -1 ? lowLevel : lowLevel);
 			this.sample.setAndUpdate("" + (timestamp) + ":" + valTmp);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

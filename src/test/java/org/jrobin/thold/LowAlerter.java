@@ -29,7 +29,7 @@ public class LowAlerter extends RddUpdateAlerter implements Threshold {
 			){
 					this.incident(timestamp);
 				}else{
-					this.clear();
+					this.clear(timestamp);
 		}
 	}
   

@@ -34,7 +34,7 @@ public class HighAlerter extends RddUpdateAlerter implements Threshold {
 		if (val > this.getBaseLine()) {
 			this.incident(timestamp);
 		} else {
-			this.clear();
+			this.clear(timestamp);
 		}
 	}
  

@@ -783,7 +783,7 @@ public class RrdDb implements RrdUpdater {
 				return i;
 			}
 		}
-		throw new RrdException("Unknown datasource name: " + dsName);
+		throw new RrdException("Unknown datasource name: ['" + dsName+"']");
 	}
 
 	/**
