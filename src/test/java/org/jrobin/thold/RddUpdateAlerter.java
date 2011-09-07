@@ -75,10 +75,10 @@ public abstract class RddUpdateAlerter extends AbstractAlerter {
 			this.sample.setAndUpdate("" + (timestamp) + ":" + valTmp);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (RrdException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 
@@ -100,10 +100,10 @@ public abstract class RddUpdateAlerter extends AbstractAlerter {
 			this.sample.setAndUpdate("" + (timestamp) + ":" + valTmp);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (RrdException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
  		}
 	}
 

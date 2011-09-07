@@ -1,0 +1,887 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head id="ctl00_Head1">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><link id="ctl00_HeaderLink1" rel="stylesheet" type="text/css" href="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/Global-bn20110801.css"><link id="ctl00_HeaderLink2" rel="stylesheet" type="text/css" href="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/Library-bn20110801.css"><link id="ctl00_HeaderLink3" rel="stylesheet" type="text/css" href="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/technet.css"><meta name="NormalizedUrl" content="http://technet.microsoft.com/en-us/library(d=default)/dd789011(l=en-us,v=TechNet.10).aspx"><meta name="VotingContextUrl" content="http://technet.microsoft.com/en-us/library(d=default)/dd789011(l=en-us,v=TechNet.10).aspx"><meta name="ROBOTS" content="NOINDEX,NOFOLLOW"><meta name="MN" content="D1DC1167-2:46:30 AM"><meta name="ms.locale" content="en-us"><meta name="Search.ShortId" content="dd789011"><meta name="DCS.appliesToProduct" content="SCOperationsManager">
+
+<!-- Looking for metadata? Use the robot view instead http://currentsite/currenturl(robot).aspx -->
+<meta name="DCS.dcsuri" content="/en-us/library(d=default)/dd789011(l=en-us,v=TechNet.10).aspx">
+<link rel="stylesheet" type="text/css" href="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/mtps-bn20110801.css"><link rel="alternate" media="print" href="http://technet.microsoft.com/en-us/library/dd789011%28printer%29.aspx">
+<title>
+	Understanding Self-Tuning Threshold Monitors
+</title></head>
+<body id="ctl00_Mtps_body" dir="ltr">
+
+  <form name="aspnetForm" method="post" action="dd789011.aspx" id="aspnetForm">
+<div>
+<input name="flag" id="flag" value="false" type="hidden">
+<input name="__EVENTTARGET" id="__EVENTTARGET" value="" type="hidden">
+<input name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" type="hidden">
+<input name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUBMGQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgEFHmN0bDAwJGN0bDAzJGN0bDAwJFNlYXJjaEJ1dHRvbn/MUPrHmYIeftOetJDFUK/CpgNV" type="hidden">
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['aspnetForm'];
+if (!theForm) {
+    theForm = document.aspnetForm;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/WebResource.js" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+//<![CDATA[
+var CurUserId="AxUFAAAAAADQCAAA6qoQQ/BOYRARWlahtOFJJg!!";var ClientURL="http%3a%2f%2ftechnet.microsoft.com%2fen-us%2flibrary(d%3ddefault)%2fdd789011(l%3den-us%2cv%3dTechNet.10).aspx";var maxRating=5;var RatingObjId="ctl00_ib1_Flyout_Rating1";var tbCommentsId="ctl00_ib1_Flyout_tbComments";var PageId="dd789011";var pageTag="contentRatingdd789011TechNet.10en-us";var sendBtnId="ctl00_ib1_Flyout_btnSend";var curRating="4";var contentRated=false;var RatingTooltipText="Click a star and provide feedback";var RatedTooltipText="You have already rated this content. Thank you for your feedback.";var userIPAddress="195.200.34.50";var MtpsPageDirection="ltr";var RatingFlyoutID="ctl00_ib1_Flyout";var Rating_Device="default";var CCI_DeleteConfirmationText="Are you sure you want to delete?";function wkAddNewItemClick(){CCE_EditAnnotation(-1);};
+var CCS_AddLinkID="ctl00_WikiContent_Add";var CCS_User="";var CCS_ContentUrl="http://technet.microsoft.com/en-us/library/dd789011.aspx";//]]>
+</script>
+
+<script src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/jquery-1.js" type="text/javascript"></script>
+<script src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/Silverlight-bn20110801.js" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+var wt_nvr_ru = "WT_NVR_RU";var wt_fpcdom = ".microsoft.com";var wt_domlist = "technet.microsoft.com";var wt_pathlist = "/technet/";var wt_paramlist = "DCSext.mtps_techcenter";var wt_siteid = "TECHNET";var gDomain="m.webtrends.com";
+var gDcsId="dcsjwb9vb00000c932fd0rjc7_5p3t";
+var gFpc="WT_FPC";
+/*<![CDATA[*/
+if(document.cookie.indexOf(gFpc+"=")==-1){document.write("<scr"+"ipt type='text/javascript' src='"+"http"+(window.location.protocol.indexOf('https:')==0?'s':'')+"://"+gDomain+"/"+gDcsId+"/wtid.js"+"'><\/scr"+"ipt>");}
+/*]]>*/
+var detectedLocale = 'en-us';
+var wtsp="_sto_technet_systemcenter_";
+var gTrackEvents = 0;
+var omni_guid='9a8c4526-48dc-4233-b605-f5cd87ee6121';//]]>
+</script>
+<script src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/omni_rsid_technet-bn20110801.js" type="text/javascript"></script><noscript><a href='http://www.omniture.com' title='Web Analytics'><img src='http://msstonojstechnet.112.2o7.net/b/ss/msstonojstechnet/1/H.20.2--NS/0'  height='1' width='1' border='0' alt='' /></a></noscript>
+<script type="text/javascript">
+//<![CDATA[
+var CCT_Browse="Browse other topics containing this tag";var CCT_Remove="Remove the tag from this topic";var CCT_NoTags="No tags entered";var CCT_Error="An error has occurred";var CCT_BugTag="contentbug";var CCE_ErrSameContent = "Content has not changed";
+var CCE_ErrEmptyTitle = "Title can not be empty";
+var CCE_ErrEmptyContent = "Content cannot be empty";
+var CCE_ErrTitleTooLong = "Title is limited to 100 characters";
+var CCE_ErrContentTooLong = "Content is limited to 50,000 characters";
+var CCE_ErrServerError = "Error occurred while saving your data.";
+var CCE_IsEditing=false;var CCE_IsTaggingEnabled=true;var CCE_TitleMaxLen=100;var CCE_ContentMaxLen=50000;var CCE_UpdateText="Please Wait";//]]>
+</script>
+
+<script src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/compositejscript3.js" type="text/javascript"></script>
+<div>
+
+	<input name="__PREVIOUSPAGE" id="__PREVIOUSPAGE" value="114NcQSrncm0g1xi-_IVBVl3yViuR8hGZwCH2k1o7VHmM3FSwCOSgd1uDeaMchLMBk1akV7XlTJZxVqa8wcouZg9MgWP6dcgGMt2I7IoGxiKRRt70" type="hidden">
+</div>
+  <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ctl00$ScriptManager1', 'aspnetForm', ['fctl00$WikiContent$ctl00$ItemUpdatePanel',''], [], [], 90, 'ctl00');
+//]]>
+</script>
+
+   
+  <div id="rheader">
+    
+
+<div class="mastheadfontbase">
+  <div>
+		<div class="GlobalBar">
+			<div class="Teaser">
+				
+
+<span id="ticklerWrapper">
+<a id="ctl00_ctl03_Tickler1_InstallLink" class="slLink" href="http://clk.atdmt.com/MRT/go/141489559/direct/01/" onclick="javascript:Track('ctl00_ctl03_Tickler1|_InstallLink',this);">Upgrade your Internet Experience</a>
+</span>
+
+
+			</div>
+			<div class="GlobalBarRight">
+			  <div class="LocaleFlyout">
+				  <div class="LocaleManagementFlyoutStatic" style="position:relative;" id="ctl00_ctl03_LocaleManagement_ctl00"><a class="LocaleManagementFlyoutStaticLink" href="javascript:void(0)">United States - English&nbsp;</a><img class="LocaleManagementFlyoutPopArrow LibC_popdownarrow" src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" alt="Dropdown Arrow" style="height: 4px; width: 7px; border-width: 0px;"><div id="ctl00_ctl03_LocaleManagement_ctl00_Popup" class="LocaleManagementFlyoutPopup" style="position: absolute;visibility:hidden;left:-1000px;">
+		<table style="width: 175px;" border="0">
+			<tbody><tr>
+				<td><a href="javascript:__doPostBack('ctl00$ctl03$LocaleManagement$ctl00$ctl05','')">Argentina (Español)</a></td>
+			</tr><tr>
+				<td><a href="javascript:__doPostBack('ctl00$ctl03$LocaleManagement$ctl00$ctl06','')">Australia (English)</a></td>
+			</tr><tr>
+				<td><a href="javascript:__doPostBack('ctl00$ctl03$LocaleManagement$ctl00$ctl07','')">Brasil (Português)</a></td>
+			</tr><tr>
+				<td><a href="javascript:__doPostBack('ctl00$ctl03$LocaleManagement$ctl00$ctl08','')">Canada (English)</a></td>
+			</tr><tr>
+				<td><a href="javascript:__doPostBack('ctl00$ctl03$LocaleManagement$ctl00$ctl09','')">中国 (简体中文)</a></td>
+			</tr><tr>
+				<td><a href="javascript:__doPostBack('ctl00$ctl03$LocaleManagement$ctl00$ctl10','')">Colombia (Español)</a></td>
+			</tr><tr>
+				<td><a href="javascript:__doPostBack('ctl00$ctl03$LocaleManagement$ctl00$ctl11','')">Deutschland (Deutsch)</a></td>
+			</tr><tr>
+				<td><a href="javascript:__doPostBack('ctl00$ctl03$LocaleManagement$ctl00$ctl12','')">España (Español)</a></td>
+			</tr><tr>
+				<td><a href="javascript:__doPostBack('ctl00$ctl03$LocaleManagement$ctl00$ctl13','')">France (Français)</a></td>
+			</tr><tr>
+				<td><a href="javascript:__doPostBack('ctl00$ctl03$LocaleManagement$ctl00$ctl14','')">India (English)</a></td>
+			</tr><tr>
+				<td><a href="javascript:__doPostBack('ctl00$ctl03$LocaleManagement$ctl00$ctl15','')">Italia (Italiano)</a></td>
+			</tr><tr>
+				<td><a href="javascript:__doPostBack('ctl00$ctl03$LocaleManagement$ctl00$ctl16','')">日本 (日本語)</a></td>
+			</tr><tr>
+				<td><a href="javascript:__doPostBack('ctl00$ctl03$LocaleManagement$ctl00$ctl17','')">México (Español)</a></td>
+			</tr><tr>
+				<td><a href="javascript:__doPostBack('ctl00$ctl03$LocaleManagement$ctl00$ctl18','')">Perú (Español)</a></td>
+			</tr><tr>
+				<td><a href="javascript:__doPostBack('ctl00$ctl03$LocaleManagement$ctl00$ctl19','')">Россия (Pусский)</a></td>
+			</tr><tr>
+				<td><a href="javascript:__doPostBack('ctl00$ctl03$LocaleManagement$ctl00$ctl20','')">United Kingdom (English)</a></td>
+			</tr><tr>
+				<td><a href="javascript:__doPostBack('ctl00$ctl03$LocaleManagement$ctl00$ctl21','')">United States (English)</a></td>
+			</tr><tr>
+				<td class="LocaleManagementFlyoutPopupHr"></td>
+			</tr><tr>
+				<td><a href="http://technet.microsoft.com/en-us/ms376720.aspx">More...</a></td>
+			</tr>
+		</tbody></table></div><div id="ctl00_ctl03_LocaleManagement_ctl00_Anim" class="TFlyPopupAnimate"></div>
+</div>
+
+
+
+		    </div>
+		    <div class="SiteMap">
+				  <a id="ctl00_ctl03_MSFT_Site" title="Microsoft.com" class="SiteMapLink" href="http://www.microsoft.com/">Microsoft.com</a>
+			  </div>
+			  <div class="PassportScarab">
+				  <span id="ctl00_ctl03_UserRecognitionFlyout_lbwelcom" class="UserRecognitionStaticText">Welcome</span>
+
+  
+  
+<a id="idPPScarab" href="https://login.live.com/login.srf?wa=wsignin1.0&amp;rpsnv=11&amp;ct=1315388790&amp;rver=6.0.5276.0&amp;wp=MCLBI&amp;wlcxt=technet%24technet%24technet&amp;wreply=http:%2F%2Ftechnet.microsoft.com%2Fen-us%2Flibrary%2Fdd789011.aspx&amp;lc=1033&amp;cb=&amp;id=254354"><span id="idPPScarabSIT" class="MTPS_GlobalToolbarLinks_msdn">Sign in</span></a>
+
+
+			  </div>
+			  
+			  
+		  </div>
+		</div>
+	</div>
+	<div class="classicTopNav">
+	    <div class="ThinNavBox">
+		<a href="http://technet.microsoft.com/en-us/default.aspx" id="ctl00_ctl03_brandlink"><div id="ctl00_ctl03_BrandLogo" class="BrandLogo">
+
+</div></a>
+		<div class="Search"><div id="ctl00_ctl03_ctl00_SearchBox" class="SearchBox">
+    <input value="Search TechNet with Bing" style="color: rgb(170, 170, 170); font-style: italic;" autocomplete="off" name="ctl00$ctl03$ctl00$SearchTextBox" id="ctl00_ctl03_ctl00_SearchTextBox" title="Search TechNet with Bing" class="TextBoxSearch" type="text">
+    <input name="ctl00$ctl03$ctl00$SearchButton" id="ctl00_ctl03_ctl00_SearchButton" title="Search TechNet with Bing" class="SearchButton" alt="Click here to search" src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" style="border-width: 0px;" type="image">
+    <span class="Bing"></span>
+<script type="text/javascript" defer="defer" src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/SearchBox.js" id="mscom.srch.searchBox"></script><div style="display: none; text-align: left; border: 1px solid buttonshadow; position: absolute; z-index: 1000; padding: 2px; background-color: rgb(255, 255, 255); color: rgb(0, 0, 255); font-family: arial;" id="SearchFlyoutContainer"><div id="SuggestionContainer"><ul style="list-style: none outside none; padding: 4px 2px 0px 1px; cursor: pointer; font-size: 8pt; margin: 1px;"></ul></div><div style="width: 100%; margin: 0px; text-align: right; font-size: 8pt;" id="FooterContainer"><a href="#">Close</a></div></div></div></div>
+		<div class="evergreenLinks">
+	    
+      
+     
+        <a id="ctl00_ctl03_eventlink"><div id="ctl00_ctl03_EventLogo" class="EventLogo">
+
+</div></a>
+     </div>
+     
+       
+	</div>
+	    <div class="Clear"></div>
+        
+
+	<div class="NavigationBox">
+	    <div id="ctl00_ctl03_tabs_CenterTitle" class="HeaderTitle">System Center TechCenter</div>
+		<div class="Sponsor">
+		  
+		</div>
+		<div class="ClearLeft"></div>
+        <div class="leftcap"></div>
+        <div class="internav">
+	        <div id="ctl00_ctl03_tabs_manTabsHolder"><a id="ctl00_ctl03_tabs_ctl01" href="http://technet.microsoft.com/en-us/systemcenter/default.aspx" onclick="javascript:Track('|TabStrip Link|ctl00_ctl03_tabs_ctl00|ctl00_ctl03_tabs_ctl01',this);">Home</a><a id="ctl00_ctl03_tabs_ctl03" href="http://technet.microsoft.com/en-us/systemcenter/ff658541.aspx" onclick="javascript:Track('|TabStrip Link|ctl00_ctl03_tabs_ctl02|ctl00_ctl03_tabs_ctl03',this);">Products</a><a id="ctl00_ctl03_tabs_ctl07" class="active" href="http://technet.microsoft.com/en-us/library/cc507089.aspx" onclick="javascript:Track('|TabStrip Link|ctl00_ctl03_tabs_ctl06|ctl00_ctl03_tabs_ctl07',this);">Library</a><a id="ctl00_ctl03_tabs_ctl09" href="http://technet.microsoft.com/en-us/systemcenter/cc511005.aspx" onclick="javascript:Track('|TabStrip Link|ctl00_ctl03_tabs_ctl08|ctl00_ctl03_tabs_ctl09',this);">Learn</a><a id="ctl00_ctl03_tabs_ctl11" href="http://technet.microsoft.com/en-us/systemcenter/cc137824.aspx" onclick="javascript:Track('|TabStrip Link|ctl00_ctl03_tabs_ctl10|ctl00_ctl03_tabs_ctl11',this);">Downloads</a><a id="ctl00_ctl03_tabs_ctl13" href="http://technet.microsoft.com/en-us/systemcenter/cc511006.aspx" onclick="javascript:Track('|TabStrip Link|ctl00_ctl03_tabs_ctl12|ctl00_ctl03_tabs_ctl13',this);">Support</a><a id="ctl00_ctl03_tabs_ctl15" href="http://technet.microsoft.com/en-us/systemcenter/gg191847.aspx" onclick="javascript:Track('|TabStrip Link|ctl00_ctl03_tabs_ctl14|ctl00_ctl03_tabs_ctl15',this);">Forums</a></div>
+        </div>
+        
+
+<div id="ctl00_ctl03_tabs_LwViewSwitcher1_Panel1" class="LWVS_Loband">
+	
+<a id="ctl00_ctl03_tabs_LwViewSwitcher1_ClassicLink" tabindex="201" class="LWVS_DisabledLink" onclick="SetViewCookie('classic')">Classic</a>&nbsp; | &nbsp; <a href="http://technet.microsoft.com/en-us/library/dd789011.aspx" id="ctl00_ctl03_tabs_LwViewSwitcher1_LightweightLink" tabindex="202" class="LWVS_Link" onclick="SetViewCookie('lightweight')">Lightweight</a>&nbsp; | &nbsp; <a href="http://technet.microsoft.com/en-us/library/dd789011.aspx" id="ctl00_ctl03_tabs_LwViewSwitcher1_LobandLink" tabindex="203" class="LWVS_Link" onclick="SetViewCookie('loband')">ScriptFree</a>
+</div>
+
+
+        <div class="rightcap"></div>
+	</div>
+	
+	<div class="Clear"></div>
+	<div id="ctl00_ctl03_tabs_LocalNavigation" class="LocalNavigation" style="height:2px;display:none;">
+	    
+	</div>
+	<div class="cleartabstrip"></div>
+	<div id="ctl00_ctl03_tabs_LocalNavBottom" class="LocalNavBottom"></div>
+	
+	
+	
+    </div>
+</div>
+<div class="Clear"></div>    
+    <div id="ctl00_ib1_Panel1" class="miniRatings">
+	
+<div id="ctl00_ib1_miniRatings_left" class="miniRatings_left">
+		
+    <a id="ctl00_ib1_hlPrint" title="Print This Content" class="itPrint" onclick="javascript:SubmitRateAction('printerFriendlyPage');" href="http://technet.microsoft.com/en-us/library/dd789011%28printer%29.aspx"><img id="ctl00_ib1_imgPrint" class="LibC_rtg_print" src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" style="border-width: 0px;">&nbsp;Printer Friendly Version</a>&nbsp;&nbsp;
+    &nbsp;&nbsp;
+    <a id="ctl00_ib1_hlSendCont" title="Send This Content" class="itSend" onclick="javascript:SubmitRateAction('sendThisPage');" href="mailto:?subject=Understanding%20Self-Tuning%20Threshold%20Monitors&amp;body=This%20URL%20points%20to%20a%20page%20on%20TECHNET%20that%20may%20interest%20you:%20http://technet.microsoft.com/en-us/library/dd789011.aspx"><img id="ctl00_ib1_imgSendCont" class="LibC_rtg_email" src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" style="border-width: 0px;">&nbsp;Send</a>&nbsp;&nbsp;
+    <a id="ctl00_ib1_hlComCon" title="Click here to jump to the Community Content section on this page." class="itComCon" href="http://technet.microsoft.com/en-us/library/Community-Signup.aspx?ru=http%3a%2f%2ftechnet.microsoft.com%2fen-us%2flibrary%2fdd789011%28TechNet.10%29.aspx%3fwbi%3dnew"><img id="ctl00_ib1_imgComCon" class="LibC_rtg_comCon" src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" style="border-width: 0px;">&nbsp;Add Content...</a>&nbsp;&nbsp;
+   
+	</div>
+<div id="ctl00_ib1_miniRatings_right" class="miniRatings_right">
+		
+        <div class="ratingFlyoutStatic" style="position:relative;" id="ctl00_ib1_Flyout"><div id="ctl00_ib1_Flyout_rtgContainer" title="Click a star and provide feedback" style="display: block; text-align:right;">
+				
+              <table>
+                <tbody><tr>
+                  <td style="text-align: right; line-height: 70%;">
+                    <span id="ctl00_ib1_Flyout_rateTitleLabel" class="tbFont">Click to Rate and Give Feedback</span>
+                  </td>
+                  <td id="ctl00_ib1_Flyout_tdRtg" style="width: 85px;" onclick="if($get('ctl00_ib1_Flyout_tbComments')!=null &amp;&amp; $get('ctl00_ib1_Flyout_tbComments').visible == 'true') $get('ctl00_ib1_Flyout_tbComments').focus();">
+                      <div id="ctl00_ib1_Flyout_Rating1" title="Click a star and provide feedback" dir="ltr" style="height:16px;">
+					<a href="#" id="ctl00_ib1_Flyout_Rating1_A" title="Click a star and provide feedback" style="text-decoration: none;"><span title="Click a star and provide feedback" value="1" id="ctl00_ib1_Flyout_Rating1_Star_1" class="ratingStar filledRatingStar" style="float:left;">&nbsp;</span><span title="Click a star and provide feedback" value="2" id="ctl00_ib1_Flyout_Rating1_Star_2" class="ratingStar filledRatingStar" style="float:left;">&nbsp;</span><span title="Click a star and provide feedback" value="3" id="ctl00_ib1_Flyout_Rating1_Star_3" class="ratingStar filledRatingStar" style="float:left;">&nbsp;</span><span title="Click a star and provide feedback" value="4" id="ctl00_ib1_Flyout_Rating1_Star_4" class="ratingStar filledRatingStar" style="float:left;">&nbsp;</span><span title="Click a star and provide feedback" value="5" id="ctl00_ib1_Flyout_Rating1_Star_5" class="ratingStar emptyRatingStar" style="float:left;">&nbsp;</span></a>
+				</div>
+                  </td>
+				
+                </tr>
+              </tbody></table>
+            
+			</div>
+            <div style="display: block; float: none; clear: both;">
+            </div>
+          <div id="ctl00_ib1_Flyout_Popup" class="ratingFlyoutPopup" style="position: absolute;visibility:hidden;left:-1000px;">
+				<span id="ctl00_ib1_Flyout_lbOptText" class="OptionalText">Give feedback on this content</span><textarea name="ctl00$ib1$Flyout$tbComments" rows="2" cols="20" id="ctl00_ib1_Flyout_tbComments" class="Comment"></textarea><input name="ctl00$ib1$Flyout$btnClose" id="ctl00_ib1_Flyout_btnClose" class="Button" value="Close" onclick='CloseFLY("ctl00_ib1_Flyout") ' type="button"><input name="ctl00$ib1$Flyout$btnSend" id="ctl00_ib1_Flyout_btnSend" class="Button" value="Send" onclick="return IsPageRated(&quot;ctl00_ib1_Flyout_Rating1&quot;,&quot;ctl00_ib1_Flyout_lbOptText&quot;,'Please rate the page first.', &quot;ctl00_ib1_Flyout&quot;,this)" type="button"></div><div id="ctl00_ib1_Flyout_Anim" class="TFlyPopupAnimate"></div>
+		</div>
+		
+      
+	</div>
+    
+  <div id="intercleardiv" style="display: block; clear: both; visibility: hidden;"></div>
+
+</div>
+
+  </div>
+  <div id="contents">
+   <div id="ctl00_LibFrame" class="resizableArea">
+	<div id="ctl00_raLeft" class="leftSection" style="width:300px;display:none;">
+		
+        <img id="ctl00_TocVector1_o" class="hidden" src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" style="border-width: 0px;">
+<img id="ctl00_TocVector1_c" class="hidden" src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" style="border-width: 0px;">
+<img id="ctl00_TocVector1_e" class="hidden" src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" style="border-width: 0px;">
+<div id="holder" onclick="TocClick(event)">
+<div id="ctl00_TocVector1_root" class="rootToc">
+			<ul class="toc" id="tocVectorTreeId"><li name="bb126093(n)"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_c"><a href="http://technet.microsoft.com/en-us/library/aa991542.aspx" target="_top">TechNet Library</a></li></ul>
+		</div>
+</div>
+
+
+      
+	</div><div id="ctl00_raSplitter" title="Click and drag to resize. Double click or press 't' to toggle visibility." class="splitter" style="left:0px;">
+		<div class="LibC_lib_grippy" style="position:absolute;top:50%;"></div>
+	</div><div id="ctl00_raRight" class="rightSection">
+		
+        <div>
+          <div id="ctl00_eb1_Panel1" class="EyebrowMenuBar">
+			
+<div class="stat" style="position:relative;" id="ctl00_eb1_ctl00"><a title="TechNet" href="http://technet.microsoft.com/en-us/ms376608.aspx">TechNet</a><div id="ctl00_eb1_ctl00_Popup" class="popup" style="position: absolute; visibility: hidden; left: -1000px; width: 71px; height: 21px;">
+					<span name="http://technet.microsoft.com/en-us/library/bb426917(n).aspx">Please Wait</span></div><div id="ctl00_eb1_ctl00_Anim" class="TFlyPopupAnimate"></div>
+			</div>
+			<div class="stat" style="position:relative;" id="ctl00_eb1_ctl01"><a title="TechNet Library" href="http://technet.microsoft.com/en-us/library/aa991542.aspx">TechNet Library</a><div id="ctl00_eb1_ctl01_Popup" class="popup" style="position: absolute; visibility: hidden; left: -1000px; width: 71px; height: 21px;">
+					<span name="http://technet.microsoft.com/en-us/library/bb126093(n).aspx">Please Wait</span></div><div id="ctl00_eb1_ctl01_Anim" class="TFlyPopupAnimate"></div>
+			</div>
+			<div class="stat" style="position: relative; z-index: 198;" id="ctl00_eb1_ctl02"><a style="" title="System Center" href="http://technet.microsoft.com/en-us/library/cc507089.aspx">System Center</a><div id="ctl00_eb1_ctl02_Popup" class="popup" style="position: absolute; visibility: hidden; left: 0px; width: 300px; height: 225px; cursor: default; top: 23px; overflow: auto;"><ul class="toc"><li name="gg182752(n)"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_c"><a href="http://technet.microsoft.com/en-us/library/gg182752.aspx" target="_top">AVIcode 5.7</a></li><li name="cc184927(n)"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_c"><a href="http://technet.microsoft.com/en-us/library/cc184927.aspx" target="_top">Microsoft Operations Manager</a></li><li name="bb972140(n)"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_c"><a href="http://technet.microsoft.com/en-us/library/bb971933.aspx" target="_top">System Center Capacity Planner 2007</a></li><li name="bb735902(n)"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_c"><a href="http://technet.microsoft.com/en-us/library/gg682129.aspx" target="_top">System Center Configuration Manager 2012 (Prerelease)</a></li><li name="gg699452(n)"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_c"><a href="http://technet.microsoft.com/en-us/library/bb735860.aspx" target="_top">System Center Configuration Manager 2007</a></li><li name="ff707272(n)"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_c"><a href="http://technet.microsoft.com/en-us/library/ff399192.aspx" target="_top">System Center Data Protection Manager 2010</a></li><li name="ff714568(n)"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_c"><a href="http://technet.microsoft.com/en-us/library/bb795539.aspx" target="_top">System Center Data Protection Manager 2007</a></li><li name="cc161658(n)"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_c"><a href="http://technet.microsoft.com/en-us/library/cc161599.aspx" target="_top">System Center Data Protection Manager 2006</a></li><li name="ff603627(n)"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_c"><a href="http://technet.microsoft.com/en-us/library/ff603627.aspx" target="_top">System Center Essentials 2010</a></li><li name="ff603640(n)"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_c"><a href="http://technet.microsoft.com/en-us/library/cc308576.aspx" target="_top">System Center Essentials 2007</a></li><li name="dd252863(n)"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_c"><a href="http://technet.microsoft.com/en-us/library/cc135653.aspx" target="_top">System Center Mobile Device Manager</a></li><li name="ff630954(n)"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_c"><a href="http://technet.microsoft.com/en-us/library/ff630946.aspx" target="_top">Opalis Integration Server 6.3</a></li><li name="hh237244(n)"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_c"><a href="http://technet.microsoft.com/en-us/library/hh237242.aspx" target="_top">System Center Orchestrator 2012</a></li><li name="hh295853(n)"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_c"><a href="http://technet.microsoft.com/en-us/library/hh295851.aspx" target="_top">System Center Orchestrator 2012 Integration Packs</a></li><li name="bb381523(n)"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_c"><a href="http://technet.microsoft.com/en-us/library/hh205987.aspx" target="_top">System Center Operations Manager 2012</a></li><li name="hh206002(n)"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_c"><a href="http://technet.microsoft.com/en-us/library/bb310604.aspx" target="_top">System Center Operations Manager 2007 R2</a></li><li name="dd347500(n)"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_c"><a href="http://technet.microsoft.com/en-us/library/dd347500.aspx" target="_top">System Center Operations Manager 2007 Management Pack Guides</a></li><li name="dd795265(n)"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_c"><a href="http://technet.microsoft.com/en-us/library/dd795265.aspx" target="_top">System Center Operations Manager 2007 R2 Connectors</a></li><li name="cc138062(n)"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_c"><a href="http://technet.microsoft.com/en-us/library/cc138059.aspx" target="_top">System Center Reporting Manager 2006 Administrator Guide</a></li><li name="ff462059(n)"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_c"><a href="http://technet.microsoft.com/en-us/library/ff461010.aspx" target="_top">System Center Service Manager 2010 SP1</a></li><li name="dd309773(n)"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_c"><a href="http://technet.microsoft.com/en-us/library/hh134742.aspx" target="_top">System Center Updates Publisher 2011</a></li><li name="gg610702(n)"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_c"><a href="http://technet.microsoft.com/en-us/library/gg610610.aspx" target="_top">System Center Virtual Machine Manager 2012</a></li><li name="cc917964(n)"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_c"><a href="http://technet.microsoft.com/en-us/library/cc917964.aspx" target="_top">System Center Virtual Machine Manager 2008 and Virtual Machine Manager 2008 R2</a></li><li name="bb688005(n)"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_c"><a href="http://technet.microsoft.com/en-us/library/bb740737.aspx" target="_top">System Center Virtual Machine Manager 2007</a></li><li name="gg588342(n)"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_c"><a href="http://technet.microsoft.com/en-us/library/gg588342.aspx" target="_top">System Center Virtual Machine Manager 2008 R2 Self-Service Portal 2.0 SP1</a></li><li name="bb725983(n)"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_c"><a href="http://technet.microsoft.com/en-us/library/bb725983.aspx" target="_top">Systems Management Server</a></li></ul></div><div id="ctl00_eb1_ctl02_Anim" class="TFlyPopupAnimate"></div>
+			</div>
+			<div class="stat" style="position: relative; z-index: 198;" id="ctl00_eb1_ctl03"><a style="" title="System Center Operations Manager 2007 R2" href="http://technet.microsoft.com/en-us/library/bb310604.aspx">System Center Operations Manager 20...</a><div id="ctl00_eb1_ctl03_Popup" class="popup" style="position: absolute; visibility: hidden; left: 0px; width: 71px; height: 21px; cursor: progress; top: 23px;">
+					<span name="http://technet.microsoft.com/en-us/library/hh206002(n).aspx">Please Wait</span></div><div id="ctl00_eb1_ctl03_Anim" class="TFlyPopupAnimate"></div>
+			</div>
+			<div class="stat" style="position:relative;" id="ctl00_eb1_ctl04"><a title="Using Operations Manager 2007 R2" href="http://technet.microsoft.com/en-us/library/dd819241.aspx">Using Operations Manager 2007 R2</a><div id="ctl00_eb1_ctl04_Popup" class="popup" style="position: absolute; visibility: hidden; left: -1000px; width: 71px; height: 21px;">
+					<span name="http://technet.microsoft.com/en-us/library/dd819241(n).aspx">Please Wait</span></div><div id="ctl00_eb1_ctl04_Anim" class="TFlyPopupAnimate"></div>
+			</div>
+			<div class="stat" style="position:relative;" id="ctl00_eb1_ctl05"><a title="Operations Manager 2007 R2 Operations User's Guide" href="http://technet.microsoft.com/en-us/library/dd441428.aspx">Operations Manager 2007 R2 Operatio...</a><div id="ctl00_eb1_ctl05_Popup" class="popup" style="position: absolute; visibility: hidden; left: -1000px; width: 71px; height: 21px;">
+					<span name="http://technet.microsoft.com/en-us/library/dd441428(n).aspx">Please Wait</span></div><div id="ctl00_eb1_ctl05_Anim" class="TFlyPopupAnimate"></div>
+			</div>
+			<div class="stat" style="position:relative;" id="ctl00_eb1_ctl06"><a title="Managing Management Packs" href="http://technet.microsoft.com/en-us/library/cc974479.aspx">Managing Management Packs</a><div id="ctl00_eb1_ctl06_Popup" class="popup" style="position: absolute; visibility: hidden; left: -1000px; width: 71px; height: 21px;">
+					<span name="http://technet.microsoft.com/en-us/library/dd789076(n).aspx">Please Wait</span></div><div id="ctl00_eb1_ctl06_Anim" class="TFlyPopupAnimate"></div>
+			</div>
+			<div class="stat" style="position: relative; z-index: 198;" id="ctl00_eb1_ctl07"><a style="" title="Working with Management Packs" href="http://technet.microsoft.com/en-us/library/cc974485.aspx">Working with Management Packs</a><div id="ctl00_eb1_ctl07_Popup" class="popup" style="position: absolute; visibility: hidden; left: -1000px; width: 300px; height: 225px; cursor: default; overflow: auto;"><ul class="toc"><li name="na"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_e"><a href="http://technet.microsoft.com/en-us/library/cc974494.aspx" target="_top">How to Import a Management Pack in Operations Manager 2007</a></li><li name="na"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_e"><a href="http://technet.microsoft.com/en-us/library/cc974476.aspx" target="_top">How to Check the Version of an Imported Management Pack</a></li><li name="na"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_e"><a href="http://technet.microsoft.com/en-us/library/cc974493.aspx" target="_top">How to Check Management Pack Dependencies</a></li><li name="na"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_e"><a href="http://technet.microsoft.com/en-us/library/cc974489.aspx" target="_top">How to Remove a Management Pack</a></li><li name="na"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_e"><a href="http://technet.microsoft.com/en-us/library/cc974482.aspx" target="_top">How to Display Performance Collection Rules</a></li><li name="na"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_e"><a href="http://technet.microsoft.com/en-us/library/cc974480.aspx" target="_top">How to Display Monitor Thresholds</a></li><li name="na"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_e"><a href="http://technet.microsoft.com/en-us/library/cc974488.aspx" target="_top">How to Display All Management Pack Rules</a></li><li name="na"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_e"><a href="http://technet.microsoft.com/en-us/library/cc974478.aspx" target="_top">How to Display Overrides for a Management Pack</a></li><li name="na"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_e"><a href="http://technet.microsoft.com/en-us/library/cc974495.aspx" target="_top">How to Display Monitors for a Management Pack</a></li><li name="na"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_e"><a href="http://technet.microsoft.com/en-us/library/cc974490.aspx" target="_top">How to View Management Pack Details</a></li><li name="na"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" class="LibC_e"><a href="http://technet.microsoft.com/en-us/library/dd789011.aspx" target="_top">Understanding Self-Tuning Threshold Monitors</a></li></ul></div><div id="ctl00_eb1_ctl07_Anim" class="TFlyPopupAnimate"></div>
+			</div>
+			<div class="nochildstat"><strong>&nbsp;Understanding Self-Tuning Threshold...</strong></div><span style="float:none;clear:both;display:block;"></span>
+		</div>
+
+        </div>
+        
+
+        <div class="RightPanel">
+          <div class="ContentBar">
+            
+            
+<script type="text/Javascript">
+</script>
+
+<style type="text/css">
+.vb, .cs, .cpp, .nu, .fs
+{
+	display:none;
+}
+</style>
+<style id="LanguageSpecificTextStyle" type="text/css">
+.nu
+{
+   display:inline;
+}
+</style><div id="ctl00_DropDownFilter_DropDownFilterMain" class="DropDownFilterStyle"><img id="ctl00_DropDownFilter_MTPS_DD_ImageArrow" title="Language Filter" class="MTPS_DropDownImage LibC_arrow-off" onclick="DDFilterOn(event);" onmouseover="ChangeDropDownImage(true);ResetLanguagesMenuTimer(event);" onmouseout="ChangeDropDownImage(false);RequestHideLanguagesMenu();" src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" alt="Language Filter" style="border-width: 0px;"><a id="ctl00_DropDownFilter_Mtps_DropDownFilterText" title="Language Filter" class="DropDownFilterOff" onclick="DDFilterOn(event);" onmouseover="ChangeDropDownImage(true);" onmouseout="ChangeDropDownImage(false);" href="http://technet.microsoft.com/en-us/library/dd789011.aspx#Mtps_DropDownFilterText">Language Filter : All</a><div id="ctl00_DropDownFilter_Mtps_DropDownPopUp" style="display:none" class="MTPS_PopupDivPanel" onmouseover="ResetLanguagesMenuTimer(event);" onmouseout="RequestHideLanguagesMenu();"><div class="DivCbxLabelLanguage">
+			<input name="ctl00$DropDownFilter$DropDownLngFilterCtrl" id="ctl00_DropDownFilter_DropDownLngFilterCtrl" checked="checked" value="Visual Basic" arrayvalue="visualbasic" onclick="SetLangFilter(null,false);" type="checkbox"><span id="ctl00_DropDownFilter_ctl00_DropDownFilter_DropDownLngFilterCtrl_0" title="Visual Basic">Visual Basic<br></span>
+		</div><div class="DivCbxLabelLanguage">
+			<input name="ctl00$DropDownFilter$DropDownLngFilterCtrl" id="ctl00_DropDownFilter_DropDownLngFilterCtrl" checked="checked" value="C#" arrayvalue="csharp" onclick="SetLangFilter(null,false);" type="checkbox"><span id="ctl00_DropDownFilter_ctl00_DropDownFilter_DropDownLngFilterCtrl_1" title="C#">C#<br></span>
+		</div><div class="DivCbxLabelLanguage">
+			<input name="ctl00$DropDownFilter$DropDownLngFilterCtrl" id="ctl00_DropDownFilter_DropDownLngFilterCtrl" checked="checked" value="C++" arrayvalue="managedcplusplus" onclick="SetLangFilter(null,false);" type="checkbox"><span id="ctl00_DropDownFilter_ctl00_DropDownFilter_DropDownLngFilterCtrl_2" title="C++">C++<br></span>
+		</div><div class="DivCbxLabelLanguage">
+			<input name="ctl00$DropDownFilter$DropDownLngFilterCtrl" id="ctl00_DropDownFilter_DropDownLngFilterCtrl" checked="checked" value="J#" arrayvalue="jsharp" onclick="SetLangFilter(null,false);" type="checkbox"><span id="ctl00_DropDownFilter_ctl00_DropDownFilter_DropDownLngFilterCtrl_3" title="J#">J#<br></span>
+		</div><div class="DivCbxLabelLanguage">
+			<input name="ctl00$DropDownFilter$DropDownLngFilterCtrl" id="ctl00_DropDownFilter_DropDownLngFilterCtrl" checked="checked" value="JScript" arrayvalue="jscript" onclick="SetLangFilter(null,false);" type="checkbox"><span id="ctl00_DropDownFilter_ctl00_DropDownFilter_DropDownLngFilterCtrl_4" title="JScript">JScript<br></span>
+		</div><div class="DivCbxLabelLanguage">
+			<input name="ctl00$DropDownFilter$DropDownLngFilterCtrl" id="ctl00_DropDownFilter_DropDownLngFilterCtrl" checked="checked" value="XAML" arrayvalue="xaml" onclick="SetLangFilter(null,false);" type="checkbox"><span id="ctl00_DropDownFilter_ctl00_DropDownFilter_DropDownLngFilterCtrl_5" title="XAML">XAML<br></span>
+		</div><div class="DivCbxLabelLanguage">
+			<input name="ctl00$DropDownFilter$DropDownLngFilterCtrl" id="ctl00_DropDownFilter_DropDownLngFilterCtrl" checked="checked" value="F#" arrayvalue="fsharp" onclick="SetLangFilter(null,false);" type="checkbox"><span id="ctl00_DropDownFilter_ctl00_DropDownFilter_DropDownLngFilterCtrl_6" title="F#">F#<br></span>
+		</div></div>
+<script type="text/Javascript">
+var strConstLangFilterAll ="All";
+var strConstLangFilterMulti ="Multiple";
+var strConstLangFilterNone ="None";
+var strConstLangFilterText ="Language Filter";
+var oMTPS_DD_ImgArrow = document.getElementById("ctl00_DropDownFilter_MTPS_DD_ImageArrow");
+var oMTPS_DD_PanelLink = document.getElementById("ctl00_DropDownFilter_Mtps_DropDownFilterText");
+var oMTPS_DD_Div = document.getElementById("ctl00_DropDownFilter_DropDownFilterMain");
+var oMTPS_DD_PopUpDiv = document.getElementById("ctl00_DropDownFilter_Mtps_DropDownPopUp");
+</script>
+</div>
+              
+            
+            
+          </div>
+           <div class="ContentArea">
+      
+          
+          
+          
+          
+          
+        
+          <div>
+<div class="topic" xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:cs="http://msdn.microsoft.com/en-us/">
+  <div class="title">Understanding Self-Tuning Threshold Monitors<!----></div>
+  <!--Published via DxPublisher.-->
+  <p>Updated: May 22, 2009</p><p>Applies To: Operations Manager 2007 R2, Operations Manager 2007 SP1</p><div id="mainSection">
+    <div id="mainBody">
+      <p>A <em>self-tuning threshold monitor</em> is a monitor type in 
+Operations Manager&nbsp;2007. Instead of using a fixed threshold, 
+self-tuning threshold (STT) monitors learn from the environment and the 
+thresholds are updated over time. This topic explains how STT monitors 
+work and how to work with STT monitors. </p>
+      <h2 class="heading">How Self-Tuning Threshold Monitors Work</h2>
+      <div id="sectionSection0" class="section">
+        <p>Monitors that use self-tuning thresholds are based on Windows performance counters. An STT monitor has a <em>business cycle</em>
+ setting. The business cycle, which can be configured in days or weeks, 
+establishes the period of time of normal activity that Operations 
+Manager will use to create a <em>signature</em>. The signature is a 
+numeric data provider that learns the characteristics of the business 
+cycle. Operations Manager uses the signature to set and adjust 
+thresholds for alerts by evaluating performance counter results against 
+the pattern of the business cycle.</p>
+        <p>For example, a self-tuning threshold monitor for logons to 
+the Exchange service learns that a spike in the number of connections is
+ expected on Monday mornings. The threshold is adjusted to account for 
+that pattern. As a result, an alert would not be generated for the high 
+number of logons on Monday mornings, but if a similar number of logons 
+occurred on a Saturday night, an alert would be generated.</p>
+        <p>Each STT monitor has an initial learning period. The initial 
+learning period consists of one or more business cycles, depending on 
+the configuration of the monitor. During the initial learning period, 
+Operations Manager establishes the signature that represents regular and
+ expected activity; no alerts are generated during the initial learning 
+period.</p>
+        <p>The signature is a moving baseline average and standard 
+deviation computed during the initial learning period. The standard 
+deviation is determined by the sensitivity level of the STT monitor. 
+When sensitivity is set to the highest level, the deviation from the 
+baseline for expected activity is low. When sensitivity is set to the 
+lowest level, the deviation from the baseline for expected activity is 
+high. </p>
+      </div>
+      <h2 class="heading">How to Work With Self-Tuning Threshold Monitors</h2>
+      <div id="sectionSection1" class="section">
+        <p>When an STT monitor generates an excessive number of alerts 
+or more than are useful for your monitoring needs, you can adjust the 
+self-tuning threshold by lowering the sensitivity.</p>
+        <p>A self-tuning threshold consists of two rules and a monitor. 
+The performance collection rule collects the performance counter data, 
+and the signature collection rule establishes the signature. The monitor
+ compares the value of the performance counter data to the signature. 
+You change the sensitivity of a self-tuning threshold by adjusting the 
+sensitivity parameters for the signature collection rule and the 
+monitor.</p>
+        <p>The monitor has two sensitivity parameters, <em>inner sensitivity</em> and <em>outer sensitivity</em>.
+ The inner sensitivity parameter setting for the monitor must match the 
+sensitivity parameter setting for the signature collection rule.</p>
+        <h4 class="subHeading">To adjust self-tuning threshold sensitivity</h4>
+        <div class="subSection">
+          <ol class="ordered">
+            <li>
+              <p>Locate the rule that applies to the alert.</p>
+              <div class="alert">
+                <table>
+                  <tbody><tr>
+                    <th align="left">
+                      <img alt="note" src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/dd789011.gif">Note </th>
+                  </tr>
+                  <tr>
+                    <td>
+										To identify the rule that is associated with the monitor that 
+generated the alert, run the script that is provided after this 
+procedure.<p><!----></p></td>
+                  </tr>
+                </tbody></table>
+                <p>
+                  <!---->
+                </p>
+              </div>
+            </li>
+            <li>
+              <p>Disable the rule.</p>
+            </li>
+            <li>
+              <p>Right-click the rule, point to <strong>Overrides</strong>, point to <strong>Override the Rule</strong>, and click <strong>For all objects of type:</strong><em>Default selection</em>. </p>
+            </li>
+            <li>
+              <p>In <strong>Override Properties</strong>, select the <strong>Override</strong> box for the <strong>Sensitivity</strong> parameter. </p>
+            </li>
+            <li>
+              <p>In <strong>Override Value</strong>, change the number to increase or decrease the sensitivity level, using one of the following values:</p>
+              <ul>
+                <li class="unordered">
+											4.01 (lowest sensitivity)<br><br></li>
+                <li class="unordered">
+											3.77<br><br></li>
+                <li class="unordered">
+											3.29<br><br></li>
+                <li class="unordered">
+											2.81<br><br></li>
+                <li class="unordered">
+											2.57 (highest sensitivity)<br><br></li>
+              </ul>
+            </li>
+            <li>
+              <p>Locate the monitor that applies to the alert. The monitor name is displayed in the Details section for the alert.</p>
+            </li>
+            <li>
+              <p>Disable the monitor.</p>
+            </li>
+            <li>
+              <p>Right-click the monitor, point to <strong>Overrides</strong>, point to <strong>Override the Monitor</strong>, and click <strong>For all objects of type:</strong><em>Default selection</em>. </p>
+            </li>
+            <li>
+              <p>In <strong>Override Properties</strong>, select the <strong>Override</strong> box for the <strong>Inner Sensitivity</strong> parameter.</p>
+            </li>
+            <li>
+              <p>In <strong>Override Value</strong>, change the number to the value you set in step 5.</p>
+            </li>
+            <li>
+              <p>In <strong>Override Properties</strong>, select the <strong>Override</strong> box for the <strong>Outer Sensitivity</strong> parameter.</p>
+            </li>
+            <li>
+              <p>In <strong>Override Value</strong>, change the number to a value greater than the number you set for the <strong>Inner Sensitivity</strong> parameter.</p>
+            </li>
+            <li>
+              <p>Enable the monitor.</p>
+            </li>
+            <li>
+              <p>Locate the rule from step 1 and enable the rule.</p>
+            </li>
+          </ol>
+        </div>
+      </div>
+      <h2 class="heading">Script for Identifying a Rule Associated with a Monitor</h2>
+      <div id="sectionSection2" class="section">
+        <p>Use the following script in step 1 of the previous procedure 
+to identify the rule to disable when adjusting the sensitivity for a 
+self-tuning threshold. Copy the script below and save it as 
+STTSignatureCollectionRule.ps1 on the computer on which the Operations 
+console is installed. To run the script, use the following syntax with 
+the name of the monitor that is displayed in the alert details:   <code>STTSignatureCollectionRule <em>&lt;Monitor Display Name&gt;</em></code>.</p>
+        <span id="ctl00_MTCS_main_ctl02">
+<div class="libCScode" id="ctl00_MTCS_main_ctl02_">
+    
+    <div class="CodeSnippetTitleBar">
+        <div class="CodeDisplayLanguage">
+            
+        </div>
+        
+    </div>
+    <div dir="ltr" style="background-color: #ddd">
+    <pre class="libCScode" id="ctl00_MTCS_main_ctl02_code" space="preserve">##
+## This script prints out the collection rule associated with an STT monitor.
+##
+## It takes the display name of the STT monitor as input.
+##
+## April-13-2009
+##
+#######################################################################################################################################################
+
+param($monitorDisplayName)
+
+$managementGroup = (Get-ManagementGroupConnection).ManagementGroup
+
+# Prepare the monitor criteria
+$monitorCriteria = New-Object Microsoft.EnterpriseManagement.Configuration.MonitorCriteria([String]::Format("DisplayName = '{0}'",$monitorDisplayName))
+
+# Get monitors
+$sttMonitor = $managementGroup.GetMonitors($monitorCriteria)[0]
+
+if (!$sttMonitor)
+{
+    write-host "STT Monitor could not be found!"
+    exit
+}
+
+# Get and Prepare the monitor config
+$config = ($sttMonitor).Configuration
+$config = "&lt;Config&gt;" + $config + "&lt;/Config&gt;"
+
+# Get the signature id
+[System.Xml.XmlDocument] $xd = new-object System.Xml.XmlDocument
+
+$xd.LoadXml($config)
+
+$nodelist = $xd.selectnodes("/Config/SignatureID")
+
+foreach ($node in $nodelist) {
+   $signatureId = $node.get_innerXml()
+}
+
+if ((!$signatureId) -or ($signatureId.Length -eq 0))
+{
+    write-host "Signature Id for the STT Monitor could not be found! Make sure this is a valid STT Monitor."
+    exit
+}
+
+# Iterate through the rules in the system and search for the right one.
+
+$monitoringRules = $managementGroup.GetMonitoringRules()
+
+foreach ($monitoringRule in $monitoringRules) 
+{
+    $condDetectionModule = $monitoringRule.ConditionDetection
+
+    if ($condDetectionModule) 
+    {
+        $moduleConfig = $condDetectionModule.Configuration
+        
+        if ($moduleConfig) 
+        {
+            if ($moduleConfig.Contains($signatureId))
+            {
+                $outputRuleDisplayName = $monitoringRule.DisplayName
+$monitoringRule
+
+                exit
+            }
+        }
+    }
+}
+
+# The signature collection rule not be found
+write-host "The signature collection rule associated with the STT monitor could not be found"
+
+
+</pre>
+    </div>
+</div>
+
+</span>
+      </div>
+    </div>
+  </div>
+</div></div>
+        
+          
+        </div>
+      </div>
+
+      
+
+<span id="CommunityContent"></span>
+<div id="ctl00_WikiContent_cc" class="CCS_Container">
+			
+
+  <div class="CCS_TopicTagEditor">
+	  <div id="ctl00_WikiContent_TopicTagEditor_panel" class="CCT_Panel">
+  <div id="tagsPanel" class="CCT_TagsPanel">
+    <span id="ctl00_WikiContent_TopicTagEditor_title" class="CCT_Title">Tags</span>
+    <a href="http://technet.microsoft.com/platform/Controls/CCTagEditor/resources/taghelp.htm" id="ctl00_WikiContent_TopicTagEditor_helpLink" class="CCT_HelpLink" onclick='CCS_ShowHelp("/platform/Controls/CCTagEditor/resources/taghelp.htm",800,600);return false;'>
+      <img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" id="ctl00_WikiContent_TopicTagEditor_helpImage" class="CCT_HelpImage LibC_help" alt="What's this?" title="What's this?"></a>:
+    <span id="ctl00_WikiContent_TopicTagEditor_tags" class="CCT_Text"></span>
+    <span id="ctl00_WikiContent_TopicTagEditor_view" class="CCT_View">
+      <a href="http://technet.microsoft.com/Platform/Controls/CCTagEditor/#" id="ctl00_WikiContent_TopicTagEditor_addTagLink" class="CCT_LinkButton" onclick='return CCT_AddATag("http://technet.microsoft.com/en-us/library/Community-Signup.aspx?ru=http%3a%2f%2ftechnet.microsoft.com%2fen-us%2flibrary%2fdd789011(TechNet.10).aspx",-1);' title="Add a tag to this topic">Add a tag</a>
+    </span>
+
+    <span id="ctl00_WikiContent_TopicTagEditor_editPanel" style="display:none" class="CCT_Edit">
+      <input name="ctl00$WikiContent$TopicTagEditor$textbox" id="ctl00_WikiContent_TopicTagEditor_textbox" class="CCT_TextBox" autocomplete="off" type="text">
+      <a href="http://technet.microsoft.com/Platform/Controls/CCTagEditor/#" id="ctl00_WikiContent_TopicTagEditor_addLink" class="CCT_LinkButton" onclick="return CCT_AddTags(-1);" title="Submit the tags for this topic">Add</a>
+
+      &nbsp;
+      <a href="http://technet.microsoft.com/Platform/Controls/CCTagEditor/#" id="ctl00_WikiContent_TopicTagEditor_cancelLink" class="CCT_LinkButton" onclick="return CCT_CancelAddTag(-1);" title="Cancel this operation">Cancel</a>
+    </span>
+    <span id="ctl00_WikiContent_TopicTagEditor_messagePanel" class="CCT_Message"></span>
+  </div>
+  <div id="ctl00_WikiContent_TopicTagEditor_flagAsPanel" class="CCT_FlagAsPanel" style="display:none">
+    <span id="ctl00_WikiContent_TopicTagEditor_flagAsLabel">Flag as </span>
+    <a href="http://technet.microsoft.com/Platform/Controls/CCTagEditor/#" id="ctl00_WikiContent_TopicTagEditor_contentBugLink" class="CCT_LinkButton" onclick='return CCT_FlagContentBug("http://technet.microsoft.com/en-us/library/Community-Signup.aspx?ru=http%3a%2f%2ftechnet.microsoft.com%2fen-us%2flibrary%2fdd789011(TechNet.10).aspx",-1);' title="Flagging this annotation as a 'ContentBug' will let the author know that this topic needs to be reviewed">ContentBug</a>
+  </div>
+  <div style="clear:both"></div>
+</div>
+
+  </div>
+
+  <div class="CCS_WikiLogo">
+	  <img id="ctl00_WikiContent_wikiLogo" class="LibC_wiki" src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" style="border-width: 0px;">
+  </div>
+
+  <div id="ctl00_WikiContent_contentContainer" class="CCS_ContentContainer">
+				
+    <div id="ctl00_WikiContent_headerContainer" class="CCS_HeaderContainer">
+					
+			<table class="CCS_Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+				<tbody><tr>
+					<td>
+  					<div class="CCS_HeaderTitle">
+  					  <span id="ctl00_WikiContent_headerTitle">Community Content</span>&nbsp;&nbsp;
+              <a href="http://technet.microsoft.com/platform/Controls/CCSection/resources/cchelp.htm" id="ctl00_WikiContent_helpLink" class="CCS_HelpLink" onclick='CCS_ShowHelp("/platform/Controls/CCSection/resources/cchelp.htm",400,400);return false;'><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" id="ctl00_WikiContent_helpImage" class="CCS_HelpImage  LibC_help" alt="What is Community Content?" title="What is Community Content?"></a>
+  					</div>
+					</td>
+				</tr>
+			</tbody></table>
+			<table class="CCS_Toolbar" border="0" cellpadding="0" cellspacing="0" width="100%">
+				<tbody><tr>
+					<td class="CCS_Add">
+					  <a id="ctl00_WikiContent_Add" class="CCS_Link" href='javascript:WebForm_DoPostBackWithOptions(new%20WebForm_PostBackOptions("ctl00$WikiContent$Add",%20"",%20false,%20"",%20"http://technet.microsoft.com/en-us/library/Community-Signup.aspx?ru=http%3a%2f%2ftechnet.microsoft.com%2fen-us%2flibrary%2fdd789011(TechNet.10).aspx%3fwbi%3dnew",%20false,%20true))'>Add new content</a>
+					</td>
+					<td class="CCS_RecentChanges">
+					  <a href="http://technet.microsoft.com/en-us/library/community-edits.rss?topic=dd789011%7Cen-us%7C10" id="ctl00_WikiContent_recentPageLink"><img id="ctl00_WikiContent_imageRSS" class="CCS_RSSImage LibC_rss_button" src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" alt="RSS" style="border-width: 0px;" align="middle"></a>&nbsp;
+					  <span id="ctl00_WikiContent_recentChangesTitle" class="CCS_RecentChangesText">Annotations</span>
+					</td>
+					<td class="CCS_Profile" align="right">
+						
+					</td>
+				</tr>
+			</tbody></table>
+    
+				</div>
+
+    <div id="ctl00_WikiContent_wikiItems" class="CCS_ItemsContainer">
+					<div id="ctl00_WikiContent_ctl00_ItemUpdatePanel">
+						
+    <div id="ctl00_WikiContent_ctl00_Container" class="CCI_Container" style="display:none;">
+							
+      <div id="ctl00_WikiContent_ctl00_Header" class="CCI_Header">
+								
+        <table cellpadding="0" cellspacing="0" width="100%">
+            <tbody><tr>
+                <td align="left">
+                    <span id="ctl00_WikiContent_ctl00_HeaderTitle" class="CCI_Header_Title"></span>
+                </td>
+                <td>
+                    <span id="ctl00_WikiContent_ctl00_Label2" class="CCI_Header_Spacer">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                </td>
+
+                
+                  <td class="CCI_Header_Actions" align="right">
+                      <span id="ctl00_WikiContent_ctl00_EditInfo"></span><span id="ctl00_WikiContent_ctl00_Separator">
+                        &nbsp;&nbsp;|&nbsp;&nbsp;
+                      </span><span id="ctl00_WikiContent_ctl00_EditLabel"><a id="ctl00_WikiContent_ctl00_Edit" title="Edit this version" class="CCI_Header_Link" href="javascript:__doPostBack('ctl00$WikiContent$ctl00$Edit','')">Edit</a></span><input name="ctl00$WikiContent$ctl00$showhistoryFlag" id="ctl00_WikiContent_ctl00_showhistoryFlag" style="display: none;" value="false" type="text">
+                  </td>
+                
+                
+            </tr>
+        </tbody></table>
+      
+							</div>
+
+      
+
+      <div id="ctl00_WikiContent_ctl00_EditorPanel" class="CCI_Text" style="cursor:default;">
+								
+        <div id="ctl00_WikiContent_ctl00_Editor_Container" onkeypress="javascript:return WebForm_FireDefaultButton(event, 'ctl00_WikiContent_ctl00_Editor_Save')">
+									
+	  
+    <div id="ctl00_WikiContent_ctl00_Editor_RadEditor" title="Double-click to edit this block" class=" CCE_Editor_Disabled" style="width:680px;height:400px;height:auto;width:auto;">
+										<!-- 2008.2.723.35 -->
+									</div>
+    <input name="ctl00$WikiContent$ctl00$Editor$editorData" id="ctl00_WikiContent_ctl00_Editor_editorData" type="hidden">
+    <input name="ctl00$WikiContent$ctl00$Editor$tagEditorData" id="ctl00_WikiContent_ctl00_Editor_tagEditorData" type="hidden">
+    
+    
+  
+								</div>
+
+      
+							</div>
+
+      <div id="ctl00_WikiContent_ctl00_TagEditor_panel" class="CCT_Panel">
+  <div id="tagsPanel" class="CCT_TagsPanel">
+    <span id="ctl00_WikiContent_ctl00_TagEditor_title" class="CCT_Title">Tags</span>
+    <a href="http://technet.microsoft.com/platform/Controls/CCTagEditor/resources/taghelp.htm" id="ctl00_WikiContent_ctl00_TagEditor_helpLink" class="CCT_HelpLink" onclick='CCS_ShowHelp("/platform/Controls/CCTagEditor/resources/taghelp.htm",800,600);return false;'>
+      <img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" id="ctl00_WikiContent_ctl00_TagEditor_helpImage" class="CCT_HelpImage LibC_help" alt="What's this?" title="What's this?"></a>:
+    <span id="ctl00_WikiContent_ctl00_TagEditor_tags" class="CCT_Text"></span>
+    <span id="ctl00_WikiContent_ctl00_TagEditor_view" class="CCT_View">
+      <a href="http://technet.microsoft.com/Platform/Controls/CCTagEditor/#" id="ctl00_WikiContent_ctl00_TagEditor_addTagLink" class="CCT_LinkButton" title="Add a tag to this topic">Add a tag</a>
+    </span>
+
+    <span id="ctl00_WikiContent_ctl00_TagEditor_editPanel" style="display:none" class="CCT_Edit">
+      <input name="ctl00$WikiContent$ctl00$TagEditor$textbox" id="ctl00_WikiContent_ctl00_TagEditor_textbox" class="CCT_TextBox" autocomplete="off" type="text">
+      <a href="http://technet.microsoft.com/Platform/Controls/CCTagEditor/#" id="ctl00_WikiContent_ctl00_TagEditor_addLink" class="CCT_LinkButton" title="Submit the tags for this topic">Add</a>
+
+      &nbsp;
+      <a href="http://technet.microsoft.com/Platform/Controls/CCTagEditor/#" id="ctl00_WikiContent_ctl00_TagEditor_cancelLink" class="CCT_LinkButton" title="Cancel this operation">Cancel</a>
+    </span>
+    <span id="ctl00_WikiContent_ctl00_TagEditor_messagePanel" class="CCT_Message"></span>
+  </div>
+  <div id="ctl00_WikiContent_ctl00_TagEditor_flagAsPanel" class="CCT_FlagAsPanel" style="display:none">
+    <span id="ctl00_WikiContent_ctl00_TagEditor_flagAsLabel">Flag as </span>
+    <a href="http://technet.microsoft.com/Platform/Controls/CCTagEditor/#" id="ctl00_WikiContent_ctl00_TagEditor_contentBugLink" class="CCT_LinkButton" onclick='return CCT_FlagContentBug("http://technet.microsoft.com/en-us/library/Community-Signup.aspx?ru=http%3a%2f%2ftechnet.microsoft.com%2fen-us%2flibrary%2fdd789011(TechNet.10).aspx",-1);' title="Flagging this annotation as a 'ContentBug' will let the author know that this topic needs to be reviewed">ContentBug</a>
+  </div>
+  <div style="clear:both"></div>
+</div>
+
+
+    
+						</div>
+  
+					</div>
+
+				</div>
+
+    <div id="ctl00_WikiContent_EditorPanel" class="CCI_Container_Edit" style="display:none">
+					
+      <div id="ctl00_WikiContent_Editor_Container" onkeypress="javascript:return WebForm_FireDefaultButton(event, 'ctl00_WikiContent_Editor_Save')">
+						
+	  
+    <div id="ctl00_WikiContent_Editor_RadEditor" title="Double-click to edit this block" class=" CCE_Editor_Disabled" style="width:680px;height:400px;height:auto;width:auto;">
+							
+						</div>
+    <input name="ctl00$WikiContent$Editor$editorData" id="ctl00_WikiContent_Editor_editorData" type="hidden">
+    <input name="ctl00$WikiContent$Editor$tagEditorData" id="ctl00_WikiContent_Editor_tagEditorData" type="hidden">
+    
+    
+  
+					</div>
+
+    
+				</div>
+    
+
+    <div id="ProgressIndicator" class="CCS_Progress">
+      <img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" id="ctl00_WikiContent_progressImage" class="LibC_spinner" alt="Processing">
+    </div>
+
+    <div class="CCS_Footer"></div>
+   
+			</div>
+
+		</div>
+      
+
+<div style="overflow:hidden;display:block;position:relative;">
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tbody><tr>
+    <td id="ctl00_mtpsFooter_FooterFadeCell" class="MTPS_FooterFade">
+      <div id="ctl00_mtpsFooter_SiteLinks" class="MTPS_FooterLinks">
+
+		</div>
+      <span id="ctl00_mtpsFooter_MSFT_copyright" title="© 2011  Microsoft. All rights reserved." class="MTPS_FooterCopyright">© 2011  Microsoft. All rights reserved.</span>
+      <a id="ctl00_mtpsFooter_MSFT_Terms" title="Terms of Use" class="MTPS_FooterLinks" href="http://technet.microsoft.com/cc300389.aspx">Terms of Use</a>
+      <span id="ctl00_mtpsFooter_PipeSpan1">|</span>
+      <a id="ctl00_mtpsFooter_MSFT_Trademarks" title="Trademarks" class="MTPS_FooterLinks" href="http://www.microsoft.com/library/toolbar/3.0/trademarks/en-us.mspx">Trademarks</a>
+      <span id="ctl00_mtpsFooter_PipeSpan2">|</span>
+      <a id="ctl00_mtpsFooter_MSFT_PrivacyStatement" title="Privacy Statement" class="MTPS_FooterLinks" href="http://www.microsoft.com/info/privacy.mspx">Privacy Statement</a>
+      
+      <a id="ctl00_mtpsFooter_MSFT_Feedback" class="MTPS_FooterLinks" rel="sitefeedback" target="_blank"></a>
+      
+      <a id="ctl00_mtpsFooter_MSFT_FeedbackAnswers" class="MTPS_FooterLinks"></a>
+    </td>
+		
+    <td id="ctl00_mtpsFooter_FooterLogoCell">
+      <a id="ctl00_mtpsFooter_MSFT_LOGO" title="Microsoft" href="http://www.microsoft.com/en/us/default.aspx"><img id="ctl00_mtpsFooter_MSFT_imgLogo" class="technet_TabC_mslogo" src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/clear.gif" style="border-width: 0px;"></a>
+    </td>
+		
+  </tr>
+</tbody></table>
+
+</div>
+ 
+      
+	</div>
+</div>
+  </div>
+  <div style="display:none"><img src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/trans_pixel.gif" alt="Page view tracker" border="0" height="0" hspace="0" vspace="0" width="0"></div>
+  
+<script src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/webtrendsscript-bn20110801.js" type="text/javascript"></script>
+<noscript>
+<div><img alt="DCSIMG" id="Img1" width="1" height="1" src="http://m.webtrends.com/dcsjwb9vb00000c932fd0rjc7_5p3t/njs.gif?dcsuri=/nojavascript&amp;WT.js=No" /></div>
+</noscript>
+  <script type="text/javascript" src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/mtps-bn20110801.js"></script>
+    <script type="text/javascript">
+        //<![CDATA[
+        setTimeout(function() {
+            var hashElementId = document.location.hash.substr(1);
+            var hashElement = document.getElementById(hashElementId);
+            if (hashElement != null) {
+                hashElement.scrollIntoView(true);
+            }
+        }, 1);
+        //]]>
+    </script>
+  
+<script type="text/javascript">
+//<![CDATA[
+var CCT_Controls =  new Array({id:-1,prefix:'ctl00_WikiContent_TopicTagEditor_'}, {id:-2,prefix:'ctl00_WikiContent_ctl00_TagEditor_'});
+var CCE_EditorInfo =  new Array({i:-2,p:'ctl00_WikiContent_ctl00_Editor_',c:'ctl00_WikiContent_ctl00_'}, {i:-1,p:'ctl00_WikiContent_Editor_',c:''});
+//]]>
+</script>
+
+
+<script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager.getInstance().add_beginRequest(CCS_BeginRequestHandler);Sys.WebForms.PageRequestManager.getInstance().add_endRequest(CCS_EndRequestHandler); RegisterAutoSubmit('ctl00_ib1_Flyout_Rating1','ctl00_ib1_Flyout_btnSend','contentRatingdd789011TechNet.10en-us');
+
+//]]>
+</script>
+<script type="text/javascript" language="javascript">
+<!--
+ function GetContentWnd(){ return parent; } function OnInitPage(){var oWnd = GetContentWnd();} function OnSave(){ var oWnd = GetContentWnd(); window.external.addFavorite('http://technet.microsoft.com/en-us/library/dd789011.aspx', oWnd.document.title ); }
+
+-->
+</script>
+<script type="text/javascript">
+//<![CDATA[
+document.getElementById('ctl00_ib1_Flyout_rtgContainer').title="Click a star and provide feedback";
+CCT_Init("false","http%3a%2f%2ftechnet.microsoft.com%2fen-us%2flibrary%2fdd789011.aspx");$addHandler($get("ctl00_WikiContent_TopicTagEditor_editPanel"),"keydown",CCT_KeyDown);TFly_Init('ctl00_ctl03_LocaleManagement_ctl00',0,0,1,0,0,'LocaleManagementFlyoutStaticHover','',0,400,'','','','');
+TFly_Init('ctl00_ib1_Flyout',5,2,1,0,0,'','',0,400,'','TFlyPreAnimate','','');
+MTPS.Controls.MtpsRating.createMtpsRating('ctl00_ib1_Flyout_Rating1','ratingStar','filledRatingStar','emptyRatingStar','savedRatingStar','5','LeftToRightTopToBottom', false);MTPS.Controls.ResizeableArea = new MTPS.Controls.CreateResizeableArea('ctl00_LibFrame','ctl00_raSplitter','ctl00_raLeft','ctl00_raRight','tocwidth','toccollapsed','173');MTPS.Controls.ResizeableArea.ClientCollapseEvents = function(isCollapsing) {TocResizableAreaChange(isCollapsing);};var tocVectorObject;var hostbase;var closedImg;var openImg;var emptyImg;var loadingImg;var tocVector;var tocIndex = 0;var holder;var tocLoaded = false;var tocCollapsed = 'True';var pageIdentifier = 'dd789011';tocVectorObject = {"nodes": [{"id": "bb126093(n)" ,"url": "/bb126093(n)"},{"id": "cc138020(n)" ,"url": "/cc138020(n)"},{"id": "hh206002(n)" ,"url": "/hh206002(n)"},{"id": "dd819241(n)" ,"url": "/dd819241(n)"},{"id": "dd441428(n)" ,"url": "/dd441428(n)"},{"id": "dd789076(n)" ,"url": "/dd789076(n)"},{"id": "dd789071(n)" ,"url": "/dd789071(n)"},{"id": "dd789011(n)" ,"url": "/dd789011(n)"}]};hostbase ="http://technet.microsoft.com/en-us/library";tocVector = eval(tocVectorObject);closedImg = "LibC_c";openImg = "LibC_o";emptyImg = "LibC_e";var tocDir = false;TFly_Init('ctl00_eb1_ctl00',0,-1,-1,0,0,'statHover','',0,0,'EyeBrowMenuBarSetHeight','ExpEye','','');
+TFly_Init('ctl00_eb1_ctl01',0,-1,-1,0,0,'statHover','',0,0,'EyeBrowMenuBarSetHeight','ExpEye','','');
+TFly_Init('ctl00_eb1_ctl02',0,-1,-1,0,0,'statHover','',0,0,'EyeBrowMenuBarSetHeight','ExpEye','','');
+TFly_Init('ctl00_eb1_ctl03',0,-1,-1,0,0,'statHover','',0,0,'EyeBrowMenuBarSetHeight','ExpEye','','');
+TFly_Init('ctl00_eb1_ctl04',0,-1,-1,0,0,'statHover','',0,0,'EyeBrowMenuBarSetHeight','ExpEye','','');
+TFly_Init('ctl00_eb1_ctl05',0,-1,-1,0,0,'statHover','',0,0,'EyeBrowMenuBarSetHeight','ExpEye','','');
+TFly_Init('ctl00_eb1_ctl06',0,-1,-1,0,0,'statHover','',0,0,'EyeBrowMenuBarSetHeight','ExpEye','','');
+TFly_Init('ctl00_eb1_ctl07',0,-1,-1,0,0,'statHover','',0,0,'EyeBrowMenuBarSetHeight','ExpEye','','');
+CheckDropDownClientCookie(false);SetFilterText(false);//]]>
+</script>
+</form>
+
+
+<script language="javascript" type="text/javascript" src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/broker.js"></script><script src="Understanding%20Self-Tuning%20Threshold%20Monitors-Dateien/broker-config.js"></script>
+
+</body></html>

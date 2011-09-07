@@ -28,6 +28,8 @@ import cc.co.llabor.cache.Manager;
  * Creation:  27.04.2010::15:33:35<br> 
  */
 public class RrdUpdateAction implements Action {
+	
+		static RrdKeeper keeper = RrdKeeper.getInstance(); 
 
 	    public static final String MM_DD_YYYY_HH_MM_SS_SSS = "MM/dd/yyyy HH:mm:ss.SSS";
 		SimpleDateFormat sdf = new SimpleDateFormat(MM_DD_YYYY_HH_MM_SS_SSS);
@@ -38,18 +40,37 @@ public class RrdUpdateAction implements Action {
 			this.sdf = sdf;
 		}
 
+		/**
+		 * the only one method to direct call update RRD-DB.
+		 * <br>
+		 * make a lot of things:
+		 *  <li> produce the rrdtool update-cmd
+		 *  <li> process errors
+		 *  <li> statistic
+		 *    
+		 * @param xpath : 'casd3ce1/java.lang/EClipse/Europa-ClassLoading/gauge/TotLoadedClasses'
+		 * @param timestamp :55461778
+		 * @param data :12345134534
+		 * 
+		 * 
+
+		 */ 
 		public Object perform(String xpath, long timestamp, String data) {
 			Object retval = ""; 
 			String cmdTmp = makeUpdateCMD(data, timestamp, xpath); 
 			try {   
+				keeper.update();
 				retval  = RrdCommander.execute(cmdTmp );
+				keeper.success();
 			} catch (IOException e) { 
+				keeper.warning();
 				if (e instanceof FileNotFoundException){
 					try {
 						String cmdCreate = makeCreateCMD(timestamp, xpath);   
 						System.out.println(xpath +" --->  "+cmdCreate); 
 						retval  =RrdCommander.execute(cmdCreate);
 						retval  =RrdCommander.execute(cmdTmp );
+						keeper.create();
 					} catch (IOException e1) { 
 						//e1.printStackTrace();
 						retval = e1;
@@ -57,8 +78,11 @@ public class RrdUpdateAction implements Action {
 						//e1.printStackTrace();
 						retval = e1;
 					}
+				}else{
+					keeper.fatal();
 				}
 			} catch (RrdException e) { 
+				keeper.error();
 				//e.printStackTrace();
 				retval = e; 
 			} 			
