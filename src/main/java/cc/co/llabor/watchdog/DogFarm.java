@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  * Creation:  30.05.2011::13:05:22<br> 
  */
 public class DogFarm {
-	protected static Timer timer = new Timer();
+	protected static Timer timer = new Timer(DogFarm.class.getName()+":Timer");
 
 	public static AbstractLimitWatchDog startTimer(String className) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IllegalArgumentException, SecurityException, InvocationTargetException, NoSuchMethodException {
 		Class  clazzTmp = Class.forName(className);

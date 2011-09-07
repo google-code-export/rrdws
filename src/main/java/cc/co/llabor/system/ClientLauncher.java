@@ -19,7 +19,7 @@ public class ClientLauncher implements Runnable {
 		//java.lang.instrument.Instrumentation instr = null;
 		////java -javaagent:collectd.jar="udp://localhost#javalang" -jar sigar.jar
 		////java -javaagent:collectd.jar="udp://localhost#javalang" -jar sigar.jar					
-			String args = "udp://239.192.74.66:25826#javalang#tomcat";
+			String args = "udp://239.192.74.66:25826#rrd#javalang#tomcat";
 			org.collectd.mx.RemoteMBeanSender.premain(args , null);
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block

@@ -58,7 +58,7 @@ public class StartStopServlet extends HttpServlet {
 			// collectd SERVER
 			startCollectdServer(arg0);
 			
-			// collectd CLIENT
+			// collectd CLIENT (agent)
 			startColelctdClient();
 					
 			// start collectd queue-worker

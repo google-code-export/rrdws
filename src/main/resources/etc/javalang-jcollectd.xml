@@ -11,6 +11,15 @@
       <attribute name="NonHeapMemoryUsage.max" alias="NonHeap_max" units="bytes"/>
     </mbean>
 
+
+    <mbean name="java.lang:type=Runtime" alias="RT">
+    	<attribute name="ManagementSpecVersion"/>
+    	<attribute name="SpecVersion"/>
+    	<attribute name="StartTime"/>
+    	<attribute name="Uptime"/>
+    	<attribute name="VmVersion"/>
+    </mbean>    
+    
     <mbean name="java.lang:type=Compilation" alias="Compilation">
     	<attribute name="TotalCompilationTime"/>
     </mbean>

@@ -23,7 +23,7 @@ public class TholdTest extends TestCase {
 	 
 	
 	private String getRRDName(){
-		return this.getClass().getName()+this.getName()+TEST_RRD;
+		return this.getClass().getName()+"_"+this.getName()+"_"+TEST_RRD;
 	}
 	@Override
 	protected void setUp() throws Exception {
@@ -124,7 +124,7 @@ public class TholdTest extends TestCase {
 		capTmp.unregister(headHunter);
 	}
 	private String syncToText() {
-		return  AlertCaptain.getInstance().isAsync()?"{A}":"sync";
+		return  AlertCaptain.getInstance().isAsync()?"!ASYNC!":"_sync_";
 	}
 	private void stayABit(AlertCaptain capTmp) {
 		

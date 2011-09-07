@@ -1,0 +1,12 @@
+<jcollectd-config>
+  <mbeans name="rrd">
+    <mbean name="rrdMX:type=ws.rrd.csv.RrdKeeper" alias="RrdKeeper"> 
+      <attribute name="updateCounter"  />
+      <attribute name="successCounter"  />
+      <attribute name="errorCounter"  />
+      <attribute name="warningCounter"  />
+      <attribute name="createCounter"  />
+      <attribute name="fatalCounter"  />
+    </mbean>
+  </mbeans>
+</jcollectd-config>
