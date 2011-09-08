@@ -215,13 +215,36 @@ public class RrdKeeper implements NotificationBroadcaster, DynamicMBean{
         }        
         return attrs;
     }
-	private void syncValues() {
+    long lastSyncTimeMilliseconds = -1;
+    long lastUpdatesCounter = -1;
+    private void syncValues() {
+    	long startTmp = System.currentTimeMillis();
+		
 		_metrics .put("updateCounter",  new Long(updateCounter)  );
     	_metrics .put("successCounter",  new Long(successCounter));
     	_metrics .put("errorCounter",  new Long(errorCounter));
     	_metrics .put("warningCounter",  new Long(warningCounter));
     	_metrics .put("createCounter",  new Long(createCounter));
     	_metrics .put("fatalCounter",  new Long(fatalCounter));
+    	_metrics .put("lastSyncTimeMilliseconds",   new Long(lastSyncTimeMilliseconds));
+    	_metrics .put("currentTimeMilliseconds",   new Long(lastSyncTimeMilliseconds ));
+    	_metrics .put("mathRandom",   new Double( Math.random() ) );
+    	_metrics .put("sinusT",   new Double( Math.sin( lastSyncTimeMilliseconds *  (7.0/(1000*60*60*24*Math.PI)) ) ) );
+    	
+    	long nowTmp = System.currentTimeMillis();
+    	_metrics .put("timePerSync",   new Long(startTmp - nowTmp  ));
+    	long sinceLastMsTmp = nowTmp - lastSyncTimeMilliseconds;
+		_metrics .put("timeSinceLastSync",   new Long(sinceLastMsTmp));
+		double updatesPerSecond = updateCounter - lastUpdatesCounter ;
+		_metrics .put("updateDelta",   new Double(updatesPerSecond));
+		
+		updatesPerSecond = sinceLastMsTmp>0?(1000*updatesPerSecond)/sinceLastMsTmp:updatesPerSecond;
+		lastUpdatesCounter  = updateCounter ;
+		
+		_metrics .put("updatesPerSecond",   new Double(updatesPerSecond));
+
+		lastSyncTimeMilliseconds = nowTmp ;
+
 	}
 	public void warning() {
 		warningCounter++;
