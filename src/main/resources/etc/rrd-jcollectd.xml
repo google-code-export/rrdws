@@ -7,6 +7,19 @@
       <attribute name="warningCounter"  />
       <attribute name="createCounter"  />
       <attribute name="fatalCounter"  />
+      <attribute name="lastSyncTimeMilliseconds"  />
+      <attribute name="timeSinceLastSync"  />
+      <attribute name="currentTimeMilliseconds"  />
+      <attribute name="sinusT"  />
+      <attribute name="mathRandom"  />
+      <attribute name="fatalCounter"  />
+ 
+      <attribute name="updatesPerSecond"  />
+      <attribute name="updatesDelta"  />
+      <attribute name="timePerSync"  />
+  
+ 
+
     </mbean>
   </mbeans>
 </jcollectd-config>

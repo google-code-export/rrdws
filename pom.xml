@@ -69,7 +69,7 @@
 		<dependency>
 			<groupId>cc.co.llabor</groupId>
 			<artifactId>jcollectd</artifactId>
-			<version>0.1.4</version>
+			<version>0.1.5-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
