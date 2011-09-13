@@ -25,7 +25,8 @@
       $(function() {          
           $("img").lazyload({
              placeholder : "img/grey.gif",
-             effect      : "fadeIn"
+             threshold : 200 ,
+             event : "mouseover"
           });
       });
   </script>
