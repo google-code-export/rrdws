@@ -21,15 +21,11 @@
 </style>
  <script src="js/jquery.min.js" type="text/javascript"></script>
  <script src="js/jquery.lazyload.js" type="text/javascript"></script>
-  <script type="text/javascript" charset="utf-8">
-      $(function() {          
-          $("img").lazyload({
-             placeholder : "img/grey.gif",
-             threshold : 200 ,
-             event : "mouseover"
-          });
-      });
-  </script>
+      <script>
+        $(function(){
+          $('img.lazy').lazyload({threshold: 30});
+        });
+      </script>
  </head>
 <body bgcolor=#FFFFFF link=#006890 vlink=#003860 alink=#800000 text=#000000 topmargin="0" marginheight="0">
  <table class="data-table-3" summary="this is the table >;-)" >
@@ -43,7 +39,6 @@ int i=0;
 for (String key:reg.getPath2db().keySet() ){
 i++;
 %>
-
 <tr class="td-<%=1+(i%3)%>">
     <td >
 		<%=i %>
@@ -56,8 +51,14 @@ i++;
 	<td>==</td>
 	<td><%=reg.getPath2db().get(key)%></td>
 	<td>
-		<a href="xgen.jsp?db=<%=reg.getPath2db().get(key)%>&_h=200&_w=320&_start=end-1day" target="_blank">
-			<img src="gen.jsp?db=<%=reg.getPath2db().get(key) %>"/>.
+		<a href="xgen.jsp?db=<%=reg.getPath2db().get(key)%>&_h=200&_w=320&_start=end-1day" target="_blank"> 
+			<%
+				String imgUrl = "gen.jsp?db="+reg.getPath2db().get(key) ;
+			%>
+			<img class="lazy" src="img/grey.gif" original-src="<%=imgUrl%>" width="64" height="32" />.
+	      <noscript>
+    	    <img src="<%=imgUrl%>" />
+      	</noscript>			
 		</a>	
 	</td>
 	<td>
@@ -65,12 +66,10 @@ i++;
 			X
 		</a>
 	</td>
-
-	
 </tr>
 <%
-}
-}
+} // for (String key:reg.getPath2db().keySet() ){
+} // if (null != reg){
 %>
    
 </table>
