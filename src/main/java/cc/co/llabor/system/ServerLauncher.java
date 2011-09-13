@@ -33,7 +33,8 @@ public class ServerLauncher implements Runnable {
 		}
 
 		public void destroyServer() {
-			org.collectd.mx.MBeanReceiver.getInstance().kill();
+			//org.collectd.mx.MBeanReceiver.getInstance().kill();
+			org.collectd.mx.MBeanReceiver.getInstance().shutdown();
 		}
 	 
 
