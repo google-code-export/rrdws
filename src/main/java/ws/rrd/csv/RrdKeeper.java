@@ -1,14 +1,24 @@
 package ws.rrd.csv;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.lang.management.ManagementFactory;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.logging.LogManager;
 
 import javax.management.Attribute;
 import javax.management.AttributeList;
 import javax.management.AttributeNotFoundException;
+import javax.management.Descriptor;
 import javax.management.DynamicMBean;
+import javax.management.ImmutableDescriptor;
 import javax.management.InstanceAlreadyExistsException;
+import javax.management.InstanceNotFoundException;
 import javax.management.InvalidAttributeValueException;
 import javax.management.ListenerNotFoundException;
 import javax.management.MBeanAttributeInfo;
@@ -18,11 +28,18 @@ import javax.management.MBeanInfo;
 import javax.management.MBeanNotificationInfo;
 import javax.management.MBeanOperationInfo;
 import javax.management.MBeanServer;
+import javax.management.Notification;
 import javax.management.NotificationBroadcaster;
 import javax.management.NotificationFilter;
 import javax.management.NotificationListener;
 import javax.management.ObjectName;
 import javax.management.ReflectionException;
+import javax.management.modelmbean.DescriptorSupport;
+ 
+import jmxlogger.test.LogListener;
+import jmxlogger.tools.ToolBox;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
  
@@ -36,11 +53,14 @@ import javax.management.ReflectionException;
  * 
  * Creation:  07.09.2011::17:10:50<br> 
  */
-public class RrdKeeper implements NotificationBroadcaster, DynamicMBean{
+public class RrdKeeper implements NotificationBroadcaster, NotificationListener , DynamicMBean{
 
 	private static final String DOMAIN = "rrdMX";
 	static RrdKeeper me = new RrdKeeper(); // jaja! natuerlich. singleton :-P...
-	
+	private Map<String, RrdNotificator> listeners = null;
+	{
+		listeners = new HashMap<String, RrdNotificator>();
+	}
 	private RrdKeeper(){
 		super();
 		try {
@@ -56,6 +76,15 @@ public class RrdKeeper implements NotificationBroadcaster, DynamicMBean{
         ObjectName name = new ObjectName(DOMAIN + ":" + "type=" + ""+this.getClass().getName());
         try{
         	bs.registerMBean(this, name);
+        	assert bs.getObjectInstance(name) != null : "RRDKeeper MBean is not registered";
+        	// register itself as listener
+        	NotificationListener listener = this;
+			NotificationFilter filter = new EverybodyFilter();
+			Object handback = this;
+			
+			this.addNotificationListener(listener, filter, handback);
+			
+			initLogger();
         }catch(InstanceAlreadyExistsException e)
         {
         	MBeanInfo oldOne = bs.getMBeanInfo(name);
@@ -65,34 +94,82 @@ public class RrdKeeper implements NotificationBroadcaster, DynamicMBean{
         }
         
    }
+	/**
+	 * /jmx-logger-log4j/src/test/java/jmxlogger/test/JmxLogAppenderTest.java
+	 * @author vipup
+	 * @throws InstanceNotFoundException 
+	 */
+	private void initLogger() throws InstanceNotFoundException { 
+        //Logger logger = Logger.getLogger(JmxLogAppenderTest.class);
+        //DOMConfigurator.configure("log4j.xml");
+        MBeanServer platformServer = ManagementFactory.getPlatformMBeanServer();
+        ObjectName objectName = ToolBox.buildObjectName("jmxlogger:type=LogEmitter");
+        LogListener lstnr = new LogListener();
+        platformServer.addNotificationListener(objectName, lstnr, null,null);
+
+        log.info("Hello World!");
+        log.info("This is a test for log4j.");
+        log.info("Do not attempt to change the channel.");
+	}
+	
 	
 	public static RrdKeeper getInstance() {
 		return me;
 	}
+	
+	
+	
 	@Override
 	public void addNotificationListener(NotificationListener listener,
-			NotificationFilter filter, Object handback)
+			NotificationFilter filter, final Object handback)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 07.09.2011");
-		else {
-		}
+		Object[] argArray = new Object[]{listener, filter,handback};
+		log.info("addNotificationListener( {},{},{})" ,argArray );
+		String key = "/"+filter.toString(); // TODO xpath ??
+		RrdNotificator theNext = new RrdNotificator (listener, filter,handback);
+		listeners.put(key , theNext);
 	}
 	@Override
 	public void removeNotificationListener(NotificationListener listener)
 			throws ListenerNotFoundException {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 07.09.2011");
-		else {
+		
+		if (listeners.containsValue(listener)){
+			log.info("--------  removeNotificationListener( {} )" ,listener );
+		}else{
+			log.info("!!!!!!!!!!  removeNotificationListener( {} )" ,listener );
 		}
 	}
 	@Override
 	public MBeanNotificationInfo[] getNotificationInfo() {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 07.09.2011");
-		else {
-		return null;
+		MBeanNotificationInfo[] retval = new MBeanNotificationInfo[]{};
+		List<MBeanNotificationInfo> notification = new ArrayList<MBeanNotificationInfo>();
+		for (int i=0;i<_metrics.size();i++){
+			/*
+			 * Parameters:
+notifTypes The array of strings (in dot notation) containing the notification types that the MBean may emit. This may be null with the same effect as a zero-length array.
+name The fully qualified Java class name of the described notifications.
+description A human readable description of the data.
+descriptor The descriptor for the notifications. This may be null which is equivalent to an empty descriptor.
+
+			 */
+			String description = "description #"+i;
+			Descriptor descriptor = (i%2) == 0?
+						new DescriptorSupport():
+						new ImmutableDescriptor("i"+i+"="+ _metrics.keySet().toArray() [ i ],  "a=b=c");
+			String name = this.getClass().getName(); //"x# ["+i+"]="+ _metrics.values().toArray() [ i ];
+			String[] notifTypes = {
+						"String".getClass().getName()
+						 , Long.class.getName()
+						 , Double.class.getName()
+						 , Float.class.getName()
+						 ,  Integer.class.getName()
+						 ,  Float.class.getName()
+						};
+			MBeanNotificationInfo e =new MBeanNotificationInfo(notifTypes, name, description, descriptor);// new RrdNotifInf(notifTypes, name, description, descriptor);
+			notification.add(e );
 		}
+		retval  =   notification.toArray(retval);
+		return retval;
 	}
 	@Override
 	public Object getAttribute(String attribute)
@@ -153,24 +230,37 @@ public class RrdKeeper implements NotificationBroadcaster, DynamicMBean{
             new MBeanInfo(getClass().getName(),
                           RrdKeeper.class.getName(),
                           getAttributeInfo(),
-                          1==1?null:getConstructors(), //constructors
-                        		  1==1?null:getOperations() , //operations
-                        				  1==1?null:getNotificationInfo()); //notifications
+                          1==2?null:getConstructors(), //constructors
+                        		  1==2?null:getOperations() , //operations
+                        				  2==1?null:getNotificationInfo()); //notifications
         return info;
     }
-    private MBeanOperationInfo[] getOperations() {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 07.09.2011");
-		else {
-		return null;
-		}
+    private MBeanOperationInfo[] getOperations() { 
+    	String descTmp = "resetCouters(...)";
+		Method methodTmp =this.getClass().getMethods()[0];
+		MBeanOperationInfo[] retval = new MBeanOperationInfo[]
+	     
+	     {
+    			new MBeanOperationInfo(descTmp, methodTmp)
+	     };
+		return retval;
+		
 	}
-	private MBeanConstructorInfo[] getConstructors() {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 07.09.2011");
-		else {
-		return null;
-		}
+	private MBeanConstructorInfo[] getConstructors() { 
+		Constructor constructor = null;
+		String description = ""+constructor ;
+		
+		MBeanConstructorInfo[] retval  = null;
+		try{
+			constructor  = this.getClass().getConstructors()[0];
+			MBeanConstructorInfo theOneConstr = new MBeanConstructorInfo(description, constructor);
+			retval = new MBeanConstructorInfo[]{
+					theOneConstr 
+				};
+		}catch(Throwable e){}
+		
+		return retval ;
+		
 	}
 	protected String getAttributeType(String name) {
         return _metrics.get(name).getClass().getName();
@@ -193,12 +283,8 @@ public class RrdKeeper implements NotificationBroadcaster, DynamicMBean{
     }        
     
     private Map<String,Number> _metrics = new HashMap<String, Number> ();
-    protected MBeanAttributeInfo[] getAttributeInfo() {
-    	 
-		syncValues();
-    	
-    	
-    	
+    protected MBeanAttributeInfo[] getAttributeInfo() { 
+		syncValues(); 
         MBeanAttributeInfo[] attrs =
             new MBeanAttributeInfo[_metrics.size()];
         int i=0;
@@ -231,6 +317,16 @@ public class RrdKeeper implements NotificationBroadcaster, DynamicMBean{
     	_metrics .put("mathRandom",   new Double( Math.random() ) );
     	_metrics .put("sinusT",   new Double( Math.sin( lastSyncTimeMilliseconds *  (7.0/(1000*60*60*24*Math.PI)) ) ) );
     	
+    	for (RrdNotificator l:listeners.values()){
+//    		System.out.println(l);
+//    		Object handback = "not#"+updateCounter;
+//			String typeTmp = "".getClass().getName();
+//			String msgTmp = "rrd self-notification#"+this.updateCounter;
+//			Notification notification = new RrdNotification(typeTmp , handback, this.updateCounter, startTmp, msgTmp );
+//			l.getListener().handleNotification(notification , handback );
+    		log.debug("Notification for {} - {} ", l, this  );
+    	}
+    	
     	long nowTmp = System.currentTimeMillis();
     	_metrics .put("timePerSync",   new Long(startTmp - nowTmp  ));
     	long sinceLastMsTmp = nowTmp - lastSyncTimeMilliseconds;
@@ -262,6 +358,12 @@ public class RrdKeeper implements NotificationBroadcaster, DynamicMBean{
     long warningCounter = 0;
 	long createCounter = 0;
 	long fatalCounter = 0;
+	private static final Logger log = LoggerFactory.getLogger(RrdKeeper.class .getName());
+
+	@Override
+	public void handleNotification(Notification notification, Object handback) {
+		 System.out.println("NOTIFICATION>>>"+notification+"\""+handback);
+	}
 
 }
 
