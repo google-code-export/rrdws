@@ -329,6 +329,8 @@ descriptor The descriptor for the notifications. This may be null which is equiv
     	_metrics .put("loggedWarn",loggedWarn);
     	_metrics .put("loggedInfo",loggedInfo);
     	_metrics .put("loggedDebug",loggedDebug);    	
+    	_metrics .put("loggedTrace",loggedTrace);
+    	_metrics .put("loggedCounter",loggedCounter);
 		_metrics .put("updateCounter",  new Long(updateCounter)  );
     	_metrics .put("successCounter",  new Long(successCounter));
     	_metrics .put("errorCounter",  new Long(errorCounter));
@@ -398,12 +400,31 @@ descriptor The descriptor for the notifications. This may be null which is equiv
 	private int loggedWarn = 0;
 	private int loggedInfo = 0;
 	private int loggedDebug = 0;
+	private int loggedTrace = 0;
+	private int loggedCounter = 0;
+	
 	 
-	public void loggedFATAL() { loggedFatal ++;	}
-	public void loggedERROR() { 	loggedError ++;}
-	public void loggedWARN() { 	loggedWarn++;}
-	public void loggedINFO() { 	loggedInfo++;}
-	public void loggedDEBUG() { 	loggedDebug++;}
+	public void loggedFATAL() {
+		loggedFatal++;
+	}
+	public void loggedERROR() {
+		loggedError++;
+	}
+	public void loggedWARN() {
+		loggedWarn++;
+	}
+	public void loggedINFO() {
+		loggedInfo++;
+	}
+	public void loggedDEBUG() {
+		loggedDebug++;
+	}
+	public void loggedTRACE() {
+		loggedTrace++;
+	}
+	public void logged() {
+		loggedCounter++;
+	}	
 
 }
 
