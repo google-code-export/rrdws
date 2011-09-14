@@ -22,21 +22,26 @@ public class JMXAppender extends JmxLogAppender{
     protected void append(LoggingEvent log4jEvent) {
     	super.append(log4jEvent);
     	int level = log4jEvent.getLevel().toInt();
-    	switch (level) {
+    	RrdKeeper instance = RrdKeeper.getInstance();
+    	instance.logged();
+		switch (level) {
+			case Priority.ALL_INT :
+				instance.loggedTRACE();
+				break;
 			case Priority.DEBUG_INT :
-				RrdKeeper.getInstance().loggedDEBUG();
+				instance.loggedDEBUG();
 				break;
 			case Priority.ERROR_INT:
-				RrdKeeper.getInstance().loggedERROR();
+				instance.loggedERROR();
 				break;
 			case Priority.FATAL_INT  :
-				RrdKeeper.getInstance().loggedFATAL();
+				instance.loggedFATAL();
 				break;
 			case Priority.WARN_INT  :
-				RrdKeeper.getInstance().loggedWARN();
+				instance.loggedWARN();
 				break;
 			case Priority.INFO_INT :
-				RrdKeeper.getInstance().loggedINFO();
+				instance.loggedINFO();
 				break;
 
 			default :

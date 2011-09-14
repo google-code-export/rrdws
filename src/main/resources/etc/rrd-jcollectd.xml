@@ -1,28 +1,30 @@
 <jcollectd-config>
   <mbeans name="rrd">
     <mbean name="rrdMX:type=ws.rrd.csv.RrdKeeper" alias="RrdKeeper"> 
-      <attribute name="updateCounter"  />
-      <attribute name="successCounter"  />
-      <attribute name="errorCounter"  />
-      <attribute name="warningCounter"  />
-      <attribute name="createCounter"  />
-      <attribute name="fatalCounter"  />
+      <attribute name="updateCounter" type="counter" />
+      <attribute name="successCounter"  type="counter" />
+      <attribute name="errorCounter" type="counter" />
+      <attribute name="warningCounter"  type="counter"/>
+      <attribute name="createCounter"  type="counter"/>
+      <attribute name="fatalCounter"  type="counter"/>
       <attribute name="lastSyncTimeMilliseconds"  />
       <attribute name="timeSinceLastSync"  />
       <attribute name="currentTimeMilliseconds"  />
-      <attribute name="sinusT"  />
-      <attribute name="mathRandom"  />
-      <attribute name="fatalCounter"  />
+      <attribute name="sinusT" alias="sinus(T)" />
+      <attribute name="mathRandom"  alias="Math.random()"/>
+      <attribute name="fatalCounter" type="counter" />
  
       <attribute name="updatesPerSecond"  />
       <attribute name="updatesDelta"  />
       <attribute name="timePerSync"  />
   
-     <attribute name="loggedFatal"  />
-    <attribute name="loggedError"  />
-    <attribute name="loggedWarn"  />
-    <attribute name="loggedInfo"  />
-    <attribute name="loggedDebug"  />
+    <attribute name="loggedFatal" type="counter" />
+    <attribute name="loggedError"  type="counter"/>
+    <attribute name="loggedWarn"  type="counter"/>
+    <attribute name="loggedInfo"  type="counter"/>
+    <attribute name="loggedDebug"  type="counter"/>
+    <attribute name="loggedTrace"  type="counter" />
+    
 
     </mbean>
   </mbeans>
