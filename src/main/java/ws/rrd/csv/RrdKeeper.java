@@ -28,6 +28,7 @@ import javax.management.MBeanInfo;
 import javax.management.MBeanNotificationInfo;
 import javax.management.MBeanOperationInfo;
 import javax.management.MBeanServer;
+import javax.management.MalformedObjectNameException;
 import javax.management.Notification;
 import javax.management.NotificationBroadcaster;
 import javax.management.NotificationFilter;
@@ -103,15 +104,32 @@ public class RrdKeeper implements NotificationBroadcaster, NotificationListener 
         //Logger logger = Logger.getLogger(JmxLogAppenderTest.class);
         //DOMConfigurator.configure("log4j.xml");
         MBeanServer platformServer = ManagementFactory.getPlatformMBeanServer();
-        ObjectName objectName = ToolBox.buildObjectName("jmxlogger:type=LogEmitter");
-        LogListener lstnr = new LogListener();
+        ObjectName objectName = /*ToolBox.*/buildObjectName("rrdMX:type=ws.rrd.csv.RrdKeeper");
+        //LogListener lstnr = new LogListener();
+        NotificationListener lstnr = this; 
         platformServer.addNotificationListener(objectName, lstnr, null,null);
 
-        log.info("Hello World!");
-        log.info("This is a test for log4j.");
-        log.info("Do not attempt to change the channel.");
+        log.warn("Hello World! {}", this);
+        log.debug("This is a test for   log4j @rrdKeeper.{}", this);
+        log.info("Do not attempt to change the channel.{}", this);
 	}
 	
+    /**
+     * Util method to build a standard JMX ObjectName.  It wraps all of the exceptions into a RuntimeException.
+     * @param name - the string representation of ObjectName
+     * @return new instance of ObjectName
+     */
+    public static ObjectName buildObjectName(String name){
+        ObjectName objName = null;
+        try {
+            objName = new ObjectName(name);
+        } catch (MalformedObjectNameException ex) {
+            throw new RuntimeException(ex);
+        } catch (NullPointerException ex) {
+            throw new RuntimeException(ex);
+        }
+        return objName;
+    }	
 	
 	public static RrdKeeper getInstance() {
 		return me;
@@ -232,7 +250,7 @@ descriptor The descriptor for the notifications. This may be null which is equiv
                           getAttributeInfo(),
                           1==1?null:getConstructors(), //constructors
                         		  1==1?null:getOperations() , //operations
-                        				  2==1?null:getNotificationInfo()); //notifications
+                        				  1==1?null:getNotificationInfo()); //notifications
         return info;
     }
     private MBeanOperationInfo[] getOperations() { 
@@ -305,7 +323,12 @@ descriptor The descriptor for the notifications. This may be null which is equiv
     long lastUpdatesCounter = -1;
     private void syncValues() {
     	long startTmp = System.currentTimeMillis();
-		
+
+    	_metrics .put("loggedFatal",loggedFatal);
+    	_metrics .put("loggedError",loggedError);
+    	_metrics .put("loggedWarn",loggedWarn);
+    	_metrics .put("loggedInfo",loggedInfo);
+    	_metrics .put("loggedDebug",loggedDebug);    	
 		_metrics .put("updateCounter",  new Long(updateCounter)  );
     	_metrics .put("successCounter",  new Long(successCounter));
     	_metrics .put("errorCounter",  new Long(errorCounter));
@@ -370,6 +393,17 @@ descriptor The descriptor for the notifications. This may be null which is equiv
 	public void handleNotification(Notification notification, Object handback) {
 		 System.out.println("NOTIFICATION>>>"+notification+"\""+handback);
 	}
+	private int loggedFatal = 0;
+	private int loggedError = 0;
+	private int loggedWarn = 0;
+	private int loggedInfo = 0;
+	private int loggedDebug = 0;
+	 
+	public void loggedFATAL() { loggedFatal ++;	}
+	public void loggedERROR() { 	loggedError ++;}
+	public void loggedWARN() { 	loggedWarn++;}
+	public void loggedINFO() { 	loggedInfo++;}
+	public void loggedDEBUG() { 	loggedDebug++;}
 
 }
 

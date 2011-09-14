@@ -18,7 +18,11 @@
       <attribute name="updatesDelta"  />
       <attribute name="timePerSync"  />
   
- 
+     <attribute name="loggedFatal"  />
+    <attribute name="loggedError"  />
+    <attribute name="loggedWarn"  />
+    <attribute name="loggedInfo"  />
+    <attribute name="loggedDebug"  />
 
     </mbean>
   </mbeans>
