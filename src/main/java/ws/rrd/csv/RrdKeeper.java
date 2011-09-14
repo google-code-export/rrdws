@@ -56,6 +56,12 @@ public class RrdKeeper implements NotificationBroadcaster, NotificationListener 
 	static private Map<String, RrdNotificator> listeners = null;
 	static {
 		listeners = new HashMap<String, RrdNotificator>();
+		try {
+			me.init();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	private RrdKeeper(){
 		super();
@@ -77,13 +83,16 @@ public class RrdKeeper implements NotificationBroadcaster, NotificationListener 
 			
 			initLogger();
         }catch(InstanceAlreadyExistsException e)
-        {
+        {e.printStackTrace();
         	MBeanInfo oldOne = bs.getMBeanInfo(name);
         	System.out.println("ungeristered MBean:"+oldOne);
-        	bs.unregisterMBean(name);
-        	bs.registerMBean(this, name);
-        }
-        inited = true;
+        	try{
+        		bs.unregisterMBean(name);
+        	}catch(Throwable ee){
+        		ee.printStackTrace();
+        	}
+        	init();
+        } 
    }
 	/**
 	 * /jmx-logger-log4j/src/test/java/jmxlogger/test/JmxLogAppenderTest.java
@@ -121,15 +130,7 @@ public class RrdKeeper implements NotificationBroadcaster, NotificationListener 
         return objName;
     }	
 	
-	public static RrdKeeper getInstance() {
-		if (!me.inited){
-			try {
-				me.init();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+	public static RrdKeeper getInstance() { 
 		return me;
 	}
 	
@@ -242,7 +243,7 @@ descriptor The descriptor for the notifications. This may be null which is equiv
         MBeanInfo info =
             new MBeanInfo(getClass().getName(),
                           RrdKeeper.class.getName(),
-                          !this.inited?null:getAttributeInfo(),
+                          getAttributeInfo(),
                           1==1?null:getConstructors(), //constructors
                         		  1==1?null:getOperations() , //operations
                         				  1==1?null:getNotificationInfo()); //notifications
@@ -297,7 +298,7 @@ descriptor The descriptor for the notifications. This may be null which is equiv
     
     private Map<String,Number> _metrics = new HashMap<String, Number> ();
     protected MBeanAttributeInfo[] getAttributeInfo() { 
-		syncValues(); 
+		this.syncValues();
         MBeanAttributeInfo[] attrs =
             new MBeanAttributeInfo[_metrics.size()];
         int i=0;
@@ -315,17 +316,16 @@ descriptor The descriptor for the notifications. This may be null which is equiv
         return attrs;
     }
     long lastSyncTimeMilliseconds = -1;
-    long lastUpdatesCounter = -1;
-    private boolean inited = false;
+    long lastUpdatesCounter = -1; 
     private void syncValues() {
-    	if (!inited){
-    		System.out.println("not inited yet...");
-    		try {
-    			init();
-    		} catch (Exception e) { 
-    			e.printStackTrace();
-    		}    		
-    	}
+//    	if (!inited){
+//    		System.out.println("not inited yet...");
+//    		try {
+//    			init();
+//    		} catch (Exception e) { 
+//    			e.printStackTrace();
+//    		}    		
+//    	}
     	long startTmp = System.currentTimeMillis();
 
     	_metrics .put("loggedFatal",loggedFatal);
