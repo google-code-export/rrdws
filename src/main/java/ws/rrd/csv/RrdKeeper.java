@@ -60,9 +60,8 @@ public class RrdKeeper implements NotificationBroadcaster, NotificationListener 
 		super();
 		try {
 			init();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) { 
+			log.error("RrdKeeper(){}", e);
 		}
 	}
     public void init() throws Exception {
@@ -87,7 +86,7 @@ public class RrdKeeper implements NotificationBroadcaster, NotificationListener 
         	bs.unregisterMBean(name);
         	bs.registerMBean(this, name);
         }
-        
+        inited = true;
    }
 	/**
 	 * /jmx-logger-log4j/src/test/java/jmxlogger/test/JmxLogAppenderTest.java
@@ -206,14 +205,11 @@ descriptor The descriptor for the notifications. This may be null which is equiv
 			try {
 				retval.add((Number) getAttribute(attr));
 			} catch (AttributeNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error("getAttributes{}{}",attributes, e);
 			} catch (MBeanException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error("getAttributes{}{}",attributes, e);
 			} catch (ReflectionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error("getAttributes{}{}",attributes, e);
 			}
 		}
 		
@@ -315,7 +311,11 @@ descriptor The descriptor for the notifications. This may be null which is equiv
     }
     long lastSyncTimeMilliseconds = -1;
     long lastUpdatesCounter = -1;
+    private boolean inited = false;
     private void syncValues() {
+    	if (!inited){
+    		System.out.println("not inited yet...");;
+    	}
     	long startTmp = System.currentTimeMillis();
 
     	_metrics .put("loggedFatal",loggedFatal);
@@ -336,22 +336,22 @@ descriptor The descriptor for the notifications. This may be null which is equiv
     	_metrics .put("mathRandom",   new Double( Math.random() ) );
     	_metrics .put("sinusT",   new Double( Math.sin( lastSyncTimeMilliseconds *  (7.0/(1000*60*60*24*Math.PI)) ) ) );
     	
-    	if(listeners!=null)// workaroud for static-initialisation
-    	for (RrdNotificator l:listeners.values()){
-//    		System.out.println(l);
-//    		Object handback = "not#"+updateCounter;
-//			String typeTmp = "".getClass().getName();
-//			String msgTmp = "rrd self-notification#"+this.updateCounter;
-//			Notification notification = new RrdNotification(typeTmp , handback, this.updateCounter, startTmp, msgTmp );
-//			l.getListener().handleNotification(notification , handback );
-    		log.error( "Notification for {} - {} ", l, this  );
-    	}
-    	try{
-    		log.trace( "sync  # {} ",  ""+ this.updateCounter  );
-    	}catch(Throwable ee){
-    		ee.printStackTrace();
-    	}
-    	
+//    	if(listeners!=null)// workaroud for static-initialisation
+//    	for (RrdNotificator l:listeners.values()){
+////    		System.out.println(l);
+////    		Object handback = "not#"+updateCounter;
+////			String typeTmp = "".getClass().getName();
+////			String msgTmp = "rrd self-notification#"+this.updateCounter;
+////			Notification notification = new RrdNotification(typeTmp , handback, this.updateCounter, startTmp, msgTmp );
+////			l.getListener().handleNotification(notification , handback );
+//    		log.error( "Notification for {} - {} ", l, this  );
+//    	}
+//    	try{
+//    		log.trace( "sync  # {} ",  ""+ this.updateCounter  );
+//    	}catch(Throwable ee){
+//    		log.warn(  "syncValues() ",ee);
+//    	}
+//    	
     	long nowTmp = System.currentTimeMillis();
     	_metrics .put("timePerSync",   new Long(startTmp - nowTmp  ));
     	long sinceLastMsTmp = nowTmp - lastSyncTimeMilliseconds;

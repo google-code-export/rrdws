@@ -11,12 +11,9 @@ package cc.co.llabor.watchdog;
  */ 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Properties;
-import java.util.ResourceBundle;
-
+import java.util.Properties;  
 import net.sf.jsr107cache.Cache;
-
-import org.jrobin.core.Archive;
+ 
 import org.jrobin.core.RrdDb;
 import org.jrobin.core.RrdDbPool;
 import org.jrobin.core.RrdException;
@@ -62,10 +59,10 @@ public class RRDHighLimitWatchDog extends AbstractLimitWatchDog {
 			this.lowLIMIT = Long.parseLong( bTmp.getProperty("lowLIMIT", ""+lowLIMIT) );
 				
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("RRDHighLimitWatchDog(){}", e );
 		} catch (Throwable e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("RRDHighLimitWatchDog(){}", e );
 		}
 		
 
@@ -75,7 +72,7 @@ public class RRDHighLimitWatchDog extends AbstractLimitWatchDog {
 		try {
 			Runtime.getRuntime().exec(this.toEXEC );
 		} catch (IOException e) { 
-			e.printStackTrace();
+			log.error("do911() {}{}", e );
 		}
 	}
 	protected void doWarning(long lowMemory) {
@@ -114,10 +111,10 @@ public class RRDHighLimitWatchDog extends AbstractLimitWatchDog {
 			retval =  (long)a; 
  
 		} catch (RrdException e1) {
-			log.error(  "doStop() failed", e1);
+			log.error(  "getCurrent()failed", e1);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(  "getCurrent() failed", e);
 		} 		
 		return retval ;
 	}
@@ -163,11 +160,11 @@ public class RRDHighLimitWatchDog extends AbstractLimitWatchDog {
 				doDefault();  
 			}catch (java.lang.OutOfMemoryError e) {
 				oumErrorCount++;
-				e.printStackTrace();
+				log.error("run()", e );
 				do911();
 			}catch (Exception e) {
 				errorCount ++;
-				e.printStackTrace();
+				log.error("run()", e );
 			}
 		}
 	
