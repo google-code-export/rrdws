@@ -340,7 +340,7 @@
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-api-1.0-sdk</artifactId>
 			<version>${gae.version}</version>
-			 
+			 <scope>${gae.api.scope}</scope>
 		</dependency>
 
 		<!-- 
@@ -804,6 +804,8 @@
 				</property>
 			</activation>
 			<properties>
+				<!--   <scope>${gae.api.scope}</scope>  -->
+				<gae.api.scope>compile</gae.api.scope>
 				<gae.application.version>1</gae.application.version>
 			</properties>
 		</profile>
@@ -817,6 +819,7 @@
 				</property>
 			</activation>
 			<properties>
+		  		<gae.api.scope>provided</gae.api.scope>
 				<gae.application.version>xxx</gae.application.version>
 			</properties>
 			<build>
