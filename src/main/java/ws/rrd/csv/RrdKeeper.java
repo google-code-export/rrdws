@@ -57,8 +57,8 @@ public class RrdKeeper implements NotificationBroadcaster, NotificationListener 
 
 	private static final String DOMAIN = "rrdMX";
 	static RrdKeeper me = new RrdKeeper(); // jaja! natuerlich. singleton :-P...
-	private Map<String, RrdNotificator> listeners = null;
-	{
+	static private Map<String, RrdNotificator> listeners = null;
+	static {
 		listeners = new HashMap<String, RrdNotificator>();
 	}
 	private RrdKeeper(){
@@ -230,8 +230,8 @@ descriptor The descriptor for the notifications. This may be null which is equiv
             new MBeanInfo(getClass().getName(),
                           RrdKeeper.class.getName(),
                           getAttributeInfo(),
-                          1==2?null:getConstructors(), //constructors
-                        		  1==2?null:getOperations() , //operations
+                          1==1?null:getConstructors(), //constructors
+                        		  1==1?null:getOperations() , //operations
                         				  2==1?null:getNotificationInfo()); //notifications
         return info;
     }
@@ -317,6 +317,7 @@ descriptor The descriptor for the notifications. This may be null which is equiv
     	_metrics .put("mathRandom",   new Double( Math.random() ) );
     	_metrics .put("sinusT",   new Double( Math.sin( lastSyncTimeMilliseconds *  (7.0/(1000*60*60*24*Math.PI)) ) ) );
     	
+    	if(listeners!=null)// workaroud for static-initialisation
     	for (RrdNotificator l:listeners.values()){
 //    		System.out.println(l);
 //    		Object handback = "not#"+updateCounter;
@@ -324,7 +325,12 @@ descriptor The descriptor for the notifications. This may be null which is equiv
 //			String msgTmp = "rrd self-notification#"+this.updateCounter;
 //			Notification notification = new RrdNotification(typeTmp , handback, this.updateCounter, startTmp, msgTmp );
 //			l.getListener().handleNotification(notification , handback );
-    		log.debug("Notification for {} - {} ", l, this  );
+    		log.error( "Notification for {} - {} ", l, this  );
+    	}
+    	try{
+    		log.info( "sync  # {} ",  ""+ this.updateCounter  );
+    	}catch(Throwable ee){
+    		ee.printStackTrace();
     	}
     	
     	long nowTmp = System.currentTimeMillis();
