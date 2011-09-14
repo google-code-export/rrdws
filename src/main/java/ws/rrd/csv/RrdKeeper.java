@@ -351,7 +351,7 @@ descriptor The descriptor for the notifications. This may be null which is equiv
     		log.error( "Notification for {} - {} ", l, this  );
     	}
     	try{
-    		log.info( "sync  # {} ",  ""+ this.updateCounter  );
+    		log.trace( "sync  # {} ",  ""+ this.updateCounter  );
     	}catch(Throwable ee){
     		ee.printStackTrace();
     	}
