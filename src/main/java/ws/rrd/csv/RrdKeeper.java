@@ -32,6 +32,7 @@ import javax.management.NotificationListener;
 import javax.management.ObjectName;
 import javax.management.ReflectionException;
 import javax.management.modelmbean.DescriptorSupport;
+import javax.naming.InitialContext;
   
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,13 +59,9 @@ public class RrdKeeper implements NotificationBroadcaster, NotificationListener 
 	}
 	private RrdKeeper(){
 		super();
-		try {
-			init();
-		} catch (Exception e) { 
-			log.error("RrdKeeper(){}", e);
-		}
 	}
-    public void init() throws Exception {
+	
+    private synchronized void init() throws Exception {
         MBeanServer bs =
             ManagementFactory.getPlatformMBeanServer();    	
         ObjectName name = new ObjectName(DOMAIN + ":" + "type=" + ""+this.getClass().getName());
@@ -102,9 +99,9 @@ public class RrdKeeper implements NotificationBroadcaster, NotificationListener 
         NotificationListener lstnr = this; 
         platformServer.addNotificationListener(objectName, lstnr, null,null);
 
-        log.warn("Hello World! {}", this);
-        log.debug("This is a test for   log4j @rrdKeeper.{}", this);
-        log.info("Do not attempt to change the channel.{}", this);
+//        log.warn("Hello World! {}", this);
+//        log.debug("This is a test for   log4j @rrdKeeper.{}", this);
+//        log.info("Do not attempt to change the channel.{}", this);
 	}
 	
     /**
@@ -125,6 +122,14 @@ public class RrdKeeper implements NotificationBroadcaster, NotificationListener 
     }	
 	
 	public static RrdKeeper getInstance() {
+		if (!me.inited){
+			try {
+				me.init();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		return me;
 	}
 	
@@ -237,7 +242,7 @@ descriptor The descriptor for the notifications. This may be null which is equiv
         MBeanInfo info =
             new MBeanInfo(getClass().getName(),
                           RrdKeeper.class.getName(),
-                          getAttributeInfo(),
+                          !this.inited?null:getAttributeInfo(),
                           1==1?null:getConstructors(), //constructors
                         		  1==1?null:getOperations() , //operations
                         				  1==1?null:getNotificationInfo()); //notifications
@@ -314,7 +319,12 @@ descriptor The descriptor for the notifications. This may be null which is equiv
     private boolean inited = false;
     private void syncValues() {
     	if (!inited){
-    		System.out.println("not inited yet...");;
+    		System.out.println("not inited yet...");
+    		try {
+    			init();
+    		} catch (Exception e) { 
+    			e.printStackTrace();
+    		}    		
     	}
     	long startTmp = System.currentTimeMillis();
 
