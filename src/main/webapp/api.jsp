@@ -1,3 +1,4 @@
+<%@page import="java.util.Enumeration"%>
 <%@page 
 	import="net.sf.jsr107cache.Cache"%><%@page 
 	import="cc.co.llabor.cache.Manager"%><%@page 
@@ -11,6 +12,14 @@
 //	response.setContentType("application/json");		
 //	response.setDateHeader ("Expires", 0); //prevents caching at the proxy server
 //	response.setHeader("Content-Disposition", "attachment;filename=anno.json");	
+
+
+Enumeration enTmp = request.getHeaderNames();
+for (;enTmp .hasMoreElements();){
+	String nameTmp =""+enTmp .nextElement();
+	String hTmp = request.getHeader(nameTmp);
+	System.out.println("! "+ nameTmp  +" =["+hTmp +"]" );
+}
 
 String uCase = request.getRequestURI();
 String cxType = request.getContentType();
@@ -60,21 +69,23 @@ if(ServletFileUpload.isMultipartContent(request)){
 
 String storedAnn = null;
 String allKeys  = null;
+String prefixTmp = ""+ ( ""+request.getHeader("referer")).hashCode();
+String baseNAME = "ALL-"+prefixTmp;
 switch(cmdID){
 	case 0: 
 		System.out.println("annoCREATE");
-		idTmp = ""+System.currentTimeMillis();
+		idTmp = ""+prefixTmp+"-"+System.currentTimeMillis();
 		//"id": "cccccccccccccccccccccccccccccccc",  
 		theB = "{\"id\":\""+idTmp+"\","  +theB.trim().substring(1);
 		//break;
 	case 1: 
 		System.out.println("annoUPDATE");
 		
-		allKeys = (String)anno.get("ALL");
+		allKeys = (String)anno.get(baseNAME);
 		allKeys = allKeys ==null? "":allKeys ;
 		allKeys +=",";
 		allKeys += idTmp;
-		anno.put("ALL", allKeys);
+		anno.put(baseNAME, allKeys);
 		anno.put(idTmp, ""+theB);
 		 
 		break;
@@ -83,15 +94,15 @@ switch(cmdID){
 		break;
 	case 3: 
 		System.out.println("annoDESTROY");
-		allKeys = (String)anno.get("ALL");
+		allKeys = (String)anno.get(baseNAME);
 		allKeys = allKeys ==null? "":allKeys ;
 		allKeys = allKeys.indexOf(idTmp)>=0?allKeys.replace(idTmp,",").replace(",,",","):allKeys;		
-		anno.put("ALL", allKeys);
+		anno.put(baseNAME, allKeys);
 		anno.remove(idTmp);
 		break;
 	case 4: 
 		System.out.println("annoSEARCH");
-		allKeys = (String)anno.get("ALL");
+		allKeys = (String)anno.get(baseNAME);
 		
 		if (allKeys != null){
 			storedAnn = "{\"rows\":[\n";
