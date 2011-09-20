@@ -75,8 +75,10 @@ switch(cmdID){
 	case 0: 
 		System.out.println("annoCREATE");
 		idTmp = ""+prefixTmp+"-"+System.currentTimeMillis();
-		//"id": "cccccccccccccccccccccccccccccccc",  
-		theB = "{\"id\":\""+idTmp+"\","  +theB.trim().substring(1);
+		//"id": "cccccccccccccccccccccccccccccccc",
+		String restTmp = theB.trim().substring(1);
+		restTmp = restTmp.startsWith("\"")?restTmp:("\""+restTmp);
+		theB = "{\"id\":\""+idTmp+"\","  +restTmp;
 		//break;
 	case 1: 
 		System.out.println("annoUPDATE");
