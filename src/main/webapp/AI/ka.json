@@ -1,0 +1,114 @@
+{
+  "rows": [
+    {
+      "account_id": "39fc339cf058bd22176771b3e3153e6a", 
+      "created": "2011-09-19T15:02:37.964648", 
+      "text": "hallo s\u00fcsse!", 
+      "_rev": "1-b36dc0d9920116b58cc2a152517ca19a", 
+      "tags": [], 
+      "uri": "http://localhost:8080/rrdsaas/l/l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001", 
+      "ranges": [
+        {
+          "start": "/div/table/tbody/tr[3]/td/font", 
+          "end": "/div/table/tbody/tr[3]/td/font", 
+          "startOffset": 0, 
+          "endOffset": 22
+        }
+      ], 
+      "annotator_schema_version": "v1.0", 
+      "user": {
+        "id": "39fc339cf058bd22176771b3e3153e6a", 
+        "name": "vasja"
+      }, 
+      "quote": "Mein Name ist Fredegar", 
+      "_id": "39fc339cf058bd22176771b3e33c03d9", 
+      "type": "Annotation", 
+      "id": "39fc339cf058bd22176771b3e33c03d9", 
+      "permissions": {
+        "read": [], 
+        "admin": [
+          "39fc339cf058bd22176771b3e3153e6a"
+        ], 
+        "update": [
+          "39fc339cf058bd22176771b3e3153e6a"
+        ], 
+        "delete": [
+          "39fc339cf058bd22176771b3e3153e6a"
+        ]
+      }
+    }, 
+    {
+      "account_id": "39fc339cf058bd22176771b3e3153e6a", 
+      "created": "2011-09-19T14:59:50.719573", 
+      "text": "Jo Google", 
+      "_rev": "1-e272ab80208b5536f5a5c55f651febc6", 
+      "tags": [], 
+      "uri": "http://localhost:8080/rrdsaas/l/l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001", 
+      "ranges": [
+        {
+          "start": "/div[5]/span/center/div/div/div/div", 
+          "end": "/div[5]/span/center/div/div/div/div", 
+          "startOffset": 0, 
+          "endOffset": 11
+        }
+      ], 
+      "annotator_schema_version": "v1.0", 
+      "user": {
+        "id": "39fc339cf058bd22176771b3e3153e6a", 
+        "name": "vasja"
+      }, 
+      "quote": "Deutschland", 
+      "_id": "39fc339cf058bd22176771b3e33bf35f", 
+      "type": "Annotation", 
+      "id": "39fc339cf058bd22176771b3e33bf35f", 
+      "permissions": {
+        "read": [], 
+        "admin": [
+          "39fc339cf058bd22176771b3e3153e6a"
+        ], 
+        "update": [], 
+        "delete": [
+          "39fc339cf058bd22176771b3e3153e6a"
+        ]
+      }
+    }, 
+    {
+      "account_id": "39fc339cf058bd22176771b3e3153e6a", 
+      "created": "2011-09-19T10:09:39.083676", 
+      "text": "\u041b\u0443\u0436\u043a\u043e\u0444\u0444 \u0447\u0435\u0448\u0435\u0442 \u0440\u0435\u043f\u0443 :)", 
+      "_rev": "1-d86a96995c8ed970b598a0b3d7b0bdf7", 
+      "tags": [], 
+      "uri": "http://localhost:8080/rrdsaas/l/l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001", 
+      "ranges": [
+        {
+          "start": "/table[3]/tbody/tr/td[2]/table/tbody/tr/td[2]/div/table/tbody/tr[2]/td/div/table/tbody/tr/th/h2/a", 
+          "end": "/table[3]/tbody/tr/td[2]/table/tbody/tr/td[2]/div/table/tbody/tr[2]/td/div/table/tbody/tr[2]/th/h3/a", 
+          "startOffset": 0, 
+          "endOffset": 85
+        }
+      ], 
+      "annotator_schema_version": "v1.0", 
+      "user": {
+        "id": "39fc339cf058bd22176771b3e3153e6a", 
+        "name": "vasja"
+      }, 
+      "quote": "\u00d0\u009d\u00d0\u00be\u00d0\u00b2\u00d0\u00be\u00d1\u0081\u00d1\u201a\u00d0\u00b8 \u00d0\u00b4\u00d0\u00bd\u00d1\u008f\u00d0\u00a4\u00d0\u00b8\u00d0\u00bd\u00d0\u00b0\u00d0\u00bd\u00d1\u0081\u00d1\u2039|\u00d0\u0161\u00d0\u00b8\u00d0\u00bd\u00d0\u00be|\u00d0\u009d\u00d0\u00b0\u00d1\u0192\u00d0\u00ba\u00d0\u00b0|\u00d0\u2013\u00d0\u00b5\u00d0\u00bd\u00d1\u0081\u00d0\u00ba\u00d0\u00b8\u00d0\u00b9 \u00d0\u00ba\u00d0\u00bb\u00d1\u0192\u00d0\u00b1\u00ab\u00d0\u2014\u00d0\u00b0\u00d0\u00bd\u00d0\u00b8\u00d0\u00bc\u00d0\u00b0\u00d1\u201a\u00d1\u0152\u00d1\u0081\u00d1\u008f \u00d0\u00b1\u00d0\u00b8\u00d0\u00b7\u00d0\u00bd\u00d0\u00b5\u00d1\u0081\u00d0\u00be\u00d0\u00bc \u00d0\u00b2 \u00d0\u00bd\u00d0\u00b0\u00d1\u02c6\u00d0\u00b5\u00d0\u00b9 \u00d1\u0081\u00d1\u201a\u00d1\u20ac\u00d0\u00b0\u00d0\u00bd\u00d0\u00b5 \u00d0\u00bd\u00d0\u00b5\u00d0\u00b2\u00d0\u00be\u00d0\u00b7\u00d0\u00bc\u00d0\u00be\u00d0\u00b6\u00d0\u00bd\u00d0", 
+      "_id": "39fc339cf058bd22176771b3e33bbef1", 
+      "type": "Annotation", 
+      "id": "39fc339cf058bd22176771b3e33bbef1", 
+      "permissions": {
+        "read": [], 
+        "admin": [
+          "39fc339cf058bd22176771b3e3153e6a"
+        ], 
+        "update": [
+          "39fc339cf058bd22176771b3e3153e6a"
+        ], 
+        "delete": [
+          "39fc339cf058bd22176771b3e3153e6a"
+        ]
+      }
+    }
+  ], 
+  "total": 3
+}

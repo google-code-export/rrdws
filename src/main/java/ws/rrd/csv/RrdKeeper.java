@@ -363,18 +363,20 @@ descriptor The descriptor for the notifications. This may be null which is equiv
 //    	}
 //    	
     	long nowTmp = System.currentTimeMillis();
-    	_metrics .put("timePerSync",   new Long(startTmp - nowTmp  ));
+    	
     	long sinceLastMsTmp = nowTmp - lastSyncTimeMilliseconds;
-		_metrics .put("timeSinceLastSync",   new Long(sinceLastMsTmp));
-		double updatesPerSecond = updateCounter - lastUpdatesCounter ;
-		_metrics .put("updateDelta",   new Double(updatesPerSecond));
-		
-		updatesPerSecond = sinceLastMsTmp>0?(1000*updatesPerSecond)/sinceLastMsTmp:updatesPerSecond;
-		lastUpdatesCounter  = updateCounter ;
-		
-		_metrics .put("updatesPerSecond",   new Double(updatesPerSecond));
+    	if ( sinceLastMsTmp  >60*1000){ // 1 per min
+    		_metrics .put("timePerSync",   new Long(startTmp - nowTmp  ));
+    		_metrics .put("timeSinceLastSync",   new Long(sinceLastMsTmp));
+    		double updatesPerSecond = updateCounter - lastUpdatesCounter ;
+    		_metrics .put("updateDelta",   new Double(updatesPerSecond));
+    		updatesPerSecond =  (1000*updatesPerSecond)/sinceLastMsTmp;
+    		lastUpdatesCounter  = updateCounter ;
+    		_metrics .put("updatesPerSecond",   new Double(updatesPerSecond));
+    		lastSyncTimeMilliseconds = nowTmp ;
+    	}				
 
-		lastSyncTimeMilliseconds = nowTmp ;
+		
 
 	}
 	public void warning() {
