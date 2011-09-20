@@ -339,6 +339,7 @@ public class LServlet extends HttpServlet {
 		        
 				int beginIndex = 0;
 				String charSetHeader = req.getHeader("Accept-Charset ");
+				charSetHeader = charSetHeader==null?req.getHeader("Accept-Charset"):charSetHeader ;
 				int endIndex = charSetHeader.indexOf(",");
 				contextEncStr  = charSetHeader.substring(beginIndex , endIndex);//"ISO-8859-1";
 			}

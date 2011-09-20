@@ -74,7 +74,42 @@
 		</servlet-class>
 	</servlet>
 
+	<servlet>
+		<servlet-name>annotations</servlet-name>
+		<jsp-file>/api.jsp</jsp-file>
+	</servlet>
+<!--
+        create: "/annoCREATE",
+        read: "/annoREAD/:id",
+        update: "/annoUPDATE/:id",
+        destroy: "/annoDESTROY/:id",
+        search: "/annoSEARCH"
+--> 
+ <servlet-mapping>
+        <servlet-name>annotations</servlet-name>
+        <url-pattern>/annoCREATE/*</url-pattern>
+    </servlet-mapping>
+ <servlet-mapping>
+        <servlet-name>annotations</servlet-name>
+        <url-pattern>/annoREAD/*</url-pattern>
+    </servlet-mapping>
+ <servlet-mapping>
+        <servlet-name>annotations</servlet-name>
+        <url-pattern>/annoUPDATE/*</url-pattern>
+    </servlet-mapping>
+ <servlet-mapping>
+        <servlet-name>annotations</servlet-name>
+        <url-pattern>/annoDESTROY/*</url-pattern>
+    </servlet-mapping>
 
+ <servlet-mapping>
+        <servlet-name>annotations</servlet-name>
+        <url-pattern>/annoSEARCH/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>annotations</servlet-name>
+        <url-pattern>/Al/*</url-pattern>
+    </servlet-mapping>	
 
 	<servlet-mapping>
 		<servlet-name>speed.svg</servlet-name>
