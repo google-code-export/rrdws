@@ -22,6 +22,8 @@ import java.util.zip.GZIPInputStream;
 import javax.servlet.ServletOutputStream; 
 import javax.servlet.http.*;
 
+import net.sf.jsr107cache.Cache;
+
 import org.apache.http.Header;
 import org.apache.http.HttpEntity; 
 import org.apache.http.HttpResponse;
@@ -39,6 +41,7 @@ import cc.co.llabor.cache.js.Item;
 import cc.co.llabor.cache.js.JSStore;
 import cc.co.llabor.system.ExitTrappedException;
 
+import cc.co.llabor.cache.Manager;
 import cc.co.llabor.cache.MemoryFileItem;
 import cc.co.llabor.cache.MemoryFileItemFactory;
 
@@ -226,6 +229,7 @@ public class LServlet extends HttpServlet {
 			
 			
 			HttpResponse xRespTmp = null ;
+			Cache getCache = Manager.getCache("getCache@"+this.getClass().getName());
 
 			if ("POST".equals( req.getMethod() ) && ! isRootReq(req) ){
 				List<MemoryFileItem> items  = null;
@@ -249,7 +253,19 @@ public class LServlet extends HttpServlet {
 				urlStr = checkGOTO(urlStr);
 				
 				try{
-					xRespTmp = urlFetcherTmp.fetchGetResp(urlStr, headsToResend);
+
+					
+					Object dataTmp = getCache .get(urlStr);
+					if (dataTmp == null){
+						xRespTmp = urlFetcherTmp.fetchGetResp(urlStr, headsToResend);
+						
+					}else{
+						// write cached ! 
+						outTmp = resp.getOutputStream();	
+						outTmp.write((byte[])dataTmp); 
+						return;	
+					}
+					
 				}catch(ClientProtocolException e){
 					log.error( "URL{"+urlStr+"}::",  e);
 					// last try 
@@ -409,11 +425,20 @@ public class LServlet extends HttpServlet {
 	    		include(resp, "L.jspX");
 	    	} 
 	    	textValue = renderDocument(documentTmp, contextEncStr);  
+	    	byte[] bytesTmp = null;
 	    	if (!"null".equals(""+contextEncStr)){
-	    		outTmp.write(textValue.getBytes(contextEncStr)); 
+	    		bytesTmp = textValue.getBytes(contextEncStr);
+				
 	    	}else{
-	    		outTmp.write(textValue.getBytes()); 
+	    		bytesTmp = textValue.getBytes(); 
 	    	} 
+	    	outTmp.write(bytesTmp); 
+	    	// and cache it!
+	    	try{
+	    		getCache.put(urlStr, xRespTmp);
+	    	}catch(Throwable e){}
+	    	
+	    	
 		} catch (java.lang.NoClassDefFoundError e) {
 			if (TRACE) System_out_println(contextTypeStr +" ===============  "+e.getMessage());e.printStackTrace();
 			if (TRACE) System_out_println(documentTmp);
