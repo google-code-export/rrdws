@@ -1,17 +1,12 @@
 package ws.rrd.csv;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.text.DateFormat;
+import java.io.IOException; 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Date;
-import java.util.TreeMap;
+import java.text.SimpleDateFormat; 
+import java.util.Date; 
 
-import net.sf.jsr107cache.Cache;
-import net.sf.jsr107cache.CacheManager;
-
+import net.sf.jsr107cache.Cache; 
 import org.jrobin.cmd.RrdCommander;
 import org.jrobin.core.RrdException;
 
@@ -88,6 +83,11 @@ public class RrdUpdateAction implements Action {
 			} 			
 			return retval;
 		}
+		/**
+		 * do the same as perform(String xpath, long timestamp, String data) 
+		 * just try to recognize the Timestamp, if possible
+		 * 
+		 */
 		public Object perform(String xpath, String timestamp, String data) {
 			Object retval = "";			
 			long timestampTmp = 0;
@@ -142,11 +142,15 @@ public class RrdUpdateAction implements Action {
 	    static int flushCount=0;
 	    static int changeCount=0;
 		private static void checkReg(String rrddb, String xpath  ) {
+			if (cache == null) return; // GC/destroy-mode
 			if (reg == null){ 
 				reg = new Registry();
-			}	
-			if (cache == null) return; // GC/destroy-mode
-			if (changeCount >10 ||(last_clean +10000) < System.currentTimeMillis()){
+			}else{
+				// exceptional test-DB - alsway registered DB
+				reg.register("test.rrd","test");
+			}
+			
+			if ( flushCount == 0 || changeCount >10 ||(last_clean +10000) < System.currentTimeMillis()){
 				synchronized (cache) { 
 					cache.remove("REGISTRY");
 					cache.put("REGISTRY", new Registry( reg.getDb2path() ));
@@ -161,11 +165,7 @@ public class RrdUpdateAction implements Action {
 					reg.getDb2path().get(rrddb).equals(xpath) ){
 				//nothing to do
 				return;
-			} 
-		 		
-
-			
-
+			}  
 			reg.register(rrddb,xpath);
 			changeCount++;
 				
