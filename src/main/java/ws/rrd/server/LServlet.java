@@ -259,27 +259,28 @@ public class LServlet extends HttpServlet {
 				}
 			}				
 			else{ // GET
-				urlStr = checkGOTO(urlStr);
-				
-				try{
-
-					
-					Object dataTmp = getCache .get(urlStr);
+				urlStr = checkGOTO(urlStr);				
+				try{					
+					String keyTmp = calcCackeKey(urlStr);
+					Object dataTmp = getCache .get(keyTmp );
 					if (dataTmp == null){
 						xRespTmp = urlFetcherTmp.fetchGetResp(urlStr, headsToResend);
 						
-					}else{
+					}else if (((LCacheEntry) dataTmp).getExpired() > System.currentTimeMillis()){
 						// write cached ! 
-						outTmp = resp.getOutputStream();	
-						outTmp.write((byte[])dataTmp); 
+						outTmp = resp.getOutputStream();
+						LCacheEntry theItem = (LCacheEntry) dataTmp;	
+						outTmp.write(theItem.getBytes()); 
 						return;	
+					}else{
+						 getCache .remove(urlStr);
+						 dataTmp =null;
+						 xRespTmp = urlFetcherTmp.fetchGetResp(urlStr, headsToResend);
 					}
-					
 				}catch(ClientProtocolException e){
 					log.error( "URL{"+urlStr+"}::",  e);
 					// last try 
 					xRespTmp =  urlFetcherTmp.fetchGetResp(urlStr+"/", headsToResend);
-					 
 				}
 			}
 			final StatusLine statusLine = xRespTmp.getStatusLine();
@@ -360,13 +361,17 @@ public class LServlet extends HttpServlet {
 			ByteArrayOutputStream oaos = new ByteArrayOutputStream();
 			entity.writeTo(oaos) ;
 			if ("gzip".equals(contextEncStr)  || isGZip(xRespTmp) ){
-				oaos = deZip(oaos); 
-		        
-				int beginIndex = 0;
-				String charSetHeader = req.getHeader("Accept-Charset ");
-				charSetHeader = charSetHeader==null?req.getHeader("Accept-Charset"):charSetHeader ;
-				int endIndex = charSetHeader.indexOf(",");
-				contextEncStr  = charSetHeader.substring(beginIndex , endIndex);//"ISO-8859-1";
+				oaos = deZip(oaos);
+				try {
+					int beginIndex = 0;
+					String charSetHeader = req.getHeader("Accept-Charset ");
+					charSetHeader = charSetHeader == null ? req
+							.getHeader("Accept-Charset") : charSetHeader;
+					int endIndex = charSetHeader.indexOf(",");
+					contextEncStr = charSetHeader.substring(beginIndex,
+							endIndex);// "ISO-8859-1";
+				} catch (NullPointerException e) {
+				}
 			}
 			String data = null;
 			try{
@@ -443,9 +448,7 @@ public class LServlet extends HttpServlet {
 	    	} 
 	    	outTmp.write(bytesTmp); 
 	    	// and cache it!
-	    	try{
-	    		getCache.put(urlStr, xRespTmp);
-	    	}catch(Throwable e){}
+	    	cacheIt(urlStr, getCache, bytesTmp);
 	    	
 	    	
 		} catch (java.lang.NoClassDefFoundError e) {
@@ -466,6 +469,18 @@ public class LServlet extends HttpServlet {
 			}
 			
 		}  
+	}
+	public void cacheIt(String urlStr, Cache getCache, byte[] bytesTmp) {
+		String key = calcCackeKey(urlStr);
+		try{
+			LCacheEntry newData = new LCacheEntry(key, bytesTmp);
+			getCache.put(urlStr, newData);
+		}catch(Throwable e){}
+	}
+	public String calcCackeKey(String urlStr) {
+		String key = urlStr;
+		key =    key.lastIndexOf( "/") -key.indexOf("://") <5 ?key+"/.":key;
+		return key;
 	}
 	/**
 	 * @author vipup
