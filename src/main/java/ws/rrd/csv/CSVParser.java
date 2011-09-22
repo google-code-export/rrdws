@@ -10,8 +10,7 @@ import java.util.TreeMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import ws.rrd.server.LServlet;
+ 
 
 /** 
  * <b>takes CSV InputStream as source and perform update for any line into correspondent RRD-DB</b>
