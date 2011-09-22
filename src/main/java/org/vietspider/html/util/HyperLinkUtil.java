@@ -1,5 +1,6 @@
 package org.vietspider.html.util;
 
+import java.io.ByteArrayOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -12,10 +13,13 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  
 import org.vietspider.chars.TextVerifier; 
 import org.vietspider.chars.ValueVerifier;  
+import org.vietspider.html.HTMLDocument;
 import org.vietspider.html.HTMLNode; 
 import org.vietspider.html.Name;
 import org.vietspider.html.NodeIterator; 
+import org.vietspider.html.parser.HTMLParser2;
 import org.vietspider.html.parser.NodeImpl; 
+import org.vietspider.html.util.HyperLinkUtil.NoScriptVerifier;
 import org.vietspider.token.TypeToken;
 import org.vietspider.token.attribute.Attribute;
 import org.vietspider.token.attribute.Attributes;
@@ -34,7 +38,9 @@ public class HyperLinkUtil {
   private NormalLinkVerifier normalLinkVerifier;
   private MetaLinkVerifier metaLinkVerifier;
   private JavaScriptVerifier jsVerifier;
+  private NoScriptVerifier noscriptVerifier;
   private StyleVerifier cssVerifier;
+  private StyleAttrVerifier styleVerifier;
   
   private final static Map<String, String> linkAttributeMap = new HashMap<String, String>(4); 
   private final static Map<String, String> linkAttributeFullMap = new HashMap<String, String>(5);
@@ -46,7 +52,9 @@ public class HyperLinkUtil {
     normalLinkVerifier = new NormalLinkVerifier();
     metaLinkVerifier = new MetaLinkVerifier();
     jsVerifier = new JavaScriptVerifier();
+    noscriptVerifier = new NoScriptVerifier();
     cssVerifier = new StyleVerifier();
+    styleVerifier = new StyleAttrVerifier(); 
 
     linkAttributeMap.put("a", "href");
     linkAttributeMap.put("iframe", "src");
@@ -111,6 +119,11 @@ public class HyperLinkUtil {
   		" onsubmit"/* (beim Absenden des Formulars) */  ,
   		" onunload"/* (beim Verlassen der Datei) */  ,
   		" javascript:"/* (bei Verweisen) */
+  		// non-standart ??
+//  		,"style"
+//  		,"src"
+//  		,"background:"
+  		
 			};
 private static final boolean TRACE = false;  
   // http://de.selfhtml.org/javascript/sprache/eventhandler.htm
@@ -170,6 +183,28 @@ private static final boolean TRACE = false;
 	    createFullLink(node, mTmp,    swapServletUrl2, home, normalLinkVerifier);  
 } 
 
+  // noscriptVerifier
+  public  void createNoScriptLink(HTMLNode node, String swapServletUrl2, URL home) {
+
+	  NoScriptVerifier verifier = noscriptVerifier;
+	  if (node == null)
+		  return;	  
+	  NodeIterator iterator = node.iterator();
+	  while (iterator.hasNext()) {
+		  HTMLNode n = iterator.next(); 
+			  //System.out.println(n.getName());
+		      if(verifier != null &&  verifier.verify(n)){ 
+				//String  value = verifier.eval (n, null, null);
+		        //value = prepareLinkValue(home , value);
+		        //value = encode(swapServletUrl2, value);
+		        String sHome = home.toString();
+				String externalFormHome = home.toExternalForm();
+				verifier.modi(n, swapServletUrl2, sHome, externalFormHome  ); 
+		      } 
+	  } 
+  } 
+
+  // jsVerifier
   public  void createScriptLink(HTMLNode node, String swapServletUrl2, URL home) {
 
 	  JavaScriptVerifier verifier = jsVerifier;
@@ -191,7 +226,7 @@ private static final boolean TRACE = false;
   } 
   
   public  void createStyleLink(HTMLNode node, String swapServletUrl2, URL home) {
-
+	  // check <style ...
 	  StyleVerifier verifier = cssVerifier;
 	  if (node == null)
 		  return;	  
@@ -206,6 +241,23 @@ private static final boolean TRACE = false;
 		        verifier.modi(n, swapServletUrl2, home.toString(),home.toExternalForm()  ); 
 		      } 
 	  } 
+  	// for ex  <table width="996"  border="0" cellspacing="0" cellpadding="0" align="center" style="background: url(http://www.xa........ 
+	  StyleAttrVerifier atttrVerifier = styleVerifier;
+	  NodeIterator iterator2 = node.iterator();
+	  while (iterator2.hasNext()) {
+		  HTMLNode n = iterator2.next(); 
+			  //System.out.println(n.getName());
+		      if(atttrVerifier != null &&  atttrVerifier.verify(n)){ 
+				//String  value = verifier.eval (n, null, null);
+		        //value = prepareLinkValue(home , value);
+		        //value = encode(swapServletUrl2, value);
+//		    	  System.out.println(node.getTextValue() );
+//		    	  System.out.println(n.getTextValue() );
+		    	  atttrVerifier.modi(n, swapServletUrl2, home.toString(),home.toExternalForm()  );
+//		    	  System.out.println(node.getTextValue() );
+//		    	  System.out.println(n.getTextValue() );
+		      } 
+	  } 	  
   } 
     
   
@@ -355,7 +407,7 @@ private static final boolean TRACE = false;
 		}
 	}  
   
-  public void createFullLink(HTMLNode node, 
+  public static void createFullLink(HTMLNode node, 
     String nodeName, String attrName, String swapServletUrl2, URL home, ValueVerifier verifier) {
     NodeIterator iterator = node.iterator();
     while(iterator.hasNext()) {
@@ -366,7 +418,7 @@ private static final boolean TRACE = false;
     }
   } 
   
-  private void createFullSingleLink(HTMLNode node, 
+  private static void createFullSingleLink(HTMLNode node, 
       String nodeName, String attrName, String swapServletUrl2, URL home, ValueVerifier verifier)   {
   
         if(verifier != null && !verifier.verify(node, nodeName, attrName)) return;  
@@ -535,7 +587,11 @@ private static final boolean TRACE = false;
   public static class ImageLinkVerifier extends TextVerifier implements ValueVerifier{
       String exist[] = {"img", "image"};
       String end[]={"jpg", "gif", "jpeg", "png", "ico", "svg", "bmp", "dib"};	  
-     protected boolean verify(String link){
+		public boolean verify(HTMLNode node) { 
+			String nodeName = node.getName().toString();
+			return verify(nodeName);
+		}
+      protected boolean verify(String link){
       link = link.toLowerCase();    
 
       return existIn(link, exist) || endWith(link, end);
@@ -551,7 +607,6 @@ private static final boolean TRACE = false;
         attrs.set(attr);
 	}     
   }
-  
   public static class JavaScriptVerifier extends TextVerifier implements ValueVerifier {
 		String start[] = {  "javascript", "window", "history"};
 		String exist[] = {"document.", "eval","navigator.","window.", ".location", "this"};
@@ -560,7 +615,7 @@ private static final boolean TRACE = false;
 			strScriptPar = strScriptPar.toLowerCase();
 			return startOrEndOrExist(strScriptPar.toLowerCase(), start, end, exist);
 		}	  
- 
+
 		public boolean verify(HTMLNode node) { 
 			boolean retval = false;
 			String nodeName = node.getName().toString();
@@ -594,7 +649,7 @@ private static final boolean TRACE = false;
 		 * calculate and gives back SServlet-URL
 		 * clean childrens for script-node, if any
 		 * 
- 		 * @param node
+		 * @param node
 		 * @param scriptValue
 		 * @param xRef
 		 * @return
@@ -628,27 +683,99 @@ private static final boolean TRACE = false;
 	        
 		}		
 	}
+  
+  
+  public static class NoScriptVerifier extends TextVerifier implements ValueVerifier {
+		String start[] = {  "noscript" };
+		String exist[] = tagList;
+		String end[] = {};
+		protected boolean verify(String strScriptPar) {
+			strScriptPar = strScriptPar.toLowerCase();
+			return startOrEndOrExist(strScriptPar.toLowerCase(), start, end, exist);
+		}	  
+ 
+		public boolean verify(HTMLNode node) { 
+			boolean retval = false;  
+			if ("NOSCRIPT".equals( node.getName().toString())){
+				String scriptOnBody = node.getTextValue(); 
+				if (verify(scriptOnBody)){
+					retval = true;
+				}
+			}
+			return retval;
+		}
+		 
+		@Override
+		public void modi(HTMLNode node, String rootServletPar, String refPar, String refPar2) { 
+			{     	
+			  	String textValue = node.getTextValue();
+			  	textValue = textValue.replace("noscript", "html");
+				HTMLParser2 p2 =  new HTMLParser2();  
+				try {
+					HTMLDocument docTmp = p2.createDocument(textValue);
+					HTMLNode rootNode = docTmp.getRoot();
+					NodeIterator iterator1 = rootNode.iterator();
+					while (iterator1.hasNext()) {
+						HTMLNode n = iterator1.next(); 
+						//System.out.println(n);
+					}					
+					LServlet.testCreateFullLink(rootNode, rootServletPar, null);
+					//LServlet.testCreateImageLink(rootNode, rootServletPar, null);
+					LServlet.testCreateMetaLink(rootNode, rootServletPar, null);    	
+					LServlet.testCreateScriptLink(rootNode, rootServletPar, null);
+					LServlet.testCreateStyleLink( rootNode, rootServletPar, null);
+					//System.out.println(rootNode.getTextValue());
+					// replace to modi
+					String txtTmp = rootNode.getTextValue();
+					int endIndex = txtTmp.lastIndexOf("</body></html>");
+					int beginIndex = txtTmp.indexOf("<html><head></head><body>")+"<html><head></head><body>".length();
+					txtTmp = txtTmp.substring(beginIndex , endIndex );
+					node.removeChild(node.getChild(0));
+					//node.setValue(("<NOSCRIPT>"+txtTmp+"</NOSCRIPT>").toCharArray());
+					node.addChild(rootNode.getChild(1).getChild(0) );
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+			}
+		}
+
+		private void chkA(HTMLNode node) {
+			ImageLinkVerifier iTmp = new ImageLinkVerifier();
+			if (iTmp.verify(node)) iTmp.modi(node, node.getName().toString(), "href", "BAN");
+			StyleVerifier  sTmp = new StyleVerifier();
+			if (sTmp .verify(node)) sTmp .modi(node, node.getName().toString(), "href", "BAN");
+			NodeIterator iterator = node.iterator();
+			while (iterator.hasNext()) {
+				HTMLNode n = iterator.next(); 
+				chkA(n);
+			}
+		}		
+	}
  
   
   
-  public static class StyleVerifier extends TextVerifier implements ValueVerifier {
-		String start[] = {  "style" };
-		String exist[] = {"url", "import", "script", "onclick", "img","background-image"};
+  public static class StyleAttrVerifier extends TextVerifier implements ValueVerifier {
+	    // for ex  <table width="996"  border="0" cellspacing="0" cellpadding="0" align="center" style="background: url(http://www.xa........
+		String start[] = {  "a","abbr","acronym","address","area","b","big","blockquote","body","button","caption","center","cite","code","col","colgroup","dd","del","dfn","dir","div","dl","dt","em","fieldset","form","h1","h2","h3","h4","h5","h6","hr","i","img","input","ins","kbd","label","legend","li","link","map","menu","noframes","noscript","object","ol","optgroup","option","p","pre","q","s","samp","select","small","span","strike","strong","sub","sup","table","tbody","td","textarea","tfoot","th","thead","tr","tt","u","ul","var"};
+		String exist[] = {  "style" /*, "class" */};
 		String end[] = {};
-		protected boolean verify(String strScriptPar) {
-			String lowerCase = strScriptPar.toLowerCase();
-			strScriptPar = lowerCase;
-			return startOrEndOrExist(lowerCase, start, end, exist) ||
-			startOrEndOrExist(lowerCase, start,  end, eventList);
+		protected boolean verify(String nodePar) {
+			String lowerCase = nodePar.toLowerCase();
+			return startOrEndOrExist(lowerCase, start, end, exist) ;
 		}	  
 
 		public boolean verify(HTMLNode node) { 
-			boolean retval = false;
-			String nodeName = node.getName().toString();
-			if (1==2)System.out.println(nodeName);
-			// CSS body-check
-			if ("STYLE".equals( node.getName().toString())){ 
+			boolean retval = false; 
+			for (Attribute aTmp :node.getAttributes()){
+				String lowerCase = aTmp.getName().toLowerCase();
+				if ("style".equals( lowerCase)){
 					retval = true; 
+					break;
+				}
+//				if ("class".equals( lowerCase)){
+//					retval = true; 
+//				}									
 			}
 			return retval;
 		}
@@ -672,22 +799,28 @@ private static final boolean TRACE = false;
 		@Override
 		public void modi(HTMLNode node, String rootServletPar, String refPar, String refPar2) {
 	        Attributes attrs = node.getAttributes();  
-			String newValue = null; 	
-			String value =  node.getTextValue() ;//CSStore.getInstanse().getByURL(refPar)
-			if (verify(value)){
-				String cacheKey = clearBody(node, value, refPar);//clearBody(node, scriptOnBody);
-
-				CSStore ssTmp = CSStore.getInstanse();
-				cc.co.llabor.cache.css.Item scriptTmp =  ssTmp .putOrCreate(cacheKey, value ,refPar);
-				if (1==1) System.out.println(scriptTmp);
-				
-				String newLink = cacheKey;
-				newValue = newLink;
-				//node.setValue(  newLink.toCharArray() ); 
-				if(!LServlet.TRACE)System.out.println("NEW VAL for CSS   : ["+value+"]=>"+newValue);
-			}else{
-				if(!LServlet.TRACE)System.out.println(" no changes for "+node.getName());
-			}
+	        for (Attribute aTmp:attrs){
+	        	String aNameTmp = aTmp.getName().toLowerCase();
+	        	for ( String nameToCheck:new String []{"style"}){
+	        		if(nameToCheck.equals(aNameTmp)){
+	        			//justifyCSS(String urlStr, ByteArrayOutputStream oaos)
+	        			String aVal = aTmp.getValue();
+	        			String aNewNal = LServlet.justifyCSS(rootServletPar,  aVal ); 
+	        			System.out.println("change ["+aVal+"] to NEW VAL  {"+aNewNal +"}...");
+	        			
+	        			String textValue = node.getTextValue();
+	        			int beginIndex = textValue.indexOf(aVal) ;
+						int endIndex = beginIndex + aVal.length();
+						String toReplaceValue = textValue.substring(0, beginIndex);
+						toReplaceValue +=aNewNal;
+						toReplaceValue +=textValue.substring(endIndex);
+						toReplaceValue = toReplaceValue .substring(1,toReplaceValue.length()-1 );
+						assert(aTmp.getValue() .equals(aNewNal) );
+						node.setValue(toReplaceValue.toCharArray()); 
+	        			
+	        		}
+	        	}
+	        }
 	        
 	        
 		}		
@@ -743,6 +876,68 @@ private static final boolean TRACE = false;
 		}
 
 	}
+
+public static class StyleVerifier extends TextVerifier implements ValueVerifier {
+	String start[] = {  "style" , "class"};
+	String exist[] = {"url", "import", "script", "onclick", "img","background-image"};
+	String end[] = {};
+	protected boolean verify(String strScriptPar) {
+		String lowerCase = strScriptPar.toLowerCase();
+		strScriptPar = lowerCase;
+		return startOrEndOrExist(lowerCase, start, end, exist) ||
+		startOrEndOrExist(lowerCase, start,  end, eventList);
+	}	  
+
+	public boolean verify(HTMLNode node) { 
+		boolean retval = false;
+		String nodeName = node.getName().toString();
+		if (1==2)System.out.println(nodeName);
+		// CSS body-check
+		if ("STYLE".equals( node.getName().toString())){ 
+				retval = true; 
+		} 
+		return retval;
+	}
+	
+	private String  clearBody(HTMLNode node, final String scriptValue, String xRefUrl) {
+		node.clearChildren();// setChild(0, new
+		String retval= LServlet.calcBase()+"C/"+"0"+ scriptValue.length() +"@" +xRefUrl.hashCode() + ".css";
+		// <LINK href="mystyle.css" title="compact" rel="stylesheet" type="text/css">
+		String stringTmp = "LINK  rel=\"stylesheet\"   href=\""+retval+ "\"    title=\""+retval+"\"    type=\"text/css\" media=\"all\" ";
+		
+		// HTMLNode(){})getChildren().clear()setValue("/*
+		// 8-X */".toCharArray());
+		final String scriptAliasTmp = (stringTmp);
+		// replace Script-Content by link to cached value
+		//ScriptItem siTmp = ssTmp.getByValue();
+		node.setValue(scriptAliasTmp.toCharArray());
+		//System.out.println("" + node.getTextValue());
+		return retval;
+		
+	}
+	@Override
+	public void modi(HTMLNode node, String rootServletPar, String refPar, String refPar2) {
+        Attributes attrs = node.getAttributes();  
+		String newValue = null; 	
+		String value =  node.getTextValue() ;//CSStore.getInstanse().getByURL(refPar)
+		if (verify(value)){
+			String cacheKey = clearBody(node, value, refPar);//clearBody(node, scriptOnBody);
+
+			CSStore ssTmp = CSStore.getInstanse();
+			cc.co.llabor.cache.css.Item scriptTmp =  ssTmp .putOrCreate(cacheKey, value ,refPar);
+			if (1==1) System.out.println(scriptTmp);
+			
+			String newLink = cacheKey;
+			newValue = newLink;
+			//node.setValue(  newLink.toCharArray() ); 
+			if(!LServlet.TRACE)System.out.println("NEW VAL for CSS   : ["+value+"]=>"+newValue);
+		}else{
+			if(!LServlet.TRACE)System.out.println(" no changes for "+node.getName());
+		}
+        
+        
+	}		
+}
  
 }
   
