@@ -110,6 +110,15 @@ public class LServlet extends HttpServlet {
 	    		System_out_println(ele);
 	  }
 		  
+	  public static void testCreateNoScriptLink(HTMLNode node, String swapServletUrl2, URL home){
+		    handler.createNoScriptLink( node,  swapServletUrl2,  home);
+		    if (TRACE){
+		    	//List<String> list  = handler.scanScriptLink(node );
+		    	//for(String ele : list)
+		    	//	System_out_println(ele);
+		    }
+		  }		  
+	  
 	  public static void testCreateScriptLink(HTMLNode node, String swapServletUrl2, URL home){
 	    handler.createScriptLink( node,  swapServletUrl2,  home);
 	    if (TRACE){
@@ -560,25 +569,9 @@ public class LServlet extends HttpServlet {
 				oaos = deZip(oaos);
 			    //contextEncStr  = "ISO-8859-1";
 			}				
-			String lBAK_GIF = "URL (/l.gif?";
-			String FSservletURL = "url ( hTtP://"+SwapServletUrl.replace("/l/","/F/h_t_t_p_://");
-			String FSSservletURL = "url  ( hTtPs://"+SwapServletUrl.replace("/l/","/F/h_t_t_p_s_://");
-			xCSS = oaos.toString()
-			// ROOT OF SERVER
-			.replace("url(/", lBAK_GIF)
-			.replace("url (/", lBAK_GIF)
-			.replace("URL(/", lBAK_GIF)
-			.replace("Url(/", lBAK_GIF)
-			.replace("url ( /", lBAK_GIF)
-			.replace(lBAK_GIF, FSservletURL ) //.replace(lBAK_GIF, "url(/l.gif?")
-			// ABSOLUTE-ref like: 
-			// url(http://maps.gstatic.com
-			.replace("url(http://", FSservletURL)
-			.replace("url(https://", FSSservletURL)
-			// 	rel-ref from './'	
-			.replace("url(", "url  (    "+SwapServletUrl.replace("/l/",undescoredProtocol(urlStr))+stripFileName(  stripProtocol(urlStr)))
-			; 
-			xCSS = xCSS.replace(" url  (    http", "url(http");
+			xCSS = oaos.toString();
+			xCSS = justifyCSS(urlStr, xCSS ); 
+			
 			String refPar = urlStr;
 			if (1==2)
 			try{
@@ -595,6 +588,29 @@ public class LServlet extends HttpServlet {
 		outTmp.flush();
 		//store.putOrCreate(urlStr, xCSS, urlStr);
 		return outTmp;
+	}
+	public static String justifyCSS(String urlStr, String cssInPar) {// , ByteArrayOutputStream oaos
+		String xCSS;
+		String lBAK_GIF = "URL (/l.gif?";
+		String FSservletURL = "url ( hTtP://"+SwapServletUrl.replace("/l/","/F/h_t_t_p_://");
+		String FSSservletURL = "url  ( hTtPs://"+SwapServletUrl.replace("/l/","/F/h_t_t_p_s_://");
+		
+		// ROOT OF SERVER
+		xCSS = cssInPar.replace("url(/", lBAK_GIF)
+		.replace("url (/", lBAK_GIF)
+		.replace("URL(/", lBAK_GIF)
+		.replace("Url(/", lBAK_GIF)
+		.replace("url ( /", lBAK_GIF)
+		.replace(lBAK_GIF, FSservletURL ) //.replace(lBAK_GIF, "url(/l.gif?")
+		// ABSOLUTE-ref like: 
+		// url(http://maps.gstatic.com
+		.replace("url(http://", FSservletURL)
+		.replace("url(https://", FSSservletURL)
+		// 	rel-ref from './'	
+		.replace("url(", "url  (    "+SwapServletUrl.replace("/l/",undescoredProtocol(urlStr))+stripFileName(  stripProtocol(urlStr)))
+		;
+		xCSS = xCSS.replace(" url  (    http", "url(http");
+		return xCSS;
 	}
 
 	private static String undescoredProtocol(String urlStr) {
