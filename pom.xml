@@ -830,7 +830,6 @@
 				<resources>
 					<resource>
 						<directory>src/main/resources</directory>
-
 						<includes>
 							<include>**/*</include>
 						</includes>
@@ -842,10 +841,10 @@
 						</directory>
 						<includes>
 							<include>
-								net.sf.jsr107cache.CacheFactory
+								log4j.properties
 							</include>
 						</includes>
-						<targetPath>META-INF/services</targetPath>
+						<targetPath></targetPath>
 					</resource>
 				</resources>
 			</build>
