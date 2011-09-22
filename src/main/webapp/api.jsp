@@ -7,8 +7,10 @@
 	import="cc.co.llabor.cache.MemoryFileItemFactory"%><%@page 
 	import="org.apache.commons.fileupload.servlet.ServletFileUpload"%><%@page
 	import="cc.co.llabor.cache.MemoryFileItemFactory"%><%@page 
-    contentType="application/json"%><%
-
+    contentType="application/json; charset=UTF-8"%><%@page 
+    pageEncoding="UTF-8"%><%
+    
+//; charset=utf-8
 //	response.setContentType("application/json");		
 //	response.setDateHeader ("Expires", 0); //prevents caching at the proxy server
 //	response.setHeader("Content-Disposition", "attachment;filename=anno.json");	
@@ -63,7 +65,7 @@ if(ServletFileUpload.isMultipartContent(request)){
 }else{
 	 byte[] buf2 = new byte[request.getInputStream().available()];
 	 request.getInputStream().read(buf2);
-	 theB = new String(buf2);
+	 theB = new String(buf2, "UTF-8" );
 	 System.out.println("---theroMULT----\n"+theB+"\n---theroMULT----");
 }
 
@@ -144,33 +146,29 @@ System.out.println(" METHOD:"+  methTmp +"::"+cxType );
 
 %>
 <%if ("null".equals(""+storedAnn)   ){
-//	{ "user":"Mark","text":"SFG SFG","ranges":[{"start":"/div[2]/p[2]","startOffset":10,"end":"/div[2]/p[2]","endOffset":274}], }
-// {"permissions":{"read":[],"update":[],"delete":[],"admin":[]},"user":"Mark","text":"333","ranges":[{"start":"/h2","startOffset":4,"end":"/h2","endOffset":17}],"quote":"Comedy of Err"}
-//http://c0824ce0:8080/examples/openshakespeare/GESHA/
-
 	%> {
   "rows": [
 	{
       "id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa9",  
       "text": "hallo s0fcsse!",  
-      "uri": "http://c0824ce0:8080/examples/openshakespeare/GESHA/",         	  
+      "uri": "http://rrd.llabor.co.cc/examples/openshakespeare/GESHA/",         	  
       "ranges":[{"start":"/div[2]/h2","end":"/div[2]/h2","startOffset":0,"endOffset":19}] ,  
 	  "tags":["jazz"],
 	  "quote":"The Comedy of Error" ,  
       "type": "Annotation" 
     },
 	{
-		"text":"222","tags":[],"ranges":[{"start":"/div[2]/h2","startOffset":6,"end":"/div[2]/h2","endOffset":20}],"quote":"medy of Errors","uri":"http://c0824ce0:8080/examples/openshakespeare/GESHA/",
+		"text":"222","tags":[],"ranges":[{"start":"/div[2]/h2","startOffset":6,"end":"/div[2]/h2","endOffset":20}],"quote":"medy of Errors","uri":"http:/rrd.llabor.co.cc/examples/openshakespeare/GESHA/",
       "id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",        
 	  "tags":["jazz","box"],
-      "uri": "http://c0824ce0:8080/examples/openshakespeare/GESHA/",         	  
+      "uri": "http://rrd.llabor.co.cc/examples/openshakespeare/GESHA/",         	  
 	  "quote":"The Comedy of Error" ,  
       "type": "Annotation" 
     },
 	{
-		"text":"333","tags":[],"ranges":[{"start":"/div[2]/h2","startOffset":4,"end":"/div[2]/h4","endOffset":30}],"quote":"Comedy of ErrorsACT ISCENE I.  A hall in DUKE SOLIN","uri":"http://c0824ce0:8080/examples/openshakespeare/GESHA/"	,
+		"text":"333","tags":[],"ranges":[{"start":"/div[2]/h2","startOffset":4,"end":"/div[2]/h4","endOffset":30}],"quote":"Comedy of ErrorsACT ISCENE I.  A hall in DUKE SOLIN","uri":"http://rrd.llabor.co.cc/examples/openshakespeare/GESHA/"	,
       "id": "cccccccccccccccccccccccccccccccc",        
-      "uri": "http://c0824ce0:8080/examples/openshakespeare/GESHA/",         	  
+      "uri": "http://rrd.llabor.co.cc/examples/openshakespeare/GESHA/",         	  
       "quote":"The Comedy of Error" ,  
 	  "tags":["jazz","box","sex"],
       "type": "Annotation" 

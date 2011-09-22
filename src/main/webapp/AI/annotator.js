@@ -2186,7 +2186,7 @@
       v = z.location.href.split(/#|\?/).shift() || "";
       h.extend(y, {
         Store: {
-          prefix: w.storeUri || "http://c0824ce0:8080/rrdsaas/F/h_t_t_p_://annotateit.org/api",
+          prefix: w.storeUri || "http://rrd.llabor.co.cc/rrdsaas/F/h_t_t_p_://annotateit.org/api",
           annotationData: {
             uri: v
           },
