@@ -3,7 +3,7 @@
   var annotations = []
 
   $.mockjax({
-    url: 'http://c0824ce0:8080/examples/api.jsp?we=qwe&',
+    url: 'http://rrd.llabor.co.cc/api.jsp?we=qwe&',
     contentType: 'text/json',
     responseText: annotations
   })
