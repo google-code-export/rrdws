@@ -306,7 +306,7 @@
 		<dependency>
 			<groupId>com.google.appengine.orm</groupId>
 			<artifactId>datanucleus-appengine</artifactId>
-
+			<scope>${gae.api.scope}</scope>
 			<version>1.0.6.final</version>
 		</dependency>
 
@@ -314,6 +314,7 @@
 			<groupId>org.datanucleus</groupId>
 			<artifactId>datanucleus-core</artifactId>
 			<version>1.1.5</version>
+			<scope>${gae.api.scope}</scope>
 			<exclusions>
 				<exclusion>
 					<groupId>javax.transaction</groupId>
@@ -325,6 +326,7 @@
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>datanucleus-jpa</artifactId>
+			 
 			<version>1.1.5</version>
 			<scope>runtime</scope>
 		</dependency>
@@ -350,12 +352,14 @@
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
 			<version>${gwt.version}</version>
+			<scope>${gae.api.scope}</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
 			<version>${gwt.version}</version>
+			
 			<scope>provided</scope>
 		</dependency>
 
