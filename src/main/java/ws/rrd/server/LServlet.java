@@ -267,9 +267,10 @@ public class LServlet extends HttpServlet {
 						xRespTmp = urlFetcherTmp.fetchGetResp(urlStr, headsToResend);
 						
 					}else if (((LCacheEntry) dataTmp).getExpired() > System.currentTimeMillis()){
-						// write cached ! 
-						outTmp = resp.getOutputStream();
+						// write cached !
 						LCacheEntry theItem = (LCacheEntry) dataTmp;	
+						resp.setContentType(theItem.getCxType());
+						outTmp = resp.getOutputStream();
 						outTmp.write(theItem.getBytes()); 
 						return;	
 					}else{
@@ -360,24 +361,14 @@ public class LServlet extends HttpServlet {
 			 
 			ByteArrayOutputStream oaos = new ByteArrayOutputStream();
 			entity.writeTo(oaos) ;
-			if ("gzip".equals(contextEncStr)  || isGZip(xRespTmp) ){
-				oaos = deZip(oaos);
-				try {
-					int beginIndex = 0;
-					String charSetHeader = req.getHeader("Accept-Charset ");
-					charSetHeader = charSetHeader == null ? req
-							.getHeader("Accept-Charset") : charSetHeader;
-					int endIndex = charSetHeader.indexOf(",");
-					contextEncStr = charSetHeader.substring(beginIndex,
-							endIndex);// "ISO-8859-1";
-				} catch (NullPointerException e) {
-				}
-			}
+			oaos.flush();
+			oaos = unZIP(xRespTmp, contextEncStr, oaos);
+			contextEncStr = calcContextEnc(req, xRespTmp, contextEncStr);
 			String data = null;
 			try{
 				data = oaos.toString(contextEncStr);//xCSS.toUpperCase().substring( 12430)
 			}catch(Exception e){
-				data = oaos.toString();
+				data = oaos.toString();oaos.toString("utf-8");
 			} //data.substring( data.indexOf("&lt;") -100, data.indexOf("&lt;") +20);
 			 
 			if ("null".equals(  ""+contextEncStr ) &&  data.toLowerCase().indexOf("content=\"text/html")>0)try{
@@ -422,7 +413,8 @@ public class LServlet extends HttpServlet {
 	    	int beginIndex = contextTypeStr.toUpperCase().indexOf(" ")+1;
 
 	    	setupResponseProperty( resp,  xRespTmp);
-	    	resp.setContentType(contextTypeStr.substring(beginIndex));
+	    	String cxType = contextTypeStr.substring(beginIndex);
+			resp.setContentType(cxType);
 	    	if (!"null".equals(""+contextEncStr)){
 	    		resp.setCharacterEncoding(contextEncStr);
 	    	}	    	
@@ -447,8 +439,8 @@ public class LServlet extends HttpServlet {
 	    		bytesTmp = textValue.getBytes(); 
 	    	} 
 	    	outTmp.write(bytesTmp); 
-	    	// and cache it!
-	    	cacheIt(urlStr, getCache, bytesTmp);
+	    	// and cache it! //	    	String cxType = contextTypeStr.substring(beginIndex);
+	    	cacheIt(urlStr, getCache, bytesTmp,cxType );
 	    	
 	    	
 		} catch (java.lang.NoClassDefFoundError e) {
@@ -470,16 +462,48 @@ public class LServlet extends HttpServlet {
 			
 		}  
 	}
-	public void cacheIt(String urlStr, Cache getCache, byte[] bytesTmp) {
+	private static ByteArrayOutputStream unZIP(HttpResponse xRespTmp,
+			String contextEncStr, ByteArrayOutputStream oaos)
+			throws IOException {
+		if ("gzip".equals(contextEncStr)  || isGZip(xRespTmp) ){
+			oaos = deZip(oaos);
+		}
+		return oaos;
+	}
+	public String calcContextEnc(HttpServletRequest req, HttpResponse xRespTmp,
+			String contextEncStr) {
+		try {
+			 contextEncStr = ""+xRespTmp.getHeaders("Content-Type")[0];
+			 String cxTitle = "charset=";
+			 int beginIndex = contextEncStr.indexOf(cxTitle)+cxTitle.length();
+			contextEncStr = contextEncStr .substring(beginIndex);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (contextEncStr ==null)
+		try {
+			int beginIndex = 0;
+			String charSetHeader = req.getHeader("Accept-Charset ");
+			charSetHeader = charSetHeader == null ? req
+					.getHeader("Accept-Charset") : charSetHeader;
+			int endIndex = charSetHeader.indexOf(",");
+			contextEncStr = charSetHeader.substring(beginIndex,
+					endIndex);// "ISO-8859-1";
+		} catch (NullPointerException e) {
+		}
+		return contextEncStr;
+	}
+	public void cacheIt(String urlStr, Cache getCache, byte[] bytesTmp, String cxType) {
 		String key = calcCackeKey(urlStr);
 		try{
-			LCacheEntry newData = new LCacheEntry(key, bytesTmp);
-			getCache.put(urlStr, newData);
+			LCacheEntry newData = new LCacheEntry(key, bytesTmp, cxType);
+			getCache.put(key, newData);
 		}catch(Throwable e){}
 	}
 	public String calcCackeKey(String urlStr) {
 		String key = urlStr;
-		key =    key.lastIndexOf( "/") -key.indexOf("://") <5 ?key+"/.":key;
+		key =    key.lastIndexOf( "/") -key.indexOf("://") <5 ?key+"/.!":key;
+		key =    key.lastIndexOf( "/") == key.length() -1 ?key+".!":key;
 		return key;
 	}
 	/**
@@ -648,8 +672,15 @@ public class LServlet extends HttpServlet {
 			setupResponseProperty( resp,  xRespTmp);
 		}
 		//log.warning("HTML contextTypeStr||contextEncStr:["+contextTypeStr+"||"+contextEncStr+"]  URL =:["+urlStr+"]");
+		
+		
+		String contextEncStr =  ""+entity.getContentEncoding() ;
+		ByteArrayOutputStream oaos = new ByteArrayOutputStream();
+		entity.writeTo(oaos) ;
+		oaos = unZIP(xRespTmp, contextEncStr, oaos);
+		
 		outTmp = resp.getOutputStream();
-		entity.writeTo(outTmp) ;
+		oaos.writeTo(outTmp) ;
 		outTmp.flush();
 		outTmp.close();
 		return outTmp;
@@ -710,7 +741,10 @@ public class LServlet extends HttpServlet {
 		"Content-Type: image/ief".equalsIgnoreCase( contextTypeStr) ||
 		"Content-Type: image/g3fax".equalsIgnoreCase( contextTypeStr) ||
 		"Content-Type: application/x-shockwave-flash".equalsIgnoreCase( contextTypeStr)||
-		(""+contextTypeStr).indexOf( "application/") >0;
+		(""+contextTypeStr).indexOf( "application/") >=0||
+		(""+contextTypeStr).indexOf( "text/xml") >=0
+		
+		;
 	}
 
 	static boolean isScript(String contextTypeStr) {
@@ -802,13 +836,20 @@ public class LServlet extends HttpServlet {
 
 	private static ByteArrayOutputStream deZip(ByteArrayOutputStream oaos)
 			throws IOException {
+		oaos.close();
+		
 		ByteArrayInputStream gzippeddata = new ByteArrayInputStream(oaos.toByteArray());
 		GZIPInputStream zipin = new GZIPInputStream(gzippeddata);
-		byte[] buf = new byte[1024];  //size can be  
+		byte[] buf = new byte[16*1024];  //size can be  
 		int len;
 		oaos = new ByteArrayOutputStream();
-		while ((len = zipin.read(buf)) > 0) {
-			oaos.write(buf, 0, len);
+		try{
+			while ((len = zipin.read(buf)) > 0) {
+				oaos.write(buf, 0, len);
+			}
+		}catch(IOException e){
+			//System.out.println(new String(oaos.toByteArray()));
+			if (oaos.size()>0)return oaos;
 		}
 		return oaos;
 	}

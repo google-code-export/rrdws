@@ -11,6 +11,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
  
+import org.mortbay.log.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vietspider.chars.TextVerifier; 
 import org.vietspider.chars.ValueVerifier;  
 import org.vietspider.html.HTMLDocument;
@@ -289,6 +292,7 @@ private static final boolean TRACE = false;
   }
   int level = 0;
   HTMLNode lastParent = null;
+private static final Logger log = LoggerFactory.getLogger(LServlet.class .getName());
   
 	private void createFullLink(HTMLNode node,
 			Map<String, String> map, String swapServletUrl2, URL home,
@@ -802,22 +806,26 @@ private static final boolean TRACE = false;
 	        for (Attribute aTmp:attrs){
 	        	String aNameTmp = aTmp.getName().toLowerCase();
 	        	for ( String nameToCheck:new String []{"style"}){
-	        		if(nameToCheck.equals(aNameTmp)){
-	        			//justifyCSS(String urlStr, ByteArrayOutputStream oaos)
-	        			String aVal = aTmp.getValue();
-	        			String aNewNal = LServlet.justifyCSS(rootServletPar,  aVal ); 
-	        			System.out.println("change ["+aVal+"] to NEW VAL  {"+aNewNal +"}...");
-	        			
-	        			String textValue = node.getTextValue();
-	        			int beginIndex = textValue.indexOf(aVal) ;
-						int endIndex = beginIndex + aVal.length();
-						String toReplaceValue = textValue.substring(0, beginIndex);
-						toReplaceValue +=aNewNal;
-						toReplaceValue +=textValue.substring(endIndex);
-						toReplaceValue = toReplaceValue .substring(1,toReplaceValue.length()-1 );
-						assert(aTmp.getValue() .equals(aNewNal) );
-						node.setValue(toReplaceValue.toCharArray()); 
-	        			
+	        		try{
+		        		if(nameToCheck.equals(aNameTmp)){
+		        			//justifyCSS(String urlStr, ByteArrayOutputStream oaos)
+		        			String aVal = aTmp.getValue();
+		        			String aNewNal = LServlet.justifyCSS(rootServletPar,  aVal ); 
+		        			System.out.println("change ["+aVal+"] to NEW VAL  {"+aNewNal +"}...");
+		        			
+		        			String textValue = node.getTextValue();
+		        			int beginIndex = textValue.indexOf(aVal) ;
+							int endIndex = beginIndex + aVal.length();
+							String toReplaceValue = textValue.substring(0, beginIndex);
+							toReplaceValue +=aNewNal;
+							toReplaceValue +=textValue.substring(endIndex);
+							toReplaceValue = toReplaceValue .substring(1,toReplaceValue.length()-1 );
+							assert(aTmp.getValue() .equals(aNewNal) );
+							node.setValue(toReplaceValue.toCharArray()); 
+		        			
+		        		}
+	        		}catch(Exception e){
+	        			log.trace("PP{}",e);
 	        		}
 	        	}
 	        }
