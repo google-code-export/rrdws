@@ -32,7 +32,7 @@ public class StartStopServlet extends HttpServlet {
 	 * @author vipup
 	 */
 	private static final long serialVersionUID = -3432681267977857824L;
-	private static Logger log = LoggerFactory.getLogger("cc.co.llabor.system.StartStopServlet");
+	private static Logger log = LoggerFactory.getLogger(cc.co.llabor.system.StartStopServlet.class);
 	private static int groupCounter = 0;
 	ThreadGroup mythreads = new ThreadGroup("rrd@"+groupCounter++);
 	
@@ -182,6 +182,11 @@ public class StartStopServlet extends HttpServlet {
 		String hostPar="127.0.0.1:161";
 		for(String arg:RuntimemxBean.getInputArguments()) {
 			System.out.println(arg);
+			log.debug("DEBUG{}",arg);
+			log.info("INFO{}",arg);
+			log.error( "ERR{}",arg);
+			log.trace("TRACE{}",arg);
+			log.warn("WARN{}",arg);
 			
 /*
  * 

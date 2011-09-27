@@ -1,0 +1,1 @@
+mvn -o -e tomcat:redeploy -Dcccache -Dperas-pm-tc60 -Dmaven.test.skip=true -Dhttp.proxyHost=proxy.host -Dhttp.proxyPort=8080

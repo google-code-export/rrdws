@@ -13,8 +13,10 @@ import java.io.Serializable;
 public class LCacheEntry implements Serializable {
 	byte[] data;
 	private long expired = System.currentTimeMillis() + 60*60*1000; // 1h
-	public LCacheEntry(String urlStr, byte[] bytesTmp) {
+	private String cxType = "text/html";
+	public LCacheEntry(String urlStr, byte[] bytesTmp, String cxType) {
 		this.data = bytesTmp;
+		this.setCxType(cxType);
 	}
 
 	public void setExpired(long expired) {
@@ -33,6 +35,14 @@ public class LCacheEntry implements Serializable {
 	public long getExpired() { 
 		return expired ;
 		 
+	}
+
+	public void setCxType(String cxType) {
+		this.cxType = cxType;
+	}
+
+	public String getCxType() { 
+		return cxType;
 	}
 }
 
