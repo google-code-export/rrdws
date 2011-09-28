@@ -1,4 +1,4 @@
-package org.jrobin.thold;
+package cc.co.llabor.threshold;
 
 import cc.co.llabor.threshold.rrd.Threshold;
 

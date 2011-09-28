@@ -1,4 +1,4 @@
-package org.jrobin.thold; 
+package cc.co.llabor.threshold; 
 
 public class TholdSyncTest extends TholdTest {
 
