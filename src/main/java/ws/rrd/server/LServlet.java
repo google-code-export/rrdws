@@ -35,6 +35,7 @@ import org.vietspider.html.HTMLDocument;
 import org.vietspider.html.HTMLNode;
 import org.vietspider.html.parser.HTMLParser2;
 import org.vietspider.html.util.HyperLinkUtil;
+import org.vietspider.token.attribute.Attribute;
 
 import cc.co.llabor.cache.css.CSStore;
 import cc.co.llabor.cache.js.Item;
@@ -238,7 +239,7 @@ public class LServlet extends HttpServlet {
 			
 			
 			HttpResponse xRespTmp = null ;
-			Cache getCache = Manager.getCache("getCache@"+this.getClass().getName());
+			Cache getCache = getCache();
 
 			if ("POST".equals( req.getMethod() ) && ! isRootReq(req) ){
 				List<MemoryFileItem> items  = null;
@@ -363,7 +364,7 @@ public class LServlet extends HttpServlet {
 			entity.writeTo(oaos) ;
 			oaos.flush();
 			oaos = unZIP(xRespTmp, contextEncStr, oaos);
-			contextEncStr = calcContextEnc(req, xRespTmp, contextEncStr);
+			contextEncStr = calcContextEnc(req, xRespTmp, oaos);
 			String data = null;
 			try{
 				data = oaos.toString(contextEncStr);//xCSS.toUpperCase().substring( 12430)
@@ -422,6 +423,30 @@ public class LServlet extends HttpServlet {
 	    	String textValue = null;
 	    	// wrap
 	    	try{ 
+	    		//documentTmp.getRoot().getChild(0).getByXPath("BODY");
+	    		HTMLNode headTmp = null;
+	    		HTMLNode baseTmp = null;
+	    		for (HTMLNode nodeTmp : documentTmp.getRoot().getChild(0).getChildren()){
+	    			String nodeNameTmp =nodeTmp .getName().name();
+	    			if ("HEAD".equals(nodeNameTmp)){
+	    				headTmp = nodeTmp;
+	    			}
+	    			if ("BASE".equals(nodeNameTmp)){
+	    				baseTmp  = nodeTmp;
+	    				break;
+	    			}
+	    		}
+	    		if (baseTmp != null){//getTextValue()
+	    			System.out.println(baseTmp.getTextValue());
+	    			String avalTmp = baseTmp.getAttributes().get("href").getValue();
+	    			baseTmp.getAttributes().remove("href");
+	    			Attribute hrefTmp = new Attribute("href", ""+HyperLinkUtil.encode(SwapServletUrl, avalTmp));
+					baseTmp.getAttributes().add(hrefTmp );
+	    			System.out.println(baseTmp.getTextValue());
+	    			
+	    		}else{
+	    			System.out.println(headTmp);
+	    		}
 	    		HTMLNode bodyTmp = documentTmp.getRoot().getChild(1);
 				HTMLDocument htmlTmp = buildToolbar(urlStr, parser2);
 				HTMLNode myIFrame = htmlTmp.getRoot().getChild(1).getChild(0);
@@ -462,6 +487,10 @@ public class LServlet extends HttpServlet {
 			
 		}  
 	}
+	public static Cache getCache() {
+		Cache getCache = Manager.getCache("getCache@"+LServlet.class.getName());
+		return getCache;
+	}
 	private static ByteArrayOutputStream unZIP(HttpResponse xRespTmp,
 			String contextEncStr, ByteArrayOutputStream oaos)
 			throws IOException {
@@ -471,12 +500,20 @@ public class LServlet extends HttpServlet {
 		return oaos;
 	}
 	public String calcContextEnc(HttpServletRequest req, HttpResponse xRespTmp,
-			String contextEncStr) {
+			ByteArrayOutputStream oaos) {
+		String contextEncStr=null;
 		try {
 			 contextEncStr = ""+xRespTmp.getHeaders("Content-Type")[0];
 			 String cxTitle = "charset=";
-			 int beginIndex = contextEncStr.indexOf(cxTitle)+cxTitle.length();
-			contextEncStr = contextEncStr .substring(beginIndex);
+			 int beginIndex = contextEncStr.indexOf(cxTitle);
+			 if (beginIndex==-1){
+				 // last chance - seach for charset in the page
+				 String htmlTmp = oaos.toString();
+				contextEncStr = htmlTmp.substring(htmlTmp.indexOf(cxTitle)+cxTitle.length());
+				contextEncStr = contextEncStr.substring(0,contextEncStr.indexOf("\""));
+			 }else{
+				 contextEncStr = contextEncStr .substring(beginIndex+cxTitle.length());
+			 }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -493,14 +530,14 @@ public class LServlet extends HttpServlet {
 		}
 		return contextEncStr;
 	}
-	public void cacheIt(String urlStr, Cache getCache, byte[] bytesTmp, String cxType) {
+	public static void cacheIt(String urlStr, Cache getCache, byte[] bytesTmp, String cxType) {
 		String key = calcCackeKey(urlStr);
 		try{
 			LCacheEntry newData = new LCacheEntry(key, bytesTmp, cxType);
 			getCache.put(key, newData);
 		}catch(Throwable e){}
 	}
-	public String calcCackeKey(String urlStr) {
+	public static String calcCackeKey(String urlStr) {
 		String key = urlStr;
 		key =    key.lastIndexOf( "/") -key.indexOf("://") <5 ?key+"/.!":key;
 		key =    key.lastIndexOf( "/") == key.length() -1 ?key+".!":key;
@@ -623,10 +660,18 @@ public class LServlet extends HttpServlet {
 		
 		resp.setContentType("text/css");
 		outTmp = resp.getOutputStream();
-		outTmp.write(xCSS.getBytes());
+		byte[] bytesTmp = xCSS.getBytes();
+		outTmp.write(bytesTmp);
 		outTmp.flush();
+    	// and cache it! //	    	String cxType = contextTypeStr.substring(beginIndex);
+    	cacheIt(urlStr, bytesTmp,contextTypeStr );
+
 		//store.putOrCreate(urlStr, xCSS, urlStr);
 		return outTmp;
+	}
+	private static void cacheIt(String urlStr, byte[] bytesTmp,
+			String contextTypeStr) {
+		 cacheIt(urlStr, getCache() , bytesTmp, contextTypeStr);
 	}
 	public static String justifyCSS(String urlStr, String cssInPar) {// , ByteArrayOutputStream oaos
 		String xCSS;
@@ -715,7 +760,11 @@ public class LServlet extends HttpServlet {
 		resp.setContentType("application/javascript; charset=utf-8");
 		outTmp = resp.getOutputStream();
 		String scriptValueTmp = scriptTmp.getValue();
-		outTmp.write(scriptValueTmp.getBytes("UTF-8")) ;
+		byte[] bytesTmp = scriptValueTmp.getBytes("UTF-8");
+		outTmp.write(bytesTmp) ;
+		
+    	// and cache it! //	    	String cxType = contextTypeStr.substring(beginIndex);
+    	cacheIt(urlStr, bytesTmp,contextTypeStr );		
 		outTmp.flush();
 		return outTmp;
 	}
