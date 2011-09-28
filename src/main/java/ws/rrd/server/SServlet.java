@@ -5,7 +5,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse; 
 
-import org.vietspider.html.util.HyperLinkUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory; 
   
 
 import cc.co.llabor.cache.js.Item;
@@ -13,7 +14,8 @@ import cc.co.llabor.cache.js.JSStore;
 import cc.co.llabor.cache.replace.ReplaceStore;
 
 public class SServlet extends HttpServlet{ /* SCRIPT-mastering servlet*/
-	private static final long serialVersionUID = -5308225516841490806L; 
+	private static final long serialVersionUID = -5308225516841490806L;
+	private static final Logger log = LoggerFactory.getLogger(LServlet.class .getName()); 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException{
 		ServletOutputStream out = resp.getOutputStream();
 		String uriTmp =   req.getRequestURL().toString() ;
@@ -61,7 +63,7 @@ public class SServlet extends HttpServlet{ /* SCRIPT-mastering servlet*/
 			instanse.putOrCreate(uriTmp, scriptValue, refTmp   );
 		}catch(NullPointerException e){
 			// ignore NO_REFFERs - org.apache.tomcat.util.http.ValuesEnumerator.nextElement(MimeHeaders.java:443)
-			e.printStackTrace();
+			log .trace("uriTmp -|{}", e);
 		}catch(Exception e){
 			System.out.println("NOSCRIPT in the store! URL=["+uriTmp+"]");
 			e.printStackTrace();
