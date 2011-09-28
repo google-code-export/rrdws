@@ -23,6 +23,14 @@ public abstract class RddUpdateAlerter extends AbstractAlerter {
 
 	private RrdDb rrdDb;
 
+	public RrdDb getRrdDb() { 
+			return rrdDb;
+	}
+
+	public void setRrdDb(RrdDb rrdDb) {
+		this.rrdDb = rrdDb;
+	}
+
 	private void init(String rrdPar) throws RrdException, IOException {
 		RrdDef rrdDef = new RrdDef(rrdPar);
 		long startTime = 920800000L; // 920800000L == [Sun Mar 07 10:46:40 CET
@@ -64,7 +72,9 @@ public abstract class RddUpdateAlerter extends AbstractAlerter {
 			e.printStackTrace();
 		}
 	}
-	public void performAction(long timestamp) {
+	
+	@Override
+	 public void performAction(long timestamp) {
 		try {
 			long activatingTimepoint = this.inIncidentTime()
 					+ this.getSpanLength();
@@ -88,7 +98,7 @@ public abstract class RddUpdateAlerter extends AbstractAlerter {
 	public static int COUNTDOWN_TO_DEACTIVE_VALUE = 100;
 	
 	
-	
+	@Override
 	public void performSleep(long timestamp) {
 		try {
 			long activatingTimepoint = this.inIncidentTime()

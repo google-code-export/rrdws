@@ -1,4 +1,3 @@
-
 syntax: regexp
 ^war/WEB-INF/appengine-generated$
 syntax: regexp
@@ -30,4 +29,5 @@ syntax: glob
 *.rrd
 effective-pom.xml
 release.properties
+.*
 

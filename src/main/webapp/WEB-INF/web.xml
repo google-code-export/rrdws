@@ -91,6 +91,16 @@
 		<servlet-name>annotations</servlet-name>
 		<jsp-file>/api.jsp</jsp-file>
 	</servlet>
+
+    <servlet> 
+     <servlet-name>ShellServlet</servlet-name> 
+     <servlet-class>com.jsos.shell.ShellServlet</servlet-class> 
+    </servlet>
+<servlet-mapping> 
+    <servlet-name>ShellServlet</servlet-name> 
+    <url-pattern>/servlet/ShellServlet</url-pattern> 
+   </servlet-mapping>	
+	
 <!--
         create: "/annoCREATE",
         read: "/annoREAD/:id",
