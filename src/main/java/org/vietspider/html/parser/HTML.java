@@ -181,7 +181,7 @@ import org.vietspider.token.TypeToken;
   @NodeConfig (name = Name.SUP, type = Special.class),
 
   @NodeConfig (name = Name.TABLE, 
-      children={Name.TBODY, Name.THEAD, Name.TFOOT, Name.CAPTION, Name.COLGROUP},
+      children={Name.TR, Name.TBODY, Name.THEAD, Name.TFOOT, Name.CAPTION, Name.COLGROUP},
       type = Block.class, block = true, move = MoveType.INSERT
   ),
   @NodeConfig (name = Name.TBODY, 
@@ -201,7 +201,7 @@ import org.vietspider.token.TypeToken;
   ),
   @NodeConfig (name = Name.TITLE, move = MoveType.HEADER, type = HeadContent.class ),
   @NodeConfig (name = Name.TR, 
-      end = Tag.OPTIONAL,  parent={Name.TBODY, Name.THEAD, Name.TFOOT}, 
+      end = Tag.OPTIONAL,  parent={Name.TABLE, Name.TBODY, Name.THEAD, Name.TFOOT}, 
       children = {Name.TD, Name.TH}, type = Table.class, move = MoveType.INSERT
   ),
   @NodeConfig (name = Name.TT, type = Fontstyle.class),
