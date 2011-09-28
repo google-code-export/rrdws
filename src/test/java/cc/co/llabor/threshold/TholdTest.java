@@ -1,4 +1,4 @@
-package org.jrobin.thold;
+package cc.co.llabor.threshold;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
