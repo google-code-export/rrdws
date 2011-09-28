@@ -29,18 +29,48 @@ import cc.co.llabor.threshold.rrd.Threshold;
 public class AlertCaptain implements Runnable{
 
 	public static AlertCaptain getInstance() { 
+		if (myself.isAsync && !myself.isAlive){
+			System.out.println("starting ....");
+			Thread th = new Thread(myself, "AlertCaptain");
+			th .setPriority(Thread.MAX_PRIORITY/2+Thread.MAX_PRIORITY/4); // 75%
+			myself.isAlive = true;
+			th.start();
+			System.out.println("...done.");
+		}		
+		
 		return myself; 
 	}
 
 	List<Threshold> ToDo = new ArrayList<Threshold>();
-	private static final Logger log = LoggerFactory.getLogger(DataWorker.class .getName());
-	private boolean isAlive = true;
+	private static final Logger log = LoggerFactory.getLogger(AlertCaptain.class .getName());
+	private boolean isAlive = false;
 	
 	
+	public boolean isAlive() { 
+			return isAlive;
+	}
+	public void setAlive(boolean isAlive) {
+		this.isAlive = isAlive;
+	}
+
 	private java.util.Queue<CheckPoint> queue;
 	private int wakeCounter;
 	private boolean isAsync = false;
+	private Throwable lastExc;
+	public Throwable getLastExc() { 
+			return lastExc;
+	}
+
+	private long processStart;
+	public long getProcessStart() { 
+			return processStart;
+	}
+
+	private long processEnd;
 	
+	public long getProcessEnd() { 
+			return processEnd;
+	}
 	public boolean isAsync() { 
 			return isAsync;
 	}
@@ -58,12 +88,7 @@ public class AlertCaptain implements Runnable{
 	}
 	AlertCaptain ( Queue<CheckPoint> q){
 		isAsync = true;
-		if (isAsync){
-			this.queue = q;
-			Thread th = new Thread(this, "AlertCaptain");
-			th .setPriority(Thread.MAX_PRIORITY/2+Thread.MAX_PRIORITY/4); // 75%
-			th.start();
-		}
+		this.queue = q;
 		log.info(Repo.getBanner( "AlertCaptain"));
 	}
 	public void register(Threshold e) {
@@ -81,8 +106,7 @@ public class AlertCaptain implements Runnable{
 	/**
 	 * put the time-related-job into queue
 	 * OR 
-	 * process it syncronously
-	 * 
+	 * process it synchronously
 	 * 
 	 * @author vipup
 	 * @param timestamp
@@ -94,7 +118,7 @@ public class AlertCaptain implements Runnable{
 			if (this.isAsync){
 				queue.add(e);
 			}else{
-				processData(e ); 
+				processData(e); 
 			}
 		}
 	}
@@ -103,37 +127,48 @@ public class AlertCaptain implements Runnable{
 		isAlive = false;
 	}
 	public void run() {
+		System.out.println(" [The Captain]  ");
 		while(isAlive ){ 
-			if (queue.isEmpty()){
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) { 
-					e.printStackTrace();
-				}
-			}else{
-				CheckPoint charlieTmp =null;
-				try {
-					charlieTmp = queue.peek() ;
-					if (charlieTmp ==null){
-						//notifyAll();
-						continue;
+			//System.out.println(" is alive...  ");
+			try{
+				if (queue.isEmpty()){
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) { 
+						e.printStackTrace();
 					}
-					processData(charlieTmp ); 
-					queue.remove(charlieTmp);
-				} catch (	java.util.NoSuchElementException	e){
-					if (charlieTmp !=null)
-						charlieTmp.processError(e);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					//charlieTmp.processError(e);
-					//e.printStackTrace();
-				}catch( Throwable e){
-					//e.printStackTrace();
-				} finally{
-					
-				}
+				}else{
+					CheckPoint charlieTmp =null;
+					try {
+						charlieTmp = queue.peek() ;
+						if (charlieTmp ==null){
+							//notifyAll();
+							continue;
+						}
+						processStart = charlieTmp.getTimestamp();
+						processData(charlieTmp ); 
+						processEnd = charlieTmp.getTimestamp();
+						queue.remove(charlieTmp);
+					} catch (	java.util.NoSuchElementException	e){
+						if (charlieTmp !=null)
+							charlieTmp.processError(e);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						//charlieTmp.processError(e);
+						//e.printStackTrace();
+						lastExc = e;
+					}catch( Throwable e){
+						//e.printStackTrace();
+						lastExc = e;
+					}
+				}	
+			}catch(Throwable e){
+				lastExc = e;
+			} finally{
+				//isAlive = false;
 			}
 		}
+		System.out.println(" |nasd;famsadflasmdfhq;wrxqweuiqwxrf;heqx,rqlwexr,qwexr,qeurx..  ");
 		log.info(Repo.getBanner( "+AlertCaptain"));
 	}
 

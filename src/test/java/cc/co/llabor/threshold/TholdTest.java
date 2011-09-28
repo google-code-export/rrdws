@@ -2,6 +2,7 @@ package cc.co.llabor.threshold;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import junit.framework.TestCase;
@@ -32,6 +33,17 @@ public class TholdTest extends TestCase {
 
 		// 1999]
 		rrdDef = new RrdDef(getRRDName());
+		String path2RRD = rrdDef.getPath();
+		File rrdFile = new File(path2RRD);
+		if (rrdFile.exists()){
+			rrdFile.delete();
+		}
+		File rrdTholdFile = new File(path2RRD+"Thold.RRD");
+		if (rrdTholdFile.exists()){
+			rrdTholdFile.delete();
+		}
+		
+		
 		rrdDef.setStartTime(startTime);
 		rrdDef.setStep(55);
 
@@ -126,6 +138,12 @@ public class TholdTest extends TestCase {
 	private String syncToText() {
 		return  AlertCaptain.getInstance().isAsync()?"!ASYNC!":"_sync_";
 	}
+	
+	/**
+	 * this method will simulate the short timeout for asynchron model of testing, when a lot of event stay on the queue for processing, to give a change to process it somehow ....
+	 * @author vipup
+	 * @param capTmp
+	 */
 	private void stayABit(AlertCaptain capTmp) {
 		
 		if (capTmp.isAsync() && capTmp.getQueueLength() > 11010){
@@ -136,7 +154,27 @@ public class TholdTest extends TestCase {
 				//capTmp.wait(1000);
 				stayCounter++;
 				System.out.println("#WakeCouter ="+capTmp.getWakeCounter()+"  QueueLen = "+capTmp.getQueueLength()+" stayCounter = "+stayCounter);
+				System.out.println("AlertCaptain is "+(capTmp.isAlive()?" alive...":"DEAD!"));
+				
+				if (!capTmp.isAlive()){
+					System.out.println("getProcessStart::"+capTmp.getProcessStart());
+					System.out.println("getProcessEnd::"+capTmp.getProcessEnd());
+					if (capTmp.getLastExc()!=null){
+						capTmp.getLastExc().printStackTrace();
+					}else{
+						return;
+					}
+				}else{
+					System.out.println("getProcessStart::"+capTmp.getProcessStart());
+					System.out.println("getProcessEnd::"+capTmp.getProcessEnd());
+					System.out.println("capTmp.getLastExc()::"+capTmp.getLastExc());
+					
+					
+				}
 			} catch (Exception e) {//Interrupted
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}catch (Throwable e) {//Interrupted
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -384,30 +422,42 @@ public class TholdTest extends TestCase {
 		// use the following code: System.out.println("--");
 
 	}
-	public void testExecuteSinBaseLine() throws RrdException, IOException {
-
-		int MAX_POSSIBLE_IQ = 140;
-
+	
+	public void testNotification() throws RrdException, IOException {
 		double baseLine = 80; // should be smart enough ;)
 		double delta = 15;
-		long tenSecondds = 10; // 10 sec is maximal time to start to do
-								// something...
-		Threshold headHunter = new BaselineAlerter(getRRDName(), baseLine, delta,
-				tenSecondds);
+		long tenSecondds = 10; // 10 sec is maximal time to start to do something...		
+		//Threshold headHunter = new BaselineAlerter(getRRDName(), baseLine, delta, 	tenSecondds);
+		StdOutNotificator stdOutNotificator = new StdOutNotificator (getRRDName(), baseLine, delta, 	tenSecondds);
+		
+		testExecuteSinBaseLine(  stdOutNotificator );
+		assertEquals(stdOutNotificator.getNotificationCounter(), 20);
+		
+		
+	}
+		
+	
+	public void testExecuteSinBaseLine() throws RrdException, IOException {
+		double baseLine = 80; // should be smart enough ;)
+		double delta = 15;
+		long tenSecondds = 10; // 10 sec is maximal time to start to do something...		
+		Threshold headHunter = new BaselineAlerter(getRRDName(), baseLine, delta, 	tenSecondds);
+		testExecuteSinBaseLine(  headHunter);
+	}
+
+	public void testExecuteSinBaseLine(Threshold headHunter) throws RrdException, IOException {
+		int MAX_POSSIBLE_IQ = 140;
 		AlertCaptain capTmp = AlertCaptain.getInstance();
-
 		capTmp.register(headHunter);
-
 		Sample sample = rrdDb.createSample();
 		long lastTimeTmp = -1;
 		double lastSpeed = 0;
-		for (int secTmp = 1; secTmp < 60 * 60 * 12; secTmp += 1) { // 1 Day
-			lastTimeTmp = startTime + secTmp;
+		double baseLine = ((BaselineAlerter)headHunter).getBaseLine() ;
+		// 1 Day to go...
+		for (int secTmp = 1; secTmp < 60 * 60 * 12; secTmp += 1) { 			lastTimeTmp = startTime + secTmp;
 			double d = 22 * Math.sin((.0001356 * secTmp));
 			lastSpeed = d * Math.sin(Math.E * .000531 * secTmp);
-			lastSpeed += baseLine;
-			// lastSpeed = lastSpeed>0?lastSpeed:-lastSpeed;
-
+			lastSpeed += baseLine ;
 			// Realdata production
 			sample.setAndUpdate("" + (lastTimeTmp) + ":" + (lastSpeed));
 			// observation of trarget rrd -- here will be simulation of Time!
@@ -429,8 +479,9 @@ public class TholdTest extends TestCase {
 
 		graphDef.datasource("BaseLINE", "" + baseLine);
 		graphDef.line("BaseLINE", new Color(0, 0x33, 0xAA), "BaseLINE", 4);
+		double delta = ((BaselineAlerter)headHunter).getGap() ;
 		// delta
-		graphDef.datasource("BaseLINEHi", "" + (baseLine + delta));
+		graphDef.datasource("BaseLINEHi", "" + (baseLine + delta ));
 		graphDef.line("BaseLINEHi", new Color(0, 0x33, 0x66), "highest", 2);
 		graphDef.datasource("BaseLINELow", "" + (baseLine - delta));
 		graphDef.line("BaseLINELow", new Color(0, 0x66, 033), "lowest", 2);
@@ -462,6 +513,10 @@ public class TholdTest extends TestCase {
 		// use the following code: System.out.println("--");
 
 	}
+	
+	
+
+	
 	public void testExecuteSinBaseLinePow2() throws RrdException, IOException {
 
 		int MAX_POSSIBLE_IQ = 140;
