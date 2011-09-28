@@ -1,8 +1,11 @@
 package org.vietspider.html.util;
 
 import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -244,6 +247,7 @@ private static final boolean TRACE = false;
 		        verifier.modi(n, swapServletUrl2, home.toString(),home.toExternalForm()  ); 
 		      } 
 	  } 
+	  if (1=="1".length())return;
   	// for ex  <table width="996"  border="0" cellspacing="0" cellpadding="0" align="center" style="background: url(http://www.xa........ 
 	  StyleAttrVerifier atttrVerifier = styleVerifier;
 	  NodeIterator iterator2 = node.iterator();
@@ -512,7 +516,14 @@ private static final Logger log = LoggerFactory.getLogger(LServlet.class .getNam
 
 	public static  String encode(String swapServletUrl2, String value) {
 		if (value.startsWith(swapServletUrl2)) return value;
-		value  = swapServletUrl2 + new String (Base64Coder.encode(  value.getBytes() ));
+		try {
+			value = URLDecoder.decode(value, "utf-8");
+			value  = swapServletUrl2 + new String (Base64Coder.encode(  value.getBytes("utf-8") ));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			value  = swapServletUrl2 + new String (Base64Coder.encode(  value.getBytes() ));
+		}
 		return value;
 	}
 	
@@ -521,7 +532,7 @@ private static final Logger log = LoggerFactory.getLogger(LServlet.class .getNam
 		char[] charArray = decodedUrl.toCharArray();
 		try{
 			final byte[] decodedTmp = Base64Coder.decode(charArray);
-			urlStr = ""+ new String(decodedTmp)+"";
+			urlStr = ""+ new String(decodedTmp, "utf-8")+"";
 		}catch(Throwable e){
 			try{
 				// aHR0cDovL2l0LXJ1LmRlL2ZvcnVtL3ZpZXdmb3J1bS5waHA/viewforum.php
