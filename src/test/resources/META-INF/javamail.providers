@@ -1,4 +1,7 @@
 #cc
-#protocol=gm; type=transport; class=cc.co.llabor.mail.SMTPTransport;
+protocol=gm; type=transport; class=cc.co.llabor.mail.SMTPTransport;
+#protocol=smtp; type=transport; class=cc.co.llabor.mail.SMTPTransport;
+
 #sun
-protocol=gm; type=transport; class=com.sun.mail.smtp.SMTPTransport;
+#rotocol=gm; type=transport; class=com.sun.mail.smtp.SMTPTransport;
+
