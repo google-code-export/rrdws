@@ -1,9 +1,10 @@
+<!-- 4GAE? -->
 <Context privileged='true' >
   <Resource name='mail/Session' auth='Container' type='javax.mail.Session'/>
   <ResourceParams name='mail/Session'>
     <parameter>
       <name>mail.smtp.host</name>
-      <value>localhost</value>
+      <value>locALhost</value>
     </parameter>
     <parameter>
       <name>mail.smtp.port</name>
