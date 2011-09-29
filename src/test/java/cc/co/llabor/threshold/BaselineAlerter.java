@@ -34,7 +34,7 @@ public class BaselineAlerter extends RddUpdateAlerter implements Threshold {
 
 
 	@Override
-	public void checkIncident(double val, long timestamp) {
+	public boolean checkIncident(double val, long timestamp) {
 //	} //BaselineAlerter
 	//  !----- -10--- -9-----...------0-----1----2 F(t) ------3------5-----11 ..---!
 	//                (Baseline)-------->!<
@@ -53,15 +53,11 @@ public class BaselineAlerter extends RddUpdateAlerter implements Threshold {
 //			toCheck.clear();
 //		}
 
-		if (
+		return (
 			val >  this.getBaseLine() +this.getGap()
 			||
 			val <  this.getBaseLine() -this.getGap()
-		){
-				this.incident(timestamp);
-			}else{
-				this.clear(timestamp);
-		}
+		);
 	}
 
 

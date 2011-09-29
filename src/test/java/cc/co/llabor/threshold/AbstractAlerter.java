@@ -15,9 +15,9 @@ import cc.co.llabor.threshold.rrd.Threshold;
 public abstract class AbstractAlerter implements Threshold {
 	protected String rrdName;
 	protected double baseLine;
-	protected long activationTimeoutInSeconds;
-	protected String action;
-	protected String actionArgs;
+	// have to be triggered immediately 
+	protected long activationTimeoutInSeconds=0;
+ 
 
 	long incidentTime = -1;
 	@Override
@@ -41,15 +41,6 @@ public abstract class AbstractAlerter implements Threshold {
 		incidentTime = -1;
 	}
 
-	@Override
-	public String getActionArgs() {
-		// TODO Auto-generated method stub
-		if (1 == 1)
-			throw new RuntimeException("not yet implemented since 30.08.2011");
-		else {
-			return null;
-		}
-	}
 
 	public double getBaseLine() {
 		return this.baseLine;
@@ -70,13 +61,24 @@ public abstract class AbstractAlerter implements Threshold {
 	public String getDatasource() {
 		return this.rrdName;
 	}
-
+ 
+	/**
+	 * something like Cpu_Load
+	 */
 	@Override
 	public String getMonitorType() {
-		return this.getClass().getName();
+		// TODO Auto-generated method stub
+		if (1 == 1)
+			throw new RuntimeException("not yet implemented since 30.08.2011");
+		else {
+			return null;
+		}
 	}
-
+ 
 	@Override
+	/**
+	 * ...and _Average:1Hour _?
+	 */
 	public String getMonitorArgs() {
 		// TODO Auto-generated method stub
 		if (1 == 1)
@@ -86,9 +88,30 @@ public abstract class AbstractAlerter implements Threshold {
 		}
 	}
 
+	
 	@Override
+	/**
+	 * shell://kill
+	 */
 	public String getAction() {
-		return action;
+		// TODO Auto-generated method stub
+		if (1 == 1)
+			throw new RuntimeException("not yet implemented since 30.08.2011");
+		else {
+			return null;
+		}
 	}
 
+	@Override
+	/**
+	 * pid
+	 */
+	public String getActionArgs() {
+		// TODO Auto-generated method stub
+		if (1 == 1)
+			throw new RuntimeException("not yet implemented since 30.08.2011");
+		else {
+			return null;
+		}
+	}
 }

@@ -1,13 +1,10 @@
 package cc.co.llabor.threshold;
  
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.ArrayList; 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue; 
-import org.collectd.DataWorker;
+import java.util.Queue;  
 import org.jrobin.core.Datasource;
 import org.jrobin.core.RrdDb;
 import org.jrobin.core.RrdDbPool;
@@ -28,16 +25,24 @@ import cc.co.llabor.threshold.rrd.Threshold;
  */
 public class AlertCaptain implements Runnable{
 
+	static boolean inited=false;
+	
 	public static AlertCaptain getInstance() { 
-		if (myself.isAsync && !myself.isAlive){
-			System.out.println("starting ....");
-			Thread th = new Thread(myself, "AlertCaptain");
-			th .setPriority(Thread.MAX_PRIORITY/2+Thread.MAX_PRIORITY/4); // 75%
-			myself.isAlive = true;
-			th.start();
-			System.out.println("...done.");
+		if (!inited){
+			synchronized (Thread.class) {
+				if (!inited){
+					if (myself.isAsync && !myself.isAlive){
+						System.out.println("starting ....");
+						Thread th = new Thread(myself, "AlertCaptain");
+						th .setPriority(Thread.MAX_PRIORITY/2+Thread.MAX_PRIORITY/4); // 75%
+						myself.isAlive = true;
+						th.start();
+						System.out.println("...done.");
+						inited = true;
+					}	
+				}
+			}
 		}		
-		
 		return myself; 
 	}
 
@@ -89,7 +94,7 @@ public class AlertCaptain implements Runnable{
 	AlertCaptain ( Queue<CheckPoint> q){
 		isAsync = true;
 		this.queue = q;
-		log.info(Repo.getBanner( "AlertCaptain"));
+		log.info(Repo.getBanner("AlertCaptain"));
 	}
 	public void register(Threshold e) {
 		ToDo.add(e);
@@ -127,7 +132,7 @@ public class AlertCaptain implements Runnable{
 		isAlive = false;
 	}
 	public void run() {
-		System.out.println(" [The Captain]  ");
+		log.info(Repo.getBanner( "AlertCaptain"));
 		while(isAlive ){ 
 			//System.out.println(" is alive...  ");
 			try{
@@ -186,7 +191,13 @@ public class AlertCaptain implements Runnable{
 				val = dsTmp.getLastValue();
 			}
 			
-			toCheck.checkIncident(val, charlieTmp.timestamp);
+			boolean isInIncident = toCheck.checkIncident(val,
+			charlieTmp.timestamp);
+			if (isInIncident) {
+				toCheck.incident(charlieTmp.timestamp);
+			} else {
+				toCheck.clear(charlieTmp.timestamp);
+			}			
 			toCheck.reactIncidentIfAny(charlieTmp.timestamp);
 			
 		} catch (IOException e) {
@@ -201,11 +212,11 @@ public class AlertCaptain implements Runnable{
 	 
 
 	static AlertCaptain myself = new AlertCaptain();
-	public void unregister(Threshold headHunter) {
+	public void unregister(Threshold activist) {
 		try{
-			if (ToDo.indexOf( headHunter )>=0){
-				boolean o = ToDo.remove(headHunter);
-				headHunter.stop();
+			if (ToDo.indexOf( activist )>=0){
+				boolean o = ToDo.remove(activist);
+				if (o) activist.stop();
 			}
 		}catch(Throwable e){
 			e.printStackTrace();

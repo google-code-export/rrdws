@@ -30,12 +30,8 @@ public class HighAlerter extends RddUpdateAlerter implements Threshold {
 	//                (HiLimit)---------------->!<
 	///                                         !<--- alert ----------------------<< 
 	@Override
-	public void checkIncident(double val, long timestamp) {
-		if (val > this.getBaseLine()) {
-			this.incident(timestamp);
-		} else {
-			this.clear(timestamp);
-		}
+	public boolean checkIncident(double val, long timestamp) {
+		return (val > this.getBaseLine())  ;
 	}
  
   

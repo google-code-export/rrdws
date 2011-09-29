@@ -23,14 +23,10 @@ public class LowAlerter extends RddUpdateAlerter implements Threshold {
 	//                >!<---------(lowLimit)
 	/// >>--- alert -->! 
 	@Override
-	public void checkIncident(double val, long timestamp) {
-		if (
+	public boolean checkIncident(double val, long timestamp) {
+		return (
 				val <  this.getBaseLine()  
-			){
-					this.incident(timestamp);
-				}else{
-					this.clear(timestamp);
-		}
+			);
 	}
   
  

@@ -47,7 +47,8 @@ public interface Threshold {
 	 * altertate for 2 prev-methods???
 	 * 	 */
 	public void performAction(long timestampSec);
-	/** same with performAction, just without AlertAction... ??
+	/** 
+	 * same with performAction, just without AlertAction... ??
 	 * 	
 	 * @author vipup
 	 * @param timestamp
@@ -56,42 +57,50 @@ public interface Threshold {
 	
 //	<SPAN> := Spanning keyword: SPAN. Case insensitive.
 //	@deprecated ???<span-length> := Number of time spans a thresholds should fail before triggering an action. Number.
-//	!! a number of seconds a thresholds should fail before triggering an action.
-	public long getSpanLength(); 
 	/**
-	 * 	// return the time since the Threshold goes into its limit-incident ( limit is reached ) OR -1 if not the case.
-		// @see getSpanLength()
+	 * !! a number of seconds a thresholds should fail before triggering an
+	 * action.
+	 */
+	public long getSpanLength();
+	
+	/**
+	 * return the time since the Threshold goes into its 
+	 * limit-incident ( limit is reached ) 
+	 * OR -1 if not the case.
+	 * @see getSpanLength()
  	 * @author vipup
 	 * @return
 	 */
 	public long inIncidentTime();	
-	/**	// Start incident....
+	/**
+	 * Start incident....
+	 * mark it as Activated-Threshold
 	 * 
 	 * @author vipup
 	 * @param timestampSec
 	 */
 	public void incident(long timestampSec);
 	/**
-	 * 	// clear incident 
+	 * clear incident - mark it as inactive(passive)
 	 * @author vipup
 	 * @param timestampSec
 	 */
 	public void clear(long timestampSec);
 	/**
+	 * will be called for any update-action
+	 * (pre-action for reactIncidentIfAny)
 	 * 
+	 * the value ahve to be cheched for triggering the Threshold
+	 */
+	public boolean checkIncident(double val, long timestamp);
+	/**
+	 * have to implement alert-reaction for incident-state
 	 * @author vipup
-	 * @param val
 	 * @param timestamp
 	 */
-	void checkIncident(double val, long timestamp);
+	public void reactIncidentIfAny(long timestamp);
 	/**
-	 * 
-	 * @author vipup
-	 * @param timestamp
-	 */
-	void reactIncidentIfAny(long timestamp);
-	/**
-	 * 
+	 * will be called at destroy-time 
 	 * @author vipup
 	 */
 	public void stop();
