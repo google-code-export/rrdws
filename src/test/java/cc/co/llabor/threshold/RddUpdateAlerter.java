@@ -9,7 +9,16 @@ import org.jrobin.core.RrdException;
 import org.jrobin.core.Sample;
 
 /**
- * <b>Description:TODO</b>
+ * <b>Hardcoded RRD-linked Alerter, which will controll the RRD-DB directly
+ * </b>
+ * 
+ * for any monitored RRD-sensor will be created associated
+ * RRD-DB with CF_AVERAGE,CF_MAX and CF_MIN counters.
+ * Depend on the rules AlertCaptain will organize Observer<->Observable mechanism for any defined pair.
+ * 
+ * 
+ * 
+ * 
  * 
  * @author vipup<br>
  * <br>
