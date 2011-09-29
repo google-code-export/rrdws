@@ -19,7 +19,10 @@ import org.slf4j.LoggerFactory;
 public class MailEvaluator implements TriggeringEventEvaluator, OptionHandler {
 	private static final Logger log = LoggerFactory.getLogger(GtalkAppenderTest.class .getName());
 
-	public boolean isTriggeringEvent(LoggingEvent event) { return true; }
+	public boolean isTriggeringEvent(LoggingEvent event) {
+		return "cc.co.llabor.log.GtalkAppenderTest".equals( event.categoryName ); 
+		//return true; 
+	}
 
 	@Override
 	public void activateOptions() {
