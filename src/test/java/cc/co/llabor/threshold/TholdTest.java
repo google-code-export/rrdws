@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import junit.framework.TestCase;
+
+import org.hamcrest.core.IsAnything;
 import org.jrobin.core.ConsolFuns;
 import org.jrobin.core.RrdDb;
 import org.jrobin.core.RrdDbPool;
@@ -21,10 +23,10 @@ public class TholdTest extends TestCase {
 	RrdDb rrdDb;
 	long startTime = 920800000L;
 	private int stayCounter; // 920800000L == [Sun Mar 07 10:46:40 CET
-	 
-	
-	private String getRRDName(){
-		return this.getClass().getName()+"_"+this.getName()+"_"+TEST_RRD;
+
+	private String getRRDName() {
+		return this.getClass().getName() + "_" + this.getName() + "_"
+				+ TEST_RRD;
 	}
 	@Override
 	protected void setUp() throws Exception {
@@ -35,15 +37,14 @@ public class TholdTest extends TestCase {
 		rrdDef = new RrdDef(getRRDName());
 		String path2RRD = rrdDef.getPath();
 		File rrdFile = new File(path2RRD);
-		if (rrdFile.exists()){
+		if (rrdFile.exists()) {
 			rrdFile.delete();
 		}
-		File rrdTholdFile = new File(path2RRD+"Thold.RRD");
-		if (rrdTholdFile.exists()){
+		File rrdTholdFile = new File(path2RRD + "Thold.RRD");
+		if (rrdTholdFile.exists()) {
 			rrdTholdFile.delete();
 		}
-		
-		
+
 		rrdDef.setStartTime(startTime);
 		rrdDef.setStep(55);
 
@@ -68,21 +69,44 @@ public class TholdTest extends TestCase {
 		rrdDb.close();
 		// close all RRDs..
 		RrdDbPool instance;
-		 
+
 		instance = RrdDbPool.getInstance();
 		instance.reset();
 
- 		 super.tearDown();
+		super.tearDown();
 
 	}
 	private static final String TEST_RRD = "test.rrd";
-	public void testExecuteSinHighAlert() throws RrdException, IOException {
 
-		int MAX_POSSIBLE_IQ = 200;
+	public void testNotificationHigh() throws RrdException, IOException {
+
+		double hiLimit = 130; // should be smart enough ;)
+		long tenSecondds = 10; // 10 sec is maximal time to start to do
+								// something...
+		StdOutHighNotificator headHunter = new StdOutHighNotificator(
+				getRRDName(), hiLimit, tenSecondds);
+		testSinHighAlert(headHunter);
+		int xTmp = headHunter.getNotificationCounter();
+		AlertCaptain capTmp = AlertCaptain.getInstance();
+		if (capTmp.isAsync())
+			assertTrue("! 55>x > 60!", xTmp > 55 && xTmp < 60);
+		else
+			assertTrue("! 57>x > 57!", xTmp == 57);
+	}
+
+	public void testSinHighAlert() throws RrdException, IOException {
+
 		double hiLimit = 130; // should be smart enough ;)
 		long tenSecondds = 1111; // 10 sec is maximal time to start to do
 									// something...
-		Threshold headHunter = new HighAlerter(getRRDName(), hiLimit, tenSecondds);
+		Threshold headHunter = new HighAlerter(getRRDName(), hiLimit,
+				tenSecondds);
+		testSinHighAlert(headHunter);
+	}
+
+	public void testSinHighAlert(Threshold headHunter) throws RrdException,
+			IOException {
+		int MAX_POSSIBLE_IQ = 200;
 		AlertCaptain capTmp = AlertCaptain.getInstance();
 
 		capTmp.register(headHunter);
@@ -95,14 +119,12 @@ public class TholdTest extends TestCase {
 			double d = MAX_POSSIBLE_IQ * Math.sin((.0001356 * secTmp));
 			lastSpeed = d * Math.sin(.000531 * secTmp);
 			lastSpeed += 100;
-			// Realdata production 
+			// Realdata production
 			sample.setAndUpdate("" + (lastTimeTmp) + ":" + (lastSpeed));
 			// observation of trarget rrd -- here will be simulation of Time!
 			capTmp.tick(lastTimeTmp);
 			stayABit(capTmp);
-
 		}
-		 
 
 		RrdGraphDef graphDef = new RrdGraphDef();
 		graphDef.setStartTime(startTime - 10 * 60);// seconds!
@@ -112,8 +134,9 @@ public class TholdTest extends TestCase {
 		graphDef.setHeight(600);
 		graphDef.setVerticalLabel(" " + new Date(startTime * 1000) + " - "
 				+ new Date(lastTimeTmp * 1000));
-		graphDef.setTitle("Test_"+ syncToText()+getRRDName());
+		graphDef.setTitle("Test_" + syncToText() + getRRDName());
 
+		double hiLimit = ((RddUpdateAlerter) headHunter).getBaseLine();
 		graphDef.datasource("HighLIMIT", "" + hiLimit);
 		graphDef.line("HighLIMIT", new Color(0, 0x33, 0xAA), "minimal_IQ", 4);
 
@@ -121,8 +144,7 @@ public class TholdTest extends TestCase {
 		graphDef.line("myspeed", new Color(0xFF, 0, 0), "F(t)", 2);
 
 		// .stat.rrd
-		graphDef.datasource("myspeedAlert",  getTholdName(), "speed",
-				"AVERAGE");
+		graphDef.datasource("myspeedAlert", getTholdName(), "speed", "AVERAGE");
 		graphDef.line("myspeedAlert", new Color(0, 0xFF, 0), "recruit IT!", 4);
 
 		RrdGraph graph = new RrdGraph(graphDef);
@@ -136,51 +158,75 @@ public class TholdTest extends TestCase {
 		capTmp.unregister(headHunter);
 	}
 	private String syncToText() {
-		return  AlertCaptain.getInstance().isAsync()?"!ASYNC!":"_sync_";
+		return AlertCaptain.getInstance().isAsync() ? "!ASYNC!" : "_sync_";
 	}
-	
+
 	/**
-	 * this method will simulate the short timeout for asynchron model of testing, when a lot of event stay on the queue for processing, to give a change to process it somehow ....
+	 * this method will simulate the short timeout for asynchron model of
+	 * testing, when a lot of event stay on the queue for processing, to give a
+	 * change to process it somehow ....
+	 * 
 	 * @author vipup
 	 * @param capTmp
 	 */
+	int stayCount = 0;
 	private void stayABit(AlertCaptain capTmp) {
-		
-		if (capTmp.isAsync() && capTmp.getQueueLength() > 11010){
+
+		if (capTmp.isAsync() && capTmp.getQueueLength() > 11010) {
+			// try {
+			System.out.println("QueueLen = " + capTmp.getQueueLength()
+					+ "wait a sec:#" + stayCounter);
 			try {
-				System.out.println("QueueLen = "+capTmp.getQueueLength()+"wait a sec:#"+stayCounter);
-				Thread.sleep(1111);//setAsync
-				//Thread.yield();//setAsync
-				//capTmp.wait(1000);
-				stayCounter++;
-				System.out.println("#WakeCouter ="+capTmp.getWakeCounter()+"  QueueLen = "+capTmp.getQueueLength()+" stayCounter = "+stayCounter);
-				System.out.println("AlertCaptain is "+(capTmp.isAlive()?" alive...":"DEAD!"));
-				
-				if (!capTmp.isAlive()){
-					System.out.println("getProcessStart::"+capTmp.getProcessStart());
-					System.out.println("getProcessEnd::"+capTmp.getProcessEnd());
-					if (capTmp.getLastExc()!=null){
-						capTmp.getLastExc().printStackTrace();
-					}else{
-						return;
-					}
-				}else{
-					System.out.println("getProcessStart::"+capTmp.getProcessStart());
-					System.out.println("getProcessEnd::"+capTmp.getProcessEnd());
-					System.out.println("capTmp.getLastExc()::"+capTmp.getLastExc());
-					
-					
+				Thread.sleep(1111);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}// setAsync
+				// Thread.yield();//setAsync
+				// capTmp.wait(1000);
+			stayCounter++;
+			System.out.println("#WakeCouter =" + capTmp.getWakeCounter()
+					+ "  QueueLen = " + capTmp.getQueueLength()
+					+ " stayCounter = " + stayCounter);
+			System.out.println("AlertCaptain is "
+					+ (capTmp.isAlive() ? " alive..." : "DEAD!"));
+
+			if (!capTmp.isAlive()) {
+				System.out.println("getProcessStart::"
+						+ capTmp.getProcessStart());
+				System.out.println("getProcessEnd::" + capTmp.getProcessEnd());
+				if (capTmp.getLastExc() != null) {
+					capTmp.getLastExc().printStackTrace();
+				} else {
+					return;
 				}
-			} catch (Exception e) {//Interrupted
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}catch (Throwable e) {//Interrupted
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} else {
+				System.out.println("getProcessStart::"
+						+ capTmp.getProcessStart());
+				System.out.println("getProcessEnd::" + capTmp.getProcessEnd());
+				System.out.println("capTmp.getLastExc()::"
+						+ capTmp.getLastExc());
+				stayCount++;
+				if (stayCount < 10) {
+					try {
+						capTmp.notifyAll();
+					} catch (Throwable e) {
+					}
+				} else {
+					capTmp.kill();
+					throw new RuntimeException("let me out!");
+				}
 			}
+			// } catch (Exception e) {//Interrupted
+			// // TODO Auto-generated catch block
+			// e.printStackTrace();
+			// }catch (Throwable e) {//Interrupted
+			// // TODO Auto-generated catch block
+			// e.printStackTrace();
+			// }
 		}
 	}
-	public void testExecutePureSin() throws RrdException, IOException {
+	public void testPureSin() throws RrdException, IOException {
 
 		Sample sample = rrdDb.createSample();
 		long lastTimeTmp = -1;
@@ -190,7 +236,6 @@ public class TholdTest extends TestCase {
 			lastSpeed += 100.0 * Math.sin((.0003 * secTmp));
 			sample.setAndUpdate("" + (lastTimeTmp) + ":" + (lastSpeed));
 		}
- 
 
 		RrdGraphDef graphDef = new RrdGraphDef();
 		graphDef.setStartTime(startTime - 10 * 60);// seconds!
@@ -200,10 +245,12 @@ public class TholdTest extends TestCase {
 		graphDef.setHeight(600);
 		graphDef.setVerticalLabel(" " + new Date(startTime * 1000) + " - "
 				+ new Date(lastTimeTmp * 1000));
-		graphDef.setTitle("Test_"+ syncToText()+getRRDName());
-		graphDef.datasource("myspeedMAX", getRRDName(), "speed", ConsolFuns.CF_MAX);
+		graphDef.setTitle("Test_" + syncToText() + getRRDName());
+		graphDef.datasource("myspeedMAX", getRRDName(), "speed",
+				ConsolFuns.CF_MAX);
 		graphDef.line("myspeedMAX", new Color(0xFF, 0xAF, 0xAF), "max", 2);
-		graphDef.datasource("myspeedMIN", getRRDName(), "speed", ConsolFuns.CF_MIN);
+		graphDef.datasource("myspeedMIN", getRRDName(), "speed",
+				ConsolFuns.CF_MIN);
 		graphDef.line("myspeedMIN", new Color(0xFF, 0xAF, 0xFF), "min", 2);
 		graphDef.datasource("myspeedLAST", getRRDName(), "speed",
 				ConsolFuns.CF_LAST);
@@ -226,14 +273,15 @@ public class TholdTest extends TestCase {
 		// use the following code: System.out.println("--");
 
 	}
-	public void testExecuteSin() throws RrdException, IOException {
+	public void testSin() throws RrdException, IOException {
 
 		int MAX_POSSIBLE_IQ = 200;
 
 		double hiLimit = 130; // should be smart enough ;)
 		long tenSecondds = 10; // 10 sec is maximal time to start to do
 								// something...
-		Threshold headHunter = new HighAlerter(getRRDName(), hiLimit, tenSecondds);
+		Threshold headHunter = new HighAlerter(getRRDName(), hiLimit,
+				tenSecondds);
 		AlertCaptain capTmp = AlertCaptain.getInstance();
 
 		capTmp.register(headHunter);
@@ -251,11 +299,10 @@ public class TholdTest extends TestCase {
 			// observation of trarget rrd -- here will be simulation of Time!
 			capTmp.tick(lastTimeTmp);
 			stayABit(capTmp);
-			
+
 		}
 		capTmp.unregister(headHunter);
 
-		
 		RrdGraphDef graphDef = new RrdGraphDef();
 		graphDef.setStartTime(startTime - 10 * 60);// seconds!
 		graphDef.setEndTime(lastTimeTmp + 10 * 60);// seconds
@@ -264,7 +311,7 @@ public class TholdTest extends TestCase {
 		graphDef.setHeight(600);
 		graphDef.setVerticalLabel(" " + new Date(startTime * 1000) + " - "
 				+ new Date(lastTimeTmp * 1000));
-		graphDef.setTitle("Test_"+ syncToText()+getRRDName());
+		graphDef.setTitle("Test_" + syncToText() + getRRDName());
 
 		graphDef.datasource("HighLIMIT", "" + hiLimit);
 		graphDef.line("HighLIMIT", new Color(0, 0x33, 0xAA), "minimal_IQ", 4);
@@ -273,8 +320,7 @@ public class TholdTest extends TestCase {
 		graphDef.line("myspeed", new Color(0xFF, 0, 0), "F(t)", 2);
 
 		// .stat.rrd
-		graphDef.datasource("myspeedAlert", getTholdName(), "speed",
-				"AVERAGE");
+		graphDef.datasource("myspeedAlert", getTholdName(), "speed", "AVERAGE");
 		graphDef.line("myspeedAlert", new Color(0, 0xFF, 0), "recruit IT!", 4);
 
 		RrdGraph graph = new RrdGraph(graphDef);
@@ -287,14 +333,15 @@ public class TholdTest extends TestCase {
 		// use the following code: System.out.println("--");
 
 	}
-	public void testExecuteSinPow2() throws RrdException, IOException {
+	public void testSinPow2() throws RrdException, IOException {
 
 		int MAX_POSSIBLE_IQ = 140;
 
 		double hiLimit = 60; // should be smart enough ;)
 		long tenSecondds = 10; // 10 sec is maximal time to start to do
 								// something...
-		Threshold headHunter = new HighAlerter(getRRDName(), hiLimit, tenSecondds);
+		Threshold headHunter = new HighAlerter(getRRDName(), hiLimit,
+				tenSecondds);
 		AlertCaptain capTmp = AlertCaptain.getInstance();
 
 		capTmp.register(headHunter);
@@ -317,7 +364,6 @@ public class TholdTest extends TestCase {
 		}
 		capTmp.unregister(headHunter);
 
-		
 		RrdGraphDef graphDef = new RrdGraphDef();
 		graphDef.setStartTime(startTime - 10 * 60);// seconds!
 		graphDef.setEndTime(lastTimeTmp + 10 * 60);// seconds
@@ -326,14 +372,13 @@ public class TholdTest extends TestCase {
 		graphDef.setHeight(600);
 		graphDef.setVerticalLabel(" " + new Date(startTime * 1000) + " - "
 				+ new Date(lastTimeTmp * 1000));
-		graphDef.setTitle("Test_"+ syncToText()+getRRDName());
+		graphDef.setTitle("Test_" + syncToText() + getRRDName());
 
 		graphDef.datasource("HighLIMIT", "" + hiLimit);
 		graphDef.line("HighLIMIT", new Color(0, 0x33, 0xAA), "minimal_IQ", 4);
 
 		// .stat.rrd
-		graphDef.datasource("myspeedAlert", getTholdName(), "speed",
-				"AVERAGE");
+		graphDef.datasource("myspeedAlert", getTholdName(), "speed", "AVERAGE");
 		graphDef.line("myspeedAlert", new Color(0, 0xFF, 0), "recruit IT!", 3);
 		graphDef.datasource("myspeedAlertMAX", getTholdName(), "speed",
 				ConsolFuns.CF_MAX);
@@ -362,16 +407,19 @@ public class TholdTest extends TestCase {
 		return getRRDName() + ".Thold.RRD";
 	}
 
-	public void testExecuteSinLowAlert() throws RrdException, IOException {
-
-		int MAX_POSSIBLE_IQ = 200;
-
+	public void testSinLowAlert() throws RrdException, IOException {
 		double lowLimit = 40; // should be smart enough ;)
 		long tenSecondds = 1111; // 10 sec is maximal time to start to do
 									// something...
-		Threshold debiKiller = new LowAlerter(getRRDName(), lowLimit, tenSecondds);
-		AlertCaptain capTmp = AlertCaptain.getInstance();
+		Threshold debiKiller = new LowAlerter(getRRDName(), lowLimit,
+				tenSecondds);
+		testSinLowAlert(debiKiller);
+	}
 
+	public void testSinLowAlert(Threshold debiKiller) throws RrdException,
+			IOException {
+		AlertCaptain capTmp = AlertCaptain.getInstance();
+		int MAX_POSSIBLE_IQ = 200;
 		capTmp.register(debiKiller);
 
 		Sample sample = rrdDb.createSample();
@@ -390,7 +438,6 @@ public class TholdTest extends TestCase {
 		}
 		capTmp.unregister(debiKiller);
 
-		
 		RrdGraphDef graphDef = new RrdGraphDef();
 		graphDef.setStartTime(startTime - 10 * 60);// seconds!
 		graphDef.setEndTime(lastTimeTmp + 10 * 60);// seconds
@@ -399,8 +446,9 @@ public class TholdTest extends TestCase {
 		graphDef.setHeight(600);
 		graphDef.setVerticalLabel(" " + new Date(startTime * 1000) + " - "
 				+ new Date(lastTimeTmp * 1000));
-		graphDef.setTitle("Test_"+ syncToText()+getRRDName());
+		graphDef.setTitle("Test_" + syncToText() + getRRDName());
 
+		double lowLimit = ((RddUpdateAlerter) debiKiller).getBaseLine();
 		graphDef.datasource("LowLIMIT", "" + lowLimit);
 		graphDef.line("LowLIMIT", new Color(0, 0x33, 0xAA), "minimal_IQ", 4);
 
@@ -408,8 +456,7 @@ public class TholdTest extends TestCase {
 		graphDef.line("myspeed", new Color(0xFF, 0, 0), "F(t)", 2);
 
 		// .stat.rrd
-		graphDef.datasource("myspeedAlert", getTholdName(), "speed",
-				"AVERAGE");
+		graphDef.datasource("myspeedAlert", getTholdName(), "speed", "AVERAGE");
 		graphDef.line("myspeedAlert", new Color(0, 0xFF, 0), "terminate IT!", 4);
 
 		RrdGraph graph = new RrdGraph(graphDef);
@@ -422,42 +469,70 @@ public class TholdTest extends TestCase {
 		// use the following code: System.out.println("--");
 
 	}
-	
-	public void testNotification() throws RrdException, IOException {
+
+	public void testNotificationBaseLine() throws RrdException, IOException {
+		double baseLine = 80; // should be smart enough ;)
+		double delta = 15;
+		long tenSecondds = 10; // 10 sec is maximal time to start to do
+								// something...
+		// Threshold headHunter = new BaselineAlerter(getRRDName(), baseLine,
+		// delta, tenSecondds);
+		StdOutBLNotificator stdOutNotificator = new StdOutBLNotificator(
+				getRRDName(), baseLine, delta, tenSecondds);
+
+		testSinBaseLine(stdOutNotificator);
+//		assertEquals(stdOutNotificator.getNotificationCounter(), 20);
+		int xTmp = stdOutNotificator.getNotificationCounter();
+		AlertCaptain capTmp = AlertCaptain.getInstance();
+		if (capTmp.isAsync())
+			assertTrue("! 22>x > 20!", xTmp > 19 && xTmp < 22);
+		else
+			assertTrue("! 20>x > 20!", xTmp == 20);
+
+	}
+	public void testNotificationLow() throws RrdException, IOException {
 		double baseLine = 80; // should be smart enough ;)
 		double delta = 15;
 		long tenSecondds = 10; // 10 sec is maximal time to start to do something...		
 		//Threshold headHunter = new BaselineAlerter(getRRDName(), baseLine, delta, 	tenSecondds);
-		StdOutNotificator stdOutNotificator = new StdOutNotificator (getRRDName(), baseLine, delta, 	tenSecondds);
+		StdOutLowNotificator stdOutNotificator = new StdOutLowNotificator (getRRDName(), baseLine, tenSecondds);
 		
-		testExecuteSinBaseLine(  stdOutNotificator );
-		assertEquals(stdOutNotificator.getNotificationCounter(), 20);
-		
-		
-	}
-		
-	
-	public void testExecuteSinBaseLine() throws RrdException, IOException {
-		double baseLine = 80; // should be smart enough ;)
-		double delta = 15;
-		long tenSecondds = 10; // 10 sec is maximal time to start to do something...		
-		Threshold headHunter = new BaselineAlerter(getRRDName(), baseLine, delta, 	tenSecondds);
-		testExecuteSinBaseLine(  headHunter);
+		testSinLowAlert(  stdOutNotificator );
+		AlertCaptain capTmp = AlertCaptain.getInstance();
+		int xTmp=stdOutNotificator.getNotificationCounter();
+		if (capTmp .isAsync())
+			assertTrue( "! 64>x > 67!",xTmp> 64 &&xTmp<67);		
+		else
+			assertTrue( "! 66>x > 66!",xTmp ==66);
+			
+		 
 	}
 
-	public void testExecuteSinBaseLine(Threshold headHunter) throws RrdException, IOException {
+	public void testSinBaseLine() throws RrdException, IOException {
+		double baseLine = 80; // should be smart enough ;)
+		double delta = 15;
+		long tenSecondds = 10; // 10 sec is maximal time to start to do
+								// something...
+		Threshold headHunter = new BaselineAlerter(getRRDName(), baseLine,
+				delta, tenSecondds);
+		testSinBaseLine(headHunter);
+	}
+
+	public void testSinBaseLine(Threshold headHunter) throws RrdException,
+			IOException {
 		int MAX_POSSIBLE_IQ = 140;
 		AlertCaptain capTmp = AlertCaptain.getInstance();
 		capTmp.register(headHunter);
 		Sample sample = rrdDb.createSample();
 		long lastTimeTmp = -1;
 		double lastSpeed = 0;
-		double baseLine = ((BaselineAlerter)headHunter).getBaseLine() ;
+		double baseLine = ((RddUpdateAlerter) headHunter).getBaseLine();
 		// 1 Day to go...
-		for (int secTmp = 1; secTmp < 60 * 60 * 12; secTmp += 1) { 			lastTimeTmp = startTime + secTmp;
+		for (int secTmp = 1; secTmp < 60 * 60 * 12; secTmp += 1) {
+			lastTimeTmp = startTime + secTmp;
 			double d = 22 * Math.sin((.0001356 * secTmp));
 			lastSpeed = d * Math.sin(Math.E * .000531 * secTmp);
-			lastSpeed += baseLine ;
+			lastSpeed += baseLine;
 			// Realdata production
 			sample.setAndUpdate("" + (lastTimeTmp) + ":" + (lastSpeed));
 			// observation of trarget rrd -- here will be simulation of Time!
@@ -466,7 +541,6 @@ public class TholdTest extends TestCase {
 		}
 		capTmp.unregister(headHunter);
 
-		
 		RrdGraphDef graphDef = new RrdGraphDef();
 		graphDef.setStartTime(startTime - 10 * 60);// seconds!
 		graphDef.setEndTime(lastTimeTmp + 10 * 60);// seconds
@@ -475,20 +549,19 @@ public class TholdTest extends TestCase {
 		graphDef.setHeight(600);
 		graphDef.setVerticalLabel(" " + new Date(startTime * 1000) + " - "
 				+ new Date(lastTimeTmp * 1000));
-		graphDef.setTitle("Test_"+ syncToText()+getRRDName());
+		graphDef.setTitle("Test_" + syncToText() + getRRDName());
 
 		graphDef.datasource("BaseLINE", "" + baseLine);
 		graphDef.line("BaseLINE", new Color(0, 0x33, 0xAA), "BaseLINE", 4);
-		double delta = ((BaselineAlerter)headHunter).getGap() ;
+		double delta = ((BaselineAlerter) headHunter).getGap();
 		// delta
-		graphDef.datasource("BaseLINEHi", "" + (baseLine + delta ));
+		graphDef.datasource("BaseLINEHi", "" + (baseLine + delta));
 		graphDef.line("BaseLINEHi", new Color(0, 0x33, 0x66), "highest", 2);
 		graphDef.datasource("BaseLINELow", "" + (baseLine - delta));
 		graphDef.line("BaseLINELow", new Color(0, 0x66, 033), "lowest", 2);
 
 		// .stat.rrd
-		graphDef.datasource("myspeedAlert", getTholdName(), "speed",
-				"AVERAGE");
+		graphDef.datasource("myspeedAlert", getTholdName(), "speed", "AVERAGE");
 		graphDef.area("myspeedAlert", new Color(0xFF, 0x5F, 0), "AA!");
 		graphDef.datasource("myspeedAlertMAX", getTholdName(), "speed",
 				ConsolFuns.CF_MAX);
@@ -513,11 +586,8 @@ public class TholdTest extends TestCase {
 		// use the following code: System.out.println("--");
 
 	}
-	
-	
 
-	
-	public void testExecuteSinBaseLinePow2() throws RrdException, IOException {
+	public void testSinBaseLinePow2() throws RrdException, IOException {
 
 		int MAX_POSSIBLE_IQ = 140;
 
@@ -525,8 +595,8 @@ public class TholdTest extends TestCase {
 		double delta = 15;
 		long tenSecondds = 10; // 10 sec is maximal time to start to do
 								// something...
-		Threshold headHunter = new BaselineAlerter(getRRDName(), baseLine, delta,
-				tenSecondds);
+		Threshold headHunter = new BaselineAlerter(getRRDName(), baseLine,
+				delta, tenSecondds);
 		AlertCaptain capTmp = AlertCaptain.getInstance();
 
 		capTmp.register(headHunter);
@@ -549,8 +619,6 @@ public class TholdTest extends TestCase {
 		}
 		capTmp.unregister(headHunter);
 
-		 
-		
 		RrdGraphDef graphDef = new RrdGraphDef();
 		graphDef.setStartTime(startTime - 10 * 60);// seconds!
 		graphDef.setEndTime(lastTimeTmp + 10 * 60);// seconds
@@ -559,7 +627,7 @@ public class TholdTest extends TestCase {
 		graphDef.setHeight(600);
 		graphDef.setVerticalLabel(" " + new Date(startTime * 1000) + " - "
 				+ new Date(lastTimeTmp * 1000));
-		graphDef.setTitle("Test_"+ syncToText()+getRRDName());
+		graphDef.setTitle("Test_" + syncToText() + getRRDName());
 
 		graphDef.datasource("BaseLINE", "" + baseLine);
 		graphDef.line("BaseLINE", new Color(0, 0x33, 0xAA), "BaseLINE", 4);
@@ -570,8 +638,7 @@ public class TholdTest extends TestCase {
 		graphDef.line("BaseLINELow", new Color(0, 0x66, 033), "lowest", 2);
 
 		// .stat.rrd
-		graphDef.datasource("myspeedAlert", getTholdName(), "speed",
-				"AVERAGE");
+		graphDef.datasource("myspeedAlert", getTholdName(), "speed", "AVERAGE");
 		graphDef.area("myspeedAlert", new Color(0xFF, 0x1F, 0x1F), "AA!");
 		graphDef.datasource("myspeedAlertMAX", getTholdName(), "speed",
 				ConsolFuns.CF_MAX);
@@ -595,18 +662,19 @@ public class TholdTest extends TestCase {
 		// to save this graph as a PNG image (recommended file format)
 		// use the following code: System.out.println("--");
 	}
-	public void testExecuteNoisySinLowAlert() throws RrdException, IOException {
-	
+	public void testNoisySinLowAlert() throws RrdException, IOException {
+
 		int MAX_POSSIBLE_IQ = 200;
-	
+
 		double lowLimit = 60; // should be smart enough ;)
 		long tenSecondds = 10; // 10 sec is maximal time to start to do
-									// something...
-		Threshold dumbKiller = new LowAlerter(getRRDName(), lowLimit, tenSecondds);
+								// something...
+		Threshold dumbKiller = new LowAlerter(getRRDName(), lowLimit,
+				tenSecondds);
 		AlertCaptain capTmp = AlertCaptain.getInstance();
-	
+
 		capTmp.register(dumbKiller);
-	
+
 		Sample sample = rrdDb.createSample();
 		long lastTimeTmp = -1;
 		double lastSpeed = 0;
@@ -614,7 +682,7 @@ public class TholdTest extends TestCase {
 			lastTimeTmp = startTime + secTmp;
 			double d = MAX_POSSIBLE_IQ * Math.sin((.0001356 * secTmp));
 			lastSpeed = d * Math.sin(.000531 * secTmp);
-			lastSpeed +=   Math.random()*120.0;
+			lastSpeed += Math.random() * 120.0;
 			// Realdata production
 			sample.setAndUpdate("" + (lastTimeTmp) + ":" + (lastSpeed));
 			// observation of trarget rrd -- here will be simulation of Time!
@@ -622,8 +690,7 @@ public class TholdTest extends TestCase {
 			stayABit(capTmp);
 		}
 		capTmp.unregister(dumbKiller);
-	
-		
+
 		RrdGraphDef graphDef = new RrdGraphDef();
 		graphDef.setStartTime(startTime - 10 * 60);// seconds!
 		graphDef.setEndTime(lastTimeTmp + 10 * 60);// seconds
@@ -632,31 +699,33 @@ public class TholdTest extends TestCase {
 		graphDef.setHeight(480);
 		graphDef.setVerticalLabel(" " + new Date(startTime * 1000) + " - "
 				+ new Date(lastTimeTmp * 1000));
-		graphDef.setTitle("Test_"+ syncToText()+getRRDName());
+		graphDef.setTitle("Test_" + syncToText() + getRRDName());
 
-		
 		// .stat.rrd
-		graphDef.datasource("myspeedAlertMIN", getTholdName(), "speed", ConsolFuns.CF_MIN );
-		graphDef.area("myspeedAlertMIN", new Color(0x77,0xA7,  0xA7), "tMIN");
-		graphDef.datasource("myspeedAlertMAX", getTholdName(), "speed", ConsolFuns.CF_MAX  );
-		graphDef.area("myspeedAlertMAX", new Color(0xFF,0,  0), "tMAX");
+		graphDef.datasource("myspeedAlertMIN", getTholdName(), "speed",
+				ConsolFuns.CF_MIN);
+		graphDef.area("myspeedAlertMIN", new Color(0x77, 0xA7, 0xA7), "tMIN");
+		graphDef.datasource("myspeedAlertMAX", getTholdName(), "speed",
+				ConsolFuns.CF_MAX);
+		graphDef.area("myspeedAlertMAX", new Color(0xFF, 0, 0), "tMAX");
 		graphDef.datasource("myspeedAlert", getTholdName(), "speed", "AVERAGE");
-		graphDef.area("myspeedAlert", new Color(0xFF,0xFF, 0), "terminate IT!");
-		
-		
+		graphDef.area("myspeedAlert", new Color(0xFF, 0xFF, 0), "terminate IT!");
+
 		graphDef.datasource("LowLIMIT", "" + lowLimit);
 		graphDef.line("LowLIMIT", new Color(0, 0x33, 0xAA), "dumb_IQ", 4);
-	
+
 		graphDef.datasource("myspeed", getRRDName(), "speed", "AVERAGE");
 		graphDef.line("myspeed", new Color(0, 0, 0), "F(t)", 2);
-		graphDef.datasource("myspeedMAX", getRRDName(), "speed", ConsolFuns.CF_MAX );
-		graphDef.line("myspeedMAX", new Color(0x77, 0xFF,  0), "F(t)", 2);
-		graphDef.datasource("myspeedMIN", getRRDName(), "speed", ConsolFuns.CF_MIN);
+		graphDef.datasource("myspeedMAX", getRRDName(), "speed",
+				ConsolFuns.CF_MAX);
+		graphDef.line("myspeedMAX", new Color(0x77, 0xFF, 0), "F(t)", 2);
+		graphDef.datasource("myspeedMIN", getRRDName(), "speed",
+				ConsolFuns.CF_MIN);
 		graphDef.line("myspeedMIN", new Color(0, 0x77, 0xFF), "F(t)", 2);
 
-//		graphDef.datasource("Alert", getTholdName(), "speed", "AVERAGE");
-//		graphDef.area("Alert", new Color(0xFF, 0x1F, 0), "terminate IT!");
-	
+		// graphDef.datasource("Alert", getTholdName(), "speed", "AVERAGE");
+		// graphDef.area("Alert", new Color(0xFF, 0x1F, 0), "terminate IT!");
+
 		RrdGraph graph = new RrdGraph(graphDef);
 		// graph.saveAsGIF("speed.gif");
 		// https://rrd4j.dev.java.net/tutorial.html
@@ -665,7 +734,7 @@ public class TholdTest extends TestCase {
 		graph.render(bi.getGraphics());
 		// to save this graph as a PNG image (recommended file format)
 		// use the following code: System.out.println("--");
-	
+
 	}
 
 }
