@@ -30,8 +30,13 @@ public class Log4JActionist extends StdOutActionist{
 			return "log4j";
 	}	
 	
-	public String toString(){
-		return this.getMonitorType()+":"+this.getMonitorArgs()+"?"+this.getAction()+" ( "+this.getActionArgs() +" )";
+
+	@Override
+	/**
+	 * pid
+	 */
+	public String getActionArgs() {
+		 	return "hiLog4J @{}#{} {} ,{} ";
 	}
 
  	@Override
@@ -43,7 +48,7 @@ public class Log4JActionist extends StdOutActionist{
 			this.lastNotificationTimestamp = this.notificationIntervalInSecs +timestampSec ;
 			String action = this.getAction();
 			if ("log4j".equals(action)){
-				log.info( HELLO_STDOUT +"N"+(notificationCounter++)+"Z"+new Date(timestampSec*1000));
+				log.info( getActionArgs() , new Object[]{this ,  notificationCounter++, timestampSec, new Date(timestampSec*1000)});
 			}else{
 				String message = "unknown Action:"+action;
 				throw new RuntimeException(message );
