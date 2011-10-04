@@ -16,7 +16,7 @@ public abstract class AbstractAlerter implements Threshold {
 	protected String rrdName;
 	protected double baseLine;
 	// have to be triggered immediately 
-	protected long activationTimeoutInSeconds=0;
+	protected long activationTimeoutInSeconds=600;//10 mins
  
 
 	long incidentTime = -1;

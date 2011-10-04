@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;  
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 import org.jrobin.core.Datasource;
 import org.jrobin.core.RrdDb;
 import org.jrobin.core.RrdDbPool;
@@ -89,7 +91,7 @@ public class AlertCaptain implements Runnable{
 		return queue.size(); 
 	}
 	public AlertCaptain() {
-		this( new LinkedList<CheckPoint>() );
+		this( new ConcurrentLinkedQueue<CheckPoint>()  );
 	}
 	AlertCaptain ( Queue<CheckPoint> q){
 		isAsync = true;
@@ -133,21 +135,15 @@ public class AlertCaptain implements Runnable{
 	}
 	public void run() {
 		log.info(Repo.getBanner( "AlertCaptain"));
-		while(isAlive ){ 
-			//System.out.println(" is alive...  ");
+		while(isAlive ){  // show must go on..
 			try{
 				if (queue.isEmpty()){
-					try {
-						Thread.sleep(100);
-					} catch (InterruptedException e) { 
-						e.printStackTrace();
-					}
+					wait100();
 				}else{
 					CheckPoint charlieTmp =null;
 					try {
 						charlieTmp = queue.peek() ;
 						if (charlieTmp ==null){
-							//notifyAll();
 							continue;
 						}
 						processStart = charlieTmp.getTimestamp();
@@ -158,12 +154,8 @@ public class AlertCaptain implements Runnable{
 						if (charlieTmp !=null)
 							charlieTmp.processError(e);
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						//charlieTmp.processError(e);
-						//e.printStackTrace();
 						lastExc = e;
 					}catch( Throwable e){
-						//e.printStackTrace();
 						lastExc = e;
 					}
 				}	
@@ -175,6 +167,13 @@ public class AlertCaptain implements Runnable{
 		}
 		System.out.println(" |nasd;famsadflasmdfhq;wrxqweuiqwxrf;heqx,rqlwexr,qwexr,qeurx..  ");
 		log.info(Repo.getBanner( "+AlertCaptain"));
+	}
+	public void wait100() {
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) { 
+			e.printStackTrace();
+		}
 	}
 
 	private void processData(CheckPoint charlieTmp) { 
@@ -190,16 +189,7 @@ public class AlertCaptain implements Runnable{
 				Datasource dsTmp = rrd.getDatasource("speed");
 				val = dsTmp.getLastValue();
 			}
-			
-			boolean isInIncident = toCheck.checkIncident(val,
-			charlieTmp.timestamp);
-			if (isInIncident) {
-				toCheck.incident(charlieTmp.timestamp);
-			} else {
-				toCheck.clear(charlieTmp.timestamp);
-			}			
-			toCheck.reactIncidentIfAny(charlieTmp.timestamp);
-			
+			performChunk(charlieTmp, toCheck, val);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -208,6 +198,16 @@ public class AlertCaptain implements Runnable{
 			e.printStackTrace();
 		}
 
+	}
+	private final void performChunk(CheckPoint charlieTmp, Threshold toCheck,
+			double val) {
+		boolean isInIncident = toCheck.checkIncident(val, charlieTmp.timestamp);
+		if (isInIncident) {
+			toCheck.incident(charlieTmp.timestamp);
+		} else {
+			toCheck.clear(charlieTmp.timestamp);
+		}			
+		toCheck.reactIncidentIfAny(charlieTmp.timestamp);
 	}
 	 
 
