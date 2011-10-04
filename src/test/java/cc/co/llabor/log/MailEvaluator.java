@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * Creation:  29.09.2011::10:36:20<br> 
  */
 public class MailEvaluator implements TriggeringEventEvaluator, OptionHandler {
-	private static final Logger log = LoggerFactory.getLogger(GtalkAppenderTest.class .getName());
+	private static final Logger log = LoggerFactory.getLogger(MailEvaluator.class .getName());
 
 	public boolean isTriggeringEvent(LoggingEvent event) {
 		return "cc.co.llabor.log.GtalkAppenderTest".equals( event.categoryName ); 

@@ -479,7 +479,7 @@ public class TholdTest extends TestCase {
 				"rrd.lastDatasourceValues[0] < "+ (baseLine+delta) +""+
 				")" 
 				  , tenMins);
-
+		System.out.println(stdOutNotificator);
 //		testSinBaseLine(stdOutNotificator); 
 		AlertCaptain capTmp = AlertCaptain.getInstance();
 		capTmp.register(stdOutNotificator);
@@ -520,7 +520,7 @@ public class TholdTest extends TestCase {
 				")"
 				
 				  , tenMins);
-
+		System.out.println(stdOutNotificator);
 //		testSinBaseLine(stdOutNotificator); 
 		AlertCaptain capTmp = AlertCaptain.getInstance();
 		capTmp.register(stdOutNotificator);
@@ -545,7 +545,7 @@ public class TholdTest extends TestCase {
 		int xTmp = ((StdOutActionist)stdOutNotificator).getNotificationCounter();
 		
 		if (capTmp.isAsync())
-			assertTrue("! 7>x ("+xTmp+") > 11!", xTmp > 7 && xTmp < 11);
+			assertTrue("! 7>x ("+xTmp+") > 11!", xTmp > 7 && xTmp < 12);
 		else
 			assertTrue("! 20>"+xTmp+" > 20!", xTmp == 9);
 
@@ -555,6 +555,12 @@ public class TholdTest extends TestCase {
 		double baseLine = 80; // should be smart enough ;)
 		double delta = 15;
 		long tenMins = 10*60;  // repeat alert any 10 mins
+		// MVEL gets the follow ctx:::
+		// @see cc.co.llabor.threshold.StdOutActionist.checkIncident(double, long)
+		// rrd :: org.jrobin.core.RrdDb
+		//ctx.put("val", val); // TODO still not used
+		//ctx.put("timestamp", timestamp);// TODO still not used
+		//ctx.put("this", this);// TODO still not used		
 		Threshold stdOutNotificator = new Log4JActionist( getRRDName(), 
 				"!("+
 				"rrd.lastDatasourceValues[0] > "+ (baseLine-delta) +" && "+
@@ -562,9 +568,11 @@ public class TholdTest extends TestCase {
 				")"
 				
 				  , tenMins);
+		System.out.println(stdOutNotificator);
 
 //		testSinBaseLine(stdOutNotificator); 
 		AlertCaptain capTmp = AlertCaptain.getInstance();
+		
 		capTmp.register(stdOutNotificator);
 		Sample sample = rrdDb.createSample();
 		long lastTimeTmp = -1;
@@ -587,7 +595,7 @@ public class TholdTest extends TestCase {
 		int xTmp = ((Log4JActionist)stdOutNotificator).getNotificationCounter();
 		
 		if (capTmp.isAsync())
-			assertTrue(stdOutNotificator +"! 7>x ("+xTmp+") > 11!", xTmp > 7 && xTmp < 11);
+			assertTrue(stdOutNotificator +"! 7>x ("+xTmp+") > 11!", xTmp > 7 && xTmp < 12);
 		else
 			assertTrue(stdOutNotificator +"! 20>"+xTmp+" > 20!", xTmp == 9);
 

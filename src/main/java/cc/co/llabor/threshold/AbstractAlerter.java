@@ -19,6 +19,11 @@ public abstract class AbstractAlerter implements Threshold {
 	protected long activationTimeoutInSeconds=600;//10 mins
  
 
+	public String toString(){
+		return this.getMonitorType()+":"+this.getMonitorArgs()+"?"+this.getAction()+" ( "+this.getActionArgs() +" )";
+	}
+	
+	
 	long incidentTime = -1;
 	@Override
 	public long getSpanLength() {

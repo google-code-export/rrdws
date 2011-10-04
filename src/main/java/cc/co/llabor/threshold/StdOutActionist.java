@@ -21,7 +21,6 @@ import org.mvel2.MVEL;
  */
 public class StdOutActionist extends AbstractAlerter {
 
- 
 	public static String HELLO_STDOUT = "HELLO STDOUT";
 	long lastNotificationTimestamp = -1;
 	long notificationIntervalInSecs = 10 *60; // 10min ..1000 *
@@ -123,6 +122,9 @@ public class StdOutActionist extends AbstractAlerter {
 			try {
 				RrdDb rrd = RrdDbPool.getInstance().requestRrdDb(this.rrdName );
 				ctx.put("rrd", rrd);
+				ctx.put("val", val); // TODO still not used
+				ctx.put("timestamp", timestamp);// TODO still not used
+				ctx.put("this", this);// TODO still not used
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
