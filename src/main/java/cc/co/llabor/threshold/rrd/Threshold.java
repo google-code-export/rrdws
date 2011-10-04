@@ -1,8 +1,5 @@
 package cc.co.llabor.threshold.rrd;
-
-import org.jrobin.core.RrdDb;
-import org.jrobin.core.RrdDbPool;
-
+ 
 /** 
  * <b>Description:TODO</b>
  * @author      vipup<br>
@@ -18,6 +15,8 @@ monitor-thresholds = "<monitor-threshold> [, <monitor-threshold> ...]"
 
  */
 public interface Threshold {
+	
+	
 	/** 	
 	 * unique ID for RRD-Db, formerly RRD-name, that used for retrieve it via 
 	 * 		String rrdDef = toCheck.getDatasource();
@@ -29,43 +28,59 @@ public interface Threshold {
 	 * @return
 	 */
 	public String getDatasource();
-	/** 	<monitor type> := One of the six supported types: exact, value, relation, hunt, quotient, or failures. Case insensitive.
+	
+	
+	/** 
+	 * <monitor type> := One of the six supported types: exact, value, relation, hunt, quotient, or failures. 
+	 *  Case insensitive.
 	 * 
 	 * @author vipup
 	 * @return
 	 */
 	public String getMonitorType();
+	
+	
+	
 	/**
-	 * // 	<monitor type args> := a colon-delimited list of arguments specific to each monitor type. Case sensitive
+	 * <monitor type args> := a colon-delimited list of arguments specific to each monitor type. Case sensitive
 	 */
 	public String getMonitorArgs();
-	/** //	<ACTION> := One of six supported actions: SNMP, MAIL, EXEC, FUNC, META or FILE. Case insensitive.
+	
+	
+	/** 
+	 * <ACTION> := One of six supported actions: SNMP, MAIL, EXEC, FUNC, META or FILE. Case insensitive. ???
+	 * 
+	 * TODO - currently only STDOUT implemented...
+	 * 
+	 * TODO ??? log4j (compliant for most of cases like JMS, file, SMS, IM, MQ, EMAIL, e.t.c ), STDOUT, FILE, EXEC, SNMP, JCRONTAB ?? 
 	 * 
 	 * @author vipup
 	 * @return
 	 */
 	public String getAction();
+	
+	
 	/**
-	 * //	<action args> := a colon-delimited list of arguments specific to each action. Case sensitive in most cases.
+	 * 	<action args> := a colon-delimited list of arguments specific to each action. Case sensitive in most cases.
 	 */
 	public String getActionArgs();
 
 	/** 
 	 * performAction	-  perform action from itself
-	 * same with prev, just without AlertAction... ??
-	 * altertate for 2 prev-methods???
-	 * 	 */
+	 * Will be called for any case, when Monitor is triggered as Active :
+	 * 	- Monitor.inIncident AND 
+	 * 	- SpanLength + CureentTime > LastPerformedTime 
+	 * 	 
+	 */
 	public void performAction(long timestampSec);
 	/** 
-	 * same with performAction, just without AlertAction... ??
+	 * amost void implementation. Will be called for any case, when Monitor is passive AND update action was performed.
 	 * 	
 	 * @author vipup
 	 * @param timestamp
 	 */
 	public void performSleep(long timestamp); 	
 	
-//	<SPAN> := Spanning keyword: SPAN. Case insensitive.
-//	@deprecated ???<span-length> := Number of time spans a thresholds should fail before triggering an action. Number.
 	/**
 	 * !! a number of seconds a thresholds should fail before triggering an
 	 * action.
@@ -99,7 +114,7 @@ public interface Threshold {
 	 * will be called for any update-action
 	 * (pre-action for reactIncidentIfAny)
 	 * 
-	 * the value ahve to be cheched for triggering the Threshold
+	 * the value have to be checked for triggering the Threshold
 	 */
 	public boolean checkIncident(double val, long timestamp);
 	/**
