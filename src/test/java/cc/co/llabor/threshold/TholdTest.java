@@ -867,5 +867,54 @@ public class TholdTest extends TestCase {
 		// use the following code: System.out.println("--");
 
 	}
+	public void testNotificationMVEL_log2MAIL() throws RrdException, IOException {
+			double baseLine = 80; // should be smart enough ;)
+			double delta = 15;
+			long tenMins = 10*60;  // repeat alert any 10 mins
+			// MVEL gets the follow ctx:::
+			// @see cc.co.llabor.threshold.StdOutActionist.checkIncident(double, long)
+			// rrd :: org.jrobin.core.RrdDb
+			//ctx.put("val", val); // TODO still not used
+			//ctx.put("timestamp", timestamp);// TODO still not used
+			//ctx.put("this", this);// TODO still not used		
+			Threshold stdOutNotificator = new Log2MAILActionist( getRRDName(), 
+					"!("+
+					"rrd.lastDatasourceValues[0] > "+ (baseLine-delta) +" && "+
+					"rrd.lastDatasourceValues[0] < "+ (baseLine+delta) +""+
+					")"
+					
+					  , tenMins);
+			System.out.println(stdOutNotificator);
+	
+	//		testSinBaseLine(stdOutNotificator); 
+			AlertCaptain capTmp = AlertCaptain.getInstance();
+			
+			capTmp.register(stdOutNotificator);
+			Sample sample = rrdDb.createSample();
+			long lastTimeTmp = -1;
+			double lastSpeed = 0;
+			//double baseLine = ((RddUpdateAlerter) headHunter).getBaseLine();
+			// 1 Day to go...
+			for (int secTmp = 1; secTmp < 60 * 60 * 12; secTmp += 1) {
+				lastTimeTmp = startTime + secTmp;
+				double d = 22 * Math.sin((.0001356 * secTmp));
+				lastSpeed = d * Math.sin(Math.E * .000531 * secTmp);
+				lastSpeed += baseLine;
+				// Realdata production
+				sample.setAndUpdate("" + (lastTimeTmp) + ":" + (lastSpeed));
+				// observation of trarget rrd -- here will be simulation of Time!
+				capTmp.tick(lastTimeTmp);
+				stayABit(capTmp);
+			}
+			capTmp.unregister(stdOutNotificator);
+			
+			int xTmp = ((Log4JActionist)stdOutNotificator).getNotificationCounter();
+			
+			if (capTmp.isAsync())
+				assertTrue(stdOutNotificator +"! 7>x ("+xTmp+") > 11!", xTmp > 7 && xTmp < 12);
+			else
+				assertTrue(stdOutNotificator +"! 20>"+xTmp+" > 20!", xTmp == 9);
+	
+		}
 
 }

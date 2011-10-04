@@ -20,7 +20,7 @@ public abstract class AbstractAlerter implements Threshold {
  
 
 	public String toString(){
-		return this.getMonitorType()+":"+this.getMonitorArgs()+"?"+this.getAction()+" ( "+this.getActionArgs() +" )";
+		return  this.rrdName+"@"+this.getMonitorType()+":"+this.getMonitorArgs()+"?"+this.getAction()+" ( "+this.getActionArgs() +" )";
 	}
 	
 	
