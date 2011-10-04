@@ -481,8 +481,48 @@ public class TholdTest extends TestCase {
 				
 				  , tenMins);
 
-//		testSinBaseLine(stdOutNotificator);
-		int MAX_POSSIBLE_IQ = 140;
+//		testSinBaseLine(stdOutNotificator); 
+		AlertCaptain capTmp = AlertCaptain.getInstance();
+		capTmp.register(stdOutNotificator);
+		Sample sample = rrdDb.createSample();
+		long lastTimeTmp = -1;
+		double lastSpeed = 0;
+		//double baseLine = ((RddUpdateAlerter) headHunter).getBaseLine();
+		// 1 Day to go...
+		for (int secTmp = 1; secTmp < 60 * 60 * 12; secTmp += 1) {
+			lastTimeTmp = startTime + secTmp;
+			double d = 22 * Math.sin((.0001356 * secTmp));
+			lastSpeed = d * Math.sin(Math.E * .000531 * secTmp);
+			lastSpeed += baseLine;
+			// Realdata production
+			sample.setAndUpdate("" + (lastTimeTmp) + ":" + (lastSpeed));
+			// observation of trarget rrd -- here will be simulation of Time!
+			capTmp.tick(lastTimeTmp);
+			stayABit(capTmp);
+		}
+		capTmp.unregister(stdOutNotificator);
+		
+		int xTmp = ((StdOutActionist)stdOutNotificator).getNotificationCounter();
+		
+		if (capTmp.isAsync())
+			assertTrue("! 7>x ("+xTmp+") > 11!", xTmp > 7 && xTmp < 12);
+		else
+			assertTrue("! 20>"+xTmp+" > 20!", xTmp == 9);
+
+	}	
+	public void testNotificationMVEL_err() throws RrdException, IOException {
+		double baseLine = 80; // should be smart enough ;)
+		double delta = 15;
+		long tenMins = 10*60;  // repeat alert any 10 mins
+		Threshold stdOutNotificator = new StdErrActionist( getRRDName(), 
+				"!("+
+				"rrd.lastDatasourceValues[0] > "+ (baseLine-delta) +" && "+
+				"rrd.lastDatasourceValues[0] < "+ (baseLine+delta) +""+
+				")"
+				
+				  , tenMins);
+
+//		testSinBaseLine(stdOutNotificator); 
 		AlertCaptain capTmp = AlertCaptain.getInstance();
 		capTmp.register(stdOutNotificator);
 		Sample sample = rrdDb.createSample();
