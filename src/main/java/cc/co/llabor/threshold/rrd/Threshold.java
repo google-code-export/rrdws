@@ -1,4 +1,8 @@
 package cc.co.llabor.threshold.rrd;
+
+import org.jrobin.core.RrdDb;
+import org.jrobin.core.RrdDbPool;
+
 /** 
  * <b>Description:TODO</b>
  * @author      vipup<br>
@@ -14,7 +18,12 @@ monitor-thresholds = "<monitor-threshold> [, <monitor-threshold> ...]"
 
  */
 public interface Threshold {
-	/** 	<data source> := a data source defined for the target; Case sensitive.
+	/** 	
+	 * unique ID for RRD-Db, formerly RRD-name, that used for retrieve it via 
+	 * 		String rrdDef = toCheck.getDatasource();
+	 *  	...
+	 *      RrdDb rrd = RrdDbPool.getInstance().requestRrdDb(rrdDef );
+	 *      ...
 	 * 
 	 * @author vipup
 	 * @return
