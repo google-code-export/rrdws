@@ -66,8 +66,7 @@ public abstract class RddUpdateAlerter extends AbstractAlerter {
 
 	}
 
-	public RddUpdateAlerter(String rrdName, double baseLine,
-			long activationTimeoutInSeconds) {
+	public RddUpdateAlerter(String rrdName, double baseLine, long activationTimeoutInSeconds) {
 		this.rrdName = rrdName;
 		this.baseLine = baseLine;
 		this.activationTimeoutInSeconds = activationTimeoutInSeconds;

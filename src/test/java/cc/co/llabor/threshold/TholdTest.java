@@ -6,8 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import junit.framework.TestCase;
-
-import org.hamcrest.core.IsAnything;
+ 
 import org.jrobin.core.ConsolFuns;
 import org.jrobin.core.RrdDb;
 import org.jrobin.core.RrdDbPool;
@@ -89,9 +88,9 @@ public class TholdTest extends TestCase {
 		int xTmp = headHunter.getNotificationCounter();
 		AlertCaptain capTmp = AlertCaptain.getInstance();
 		if (capTmp.isAsync())
-			assertTrue("! 55>x > 60!", xTmp > 55 && xTmp < 60);
+			assertTrue("! 55>"+xTmp+" > 60!", xTmp > 55 && xTmp < 60);
 		else
-			assertTrue("! 57>x > 57!", xTmp == 57);
+			assertTrue("! 57>"+xTmp+" > 57!", xTmp == 57);
 	}
 
 	public void testSinHighAlert() throws RrdException, IOException {
@@ -207,7 +206,7 @@ public class TholdTest extends TestCase {
 				System.out.println("capTmp.getLastExc()::"
 						+ capTmp.getLastExc());
 				stayCount++;
-				if (stayCount < 10) {
+				if (stayCount < 10111) {
 					try {
 						capTmp.notifyAll();
 					} catch (Throwable e) {
@@ -470,6 +469,49 @@ public class TholdTest extends TestCase {
 
 	}
 
+	public void testNotificationMVEL() throws RrdException, IOException {
+		double baseLine = 80; // should be smart enough ;)
+		double delta = 15;
+		long tenMins = 10*60;  // repeat alert any 10 mins
+		Threshold stdOutNotificator = new StdOutActionist( getRRDName(), 
+				"!("+
+				"rrd.lastDatasourceValues[0] > "+ (baseLine-delta) +" && "+
+				"rrd.lastDatasourceValues[0] < "+ (baseLine+delta) +""+
+				")"
+				
+				  , tenMins);
+
+//		testSinBaseLine(stdOutNotificator);
+		int MAX_POSSIBLE_IQ = 140;
+		AlertCaptain capTmp = AlertCaptain.getInstance();
+		capTmp.register(stdOutNotificator);
+		Sample sample = rrdDb.createSample();
+		long lastTimeTmp = -1;
+		double lastSpeed = 0;
+		//double baseLine = ((RddUpdateAlerter) headHunter).getBaseLine();
+		// 1 Day to go...
+		for (int secTmp = 1; secTmp < 60 * 60 * 12; secTmp += 1) {
+			lastTimeTmp = startTime + secTmp;
+			double d = 22 * Math.sin((.0001356 * secTmp));
+			lastSpeed = d * Math.sin(Math.E * .000531 * secTmp);
+			lastSpeed += baseLine;
+			// Realdata production
+			sample.setAndUpdate("" + (lastTimeTmp) + ":" + (lastSpeed));
+			// observation of trarget rrd -- here will be simulation of Time!
+			capTmp.tick(lastTimeTmp);
+			stayABit(capTmp);
+		}
+		capTmp.unregister(stdOutNotificator);
+		
+		int xTmp = ((StdOutActionist)stdOutNotificator).getNotificationCounter();
+		
+		if (capTmp.isAsync())
+			assertTrue("! 7>x ("+xTmp+") > 11!", xTmp > 7 && xTmp < 11);
+		else
+			assertTrue("! 20>"+xTmp+" > 20!", xTmp == 9);
+
+	}	
+	
 	public void testNotificationBaseLine() throws RrdException, IOException {
 		double baseLine = 80; // should be smart enough ;)
 		double delta = 15;
@@ -485,9 +527,9 @@ public class TholdTest extends TestCase {
 		int xTmp = stdOutNotificator.getNotificationCounter();
 		AlertCaptain capTmp = AlertCaptain.getInstance();
 		if (capTmp.isAsync())
-			assertTrue("! 22>x > 20!", xTmp > 19 && xTmp < 22);
+			assertTrue("! 22>x ("+xTmp+") > 20!", xTmp > 19 && xTmp < 22);
 		else
-			assertTrue("! 20>x > 20!", xTmp == 20);
+			assertTrue("! 20>"+xTmp+" > 20!", xTmp == 20);
 
 	}
 	public void testNotificationLow() throws RrdException, IOException {
@@ -501,9 +543,9 @@ public class TholdTest extends TestCase {
 		AlertCaptain capTmp = AlertCaptain.getInstance();
 		int xTmp=stdOutNotificator.getNotificationCounter();
 		if (capTmp .isAsync())
-			assertTrue( "! 64>x > 67!",xTmp> 64 &&xTmp<67);		
+			assertTrue( "! 64>"+xTmp+" > 68!",xTmp> 64 &&xTmp<68);		
 		else
-			assertTrue( "! 66>x > 66!",xTmp ==66);
+			assertTrue( "! 66> "+xTmp+" > 66!",xTmp ==66);
 			
 		 
 	}
