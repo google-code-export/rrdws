@@ -20,7 +20,9 @@ public class MailEvaluator implements TriggeringEventEvaluator, OptionHandler {
 	private static final Logger log = LoggerFactory.getLogger(MailEvaluator.class .getName());
 
 	public boolean isTriggeringEvent(LoggingEvent event) {
-		return "cc.co.llabor.log.GtalkAppenderTest".equals( event.categoryName ); 
+		return "cc.co.llabor.log.GtalkAppenderTest".equals( event.getLoggerName() )||
+		//log4j.category.MAIL2ROOT
+		"MAIL2ROOT".equals( event.getLoggerName() ); 
 		//return true; 
 	}
 
