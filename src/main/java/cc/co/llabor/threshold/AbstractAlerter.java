@@ -1,5 +1,7 @@
 package cc.co.llabor.threshold;
 
+import java.util.Properties;
+
 import cc.co.llabor.threshold.rrd.Threshold;
 
 /**
@@ -13,6 +15,29 @@ import cc.co.llabor.threshold.rrd.Threshold;
  *         Creation: 01.09.2011::16:46:16<br>
  */
 public abstract class AbstractAlerter implements Threshold {
+	/**
+	 * @author vipup
+	 */
+	private static final long serialVersionUID = -4419251070739231053L;
+
+	
+	
+
+	@Override
+	public Properties toProperties() {
+		Properties retval = new Properties();
+		retval.setProperty( "class", this.getClass().getName() );
+		retval.setProperty( "action", this.getAction());
+		retval.setProperty("actionArgs", this.getActionArgs());
+		retval.setProperty("datasource", this.getDatasource());
+		retval.setProperty("monitorType", this.getMonitorType());
+		retval.setProperty("monitorArgs", this.getMonitorArgs());
+		retval.setProperty("spanLength", ""+this.getSpanLength());
+		retval.setProperty("BaseLine", ""+this.getBaseLine());
+		return retval;
+	}
+
+
 	protected String rrdName;
 	protected double baseLine;
 	// have to be triggered immediately 
@@ -45,11 +70,11 @@ public abstract class AbstractAlerter implements Threshold {
 	public void clear(long timestamp) {
 		incidentTime = -1;
 	}
-
-
+ 
 	public double getBaseLine() {
 		return this.baseLine;
 	}
+	
 	@Override
 	public void reactIncidentIfAny(long timestamp) {
 		long inIncidentTime = this.inIncidentTime();

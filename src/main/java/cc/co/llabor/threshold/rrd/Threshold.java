@@ -1,4 +1,7 @@
 package cc.co.llabor.threshold.rrd;
+
+import java.io.Serializable;
+import java.util.Properties;
  
 /** 
  * <b>Description:TODO</b>
@@ -14,7 +17,7 @@ package cc.co.llabor.threshold.rrd;
 monitor-thresholds = "<monitor-threshold> [, <monitor-threshold> ...]"
 
  */
-public interface Threshold {
+public interface Threshold extends Serializable{
 	
 	
 	/** 	
@@ -128,6 +131,9 @@ public interface Threshold {
 	 * @author vipup
 	 */
 	public void stop();
+
+
+	public Properties toProperties();
 
 
 }

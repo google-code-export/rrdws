@@ -1,6 +1,7 @@
 package cc.co.llabor.threshold;
 
 import java.util.Date;
+import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,10 @@ import org.slf4j.LoggerFactory;
 public class Log2MAILActionist extends StdOutActionist{
 
 	private static final Logger log = LoggerFactory.getLogger("MAIL2ROOT");
+	
+	Log2MAILActionist(Properties props){
+		super(props);
+	}
 
 	public Log2MAILActionist(String rrdName, String monitorArgs,
 			long notificationInterval) {

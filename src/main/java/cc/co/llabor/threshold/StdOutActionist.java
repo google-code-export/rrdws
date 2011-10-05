@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import org.jrobin.core.RrdDb;
 import org.jrobin.core.RrdDbPool;
@@ -21,15 +22,34 @@ import org.mvel2.MVEL;
  */
 public class StdOutActionist extends AbstractAlerter {
 
-	public static String HELLO_STDOUT = "HELLO STDOUT";
+	
+
+	
+	/**
+	 * @author vipup
+	 */
+	private static final long serialVersionUID = -1411482451587802533L;
+	
+	StdOutActionist(Properties props){
+		this.action =props.getProperty("action") ;
+		this.actionArgs =props.getProperty("actionArgs") ;
+		this.rrdName =props.getProperty("datasource") ;
+		this.type =props.getProperty("monitorType") ;
+		this.monitorArgs =props.getProperty("monitorArgs") ;
+		this.activationTimeoutInSeconds = Integer.parseInt( props.getProperty("spanLength" ));
+		this.baseLine = Double.parseDouble(  props.getProperty("BaseLine")); 		
+	}	
+
+	protected String actionArgs = "HELLO STDOUT";
 	long lastNotificationTimestamp = -1;
 	long notificationIntervalInSecs = 10 *60; // 10min ..1000 *
 	int notificationCounter = 0;
-	private String monitorArgs = "a=1;b=2";
+	protected String monitorArgs = "a=1;b=2";
+	protected String action = "syso";
+	protected String type = "mvel";
 	public StdOutActionist(String rrdName, double baseLine, double delta,
 			long notificationInterval) {
 		this.rrdName = 	rrdName;	//			RrdDb rrd = RrdDbPool.getInstance().requestRrdDb(rrdName ); 
-
 		monitorArgs  = "1==2";
 		this.notificationIntervalInSecs = notificationInterval;
 	}
@@ -53,7 +73,7 @@ public class StdOutActionist extends AbstractAlerter {
 			this.lastNotificationTimestamp = this.notificationIntervalInSecs +timestampSec ;
 			String action = this.getAction();
 			if ("syso".equals(action)){
-				System.out.println(HELLO_STDOUT +"N"+(notificationCounter++)+"Z"+new Date(timestampSec*1000));
+				System.out.println(actionArgs +"N"+(notificationCounter++)+"Z"+new Date(timestampSec*1000));
 			}else{
 				String message = "unknown Action:"+action;
 				throw new RuntimeException(message );
@@ -67,7 +87,7 @@ public class StdOutActionist extends AbstractAlerter {
 	 */
 	@Override
 	public String getMonitorType() {
-			return "mvel";
+			return type ;
 	}
  
 	@Override
@@ -84,7 +104,7 @@ public class StdOutActionist extends AbstractAlerter {
 	 * shell://kill
 	 */
 	public String getAction() { 
-			return "syso";
+			return action ;
 	}
 
 	@Override
@@ -92,7 +112,7 @@ public class StdOutActionist extends AbstractAlerter {
 	 * pid
 	 */
 	public String getActionArgs() {
-		 	return HELLO_STDOUT;
+		 	return actionArgs;
 	}
 	@Override
 	public void performSleep(long timestamp) { 

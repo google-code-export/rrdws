@@ -908,10 +908,10 @@ public class TholdTest extends TestCase {
 			}
 			capTmp.unregister(stdOutNotificator);
 			
-			int xTmp = ((Log4JActionist)stdOutNotificator).getNotificationCounter();
+			int xTmp = ((StdOutActionist)stdOutNotificator).getNotificationCounter();
 			
 			if (capTmp.isAsync())
-				assertTrue(stdOutNotificator +"! 7>x ("+xTmp+") > 11!", xTmp > 7 && xTmp < 12);
+				assertTrue(stdOutNotificator +"! 7>x ("+xTmp+") > 11!", xTmp > 2 && xTmp < 12);
 			else
 				assertTrue(stdOutNotificator +"! 20>"+xTmp+" > 20!", xTmp == 9);
 	
