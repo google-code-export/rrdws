@@ -29,11 +29,13 @@ public class StdOutActionist extends AbstractAlerter {
 	 * @author vipup
 	 */
 	private static final long serialVersionUID = -1411482451587802533L;
+	protected String dsName = "speed";
 	
 	StdOutActionist(Properties props){
 		this.action =props.getProperty("action") ;
 		this.actionArgs =props.getProperty("actionArgs") ;
 		this.rrdName =props.getProperty("datasource") ;
+		this.dsName =props.getProperty("dsName") ;
 		this.type =props.getProperty("monitorType") ;
 		this.monitorArgs =props.getProperty("monitorArgs") ;
 		this.activationTimeoutInSeconds = Integer.parseInt( props.getProperty("spanLength" ));
@@ -124,7 +126,7 @@ public class StdOutActionist extends AbstractAlerter {
 		long inIncidentTime = this.inIncidentTime();
 		long spanLength = this.getSpanLength();
 
-		if (inIncidentTime > 0 && (inIncidentTime + spanLength) < timestamp) {
+		if (inIncidentTime >= 0 && (inIncidentTime + spanLength) < timestamp) {
 			this.performAction(timestamp);
 		} else {
 			this.performSleep(timestamp);
@@ -153,7 +155,12 @@ public class StdOutActionist extends AbstractAlerter {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
-			Object result = MVEL.eval(expression , ctx );
+			Object result = null;
+			try{
+				result  = MVEL.eval(expression , ctx );
+			}catch(Throwable e){
+				// ignore any error
+			}
 			boolean retval = false;
 			if ((result instanceof Boolean)){
 				retval  =  ((Boolean)result).booleanValue();
@@ -166,6 +173,10 @@ public class StdOutActionist extends AbstractAlerter {
 	@Override
 	public void stop() {
 		System.out.println("BYE");
+	}
+	@Override
+	public String getDsName() {
+		return this.dsName;
 	}	
 }
 

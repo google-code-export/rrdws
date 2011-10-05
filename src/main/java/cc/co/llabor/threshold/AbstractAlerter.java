@@ -22,7 +22,7 @@ public abstract class AbstractAlerter implements Threshold {
 
  
 	
-	final synchronized void performChunk(long timestamp,  double val) {
+	final void performChunk(long timestamp,  double val) {
 		boolean isInIncident = checkIncident(val,  timestamp);
 		if (isInIncident) {
 			incident( timestamp);
@@ -37,6 +37,8 @@ public abstract class AbstractAlerter implements Threshold {
 		Properties retval = new Properties();
 		retval.setProperty( "class", this.getClass().getName() );
 		retval.setProperty( "action", this.getAction());
+		retval.setProperty( "dsName", this.getDsName() );
+		
 		retval.setProperty("actionArgs", this.getActionArgs());
 		retval.setProperty("datasource", this.getDatasource());
 		retval.setProperty("monitorType", this.getMonitorType());
@@ -54,7 +56,7 @@ public abstract class AbstractAlerter implements Threshold {
  
 
 	public String toString(){
-		return  this.rrdName+"@"+this.getMonitorType()+":"+this.getMonitorArgs()+"?"+this.getAction()+" ( "+this.getActionArgs() +" )";
+		return  this.getDsName() +":"+this.getDatasource() +"@"+this.getMonitorType()+"://"+this.getMonitorArgs()+"?"+this.getAction()+" ( "+this.getActionArgs() +" )";
 	}
 	
 	
@@ -119,7 +121,7 @@ public abstract class AbstractAlerter implements Threshold {
 		long inIncidentTime = this.inIncidentTime();
 		long spanLength = this.getSpanLength();
 
-		if (inIncidentTime > 0 && (inIncidentTime + spanLength) < timestamp) {
+		if (inIncidentTime >= 0 && (inIncidentTime + spanLength) < timestamp) {
 			this.performAction(timestamp);
 		} else {
 			this.performSleep(timestamp);
@@ -183,4 +185,14 @@ public abstract class AbstractAlerter implements Threshold {
 			return null;
 		}
 	}
+
+	@Override
+	public String getDsName() {
+		// TODO Auto-generated method stub
+		if (1==1)throw new RuntimeException("not yet implemented since 05.10.2011");
+		else {
+		return null;
+		}
+	}
+
 }

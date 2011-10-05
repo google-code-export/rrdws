@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
@@ -79,6 +82,8 @@ public class AlertCaptain implements Runnable {
 	}
 
 	private long processEnd;
+	private  Collection<Threshold> unmodifiableCollection = new HashSet<Threshold>();
+	 
 
 	public long getProcessEnd() {
 		return processEnd;
@@ -105,14 +110,15 @@ public class AlertCaptain implements Runnable {
 	}
 	public void register(Threshold e) {
 		ToDo.add(e);
+		syncUC();
 	}
 	public void tick() {
 		long timestamp = System.currentTimeMillis();
 		this.tick(timestamp / 1000);
 	}
 
-	public void tick(long timestamp) {
-		wakeUp(timestamp);
+	public void tick(long timestampInSeconds) {
+		wakeUp(timestampInSeconds);
 	}
 
 	/**
@@ -121,17 +127,30 @@ public class AlertCaptain implements Runnable {
 	 * @author vipup
 	 * @param timestamp
 	 */
-	private void wakeUp(long timestamp) {
+	private void wakeUp(long timestampInSeconds) {
 		wakeCounter++;
-		for (Threshold toCheck : this.ToDo) {
-			CheckPoint e = new CheckPoint(timestamp, toCheck);
-			if (this.isAsync) {
-				queue.add(e);
-			} else {
-				processData(e);
+		for (Threshold activist : unmodifiableCollection ) {
+			try{
+				
+				if (this.isAsync) {
+					CheckPoint e = new CheckPoint(timestampInSeconds, activist);
+					queue.add(e);
+				} else {
+					//processData(e);
+					String rrdDef = activist.getDatasource();
+					RrdDb rrd = RrdDbPool.getInstance().requestRrdDb(rrdDef);										
+  					String dsName = activist.getDsName();//"speed";
+ 					Datasource dsTmp = rrd.getDatasource(dsName);
+ 					double val = dsTmp.getLastValue();
+					processData(val, timestampInSeconds, activist);
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+				unregister(activist);
 			}
 		}
 	}
+
 
 	public void kill() {
 		isAlive = false;
@@ -179,28 +198,36 @@ public class AlertCaptain implements Runnable {
 			e.printStackTrace();
 		}
 	}
-
+	//Async
 	private void processData(CheckPoint charlieTmp) {
-		Threshold toCheck = charlieTmp.getToCheck();
-		String rrdDef = toCheck.getDatasource();
-		try {
-			RrdDb rrd = RrdDbPool.getInstance().requestRrdDb(rrdDef);
-			double val = 0;
+		Threshold activist = charlieTmp.getToCheck();
+		double val = charlieTmp.getValue();
+		processData(val, charlieTmp.timestamp, activist);
+	}
+	
+	//sync
+	private void processData(double val, long timestampInSeconds, Threshold activist) {
+ 		
+//		String rrdDef = activist.getDatasource();
+//		try {
+//			RrdDb rrd = RrdDbPool.getInstance().requestRrdDb(rrdDef);
+			 
 			// synch mode
-			if (this.isAsync) {
-				val = charlieTmp.getValue();
-			} else {
-				Datasource dsTmp = rrd.getDatasource("speed");
-				val = dsTmp.getLastValue();
-			}
-			((AbstractAlerter)toCheck).performChunk(charlieTmp.timestamp, val);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (RrdException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//			if (this.isAsync) {
+//				val = charlieTmp.getValue();
+//			} else {
+//				String dsName = activist.getDsName();//"speed";
+//				Datasource dsTmp = rrd.getDatasource(dsName);
+//				val = dsTmp.getLastValue();
+//			}
+			((AbstractAlerter)activist).performChunk(timestampInSeconds, val);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (RrdException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 	}
 
@@ -209,12 +236,18 @@ public class AlertCaptain implements Runnable {
 		try {
 			if (ToDo.indexOf(activist) >= 0) {
 				boolean o = ToDo.remove(activist);
-				if (o)
+				if (o){
+					syncUC();
 					activist.stop();
+				}
+					
 			}
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
+	}
+	public void syncUC() {
+		unmodifiableCollection = Collections.unmodifiableCollection(  new HashSet<Threshold>( this.ToDo ));
 	}
 	public Threshold toThreshold(Object thTmp) throws TholdException {
 		try {

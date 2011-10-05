@@ -31,7 +31,7 @@ public class TholdTest extends TestCase {
 	protected void setUp() throws Exception {
 
 		super.setUp();
-
+		
 		// 1999]
 		rrdDef = new RrdDef(getRRDName());
 		String path2RRD = rrdDef.getPath();
