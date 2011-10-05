@@ -1,6 +1,7 @@
 package cc.co.llabor.threshold;
 
 import java.util.Date;
+import java.util.Properties;
 
 /** 
  * <b>Do almost the same as StdOutActionist, except the OUT.</b>
@@ -14,6 +15,8 @@ import java.util.Date;
  * Creation:  04.10.2011::13:43:09<br> 
  */
 public class StdErrActionist extends StdOutActionist{
+	
+	
 
 	public StdErrActionist(String rrdName, String monitorArgs,
 			long notificationInterval) {
@@ -21,7 +24,11 @@ public class StdErrActionist extends StdOutActionist{
 		 
 	}
 
- 	@Override
+	StdErrActionist(Properties props){
+		super(props);
+	}
+
+	@Override
 	public void performAction(long timestampSec) {
 		
 		if (inIncidentTime()>=0)
@@ -30,7 +37,7 @@ public class StdErrActionist extends StdOutActionist{
 			this.lastNotificationTimestamp = this.notificationIntervalInSecs +timestampSec ;
 			String action = this.getAction();
 			if ("syso".equals(action)){
-				System.err.println(HELLO_STDOUT +"N"+(notificationCounter++)+"Z"+new Date(timestampSec*1000));
+				System.err.println(actionArgs +"N"+(notificationCounter++)+"Z"+new Date(timestampSec*1000));
 			}else{
 				String message = "unknown Action:"+action;
 				throw new RuntimeException(message );

@@ -1,6 +1,7 @@
 package cc.co.llabor.threshold;
 
 import java.util.Date;
+import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,9 @@ public class Log4JActionist extends StdOutActionist{
 			long notificationInterval) {
 		super(rrdName, monitorArgs, notificationInterval);
 		 
+	}
+	Log4JActionist(Properties props){
+		super(props);
 	}
 	@Override
 	public String getAction() { 
