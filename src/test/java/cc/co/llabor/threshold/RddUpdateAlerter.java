@@ -35,6 +35,11 @@ public abstract class RddUpdateAlerter extends AbstractAlerter {
 	public RrdDb getRrdDb() { 
 			return rrdDb;
 	}
+	
+	@Override
+	public String getDsName() {
+		return "speed";
+	}	
 
 	public void setRrdDb(RrdDb rrdDb) {
 		this.rrdDb = rrdDb;

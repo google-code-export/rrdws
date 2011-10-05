@@ -20,12 +20,11 @@ import cc.co.llabor.threshold.rrd.Threshold;
  * Creation:  30.08.2011::16:42:16<br> 
  */
 public class CheckPoint {
-	public CheckPoint(long timestamp,Threshold toCheck){
+	public CheckPoint(long timestamp,Threshold toCheck) throws IOException, RrdException{
 		this.timestamp = timestamp;
 		this.toCheck = toCheck;
 		String ds = toCheck.getDatasource();
-		RrdDb rrd;
-		try {
+		RrdDb rrd; 
 			rrd = RrdDbPool.getInstance().requestRrdDb( ds  );
 			//TODO speed???
 			long fetchStart = (timestamp ) ;
@@ -35,13 +34,7 @@ public class CheckPoint {
 			 
 			double val = vals[0];	
 			this.setValue(val);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (RrdException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		 
 		
 	
 	}

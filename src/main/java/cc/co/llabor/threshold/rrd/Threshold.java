@@ -101,6 +101,14 @@ public interface Threshold extends Serializable{
 	public Properties toProperties();
 
 
+	/**
+	 * dataSourcaName
+	 * @author vipup
+	 * @return
+	 */
+	public String getDsName();
+
+
 	//public void performChunk(long timestamp, double val);
 
  
