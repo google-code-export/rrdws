@@ -90,42 +90,7 @@ public interface Threshold extends Serializable{
 	 */
 	public long getSpanLength();
 	
-	/**
-	 * return the time since the Threshold goes into its 
-	 * limit-incident ( limit is reached ) 
-	 * OR -1 if not the case.
-	 * @see getSpanLength()
- 	 * @author vipup
-	 * @return
-	 */
-	public long inIncidentTime();	
-	/**
-	 * Start incident....
-	 * mark it as Activated-Threshold
-	 * 
-	 * @author vipup
-	 * @param timestampSec
-	 */
-	public void incident(long timestampSec);
-	/**
-	 * clear incident - mark it as inactive(passive)
-	 * @author vipup
-	 * @param timestampSec
-	 */
-	public void clear(long timestampSec);
-	/**
-	 * will be called for any update-action
-	 * (pre-action for reactIncidentIfAny)
-	 * 
-	 * the value have to be checked for triggering the Threshold
-	 */
-	public boolean checkIncident(double val, long timestamp);
-	/**
-	 * have to implement alert-reaction for incident-state
-	 * @author vipup
-	 * @param timestamp
-	 */
-	public void reactIncidentIfAny(long timestamp);
+
 	/**
 	 * will be called at destroy-time 
 	 * @author vipup
@@ -134,6 +99,11 @@ public interface Threshold extends Serializable{
 
 
 	public Properties toProperties();
+
+
+	//public void performChunk(long timestamp, double val);
+
+ 
 
 
 }

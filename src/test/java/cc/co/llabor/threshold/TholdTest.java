@@ -504,7 +504,7 @@ public class TholdTest extends TestCase {
 		int xTmp = ((StdOutActionist)stdOutNotificator).getNotificationCounter();
 		
 		if (capTmp.isAsync())
-			assertTrue("! 7>x ("+xTmp+") > 11!", xTmp > 7 && xTmp < 12);
+			assertTrue("! 7>x ("+xTmp+") > 11!", xTmp > 7 && xTmp < 14);
 		else
 			assertTrue("! 20>"+xTmp+" > 20!", xTmp == 9);
 
@@ -545,7 +545,7 @@ public class TholdTest extends TestCase {
 		int xTmp = ((StdOutActionist)stdOutNotificator).getNotificationCounter();
 		
 		if (capTmp.isAsync())
-			assertTrue("! 7>x ("+xTmp+") > 11!", xTmp > 7 && xTmp < 12);
+			assertTrue("! 7>x ("+xTmp+") > 11!", xTmp > 7 && xTmp < 14);
 		else
 			assertTrue("! 20>"+xTmp+" > 20!", xTmp == 9);
 
@@ -595,7 +595,7 @@ public class TholdTest extends TestCase {
 		int xTmp = ((Log4JActionist)stdOutNotificator).getNotificationCounter();
 		
 		if (capTmp.isAsync())
-			assertTrue(stdOutNotificator +"! 7>x ("+xTmp+") > 11!", xTmp > 7 && xTmp < 12);
+			assertTrue(stdOutNotificator +"! 7>x ("+xTmp+") > 11!", xTmp > 7 && xTmp < 15);
 		else
 			assertTrue(stdOutNotificator +"! 20>"+xTmp+" > 20!", xTmp == 9);
 
@@ -632,7 +632,7 @@ public class TholdTest extends TestCase {
 		AlertCaptain capTmp = AlertCaptain.getInstance();
 		int xTmp=stdOutNotificator.getNotificationCounter();
 		if (capTmp .isAsync())
-			assertTrue( "! 64>"+xTmp+" > 68!",xTmp> 64 &&xTmp<68);		
+			assertTrue( "! 64>"+xTmp+" > 70!",xTmp> 64 &&xTmp<70);		
 		else
 			assertTrue( "! 66> "+xTmp+" > 66!",xTmp ==66);
 			

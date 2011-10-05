@@ -20,8 +20,17 @@ public abstract class AbstractAlerter implements Threshold {
 	 */
 	private static final long serialVersionUID = -4419251070739231053L;
 
+ 
 	
-	
+	final synchronized void performChunk(long timestamp,  double val) {
+		boolean isInIncident = checkIncident(val,  timestamp);
+		if (isInIncident) {
+			incident( timestamp);
+		} else {
+			clear(timestamp);
+		}
+		reactIncidentIfAny(timestamp);
+	}	
 
 	@Override
 	public Properties toProperties() {
@@ -55,27 +64,57 @@ public abstract class AbstractAlerter implements Threshold {
 		return activationTimeoutInSeconds;
 	}
 
-	@Override
-	public long inIncidentTime() {
+	/**
+	 * return the time since the Threshold goes into its 
+	 * limit-incident ( limit is reached ) 
+	 * OR -1 if not the case.
+	 * @see getSpanLength()
+ 	 * @author vipup
+	 * @return
+	 */ 
+	protected long inIncidentTime() {
 		return incidentTime;
-	}
-
-	public void incident(long timestamp) {
+	} 
+	/**
+	 * Start incident....
+	 * mark it as Activated-Threshold
+	 * 
+	 * @author vipup
+	 * @param timestampSec
+	 */
+	protected void incident(long timestamp) {
 		if (incidentTime == -1)
 			incidentTime = timestamp;
 	}
-
-	
-	@Override
-	public void clear(long timestamp) {
+ 
+	/**
+	 * clear incident - mark it as inactive(passive)
+	 * @author vipup
+	 * @param timestampSec
+	 */ 
+	protected void clear(long timestamp) {
 		incidentTime = -1;
 	}
+	
+	
+
+	/**
+	 * will be called for any update-action
+	 * (pre-action for reactIncidentIfAny)
+	 * 
+	 * the value have to be checked for triggering the Threshold
+	 */
+	protected abstract boolean checkIncident(double val, long timestamp);	
  
 	public double getBaseLine() {
 		return this.baseLine;
 	}
-	
-	@Override
+
+	/**
+	 * have to implement alert-reaction for incident-state
+	 * @author vipup
+	 * @param timestamp
+	 */ 
 	public void reactIncidentIfAny(long timestamp) {
 		long inIncidentTime = this.inIncidentTime();
 		long spanLength = this.getSpanLength();
