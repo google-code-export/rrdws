@@ -14,9 +14,11 @@ import java.util.Properties;
  * 
  * Creation:  04.10.2011::13:43:09<br> 
  */
-public class StdErrActionist extends StdOutActionist{
-	
-	
+public class StdErrActionist extends StdOutActionist{ 
+	/**
+	 * @author vipup
+	 */
+	private static final long serialVersionUID = -6306830921722082168L;
 
 	public StdErrActionist(String rrdName, String monitorArgs,
 			long notificationInterval) {

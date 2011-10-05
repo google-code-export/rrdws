@@ -193,7 +193,7 @@ public class AlertCaptain implements Runnable {
 				Datasource dsTmp = rrd.getDatasource("speed");
 				val = dsTmp.getLastValue();
 			}
-			performChunk(charlieTmp, toCheck, val);
+			((AbstractAlerter)toCheck).performChunk(charlieTmp.timestamp, val);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -202,16 +202,6 @@ public class AlertCaptain implements Runnable {
 			e.printStackTrace();
 		}
 
-	}
-	private final void performChunk(CheckPoint charlieTmp, Threshold toCheck,
-			double val) {
-		boolean isInIncident = toCheck.checkIncident(val, charlieTmp.timestamp);
-		if (isInIncident) {
-			toCheck.incident(charlieTmp.timestamp);
-		} else {
-			toCheck.clear(charlieTmp.timestamp);
-		}
-		toCheck.reactIncidentIfAny(charlieTmp.timestamp);
 	}
 
 	static AlertCaptain myself = new AlertCaptain();

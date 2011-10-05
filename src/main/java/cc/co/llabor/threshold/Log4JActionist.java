@@ -18,6 +18,13 @@ import org.slf4j.LoggerFactory;
  * Creation:  04.10.2011::13:43:09<br> 
  */
 public class Log4JActionist extends StdOutActionist{
+	
+	/**
+	 * @author vipup
+	 */
+	private static final long serialVersionUID = 3434669922946134100L;
+
+	public static final String LOG4J = "log4j";
 
 	private static final Logger log = LoggerFactory.getLogger("L4JACT");
 
@@ -29,9 +36,9 @@ public class Log4JActionist extends StdOutActionist{
 	Log4JActionist(Properties props){
 		super(props);
 	}
-	@Override
-	public String getAction() { 
-			return "log4j";
+	
+	{ 
+			this.action =  LOG4J;
 	}	
 	
 
@@ -51,7 +58,7 @@ public class Log4JActionist extends StdOutActionist{
 		{
 			this.lastNotificationTimestamp = this.notificationIntervalInSecs +timestampSec ;
 			String action = this.getAction();
-			if ("log4j".equals(action)){
+			if (LOG4J.equals(action)){
 				log.info( getActionArgs() , new Object[]{this ,  notificationCounter++, timestampSec, new Date(timestampSec*1000)});
 			}else{
 				String message = "unknown Action:"+action;

@@ -145,6 +145,7 @@ public class StdOutActionist extends AbstractAlerter {
 				ctx.put("val", val); // TODO still not used
 				ctx.put("timestamp", timestamp);// TODO still not used
 				ctx.put("this", this);// TODO still not used
+				ctx.put("dvalue", rrd.getLastDatasourceValues()[0]);//rrd.lastDatasourceValues[0]
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
