@@ -36,6 +36,7 @@ public class Repo {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			buf = ("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"+namePar+"|||||||||||||||||||||||||||||||||||||||||").getBytes();
 		}
 		
 		String retval = new String(buf);

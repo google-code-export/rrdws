@@ -10,6 +10,8 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;  
 
+import net.sf.jsr107cache.Cache;
+
 import org.collectd.DataWorker; 
 import org.jrobin.core.RrdDbPool;
 import org.jrobin.core.RrdException;
@@ -19,7 +21,11 @@ import org.jrobin.mrtg.server.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;   
 
+import cc.co.llabor.cache.Manager;
 import cc.co.llabor.features.Repo;
+import cc.co.llabor.threshold.AlertCaptain;
+import cc.co.llabor.threshold.TholdException;
+import cc.co.llabor.threshold.rrd.Threshold;
 import cc.co.llabor.watchdog.AbstractLimitWatchDog;
 import cc.co.llabor.watchdog.DogFarm;
 import cc.co.llabor.watchdog.HighLimitWatchDog;
@@ -138,6 +144,19 @@ public class StartStopServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
+		// do exactly the same as prev-WatchDog, but otherwise
+		AlertCaptain ac = AlertCaptain.getInstance();
+		Cache tholdRepo = Manager.getCache("thold");
+		Object tholdProps = tholdRepo.get("default.properties");//RRDHighLimitWatchDog
+		try {
+			log.info(Repo.getBanner( "tholdHealthWatchDog"));
+			Threshold watchDog  = ac.toThreshold(tholdProps );
+			ac.register(  watchDog );
+			
+		} catch (TholdException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		

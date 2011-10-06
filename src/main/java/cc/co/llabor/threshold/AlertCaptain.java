@@ -13,12 +13,18 @@ import java.util.Properties;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import javax.management.Notification;
+import javax.management.NotificationFilter;
+import javax.management.NotificationListener;
+
 import org.jrobin.core.Datasource;
 import org.jrobin.core.RrdDb;
 import org.jrobin.core.RrdDbPool;
 import org.jrobin.core.RrdException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import ws.rrd.csv.RrdKeeper;
 import cc.co.llabor.features.Repo;
 import cc.co.llabor.threshold.rrd.Threshold;
 
@@ -32,7 +38,7 @@ import cc.co.llabor.threshold.rrd.Threshold;
  * 
  *         Creation: 30.08.2011::15:59:53<br>
  */
-public class AlertCaptain implements Runnable {
+public class AlertCaptain implements Runnable, NotificationListener {
 
 	static boolean inited = false;
 
@@ -109,7 +115,12 @@ public class AlertCaptain implements Runnable {
 		log.info(Repo.getBanner("AlertCaptain"));
 	}
 	public void register(Threshold e) {
+		
 		ToDo.add(e);
+		NotificationListener listener = this;
+		NotificationFilter filter = null;
+		Object handback = null;
+		RrdKeeper.getInstance().addNotificationListener(listener , filter , handback );
 		syncUC();
 	}
 	public void tick() {
@@ -278,6 +289,13 @@ public class AlertCaptain implements Runnable {
 		} catch (InvocationTargetException e) {
 			throw new TholdException("invalid Thold def:" + thTmp, e);
 		}
+	}
+	@Override
+	public void handleNotification(Notification notification, Object handback) {
+		long ts = notification.getTimeStamp();
+		//System.out.println(""+notification+handback);
+		//log.error("#"+ts+"::"+notification+handback);
+		this.tick(ts /1000);
 	}
 
 }
