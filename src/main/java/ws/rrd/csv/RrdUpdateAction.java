@@ -57,6 +57,7 @@ public class RrdUpdateAction implements Action {
 				keeper.update();
 				retval  = RrdCommander.execute(cmdTmp );
 				keeper.success();
+				keeper.performNotification(xpath, timestamp, data);
 			} catch (IOException e) { 
 				keeper.warning();
 				if (e instanceof FileNotFoundException){
