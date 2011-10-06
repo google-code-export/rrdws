@@ -728,6 +728,7 @@ public class LServlet extends HttpServlet {
 		oaos.writeTo(outTmp) ;
 		outTmp.flush();
 		outTmp.close();
+		cacheIt(urlStr, getCache(), oaos.toByteArray(), contextTypeStr );
 		return outTmp;
 	}
 
