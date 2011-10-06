@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.jrobin.core.ConsolFuns;
 import org.jrobin.core.RrdDb;
+import org.jrobin.core.RrdDbPool;
 import org.jrobin.core.RrdDef;
 
 import net.sf.jsr107cache.Cache;
@@ -66,13 +67,14 @@ public class TholdIniTest extends TestCase {
 		assertEquals(""+localOut, localOut.toString().length(), 207);
 	} 	
 	
-	 
+	RrdDef rrdDef; 
+	RrdDb rrdDb;
 	protected void setUpDB() throws Exception {
  
-		RrdDef rrdDef;
+
 
 		long startTime = 920800000L;
-		RrdDb rrdDb;
+
 		
 		// 1999]
 		rrdDef = new RrdDef("test.rrd"/*getRRDName()*/);
@@ -151,8 +153,16 @@ public class TholdIniTest extends TestCase {
 	     
 	}
 
+	@Override
 	protected void tearDown() throws Exception {
-		System.out.println("--------tearDown---------");  
-		System.out.println("......-tearDown----......");
+		rrdDb.close();
+		// close all RRDs..
+		RrdDbPool instance;
+
+		instance = RrdDbPool.getInstance();
+		instance.reset();
+
+		super.tearDown();
+
 	}
 }
