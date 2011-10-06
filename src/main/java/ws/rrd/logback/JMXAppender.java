@@ -1,11 +1,16 @@
 package ws.rrd.logback;
 
+import java.util.Map;
+
+import javax.management.Notification;
+
 import org.apache.log4j.Priority;
 import org.apache.log4j.spi.LoggingEvent;
 
 import ws.rrd.csv.RrdKeeper;
 
 import jmxlogger.integration.log4j.JmxLogAppender;
+import jmxlogger.tools.ToolBox;
 
 /** 
  * <b>Description:TODO</b>
@@ -17,6 +22,45 @@ import jmxlogger.integration.log4j.JmxLogAppender;
  * Creation:  14.09.2011::10:49:38<br> 
  */
 public class JMXAppender extends JmxLogAppender{
+	private Map <String,Long> statistics;	
+	   /**
+     * Prepares event information as Notification object.
+     * @param event
+     * @return Notification
+     */
+    private Notification buildNotification(Map<String,Object> event){
+        long seqnum = (event.get(ToolBox.KEY_EVENT_SEQ_NUM) != null) ? (Long)event.get(ToolBox.KEY_EVENT_SEQ_NUM) : 0L;
+        long timestamp  = (event.get(ToolBox.KEY_EVENT_TIME_STAMP) != null) ? (Long)event.get(ToolBox.KEY_EVENT_TIME_STAMP) : 0L;
+
+        // keep a copy of the stats
+        statistics = (Map<String, Long>) event.get(ToolBox.KEY_EVENT_LOG_STAT);
+
+        Notification note = new Notification(
+                ToolBox.getDefaultEventType(),
+                (String)event.get(ToolBox.KEY_EVENT_SOURCE),
+                seqnum,
+                timestamp,
+                (String)event.get(ToolBox.KEY_EVENT_FORMATTED_MESSAGE));
+        note.setUserData(event);
+        return note;
+    }
+    long seqCounter = 0;
+    private Notification buildNotification(LoggingEvent event){
+        long seqnum = seqCounter++;
+        long timestamp  =  event.getTimeStamp();
+
+        // keep a copy of the stats
+//        statistics = (Map<String, Long>) event.get(ToolBox.KEY_EVENT_LOG_STAT);
+
+        Notification note = new Notification(
+                ToolBox.getDefaultEventType(),
+                event.getLoggerName() ,
+                seqnum,
+                timestamp,
+                event.getMessage().toString() );
+        note.setUserData(event.getRenderedMessage());
+        return note;
+    }
 	
     @Override
     protected void append(LoggingEvent log4jEvent) {
@@ -24,6 +68,12 @@ public class JMXAppender extends JmxLogAppender{
     	int level = log4jEvent.getLevel().toInt();
     	RrdKeeper instance = RrdKeeper.getInstance();
     	instance.logged();
+    	Object handback = log4jEvent;
+		// @jmxlogger.tools.JmxLogEmitter.sendLog(Map<String, Object>)
+    	//sendNotification(buildNotification(event));
+		Notification notification = buildNotification(log4jEvent);
+		handback = ""+handback;
+		instance.handleNotification(notification , handback);
 		switch (level) {
 			case Priority.ALL_INT :
 				instance.loggedTRACE();

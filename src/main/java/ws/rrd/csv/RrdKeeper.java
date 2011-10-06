@@ -27,6 +27,7 @@ import javax.management.MBeanServer;
 import javax.management.MalformedObjectNameException;
 import javax.management.Notification;
 import javax.management.NotificationBroadcaster;
+import javax.management.NotificationBroadcasterSupport;
 import javax.management.NotificationFilter;
 import javax.management.NotificationListener;
 import javax.management.ObjectName;
@@ -49,7 +50,7 @@ import org.slf4j.LoggerFactory;
  * 
  * Creation:  07.09.2011::17:10:50<br> 
  */
-public class RrdKeeper implements NotificationBroadcaster, NotificationListener , DynamicMBean{
+public class RrdKeeper extends NotificationBroadcasterSupport implements NotificationBroadcaster, NotificationListener , DynamicMBean{
 
 	private static final String DOMAIN = "rrdMX";
 	static RrdKeeper me = new RrdKeeper(); // jaja! natuerlich. singleton :-P...
@@ -78,7 +79,7 @@ public class RrdKeeper implements NotificationBroadcaster, NotificationListener 
         	NotificationListener listener = this;
 			NotificationFilter filter = new EverybodyFilter();
 			Object handback = this;
-			
+			if (1==2) // TODO 8-///
 			this.addNotificationListener(listener, filter, handback);
 			
 			initLogger();
@@ -106,6 +107,7 @@ public class RrdKeeper implements NotificationBroadcaster, NotificationListener 
         ObjectName objectName = /*ToolBox.*/buildObjectName("rrdMX:type=ws.rrd.csv.RrdKeeper");
         //LogListener lstnr = new LogListener();
         NotificationListener lstnr = this; 
+        if (1==3) // TODO 8-//
         platformServer.addNotificationListener(objectName, lstnr, null,null);
 
 //        log.warn("Hello World! {}", this);
@@ -135,59 +137,8 @@ public class RrdKeeper implements NotificationBroadcaster, NotificationListener 
 	}
 	
 	
-	
-	@Override
-	public void addNotificationListener(NotificationListener listener,
-			NotificationFilter filter, final Object handback)
-			throws IllegalArgumentException {
-		Object[] argArray = new Object[]{listener, filter,handback};
-		log.info("addNotificationListener( {},{},{})" ,argArray );
-		String key = "/"+filter.toString(); // TODO xpath ??
-		RrdNotificator theNext = new RrdNotificator (listener, filter,handback);
-		listeners.put(key , theNext);
-	}
-	@Override
-	public void removeNotificationListener(NotificationListener listener)
-			throws ListenerNotFoundException {
-		
-		if (listeners.containsValue(listener)){
-			log.info("--------  removeNotificationListener( {} )" ,listener );
-		}else{
-			log.info("!!!!!!!!!!  removeNotificationListener( {} )" ,listener );
-		}
-	}
-	@Override
-	public MBeanNotificationInfo[] getNotificationInfo() {
-		MBeanNotificationInfo[] retval = new MBeanNotificationInfo[]{};
-		List<MBeanNotificationInfo> notification = new ArrayList<MBeanNotificationInfo>();
-		for (int i=0;i<_metrics.size();i++){
-			/*
-			 * Parameters:
-notifTypes The array of strings (in dot notation) containing the notification types that the MBean may emit. This may be null with the same effect as a zero-length array.
-name The fully qualified Java class name of the described notifications.
-description A human readable description of the data.
-descriptor The descriptor for the notifications. This may be null which is equivalent to an empty descriptor.
-
-			 */
-			String description = "description #"+i;
-			Descriptor descriptor = (i%2) == 0?
-						new DescriptorSupport():
-						new ImmutableDescriptor("i"+i+"="+ _metrics.keySet().toArray() [ i ],  "a=b=c");
-			String name = this.getClass().getName(); //"x# ["+i+"]="+ _metrics.values().toArray() [ i ];
-			String[] notifTypes = {
-						"String".getClass().getName()
-						 , Long.class.getName()
-						 , Double.class.getName()
-						 , Float.class.getName()
-						 ,  Integer.class.getName()
-						 ,  Float.class.getName()
-						};
-			MBeanNotificationInfo e =new MBeanNotificationInfo(notifTypes, name, description, descriptor);// new RrdNotifInf(notifTypes, name, description, descriptor);
-			notification.add(e );
-		}
-		retval  =   notification.toArray(retval);
-		return retval;
-	}
+	 
+	 
 	@Override
 	public Object getAttribute(String attribute)
 			throws AttributeNotFoundException, MBeanException,
@@ -399,7 +350,8 @@ descriptor The descriptor for the notifications. This may be null which is equiv
 
 	@Override
 	public void handleNotification(Notification notification, Object handback) {
-		 System.out.println("NOTIFICATION>>>"+notification+"\""+handback);
+		 //System.out.println("NOTIFICATION>>>"+notification+"\""+handback);
+		 sendNotification(notification);
 	}
 	private int loggedFatal = 0;
 	private int loggedError = 0;
