@@ -59,7 +59,8 @@ public class Log4JActionist extends StdOutActionist{
 			this.lastNotificationTimestamp = this.notificationIntervalInSecs +timestampSec ;
 			String action = this.getAction();
 			if (LOG4J.equals(action)){
-				log.info( getActionArgs() , new Object[]{this ,  notificationCounter++, timestampSec, new Date(timestampSec*1000)});
+				Logger logTmp = LoggerFactory.getLogger("D_LOG");
+				logTmp.error( getActionArgs() , new Object[]{this ,  ""+notificationCounter++, ""+timestampSec, new Date(timestampSec*1000)});
 			}else{
 				String message = "unknown Action:"+action;
 				throw new RuntimeException(message );

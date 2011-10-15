@@ -1,0 +1,562 @@
+Content-Type: multipart/related; start=<op.mhtml.1317126599087.b960da66291209af@10.2.212.213>; boundary=----------I9NSoI8YpuB3ywS9RQOjgp
+Content-Location: http://www.javaexpress.pl/article/show/Log4J_a_komunikatory_internetowe?printable=true
+Subject: =?utf-8?Q?Log4J=20a=20komunikatory=20internetowe=20-=20JAVA=20exPress?=
+MIME-Version: 1.0
+
+------------I9NSoI8YpuB3ywS9RQOjgp
+Content-Disposition: inline; filename=Log4J_a_komunikatory_internetowe.htm
+Content-Type: text/html; charset=utf-8; name=Log4J_a_komunikatory_internetowe.htm
+Content-ID: <op.mhtml.1317126599087.b960da66291209af@10.2.212.213>
+Content-Location: http://www.javaexpress.pl/article/show/Log4J_a_komunikatory_internetowe?printable=true
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="/css/articlePrint.css" />
+    <link rel="shortcut icon" href="/images/favicon.png"
+              type="image/x-icon" />
+    <title>Log4J a komunikatory internetowe - JAVA exPress</title>
+  </head>
+  <body>
+
+    <div class="article">
+      <h3>
+        <img src="/images/jexp.png" alt="JAVA exPress logo" />
+        Published on JAVA exPress
+        (<a href="http://www.javaexpress.pl">http://www.javaexpress.pl</a>)
+      </h3>
+      
+      <h1>Log4J a komunikatory internetowe</h1>
+      <h2>Michał Szynkaruk</h2>
+      <h3>
+          Issue 7
+          (2010-03-30)
+      </h3>
+      
+      <div class="article_body">
+        <p>Logi informujące o błędach w trakcie działania aplikacji można zapisywać     zar&oacute;wno lokalnie (jako pliki tekstowe, krotki w bazie danych itd.) jak i     wysyłać na inną maszynę, np. w postaci e-maila. Niewątpliwe wielu z nas ma     na stałe uruchomiony jakiś komunikator internetowy niezależnie od tego czy     jesteśmy w pracy, w domu czy w podr&oacute;ży. Skoro chcemy być w stałym kontakcie     z naszymi znajomymi, to dlaczego nie możemy być z naszą aplikacją?</p>
+<p>W tym artykule pokażę jak można wykorzystać bibliotekę <a href="http://logging.apache.org/log4j/1.2/">Log4j</a>     i najpopularniejsze komunikatory w Polsce: Skype, Gadu-Gadu oraz Google Talk.</p>
+<h3>Skype i Log4j</h3>
+<p>Dzięki API o nazwie <strong>Skype4Java</strong>, kt&oacute;re jest oficjalnie     udostępnione poprzez stronę     <a href="https://developer.skype.com/wiki/Java_API">https://developer.skype.com/wiki/Java_API</a>     możemy w łatwy spos&oacute;b wysyłać logi na podane konto. Aby to uczynić należy:</p>
+<ul>
+    <li>
+    <p>posiadać aktywne konto Skype</p>
+    </li>
+    <li>
+    <p>dołączyć bibliotekę <em>skype_full.jar</em></p>
+    </li>
+    <li>
+    <p>dołączyć bibliotekę log4j</p>
+    </li>
+</ul>
+<p>Na początku konstruujemy własny <code>appender</code> w oparciu o abstrakcyjną     klasę <code>AppenderSkeleton</code> (jeśli nie masz podstawowej wiedzy dotyczącej     biblioteki log4j, to polecam przeczytanie mojego      <a href="http://www.javaexpress.pl/article/show/Log4j__czyli_jak_skutecznie_tworzyc_logi_w_aplikacjach_javowych">artykułu</a>,     kt&oacute;ry znajduje się w poprzednim numerze Java Express oraz oficjalnej dokumentacji na stronie     <a href="http://logging.apache.org/log4j/1.2/index.html">http://logging.apache.org/log4j/1.2/index.html</a>).     Nazwijmy naszą klasę <code>SkypeAppender</code> i umieśćmy w niej tylko jedną     zmienną wraz ze standardowym getterem i setterem:</p>
+<pre class="brush:java">
+    private String receiver;
+
+    public String getReceiver() {
+      return receiver;
+    }
+
+    public void setReceiver(String receiver) {
+      this.receiver = receiver;
+    }
+</pre>
+<p>Następnie zdefiniujmy funkcję odpowiedzialną za wysyłanie wiadomości:</p>
+<pre class="brush:java">
+    public void sendMessage(String content) {
+      try {
+        Skype.chat(receiver).send(content);
+      } catch (SkypeException ex) {
+
+      }
+    }
+</pre>
+<p>oraz nadpiszmy metody dziedziczone z klasy <code>AppenderSkeleton</code>:</p>
+<pre class="brush:java">
+    @Override
+    protected void append(LoggingEvent event) {
+      sendMessage(getLayout().format(event));
+    }
+
+    @Override
+    public boolean requiresLayout() {
+      return true;
+    }
+
+    @Override
+    public void close() {
+    }
+</pre>
+<p>Konfigurację możemy ustawić przykładowo w pliku właściwości:</p>
+<pre class="brush:bash">
+    log4j.appender.skype=log4jtests.SkypeAppender
+    log4j.appender.skype.layout=org.apache.log4j.PatternLayout
+    log4j.appender.skype.layout.ConversionPattern=[%p] %c - %m
+    log4j.appender.skype.receiver= TU_PODAJESZ_NAZWE_ODBIORCY
+    log4j.rootLogger=DEBUG, skype
+</pre>
+<p>Pozostało nam już tylko stworzyć obiekt typu <code>Logger</code> i wysłać wpis.</p>
+<p>Przykładowe wywołanie w statycznej funkcji <code>main()</code>:</p>
+<pre class="brush:java">
+    Logger logger = Logger.getRootLogger();
+    logger.info(&quot;Czesc, tu aplikacja :)&quot;);
+</pre>
+<p>Ważne jest by w trakcie działania aplikacji uruchomiony był Skype i umożliwiał     on <em>ingerencję</em> naszej aplikacji w Javie.</p>
+<h3>Wysyłamy loGGi</h3>
+<p>Gadu-Gadu wykorzystuje własny protok&oacute;ł komunikacji, w kt&oacute;rym m. in. każdy     użytkownik jest jednoznacznie identyfikowany za pomocą unikalnego numeru.     Aby m&oacute;c wysyłać logi w postaci wiadomości musimy:</p>
+<ul>
+    <li>
+    <p>posiadać aktywne konto GG z kt&oacute;rego dane logi wysyłamy,</p>
+    </li>
+    <li>
+    <p>dołączyć bibliotekę <a href="http://jggapi.sourceforge.net/">JGGApi</a> kt&oacute;ra implementuje wymieniony protok&oacute;w,</p>
+    </li>
+    <li>
+    <p>dołączyć bibliotekę <a href="http://commons.apache.org/logging/">Jakarta-Commons Logging</a>,             kt&oacute;ra jest wykorzystywana przez JGGApi,</p>
+    </li>
+    <li>
+    <p>dołączyć bibliotekę log4j.</p>
+    </li>
+</ul>
+<p>W tym przykładzie skorzystałem z JGGApi w wersji 1.6, log4j w wersji 1.2.15,     Commons Logging w wersji 1.1.1.</p>
+<div class="cytaty">
+<p class="oneline">Gadu-Gadu wykorzystuje własny protok&oacute;ł komunikacji</p>
+</div>
+<p>Podobnie jak w poprzednim przykładzie konstruujemy własny <code>appender</code>     w oparciu o abstrakcyjną klasę <code>AppenderSkeleton</code>. Niech nasza     klasa przyjmie nazwę <code>GGAppender</code>. Umieścimy w niej następujące     zmienne:</p>
+<pre class="brush:java">
+    private int number;
+    private String password;
+    private int receiver;
+    private boolean isReady;
+    private boolean isFirst = true;
+    private ISession session;
+    private LoginContext loginContext;
+</pre>
+<p>Gdzie <code>number</code> i <code>password</code> odnoszą się do naszego     konta gg, <code>receiver</code> jest numerem GG, na kt&oacute;ry chcemy wysłać naszą     wiadomość.</p>
+<p>Zmienna <code>isReady</code> m&oacute;wi nam kiedy mamy połączenie z serwerem     Gadu-Gadu, jesteśmy zalogowani i gotowi wysyłać wiadomości. Zmienna <code>isFirst</code>     określa czy potrzebujemy połączenia z serwerem Gadu-Gadu, <code>session</code>     jak sama nazwa wskazuje jest sesją, a <code>loginContext</code> zawiera dane     o naszym koncie GG. Dla wszystkich wyżej wymienionych zmiennych definiujemy     standardowe gettery i settery (tak by m&oacute;c przypisać im wartości określone w     konfiguracji, o czym za chwile będzie mowa). Następnie definiujemy funkcję     <code>connect()</code> dzięki kt&oacute;rej połączymy się z serwerem Gadu-Gadu:</p>
+<pre class="brush:java">
+    public void connect() throws GGException {
+      loginContext = new LoginContext(number, password);
+      session = SessionFactory.createSession();
+      session.addSessionStateListener(new SessionStateListener() {
+        public void sessionStateChanged(SessionState oldSessionState,
+            SessionState newSessionState) {
+          if (newSessionState.equals(SessionState.AUTHENTICATION_AWAITING)) {
+            login();
+          } else if (newSessionState.equals(SessionState.LOGGED_IN)) {
+            isReady = true;
+          } else {
+            isReady = false;
+          }
+        }
+      });
+      IConnectionService connectionService = session.getConnectionService();
+      connectionService.addConnectionListener(new ConnectionListener.Stub() {
+        @Override
+        public void connectionEstablished() {
+          System.out.println(&quot;Dokonano połączenia&quot;);
+        }
+
+        @Override
+        public void connectionError(Exception ex) {
+          System.out.println(&quot;Błąd połączenia: &quot; + ex.getMessage());
+        }
+
+        @Override
+        public void connectionClosed() {
+          System.out.println(&quot;Połączenie zakończone&quot;);
+        }
+      });
+      IServer server = session.getConnectionService().lookupServer(
+          loginContext.getUin());
+      connectionService.connect(server);
+    }
+</pre>
+<p>Teraz czas na funkcję <code>login()</code>:</p>
+<pre class="brush:java">
+    private void login() {
+      ILoginService loginService = session.getLoginService();
+      loginService.addLoginListener(new LoginListener.Stub() {
+        @Override
+        public void loginOK() {
+          System.out.println(&quot;Zalogowano&quot;);
+        }
+
+        public void loginFailed() {
+          System.out.println(&quot;Nieudane logowanie&quot;);
+        }
+      });
+      try {
+        loginService.login(loginContext);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+</pre>
+<p>oraz funkcję <code>sendMessage</code>, kt&oacute;ra w argumencie przyjmuje treść     wiadomości:</p>
+<pre class="brush:java">
+    public void sendMessage(String content) {
+      IMessageService messageService = session.getMessageService();
+      OutgoingMessage outMessage = OutgoingMessage.createNewMessage(receiver,
+          content);
+      try {
+        messageService.sendMessage(outMessage);
+      } catch (GGException e) {
+        e.printStackTrace();
+      }
+    }
+</pre>
+<p>Musimy także zaimplementować funkcję <code>append</code>, w kt&oacute;rej definiujemy     gdzie log jest zapisywany, funkcje <code>close</code> oraz <code>requiresLayout</code>:</p>
+<pre class="brush:java">
+    @Override
+    protected void append(LoggingEvent event) {
+      if (isFirst) {
+        try {
+          connect();
+        } catch (GGException e) {
+          e.printStackTrace();
+        }
+        while (!isReady) {
+
+        }
+        isFirst = false;
+      }
+      sendMessage(getLayout().format(event));
+    }
+
+    @Override
+    public boolean requiresLayout() {
+      return true;
+    }
+
+    @Override
+    public void close() {
+    }
+</pre>
+<p>Dzięki tej linii:</p>
+<pre class="brush:java">
+    sendMessage(getLayout().format(event));
+</pre>
+<p>wysyłamy sformatowaną wiadomość według szablonu określonego w pliku konfiguracji.</p>
+<p>Zdecydowałem się na konfigurację XML'ową w pliku <em>log4j.xml</em>:</p>
+<pre class="brush:xml">
+    &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+    &lt;!DOCTYPE log4j:configuration SYSTEM &quot;log4j.dtd&quot;&gt;
+    &lt;log4j:configuration xmlns:log4j=&quot;http://jakarta.apache.org/log4j/&quot;&gt;
+      &lt;appender class=&quot;log4jtests.GGAppender&quot; name=&quot;gg&quot;&gt;
+        &lt;param name=&quot;number&quot; value=&quot;TU_PODAJESZ_SW&Oacute;J_NUMER_GG&quot; /&gt;
+        &lt;param name=&quot;password&quot; value=&quot;TU_PODAJESZ_SWOJE_HASŁO_GG&quot; /&gt;
+        &lt;param name=&quot;receiver&quot; value=&quot;TU_PODAJESZ_NUMER_GG_ODBIORCY&quot; /&gt;
+        &lt;layout class=&quot;org.apache.log4j.PatternLayout&quot;&gt;
+          &lt;param name=&quot;ConversionPattern&quot; value=&quot;[%p] %c - %m&quot; /&gt;
+        &lt;/layout&gt;
+      &lt;/appender&gt;
+      &lt;root&gt;
+        &lt;priority value=&quot;debug&quot;&gt;&lt;/priority&gt;
+        &lt;appender-ref ref=&quot;gg&quot; /&gt;
+      &lt;/root&gt;
+    &lt;/log4j:configuration&gt;
+</pre>
+<p>gdzie:</p>
+<ul>
+    <li>
+    <p>%p to priorytet zdarzenia,</p>
+    </li>
+    <li>
+    <p>%c to  kategoria zdarzenia,</p>
+    </li>
+    <li>
+    <p>%m to  treść komunikatu,</p>
+    </li>
+</ul>
+<p>a poziom, od kt&oacute;rego logi są wysyłane ustawiamy na debug.</p>
+<p>Podobny efekt uzyskamy, jeśli stworzymy plik właściwości (<em>log4j.properties</em>):</p>
+<pre class="brush:bash">
+    log4j.appender.gg=log4jtests.GGAppender
+    log4j.appender.gg.layout=org.apache.log4j.PatternLayout
+    log4j.appender.gg.layout.ConversionPattern=[%p] %c - %m
+    log4j.appender.gg.number= TU_PODAJESZ_SW&Oacute;J_NUMER_GG
+    log4j.appender.gg.password=TU_PODAJESZ_SWOJE_HASŁO_GG
+    log4j.appender.gg.receiver= TU_PODAJESZ_NUMER_GG_ODBIORCY
+    log4j.rootLogger=DEBUG, gg
+</pre>
+<p>Przykładowy test, kt&oacute;ry możemy umieścić w statycznej funkcji <code>main()</code>:</p>
+<pre class="brush:java">
+    Logger logger = Logger.getRootLogger();
+    try {
+      int i = 5 / 0;
+    } catch (ArithmeticException ex) {
+      logger.error(&quot;Wystapil blad w programie&quot;);
+    }
+</pre>
+<h3>Google Talk</h3>
+<p>Wysyłanie wiadomości na konto Google Talk jest r&oacute;wnie łatwe, gdyż dysponujemy     darmowymi klientami protokołu <a href="http://pl.wikipedia.org/wiki/Extensible_Messaging_and_Presence_Protocol">xmpp</a>,     z kt&oacute;rego korzysta ten komunikator. Osobiście skorzystałem z biblioteki     <a href="http://www.igniterealtime.org/downloads/index.jsp#smack">Smack</a> w wersji 3.1.0.</p>
+<div class="cytaty">
+<p class="threelines">Spos&oacute;b monitorowania działania naszej aplikacji<br />
+przy wykorzystaniu tych trzech komunikator&oacute;w<br />
+wydaje się być niezwykle ciekawy i skuteczny</p>
+</div>
+<p>Podobnie, jak w poprzednich dw&oacute;ch przykładach, tworzymy własny appender,     kt&oacute;ry u mnie prezentuje się następująco:</p>
+<pre class="brush:java">
+    public class GtalkAppender extends AppenderSkeleton {
+      private String user;
+      private String password;
+      private String receiver;
+      // tu umieść gettery i settery dla powyższych trzech zmiennych
+
+      private boolean isFirst = true;
+      XMPPConnection connection;
+      ConnectionConfiguration connConfig;
+
+      public void sendMessage(String content) {
+        try {
+          Skype.chat(receiver).send(content);
+        } catch (SkypeException ex) {
+
+        }
+      }
+
+      @Override
+      protected void append(LoggingEvent event) {
+        if (isFirst) {
+          connConfig = new ConnectionConfiguration(&quot;talk.google.com&quot;, 5222,
+              &quot;gmail.com&quot;);
+          connection = new XMPPConnection(connConfig);
+          try {
+            connection.connect();
+            connection.login(user, password);
+          } catch (XMPPException ex) {
+
+          }
+          while (!connection.isConnected()) {
+          }
+          isFirst = !isFirst;
+        }
+        Message msg = new Message(receiver, Message.Type.chat);
+        msg.setBody(getLayout().format(event));
+        connection.sendPacket(msg);
+      }
+
+      @Override
+      public boolean requiresLayout() {
+        return true;
+      }
+
+      @Override
+      public void close() {
+      }
+    }
+</pre>
+<p>Przykładowa konfiguracja poprzez plik właściwości:</p>
+<pre class="brush:bash">
+    log4j.appender.gtalk=log4jtests.GtalkAppender
+    log4j.appender.gtalk.layout=org.apache.log4j.PatternLayout
+    log4j.appender.gtalk.layout.ConversionPattern=[%p] %c - %m
+    log4j.appender.gtalk.user=TU_PODAJESZ_SW&Oacute;J_ADRES_GMAIL
+    log4j.appender.gtalk.password=TU_PODAJESZ_SWOJE_HASŁO
+    log4j.appender.gtalk.receiver=TU_PODAJESZ_ADRES_GMAIL_ODBIORCY
+    log4j.rootLogger=DEBUG, gtalk
+</pre>
+<h3>Podsumowanie</h3>
+<p>Możliwości Log4j oraz istnienie javowych bibliotek dla Skype, Gadu-Gadu oraz     Gtalk powodują, że każdy z nas ma możliwość szybkiego odbioru informacji o     wystąpieniu ewentualnych błęd&oacute;w w trakcie działania naszej aplikacji.     Dzięki temu szybko i skutecznie możemy rozpocząć akcje naprawcze. Spos&oacute;b     monitorowania działania naszej aplikacji przy wykorzystaniu tych trzech     komunikator&oacute;w wydaje się być niezwykle ciekawy i skuteczny.</p>
+      </div>
+      <p class="source">Source: http://javaexpress.pl/article/show/Log4J_a_komunikatory_internetowe</p>
+    </div>
+
+</body>
+</html>
+
+
+------------I9NSoI8YpuB3ywS9RQOjgp
+Content-Disposition: inline; filename=articlePrint.css
+Content-Type: text/css; charset=utf-8; name=articlePrint.css
+Content-Location: http://www.javaexpress.pl/css/articlePrint.css
+Content-Transfer-Encoding: 8bit
+
+* {
+    margin: 0px;
+    padding: 0px;
+    background-color: #ffffff;
+}
+
+body {
+    font-size: 12pt;
+    font-family: sans-serif;
+}
+
+h3 {
+    margin-bottom: 15pt;
+    font-size: 10pt;
+}
+
+p {
+    text-align: justify;
+    margin-bottom: 8pt;
+}
+
+a, a:hover {
+    text-decoration: none;
+    color: #000000;
+}
+
+.article {
+    width: 90%;
+    margin: 0px auto;
+}
+
+.cytaty {
+    visibility: hidden;
+}
+
+.source {
+    width: 100%;
+    border-top: #000000 solid 1px;
+    margin-top: 30pt;
+}
+
+------------I9NSoI8YpuB3ywS9RQOjgp
+Content-Disposition: inline; filename=favicon.png
+Content-Type: image/png; name=favicon.png
+Content-Location: http://www.javaexpress.pl/images/favicon.png
+Content-Transfer-Encoding: Base64
+
+iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAACXBIWXMAAC4jAAAu
+IwF4pT92AAAAIGNIUk0AAHolAACAgwAA+f8AAIDoAABSCAABFVgAADqXAAAXb9da
+H5AAAAGWSURBVHjahJLLSsNAFIbnlmRqUpNUo1KLLdoWxIWiG0VcqI/h+yn4Am4V
+F7oRL1Cpd9p6a+3dJk2ddMaFghpHPLs553zn5x9+KIQAsuLVKrJtgHGoj6TbwvfZ
+ySlAkqmkxZvN7vY21FTeaPwPCN/vbm5BCIGqItv8DZDQGzKGR0d4rQZcd7fk50sN
+jOFaJjY1FJEDgRGlK8ugWAwur+JzhCaiuooxgnKFvZvmbc1bSNpwLMud9JRBriuB
+RlDKpnJgKWWWO2+5hxYhWFPQOOMRghIm/dO0imHSpoWGX6x7rh9ENbyath1D2cnX
+egGXe5gZ1YUQPuMJi2rk89zZU2c2bsQHtTCQe3ZTMbqY/PGbXcYRBBjCsMLFi7d/
+17Qiw7r6GYeAi4NCiwuwmDQdQwkDXIgXl9U9ZmjYpKTSeTsotOpesJ6xJywqMT09
+ok/G6GGxna94HusrGB3dv2adge/bXwrnZVcAsDE/9tjusb7o9PrtXt+kZDkVTgf8
+iPfWcfmm6lkDCgJAIyg+qKYdHQCQGY6EgPcBAPMOo0bv1psrAAAAAElFTkSuQmCC
+
+------------I9NSoI8YpuB3ywS9RQOjgp
+Content-Disposition: inline; filename=jexp.png
+Content-Type: image/png; name=jexp.png
+Content-Location: http://www.javaexpress.pl/images/jexp.png
+Content-Transfer-Encoding: Base64
+
+iVBORw0KGgoAAAANSUhEUgAAAKkAAAAyCAYAAAAndPuvAAAABHNCSVQICAgIfAhk
+iAAAAAlwSFlzAAAuGAAALhgBKqonIAAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmly
+ZXdvcmtzIENTNAay06AAABWuSURBVHic7Zx5fFTV2ce/986emclkGbKHkISASIiA
+AmrVKlRFxAXBggtaW/r2fd21vri0WkWrtVqrWOuCuIGiVBRc6oLSVpBddhCSQAJZ
+yJ7MJJn1Lu8fAzcJmQmTBCj1ne8f+Zx75zznnHvv7z7nnOecG0FVVZUYMU5ixH93
+A2LEOBoxkcY46YmJNMZJT0ykMU56YiKNcdITE2mMfuP/6iukkpLjVn5MpDH6jVxZ
+hVxZedzKj4k0Rr8Jrl2LLiPjuJUfE2mMfuF5401ART906HGrQ3/cSo7xg8e3ZAme
+V14h8e2FHScVBcRj6/tiIo3RJ9qffQ7v22/jeO5ZdLm5KHV1yNt3IObnocvJAUE4
+ZnXFRBqjV6g+H6333U9g7Voc81/FUFSEZ948lMoqLNOnH3OBQkykMXqB6vPhuvU2
+pD17SFjwFrqcHFp+MQtdWiq2Bx9EMJuPS70xkcaImvYXXiC4fj0JCxegLyjAffOt
+qFIQ++9/f1zrjc3uY0SN/8vlGM88E0NREfKBA/i+XUXcxEuOe70xTxojavQ5OQgO
+BwCCJCGoKoGvv8I0Y7o2Dg3KKuXNXipcHlq8KgZRwGk1MNhpYYDV2Ld6j9kVxPjB
+Y731FtyPPYbq9SLm5KAfNQr/hg2Yln6MccrlvLSmlqdWlLG/1Yssq1gMIkFZRQUc
+cTouzBrAX6/JIynO1Kt6hRO1M/9Pz/yZrKxMxo4ZwwO/fbDLbyajkQkTJjDz+ut4
+6He/Y9CgQfz8ppsAqKis5OGHH+G+e2ezdNlHbNq8uYttWloqd991F9lZWSfiMv7f
+E1y0iKDHQ9wvfoFcUkLLzBuwJsVj+vRzqtwBVu1uIzlJIDfJRLzJQFBW8UkSe+p9
+LNpawx8vGUx6fO9EekLGpIqiMO/VV6mvr8fr82GzxuFwxONwxJPgcFBWXs6cR+cA
+UFxSyrxX52u2jzwyh63btpGVlUUwGMBut2m2druNBQsW8unnX5yIy4gBGK65BmOC
+A7msDF1BAcZLJuI3WBCALIeJGeOSubAgicHJVlJsRjIdJvKTrUw6JZkF04f3WqBw
+grr7hoYG2traKCws5NRhw3j6qafwer2IooggCDw3dy4rV30LwITxF/DInEcJBoMU
+l5SwdNkyPl62FIvFwgP3309dXR2qqiIIAi6Xiy++XE7uwGwApAMHUKRg5DjdoU5D
+F+9A53SeiEv/QbC30YsnIJOXHIfVKKKfOg21rg5kGWuKE3X2/3a55xUtPr7Z58Iv
+K8wcnYZB17+46QkRaVl5OYqiMKKwkJdefoXHn3gCSZIAEASBQCDAzJnXAzBq1Ch8
+Ph+le/fyyCNzmDjxYs466yyqqqqZPmMG+8rKNDtVVVEQGDliBFJzM1XXXY3U3g6C
+gBoMhm2LoNcjxMURf/mVOO+5D0SRLQfbePjrEkRB4NiGof8zkFWVoU4rT04cop3z
+SQoLv6vho10NzBiZyvn5CViNHR2vkJKCKsv4pl2DKSmBCleAFm+QbIcJp9XI+MGJ
+3PlRMSv3tfD69GH9at8xF+mCBQv51zff8Oq8V7RzpaWlJCcnYzabeW7uXO6+604u
+v+wyZFlGVhSmXDWV/Lw8AIYUFOB0Opnz6GNs2ryZr74MdeXLli2jqbmZf65YgSgK
+iKLIe4sX88qbb5GSloZ/y2Ykl4vDA2zL6WPQJSeH1pIPESgtIVBehup207LwLWxF
+RZgnTibbYeKWcQM7OQOBqNQadjh/FNuIU4Bo69T+HCPbUJMc5q5SaPPL/H13Iztr
+2/nH3mY2VLiRFRWTXkRGwCcLCIqMwaAHXKRZRUak2chLMmMxiFgMRmaNzeD6RbtQ
+VBWxH6tQx1ykK79dxd8/+4zZ996nnVv17SqGDikgEAhQX1/Ppk2baW5uAdDODTvl
+FADi4+MpKChg+fLl3PPruxk0aBAAJSXF+Hw+3n7nHQBUVFat+paBg3IQBAFlb4l2
++wWjkdQnn0afktqlbUpbG5U/u45A8R4AXF8txzxxMslxBi4sSD7Wt+I/GqfVwAc3
+jiAoq9S2BWhoD6KoKkFZRS+CUSeSYDHgtBqwGMJPbV5YXckVw539EigcB5FOnzYN
+V0Md2zat53DnmWy3ctWUKSQmJnLLr37J2jVrqaqsQKfK6HQ6Lh5/HkWnjdTKuOKy
+ydhsNm65+Wbt3Ixrr6O2uoJ13/4LRVZQBB1Go5nLrpoCgFxS3HFRKanoHAnd2iba
+bNgmXEjTIZEG9u8/Lrt2fkiIAtz7SSnn5SYxeXgSSXEGDDoBWVFp8UoU13vYXd+O
+V1K4avgA4s16mr0Sz66sINNh4unJBf1uw3EJQUmy0uVYhUMuX+w2iG73B9GJApIC
+NlPkd0ZSVCRZJiDJ2M1GhCPezppZN9K2fh0AcWf/iIyX5ocrBvf7i6mb8xAAhoxM
+Bn78OYLB0C2fXF+P7GpG9fvDdtGi1YYhN697BYqM4vN3P6+qofGwKcLsVpZRPO3h
+f+tchsGIYLF0O6+0t/UwlAjlQadHtFp7ruPIZikqz39bydKd9TR5JPySAoSeryjo
+EAUZp83EmdkObjsnC7tJz6oyF/FmHefmdncUfeGYedL5GytZtK2GMpeMO6igKB03
+TBQFTCJYdQpTRmTw6AWDMOgEmrwS57+xjUZPEL0q8+nM0yhMtXUre8vBVqa9u4N2
+WSDTbuST60aQZusQlurz4as4oB0b8wZHbKfi83a0y25H0He6BYqC+8P3cX+0FP+u
+nSGBRsB6wQTSn3tBO/auX4dr8SL8e3ajtLaiSh0TN0EQwGBANFswnTIM570PoE9N
+C7Vdlml5bR6tf/8EubEhNOHrITqR9KtbSPjZz7VTrvfewb3kb0i1tagBf4+28Vde
+hfPe30S8pnDoRIE7z83mznOzkRSVJk+QgBx6tg6zHrtJ1yW/rKhcOiz80MkbVPi6
+tInJw3oXWTkmIr3jk93MXb1fOy5Ks5Mc1yGitoDMxioXqgpPrijm1GQzN4xKJ8mi
+5+x0Cy+vbwBg8fYaClO7CswnKcz6YAd7690AzL9sdBeBAki1Ncj19dqxcXDkLiZY
+Xq6l9Wlp2kNV/T5q7r2H9hVfhcrIH4z5tJHoU9MQ9HqO7HAsI0dr6favl3Pw13do
+kzR9RgbGzPwOwUgy/pJigg0NBCsrEMxmUh//IwANTz2B653QpmGd04lpyCkR246q
+YBrWMVNufmM+jc88BYBos2MaXkjEGZQsYyoaGf63o1Dt9nP1gh1MHZHCqEwrVqMe
+s16kuN7D93UeauoULj/dwelZdnRi5PHnhgo3ty8tOfEiXV/p0gQqCPDylcP55Zju
+qz/zN1Yy64OdAKwsb+KGUekA3H72QF7/roqArPDBzloeGp+PvtOFPvx1Kd9VhQT6
+zKWnMGnogG5lB/aXox4KaQEY8/LDN1ZR8G7aqB1azhinpZvnvawJNO6ss0l//iUE
+49HXmhWPh4Y/P6UJ1H75laT89uFu29YCe0upnHkNSlsrvm1bAPDv2olr0dsAGLKy
+yXzzbfQDUo5aJ0CwuormF/8CgM7hIPONtzHmR+5B+kOixcDEoUnMW1NFeYsPn6Sg
+E0Pj0qQ4A8PTLZxSb2B0pr3HKINRJ1LW5I2cIQL9FumirQe19NgsR1iBAozKiNfS
+Zn3HROXUFBuXDHWybFcdO2vbWFfh4kc5obHMir1NPL2yHIAbRmVw149ywpYd2Fuq
+pUWbHX1m+DZ4N6zT8goGA3HnngeA7HLhWvyuls/x02uiEiiAb/N3BA+EhhqC2Uzy
+rXeE3VdpGJSLLikRpa0VwRgal7Z++rE2jnT89JqoBQoh7614Qw/cdullx02gABaD
+yIM/yeXBn+RS0xqg2SMhqQo2o44BNiM2o+7ohQDZCSaMut5PUvs1rVVUldX7W7Tj
+CfmRwzjV7o7xXcoRu2FuO2ugln53W0j0zd4g//XhTmRF5YzMeP56xakRyw6Udnzz
+bcjKRj+gu7dV/X4an/uzJgrbRRM1j+vftRO5pRkAwWTGOCxyXUfi3bBeS5sGD0Gf
+lh42n9LaiuJyAaBLTATAt2Ob9rv5tN51xb6tW7S0ZeSoXtn2hzS7kWGpcYxIs5Gb
+ZIlaoADJVkOXBYFo6ZcnrW8Psru+Y0Y6Mt0eMe/hLhtgbLajy28X5CUxJsvBhkoX
+n+yu50+ThjL782L2NnlwWo28M+M0rD3cjEDZPi0tGAx4Vq8CWQ6dEEXklhbc7y/W
+RKFLSCDp5ts67Ev2aGlDRoY2qYkG347tWto4JPIXk8HyMmR36B6YC4sAUNzuiPmP
+htzcpKVV5fjuEQrISp884JHIiorch6b2S6T7mjy4/aGxoF4UGJPlCJvPE5R5b3vI
+QzqtRsZldw1NiILAzWdmc9P7Lg60+PjlBztZsKUaURB4Y1ohBclxEdsgu1xIVVXa
+sW/7Vqr/e1bE/Pr0dFIfexJDdof37uKJB+Yg6KLzDqrfh1RZoR2bi06LmNe9dInm
+xePOCQ0zOoeDml78C/YrpnSP2R6yMWRkYu7kMcX4jnvd8tbroZdSH+ZxKgr6ASlY
+xo7r/ttRWF/hpqTew8VDk3Fa+y9Sb1BB7sML1S+Rft/Ji5r0In/bUUO8Sa+F6wQB
+mr0SS3fV8n1dKO8dZw8kwdy92mtPS+fxf+yjpNHDW5urAfjDxAIuDTNR6ox0sErr
+qgHskyaH4pdK11gtooghPYO4c89Dl5jU5afOnthYEH3wWaqtRaqv04793+/CvWQx
+6uE4sSCgBvz4tmym7YvPALCMHYd59OkAmEeOxrdtKwCetavxrF3dY31pTz+L7aKJ
+oXLOGEP718tD9e7aSe1v7u3R1jn7fhKuvzHqa3tz40He21rH6z8dhtPaPY4cLdVu
+P1WuAGOy7TR6gidepNtrWrV0e0Bm9mfFEfPGGXTMGpPFfT8OEwAHatsC+DstAuhE
+gfE9jHEPEywv6whiiyJJN9+OYeDAno06obS1EuzkDY350Ys0eGB/l40srvfeiZxZ
+EIgbdxYpjz2heeqEG3+Of9cO/Hv2gKqENVPa2rS0+4P3NZHGXzkV74b1eDeu7/5C
+hrP9cAkJ186ManWttMHL7ctKWPGrUaTajbT7ZardfvKdlqiXONfud3NmTjwHWwMs
+2nqQMdl2XllbTV6y5ejGR9Avke6q67gJk4YO4J5zB4V9U0RBICfRTH5S+G7bE5SZ
+vmgrB1p8DEq04PZJNHmD/GllOYtmFPXYBn+nf5SlS0pCl5TYq2uQqquRmw95YkHA
+GG4VKQKB0o6ogj41jZRHHkPQ6brFVAVBQExIxDS0awxUP2AAma8tQG5oQFVkjjAC
+VcX94RKaXpgbamsnry1araQ/+xfkxkZUWaIbgoDnm39S9+jDoCgoLc0onnZEW+R5
+w2EWbqohyaLn9Cw7kqLy4uoKpo1MjVqgPknhnk9KWDyzkHS7EW8w9BLdeEYaN40J
+P7HsiT6L1CcplDZ6tOOJQ5xckJfUg0Vkbv3oe9YcaMGgE1hy3UieXlnOoq0H+XBX
+LcUN7QxxRl7K6xx+MmRkRvUQutjvL9c8kc7hQJ+RGb3t3o4XxFgwhLizz+lV3Yfp
+aW9r/BVTaH75r6E4cBiR6JIj9zb2Sy+n8YW5yA0NIIhEt1UKypt92C0hb+9uVTnQ
+KDMo8ege8ECLjyyHCZNOxC+pFNe3k5tkxnBo0lWU3n01MRr6PBpu9IR2xhwmN4qL
+CMczq8p5/bvQxOe3F+QzOiOeSUNDD80vKbywtiKysSIT3F+uHUYM4vdA50mTPiMT
+nSP85C8cweqOCZshO7vXdUeDGghow5kjd3UdDcXvBynkoXWJiVGv2+cnW9jb4KPN
+L5MQL4JeYU1ZR6gx3BaBVr/Mz979nmp3AEEIhapqWv24/AHG99F5HabPIm32SrQG
+OrqZFFvvvwT8vLiBez8PjWPPHpjA/YfGqxcNdpJoCQ3WF2yupqY1/Bq61NiIVNOx
+mNDTcmgkOovUmJsX/X/fUGTkpo4wkC75+Oz09363EfVQOM0yavRRcnfF/31H/NdU
+WBT1tU0rGoAnIDNvfXVoF9QFA/myuJnX1lWx9oAblz/QzaY9IPOvfS1srAiF1WRV
+JSALFKUlcGVh/+5Nv+IKnd+oT3fXH9ohEx3FDe3c8LftSIqKzajjlSnDtR1SKTYj
+4/NDb1+zN8hr31WFLUOqrEBp74gw9HrVRZFD3f1h+16KvPNSrHfDeuSWlh5y955g
+VSXN818GQl8UWH9yUdS2clMjTc8/px3bJ02O2nZYipXZ5+dw90clLC9uItNh4ncX
+53LFiBRGZthIMHd3SElxelLtBnbUhJ5He0Amsw/fM4Wjz2PSvCQLI9PtbDkYmuHP
+WbGXNzdVh/Woqqoyf2ohRWmh8WJDe4ApC7dQ3x56Ix+/eAjDj9j9NHV4Kkt21AIw
+d/V+/mdctuZdD+Pfs7vLsSE7/LJpJKTGxlB04BC9Gi6IOqzn/piWQyL3rlvD/skX
+YcjIAv0RcVZVxXH1dOKvuhoAuaWFmnvuCL1gPexaCpbtQ/GExv2OGddizM1DDQap
+mX13qAfpwTNKlZWaF7VdeDGWM8ZEf23AHybl4w3KXP76NmaNy+DGM9IZ4rQQlFUq
+W7wEZIVMh0nb0W/UiWTEm6h0+TnoDiApKmdk925+EIk+izTOoOPD60fx+D/3sbna
+jdsvE5CVbl2zClj0IgnmkMBUFZ5fcwBPUKYgOY5x2QldlkUPc+HgZMZkOXD5JCRF
+4ZuyZq44tevatt7tIj4zHQQBXWo6+pTo174BaGrEnuoEBBB1mHvpiZNvvwuzLQ7f
+mlUozc2h8WNDTZicKkZrR2RDbaxHX1ba8/5PwBhvQ0xPw3L+eGy33hWydbvQle5B
+bGvtUaRGkx4hNwfz2DOx3zm71/9ETBBg7pVDmFqUwrx11dzzcQkDbEbyky2MyrRx
+Vo6j2zY9g07AE5RJtup597rh3T5J6Ssn7Lv7zsiK2uOWrhj/fsI9I7+kYNJHHiEW
+Pr2Oc3ITeGnqsf2Hun2S+qZqN9KheKhAKA54NMkpqqp9g6Tr9FYf3rUfjp7ziYhC
+VwcRWgtQCfexWXeEUPyyk72icijGGZ394ZDOke0IR0fZdKv3aIRsAdR+2B7xtYQK
+dpOOU1NCw6za1gA7atpp9ARJsxspTLOSFNd1eNWTQAE8QYUhA/oW5emJPon0xXUH
+aPXLx/rfUPaBIxvQ206hv/bhyugJ7VPBPtRzLGw7nVFhiNPKA+fncfMHe1i8tY7x
+gxN5/JJ8hqdauz1bWVHxBhU8QZmG9iDlzT7Kmry0eCWmFA6g2StR1uRl/OD+hZvC
+8W/p7mOcPARkhYe+KGPJ9jrq24LYTDosBhG9KGDWi6iEPm/2SwpBRUVRQt48y2Fi
+7MB4phQOYMLgRNbsd/FlcRNzLo5+xS5aYiKNcdIT+5Y3xklPTKQxTnpiIo1x0vN/
+pRWQF4MYHrYAAAAASUVORK5CYII=
+
+------------I9NSoI8YpuB3ywS9RQOjgp--
