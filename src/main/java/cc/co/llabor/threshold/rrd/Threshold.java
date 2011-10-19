@@ -18,7 +18,15 @@ monitor-thresholds = "<monitor-threshold> [, <monitor-threshold> ...]"
 
  */
 public interface Threshold extends Serializable{
-	
+	String CLASS = "class";
+	String BASE_LINE = "BaseLine";
+	String SPAN_LENGTH = "spanLength";
+	String MONITOR_ARGS = "monitorArgs";
+	String MONITOR_TYPE = "monitorType";
+	String DS_NAME = "dsName";
+	String DATASOURCE = "datasource";
+	String ACTION_ARGS = "actionArgs";
+	String ACTION = "action";	
 	
 	/** 	
 	 * unique ID for RRD-Db, formerly RRD-name, that used for retrieve it via 
@@ -107,6 +115,9 @@ public interface Threshold extends Serializable{
 	 * @return
 	 */
 	public String getDsName();
+
+
+	double getBaseLine();
 
 
 	//public void performChunk(long timestamp, double val);

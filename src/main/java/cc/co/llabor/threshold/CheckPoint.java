@@ -30,7 +30,7 @@ public class CheckPoint {
 			long fetchStart = (timestamp ) ;
 			long fetchEnd = timestamp+1;
 			FetchRequest rTmp = rrd.createFetchRequest("AVERAGE", fetchStart , fetchEnd );
-			double[] vals = rTmp.fetchData().getValues("speed"); 
+			double[] vals = rTmp.fetchData().getValues(this.getToCheck().getDsName() ); 
 			 
 			double val = vals[0];	
 			this.setValue(val);

@@ -11,6 +11,8 @@ import org.jrobin.core.RrdDbPool;
 import org.jrobin.core.RrdException;
 import org.mvel2.MVEL;
 
+import cc.co.llabor.threshold.rrd.Threshold;
+
 /** 
  * <b>The very first Actions-based implementation of Threshold</b>
  * @author      vipup<br>
@@ -32,14 +34,14 @@ public class StdOutActionist extends AbstractAlerter {
 	protected String dsName = "speed";
 	
 	StdOutActionist(Properties props){
-		this.action =props.getProperty("action") ;
-		this.actionArgs =props.getProperty("actionArgs") ;
-		this.rrdName =props.getProperty("datasource") ;
-		this.dsName =props.getProperty("dsName") ;
-		this.type =props.getProperty("monitorType") ;
-		this.monitorArgs =props.getProperty("monitorArgs") ;
-		this.activationTimeoutInSeconds = Integer.parseInt( props.getProperty("spanLength" ));
-		this.baseLine = Double.parseDouble(  props.getProperty("BaseLine")); 		
+		this.action =props.getProperty(Threshold.ACTION ) ;
+		this.actionArgs =props.getProperty(Threshold.ACTION_ARGS ) ;
+		this.rrdName =props.getProperty(Threshold.DATASOURCE ) ;
+		this.dsName =props.getProperty(Threshold.DS_NAME ) ;
+		this.type =props.getProperty(Threshold.MONITOR_TYPE ) ;
+		this.monitorArgs =props.getProperty(Threshold.MONITOR_ARGS ) ;
+		this.activationTimeoutInSeconds = Integer.parseInt( props.getProperty(Threshold.SPAN_LENGTH  ));
+		this.baseLine = Double.parseDouble(  props.getProperty(Threshold.BASE_LINE )); 		
 	}	
 
 	protected String actionArgs = "HELLO STDOUT";
