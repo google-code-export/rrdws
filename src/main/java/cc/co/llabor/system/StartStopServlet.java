@@ -5,6 +5,7 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Properties;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -150,8 +151,10 @@ public class StartStopServlet extends HttpServlet {
 		Object tholdProps = tholdRepo.get("default.properties");//RRDHighLimitWatchDog
 		try {
 			log.info(Repo.getBanner( "tholdHealthWatchDog"));
+			
 			Threshold watchDog  = ac.toThreshold(tholdProps );
 			ac.register(  watchDog );
+			lookInsideThold(tholdProps);
 			
 		} catch (TholdException e) {
 			// TODO Auto-generated catch block
@@ -162,6 +165,65 @@ public class StartStopServlet extends HttpServlet {
 		
 		
 		super.init(config); 
+	}
+ 
+	
+	/**
+	 * use the log4j-similar semantic for tholds-definition:
+	 * 
+	 * 
+	 * #CacheEntry stored at 1317918241876
+	 * #Thu Oct 06 18:24:01 CEST 2011
+	 * datasource=test.rrd
+	 * dsName=speed
+	 * actionArgs=hiLog4J @{}\#{} {} ,{} 
+	 * spanLength=600
+	 * class=cc.co.llabor.threshold.Log4JActionist
+	 * action=log4j
+	 * BaseLine=0.0
+	 * monitorArgs=\!(dvalue > 1 && dvalue < 111)
+	 * monitorType=mvel
+	 * A.datasource=test.rrd
+	 * A.dsName=speed
+	 * A.actionArgs=hiLog4J @{}\#{} {} ,{} 
+	 * A.spanLength=600
+	 * A.class=cc.co.llabor.threshold.Log4JActionist
+	 * A.action=log4j
+	 * A.BaseLine=1.0
+	 * A.monitorArgs=\!(dvalue > 1 && dvalue < 111)
+	 * A.monitorType=mvel
+	 * B.datasource=test.rrd
+	 * B.dsName=speed
+	 * B.actionArgs=hiLog4J @{}\#{} {} ,{} 
+	 * B.spanLength=600
+	 * B.class=cc.co.llabor.threshold.Log4JActionist
+	 * B.action=log4j
+	 * B.BaseLine=2.0
+	 * B.monitorArgs=\!(dvalue > 1 && dvalue < 111)
+	 * B.monitorType=mvel
+	 */
+	void lookInsideThold(Object tholdProps) throws TholdException {
+		for(Object  key: ((Properties )tholdProps).keySet()){
+			String keyTmp = ""+key;
+			if(keyTmp.endsWith("."+Threshold.BASE_LINE)){ // one more "thold-def" inside
+				String prefixTmp = (""+key).substring(0, keyTmp.length() - Threshold.BASE_LINE.length());
+				System.out.println(prefixTmp);
+				Properties pSubset = new Properties();
+				for(Object  keyWithPrefix: ((Properties )tholdProps).keySet()){
+					if ((""+keyWithPrefix).indexOf( prefixTmp) == 0){
+						String keyToStore = (""+keyWithPrefix).substring(prefixTmp.length());
+						String valToStore = ((Properties )tholdProps).getProperty(""+keyWithPrefix);
+						pSubset.setProperty(keyToStore, valToStore);
+						
+					}
+				}
+				AlertCaptain acTmp = AlertCaptain.getInstance();
+				Threshold watchDogTmp  = acTmp.toThreshold(pSubset );
+				
+				acTmp.register(  watchDogTmp );
+				
+			} 
+		}
 	}
 
 	private void startMrtgServer() {

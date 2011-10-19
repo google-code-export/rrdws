@@ -56,7 +56,9 @@ public abstract class AbstractAlerter implements Threshold {
  
 
 	public String toString(){
-		return  this.getDsName() +":"+this.getDatasource() +"@"+this.getMonitorType()+"://"+this.getMonitorArgs()+"?"+this.getAction()+" ( "+this.getActionArgs() +" )";
+		return this.getDsName() + ":" + this.getDatasource() + "@"
+				+ this.getMonitorType() + "://" + this.getMonitorArgs() + "?"
+				+ this.getAction() + " ( " + this.getActionArgs() + " )";
 	}
 	
 	
@@ -107,7 +109,8 @@ public abstract class AbstractAlerter implements Threshold {
 	 * the value have to be checked for triggering the Threshold
 	 */
 	protected abstract boolean checkIncident(double val, long timestamp);	
- 
+	
+	@Override
 	public double getBaseLine() {
 		return this.baseLine;
 	}

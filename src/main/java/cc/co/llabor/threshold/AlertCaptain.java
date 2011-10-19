@@ -40,6 +40,8 @@ import cc.co.llabor.threshold.rrd.Threshold;
  */
 public class AlertCaptain implements Runnable, NotificationListener {
 
+
+
 	static boolean inited = false;
 
 	public static AlertCaptain getInstance() {
@@ -257,14 +259,41 @@ public class AlertCaptain implements Runnable, NotificationListener {
 			e.printStackTrace();
 		}
 	}
-	public void syncUC() {
+	public Collection<Threshold> list(){
+		return unmodifiableCollection;
+	}
+	void syncUC() {
 		unmodifiableCollection = Collections.unmodifiableCollection(  new HashSet<Threshold>( this.ToDo ));
+		System.out.println(unmodifiableCollection);
+	}
+	public static Properties toProperties(Threshold thTmp) throws TholdException {
+		Properties retval = new Properties();
+		retval.setProperty(Threshold.CLASS, thTmp.getClass().getName());
+//		this.action =props.getProperty("action") ;
+//		this.actionArgs =props.getProperty("actionArgs") ;
+//		this.rrdName =props.getProperty("datasource") ;
+//		this.dsName =props.getProperty("dsName") ;
+//		this.type =props.getProperty("monitorType") ;
+//		this.monitorArgs =props.getProperty("monitorArgs") ;
+//		this.activationTimeoutInSeconds = Integer.parseInt( props.getProperty("spanLength" ));
+//		this.baseLine = Double.parseDouble(  props.getProperty("BaseLine")); 		
+
+		retval.setProperty(Threshold.ACTION,thTmp.getAction()) ;
+		retval.setProperty(Threshold.ACTION_ARGS,thTmp.getActionArgs() ) ;
+		retval.setProperty(Threshold.DATASOURCE,thTmp.getDatasource()  ) ;
+		retval.setProperty(Threshold.DS_NAME,thTmp.getDsName() ) ;
+		retval.setProperty(Threshold.MONITOR_TYPE,thTmp.getMonitorType() ) ;
+		retval.setProperty(Threshold.MONITOR_ARGS,thTmp.getMonitorArgs() ) ;
+		retval.setProperty(Threshold.SPAN_LENGTH ,""+thTmp.getSpanLength()  ) ;
+		retval.setProperty(Threshold.BASE_LINE,""+thTmp.getBaseLine() ) ;	
+		
+		return retval;
 	}
 	public Threshold toThreshold(Object thTmp) throws TholdException {
 		try {
 			if (thTmp instanceof Properties) {
 				Properties p = (Properties) thTmp;
-				String clazz = "" + p.getProperty("class");
+				String clazz = "" + p.getProperty(Threshold.CLASS);
 				Class cl = Class.forName(clazz);
 
 				Class[] parameterTypes = new Class[]{Properties.class};
