@@ -38,8 +38,7 @@ public class TholdIniTest extends TestCase {
 		AlertCaptain ac = AlertCaptain.getInstance();
 		ac.setAsync(false);
 		Threshold localNotificator = 
-			new Log4JActionist( "test.rrd", 
-				"( 1==1)" , 600){
+			new Log4JActionist( "test.rrd",  "( 1==1)" , 600){
 			public void performAction(long timestampSec) {
 				//super.performAction( timestampSec);
 				localOut.append( timestampSec );

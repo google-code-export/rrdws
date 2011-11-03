@@ -34,31 +34,11 @@ public class Log2MAILActionist extends Log4JActionist{
 		 
 	} 
 
-	@Override
-	/**
-	 * pid
-	 */
-	public String getActionArgs() {
-		 	return "hiLog4J @{}#{} {} ,{} ";
-	}
+ 
 
  	@Override
-	public void performAction(long timestampSec) {
-		
-		if (inIncidentTime()>=0)
-		if (timestampSec >this.lastNotificationTimestamp)	
-		{
-			this.lastNotificationTimestamp = this.notificationIntervalInSecs +timestampSec ;
-			String action = this.getAction();
-			if (LOG4J .equals(action)){
+	public void performAction(long timestampSec) { 
 				log.info( getActionArgs() , new Object[]{this ,  notificationCounter++, timestampSec, new Date(timestampSec*1000)});
-			}else{
-				String message = "unknown Action:"+action;
-				throw new RuntimeException(message );
-			}
-		}
-		
-		
 	}
 
 }

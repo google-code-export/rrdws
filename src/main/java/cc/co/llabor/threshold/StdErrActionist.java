@@ -30,23 +30,9 @@ public class StdErrActionist extends StdOutActionist{
 		super(props);
 	}
 
-	@Override
-	public void performAction(long timestampSec) {
-		
-		if (inIncidentTime()>=0)
-		if (timestampSec >this.lastNotificationTimestamp)	
-		{
-			this.lastNotificationTimestamp = this.notificationIntervalInSecs +timestampSec ;
-			String action = this.getAction();
-			if ("syso".equals(action)){
+ 	@Override
+	protected void act(long timestampSec) { 
 				System.err.println(actionArgs +"N"+(notificationCounter++)+"Z"+new Date(timestampSec*1000));
-			}else{
-				String message = "unknown Action:"+action;
-				throw new RuntimeException(message );
-			}
-		}
-		
-		
 	}
 
 }

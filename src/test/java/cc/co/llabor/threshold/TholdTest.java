@@ -93,8 +93,7 @@ public class TholdTest extends TestCase {
 			assertTrue("! 57>"+xTmp+" > 57!", xTmp == 57);
 	}
 
-	public void testSinHighAlert() throws RrdException, IOException {
-
+	public void testSinHighAlert() throws RrdException, IOException { 
 		double hiLimit = 130; // should be smart enough ;)
 		long tenSecondds = 1111; // 10 sec is maximal time to start to do
 									// something...

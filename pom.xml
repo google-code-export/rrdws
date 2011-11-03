@@ -25,12 +25,16 @@
 	<packaging>war</packaging>
 
 	<dependencies>
- 
-	
+	<dependency>
+		<groupId>eu.blky</groupId>
+		<artifactId>noti4j</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</dependency>
+ 	
 	<dependency>
 		<groupId>org.igniterealtime.smack</groupId>
 		<artifactId>smack</artifactId>
-		<version>3.1.0</version>
+		<version>3.2.1</version>
 		<scope>provided</scope><!--have to be fixed before using -->
 	</dependency>
 	<dependency>

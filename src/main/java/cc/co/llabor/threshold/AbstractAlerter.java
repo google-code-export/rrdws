@@ -136,6 +136,7 @@ public abstract class AbstractAlerter implements Threshold {
 		return this.rrdName;
 	}
  
+
 	/**
 	 * something like Cpu_Load
 	 */
@@ -189,13 +190,5 @@ public abstract class AbstractAlerter implements Threshold {
 		}
 	}
 
-	@Override
-	public String getDsName() {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 05.10.2011");
-		else {
-		return null;
-		}
-	}
-
+ 
 }
