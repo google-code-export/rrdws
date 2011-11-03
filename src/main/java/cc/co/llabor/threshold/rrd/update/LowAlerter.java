@@ -1,4 +1,4 @@
-package cc.co.llabor.threshold;
+package cc.co.llabor.threshold.rrd.update;
 
 import cc.co.llabor.threshold.rrd.Threshold;
 

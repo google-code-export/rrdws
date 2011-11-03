@@ -1,4 +1,4 @@
-package cc.co.llabor.threshold;
+package cc.co.llabor.threshold.syso;
 
 import java.util.Date;
 import java.util.Properties;
@@ -26,7 +26,7 @@ public class StdErrActionist extends StdOutActionist{
 		 
 	}
 
-	StdErrActionist(Properties props){
+	public StdErrActionist(Properties props){
 		super(props);
 	}
 

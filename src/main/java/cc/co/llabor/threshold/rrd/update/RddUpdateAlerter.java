@@ -1,4 +1,4 @@
-package cc.co.llabor.threshold;
+package cc.co.llabor.threshold.rrd.update;
 
 import java.io.IOException;
 
@@ -7,6 +7,8 @@ import org.jrobin.core.RrdDb;
 import org.jrobin.core.RrdDef;
 import org.jrobin.core.RrdException;
 import org.jrobin.core.Sample;
+
+import cc.co.llabor.threshold.AbstractAlerter;
 
 /**
  * <b>Hardcoded RRD-linked Alerter, which will controll the RRD-DB directly

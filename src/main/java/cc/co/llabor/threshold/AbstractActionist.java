@@ -29,7 +29,7 @@ public abstract class AbstractActionist extends AbstractAlerter {
 	protected String actionArgs = null;
 	long lastNotificationTimestamp = -1;
 	long notificationIntervalInSecs = 10 *60; // 10min ..1000 *
-	int notificationCounter = 0;
+	protected int notificationCounter = 0;
 	protected String monitorArgs = null;
 	protected String action = null;
 	protected String type = "mvel";	

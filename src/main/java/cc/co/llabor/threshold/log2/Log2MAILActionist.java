@@ -1,4 +1,4 @@
-package cc.co.llabor.threshold;
+package cc.co.llabor.threshold.log2;
 
 import java.util.Date;
 import java.util.Properties;
@@ -24,7 +24,7 @@ public class Log2MAILActionist extends Log4JActionist{
 	private static final long serialVersionUID = -4339988003907108789L;
 	private static final Logger log = LoggerFactory.getLogger("MAIL2ROOT");
 	
-	Log2MAILActionist(Properties props){
+	public Log2MAILActionist(Properties props){
 		super(props);
 	}
 
