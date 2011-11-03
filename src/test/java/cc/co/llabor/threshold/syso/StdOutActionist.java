@@ -1,7 +1,9 @@
-package cc.co.llabor.threshold;
+package cc.co.llabor.threshold.syso;
  
 import java.util.Date; 
 import java.util.Properties; 
+
+import cc.co.llabor.threshold.AbstractActionist;
 /** 
  * <b>The very first Actions-based implementation of Threshold</b>
  * @author      vipup<br>
@@ -20,7 +22,7 @@ public class StdOutActionist extends AbstractActionist{
 	public StdOutActionist(String rrdName, String monitorArgs, long notificationInterval) {
 		super(rrdName, monitorArgs, notificationInterval);
 	}
-	protected StdOutActionist(Properties props) {
+	public StdOutActionist(Properties props) {
 		super(props);
 	}
 	/**

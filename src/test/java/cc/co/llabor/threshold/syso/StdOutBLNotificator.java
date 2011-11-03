@@ -1,20 +1,28 @@
-package cc.co.llabor.threshold;
+package cc.co.llabor.threshold.syso;
 
-import java.util.Date;
+import java.util.Date; 
+
+import cc.co.llabor.threshold.rrd.update.BaselineAlerter;
 
 /** 
- * <b>Description:TODO</b>
+ * <b>STDOUT Notificator</b>
+ * 
+ * 1) takes regular "event" from Alert-Captain, and forward it to wrapped RRD-Threshold 
+ * 2) check EVERY_TIME_INTERVAL whether wrapped THOLD is IN_INCIDENT
+ * 3) ^___and perform System.out.println("HELLO STDOUT")
+ * 
+ * 
  * @author      vipup<br>
  * <br>
  * <b>Copyright:</b>     Copyright (c) 2006-2008 Monster AG <br>
  * <b>Company:</b>       Monster AG  <br>
  * 
- * Creation:  29.09.2011::16:37:58<br> 
+ * Creation:  28.09.2011::22:10:48<br> 
  */
-public class StdOutLowNotificator extends LowAlerter {
-
-	public StdOutLowNotificator(String rrdName, double lowLimit, long activationTimeoutInSeconds) {
-		super(rrdName, lowLimit, activationTimeoutInSeconds);
+public class StdOutBLNotificator extends BaselineAlerter{
+    public StdOutBLNotificator(String rrdName, double baseLine, double gap,
+			long activationTimeoutInSeconds) {
+		super(rrdName, baseLine, gap, activationTimeoutInSeconds);
 	}
 	public static String HELLO_STDOUT = "HELLO STDOUT";
 	long lastNotificationTimestamp = -1;

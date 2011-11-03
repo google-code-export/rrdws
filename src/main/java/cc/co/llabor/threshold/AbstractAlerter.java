@@ -62,7 +62,7 @@ public abstract class AbstractAlerter implements Threshold {
 	}
 	
 	
-	long incidentTime = -1;
+	protected long incidentTime = -1;
 	@Override
 	public long getSpanLength() {
 		return activationTimeoutInSeconds;

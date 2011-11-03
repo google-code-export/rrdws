@@ -1,9 +1,11 @@
-package cc.co.llabor.threshold;
+package cc.co.llabor.threshold.log2;
 
 import java.util.Date;
 import java.util.Properties; 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import cc.co.llabor.threshold.AbstractActionist;
 
 /** 
  * <b>Do almost the same as StdOutActionist, except the OUT.</b>
