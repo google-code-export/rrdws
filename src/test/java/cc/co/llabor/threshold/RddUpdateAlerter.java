@@ -17,9 +17,6 @@ import org.jrobin.core.Sample;
  * Depend on the rules AlertCaptain will organize Observer<->Observable mechanism for any defined pair.
  * 
  * 
- * 
- * 
- * 
  * @author vipup<br>
  * <br>
  *         <b>Copyright:</b> Copyright (c) 2006-2008 Monster AG <br>

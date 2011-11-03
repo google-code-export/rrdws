@@ -264,7 +264,7 @@ public class AlertCaptain implements Runnable, NotificationListener {
 	}
 	void syncUC() {
 		unmodifiableCollection = Collections.unmodifiableCollection(  new HashSet<Threshold>( this.ToDo ));
-		System.out.println(unmodifiableCollection);
+		//System.out.println(unmodifiableCollection);
 	}
 	public static Properties toProperties(Threshold thTmp) throws TholdException {
 		Properties retval = new Properties();
