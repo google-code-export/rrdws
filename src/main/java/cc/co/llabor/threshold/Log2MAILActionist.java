@@ -32,12 +32,10 @@ public class Log2MAILActionist extends Log4JActionist{
 			long notificationInterval) {
 		super(rrdName, monitorArgs, notificationInterval);
 		 
-	} 
-
- 
+	}  
 
  	@Override
-	public void performAction(long timestampSec) { 
+ 	protected void act(long timestampSec) {
 				log.info( getActionArgs() , new Object[]{this ,  notificationCounter++, timestampSec, new Date(timestampSec*1000)});
 	}
 
