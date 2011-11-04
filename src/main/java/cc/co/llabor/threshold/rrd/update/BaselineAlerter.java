@@ -1,13 +1,5 @@
 package cc.co.llabor.threshold.rrd.update;
-
-import java.io.IOException;
-
-import org.jrobin.core.ConsolFuns;
-import org.jrobin.core.RrdDb;
-import org.jrobin.core.RrdDef;
-import org.jrobin.core.RrdException;
-import org.jrobin.core.Sample;
-
+ 
 import cc.co.llabor.threshold.rrd.Threshold;
 
 /** 
@@ -21,6 +13,10 @@ import cc.co.llabor.threshold.rrd.Threshold;
  */
 public class BaselineAlerter extends RddUpdateAlerter implements Threshold {
 
+	/**
+	 * @author vipup
+	 */
+	private static final long serialVersionUID = 1792920230094305597L;
 	private double gap;
 
 	public double getGap() { 

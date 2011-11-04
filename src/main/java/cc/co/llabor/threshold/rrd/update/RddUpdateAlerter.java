@@ -27,6 +27,11 @@ import cc.co.llabor.threshold.AbstractAlerter;
  *         Creation: 01.09.2011::16:48:15<br>
  */
 public abstract class RddUpdateAlerter extends AbstractAlerter {
+	/**
+	 * @author vipup
+	 */
+	private static final long serialVersionUID = 6260786617371803021L;
+
 	private Sample sample;
 
 	private RrdDb rrdDb;
