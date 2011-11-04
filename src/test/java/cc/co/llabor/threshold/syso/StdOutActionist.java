@@ -14,17 +14,17 @@ import cc.co.llabor.threshold.AbstractActionist;
  * Creation:  29.09.2011::16:37:58<br> 
  */
 public class StdOutActionist extends AbstractActionist{  
-	{ 
+	public StdOutActionist(String string, String string2, long i) {
+		super(string, string2, i);
+	}
+
+	@Override
+	protected void init(Properties props) 	{  
 		this.dsName = "speed";
 		this.action =  "syso";
 		this.actionArgs =  "HELLO STDOUT"; 
 	}		
-	public StdOutActionist(String rrdName, String monitorArgs, long notificationInterval) {
-		super(rrdName, monitorArgs, notificationInterval);
-	}
-	public StdOutActionist(Properties props) {
-		super(props);
-	}
+ 
 	/**
 	 * @author vipup
 	 */

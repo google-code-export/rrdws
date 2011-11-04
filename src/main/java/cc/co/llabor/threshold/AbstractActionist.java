@@ -32,9 +32,13 @@ public abstract class AbstractActionist extends AbstractAlerter {
 	protected int notificationCounter = 0;
 	protected String monitorArgs = null;
 	protected String action = null;
-	protected String type = "mvel";	
+	protected String type = null;
 	
-	protected AbstractActionist(Properties props){
+	protected AbstractActionist( ){
+		 type = "mvel";
+	}
+	
+	public AbstractActionist(Properties props){
 		this.action =props.getProperty(Threshold.ACTION ) ;
 		this.actionArgs =props.getProperty(Threshold.ACTION_ARGS ) ;
 		this.rrdName =props.getProperty(Threshold.DATASOURCE ) ;
@@ -45,12 +49,28 @@ public abstract class AbstractActionist extends AbstractAlerter {
 		this.baseLine = Double.parseDouble(  props.getProperty(Threshold.BASE_LINE )); 		
 	}	 
 	
-	public AbstractActionist(String rrdName, String monitorArgs,
-			long notificationInterval) {
+	public AbstractActionist(String rrdName, String monitorArgs, 	int notificationInterval) {
+		this(rrdName, monitorArgs, 	(long)notificationInterval);
+	}
+	public AbstractActionist(String rrdName, String monitorArgs, 	long notificationInterval) {
 		this.rrdName = 	rrdName;	//			RrdDb rrd = RrdDbPool.getInstance().requestRrdDb(rrdName ); 
 		this.monitorArgs  =  monitorArgs ;
 		this.notificationIntervalInSecs = notificationInterval;
 	}
+	
+	public AbstractActionist(String rrdName, double baseLine, long activationTimeoutInSeconds){
+		Properties props = new Properties();
+		props.setProperty("rrdName", rrdName);
+		props.setProperty("baseLine", ""+baseLine);
+		props.setProperty("rrdName", rrdName);
+		init(props );
+	}	
+//	public CompositeAlerter(Properties props){
+//		super(props);
+//		init(props);
+//	}
+	protected abstract void init(Properties props) ;	
+	
 	public int getNotificationCounter() { 
 			return notificationCounter;
 	}
@@ -128,7 +148,7 @@ public abstract class AbstractActionist extends AbstractAlerter {
 	} 
 	
 	@Override
-	public boolean checkIncident(double val, long timestamp) {
+	protected boolean checkIncident(double val, long timestamp) {
 		
 		String monitorType = this.getMonitorType();
 		if ("mvel".equals( monitorType)){

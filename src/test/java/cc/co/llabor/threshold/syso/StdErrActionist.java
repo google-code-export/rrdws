@@ -19,18 +19,13 @@ public class StdErrActionist extends StdOutActionist{
 	 * @author vipup
 	 */
 	private static final long serialVersionUID = -6306830921722082168L;
-
-	public StdErrActionist(String rrdName, String monitorArgs,
-			long notificationInterval) {
-		super(rrdName, monitorArgs, notificationInterval);
-		 
+ 
+ 
+	public StdErrActionist(String rrdName, String string2, long tenMins) {
+		super(rrdName, string2, tenMins);
 	}
 
-	public StdErrActionist(Properties props){
-		super(props);
-	}
-
- 	@Override
+	@Override
 	protected void act(long timestampSec) { 
 				System.err.println(actionArgs +"N"+(notificationCounter++)+"Z"+new Date(timestampSec*1000));
 	}
