@@ -13,6 +13,10 @@ import cc.co.llabor.threshold.rrd.Threshold;
  */
 public class LowAlerter extends RddUpdateAlerter implements Threshold {
 
+	/**
+	 * @author vipup
+	 */
+	private static final long serialVersionUID = 287769284253539824L;
 	public LowAlerter(String rrdName, double lowLimit,
 			long activationTimeoutInSeconds) {
 		super(rrdName, lowLimit, activationTimeoutInSeconds);

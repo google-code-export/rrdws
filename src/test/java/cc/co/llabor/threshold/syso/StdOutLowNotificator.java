@@ -15,6 +15,10 @@ import cc.co.llabor.threshold.rrd.update.LowAlerter;
  */
 public class StdOutLowNotificator extends LowAlerter {
 
+	/**
+	 * @author vipup
+	 */
+	private static final long serialVersionUID = 2175919038598547257L;
 	public StdOutLowNotificator(String rrdName, double lowLimit, long activationTimeoutInSeconds) {
 		super(rrdName, lowLimit, activationTimeoutInSeconds);
 	}

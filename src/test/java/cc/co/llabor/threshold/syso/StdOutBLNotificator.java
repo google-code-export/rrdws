@@ -20,7 +20,11 @@ import cc.co.llabor.threshold.rrd.update.BaselineAlerter;
  * Creation:  28.09.2011::22:10:48<br> 
  */
 public class StdOutBLNotificator extends BaselineAlerter{
-    public StdOutBLNotificator(String rrdName, double baseLine, double gap,
+    /**
+	 * @author vipup
+	 */
+	private static final long serialVersionUID = 5969939968238423577L;
+	public StdOutBLNotificator(String rrdName, double baseLine, double gap,
 			long activationTimeoutInSeconds) {
 		super(rrdName, baseLine, gap, activationTimeoutInSeconds);
 	}
