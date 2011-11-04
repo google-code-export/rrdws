@@ -1,6 +1,7 @@
 package cc.co.llabor.threshold.rrd.update;
 
 import java.io.IOException;
+import java.util.Properties;
 
 import org.jrobin.core.ConsolFuns;
 import org.jrobin.core.RrdDb;
@@ -8,6 +9,7 @@ import org.jrobin.core.RrdDef;
 import org.jrobin.core.RrdException;
 import org.jrobin.core.Sample;
 
+import cc.co.llabor.threshold.AbstractActionist;
 import cc.co.llabor.threshold.AbstractAlerter;
 
 /**
@@ -26,7 +28,7 @@ import cc.co.llabor.threshold.AbstractAlerter;
  * 
  *         Creation: 01.09.2011::16:48:15<br>
  */
-public abstract class RddUpdateAlerter extends AbstractAlerter {
+public abstract class RddUpdateAlerter extends AbstractActionist {
 	/**
 	 * @author vipup
 	 */
@@ -75,6 +77,7 @@ public abstract class RddUpdateAlerter extends AbstractAlerter {
 
 	public RddUpdateAlerter(String rrdName, double baseLine, long activationTimeoutInSeconds) {
 		this.rrdName = rrdName;
+		this.monitorType = "mvel";
 		this.baseLine = baseLine;
 		this.activationTimeoutInSeconds = activationTimeoutInSeconds;
 		try {
@@ -89,21 +92,32 @@ public abstract class RddUpdateAlerter extends AbstractAlerter {
 	}
 	
 	@Override
-	 public void performAction(long timestamp) {
+	protected void init(Properties props) {
+		// TODO Auto-generated method stub
+		if (1==1)throw new RuntimeException("not yet implemented since 04.11.2011");
+		else {
+		}
+	}
+	
+ 
+	@Override
+	protected void act(long timestampSec) {
 		try {
 			long activatingTimepoint = this.inIncidentTime()
 					+ this.getSpanLength();
-			boolean isActivated = timestamp > activatingTimepoint;
-			int lowLevel = isActivated ? ACTIVE_ALERT_VALUE:COUNTDOWN_TO_DEACTIVE_VALUE ;
+			boolean isActivated = timestampSec > activatingTimepoint;
+			int lowLevel = isActivated
+					? ACTIVE_ALERT_VALUE
+					: COUNTDOWN_TO_DEACTIVE_VALUE;
 			String valTmp = ""
 					+ (this.incidentTime == -1 ? lowLevel : lowLevel);
-			this.sample.setAndUpdate("" + (timestamp) + ":" + valTmp);
+			this.sample.setAndUpdate("" + (timestampSec) + ":" + valTmp);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			//e.printStackTrace();
+			// e.printStackTrace();
 		} catch (RrdException e) {
 			// TODO Auto-generated catch block
-			//e.printStackTrace();
+			// e.printStackTrace();
 		}
 	}
 
@@ -142,4 +156,7 @@ public abstract class RddUpdateAlerter extends AbstractAlerter {
 			e.printStackTrace();
 		}
 	}
+	
+
+
 }

@@ -27,15 +27,15 @@ public abstract class AbstractActionist extends AbstractAlerter {
 	private static final long serialVersionUID = -1411482451587802533L;
 	protected String dsName = null;
 	protected String actionArgs = null;
-	long lastNotificationTimestamp = -1;
-	long notificationIntervalInSecs = 10 *60; // 10min ..1000 *
-	protected int notificationCounter = 0;
+	protected volatile long lastNotificationTimestamp = -1;
+	protected volatile int notificationCounter = 0;
+	protected long notificationIntervalInSecs = 10 *60; // 10min ..1000 *
 	protected String monitorArgs = null;
 	protected String action = null;
-	protected String type = null;
+	protected String monitorType = null;
 	
 	protected AbstractActionist( ){
-		 type = "mvel";
+		monitorType = "mvel";
 	}
 	
 	public AbstractActionist(Properties props){
@@ -43,7 +43,7 @@ public abstract class AbstractActionist extends AbstractAlerter {
 		this.actionArgs =props.getProperty(Threshold.ACTION_ARGS ) ;
 		this.rrdName =props.getProperty(Threshold.DATASOURCE ) ;
 		this.dsName =props.getProperty(Threshold.DS_NAME ) ;
-		this.type =props.getProperty(Threshold.MONITOR_TYPE ) ;
+		this.monitorType =props.getProperty(Threshold.MONITOR_TYPE ) ;
 		this.monitorArgs =props.getProperty(Threshold.MONITOR_ARGS ) ;
 		this.activationTimeoutInSeconds = Integer.parseInt( props.getProperty(Threshold.SPAN_LENGTH  ));
 		this.baseLine = Double.parseDouble(  props.getProperty(Threshold.BASE_LINE )); 		
@@ -56,13 +56,21 @@ public abstract class AbstractActionist extends AbstractAlerter {
 		this.rrdName = 	rrdName;	//			RrdDb rrd = RrdDbPool.getInstance().requestRrdDb(rrdName ); 
 		this.monitorArgs  =  monitorArgs ;
 		this.notificationIntervalInSecs = notificationInterval;
+		Properties props = new Properties();
+		props.setProperty(Threshold.DATASOURCE , rrdName);
+		props.setProperty(Threshold.MONITOR_ARGS , monitorArgs);
+		props.setProperty(Threshold.BASE_LINE , ""+baseLine); 
+		props.setProperty(Threshold.SPAN_LENGTH , ""+activationTimeoutInSeconds); 
+		
+		init(props );
 	}
 	
 	public AbstractActionist(String rrdName, double baseLine, long activationTimeoutInSeconds){
 		Properties props = new Properties();
-		props.setProperty("rrdName", rrdName);
-		props.setProperty("baseLine", ""+baseLine);
-		props.setProperty("rrdName", rrdName);
+		props.setProperty(Threshold.DATASOURCE , rrdName);
+		props.setProperty(Threshold.BASE_LINE , ""+baseLine); 
+		props.setProperty(Threshold.SPAN_LENGTH , ""+activationTimeoutInSeconds); 
+		
 		init(props );
 	}	
 //	public CompositeAlerter(Properties props){
@@ -84,7 +92,7 @@ public abstract class AbstractActionist extends AbstractAlerter {
 	 */
 	@Override
 	public String getMonitorType() {
-			return type ;
+			return monitorType ;
 	}
  
 	@Override

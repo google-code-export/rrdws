@@ -1,5 +1,7 @@
 package cc.co.llabor.threshold.rrd.update;
  
+import java.util.Properties;
+
 import cc.co.llabor.threshold.rrd.Threshold;
 
 /** 
@@ -55,6 +57,8 @@ public class BaselineAlerter extends RddUpdateAlerter implements Threshold {
 			val <  this.getBaseLine() -this.getGap()
 		);
 	}
+
+
 
 
 	

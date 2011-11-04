@@ -35,16 +35,16 @@ public abstract class AbstractAlerter implements Threshold {
 	@Override
 	public Properties toProperties() {
 		Properties retval = new Properties();
-		retval.setProperty( "class", this.getClass().getName() );
-		retval.setProperty( "action", this.getAction());
-		retval.setProperty( "dsName", this.getDsName() );
+		retval.setProperty( CLASS , this.getClass().getName() );
+		retval.setProperty( ACTION , this.getAction());
+		retval.setProperty( DS_NAME , this.getDsName() );
 		
-		retval.setProperty("actionArgs", this.getActionArgs());
-		retval.setProperty("datasource", this.getDatasource());
-		retval.setProperty("monitorType", this.getMonitorType());
-		retval.setProperty("monitorArgs", this.getMonitorArgs());
-		retval.setProperty("spanLength", ""+this.getSpanLength());
-		retval.setProperty("BaseLine", ""+this.getBaseLine());
+		retval.setProperty(ACTION_ARGS , this.getActionArgs());
+		retval.setProperty(DATASOURCE , this.getDatasource());
+		retval.setProperty(MONITOR_TYPE , this.getMonitorType());
+		retval.setProperty(MONITOR_ARGS , this.getMonitorArgs());
+		retval.setProperty(SPAN_LENGTH , ""+this.getSpanLength());
+		retval.setProperty(BASE_LINE, ""+this.getBaseLine());
 		return retval;
 	}
 

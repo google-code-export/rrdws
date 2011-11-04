@@ -19,7 +19,7 @@ monitor-thresholds = "<monitor-threshold> [, <monitor-threshold> ...]"
  */
 public interface Threshold extends Serializable{
 	String CLASS = "class";
-	String BASE_LINE = "BaseLine";
+	String BASE_LINE = "baseLine";
 	String SPAN_LENGTH = "spanLength";
 	String MONITOR_ARGS = "monitorArgs";
 	String MONITOR_TYPE = "monitorType";
