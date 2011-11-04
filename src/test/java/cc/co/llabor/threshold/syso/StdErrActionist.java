@@ -25,6 +25,11 @@ public class StdErrActionist extends StdOutActionist{
 		super(rrdName, string2, tenMins);
 	}
 
+	public StdErrActionist(Properties props) {
+		super(props);
+		init(props); 
+	}
+
 	@Override
 	protected void act(long timestampSec) { 
 				System.err.println(actionArgs +"N"+(notificationCounter++)+"Z"+new Date(timestampSec*1000));

@@ -40,6 +40,7 @@ public class Log4JActionist extends AbstractActionist{
 	protected void init(Properties props) 	{ 
 		this.dsName = "speed";
 		this.action =  LOG4J;
+		this.monitorType =  "mvel";
 		this.actionArgs =  "hiLog4J @{}#{} {} ,{} "; // slf4j format-string
 	}		
 
