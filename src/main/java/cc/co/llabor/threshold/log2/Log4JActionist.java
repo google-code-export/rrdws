@@ -28,10 +28,12 @@ public class Log4JActionist extends AbstractActionist{
 
 	public Log4JActionist(String string, String string2, long l) {
 		super( string, string2, l);
+		init(null);
 	}
 
 	public Log4JActionist(Properties props) {
 		super(props);
+		init(props);
 	}
 
 	@Override

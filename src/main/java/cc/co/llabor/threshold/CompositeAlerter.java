@@ -1,8 +1,7 @@
 package cc.co.llabor.threshold;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.List; 
 
 import cc.co.llabor.threshold.rrd.Threshold;
 
@@ -16,9 +15,9 @@ import cc.co.llabor.threshold.rrd.Threshold;
  * Creation:  02.11.2011::22:50:09<br> 
  */
 public abstract class CompositeAlerter extends AbstractActionist /*implements List<Threshold>*/{
+	private static final String PREFIX_STRING = "l";
+
 	protected List<Threshold> chainOfAlerters = new ArrayList<Threshold>();
-
-
 	
 	/**
 	 * @author vipup
@@ -28,8 +27,16 @@ public abstract class CompositeAlerter extends AbstractActionist /*implements Li
 	protected void agregate(Threshold theT){
 		chainOfAlerters.add(theT);
 	}
-
 	@Override
+	public String getDsName() {
+		String retval=null;
+		for (Threshold theT:chainOfAlerters){
+			 retval = ((AbstractAlerter)theT).getDsName() ;
+			 break;
+		}		
+		return retval;
+	}	
+ 	@Override
 	public void performAction(long timestampSec) {
 		for (Threshold theT:chainOfAlerters){
 			theT.performAction(timestampSec);
@@ -74,13 +81,14 @@ public abstract class CompositeAlerter extends AbstractActionist /*implements Li
 		String retval="";
 		int i=0;
 		for (Threshold theT:chainOfAlerters){
-			retval += "#"+i+"={" ;
-			retval += theT.getMonitorType();
+			retval += PREFIX_STRING+i+"={" ;
+			retval += theT.getClass().getName();
 			retval += "};";
 			i++;
 		}		
 		return retval;
 	}
+ 
  
 	@Override
 	/**
@@ -90,9 +98,13 @@ public abstract class CompositeAlerter extends AbstractActionist /*implements Li
 		String retval="";
 		int i=0;
 		for (Threshold theT:chainOfAlerters){
-			retval += "#"+i+"={" ;
-			retval += theT.getMonitorArgs();
-			retval += "};";
+			String monitorArgs2 = theT.getMonitorArgs();
+			if (monitorArgs2 != null) {
+				retval += PREFIX_STRING + i + "={";
+
+				retval += monitorArgs2;
+				retval += "};";
+			}
 			i++;
 		}		
 		return retval;
@@ -107,9 +119,13 @@ public abstract class CompositeAlerter extends AbstractActionist /*implements Li
 		String retval="";
 		int i=0;
 		for (Threshold theT:chainOfAlerters){
-			retval += "#"+i+"={" ;
-			retval += theT.getAction();
-			retval += "};";
+			String action2 = theT.getAction();
+			if (action2 !=null){
+				retval += PREFIX_STRING+i+"={" ;
+				
+				retval += action2;
+				retval += "};";
+			}
 			i++;
 		}		
 		return retval;
@@ -123,13 +139,28 @@ public abstract class CompositeAlerter extends AbstractActionist /*implements Li
 		String retval="";
 		int i=0;
 		for (Threshold theT:chainOfAlerters){
-			retval += "#"+i+"={" ;
-			retval += theT.getActionArgs();
+
+			String actionArgs2 = theT.getActionArgs();
+			if (actionArgs2 !=null){
+			retval += PREFIX_STRING+i+"={" ;
+			retval += actionArgs2;
 			retval += "};";
+			}
+			
 			i++;
 		}		
 		return retval;
 	}	
+	
+	@Override
+	public double getBaseLine() {
+		double retval=Double.NaN; 
+		for (Threshold theT:chainOfAlerters){
+ 			retval = theT.getBaseLine();
+			break;
+		}		
+		return retval;  
+	}
 }
 
 

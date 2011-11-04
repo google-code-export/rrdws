@@ -32,7 +32,7 @@ public class TholdIniTest extends TestCase {
 	} 
 	/**
 	 * test chained notification for case like:
-	 * 	java.io.FileNotFoundException: Could not open C:\Users\xco5015\Documents\MyWorkspace\rrd\test.rrd [non existent]
+	 * 	java.io.FileNotFoundException: Could not open  ..\.\.\.\.\.\test.rrd [non existent]
 	 * @author vipup
 	 * @throws TholdException
 	 */
@@ -47,7 +47,7 @@ public class TholdIniTest extends TestCase {
 				//super.performAction( timestampSec);
 				localOut.append( timestampSec );
 				localOut.append( "," );
-				//System.out.println(localOut);
+				//System.out.p  0rintln(localOut);
 			}
 		};
 		ac.register(localNotificator); 
