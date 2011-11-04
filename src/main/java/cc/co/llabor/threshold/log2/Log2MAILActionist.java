@@ -22,21 +22,17 @@ public class Log2MAILActionist extends Log4JActionist{
 	 * @author vipup
 	 */
 	private static final long serialVersionUID = -4339988003907108789L;
+	
+	
 	private static final Logger log = LoggerFactory.getLogger("MAIL2ROOT");
 	
-	public Log2MAILActionist(Properties props){
-		super(props);
+	public Log2MAILActionist(String string, String string2, long l) {
+		super( string, string2, l);
 	}
-
-	public Log2MAILActionist(String rrdName, String monitorArgs,
-			long notificationInterval) {
-		super(rrdName, monitorArgs, notificationInterval);
-		 
-	}  
 
  	@Override
  	protected void act(long timestampSec) {
-				log.info( getActionArgs() , new Object[]{this ,  notificationCounter++, timestampSec, new Date(timestampSec*1000)});
+		log.info( getActionArgs() , new Object[]{this ,  notificationCounter++, timestampSec, new Date(timestampSec*1000)});
 	}
 
 }

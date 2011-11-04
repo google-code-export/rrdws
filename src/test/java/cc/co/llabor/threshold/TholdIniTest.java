@@ -42,7 +42,7 @@ public class TholdIniTest extends TestCase {
 		AlertCaptain ac = AlertCaptain.getInstance();
 		ac.setAsync(false);
 		Threshold localNotificator = 
-			new Log4JActionist( "test.rrd",  "( 1==1)" , 600){
+			new Log4JActionist( "test.rrd",  "( 1==1)" , (long) 600){
 			public void performAction(long timestampSec) {
 				//super.performAction( timestampSec);
 				localOut.append( timestampSec );
@@ -151,7 +151,7 @@ public class TholdIniTest extends TestCase {
 				"!("+
 				"dvalue > "+ (1) +" && "+ "dvalue < "+ (111) +""+
 				")" 
-				  , 600);
+				  ,(long) 600);
 		c.put("5.properties",stdOutNotificator.toProperties() );
 	     
 	}

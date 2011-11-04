@@ -22,26 +22,31 @@ public class Log4JActionist extends AbstractActionist{
 	/**
 	 * @author vipup
 	 */
-	private static final long serialVersionUID = 3434669922946134100L; 
+	private static final long serialVersionUID = 3434669922946134100L;
+	
 	public static final String LOG4J = "log4j"; 
-	{ 
+
+	public Log4JActionist(String string, String string2, long l) {
+		super( string, string2, l);
+	}
+
+	public Log4JActionist(Properties props) {
+		super(props);
+	}
+
+	@Override
+	protected void init(Properties props) 	{ 
 		this.dsName = "speed";
 		this.action =  LOG4J;
 		this.actionArgs =  "hiLog4J @{}#{} {} ,{} "; // slf4j format-string
-	}	
-	
-	public Log4JActionist(String rrdName, String monitorArgs, long notificationInterval) {
-		super(rrdName, monitorArgs, notificationInterval);		 
-	}
-	public Log4JActionist(Properties props){
-		super(props);
-	}   
- 
-	
+	}		
+
 	protected void act(long timestampSec) {
 		Logger logTmp = LoggerFactory.getLogger("D_LOG");
 		logTmp.error( getActionArgs() , new Object[]{this ,  ""+notificationCounter++, ""+timestampSec, new Date(timestampSec*1000)});
 	}
+
+
 
 
 }

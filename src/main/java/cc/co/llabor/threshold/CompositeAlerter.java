@@ -2,6 +2,7 @@ package cc.co.llabor.threshold;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import cc.co.llabor.threshold.rrd.Threshold;
 
@@ -14,8 +15,10 @@ import cc.co.llabor.threshold.rrd.Threshold;
  * 
  * Creation:  02.11.2011::22:50:09<br> 
  */
-public abstract class CompositeAlerter extends AbstractAlerter /*implements List<Threshold>*/{
+public abstract class CompositeAlerter extends AbstractActionist /*implements List<Threshold>*/{
 	protected List<Threshold> chainOfAlerters = new ArrayList<Threshold>();
+
+
 	
 	/**
 	 * @author vipup
