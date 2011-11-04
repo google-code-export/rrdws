@@ -17,11 +17,17 @@ public class StdOutActionist extends AbstractActionist{
 	public StdOutActionist(String string, String string2, long i) {
 		super(string, string2, i);
 	}
+	public StdOutActionist(Properties props) {
+		super(props);
+		init(props); 
+	}	
 
 	@Override
 	protected void init(Properties props) 	{  
 		this.dsName = "speed";
 		this.action =  "syso";
+
+		this.monitorType =  "mvel";
 		this.actionArgs =  "HELLO STDOUT"; 
 	}		
  

@@ -30,7 +30,12 @@ public class Log2MAILActionist extends Log4JActionist{
 		super( string, string2, l);
 	}
 
- 	@Override
+ 	public Log2MAILActionist(Properties props) {
+		super(props);
+		init(props);
+	}
+
+	@Override
  	protected void act(long timestampSec) {
 		log.info( getActionArgs() , new Object[]{this ,  notificationCounter++, timestampSec, new Date(timestampSec*1000)});
 	}

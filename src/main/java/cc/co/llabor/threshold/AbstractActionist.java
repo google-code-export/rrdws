@@ -188,7 +188,8 @@ public abstract class AbstractActionist extends AbstractAlerter {
 			}
 			return retval;				
 		}else{
-			throw new RuntimeException("unknown monitorType:"+monitorType);
+			if (1==2)throw new RuntimeException("unknown monitorType:"+monitorType);
+			else return false;
 		}
 	} 
 }
