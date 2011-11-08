@@ -101,7 +101,7 @@ public abstract class CompositeAlerter extends AbstractActionist /*implements Li
 	 */
 	@Override
 	public String getMonitorType() {
-		String retval="";
+		String retval=null;
 		int i=0;
 		for (Threshold theT:chainOfAlerters){
 			retval += PREFIX_STRING+i+"={" ;
@@ -118,7 +118,7 @@ public abstract class CompositeAlerter extends AbstractActionist /*implements Li
 	 * ...and _Average:1Hour _?
 	 */
 	public String getMonitorArgs() {
-		String retval="";
+		String retval=null;
 		int i=0;
 		for (Threshold theT:chainOfAlerters){
 			String monitorArgs2 = theT.getMonitorArgs();
@@ -139,7 +139,7 @@ public abstract class CompositeAlerter extends AbstractActionist /*implements Li
 	 * shell://kill
 	 */
 	public String getAction() {
-		String retval="";
+		String retval=null;
 		int i=0;
 		for (Threshold theT:chainOfAlerters){
 			String action2 = theT.getAction();
@@ -159,7 +159,7 @@ public abstract class CompositeAlerter extends AbstractActionist /*implements Li
 	 * pid
 	 */
 	public String getActionArgs() {
-		String retval="";
+		String retval=null;
 		int i=0;
 		for (Threshold theT:chainOfAlerters){
 
