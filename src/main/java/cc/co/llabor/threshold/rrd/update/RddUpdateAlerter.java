@@ -42,10 +42,7 @@ public abstract class RddUpdateAlerter extends AbstractActionist {
 			return rrdDb;
 	}
 	
-	@Override
-	public String getDsName() {
-		return "speed";
-	}	
+ 	
 
 	public void setRrdDb(RrdDb rrdDb) {
 		this.rrdDb = rrdDb;
@@ -75,6 +72,11 @@ public abstract class RddUpdateAlerter extends AbstractActionist {
 
 	}
 
+	
+	public RddUpdateAlerter(Properties props){
+		super(props);
+	}
+	
 	public RddUpdateAlerter(String rrdName, double baseLine, long activationTimeoutInSeconds) {
 		this.rrdName = rrdName;
 		this.monitorType = "mvel";
@@ -93,10 +95,7 @@ public abstract class RddUpdateAlerter extends AbstractActionist {
 	
 	@Override
 	protected void init(Properties props) {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 04.11.2011");
-		else {
-		}
+		// do nothing
 	}
 	
  

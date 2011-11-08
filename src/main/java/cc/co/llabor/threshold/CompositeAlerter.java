@@ -2,6 +2,7 @@ package cc.co.llabor.threshold;
 
 import java.util.ArrayList;
 import java.util.List; 
+import java.util.Properties;
 
 import cc.co.llabor.threshold.rrd.Threshold;
 
@@ -16,8 +17,30 @@ import cc.co.llabor.threshold.rrd.Threshold;
  */
 public abstract class CompositeAlerter extends AbstractActionist /*implements List<Threshold>*/{
 	private static final String PREFIX_STRING = "l";
+	
 
+	protected String aList[]=null;
 	protected List<Threshold> chainOfAlerters = new ArrayList<Threshold>();
+
+	protected void init (Properties props){
+		try{
+			this.action =props.getProperty(Threshold.ACTION ) ;
+		}catch(Exception e){}try{
+			this.actionArgs =props.getProperty(Threshold.ACTION_ARGS ) ;
+		}catch(Exception e){}try{
+			this.rrdName =props.getProperty(Threshold.DATASOURCE ) ;
+		}catch(Exception e){}try{
+			this.dsName =props.getProperty(Threshold.DS_NAME ) ;
+		}catch(Exception e){}try{
+			this.monitorType =props.getProperty(Threshold.MONITOR_TYPE ) ;
+		}catch(Exception e){}try{
+			this.monitorArgs =props.getProperty(Threshold.MONITOR_ARGS ) ;
+		}catch(Exception e){}try{
+			this.activationTimeoutInSeconds = Integer.parseInt( props.getProperty(Threshold.SPAN_LENGTH  ));
+		}catch(Exception e){}try{
+			this.baseLine = Double.parseDouble(  props.getProperty(Threshold.BASE_LINE ));
+		}catch(Exception e){}
+	}
 	
 	/**
 	 * @author vipup

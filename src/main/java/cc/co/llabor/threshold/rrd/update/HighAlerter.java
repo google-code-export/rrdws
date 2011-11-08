@@ -1,5 +1,7 @@
 package cc.co.llabor.threshold.rrd.update;
  
+import java.util.Properties;
+
 import cc.co.llabor.threshold.rrd.Threshold;
 
 /** 
@@ -17,6 +19,12 @@ public class HighAlerter extends RddUpdateAlerter implements Threshold {
 	 * @author vipup
 	 */
 	private static final long serialVersionUID = 1424196870196989214L;
+	
+	
+	public HighAlerter(Properties props){
+		super(props);
+	}
+	
 	public HighAlerter(String rrdName, double baseLine,
 			long activationTimeoutInSeconds) {
 		super(rrdName, baseLine, activationTimeoutInSeconds);
