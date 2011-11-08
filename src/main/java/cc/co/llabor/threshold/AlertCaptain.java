@@ -17,6 +17,8 @@ import javax.management.Notification;
 import javax.management.NotificationFilter;
 import javax.management.NotificationListener;
 
+import net.sf.jsr107cache.Cache;
+
 import org.jrobin.core.Datasource;
 import org.jrobin.core.RrdDb;
 import org.jrobin.core.RrdDbPool;
@@ -25,8 +27,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ws.rrd.csv.RrdKeeper;
+import cc.co.llabor.cache.Manager;
 import cc.co.llabor.features.Repo;
 import cc.co.llabor.threshold.rrd.Threshold;
+import cc.co.llabor.threshold.syso.StdOutActionist;
 
 /**
  * <b>Description:TODO</b>
@@ -116,8 +120,7 @@ public class AlertCaptain implements Runnable, NotificationListener {
 		this.queue = q;
 		log.info(Repo.getBanner("AlertCaptain"));
 	}
-	public void register(Threshold e) {
-		
+	public void register(Threshold e) { 
 		ToDo.add(e);
 		NotificationListener listener = this;
 		NotificationFilter filter = null;
@@ -125,6 +128,7 @@ public class AlertCaptain implements Runnable, NotificationListener {
 		RrdKeeper.getInstance().addNotificationListener(listener , filter , handback );
 		syncUC();
 	}
+	
 	public void tick() {
 		long timestamp = System.currentTimeMillis();
 		this.tick(timestamp / 1000);
@@ -289,7 +293,28 @@ public class AlertCaptain implements Runnable, NotificationListener {
 		
 		return retval;
 	}
-	public Threshold toThreshold(Object thTmp) throws TholdException {
+	
+	public static final String cacheNS = AlertCaptain.class.getName();
+	
+	public Threshold restoreByName(String namePar) throws TholdException{
+		Cache c = Manager.getCache(cacheNS);
+ 		Object storedProps = c.get(namePar+".properties");
+		Threshold outTmp = toThreshold(storedProps) ;
+		return outTmp;
+	}
+	
+	public static void storeToName(String namePar, Threshold toStorePar) throws TholdException{ 
+		Properties properties = toStorePar.toProperties();
+		String fnTmp = namePar+".properties";
+		storeToName(fnTmp, properties); 		
+	}
+	public static void storeToName(String namePar, Properties propsPar) throws TholdException{
+		Cache c = Manager.getCache(cacheNS);
+ 		String fnTmp = namePar.endsWith(".properties")?namePar:namePar+".properties";
+		c.put(fnTmp, propsPar); 		
+	}	
+	
+	public static Threshold toThreshold(Object thTmp) throws TholdException {
 		try {
 			if (thTmp instanceof Properties) {
 				Properties p = (Properties) thTmp;
@@ -297,7 +322,8 @@ public class AlertCaptain implements Runnable, NotificationListener {
 				Class cl = Class.forName(clazz);
 
 				Class[] parameterTypes = new Class[]{Properties.class};
-				Constructor<Threshold>  constructor = cl.getDeclaredConstructor( parameterTypes );
+				Constructor<Threshold>  constructor = cl.getConstructor( parameterTypes );//instance.register( theNext );
+				
 				Threshold retval = (Threshold) constructor.newInstance(p );
 				return retval;
 			} else {

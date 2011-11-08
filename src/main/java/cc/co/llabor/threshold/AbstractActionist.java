@@ -25,28 +25,26 @@ public abstract class AbstractActionist extends AbstractAlerter {
 	 * @author vipup
 	 */
 	private static final long serialVersionUID = -1411482451587802533L;
-	protected String dsName = null;
+	protected void setDsName(String dsName) {
+		this.dsName = dsName;
+	}
+
+	protected String dsName = "speed";
 	protected String actionArgs = null;
 	protected volatile long lastNotificationTimestamp = -1;
 	protected volatile int notificationCounter = 0;
 	protected long notificationIntervalInSecs = 10 *60; // 10min ..1000 *
 	protected String monitorArgs = null;
 	protected String action = null;
-	protected String monitorType = null;
+	protected String monitorType = "mvel";
 	
 	protected AbstractActionist( ){
-		monitorType = "mvel";
+//		monitorType = "mvel";
+//		init(new Properties());
 	}
 	
 	public AbstractActionist(Properties props){
-		this.action =props.getProperty(Threshold.ACTION ) ;
-		this.actionArgs =props.getProperty(Threshold.ACTION_ARGS ) ;
-		this.rrdName =props.getProperty(Threshold.DATASOURCE ) ;
-		this.dsName =props.getProperty(Threshold.DS_NAME ) ;
-		this.monitorType =props.getProperty(Threshold.MONITOR_TYPE ) ;
-		this.monitorArgs =props.getProperty(Threshold.MONITOR_ARGS ) ;
-		this.activationTimeoutInSeconds = Integer.parseInt( props.getProperty(Threshold.SPAN_LENGTH  ));
-		this.baseLine = Double.parseDouble(  props.getProperty(Threshold.BASE_LINE )); 		
+		init(props);
 	}	 
 	
 	public AbstractActionist(String rrdName, String monitorArgs, 	int notificationInterval) {
@@ -56,6 +54,7 @@ public abstract class AbstractActionist extends AbstractAlerter {
 		this.rrdName = 	rrdName;	//			RrdDb rrd = RrdDbPool.getInstance().requestRrdDb(rrdName ); 
 		this.monitorArgs  =  monitorArgs ;
 		this.notificationIntervalInSecs = notificationInterval;
+		this.setDsName  ("speed");
 		Properties props = new Properties();
 		props.setProperty(Threshold.DATASOURCE , rrdName);
 		props.setProperty(Threshold.MONITOR_ARGS , monitorArgs);
