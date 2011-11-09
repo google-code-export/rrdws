@@ -68,9 +68,7 @@ public class RedAndLogActionist extends CompositeAlerter {
 	}
 	
 	public static String dump2Cache(String rrdName){
-		String retval = "TheRED";
-		
-		AlertCaptain ac = AlertCaptain .getInstance();
+		String retval = rrdName; 
 		
 		//props4RRDWRITER
 		String n1 = storeRRDWRITER( rrdName );
@@ -85,7 +83,7 @@ public class RedAndLogActionist extends CompositeAlerter {
 		props.put( "childs", n1+","+n2) ;
 		props.put( Threshold.CLASS, RedAndLogActionist.class.getName()) ;
  		try {
- 			ac.storeToName(retval, props);
+ 			AlertCaptain.storeToName(retval, props);
 		} catch (TholdException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -181,6 +179,7 @@ public class RedAndLogActionist extends CompositeAlerter {
 				Threshold theNext;
 				try {
 					theNext = AlertCaptain.restoreByName(namePar);
+					this.rrdName = this.rrdName ==null? theNext.getDatasource():this.rrdName;
 					this.chainOfAlerters.add(theNext);
 					AlertCaptain instance = AlertCaptain.getInstance();
 					instance.register( theNext );
