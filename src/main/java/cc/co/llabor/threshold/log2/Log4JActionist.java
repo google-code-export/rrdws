@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cc.co.llabor.threshold.AbstractActionist;
+import cc.co.llabor.threshold.rrd.Threshold;
 
 /** 
  * <b>Do almost the same as StdOutActionist, except the OUT.</b>
@@ -38,6 +39,17 @@ public class Log4JActionist extends AbstractActionist{
 
 	@Override
 	protected void init(Properties props) 	{ 
+		//super.init(props);
+		try{
+			this.rrdName = props.getProperty(Threshold.DATASOURCE);
+			System.out.println("l4j::"+rrdName);	
+		}catch (java.lang.NullPointerException e) {
+			// TODO: handle exception
+			//e.printStackTrace();
+		}catch (Exception e) {
+			// TODO: handle exception
+			//e.printStackTrace();
+		}
 		this.dsName = "speed";
 		this.action =  LOG4J;
 		this.monitorType =  "mvel";

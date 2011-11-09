@@ -11,6 +11,7 @@ import org.jrobin.core.Sample;
 
 import cc.co.llabor.threshold.AbstractActionist;
 import cc.co.llabor.threshold.AbstractAlerter;
+import cc.co.llabor.threshold.rrd.Threshold;
 
 /**
  * <b>Hardcoded RRD-linked Alerter, which will controll the RRD-DB directly
@@ -82,6 +83,12 @@ public abstract class RddUpdateAlerter extends AbstractActionist {
 		this.monitorType = "mvel";
 		this.baseLine = baseLine;
 		this.activationTimeoutInSeconds = activationTimeoutInSeconds;
+		initDB();
+	}
+
+
+
+	public void initDB() {
 		try {
 			init(this.rrdName + ".Thold.RRD");
 		} catch (RrdException e) {
@@ -95,10 +102,42 @@ public abstract class RddUpdateAlerter extends AbstractActionist {
 	
 	@Override
 	protected void init(Properties props) {
-		// do nothing
+		try{
+			this.action =props.getProperty(Threshold.ACTION ) ;
+		}catch(Exception e){}try{
+			this.actionArgs =props.getProperty(Threshold.ACTION_ARGS ) ;
+		}catch(Exception e){}try{
+			this.rrdName =props.getProperty(Threshold.DATASOURCE ) ;
+		}catch(Exception e){}try{
+			this.dsName =props.getProperty(Threshold.DS_NAME ) ;
+		}catch(Exception e){}try{
+			this.monitorType =props.getProperty(Threshold.MONITOR_TYPE ) ;
+		}catch(Exception e){}try{
+			this.monitorArgs =props.getProperty(Threshold.MONITOR_ARGS ) ;
+		}catch(Exception e){}try{
+			this.activationTimeoutInSeconds = Integer.parseInt( props.getProperty(Threshold.SPAN_LENGTH  ));
+		}catch(Exception e){}try{
+			this.baseLine = Double.parseDouble(  props.getProperty(Threshold.BASE_LINE ));
+		}catch(Exception e){}
+		
+		initDB();
 	}
 	
  
+ 	@Override
+	public void performAction(long timestampSec) { 
+		if (inIncidentTime()>=0)
+		if (timestampSec >this.lastNotificationTimestamp)	
+		{
+			this.lastNotificationTimestamp = this.notificationIntervalInSecs +timestampSec ;
+			act(timestampSec);
+		}else{
+			// !do the same for update rrdDB
+			this.lastNotificationTimestamp = this.notificationIntervalInSecs +timestampSec ;
+			act(timestampSec);
+		}
+	}	
+	
 	@Override
 	protected void act(long timestampSec) {
 		try {
@@ -106,25 +145,25 @@ public abstract class RddUpdateAlerter extends AbstractActionist {
 					+ this.getSpanLength();
 			boolean isActivated = timestampSec > activatingTimepoint;
 			int lowLevel = isActivated
-					? ACTIVE_ALERT_VALUE
-					: COUNTDOWN_TO_DEACTIVE_VALUE;
+					? ACTIVE_VALUE
+					: PASSIVE_VALUE ;
 			String valTmp = ""
 					+ (this.incidentTime == -1 ? lowLevel : lowLevel);
 			this.sample.setAndUpdate("" + (timestampSec) + ":" + valTmp);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			// e.printStackTrace();
+			  e.printStackTrace();
 		} catch (RrdException e) {
 			// TODO Auto-generated catch block
-			// e.printStackTrace();
+			  e.printStackTrace();
 		}
 	}
 
+ 
+
+	public static int ACTIVE_VALUE = 100;
+	public static int STAGE_VALUE = 255;
 	public static int PASSIVE_VALUE = 0;
-	public static int ACTIVE_ALERT_VALUE = 255;
-	public static int COUNTDOWN_VALUE = -256;
-	public static int COUNTDOWN_TO_DEACTIVE_VALUE = 100;
-	
 	
 	@Override
 	public void performSleep(long timestamp) {
@@ -132,7 +171,7 @@ public abstract class RddUpdateAlerter extends AbstractActionist {
 			long activatingTimepoint = this.inIncidentTime()
 					+ this.getSpanLength();
 			boolean isActivated = timestamp > activatingTimepoint;
-			int lowLevel = isActivated ? PASSIVE_VALUE : COUNTDOWN_VALUE;
+			int lowLevel = isActivated ? PASSIVE_VALUE : STAGE_VALUE;
 			String valTmp = ""
 					+ (this.incidentTime == -1 ? lowLevel : lowLevel);
 			this.sample.setAndUpdate("" + (timestamp) + ":" + valTmp);
@@ -147,6 +186,7 @@ public abstract class RddUpdateAlerter extends AbstractActionist {
 
 	@Override
 	public void stop() { 
+		if (rrdDb!=null)
 		try {
 			rrdDb.close();
 			

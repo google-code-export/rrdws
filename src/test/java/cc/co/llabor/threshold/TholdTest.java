@@ -124,7 +124,7 @@ public class TholdTest extends TestCase {
 		Sample sample = rrdDb.createSample();
 		long lastTimeTmp = -1;
 		double lastSpeed = 0;
-		for (int secTmp = 1; secTmp < 60 * 60 * 24; secTmp += 1) { // 1 Day
+		for (int secTmp = 1; secTmp < 60 * 60 * 24; secTmp += 11) { // 1 Day
 			lastTimeTmp = startTime + secTmp;
 			double d = MAX_POSSIBLE_IQ * Math.sin((.0001356 * secTmp));
 			lastSpeed = d * Math.sin(.000531 * secTmp);
@@ -155,7 +155,7 @@ public class TholdTest extends TestCase {
 
 		// .stat.rrd
 		graphDef.datasource("myspeedAlert", getTholdName(), "speed", "AVERAGE");
-		graphDef.line("myspeedAlert", new Color(0, 0xFF, 0), "recruit IT!", 4);
+		graphDef.line("myspeedAlert", new Color(0, 0x5F, 0x5F), "recruit IT!", 2);
 
 		RrdGraph graph = new RrdGraph(graphDef);
 		// graph.saveAsGIF("speed.gif");

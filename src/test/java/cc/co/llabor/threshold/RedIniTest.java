@@ -188,5 +188,6 @@ public class RedIniTest extends TestCase {
 						
 			// cmp
 			assertEquals(""+inTmp, ""+outTmp);
+			assertEquals( inTmp,  outTmp);
  		}
 }
