@@ -16,12 +16,55 @@ import cc.co.llabor.threshold.rrd.Threshold;
  * Creation:  02.11.2011::22:50:09<br> 
  */
 public abstract class CompositeAlerter extends AbstractActionist /*implements List<Threshold>*/{
-	private static final String PREFIX_STRING = "l";
+	private static final String PREFIX_STRING = ".";
 	
 
 	protected String aList[]=null;
 	protected List<Threshold> chainOfAlerters = new ArrayList<Threshold>();
-
+	@Override
+	/**
+	 * will check only the first
+	 */
+	protected boolean checkIncident(double val, long timestamp) {
+		boolean retval=false;
+		for (Threshold theT:chainOfAlerters){
+			 retval = ((AbstractAlerter)theT).checkIncident(val,   timestamp);
+			 break;
+		}		
+		return retval;
+	}	
+	
+	/**
+	 * the compisite-alerter check only the condition of FIRST, and perform action of ALL
+	 */
+	@Override
+	public String toString(){
+		String dsName = this.getDsName();
+		String datasource2 = this.getDatasource();
+		String monitorType = this.chainOfAlerters.get(0).getMonitorType();
+		String monitorArgs = this.chainOfAlerters.get(0).getMonitorArgs();
+		monitorArgs = monitorArgs==null?"":monitorArgs;
+		monitorArgs = monitorArgs.replace("${baseLine}", ""+this.chainOfAlerters.get(0).getBaseLine());
+		
+		String action2 = "";//this.getAction();// this.chainOfAlerters.get(chainOfAlerters.size()-1).getAction();
+		for (Threshold thTmp:this.chainOfAlerters){
+			action2 +=thTmp.getAction();
+			action2 = action2 +" ("+thTmp.getActionArgs()+")";
+			action2+=";";
+		}
+		String actionArgs = "";//this.getActionArgs();//this.chainOfAlerters.get(chainOfAlerters.size()-1).getActionArgs();
+		return dsName + ":" + 
+				datasource2 + 
+				"@" + 
+				monitorType + 
+				"://" + 
+				monitorArgs + 
+				"?" + 
+				action2 + 
+				" ( " + 
+				actionArgs + 
+				" )";
+	}	
 	protected void init (Properties props){
 		try{
 			this.action =props.getProperty(Threshold.ACTION ) ;
@@ -47,6 +90,9 @@ public abstract class CompositeAlerter extends AbstractActionist /*implements Li
 	 */
 	private static final long serialVersionUID = -3139647543813110512L;
 
+	// mark properties with non-chained behavior
+	private static final boolean FIRSTONLY = true;
+
 	protected void agregate(Threshold theT){
 		chainOfAlerters.add(theT);
 	}
@@ -55,7 +101,7 @@ public abstract class CompositeAlerter extends AbstractActionist /*implements Li
 		String retval=null;
 		for (Threshold theT:chainOfAlerters){
 			 retval = ((AbstractAlerter)theT).getDsName() ;
-			 break;
+			 if (FIRSTONLY)break;
 		}		
 		return retval;
 	}	
@@ -64,7 +110,7 @@ public abstract class CompositeAlerter extends AbstractActionist /*implements Li
 		String retval=null;
 		for (Threshold theT:chainOfAlerters){
 			 retval = ((AbstractAlerter)theT).getDatasource() ;
-			 break;
+			 if (FIRSTONLY)break;
 		}		
 		return retval;
 	}	
@@ -91,18 +137,7 @@ public abstract class CompositeAlerter extends AbstractActionist /*implements Li
 	
 	
 
-	@Override
-	/**
-	 * will check only the first
-	 */
-	protected boolean checkIncident(double val, long timestamp) {
-		boolean retval=false;
-		for (Threshold theT:chainOfAlerters){
-			 retval = ((AbstractAlerter)theT).checkIncident(val,   timestamp);
-			 break;
-		}		
-		return retval;
-	}	
+
 	
 
 	/**
@@ -115,9 +150,10 @@ public abstract class CompositeAlerter extends AbstractActionist /*implements Li
 		for (Threshold theT:chainOfAlerters){
 			retval = retval==null?"":retval;
 			retval += PREFIX_STRING+i+"={" ;
-			retval += theT.getClass().getName();
+			retval += theT.getMonitorType();
 			retval += "};";
 			i++;
+			if (FIRSTONLY)break;
 		}		
 		return retval;
 	}
@@ -135,11 +171,11 @@ public abstract class CompositeAlerter extends AbstractActionist /*implements Li
 			String monitorArgs2 = theT.getMonitorArgs();
 			if (monitorArgs2 != null) {
 				retval += PREFIX_STRING + i + "={";
-
 				retval += monitorArgs2;
 				retval += "};";
 			}
 			i++;
+			if (FIRSTONLY)break;
 		}		
 		return retval;
 	}
@@ -156,8 +192,7 @@ public abstract class CompositeAlerter extends AbstractActionist /*implements Li
 			retval = retval==null?"":retval;
 			String action2 = theT.getAction();
 			if (action2 !=null){
-				retval += PREFIX_STRING+i+"={" ;
-				
+				retval += PREFIX_STRING+i+"={" ; 
 				retval += action2;
 				retval += "};";
 			}
@@ -180,8 +215,7 @@ public abstract class CompositeAlerter extends AbstractActionist /*implements Li
 			retval += PREFIX_STRING+i+"={" ;
 			retval += actionArgs2;
 			retval += "};";
-			}
-			
+			} 
 			i++;
 		}		
 		return retval;
@@ -196,6 +230,20 @@ public abstract class CompositeAlerter extends AbstractActionist /*implements Li
 		}		
 		return retval;  
 	}
+	@Override
+	public boolean equals(Object obj) { 
+		if (obj!=null && obj instanceof CompositeAlerter){
+			CompositeAlerter o = (CompositeAlerter)obj;
+			return
+			o.rrdName == this.rrdName  &&
+			o.getClass().getName() == this.getClass().getName()   &&
+			o.aList.length == this.aList.length;				
+		}
+		else {
+			return super.equals(obj);
+		}
+	}
+	
 	
 	
 //	@Override

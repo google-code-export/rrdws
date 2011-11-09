@@ -60,8 +60,7 @@ public class RedAndLogActionist extends CompositeAlerter {
 		String value ="";
 		for (String child:this.aList){
 			value = value.length() ==0?"":value + ",";;
-			value += child;
-			
+			value += child; 
 		}
 		//this.aList =  props.getProperty("childs").split(",");
 		retval .put("childs", value );
@@ -171,72 +170,33 @@ public class RedAndLogActionist extends CompositeAlerter {
 			e.printStackTrace();
 		}
 		return retval;
-	}
-
-	void _nevercalledM(){
-		Properties props = new Properties();
-		this.action =props.getProperty(Threshold.ACTION ) ;
-		this.actionArgs =props.getProperty(Threshold.ACTION_ARGS ) ;
-		this.rrdName =props.getProperty(Threshold.DATASOURCE ) ;
-		this.dsName =props.getProperty(Threshold.DS_NAME ) ;
-		this.monitorType =props.getProperty(Threshold.MONITOR_TYPE ) ;
-		this.monitorArgs =props.getProperty(Threshold.MONITOR_ARGS ) ;
-		this.activationTimeoutInSeconds = Integer.parseInt( props.getProperty(Threshold.SPAN_LENGTH  ));
-		this.baseLine = Double.parseDouble(  props.getProperty(Threshold.BASE_LINE ));		 
-	}
-	
+	} 
 	protected void init(Properties props) {
 		System.out.println(props);
 		super.init(props);
 		try{
 			this.aList =  props.getProperty("childs").split(",");
 			for (String namePar:this.aList){
-				AlertCaptain instance = AlertCaptain.getInstance();
+				
 				Threshold theNext;
 				try {
-					theNext = instance.restoreByName(namePar);
+					theNext = AlertCaptain.restoreByName(namePar);
 					this.chainOfAlerters.add(theNext);
+					AlertCaptain instance = AlertCaptain.getInstance();
 					instance.register( theNext );
 				} catch (TholdException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
-				
+				} 
 			}
 		}catch(Exception e){}
 	}
-	
-	protected void _init(Properties props) {
-		this.rrdName = props.getProperty(Threshold.DATASOURCE , "test.rrd");
-		this.activationTimeoutInSeconds = Integer.parseInt( props.getProperty(Threshold.SPAN_LENGTH , "600" ));
-		this.dsName =props.getProperty(Threshold.DS_NAME , "speed") ;
-		// #1
-		double hiLimit = 130; // should be smart enough ;)
-		long tenSecondds = 11 ; // 10 sec is maximal time to start to do
-									// something...
-		Threshold rrdWriter = null;
-		int caseId = -1; 
-		switch (caseId ){
-			// TODO 
-			default:
-				rrdWriter = new HighAlerter(rrdName, hiLimit, tenSecondds);
-		} 
-		this.agregate(rrdWriter);
-		// #2 
-		Threshold stdOutNotificator = new Log4JActionist(props);
-		this.agregate(stdOutNotificator); 
-	} 
-	
-	@Override
-	public String getDsName() {
-		String retval=null;
-		for (Threshold theT:chainOfAlerters){
-			 retval =  theT .getDsName( );// will check only the first
-			 break;
-		}		
-		return retval;
-	}
-
+	 
+ 
+	/** 
+	 * this method wll never called - the only chained actions will be activated
+	 * @see CompositeAlerter
+	 */
 	@Override
 	protected void act(long timestampSec) {
 		// TODO Auto-generated method stub
@@ -244,6 +204,8 @@ public class RedAndLogActionist extends CompositeAlerter {
 		else {
 		}
 	}  
+	
+
 }
 
 

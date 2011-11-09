@@ -56,7 +56,10 @@ public class StdOutActionist extends AbstractActionist{
  
  	@Override
 	protected void act(long timestampSec) {
-				System.out.println(actionArgs +"N"+(notificationCounter++)+"Z"+new Date(timestampSec*1000));
+				System.out.println(actionArgs +"N" +"Z"+new Date(timestampSec*1000));
+				//getNotificationCounter();
+				beep();
+				
 	}
 }
 

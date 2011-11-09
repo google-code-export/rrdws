@@ -31,12 +31,28 @@ public abstract class AbstractActionist extends AbstractAlerter {
 
 	protected String dsName = "speed";
 	protected String actionArgs = null;
-	protected volatile long lastNotificationTimestamp = -1;
-	protected volatile int notificationCounter = 0;
-	protected long notificationIntervalInSecs = 10 *60; // 10min ..1000 *
 	protected String monitorArgs = null;
 	protected String action = null;
 	protected String monitorType = "mvel";
+
+	private volatile long lastNotificationTimestamp = -1;
+	private volatile int notificationCounter = 0;
+	private volatile long notificationIntervalInSecs = 10 *60; // 10min ..1000 *
+	
+	/**
+	 * 
+	 * TODO - remove
+	 * 
+	 * 
+	 * 
+	 * @author vipup
+	 * 
+	 * @deprecated
+	 * 
+	 */
+	public final   void beep(){
+		notificationCounter++;
+	}
 	
 	protected AbstractActionist( ){
 //		monitorType = "mvel";
@@ -121,21 +137,7 @@ public abstract class AbstractActionist extends AbstractAlerter {
 	@Override
 	public void performSleep(long timestamp) { 
 		// do nothing
-	}
-	
-	@Override
-	public void reactIncidentIfAny(long timestamp) {
-		long inIncidentTime = this.inIncidentTime();
-		long spanLength = this.getSpanLength();
-
-		if (inIncidentTime >= 0 && (inIncidentTime + spanLength) < timestamp) {
-			this.performAction(timestamp);
-		} else {
-			this.performSleep(timestamp);
-		}
-	}
-
-
+	} 
 
  	@Override
 	public void performAction(long timestampSec) { 

@@ -121,67 +121,38 @@ public abstract class RddUpdateAlerter extends AbstractActionist {
 		}catch(Exception e){}
 		
 		initDB();
-	}
-	
- 
- 	@Override
-	public void performAction(long timestampSec) { 
-		if (inIncidentTime()>=0)
-		if (timestampSec >this.lastNotificationTimestamp)	
-		{
-			this.lastNotificationTimestamp = this.notificationIntervalInSecs +timestampSec ;
-			act(timestampSec);
-		}else{
-			// !do the same for update rrdDB
-			this.lastNotificationTimestamp = this.notificationIntervalInSecs +timestampSec ;
-			act(timestampSec);
-		}
-	}	
-	
+	} 
 	@Override
 	protected void act(long timestampSec) {
-		try {
-			long activatingTimepoint = this.inIncidentTime()
-					+ this.getSpanLength();
-			boolean isActivated = timestampSec > activatingTimepoint;
-			int lowLevel = isActivated
-					? ACTIVE_VALUE
-					: PASSIVE_VALUE ;
-			String valTmp = ""
-					+ (this.incidentTime == -1 ? lowLevel : lowLevel);
+		try { 
+			int lowLevel = isInIncident(timestampSec)
+					? (ACTIVE_VALUE)
+					: (this.inIncidentTime()>0?STAGE_VALUE:PASSIVE_VALUE) ;
+			
+			String valTmp = ""  +lowLevel;
 			this.sample.setAndUpdate("" + (timestampSec) + ":" + valTmp);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			  e.printStackTrace();
+			//  e.printStackTrace();
 		} catch (RrdException e) {
 			// TODO Auto-generated catch block
-			  e.printStackTrace();
+			//  e.printStackTrace();
 		}
-	}
-
- 
-
+	} 
 	public static int ACTIVE_VALUE = 100;
 	public static int STAGE_VALUE = 255;
 	public static int PASSIVE_VALUE = 0;
-	
+	/**
+	 * fully override the super.perform to avoid the parent-behavior 
+	 * for acting with only "inIncident" state
+	 */
+ 	@Override
+	public void performAction(long timestampSec) {  
+			act(timestampSec); 
+	}		
 	@Override
-	public void performSleep(long timestamp) {
-		try {
-			long activatingTimepoint = this.inIncidentTime()
-					+ this.getSpanLength();
-			boolean isActivated = timestamp > activatingTimepoint;
-			int lowLevel = isActivated ? PASSIVE_VALUE : STAGE_VALUE;
-			String valTmp = ""
-					+ (this.incidentTime == -1 ? lowLevel : lowLevel);
-			this.sample.setAndUpdate("" + (timestamp) + ":" + valTmp);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		} catch (RrdException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
- 		}
+	public void performSleep(long timestampSec) {
+		act( timestampSec) ;
 	}
 
 	@Override
@@ -199,3 +170,4 @@ public abstract class RddUpdateAlerter extends AbstractActionist {
 
 
 }
+

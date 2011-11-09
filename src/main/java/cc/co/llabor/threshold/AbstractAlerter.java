@@ -71,8 +71,17 @@ public abstract class AbstractAlerter implements Threshold {
 		String monitorArgs = this.getMonitorArgs();
 		String action2 = this.getAction();
 		String actionArgs = this.getActionArgs();
-		return dsName + ":" + datasource2 + "@" + monitorType + "://"
-				+ monitorArgs + "?" + action2 + " ( " + actionArgs + " )";
+		return dsName + ":" + 
+				datasource2 + 
+				"@" + 
+				monitorType + 
+				"://" + 
+				monitorArgs + 
+				"?" + 
+				action2 + 
+				" ( " + 
+				actionArgs + 
+				" )";
 	}
 	
 	
@@ -132,17 +141,29 @@ public abstract class AbstractAlerter implements Threshold {
 	/**
 	 * have to implement alert-reaction for incident-state
 	 * @author vipup
-	 * @param timestamp
+	 * @param timestampSec
 	 */ 
-	public void reactIncidentIfAny(long timestamp) {
+	public final void reactIncidentIfAny(long timestampSec) {
+		if (isInIncident(timestampSec )) {			
+			this.performAction(timestampSec);
+		} else {
+			this.performSleep(timestampSec);
+		}
+	}
+
+	/**
+	 * basic logic for triggering Alerter-state 
+	 * 
+	 * @author vipup
+	 * @param timestampSec
+	 * @return
+	 */
+	public final boolean isInIncident(long timestampSec ) {
 		long inIncidentTime = this.inIncidentTime();
 		long spanLength = this.getSpanLength();
-
-		if (inIncidentTime >= 0 && (inIncidentTime + spanLength) < timestamp) {
-			this.performAction(timestamp);
-		} else {
-			this.performSleep(timestamp);
-		}
+		return 
+			inIncidentTime >= 0 && 
+			timestampSec > (inIncidentTime + spanLength) ;
 	}
 
 	@Override
