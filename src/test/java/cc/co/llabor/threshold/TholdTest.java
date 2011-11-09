@@ -590,7 +590,7 @@ public class TholdTest extends TestCase {
 		double lastSpeed = 0;
 		//double baseLine = ((RddUpdateAlerter) headHunter).getBaseLine();
 		// 1 Day to go...
-		for (int secTmp = 1; secTmp < 60 * 60 * 12; secTmp += 21) {
+		for (int secTmp = 1; secTmp < 60 * 60 * 12; secTmp += 1) {
 			lastTimeTmp = startTime + secTmp;
 			double d = 22 * Math.sin((.0001356 * secTmp));
 			lastSpeed = d * Math.sin(Math.E * .000531 * secTmp);
