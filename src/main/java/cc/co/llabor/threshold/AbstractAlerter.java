@@ -65,9 +65,14 @@ public abstract class AbstractAlerter implements Threshold {
  
 
 	public String toString(){
-		return this.getDsName() + ":" + this.getDatasource() + "@"
-				+ this.getMonitorType() + "://" + this.getMonitorArgs() + "?"
-				+ this.getAction() + " ( " + this.getActionArgs() + " )";
+		String dsName = this.getDsName();
+		String datasource2 = this.getDatasource();
+		String monitorType = this.getMonitorType();
+		String monitorArgs = this.getMonitorArgs();
+		String action2 = this.getAction();
+		String actionArgs = this.getActionArgs();
+		return dsName + ":" + datasource2 + "@" + monitorType + "://"
+				+ monitorArgs + "?" + action2 + " ( " + actionArgs + " )";
 	}
 	
 	

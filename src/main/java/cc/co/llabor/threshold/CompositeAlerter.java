@@ -59,6 +59,15 @@ public abstract class CompositeAlerter extends AbstractActionist /*implements Li
 		}		
 		return retval;
 	}	
+	@Override
+	public String getDatasource() {
+		String retval=null;
+		for (Threshold theT:chainOfAlerters){
+			 retval = ((AbstractAlerter)theT).getDatasource() ;
+			 break;
+		}		
+		return retval;
+	}	
  	@Override
 	public void performAction(long timestampSec) {
 		for (Threshold theT:chainOfAlerters){
@@ -104,6 +113,7 @@ public abstract class CompositeAlerter extends AbstractActionist /*implements Li
 		String retval=null;
 		int i=0;
 		for (Threshold theT:chainOfAlerters){
+			retval = retval==null?"":retval;
 			retval += PREFIX_STRING+i+"={" ;
 			retval += theT.getClass().getName();
 			retval += "};";
@@ -121,6 +131,7 @@ public abstract class CompositeAlerter extends AbstractActionist /*implements Li
 		String retval=null;
 		int i=0;
 		for (Threshold theT:chainOfAlerters){
+			retval = retval==null?"":retval;
 			String monitorArgs2 = theT.getMonitorArgs();
 			if (monitorArgs2 != null) {
 				retval += PREFIX_STRING + i + "={";
@@ -142,6 +153,7 @@ public abstract class CompositeAlerter extends AbstractActionist /*implements Li
 		String retval=null;
 		int i=0;
 		for (Threshold theT:chainOfAlerters){
+			retval = retval==null?"":retval;
 			String action2 = theT.getAction();
 			if (action2 !=null){
 				retval += PREFIX_STRING+i+"={" ;
@@ -162,7 +174,7 @@ public abstract class CompositeAlerter extends AbstractActionist /*implements Li
 		String retval=null;
 		int i=0;
 		for (Threshold theT:chainOfAlerters){
-
+			retval = retval==null?"":retval;
 			String actionArgs2 = theT.getActionArgs();
 			if (actionArgs2 !=null){
 			retval += PREFIX_STRING+i+"={" ;
@@ -184,6 +196,18 @@ public abstract class CompositeAlerter extends AbstractActionist /*implements Li
 		}		
 		return retval;  
 	}
+	
+	
+//	@Override
+//	public String toString() {
+//		String retval="";
+//		retval+=
+//		for (Threshold theT:chainOfAlerters){
+// 			retval = theT.getBaseLine();
+//			break;
+//		}		
+//		return retval;  
+//	}
 }
 
 

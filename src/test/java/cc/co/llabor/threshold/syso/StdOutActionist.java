@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Properties; 
 
 import cc.co.llabor.threshold.AbstractActionist;
+import cc.co.llabor.threshold.rrd.Threshold;
 /** 
  * <b>The very first Actions-based implementation of Threshold</b>
  * @author      vipup<br>
@@ -14,8 +15,8 @@ import cc.co.llabor.threshold.AbstractActionist;
  * Creation:  29.09.2011::16:37:58<br> 
  */
 public class StdOutActionist extends AbstractActionist{  
-	public StdOutActionist(String string, String string2, long i) {
-		super(string, string2, i);
+	public StdOutActionist(String rrdName, String monitorArgs, 	long notificationInterval) {
+		super(rrdName,   monitorArgs, 	  notificationInterval);
 	}
 	public StdOutActionist(Properties props) {
 		super(props);
@@ -24,6 +25,23 @@ public class StdOutActionist extends AbstractActionist{
 
 	@Override
 	protected void init(Properties props) 	{  
+		try{
+			this.action =props.getProperty(Threshold.ACTION ) ;
+		}catch(Exception e){}try{
+			this.actionArgs =props.getProperty(Threshold.ACTION_ARGS ) ;
+		}catch(Exception e){}try{
+			this.rrdName =props.getProperty(Threshold.DATASOURCE ) ;
+		}catch(Exception e){}try{
+			this.dsName =props.getProperty(Threshold.DS_NAME ) ;
+		}catch(Exception e){}try{
+			this.monitorType =props.getProperty(Threshold.MONITOR_TYPE ) ;
+		}catch(Exception e){}try{
+			this.monitorArgs =props.getProperty(Threshold.MONITOR_ARGS ) ;
+		}catch(Exception e){}try{
+			this.activationTimeoutInSeconds = Integer.parseInt( props.getProperty(Threshold.SPAN_LENGTH  ));
+		}catch(Exception e){}try{
+			this.baseLine = Double.parseDouble(  props.getProperty(Threshold.BASE_LINE ));
+		}catch(Exception e){}
 		this.dsName = "speed";
 		this.action =  "syso";
 

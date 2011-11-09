@@ -146,6 +146,8 @@ public class AlertCaptain implements Runnable, NotificationListener {
 	 */
 	private void wakeUp(long timestampInSeconds) {
 		wakeCounter++;
+		String rrdDef = null;
+		RrdDbPool instance = null;
 		for (Threshold activist : unmodifiableCollection ) {
 			try{
 				
@@ -154,15 +156,18 @@ public class AlertCaptain implements Runnable, NotificationListener {
 					queue.add(e);
 				} else {
 					//processData(e);
-					String rrdDef = activist.getDatasource();
-					RrdDb rrd = RrdDbPool.getInstance().requestRrdDb(rrdDef);										
+					rrdDef = activist.getDatasource();
+					instance = RrdDbPool.getInstance();
+					RrdDb rrd = instance.requestRrdDb(rrdDef);										
   					String dsName = activist.getDsName();//"speed";
  					Datasource dsTmp = rrd.getDatasource(dsName);
  					double val = dsTmp.getLastValue();
 					processData(val, timestampInSeconds, activist);
 				}
 			}catch(Exception e){
-				e.printStackTrace();
+				
+				// TODO ???????
+				if (1==2)e.printStackTrace();
 				unregister(activist);
 			}
 		}

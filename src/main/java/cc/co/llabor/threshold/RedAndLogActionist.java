@@ -195,6 +195,7 @@ public class RedAndLogActionist extends CompositeAlerter {
 				Threshold theNext;
 				try {
 					theNext = instance.restoreByName(namePar);
+					this.chainOfAlerters.add(theNext);
 					instance.register( theNext );
 				} catch (TholdException e) {
 					// TODO Auto-generated catch block
