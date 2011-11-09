@@ -235,8 +235,8 @@ public abstract class CompositeAlerter extends AbstractActionist /*implements Li
 		if (obj!=null && obj instanceof CompositeAlerter){
 			CompositeAlerter o = (CompositeAlerter)obj;
 			return
-			o.rrdName == this.rrdName  &&
-			o.getClass().getName() == this.getClass().getName()   &&
+			o.rrdName.equals( this.rrdName  )&&
+			o.getClass().getName() .equals( this.getClass().getName()   )&&
 			o.aList.length == this.aList.length;				
 		}
 		else {

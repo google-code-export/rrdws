@@ -167,7 +167,7 @@ public class RedIniTest extends TestCase {
 		 * @throws TholdException
 		 */
 		public void testActionistStore() throws TholdException{ 
-			Cache c = Manager.getCache(cacheNS);
+			Cache c = Manager.getCache(AlertCaptain.cacheNS);
 			// create
 //			Threshold inTmp = new RedAndLogActionist(StdOutActionist.class, "test.rrd", 
 //					"!("+
@@ -188,5 +188,18 @@ public class RedIniTest extends TestCase {
 			assertEquals(""+inTmp, ""+outTmp);
 			// cmp by equals/object-identically
 			assertEquals( inTmp,  outTmp);
+ 		}
+		
+		
+		
+		
+		public void testActionistRestore() throws TholdException{  
+			Threshold e1 = AlertCaptain.restoreByName("test.rrd"); 	 
+			Threshold e2 = AlertCaptain.restoreByName("test.rrd") ;
+						
+			// cmp by toString()
+			assertEquals(""+e1, ""+e2);
+			// cmp by equals/object-identically
+			//assertEquals( inTmp,  outTmp);
  		}
 }
