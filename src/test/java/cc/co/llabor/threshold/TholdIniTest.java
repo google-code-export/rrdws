@@ -19,13 +19,12 @@ import junit.framework.TestCase;
 public class TholdIniTest extends TestCase {
 	private static final String cacheNS = "thold";
 	public void testInitFromFile() throws TholdException{
-		String tholds = "1,2,3,4,5"; 
-		AlertCaptain ac = AlertCaptain.getInstance();
+		String tholds = "1,2,3,4,5";  
 		for (String tholdId :tholds.split(",")){
 			Cache c = Manager.getCache(cacheNS);
 			Object key = tholdId+".properties";
 			Object thTmp = c.get(key );
-			thTmp = ac.toThreshold(thTmp );
+			thTmp = AlertCaptain.toThreshold(thTmp );
 			assertTrue("!NOT Threshold!:"+thTmp, thTmp instanceof Threshold);
 			assertTrue(((Threshold)thTmp).getDatasource().equals("test.rrd") );
 		}
@@ -56,7 +55,7 @@ public class TholdIniTest extends TestCase {
 			Cache c = Manager.getCache(cacheNS);
 			Object key = tholdId+".properties";
 			Object thTmp = c.get(key ); 
-			thTmp = ac.toThreshold(thTmp );
+			thTmp = AlertCaptain.toThreshold(thTmp );
 			assertTrue("!NOT Threshold!:"+thTmp, thTmp instanceof Threshold);
 			assertTrue(((Threshold)thTmp).getDatasource().equals("test.rrd") );
 			ac.register((Threshold)thTmp);

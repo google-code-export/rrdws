@@ -301,7 +301,7 @@ public class AlertCaptain implements Runnable, NotificationListener {
 	
 	public static final String cacheNS = AlertCaptain.class.getName();
 	
-	public Threshold restoreByName(String namePar) throws TholdException{
+	public static Threshold restoreByName(String namePar) throws TholdException{
 		Cache c = Manager.getCache(cacheNS);
  		Object storedProps = c.get(namePar+".properties");
 		Threshold outTmp = toThreshold(storedProps) ;

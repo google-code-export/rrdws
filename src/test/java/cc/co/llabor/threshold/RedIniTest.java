@@ -22,7 +22,7 @@ public class RedIniTest extends TestCase {
 		String tholds = "1,2,3,4,5"; 
 		 
 		for (String tholdId :tholds.split(",")){ 
-			Object thTmp =   AlertCaptain.getInstance().restoreByName( tholdId);
+			Object thTmp =   AlertCaptain .restoreByName( tholdId);
 			assertTrue("!NOT Threshold!:"+thTmp, thTmp instanceof Threshold);
 			assertTrue(((Threshold)thTmp).getDatasource().equals("test.rrd") );
 		}
@@ -53,7 +53,7 @@ public class RedIniTest extends TestCase {
 			Cache c = Manager.getCache(AlertCaptain.cacheNS);
 			Object key = tholdId+".properties";
 			Object thTmp = c.get(key ); 
-			thTmp = ac.toThreshold(thTmp );
+			thTmp = AlertCaptain.toThreshold(thTmp );
 			assertTrue("!NOT Threshold!:"+thTmp, thTmp instanceof Threshold);
 			assertTrue(((Threshold)thTmp).getDatasource().equals("test.rrd") );
 			ac.register((Threshold)thTmp);
@@ -114,28 +114,28 @@ public class RedIniTest extends TestCase {
 				"rrd.lastDatasourceValues[0] < "+ (111) +""+
 				")" 
 				  , 600);	 
-		AlertCaptain.getInstance().storeToName( "1",stdOutNotificator );
+		AlertCaptain .storeToName( "1",stdOutNotificator );
 		stdOutNotificator = new  RedAndLogActionist(StdErrActionist.class, "test.rrd", 
 				"!("+
 				"rrd.lastDatasourceValues[0] > "+ (1) +" && "+
 				"rrd.lastDatasourceValues[0] < "+ (111) +""+
 				")" 
 				  , 600);
-		AlertCaptain.getInstance().storeToName( "2",stdOutNotificator);
+		AlertCaptain .storeToName( "2",stdOutNotificator);
 		stdOutNotificator = new  RedAndLogActionist(Log2MAILActionist.class, "test.rrd", 
 				"!("+
 				"rrd.lastDatasourceValues[0] > "+ (1) +" && "+
 				"rrd.lastDatasourceValues[0] < "+ (111) +""+
 				")" 
 				  , 600);
-		AlertCaptain.getInstance().storeToName( "3",stdOutNotificator);
+		AlertCaptain .storeToName( "3",stdOutNotificator);
 		stdOutNotificator = new  RedAndLogActionist(Log4JActionist.class,  "test.rrd", 
 				"!("+
 				"rrd.lastDatasourceValues[0] > "+ (1) +" && "+
 				"rrd.lastDatasourceValues[0] < "+ (111) +""+
 				")" 
 				  , 600);
-		AlertCaptain.getInstance().storeToName( "4",stdOutNotificator);
+		AlertCaptain .storeToName( "4",stdOutNotificator);
 		
 		//dvalue
 		
@@ -144,7 +144,7 @@ public class RedIniTest extends TestCase {
 				"dvalue > "+ (1) +" && "+ "dvalue < "+ (111) +""+
 				")" 
 				  ,  600);
-		AlertCaptain.getInstance().storeToName( "5",stdOutNotificator);
+		AlertCaptain .storeToName( "5",stdOutNotificator);
 	     
 	}
 
@@ -166,9 +166,7 @@ public class RedIniTest extends TestCase {
 		 * @author vipup
 		 * @throws TholdException
 		 */
-		public void testActionistStore() throws TholdException{
-			AlertCaptain ac = AlertCaptain.getInstance();
-			ac.setAsync(false);
+		public void testActionistStore() throws TholdException{ 
 			Cache c = Manager.getCache(cacheNS);
 			// create
 //			Threshold inTmp = new RedAndLogActionist(StdOutActionist.class, "test.rrd", 
@@ -179,15 +177,16 @@ public class RedIniTest extends TestCase {
 //					  , 600);
 			String theName = RedAndLogActionist.dump2Cache("test.rrd");
 			
-			Threshold inTmp = ac.restoreByName(theName);
+			Threshold inTmp = AlertCaptain.restoreByName(theName);
 			//store
 			c.put("in.properties",inTmp.toProperties() );			
 			// restore
 			Object storedProps = c.get("in.properties");
-			Threshold outTmp = ac.toThreshold(storedProps) ;
+			Threshold outTmp = AlertCaptain.toThreshold(storedProps) ;
 						
-			// cmp
+			// cmp by toString()
 			assertEquals(""+inTmp, ""+outTmp);
+			// cmp by equals/object-identically
 			assertEquals( inTmp,  outTmp);
  		}
 }

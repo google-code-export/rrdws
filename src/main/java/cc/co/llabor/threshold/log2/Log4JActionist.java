@@ -58,7 +58,8 @@ public class Log4JActionist extends AbstractActionist{
 
 	protected void act(long timestampSec) {
 		Logger logTmp = LoggerFactory.getLogger("D_LOG");
-		logTmp.error( getActionArgs() , new Object[]{this ,  ""+notificationCounter++, ""+timestampSec, new Date(timestampSec*1000)});
+		logTmp.error( getActionArgs() , new Object[]{this ,   ""+timestampSec, new Date(timestampSec*1000)});
+		beep();
 	}
 
 

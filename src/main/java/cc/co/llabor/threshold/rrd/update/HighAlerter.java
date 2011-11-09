@@ -30,6 +30,25 @@ public class HighAlerter extends RddUpdateAlerter implements Threshold {
 		super(rrdName, baseLine, activationTimeoutInSeconds);
 		 
 	}
+	@Override
+	public String getMonitorType() { 
+			return "java";
+	}
+
+	@Override
+	public String getMonitorArgs() {
+		 	return "if(${val} > ${baseLine})";
+	}	
+	@Override
+	public String getAction() { 
+			return "rrdWRITE";
+	}
+
+	@Override
+	public String getActionArgs() {
+		 	return "${val}";
+	}
+		
 	//  !----- -10--- -9-----...------0-----1----2 F(t) ------3------5-----11 ..---!
 	//                (HiLimit)---------------->!<
 	///                                         !<--- alert ----------------------<< 
