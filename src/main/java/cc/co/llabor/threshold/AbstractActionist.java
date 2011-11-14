@@ -6,6 +6,15 @@ import cc.co.llabor.threshold.rrd.Threshold;
 
 /** 
  * <b>The very first Actions-based implementation of Threshold</b>
+ * realise the Periodical-Activity-algorithm. 
+ * 
+ *  - The ACT will be active on, and only on case, when the notificationIntervalInSecs >0;
+ *  - The ACT will executed periodically, ANY ${notificationIntervalInSecs} seconds
+ *  - Execution will happens only when the isInIncident() returns TRUE 
+ * 
+ * OTHEWISE 
+ *    the generic performAction||performSleep will be active.
+ * 
  * @author      vipup<br>
  * <br>
  * <b>Copyright:</b>     Copyright (c) 2006-2008 Monster AG <br>

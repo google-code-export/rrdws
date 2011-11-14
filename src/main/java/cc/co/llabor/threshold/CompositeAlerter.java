@@ -248,6 +248,16 @@ public abstract class CompositeAlerter extends MVELActionist /*implements List<T
 			return super.equals(obj);
 		}
 	}
+
+	@Override
+	public int getNotificationCounter() {
+		int retval = -1;
+		for (Threshold theT:chainOfAlerters){
+			retval  = ((AbstractActionist)theT).getNotificationCounter(  );
+			if (FIRSTONLY)break;
+		}
+		return retval;
+	}
 	
 	
 	
