@@ -254,19 +254,21 @@ public class AlertCaptain implements Runnable, NotificationListener {
 	}
 
 	static AlertCaptain myself = new AlertCaptain();
-	public void unregister(Threshold activist) {
+	public Threshold unregister(Threshold activist) {
 		try {
 			if (ToDo.indexOf(activist) >= 0) {
 				boolean o = ToDo.remove(activist);
 				if (o){
 					syncUC();
 					activist.stop();
+					return activist;
 				}
 					
 			}
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 	public Collection<Threshold> list(){
 		return unmodifiableCollection;

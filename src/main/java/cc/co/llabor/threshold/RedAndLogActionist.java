@@ -101,7 +101,6 @@ public class RedAndLogActionist extends CompositeAlerter {
 		return storeLOG2GCAL(  rrdName,Log4JActionist.class, props4log2gcal);
 	}
  
-	 
 	public static String storeLOG2GCAL(  String rrdNamePar, Class clPar, Properties props4LOG2GCAL ) {
 		String namePar = clPar.getCanonicalName();
 		String accu = "";
