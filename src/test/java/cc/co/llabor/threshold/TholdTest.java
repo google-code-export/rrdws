@@ -483,7 +483,7 @@ public class TholdTest extends TestCase {
 	public void testNotificationMVEL() throws RrdException, IOException {
 		double baseLine = 80; // should be smart enough ;)
 		double delta = 15;
-		long tenMins = 10*60;  // repeat alert any 10 mins
+		long tenMins = 60*10;  // repeat alert any 10 mins
 		Threshold stdOutNotificator = new StdOutActionist( getRRDName(), 
 				"!("+
 				"rrd.lastDatasourceValues[0] > "+ (baseLine-delta) +" && "+

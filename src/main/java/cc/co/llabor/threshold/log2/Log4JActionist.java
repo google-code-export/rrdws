@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cc.co.llabor.threshold.AbstractActionist;
+import cc.co.llabor.threshold.MVELActionist;
 import cc.co.llabor.threshold.rrd.Threshold;
 
 /** 
@@ -19,7 +20,7 @@ import cc.co.llabor.threshold.rrd.Threshold;
  * 
  * Creation:  04.10.2011::13:43:09<br> 
  */
-public class Log4JActionist extends AbstractActionist{ 
+public class Log4JActionist extends MVELActionist{ 
 	/**
 	 * @author vipup
 	 */
@@ -59,7 +60,17 @@ public class Log4JActionist extends AbstractActionist{
 	protected void act(long timestampSec) {
 		Logger logTmp = LoggerFactory.getLogger("D_LOG");
 		logTmp.error( getActionArgs() , new Object[]{this ,   ""+timestampSec, new Date(timestampSec*1000)});
-		beep();
+		//beep();
+	}
+
+	@Override
+	public void performAction(long timestampSec) {
+		act(timestampSec);
+	}
+
+	@Override
+	public void performSleep(long timestamp) {
+		 //
 	}
 
 

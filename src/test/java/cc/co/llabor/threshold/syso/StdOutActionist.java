@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Properties; 
 
 import cc.co.llabor.threshold.AbstractActionist;
+import cc.co.llabor.threshold.MVELActionist;
 import cc.co.llabor.threshold.rrd.Threshold;
 /** 
  * <b>The very first Actions-based implementation of Threshold</b>
@@ -14,7 +15,7 @@ import cc.co.llabor.threshold.rrd.Threshold;
  * 
  * Creation:  29.09.2011::16:37:58<br> 
  */
-public class StdOutActionist extends AbstractActionist{  
+public class StdOutActionist extends MVELActionist{  
 	public StdOutActionist(String rrdName, String monitorArgs, 	long notificationInterval) {
 		super(rrdName,   monitorArgs, 	  notificationInterval);
 	}
@@ -54,12 +55,20 @@ public class StdOutActionist extends AbstractActionist{
 	 */
 	private static final long serialVersionUID = -1411482451587802533L;
  
- 	@Override
+ 	//@Override
 	protected void act(long timestampSec) {
 				System.out.println(actionArgs +"N" +"Z"+new Date(timestampSec*1000));
 				//getNotificationCounter();
-				beep();
+				//beep();
 				
+	}
+	@Override
+	public void performAction(long timestampSec) {
+		act(timestampSec);
+	}
+	@Override
+	public void performSleep(long timestampSec) {
+		//act(timestampSec);
 	}
 }
 
