@@ -38,7 +38,7 @@ public class Log2MAILActionist extends Log4JActionist{
 	@Override
  	protected void act(long timestampSec) {
 		log.info( getActionArgs() , new Object[]{this ,   timestampSec, new Date(timestampSec*1000)});
-		beep();
+		//beep();
 	}
 
 }

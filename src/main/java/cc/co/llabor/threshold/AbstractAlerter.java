@@ -1,5 +1,5 @@
 package cc.co.llabor.threshold;
-
+ 
 import java.util.Properties;
 
 import cc.co.llabor.threshold.rrd.Threshold;
@@ -143,13 +143,16 @@ public abstract class AbstractAlerter implements Threshold {
 	 * @author vipup
 	 * @param timestampSec
 	 */ 
-	public final void reactIncidentIfAny(long timestampSec) {
+	protected void reactIncidentIfAny(long timestampSec) {
 		if (isInIncident(timestampSec )) {			
 			this.performAction(timestampSec);
 		} else {
 			this.performSleep(timestampSec);
 		}
+
 	}
+	
+	
 
 	/**
 	 * basic logic for triggering Alerter-state 

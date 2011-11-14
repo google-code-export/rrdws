@@ -122,7 +122,7 @@ public abstract class RddUpdateAlerter extends AbstractActionist {
 		
 		initDB();
 	} 
-	@Override
+	 
 	protected void act(long timestampSec) {
 		try { 
 			int lowLevel = isInIncident(timestampSec)

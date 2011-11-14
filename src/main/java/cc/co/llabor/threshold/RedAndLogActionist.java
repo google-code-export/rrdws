@@ -190,21 +190,6 @@ public class RedAndLogActionist extends CompositeAlerter {
 			}
 		}catch(Exception e){}
 	}
-	 
- 
-	/** 
-	 * this method wll never called - the only chained actions will be activated
-	 * @see CompositeAlerter
-	 */
-	@Override
-	protected void act(long timestampSec) {
-		// TODO Auto-generated method stub
-		if (1==1)throw new RuntimeException("not yet implemented since 04.11.2011");
-		else {
-		}
-	}  
-	
-
 }
 
 

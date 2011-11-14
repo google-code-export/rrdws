@@ -16,8 +16,7 @@ import cc.co.llabor.threshold.syso.StdErrActionist;
 import cc.co.llabor.threshold.syso.StdOutActionist;
 import junit.framework.TestCase;
 
-public class RedIniTest extends TestCase {
-	private static final String cacheNS = "REDthold";
+public class RedIniTest extends TestCase { 
 	public void testInitFromFile() throws TholdException{
 		String tholds = "1,2,3,4,5"; 
 		 

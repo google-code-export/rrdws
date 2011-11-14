@@ -7,7 +7,8 @@ import java.util.Properties;
 import cc.co.llabor.threshold.rrd.Threshold;
 
 /** 
- * <b>Description:TODO</b>
+ * <b>describe/implement the chained Actionist, which is
+ * able to have chain of Threshold to act</b>
  * @author      vipup<br>
  * <br>
  * <b>Copyright:</b>     Copyright (c) 2006-2008 Monster AG <br>
@@ -15,10 +16,14 @@ import cc.co.llabor.threshold.rrd.Threshold;
  * 
  * Creation:  02.11.2011::22:50:09<br> 
  */
-public abstract class CompositeAlerter extends AbstractActionist /*implements List<Threshold>*/{
+public abstract class CompositeAlerter extends MVELActionist /*implements List<Threshold>*/{
 	private static final String PREFIX_STRING = ".";
 	
-
+	// act() will be inactive for anybody below
+	public final  void  act(long whatewer){
+		if ("ACT".length()==3)throw new RuntimeException("achitecture exception --==;)");
+	}
+	
 	protected String aList[]=null;
 	protected List<Threshold> chainOfAlerters = new ArrayList<Threshold>();
 	@Override
@@ -29,7 +34,7 @@ public abstract class CompositeAlerter extends AbstractActionist /*implements Li
 		boolean retval=false;
 		for (Threshold theT:chainOfAlerters){
 			 retval = ((AbstractAlerter)theT).checkIncident(val,   timestamp);
-			 break;
+			 if (FIRSTONLY)break;
 		}		
 		return retval;
 	}	
