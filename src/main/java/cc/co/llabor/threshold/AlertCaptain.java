@@ -270,6 +270,17 @@ public class AlertCaptain implements Runnable, NotificationListener {
 		}
 		return null;
 	}
+	
+	
+	public Threshold unregister(CompositeAlerter activist) {
+		Threshold retval = null;
+		for (Threshold actToDel :activist.chainOfAlerters){
+			retval = unregister(actToDel);
+		}
+		return retval;
+	}
+	
+	
 	public Collection<Threshold> list(){
 		return unmodifiableCollection;
 	}

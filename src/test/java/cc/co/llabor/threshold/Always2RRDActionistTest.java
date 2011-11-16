@@ -30,6 +30,9 @@ public class Always2RRDActionistTest extends TestCase {
 	RrdDb rrdDb;
 	RrdDef rrdDef;
 	long startTime = 920800000L;
+
+	private int stayCount = 0;
+	private int stayCounter; // 920800000L == [Sun Mar 07 10:46:40 CET
 	/**
 	 * this method will simulate the short timeout for asynchron model of
 	 * testing, when a lot of event stay on the queue for processing, to give a
@@ -38,8 +41,6 @@ public class Always2RRDActionistTest extends TestCase {
 	 * @author vipup
 	 * @param capTmp
 	 */
-	int stayCount = 0;
-
 	public void testNotificationMVEL() throws RrdException, IOException {
 			double baseLine = 80; // should be smart enough ;)
 			double delta = 15;
@@ -165,7 +166,7 @@ public class Always2RRDActionistTest extends TestCase {
 			
 			Always2RRDActionist a2rrd = new Always2RRDActionist(stdOutNotificator);
 			AlertCaptain capTmp = AlertCaptain.getInstance();
-			capTmp.register(a2rrd);
+			//capTmp.register(a2rrd);
 			Sample sample = rrdDb.createSample();
 			long lastTimeTmp = -1;
 			double lastSpeed = 0;
@@ -223,11 +224,11 @@ public class Always2RRDActionistTest extends TestCase {
 				sample.setAndUpdate("" + (lastTimeTmp) + ":" + (lastSpeed));
 				// observation of trarget rrd -- here will be simulation of Time!
 				capTmp.tick(lastTimeTmp);
-				//stayABit(capTmp);
+				stayABit(capTmp);
 			}
-			capTmp.unregister(stdOutNotificator);
+			stdOutNotificator = (MVELActionist) capTmp.unregister(a2rrd);
 			
-			int xTmp = ((StdOutActionist)stdOutNotificator).getNotificationCounter();
+			int xTmp = ((AbstractActionist)stdOutNotificator).getNotificationCounter();
 			
 			if (capTmp.isAsync())
 				assertTrue("! 7>x ("+xTmp+") > 11!", xTmp > 7 && xTmp < 14);
@@ -235,6 +236,63 @@ public class Always2RRDActionistTest extends TestCase {
 				assertTrue("! 20>"+xTmp+" > 20!", xTmp == 9);
 	
 		}
+
+	private void stayABit(AlertCaptain capTmp) {
+	
+		if (capTmp.isAsync() && capTmp.getQueueLength() > 11010) {
+			// try {
+			System.out.println("QueueLen = " + capTmp.getQueueLength()
+					+ "wait a sec:#" + stayCounter);
+			try {
+				Thread.sleep(1111);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}// setAsync
+				// Thread.yield();//setAsync
+				// capTmp.wait(1000);
+			stayCounter++;
+			System.out.println("#WakeCouter =" + capTmp.getWakeCounter()
+					+ "  QueueLen = " + capTmp.getQueueLength()
+					+ " stayCounter = " + stayCounter);
+			System.out.println("AlertCaptain is "
+					+ (capTmp.isAlive() ? " alive..." : "DEAD!"));
+	
+			if (!capTmp.isAlive()) {
+				System.out.println("getProcessStart::"
+						+ capTmp.getProcessStart());
+				System.out.println("getProcessEnd::" + capTmp.getProcessEnd());
+				if (capTmp.getLastExc() != null) {
+					capTmp.getLastExc().printStackTrace();
+				} else {
+					return;
+				}
+			} else {
+				System.out.println("getProcessStart::"
+						+ capTmp.getProcessStart());
+				System.out.println("getProcessEnd::" + capTmp.getProcessEnd());
+				System.out.println("capTmp.getLastExc()::"
+						+ capTmp.getLastExc());
+				stayCount++;
+				if (stayCount < 10111) {
+					try {
+						capTmp.notifyAll();
+					} catch (Throwable e) {
+					}
+				} else {
+					capTmp.kill();
+					throw new RuntimeException("let me out!");
+				}
+			}
+			// } catch (Exception e) {//Interrupted
+			// // TODO Auto-generated catch block
+			// e.printStackTrace();
+			// }catch (Throwable e) {//Interrupted
+			// // TODO Auto-generated catch block
+			// e.printStackTrace();
+			// }
+		}
+	}
 
 }
 
