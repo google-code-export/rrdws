@@ -61,10 +61,10 @@ public class TholdTest extends TestCase {
 
 		rrdDef.addDatasource("speed", "GAUGE", 600, Double.NaN, Double.NaN);
 
-		rrdDef.addArchive("AVERAGE", 0.5, 1, 3600);
-		rrdDef.addArchive("AVERAGE", 0.5, 6, 700);
-		rrdDef.addArchive("AVERAGE", 0.5, 24, 797);
-		rrdDef.addArchive("AVERAGE", 0.5, 288, 775);
+		rrdDef.addArchive(ConsolFuns.CF_AVERAGE, 0.5, 1, 3600);
+		rrdDef.addArchive(ConsolFuns.CF_AVERAGE, 0.5, 6, 700);
+		rrdDef.addArchive(ConsolFuns.CF_AVERAGE, 0.5, 24, 797);
+		rrdDef.addArchive(ConsolFuns.CF_AVERAGE, 0.5, 288, 775);
 		rrdDef.addArchive(ConsolFuns.CF_MAX, 0.5, 1, 600);
 		rrdDef.addArchive(ConsolFuns.CF_MAX, 0.5, 6, 700);
 		rrdDef.addArchive(ConsolFuns.CF_MAX, 0.5, 24, 797);
@@ -150,11 +150,11 @@ public class TholdTest extends TestCase {
 		graphDef.datasource("HighLIMIT", "" + hiLimit);
 		graphDef.line("HighLIMIT", new Color(0, 0x33, 0xAA), "minimal_IQ", 4);
 
-		graphDef.datasource("myspeed", getRRDName(), "speed", "AVERAGE");
+		graphDef.datasource("myspeed", getRRDName(), "speed", ConsolFuns.CF_AVERAGE);
 		graphDef.line("myspeed", new Color(0xFF, 0, 0), "F(t)", 2);
 
 		// .stat.rrd
-		graphDef.datasource("myspeedAlert", getTholdName(), "speed", "AVERAGE");
+		graphDef.datasource("myspeedAlert", getTholdName(), "speed", ConsolFuns.CF_AVERAGE);
 		graphDef.line("myspeedAlert", new Color(0, 0x5F, 0x5F), "recruit IT!", 2);
 
 		RrdGraph graph = new RrdGraph(graphDef);
@@ -265,7 +265,7 @@ public class TholdTest extends TestCase {
 		graphDef.datasource("myspeedLAST", getRRDName(), "speed",
 				ConsolFuns.CF_LAST);
 		graphDef.line("myspeedLAST", new Color(0x1F, 0x1F, 0x1F), "last", 3);
-		graphDef.datasource("myspeed", getRRDName(), "speed", "AVERAGE");
+		graphDef.datasource("myspeed", getRRDName(), "speed", ConsolFuns.CF_AVERAGE);
 		graphDef.line("myspeed", new Color(0xFF, 0, 0), "F(t)", 2);
 
 		graphDef.datasource("LowLIMIT", "55000");
@@ -326,11 +326,11 @@ public class TholdTest extends TestCase {
 		graphDef.datasource("HighLIMIT", "" + hiLimit);
 		graphDef.line("HighLIMIT", new Color(0, 0x33, 0xAA), "minimal_IQ", 4);
 
-		graphDef.datasource("myspeed", getRRDName(), "speed", "AVERAGE");
+		graphDef.datasource("myspeed", getRRDName(), "speed", ConsolFuns.CF_AVERAGE);
 		graphDef.line("myspeed", new Color(0xFF, 0, 0), "F(t)", 2);
 
 		// .stat.rrd
-		graphDef.datasource("myspeedAlert", getTholdName(), "speed", "AVERAGE");
+		graphDef.datasource("myspeedAlert", getTholdName(), "speed", ConsolFuns.CF_AVERAGE);
 		graphDef.line("myspeedAlert", new Color(0, 0xFF, 0), "recruit IT!", 4);
 
 		RrdGraph graph = new RrdGraph(graphDef);
@@ -388,7 +388,7 @@ public class TholdTest extends TestCase {
 		graphDef.line("HighLIMIT", new Color(0, 0x33, 0xAA), "minimal_IQ", 4);
 
 		// .stat.rrd
-		graphDef.datasource("myspeedAlert", getTholdName(), "speed", "AVERAGE");
+		graphDef.datasource("myspeedAlert", getTholdName(), "speed", ConsolFuns.CF_AVERAGE);
 		graphDef.line("myspeedAlert", new Color(0, 0xFF, 0), "recruit IT!", 3);
 		graphDef.datasource("myspeedAlertMAX", getTholdName(), "speed",
 				ConsolFuns.CF_MAX);
@@ -400,7 +400,7 @@ public class TholdTest extends TestCase {
 				"recruitMIN", 1);
 
 		// f(x)
-		graphDef.datasource("myspeed", getRRDName(), "speed", "AVERAGE");
+		graphDef.datasource("myspeed", getRRDName(), "speed", ConsolFuns.CF_AVERAGE);
 		graphDef.line("myspeed", new Color(0xFF, 0, 0), "F(t)", 1);
 
 		RrdGraph graph = new RrdGraph(graphDef);
@@ -462,11 +462,11 @@ public class TholdTest extends TestCase {
 		graphDef.datasource("LowLIMIT", "" + lowLimit);
 		graphDef.line("LowLIMIT", new Color(0, 0x33, 0xAA), "minimal_IQ", 4);
 
-		graphDef.datasource("myspeed", getRRDName(), "speed", "AVERAGE");
+		graphDef.datasource("myspeed", getRRDName(), "speed", ConsolFuns.CF_AVERAGE);
 		graphDef.line("myspeed", new Color(0xFF, 0, 0), "F(t)", 2);
 
 		// .stat.rrd
-		graphDef.datasource("myspeedAlert", getTholdName(), "speed", "AVERAGE");
+		graphDef.datasource("myspeedAlert", getTholdName(), "speed", ConsolFuns.CF_AVERAGE);
 		graphDef.line("myspeedAlert", new Color(0, 0xFF, 0), "terminate IT!", 4);
 
 		RrdGraph graph = new RrdGraph(graphDef);
@@ -703,7 +703,7 @@ public class TholdTest extends TestCase {
 		graphDef.line("BaseLINELow", new Color(0, 0x66, 033), "lowest", 2);
 
 		// .stat.rrd
-		graphDef.datasource("myspeedAlert", getTholdName(), "speed", "AVERAGE");
+		graphDef.datasource("myspeedAlert", getTholdName(), "speed", ConsolFuns.CF_AVERAGE);
 		graphDef.area("myspeedAlert", new Color(0xFF, 0x5F, 0), "AA!");
 		graphDef.datasource("myspeedAlertMAX", getTholdName(), "speed",
 				ConsolFuns.CF_MAX);
@@ -715,7 +715,7 @@ public class TholdTest extends TestCase {
 				1);
 
 		// f(x)
-		graphDef.datasource("myspeed", getRRDName(), "speed", "AVERAGE");
+		graphDef.datasource("myspeed", getRRDName(), "speed", ConsolFuns.CF_AVERAGE);
 		graphDef.line("myspeed", new Color(0x5F, 0xFF, 0), "F(t)", 1);
 
 		RrdGraph graph = new RrdGraph(graphDef);
@@ -780,7 +780,7 @@ public class TholdTest extends TestCase {
 		graphDef.line("BaseLINELow", new Color(0, 0x66, 033), "lowest", 2);
 
 		// .stat.rrd
-		graphDef.datasource("myspeedAlert", getTholdName(), "speed", "AVERAGE");
+		graphDef.datasource("myspeedAlert", getTholdName(), "speed", ConsolFuns.CF_AVERAGE);
 		graphDef.area("myspeedAlert", new Color(0xFF, 0x1F, 0x1F), "AA!");
 		graphDef.datasource("myspeedAlertMAX", getTholdName(), "speed",
 				ConsolFuns.CF_MAX);
@@ -792,7 +792,7 @@ public class TholdTest extends TestCase {
 				1);
 
 		// f(x)
-		graphDef.datasource("myspeed", getRRDName(), "speed", "AVERAGE");
+		graphDef.datasource("myspeed", getRRDName(), "speed", ConsolFuns.CF_AVERAGE);
 		graphDef.line("myspeed", new Color(0x5F, 0xFF, 0), "F(t)", 1);
 
 		RrdGraph graph = new RrdGraph(graphDef);
@@ -850,13 +850,13 @@ public class TholdTest extends TestCase {
 		graphDef.datasource("myspeedAlertMAX", getTholdName(), "speed",
 				ConsolFuns.CF_MAX);
 		graphDef.area("myspeedAlertMAX", new Color(0xFF, 0, 0), "tMAX");
-		graphDef.datasource("myspeedAlert", getTholdName(), "speed", "AVERAGE");
+		graphDef.datasource("myspeedAlert", getTholdName(), "speed", ConsolFuns.CF_AVERAGE);
 		graphDef.area("myspeedAlert", new Color(0xFF, 0xFF, 0), "terminate IT!");
 
 		graphDef.datasource("LowLIMIT", "" + lowLimit);
 		graphDef.line("LowLIMIT", new Color(0, 0x33, 0xAA), "dumb_IQ", 4);
 
-		graphDef.datasource("myspeed", getRRDName(), "speed", "AVERAGE");
+		graphDef.datasource("myspeed", getRRDName(), "speed", ConsolFuns.CF_AVERAGE);
 		graphDef.line("myspeed", new Color(0, 0, 0), "F(t)", 2);
 		graphDef.datasource("myspeedMAX", getRRDName(), "speed",
 				ConsolFuns.CF_MAX);
@@ -865,7 +865,7 @@ public class TholdTest extends TestCase {
 				ConsolFuns.CF_MIN);
 		graphDef.line("myspeedMIN", new Color(0, 0x77, 0xFF), "F(t)", 2);
 
-		// graphDef.datasource("Alert", getTholdName(), "speed", "AVERAGE");
+		// graphDef.datasource("Alert", getTholdName(), "speed", ConsolFuns.CF_AVERAGE);
 		// graphDef.area("Alert", new Color(0xFF, 0x1F, 0), "terminate IT!");
 
 		RrdGraph graph = new RrdGraph(graphDef);

@@ -47,14 +47,18 @@ public abstract class AbstractActionist extends AbstractAlerter {
 		
 		// for periodical notification only
 		if (this.notificationIntervalInSecs>0){ // filtering only for
-			if(isInIncident( timestampSec ))
-			if (timestampSec >this.lastNotificationTimestamp){
-				super.reactIncidentIfAny(timestampSec);
-				this.lastNotificationTimestamp = this.notificationIntervalInSecs +timestampSec ;
-				notificationCounter++;
-			}else{
-				// the action will be spressed till the next
+			if(isInIncident( timestampSec )){
+				if (timestampSec >this.lastNotificationTimestamp){
+					super.reactIncidentIfAny(timestampSec);
+					this.lastNotificationTimestamp = this.notificationIntervalInSecs +timestampSec ;
+					notificationCounter++;
+				}else{
+					// the action will be spressed till the next
+				}
+			}else{ // sleep-call for continuous Actionists
+				performSleep(timestampSec);
 			}
+			
 			
 		}else{ //default mode for unconfigured 
 			super.reactIncidentIfAny(timestampSec);

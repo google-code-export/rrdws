@@ -1,7 +1,10 @@
 package cc.co.llabor.threshold;
 
+import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 
 import junit.framework.TestCase;
 
@@ -11,8 +14,11 @@ import org.jrobin.core.RrdDbPool;
 import org.jrobin.core.RrdDef;
 import org.jrobin.core.RrdException;
 import org.jrobin.core.Sample;
+import org.jrobin.graph.RrdGraph;
+import org.jrobin.graph.RrdGraphDef;
 
 import cc.co.llabor.threshold.rrd.Threshold;
+import cc.co.llabor.threshold.rrd.update.RddUpdateAlerter;
 import cc.co.llabor.threshold.syso.StdOutActionist;
 
 
@@ -294,6 +300,99 @@ public class Always2RRDActionistTest extends TestCase {
 		}
 	}
 
+	// based on testNotificationMVEL2RRD
+	// should paint 9 point on the result diagramm
+	public void testAndPaint() throws RrdException, IOException {
+			double baseLine = 80; // should be smart enough ;)
+			double delta = 15;
+			long tenMins = 60*10;  // repeat alert any 10 mins
+			MVELActionist stdOutNotificator = new StdOutActionist( getRRDName(), 
+					"!("+
+					"rrd.lastDatasourceValues[0] > "+ (baseLine-delta) +" && "+
+					"rrd.lastDatasourceValues[0] < "+ (baseLine+delta) +""+
+					")" 
+					  , tenMins);
+			System.out.println(stdOutNotificator);
+	//		testSinBaseLine(stdOutNotificator);
+			
+			Always2RRDActionist a2rrd = new Always2RRDActionist(stdOutNotificator);
+			AlertCaptain capTmp = AlertCaptain.getInstance();
+			capTmp.register(a2rrd);
+			Sample sample = rrdDb.createSample();
+			long lastTimeTmp = -1;
+			double lastSpeed = 0;
+			//double baseLine = ((RddUpdateAlerter) headHunter).getBaseLine();
+			// 1 Day to go...
+			for (int secTmp = 1; secTmp < 60 * 60 * 12; secTmp += 91) {
+				lastTimeTmp = startTime + secTmp;
+				double d = 22 * Math.sin((.0001356 * secTmp));
+				lastSpeed = d * Math.sin(Math.E * .000531 * secTmp);
+				lastSpeed += baseLine;
+				// Realdata production
+				sample.setAndUpdate("" + (lastTimeTmp) + ":" + (lastSpeed));
+				// observation of trarget rrd -- here will be simulation of Time!
+				capTmp.tick(lastTimeTmp);
+				//stayABit(capTmp);
+			}
+			stdOutNotificator = (MVELActionist) capTmp.unregister(a2rrd);
+			
+			int xTmp = ((AbstractActionist)stdOutNotificator).getNotificationCounter();
+			
+			if (capTmp.isAsync())
+				assertTrue("! 7>x ("+xTmp+") > 11!", xTmp > 7 && xTmp < 14);
+			else
+				assertTrue("! 20>"+xTmp+" > 20!", xTmp == 9);
+			
+			
+			
+			double []hiBaseLowLines = new double[] {baseLine-delta, baseLine,baseLine+delta};
+			doPaint(lastTimeTmp  ,  hiBaseLowLines ,   200);
+	
+		}
+	private String syncToText() {
+		return AlertCaptain.getInstance().isAsync() ? "!ASYNC!" : "_sync_";
+	}
+	private String getTholdName() {
+		return getRRDName() + ".Thold.RRD";
+	}
+	private void doPaint(long lastTimeTmp, double []hiBaseLowLines, int MAX_POSSIBLE_IQ) throws IOException, RrdException{
+
+		RrdGraphDef graphDef = new RrdGraphDef();
+		graphDef.setStartTime(startTime - 10 * 60);// seconds!
+		graphDef.setEndTime(lastTimeTmp -(lastTimeTmp-startTime)*4/5 + 10 * 60);// seconds
+		graphDef.setFilename(getRRDName() + ".gif");
+		graphDef.setWidth(800);
+		graphDef.setHeight(600);
+		graphDef.setVerticalLabel(" " + new Date(startTime * 1000) + " - "
+				+ new Date(lastTimeTmp * 1000));
+		//graphDef.setTitle("Test_" + syncToText() + getRRDName());
+		graphDef.setTitle("Test_" + syncToText() + getRRDName());
+
+		 
+		graphDef.datasource("low", "" + hiBaseLowLines[0]);
+		graphDef.line("low", new Color(0xAA, 0x33,0 ), "lowL", 4);
+		graphDef.datasource("base", "" + hiBaseLowLines[1]);
+		graphDef.line("base", new Color(0, 0x33, 0xAA), "baseL", 4);
+		graphDef.datasource("high", "" + hiBaseLowLines[2]);
+		graphDef.line("high", new Color( 0x33, 0xAA, 0), "hiL", 4);
+
+		graphDef.datasource("myspeed", getRRDName(), "speed", "AVERAGE");
+		graphDef.line("myspeed", new Color(0x6F, 0xAF, 0), "F(t)", 2);
+
+		// .stat.rrd
+		graphDef.datasource("myspeedAlert", getTholdName(), "speed", ConsolFuns.CF_MIN );
+		graphDef.area("myspeedAlert", new Color(0xFF, 0x1F, 0x5F), "mIn" );
+		graphDef.datasource("myspeedAlert", getTholdName(), "speed", ConsolFuns.CF_MAX );
+		graphDef.line("myspeedAlert", new Color(0xbF, 0x1F, 0x5F), "mAx" );
+		graphDef.datasource("myspeedAlert", getTholdName(), "speed", ConsolFuns.CF_AVERAGE );
+		graphDef.line("myspeedAlert", new Color(0x7F, 0x1F, 0x5F), "AvG" );
+
+		RrdGraph graph = new RrdGraph(graphDef);
+		// graph.saveAsGIF("speed.gif");
+		// https://rrd4j.dev.java.net/tutorial.html
+		BufferedImage bi = new BufferedImage(MAX_POSSIBLE_IQ, MAX_POSSIBLE_IQ, BufferedImage.TYPE_INT_RGB);
+		graph.render(bi.getGraphics());
+	}
 }
 
 

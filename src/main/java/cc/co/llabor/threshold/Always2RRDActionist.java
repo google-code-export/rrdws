@@ -3,6 +3,7 @@ package cc.co.llabor.threshold;
 import java.util.Properties;
 
 import cc.co.llabor.threshold.rrd.Threshold; 
+import cc.co.llabor.threshold.rrd.update.DrivenRrdWriter; 
 
 /**
  * <b>combine n-od-MVEL- and aalways RRDUpdate actionist</b>
@@ -16,10 +17,25 @@ import cc.co.llabor.threshold.rrd.Threshold;
  */
 public class Always2RRDActionist extends CompositeAlerter {
 
+	@Override
+	public void performAction(long timestampSec) {
+		this.rrdwriter.setIncident(true);
+		this.rrdwriter.performAction(timestampSec); 
+		super.performAction(timestampSec); 
+	}
+	
+	@Override
+	public void performSleep(long timestampSec) { 
+		this.rrdwriter.setIncident(false);
+		this.rrdwriter.performAction(timestampSec); 
+		//super.performAction(timestampSec); 
+	}	
+
 	/**
 	 * @author vipup
 	 */
 	private static final long serialVersionUID = -7607540912607278569L;
+	private DrivenRrdWriter rrdwriter;
 
 	public Always2RRDActionist(Properties props) {
 		init(props);
@@ -133,9 +149,35 @@ public class Always2RRDActionist extends CompositeAlerter {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//storeRRDWRITER(this.rrdName);
+		String namePar = storeRRDWRITER(this.rrdName);
+		
+		try {
+			this.rrdwriter = (DrivenRrdWriter) AlertCaptain.restoreByName(namePar);
+		} catch (TholdException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
+	
+	public static String storeRRDWRITER( String rrdName) {
+		String retval = "rrw@"+rrdName; 
+		Properties props4RRDWRITER =   new Properties();
+		props4RRDWRITER.put( Threshold.DS_NAME , "speed") ;
+		props4RRDWRITER.put( Threshold.DATASOURCE , rrdName) ;
+		 
+		props4RRDWRITER.put( Threshold.CLASS, DrivenRrdWriter.class.getName()) ;
+		Threshold rwTmp;
+		try {
+			rwTmp = AlertCaptain.toThreshold(props4RRDWRITER); 
+			AlertCaptain .storeToName(retval, rwTmp);
+		} catch (TholdException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return retval;
+	} 
 
 	/**
 	 * hardcoded Constructor for make composite Thresould A, which delegate
