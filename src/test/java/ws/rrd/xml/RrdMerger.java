@@ -1,8 +1,13 @@
 package ws.rrd.xml;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,8 +18,7 @@ import org.jrobin.cmd.RrdCommander;
 import org.jrobin.core.RrdException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import cc.co.llabor.log.GtalkAppenderTest;
+ 
 
 /** 
  * <b>Description:DraftUndDirty Python2Java reimplementation of http://oss.oetiker.ch/rrdtool/pub/contrib/merge-rrd.tgz </b>
@@ -166,8 +170,18 @@ void mergeRRD(String opath,String npath,String mpath) throws IOException, RrdExc
 //    (status, oxml) = commands.getstatusoutput(ocmd)
 //    (status, nxml) = commands.getstatusoutput(ncmd)
 	
-	String oxml = (String) RrdCommander.execute(ocmd); 
-	String nxml = (String) RrdCommander.execute(ncmd); 
+	String oxml = null; 
+	
+	oxml = existAsXml(opath)?
+			readFully(opath)
+			:(String) RrdCommander.execute(ocmd); 
+	
+	
+	String nxml = null;
+	
+	nxml =existAsXml(npath)?
+			readFully(npath): 
+		(String) RrdCommander.execute(ncmd); 
 		
 //    
 //    odict = getXmlDict(oxml)
@@ -257,7 +271,9 @@ void mergeRRD(String opath,String npath,String mpath) throws IOException, RrdExc
 	 // TODO refactor to stream
 	mxmlf.flush();
 	mxmlf.close();
-	 System.out.println(mergedxml.toString());
+	// System.out.println(mergedxml.toString());
+	mergedxml.writeTo(new FileOutputStream(mpath));
+	
 //
 //    #create new rrds
 //    rcmd = "rrdtool restore %s %s"%(os.path.join(mpath+".xml"),mpath)
@@ -267,10 +283,28 @@ void mergeRRD(String opath,String npath,String mpath) throws IOException, RrdExc
 }
 	
 	
+private String readFully(String opath) throws IOException {
+	FileInputStream fileInputStream = new FileInputStream(opath);
+	BufferedReader rdTmp = new BufferedReader( new InputStreamReader (fileInputStream));
+	StringBuffer retval = new StringBuffer();
+	for (String lnTmp=rdTmp.readLine();lnTmp!=null;lnTmp=rdTmp.readLine()){
+		retval .append( lnTmp);
+		retval .append(  "\n");
+	}
+	return retval.toString();
+	
+}
+
+private boolean existAsXml(String opath) {
+	File fTmp = new File (opath);
+	return fTmp.exists();
+ 
+}
+
 //### start of script ###
 public static void main(String [] argv) throws IOException, RrdException{
 //if (len(sys.argv) != 4):
- if (argv.length != 4){	
+ if (argv.length != 3){	
 //    print "merge-rrd.py take 3 arguments"
 	System.out.println("merge-rrd.py take 3 arguments");
 //    printUsage()
@@ -279,11 +313,11 @@ public static void main(String [] argv) throws IOException, RrdException{
 //    
 }else{
 //old_path = sys.argv[1]
-	String old_path = argv[1];
+	String old_path = argv[0];
 //new_path = sys.argv[2]
-	String new_path = argv[2];
+	String new_path = argv[1];
 //mer_path = sys.argv[3]
-	String mer_path = argv[3];
+	String mer_path = argv[2];
 //
 //if (mer_path == old_path):
 	if (mer_path == old_path){

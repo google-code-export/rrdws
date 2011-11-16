@@ -416,7 +416,9 @@ public class RrdDb implements RrdUpdater {
 		DataImporter reader;
 		if (externalPath.startsWith(PREFIX_MEM)) {
 			String nameTmp = externalPath.substring(PREFIX_MEM.length());
-			MemoryFileItem item = MemoryFileCache.getInstance(this.getClass().getName()).get (nameTmp );
+			String cacheNameTmp = this.getClass().getName();
+			cacheNameTmp = "DEFAULT.BAK";
+			MemoryFileItem item = MemoryFileCache.getInstance(cacheNameTmp).get (nameTmp );
 			InputStream in = item.getInputStream();
 			reader = new XmlReader(in);
 			
