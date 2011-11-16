@@ -121,6 +121,7 @@ public class Always2RRDActionist extends CompositeAlerter {
 					this.chainOfAlerters.add(theNext);
 					AlertCaptain instance = AlertCaptain.getInstance();
 					((AbstractActionist)theNext).notificationIntervalInSecs=60*10;
+					this.notificationIntervalInSecs = 60*10;
 					instance.register(theNext);
 				} catch (TholdException e) {
 					// TODO Auto-generated catch block
