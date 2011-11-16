@@ -9,8 +9,7 @@ import org.jrobin.core.RrdDef;
 import org.jrobin.core.RrdException;
 import org.jrobin.core.Sample;
 
-import cc.co.llabor.threshold.AbstractActionist;
-import cc.co.llabor.threshold.AbstractAlerter;
+import cc.co.llabor.threshold.AbstractActionist; 
 import cc.co.llabor.threshold.rrd.Threshold;
 
 /**
@@ -35,7 +34,7 @@ public abstract class RddUpdateAlerter extends AbstractActionist {
 	 */
 	private static final long serialVersionUID = 6260786617371803021L;
 
-	private Sample sample;
+	protected Sample sample;
 
 	private RrdDb rrdDb;
 
@@ -54,7 +53,7 @@ public abstract class RddUpdateAlerter extends AbstractActionist {
 		long startTime = 920800000L; // 920800000L == [Sun Mar 07 10:46:40 CET 1999]
 		rrdDef.setStartTime(startTime);
 		rrdDef.setStep(1);
-		rrdDef.addDatasource("speed", "GAUGE", 600, Double.NaN, Double.NaN);
+		rrdDef.addDatasource("speed", "GAUGE", 600, 0.0, 0.0);
 		rrdDef.addArchive(ConsolFuns.CF_AVERAGE, 0.1, 1, 3600);
 		rrdDef.addArchive(ConsolFuns.CF_AVERAGE, 0.5, 6, 700);
 		rrdDef.addArchive(ConsolFuns.CF_AVERAGE, 0.5, 24, 797);
