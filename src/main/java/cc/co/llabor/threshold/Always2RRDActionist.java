@@ -17,8 +17,14 @@ import cc.co.llabor.threshold.rrd.update.DrivenRrdWriter;
  */
 public class Always2RRDActionist extends CompositeAlerter {
 
+	int MAX_TO_STORE = 1000;
+	private long[] lastAlerts = new long[MAX_TO_STORE ];
+	int lastStored = -1;
+	
+	
 	@Override
-	public void performAction(long timestampSec) {
+	public void performAction(long timestampSec) { 
+		this.lastAlerts[(++lastStored)%MAX_TO_STORE]=timestampSec;
 		this.rrdwriter.setIncident(true);
 		this.rrdwriter.performAction(timestampSec); 
 		super.performAction(timestampSec); 
@@ -177,6 +183,11 @@ public class Always2RRDActionist extends CompositeAlerter {
 		}
 		
 		return retval;
+	}
+
+ 
+	public long[] getLastAlerts() { 
+		return lastAlerts;
 	} 
 
 	/**
