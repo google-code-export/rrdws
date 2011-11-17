@@ -3,10 +3,14 @@
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.util.Locale"%>
 <%@page import="java.text.NumberFormat"%>
+<%@page contentType="text/html; charset=UTF-8" %>
 <%
 Locale loc = Locale.getDefault();
 try{
-	loc =  new Locale  (request.getParameter("locale"));
+	String []lTmp = request.getParameter("locale").split("_");
+	loc =  new Locale(lTmp[0] );
+	loc =  new Locale(lTmp[0],lTmp[1]);
+	loc =  new Locale(lTmp[0],lTmp[1],lTmp[2]);
 }catch(Throwable e){e.printStackTrace();}
 NumberFormat curTmp =NumberFormat .getCurrencyInstance(loc);
 NumberFormat numTmp =NumberFormat .getNumberInstance(loc);
@@ -22,8 +26,12 @@ Locale:<%=loc.getVariant() %><br>
 <table><tr><td>
 <% int i=0;%>
 <%for (Locale lTmp : Locale .getAvailableLocales()){%>
- <%= lTmp %></td><td>
- <%= (i%15==0)?"</td></tr><tr><td>":""%>
+<%= (i%15==0)?"</td></tr><tr><td>":""%>
+<a href="?locale=<%= lTmp %>"><%= lTmp %> 
+<img src="iso3166-1/<%=lTmp.getCountry().toLowerCase()%>.png"> </a>
+<img src="iso3166-1/<%=lTmp.getLanguage().toLowerCase()%>.png"> </a>
+</td><td>
+ 
 <%
 i++;
 } %>
