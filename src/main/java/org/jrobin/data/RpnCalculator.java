@@ -55,6 +55,8 @@ class RpnCalculator {
 	private static final byte TKN_GT = 20;
 	private static final byte TKN_GE = 21;
 	private static final byte TKN_EQ = 22;
+	//http://oss.oetiker.ch/rrdtool/doc/rrdgraph_rpn.en.html
+	private static final byte TKN_NE = 60;
 	private static final byte TKN_IF = 23;
 	private static final byte TKN_MIN = 24;
 	private static final byte TKN_MAX = 25;
@@ -177,6 +179,9 @@ class RpnCalculator {
 		}
 		else if (parsedText.equals("EQ")) {
 			token.id = TKN_EQ;
+		}
+		else if (parsedText.equals("NE")) {
+			token.id = TKN_NE;
 		}
 		else if (parsedText.equals("IF")) {
 			token.id = TKN_IF;
@@ -373,6 +378,11 @@ class RpnCalculator {
 						x1 = pop();
 						push(x1 == x2 ? 1 : 0);
 						break;
+					case TKN_NE:
+						x2 = pop();
+						x1 = pop();
+						push(x1 == x2 ? 0 : 1);
+						break;						
 					case TKN_IF:
 						x3 = pop();
 						x2 = pop();
