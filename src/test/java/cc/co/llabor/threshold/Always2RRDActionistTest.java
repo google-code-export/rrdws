@@ -338,11 +338,11 @@ public class Always2RRDActionistTest extends TestCase {
 			
 			int xTmp = ((AbstractActionist)stdOutNotificator).getNotificationCounter();
 			
-//			if (capTmp.isAsync())
-//				assertTrue("! 7>x ("+xTmp+") > 11!", xTmp > 7 && xTmp < 14);
-//			else
-//				assertTrue("! 20>"+xTmp+" > 20!", xTmp == 9);
-//			
+			if (capTmp.isAsync())
+				assertTrue("! 7>x ("+xTmp+") > 11!", xTmp > 7 && xTmp < 14);
+			else
+				assertTrue("! 20>"+xTmp+" > 20!", xTmp == 12);
+			
 			
 			
 			double []hiBaseLowLines = new double[] {baseLine-delta, baseLine,baseLine+delta};
