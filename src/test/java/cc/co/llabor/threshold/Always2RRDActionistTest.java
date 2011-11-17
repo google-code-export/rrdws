@@ -382,6 +382,25 @@ public class Always2RRDActionistTest extends TestCase {
 		// .stat.rrd
 		graphDef.datasource("myspeedAlert", getTholdName(), "speed", ConsolFuns.CF_MIN );
 		graphDef.area("myspeedAlert", new Color(0xFF, 0x1F, 0x5F), "mIn" );
+		
+		// CDEF @ http://wiki.springsurprise.com/category/technical-tidbits/
+//		rrdtool graph "Example 6 CDEF.png" \
+//		--start "end-48 hours" --end "12am Nov 1, 2009" \
+//		--imgformat PNG --width 500 --height 120 \
+//		--title "Example 6" \
+//		--vertical-label "Temperature" \
+//		DEF:temp=sysinfo.rrd:temperature:AVERAGE \
+//		CDEF:cool=temp,175,MIN \
+//		AREA:temp#FF0000:"hot" \
+//		AREA:cool#0000FF:"cool"
+		graphDef.setMaxValue(MAX_POSSIBLE_IQ);
+		//Boolean operators:	    LT, LE, GT, GE, EQ, NE
+		//CDEF:result=number,100000,GT,UNKN,number,IF
+		graphDef.datasource("myspeedAlertRED",  "myspeedAlert,"+0+",NE,"+MAX_POSSIBLE_IQ+",0,IF" );
+		graphDef.area("myspeedAlertRED", new Color(0xbF, 0x1F, 0x5F), "ALERT" );
+		
+		
+		
 		graphDef.datasource("myspeedAlert", getTholdName(), "speed", ConsolFuns.CF_MAX );
 		graphDef.line("myspeedAlert", new Color(0xbF, 0x1F, 0x5F), "mAx" );
 		graphDef.datasource("myspeedAlert", getTholdName(), "speed", ConsolFuns.CF_AVERAGE );
