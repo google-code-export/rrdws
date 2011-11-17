@@ -6,9 +6,8 @@ import gnu.inet.encoding.PunycodeException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.util.Date; 
+  
 
-import org.apache.commons.codec.net.QuotedPrintableCodec;
-import org.apache.geronimo.mail.util.QuotedPrintable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
@@ -56,7 +55,8 @@ public class XPathContentHandler implements ContentHandler {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-							trim = new String(QuotedPrintable.encode( trim .getBytes()));
+							//import org.apache.geronimo.mail.util.QuotedPrintable;
+							//trim = new String(QuotedPrintable.encode( trim .getBytes()));
 							trim = trim.replace("?", "/");
 			}
 			if (trim.startsWith("/")){
