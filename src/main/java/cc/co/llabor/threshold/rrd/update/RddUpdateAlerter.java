@@ -53,7 +53,7 @@ public abstract class RddUpdateAlerter extends AbstractActionist {
 		long startTime = 920800000L; // 920800000L == [Sun Mar 07 10:46:40 CET 1999]
 		rrdDef.setStartTime(startTime);
 		rrdDef.setStep(1);
-		rrdDef.addDatasource("speed", "GAUGE", 600, 0.0, 0.0);
+		rrdDef.addDatasource("speed", "GAUGE", 600, 0.0, 1111110.0);
 		rrdDef.addArchive(ConsolFuns.CF_AVERAGE, 0.1, 1, 3600);
 		rrdDef.addArchive(ConsolFuns.CF_AVERAGE, 0.5, 6, 700);
 		rrdDef.addArchive(ConsolFuns.CF_AVERAGE, 0.5, 24, 797);

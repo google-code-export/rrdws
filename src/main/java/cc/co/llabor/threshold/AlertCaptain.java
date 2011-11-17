@@ -284,7 +284,7 @@ public class AlertCaptain implements Runnable, NotificationListener {
 	public Collection<Threshold> list(){
 		return unmodifiableCollection;
 	}
-	void syncUC() {
+	synchronized void  syncUC() {
 		unmodifiableCollection = Collections.unmodifiableCollection(  new HashSet<Threshold>( this.ToDo ));
 		//System.out.println(unmodifiableCollection);
 	}
