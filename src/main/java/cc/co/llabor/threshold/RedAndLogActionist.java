@@ -4,8 +4,7 @@ import java.util.Properties;
 
 import cc.co.llabor.threshold.log2.Log4JActionist;
 import cc.co.llabor.threshold.rrd.Threshold; 
-import cc.co.llabor.threshold.rrd.update.HighAlerter;
-import cc.co.llabor.threshold.syso.StdOutActionist;
+import cc.co.llabor.threshold.rrd.update.HighAlerter; 
 /** 
  * <b>combine Log- and RRDUpdate actionist</b>
  * @author      vipup<br>
