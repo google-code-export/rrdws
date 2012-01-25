@@ -147,19 +147,19 @@ public class StartStopServlet extends HttpServlet {
 		} 
 		// do exactly the same as prev-WatchDog, but otherwise
 		AlertCaptain ac = AlertCaptain.getInstance();
-		Cache tholdRepo = Manager.getCache("thold");
-		Object tholdProps = tholdRepo.get("default.properties");//RRDHighLimitWatchDog
-		try {
-			log.info(Repo.getBanner( "tholdHealthWatchDog"));
-			
-			Threshold watchDog  = ac.toThreshold(tholdProps );
-			ac.register(  watchDog );
-			lookInsideThold(tholdProps);
-			
-		} catch (TholdException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		Cache tholdRepo = Manager.getCache("thold");
+//		Object tholdProps = tholdRepo.get("default.properties");//RRDHighLimitWatchDog
+//		try {
+//			log.info(Repo.getBanner( "tholdHealthWatchDog"));
+//			
+//			Threshold watchDog  = ac.toThreshold(tholdProps );
+//			ac.register(  watchDog );
+//			lookInsideThold(tholdProps);
+			ac.init();			
+//		} catch (TholdException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 		
 		

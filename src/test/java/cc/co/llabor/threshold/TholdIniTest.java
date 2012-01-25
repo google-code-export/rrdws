@@ -10,7 +10,6 @@ import org.jrobin.core.RrdDef;
 import net.sf.jsr107cache.Cache;
 import cc.co.llabor.cache.Manager;
 import cc.co.llabor.threshold.log2.Log2MAILActionist;
-import cc.co.llabor.threshold.log2.Log4JActionist;
 import cc.co.llabor.threshold.rrd.Threshold; 
 import cc.co.llabor.threshold.syso.StdErrActionist;
 import cc.co.llabor.threshold.syso.StdOutActionist;

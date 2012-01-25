@@ -2,7 +2,6 @@ package cc.co.llabor.threshold;
 
 import java.util.Properties;
 
-import cc.co.llabor.threshold.log2.Log4JActionist;
 import cc.co.llabor.threshold.rrd.Threshold; 
 import cc.co.llabor.threshold.rrd.update.HighAlerter; 
 /** 

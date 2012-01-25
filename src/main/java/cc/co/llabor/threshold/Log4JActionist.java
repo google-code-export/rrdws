@@ -1,12 +1,10 @@
-package cc.co.llabor.threshold.log2;
+package cc.co.llabor.threshold;
 
 import java.util.Date;
 import java.util.Properties; 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import cc.co.llabor.threshold.AbstractActionist;
-import cc.co.llabor.threshold.MVELActionist;
+ 
 import cc.co.llabor.threshold.rrd.Threshold;
 
 /** 

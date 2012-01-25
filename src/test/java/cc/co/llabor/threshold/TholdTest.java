@@ -17,7 +17,6 @@ import org.jrobin.graph.RrdGraph;
 import org.jrobin.graph.RrdGraphDef;
 
 import cc.co.llabor.threshold.log2.Log2MAILActionist;
-import cc.co.llabor.threshold.log2.Log4JActionist;
 import cc.co.llabor.threshold.rrd.Threshold;
 import cc.co.llabor.threshold.rrd.update.BaselineAlerter;
 import cc.co.llabor.threshold.rrd.update.HighAlerter;
