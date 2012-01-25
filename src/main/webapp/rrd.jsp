@@ -1,6 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html >
+
 <head>    
+    <link rel="RRDWS icon" href="favicon.ico" type="image/ico">
 	<div class='corner' id='angle'>
         <a href="/corner" target="_blank"><IMG SRC="img/btn_track.gif">rrd4u</a>
     </div>

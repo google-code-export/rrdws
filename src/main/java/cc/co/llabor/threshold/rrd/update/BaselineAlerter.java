@@ -1,6 +1,5 @@
 package cc.co.llabor.threshold.rrd.update;
- 
-import java.util.Properties;
+  
 
 import cc.co.llabor.threshold.rrd.Threshold;
 

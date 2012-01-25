@@ -36,10 +36,21 @@ vars.put("names", names);
         stats.put("DEBUG", new Long(1234567));
 vars.put(ToolBox.KEY_EVENT_LOG_STAT, stats);
 
-// Now we execute it.
-Object result =  MVEL.eval(expression,session, vars);//
+
+// reuse prev result if any
+Object result = session.getAttribute("result");
+if (result !=null){
+	vars.put("result", result);	
+}
+//Now we execute it.
+result = MVEL.eval(expression,session, vars);//
 session.setAttribute("result", result);
-String histTmp = ""+(new Date())+":"+expression+"="+result+ "<br>"+session.getAttribute("history") ;
+String histTmp = "<tr><td>"+(new Date())+
+			"</td><td>:"+expression+
+			"</td><td>=" +
+			"</td><td>" +result+ 
+			"</td></tr>\n"+
+			session.getAttribute("history") ;
 session.setAttribute("history", histTmp);
 
 %><html>
@@ -49,6 +60,8 @@ session.setAttribute("history", histTmp);
 	<input  name="expression" type="text" name="expression"  size="100" value="<%=StringEscapeUtils.escapeHtml( ""+expression)%>">
 	<input type="submit">
 </form>
+<TABLE>
 <%=histTmp%>
+</TABLE>
 </body>
 </html>
