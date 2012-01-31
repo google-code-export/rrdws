@@ -1,8 +1,7 @@
 package cc.co.llabor.threshold;
  
 import java.io.IOException;
-
-import org.jrobin.core.Datasource;
+ 
 import org.jrobin.core.FetchRequest;
 import org.jrobin.core.RrdDb;
 import org.jrobin.core.RrdDbPool;

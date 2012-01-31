@@ -24,11 +24,12 @@ public class Log4JActionist extends MVELActionist{
 	 */
 	private static final long serialVersionUID = 3434669922946134100L;
 	
-	public static final String LOG4J = "log4j"; 
+	public static final String LOG4J = "log4j";
+
+
 
 	public Log4JActionist(String string, String string2, long l) {
-		super( string, string2, l);
-		init(null);
+		super( string, string2, l); 
 	}
 
 	public Log4JActionist(Properties props) {
@@ -53,6 +54,26 @@ public class Log4JActionist extends MVELActionist{
 		this.action =  LOG4J;
 		this.monitorType =  "mvel";
 		this.actionArgs =  "hiLog4J @{}#{} {} ,{} "; // slf4j format-string
+		
+		try {
+			rrdName = props.getProperty(Threshold.DATASOURCE);
+		} catch (Exception e) {
+			rrdName = "test.rrd";
+		}
+		try {
+			monitorArgs = props.getProperty(Threshold.MONITOR_ARGS);
+		} catch (Exception e) {
+		}
+		try {
+			baseLine = Double.parseDouble(props
+					.getProperty(Threshold.BASE_LINE));
+		} catch (Exception e) {
+		}
+		try {
+			activationTimeoutInSeconds = Integer.parseInt(props
+					.getProperty(Threshold.SPAN_LENGTH));
+		} catch (Exception e) {
+		}
 	}		
 
 	protected void act(long timestampSec) {

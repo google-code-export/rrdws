@@ -1,9 +1,7 @@
 package cc.co.llabor.threshold.syso;
  
 import java.util.Date; 
-import java.util.Properties; 
-
-import cc.co.llabor.threshold.AbstractActionist;
+import java.util.Properties;  
 import cc.co.llabor.threshold.MVELActionist;
 import cc.co.llabor.threshold.rrd.Threshold;
 /** 
