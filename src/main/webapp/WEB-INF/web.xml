@@ -217,7 +217,7 @@
 	</servlet-mapping>
 	<!-- Default page to serve -->
 	<welcome-file-list>
-		<welcome-file>rrd.jsp</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 <!-- http://mojo.codehaus.org/jspc-maven-plugin/usage.html -->
 <!-- [INSERT FRAGMENT HERE] -->

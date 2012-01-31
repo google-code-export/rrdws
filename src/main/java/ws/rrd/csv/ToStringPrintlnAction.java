@@ -31,7 +31,7 @@ public class ToStringPrintlnAction implements Action {
 			public ToStringPrintlnAction(DateFormat dateFormat){
 				this.sdf = dateFormat;
 			}
-			Registry reg ;
+			Registry reg = Registry.getInstance(); 
 			@Override
 			public Object perform(String xpath, String timestamp, String data) {
 				try {
@@ -46,8 +46,8 @@ public class ToStringPrintlnAction implements Action {
 						System_out_println( xpath + "-->"  );  
 						String cmdCreateTmp = RrdUpdateAction.makeCreateCMD(timestampTmp, xpath) ;
 						System_out_println( cmdCreateTmp  );
-						Cache cacheTmp = Manager.getCache();
-						reg = reg == null?(Registry) cacheTmp.get("REGISTRY"):reg;
+						// TODO ??? is it still active?
+						reg = Registry.getInstance();
 					}
 					String  cmdUpdateTmp = RrdUpdateAction.makeUpdateCMD(data, timestampTmp, xpath) ; 
 					System_out_println( cmdUpdateTmp  );

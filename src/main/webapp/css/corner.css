@@ -38,7 +38,7 @@ body > div.cornerA {
 
 .cornerB {
   padding:6px;
-  background-color: #0066ff; 
+  background-color: #aaddff; 
   font-size: medium; 
   font-weight: bold; 
   /* Netscape 4, IE 4.x-5.0/Win and other lesser browsers will use this */
@@ -54,7 +54,7 @@ body > div.cornerB {
 
 .cornerC {
   padding:6px;
-  background-color: #44ff44; 
+  background-color: #aaffbb; 
   font-size: medium; 
   font-weight: bold; 
   /* Netscape 4, IE 4.x-5.0/Win and other lesser browsers will use this */

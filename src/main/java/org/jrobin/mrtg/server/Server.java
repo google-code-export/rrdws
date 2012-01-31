@@ -316,8 +316,8 @@ public class Server implements MrtgConstants {
 		int _w = 480;
 		String _t = ""+host+":"+ifDescr;
 		String _v = "-";
-	    Cache cache = Manager.getCache();
-	    Registry reg = (Registry) cache.get("REGISTRY");
+	    
+	    Registry reg = Registry.getInstance(); 
 	    String path2RRDb = calPath2RRDb(host, ifDescr);
 		String dbName = reg.getPath2db().get(path2RRDb);
 		String _end = ""+stop;
