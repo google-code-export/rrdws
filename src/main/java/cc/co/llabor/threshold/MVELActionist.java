@@ -24,26 +24,30 @@ public abstract class MVELActionist extends AbstractActionist {
 	{
 		this.monitorType= "mvel";
 	}
-	
-	public MVELActionist( ){  
-		
-	}
+
 	
 	public MVELActionist(Properties props){ 
 		init(props);
 	}	 	
+	
+	private static final Properties defaultProps = new Properties();
+	static {
+		defaultProps .setProperty(Threshold.DATASOURCE, "test.rrd"); 
+	}
+	
+	public MVELActionist( ){  
+		init(defaultProps );
+	}	
 	public MVELActionist(String rrdName, String monitorArgs, 	long notificationInterval) {
 		this.rrdName = 	rrdName;	//			RrdDb rrd = RrdDbPool.getInstance().requestRrdDb(rrdName ); 
 		this.monitorArgs  =  monitorArgs ;
 		this.notificationIntervalInSecs = notificationInterval;
-		this.setDsName  ("speed");
-		Properties props = new Properties();
-		props.setProperty(Threshold.DATASOURCE , rrdName);
-		props.setProperty(Threshold.MONITOR_ARGS , monitorArgs);
-		props.setProperty(Threshold.BASE_LINE , ""+baseLine); 
-		props.setProperty(Threshold.SPAN_LENGTH , ""+activationTimeoutInSeconds); 
-		
-		init(props );
+		this.setDsName  ("speed"); 
+		defaultProps.setProperty(Threshold.DATASOURCE , rrdName);
+		defaultProps.setProperty(Threshold.MONITOR_ARGS , monitorArgs);
+		defaultProps.setProperty(Threshold.BASE_LINE , ""+baseLine); 
+		defaultProps.setProperty(Threshold.SPAN_LENGTH , ""+activationTimeoutInSeconds); 
+		init(defaultProps );
 	}
 	/**
 	 * @author vipup

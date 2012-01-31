@@ -25,7 +25,11 @@ public class TholdIniTest extends TestCase {
 			Object thTmp = c.get(key );
 			thTmp = AlertCaptain.toThreshold(thTmp );
 			assertTrue("!NOT Threshold!:"+thTmp, thTmp instanceof Threshold);
-			assertTrue(((Threshold)thTmp).getDatasource().equals("test.rrd") );
+			try{
+				assertTrue(((Threshold)thTmp).getDatasource().equals("test.rrd") );
+			}catch(NullPointerException e){
+				fail();
+			}
 		}
 	} 
 	/**
@@ -65,7 +69,7 @@ public class TholdIniTest extends TestCase {
 		for (int i=0;i<2001;i+=60){
 			ac.tick( i* 60 );// 200 mins on live 
 		}
-		assertEquals(""+localOut, localOut.toString().length(), 207);
+		assertEquals(""+localOut, localOut.toString().length(), 207); 
 	} 	
 	
 	RrdDef rrdDef; 

@@ -33,8 +33,7 @@ public class Always2RRDActionist extends CompositeAlerter {
 	@Override
 	public void performSleep(long timestampSec) { 
 		this.rrdwriter.setIncident(false);
-		this.rrdwriter.performAction(timestampSec); 
-		//super.performAction(timestampSec); 
+		this.rrdwriter.performAction(timestampSec);  
 	}	
 
 	/**
@@ -67,46 +66,11 @@ public class Always2RRDActionist extends CompositeAlerter {
 
 
 
-	private String toNICK(String namePar){
-		String retval = "";
-		String accu = "";
-		String theLast = "LeaSt";
-		for (String theC :namePar.replace(".", ",").split(",")){
-			theLast = theC;
-			accu+=theC.substring(0,1).toUpperCase();
-		}
-		retval = accu;
-		accu = "";
-// 		Log4JActionist -> AJL4		
-//		String abcTmp = "abcdefghijklmnoprstuvwxwz1234567890".toUpperCase();
-//		for (int i=0;i<abcTmp .length();i++){
-//			String theC = abcTmp .substring(i,i+1);
-//			if(theLast.indexOf(theC)>=0){
-//				accu+=theC;
-//			}
-//			
-//		}
-//		namePar+=accu;
-
-		
-// Log4JActionist ->L4JA		
-		accu = "";
-		String abcTmp = "abcdefghijklmnoprstuvwxwxyz1234567890".toUpperCase();
-		for (int i=0;i<theLast .length();i++){
-			String theC = theLast.substring(i,i+1);
-			if(abcTmp.indexOf(theC)>=0){
-				accu+=theC;
-			}
-			
-		}	
-		retval +=accu;
-		return retval;
-	}	
 	
 	private String storeWrapped(MVELActionist clPar ) {
 		String nick = "rrw";
 		try{
-			nick  = toNICK(clPar.getClass().getName());
+			nick  = AlertCaptain.toNICK(clPar.getClass().getName());
 		}catch(Throwable e){}
 		String retval = nick +"@" + clPar.getDatasource();
 		Properties props = new Properties();
@@ -123,10 +87,11 @@ public class Always2RRDActionist extends CompositeAlerter {
 		} catch (TholdException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
-		
+		}	 
 		return retval;
 	}
+	
+	
 	protected void init(Properties props) {
 		System.out.println(props);
 		super.init(props);

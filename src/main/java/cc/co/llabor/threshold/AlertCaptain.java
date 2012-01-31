@@ -43,6 +43,7 @@ public class AlertCaptain implements Runnable, NotificationListener {
 
 
 
+	private static final String TO_DO_PROPERTIES = "ToDo.properties";
 	static boolean inited = false;
 
 	public static AlertCaptain getInstance() {
@@ -121,26 +122,118 @@ public class AlertCaptain implements Runnable, NotificationListener {
 		this.queue = q;
 		log.info(Repo.getBanner("AlertCaptain"));
 	}
-	public void register(Threshold e) { 
-		persist(e);
-		NotificationListener listener = this;
-		NotificationFilter filter = null;
-		Object handback = null;
-		RrdKeeper.getInstance().addNotificationListener(listener , filter , handback );
-		syncUC();
+	public void register(Threshold e) {
+		boolean exist  = indexOf(e)>-1;  
+// !!!FIXED@register!!!		if (1==1 ){
+		if (!exist ){
+			ToDo.add(e );
+			NotificationListener listener = this;
+			NotificationFilter filter = null;
+			Object handback = null;
+			RrdKeeper.getInstance().addNotificationListener(listener , filter , handback );
+			syncUC();
+		}
 	}
-	private void persist(Threshold e) {
-		ToDo.add(e);
-		commit();
+	// ToDo.indexOf(activist)
+	private int indexOf(Threshold e){
+		int retval = -1;
+		int count = -1;
+		for (Threshold t: ToDo){
+			count++;
+			String tStr = t.toProperties().toString();
+			String eStr = e.toProperties().toString();			
+			if (eStr .equals(tStr)){
+				retval = count;
+				break;
+			}
+		}
+		
+		return retval ;
 	}
+	private boolean persist(Threshold e) {
+		boolean exist  = indexOf(e)>=0;
+		if (!exist){
+			ToDo.add(e );
+			syncUC(); 
+			commit();
+			
+		}			
+		return !exist;
+	}
+	/**
+	 * 
+	 * @author vipup
+	 * @param activist
+	 * @return true if element was removed from registered-Activist-List
+	 */
 	private boolean unpersist(Threshold activist) {
-		boolean o = ToDo.remove(activist);
-		commit();
-		return o;
-	}	
+		synchronized (ToDo) { 
+			syncUC();
+			int index  = indexOf(activist);
+			Threshold o = index>-1? ToDo.remove(index):null;
+			syncUC();
+			commit();
+			return o !=null;
+		}
+		
+	}
+	
+	private String storeWrapped(Threshold clPar ) {
+		String nick = "rrw";
+		try{
+			nick  = toNICK(clPar.getClass().getName());
+		}catch(Throwable e){}
+		String retval = nick +"@" + clPar.getDatasource();
+		Properties props = new Properties();
+		String nameTmp = clPar.getDsName();
+		nameTmp = nameTmp==null?"NONAME#"+System.currentTimeMillis():nameTmp;
+		props.put(Threshold.DS_NAME, nameTmp);
+		props.put(Threshold.CLASS , clPar.getClass().getName() );
+		String monArgs = clPar.getMonitorArgs() ;
+		monArgs =monArgs ==null?"-MARGS-":monArgs ;
+		props.put(Threshold.MONITOR_ARGS, monArgs );
+		try{
+			props.put(Threshold.SPAN_LENGTH, "" + ((MVELActionist)clPar).notificationIntervalInSecs );
+		}catch(Exception e){}
+		String monAct = clPar.getAction() ;
+		monAct=monAct==null?"-ACTION-":monAct ;
+		
+		props.put(Threshold.ACTION ,  monAct );
+		String actionArgs  = clPar.getActionArgs() ;
+		actionArgs  = actionArgs  ==null?"-actionArgs-":actionArgs  ;
+		props.put(Threshold.ACTION_ARGS , actionArgs  );
+		
+		String childTmp =retval;
+ 		try {
+ 			AlertCaptain.storeToName(childTmp, props);
+		} catch (TholdException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	 
+		return retval;
+	}
+	
+	
 	private void commit(){
-		Cache cTmp = Manager.getCache(this.getClass().getName());
-		cTmp.put("ToDo", ToDo);
+		int counterTmp = 0;
+		for (Threshold theNext: list() ){
+			try {
+				storeToName(""+counterTmp, theNext);
+				 
+			} catch (TholdException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+			 
+				storeWrapped( theNext);
+			} catch ( Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+			counterTmp++;
+		}
+		
 	}
 	
 	public void init(){
@@ -152,13 +245,12 @@ public class AlertCaptain implements Runnable, NotificationListener {
 		}
 	}
 	private void load() throws TholdException{
-		Cache cTmp = Manager.getCache(this.getClass().getName());
-		Object tholdProps = cTmp.get("ToDo.properties"); 
+		Cache cTmp = Manager.getCache(cacheNS);
+		Object tholdProps = cTmp.get(TO_DO_PROPERTIES); 
 		// same as at the StartStopServet.init(...)
 		Threshold watchDog  = /*ac.*/toThreshold(tholdProps );
 		/*ac.*/register(  watchDog );
 		lookInsideThold(tholdProps);
-		
 	}
 	
 
@@ -349,10 +441,9 @@ public class AlertCaptain implements Runnable, NotificationListener {
 	static AlertCaptain myself = new AlertCaptain();
 	public Threshold unregister(Threshold activist) {
 		try {
-			if (ToDo.indexOf(activist) >= 0) {
+			if (ToDo.indexOf(activist) > -1) {// ToDo.add(activist)
 				boolean o = unpersist(activist);
 				if (o){
-					syncUC();
 					activist.stop();
 					return activist;
 				}
@@ -464,5 +555,40 @@ public class AlertCaptain implements Runnable, NotificationListener {
 		//log.error("#"+ts+"::"+notification+handback);
 		this.tick(ts /1000);
 	}
+	public static String toNICK(String namePar) { 
+			String retval = "";
+			String accu = "";
+			String theLast = "LeaSt";
+			for (String theC :namePar.replace(".", ",").split(",")){
+				theLast = theC;
+				accu+=theC.substring(0,1).toUpperCase();
+			}
+			retval = accu;
+			accu = "";
+//	 		Log4JActionist -> AJL4		
+//			String abcTmp = "abcdefghijklmnoprstuvwxwz1234567890".toUpperCase();
+//			for (int i=0;i<abcTmp .length();i++){
+//				String theC = abcTmp .substring(i,i+1);
+//				if(theLast.indexOf(theC)>=0){
+//					accu+=theC;
+//				}
+//				
+//			}
+//			namePar+=accu;
+
+			
+	// Log4JActionist ->L4JA		
+			accu = "";
+			String abcTmp = "abcdefghijklmnoprstuvwxwxyz1234567890".toUpperCase();
+			for (int i=0;i<theLast .length();i++){
+				String theC = theLast.substring(i,i+1);
+				if(abcTmp.indexOf(theC)>=0){
+					accu+=theC;
+				}
+				
+			}	
+			retval +=accu;
+			return retval;
+		}	
 
 }
