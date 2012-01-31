@@ -24,21 +24,16 @@
  <table class="data-table-3" summary="this is the table >;-)" >
 <%
 //removeFromRegistry.jsp provide remove ONE_ENTRY by key from common REGISTY rrd.DBs
- 
- 
 Cache cache = Manager.getCache();
-Registry reg = (Registry) cache.get("REGISTRY");
+Registry reg = Registry.getInstance();
 
 String key =  request.getParameter("rrd");
 String val = reg.getDb2path().get(key);
 System.out.println("String val = reg.getDb2path().get(key);"+val);
-reg.unregister(val, key);
-synchronized (cache) { 
-	cache.remove("REGISTRY");
-	cache.put("REGISTRY", new Registry( reg.getDb2path() ));
-	//last_clean=System.currentTimeMillis();					
-	System.out.println("REGISTRY ReFlush #" );
-}
-
+reg.unregister(key, val );  
+// commit to DISK
+reg.flush();	 
+//last_clean=System.currentTimeMillis();					
+System.out.println("REGISTRY ReFlush #" );
 %>
 <%=val%>

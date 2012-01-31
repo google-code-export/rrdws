@@ -138,23 +138,17 @@ public class RrdUpdateAction implements Action {
 		}
 
 	    private static volatile long last_clean = 0;
-	    private static Cache cache = Manager.getCache();
-	    private static Registry reg = (Registry) cache.get("REGISTRY"); 
+	    
+	    private static Registry reg = Registry.getInstance(); 
+	    	
 	    static int flushCount=0;
 	    static int changeCount=0;
 		private static void checkReg(String rrddb, String xpath  ) {
-			if (cache == null) return; // GC/destroy-mode
-			if (reg == null){ 
-				reg = new Registry();
-			}else{
-				// exceptional test-DB - alsway registered DB
-				reg.register("test.rrd","test");
-			}
+
 			
 			if ( flushCount == 0 || changeCount >10 ||(last_clean +10000) < System.currentTimeMillis()){
-				synchronized (cache) { 
-					cache.remove("REGISTRY");
-					cache.put("REGISTRY", new Registry( reg.getDb2path() ));
+				synchronized (Registry.class) { 
+					reg.flush();
 					last_clean=System.currentTimeMillis();					
 					System.out.println("REGISTRY Flush #"+flushCount+++":"+changeCount);
 					changeCount =0;
