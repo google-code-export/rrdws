@@ -114,7 +114,7 @@ public class Registry implements Serializable{
 			cache.remove(REGISTRY_CACHE_NAME);
 			cache.put(REGISTRY_CACHE_NAME, new Registry( this.getDb2path() ));
 		}
-		
+		lastInitTimeStamp = this.initedAt;
 	}
 
 }
