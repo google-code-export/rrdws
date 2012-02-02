@@ -489,7 +489,7 @@ public class LServlet extends HttpServlet {
 		}  
 	}
 	private void checkBlack(String decodedUrl) throws BlackListedException {
-		Cache blTmp = Manager.getCache("BlackList");
+		Cache blTmp = Manager.getCache("BlackList"); 
 		for (String key:(""+decodedUrl).split("/\\&?")){
 			String val = (String) blTmp .get(key);
 			if (val!=null )throw new BlackListedException(decodedUrl);
