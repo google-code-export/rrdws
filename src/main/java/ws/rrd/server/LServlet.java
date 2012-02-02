@@ -170,7 +170,8 @@ public class LServlet extends HttpServlet {
 				decodedUrl = requestURL.substring( requestURL.lastIndexOf(getMYALIAS()) + getMYALIAS().length() );
 				
 			}
-				
+			
+			checkBlack(decodedUrl);
 			 
 			String []decodedUrls ;
 			int ind=0;
@@ -486,6 +487,13 @@ public class LServlet extends HttpServlet {
 			}
 			
 		}  
+	}
+	private void checkBlack(String decodedUrl) throws BlackListedException {
+		Cache blTmp = Manager.getCache("BlackList");
+		for (String key:(""+decodedUrl).split("/\\&?")){
+			String val = (String) blTmp .get(key);
+			if (val!=null )throw new BlackListedException(decodedUrl);
+		}
 	}
 	public static Cache getCache() {
 		Cache getCache = Manager.getCache("getCache@"+LServlet.class.getName());

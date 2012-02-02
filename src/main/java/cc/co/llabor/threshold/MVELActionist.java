@@ -1,7 +1,9 @@
 package cc.co.llabor.threshold;
 
 import java.io.IOException;  
+import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 import java.util.Properties;
 
@@ -53,32 +55,22 @@ public abstract class MVELActionist extends AbstractActionist {
 	 * @author vipup
 	 */
 	private static final long serialVersionUID = -1411482451587802533L;
+	private static final Hashtable<String, Object> ctxCache = new Hashtable<String, Object>();
+	private static final Hashtable<String, Serializable > expressionCache =  new Hashtable<String, Serializable >();
+	private static final boolean TRACE = false;
 	@Override
 	protected boolean checkIncident(double val, long timestamp) {
 		
 		String monitorType = this.getMonitorType();
 		if ("mvel".equals( monitorType)){
 			String expression = this.getMonitorArgs();//["speed"]rrd.dsNames[0]
-			Map<String , Object> ctx = new HashMap<String, Object>() ;
-			try {
-				RrdDb rrd = RrdDbPool.getInstance().requestRrdDb(this.rrdName );
-				ctx.put("rrd", rrd);
-				ctx.put("val", val); // TODO still not used
-				ctx.put("timestamp", timestamp);// TODO still not used
-				ctx.put("this", this);// TODO still not used
-				ctx.put("dvalue", rrd.getLastDatasourceValues()[0]);//rrd.lastDatasourceValues[0]
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (RrdException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
 			Object result = null;
 			try{
-				result  = MVEL.eval(expression , ctx );
+				Object ctx = getContext(val, timestamp);
+				Serializable exprTmp = getExpression(expression); 
+				result  = MVEL.executeExpression(exprTmp, ctx  );
 			}catch(Throwable e){
-				// ignore any error
+				if (TRACE)e.printStackTrace();
 			}
 			boolean retval = false;
 			if ((result instanceof Boolean)){
@@ -89,6 +81,42 @@ public abstract class MVELActionist extends AbstractActionist {
 			if (1==2)throw new RuntimeException("unknown monitorType:"+monitorType);
 			else return false;
 		}
+	}
+	
+	private Serializable getExpression(String expression) {
+		Serializable retval = expressionCache.get(expression);
+		if (retval==null){
+			retval = MVEL.compileExpression(expression);
+			expressionCache.put(expression, retval);
+		}
+		return retval;		
+	}
+	
+	private Object getContext(double val, long timestamp) {
+		String theName = this.rrdName;
+		Object o = ctxCache.get(theName );
+		o = o==null?getNewContext(val, timestamp,this):o;
+		return o;
+	}
+		
+	private Object getNewContext(double val, long timestamp, MVELActionist thisO) {
+		Map<String , Object> ctx = new HashMap<String, Object>() ;
+		try {
+			RrdDb rrd = RrdDbPool.getInstance().requestRrdDb(thisO.rrdName );
+			ctx.put("rrd", rrd);
+			ctx.put("val", val); // TODO still not used
+			ctx.put("timestamp", timestamp);// TODO still not used
+			ctx.put("this", thisO);// TODO still not used
+			ctx.put("dvalue", rrd.getLastDatasourceValues()[0]);//rrd.lastDatasourceValues[0]
+			ctxCache.put(thisO.rrdName , ctx);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			if (TRACE)e.printStackTrace();
+		} catch (RrdException e) {
+			// TODO Auto-generated catch block
+			if (TRACE)e.printStackTrace();
+		} 
+		return ctx;
 	} 
 }
 
