@@ -373,7 +373,11 @@ public class AlertCaptain implements Runnable, NotificationListener {
 			try {
 				if (queue.isEmpty()) {
 					wait100();
-				} else {
+				} else if (queue.size()>100000){
+					log.error("AlertingQueue reached MAX_ALLOWED_CAPACITY["+100000+"]:"+queue.size()+"!!!");
+					queue.clear();
+					log.warn ("AlertingQueue resetet!");
+				}else{
 					CheckPoint charlieTmp = null;
 					try {
 						charlieTmp = queue.peek();
@@ -420,27 +424,20 @@ public class AlertCaptain implements Runnable, NotificationListener {
 	//sync
 	private void processData(double val, long timestampInSeconds, Threshold activist) {
  		
-//		String rrdDef = activist.getDatasource();
-//		try {
-//			RrdDb rrd = RrdDbPool.getInstance().requestRrdDb(rrdDef);
-			 
-			// synch mode
-//			if (this.isAsync) {
-//				val = charlieTmp.getValue();
-//			} else {
-//				String dsName = activist.getDsName();//"speed";
-//				Datasource dsTmp = rrd.getDatasource(dsName);
-//				val = dsTmp.getLastValue();
-//			}
-			((AbstractAlerter)activist).performChunk(timestampInSeconds, val);
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (RrdException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-
+			AbstractAlerter abstractAlerter = (AbstractAlerter)activist;
+			long start = System.currentTimeMillis();
+			long startNano = System.nanoTime();
+			long quote = abstractAlerter.getQuote();
+			long price = abstractAlerter.getPrice();
+			if (quote > price){
+				abstractAlerter.performChunkAsync(timestampInSeconds, val, price);	
+			} 
+			long stop = System.currentTimeMillis();
+			long stopNano = System.nanoTime();
+			long executeTimeNano =stopNano-startNano;
+			long executeTime =stop-start;
+			abstractAlerter.billPrice( timestampInSeconds ,executeTime ,executeTimeNano);
+ 
 	}
 
 	static AlertCaptain myself = new AlertCaptain();

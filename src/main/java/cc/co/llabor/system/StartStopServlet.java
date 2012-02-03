@@ -405,6 +405,15 @@ JRE_HOME/lib/management/snmp.acl
 			e.printStackTrace();
 		}
 		
+		try {
+			AlertCaptain.getInstance(mythreads).setAlive(false);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
 		log.info(Repo.getBanner( "+rrdws"));
 		log.info("Stoped");
 	}
