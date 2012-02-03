@@ -86,6 +86,11 @@ public abstract class AbstractAlerter implements Threshold {
 	
 	
 	protected long incidentTime = -1;
+	
+	private long lastSecond;
+	private long lastSecondPrice;
+	private long lastSecondPriceNano;
+	
 	@Override
 	public long getSpanLength() {
 		return activationTimeoutInSeconds;
@@ -226,6 +231,37 @@ public abstract class AbstractAlerter implements Threshold {
 		else {
 			return null;
 		}
+	}
+
+	public void billPrice(
+			long timestampInSeconds, 
+			long executeTime,
+			long executeTimeNano) {
+		 if (lastSecond < timestampInSeconds ){// new second
+			 lastSecond = timestampInSeconds ;
+			 lastSecondPrice = 0;
+			 lastSecondPriceNano = 0;
+		 }else{ // accumulate price
+			 lastSecondPrice += executeTime;
+			 lastSecondPriceNano += executeTimeNano;
+		 }
+	}
+
+	public long getQuote() {
+		// TODO Currently max is 10 million nanosecs ( 10 millisecs)
+		return 10000000;
+	}
+
+	public long getPrice() { 
+		return lastSecondPriceNano;
+	}
+
+	
+	
+	public void performChunkAsync(long timestampInSeconds, double val,
+			long price) {
+		// TODO AsynchExecutor asCaller = AsynchExecutor.getI (); asCaller.exec(timestampInSeconds, val,price);
+		performChunk(timestampInSeconds, val);
 	}
 
  
