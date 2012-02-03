@@ -146,7 +146,7 @@ public class StartStopServlet extends HttpServlet {
 			e.printStackTrace();
 		} 
 		// do exactly the same as prev-WatchDog, but otherwise
-		AlertCaptain ac = AlertCaptain.getInstance();
+		AlertCaptain ac = AlertCaptain.getInstance(mythreads);
 //		Cache tholdRepo = Manager.getCache("thold");
 //		Object tholdProps = tholdRepo.get("default.properties");//RRDHighLimitWatchDog
 //		try {

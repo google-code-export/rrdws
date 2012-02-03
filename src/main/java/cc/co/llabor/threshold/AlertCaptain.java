@@ -47,12 +47,17 @@ public class AlertCaptain implements Runnable, NotificationListener {
 	static boolean inited = false;
 
 	public static AlertCaptain getInstance() {
+		ThreadGroup groupTmp = Thread.currentThread().getThreadGroup();
+		return getInstance(groupTmp );
+	}
+	public static AlertCaptain getInstance(ThreadGroup groupTmp) {
 		if (!inited) {
 			synchronized (Thread.class) {
 				if (!inited) {
 					if (myself.isAsync && !myself.isAlive) {
 						System.out.println("starting ....");
-						Thread th = new Thread(myself, "AlertCaptain");
+						
+						Thread th = new Thread(groupTmp , myself, "AlertCaptain");
 						th.setPriority(Thread.MAX_PRIORITY / 2
 								+ Thread.MAX_PRIORITY / 4); // 75%
 						myself.isAlive = true;
