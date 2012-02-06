@@ -1,7 +1,7 @@
 <%@page import="cc.co.llabor.cache.Manager"%>
 <%@page import="net.sf.jsr107cache.Cache"%>
 <%
-
+try{
 	String toPrint ="nothing to do..";
 	Cache blTmp = Manager.getCache("BlackList");
 	// LIST-repo contain all items
@@ -60,3 +60,11 @@
 <pre>
 <%=toPrint.replace("/","\n") %>
 </pre>
+<%
+}catch(Throwable e){
+	e.printStackTrace();
+	e.printStackTrace( response.getWriter());
+ 
+
+}
+%>

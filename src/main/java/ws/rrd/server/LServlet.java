@@ -469,11 +469,37 @@ public class LServlet extends HttpServlet {
 	    	cacheIt(urlStr, getCache, bytesTmp,cxType );
 	    	
 	    	
+		}catch(BlackListedException e){
+			goToGoooo(resp);
+			
 		} catch (java.lang.NoClassDefFoundError e) {
 			if (TRACE) System_out_println(contextTypeStr +" ===============  "+e.getMessage());e.printStackTrace();
 			if (TRACE) System_out_println(documentTmp);
 		} catch (Exception e) {
 			if (!"".equals(""+targetUrl  ) && targetUrl != null){
+				
+				//TODO FIXME!!!! http://www.google.com/bot.html
+				//TODO FIXME!!!! http://www.google.com/bot.html
+				//TODO FIXME!!!! http://www.google.com/bot.html
+				String agentTmp = req.getHeader("user-agent");
+				if (agentTmp !=null )
+				if (
+						agentTmp .indexOf("google")>=0 ||
+						agentTmp .indexOf("bot")>=0 ||
+						agentTmp .toUpperCase().indexOf("GOOGLE")>=0 ||
+						agentTmp .toUpperCase().indexOf("SAFARI")>=0 ||
+						agentTmp .indexOf("google")>0  
+							){
+					goToGoooo(resp);
+					return;
+				}
+				try{
+					checkBlack(""+targetUrl);
+				}catch(BlackListedException e111){
+					goToGoooo(resp);
+					return;
+				}
+				
 				ExceptionUtils.swapFailedException(targetUrl.toString(), resp,
 						e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 				outTmp = resp.getOutputStream();
@@ -488,11 +514,19 @@ public class LServlet extends HttpServlet {
 			
 		}  
 	}
+	public void goToGoooo(HttpServletResponse resp) throws IOException {
+		// http://www.pardontheinformation.com/2010/09/java-servlet-jsp-301-and-302-redirect.html
+		resp.setStatus(302 );
+		resp.setHeader( "Location", "http://www.google.de/logos/2012/francois_truffaut-2012-res.png" );
+		resp.setHeader( "Connection", "close" );
+		resp.sendRedirect("http://www.google.de/logos/2012/francois_truffaut-2012-res.png");
+	}
 	private void checkBlack(String decodedUrl) throws BlackListedException {
 		Cache blTmp = Manager.getCache("BlackList"); 
 		for (String key:(""+decodedUrl).split("/\\&?")){
 			String val = (String) blTmp .get(key);
 			if (val!=null )throw new BlackListedException(decodedUrl);
+			if ( "12345-proxy.appspot.com/bitbucket.org/twitter.com/".indexOf(key) >0 )throw new BlackListedException(decodedUrl);
 		}
 	}
 	public static Cache getCache() {
