@@ -517,9 +517,15 @@ public class LServlet extends HttpServlet {
 	public void goToGoooo(HttpServletResponse resp) throws IOException {
 		// http://www.pardontheinformation.com/2010/09/java-servlet-jsp-301-and-302-redirect.html
 		resp.setStatus(302 );
-		resp.setHeader( "Location", "http://www.google.de/logos/2012/francois_truffaut-2012-res.png" );
+		
+		
+		String urlTo = "http://www.anti-scam.org/scamers-pics/scamers_XXXX_Y.jpg";
+//			http://www.anti-scam.org/scamers-pics/scamers_4137_1.jpg
+		urlTo = urlTo.replace("XXXX", ""+(1000 + System.nanoTime()%3000));
+		urlTo = urlTo.replace("Y",  ""+ (1+System.currentTimeMillis()%3) );
+		resp.setHeader( "Location",  urlTo);
 		resp.setHeader( "Connection", "close" );
-		resp.sendRedirect("http://www.google.de/logos/2012/francois_truffaut-2012-res.png");
+		resp.sendRedirect(urlTo);
 	}
 	private void checkBlack(String decodedUrl) throws BlackListedException {
 		Cache blTmp = Manager.getCache("BlackList"); 
