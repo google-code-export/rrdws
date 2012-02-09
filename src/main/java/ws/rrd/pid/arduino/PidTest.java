@@ -30,51 +30,51 @@ public class PidTest extends TestCase {
 
 	
 	
-	public void testBasic(){
+	public void testBasic() {
 		/********************************************************
-		 * PID Basic Example
-		 * Reading analog input 0 to control analog PWM output 3
+		 * PID Basic Example Reading analog input 0 to control analog PWM output
+		 * 3
 		 ********************************************************/
 
-		//#include <PID_v1.h>
-		
-		//Define Variables we'll be connecting to
+		// #include <PID_v1.h>
+
+		// Define Variables we'll be connecting to
 		double Setpoint = 100;
 		double Input = 1;
 		double Output = -1;
 
-		//Specify the links and initial tuning parameters
-		//PID myPID(&Input, &Output, &Setpoint,2,5,1, DIRECT);
-		Pid myPID = new Pid(Input, Output, Setpoint,.2,.15,.011, Pid.DIRECT);
-		
-		//void setup()
+		// Specify the links and initial tuning parameters
+		// PID myPID(&Input, &Output, &Setpoint,2,5,1, DIRECT);
+		Pid myPID = new Pid(Input, Output, Setpoint, .123, .135, .012, Pid.DIRECT);
+
+		// void setup()
 		{
-		  //initialize the variables we're linked to
-		  Input = analogRead(0);
-		  Setpoint = 100.0;
+			// initialize the variables we're linked to
+			Input = analogRead(0);
+			Setpoint = 100.0;
 
-		  //turn the PID on
-		  myPID.SetMode(Pid.AUTOMATIC);
+			// turn the PID on
+			myPID.SetMode(Pid.AUTOMATIC);
 		}
 
-		//void loop()
-		for (int i=0;i<100;i++)
-		{
-		  Input = analogRead(0);
-		  //myPID.myInput =  Input;
-		  Output = myPID.Compute(Input);
-		  //Output = myPID.myOutput;
-		  System.out.println("I:"+Input+"   O:"+Output+"   Setpoint-="+(Setpoint-Input));
-		  analogWrite(3,Output);
-		  try {
-			Thread.sleep(10);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		// void loop()
+		for (int i = 0; i < 100; i++) {
+			Input = analogRead(0);
+			// myPID.myInput = Input;
+			Output = myPID.Compute(Input);
+			// Output = myPID.myOutput;
+			System.out.println("I:" + Input + "   O:" + Output
+					+ "   Setpoint-=" + (Setpoint - Input));
+			analogWrite(3, Output);
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		}
+		assertTrue("" + (Setpoint - Input), Math.abs(Setpoint - Input) < 6);
 
-		 		
 	}
 
 	private void analogWrite(int ignoredPar, double output) { 
