@@ -5,6 +5,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method; 
 import java.util.HashMap; 
 import java.util.Map; 
+import java.util.Properties;
+
 import javax.management.Attribute;
 import javax.management.AttributeList;
 import javax.management.AttributeNotFoundException; 
@@ -23,8 +25,15 @@ import javax.management.NotificationBroadcaster;
 import javax.management.NotificationBroadcasterSupport; 
 import javax.management.ObjectName;
 import javax.management.ReflectionException; 
+
+import net.sf.jsr107cache.Cache;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import ws.rrd.pid.arduino.Pid;
+
+import cc.co.llabor.cache.Manager;
 
 /** 
  * <b>Description:TODO</b>
@@ -207,38 +216,76 @@ public class RrdKeeper extends NotificationBroadcasterSupport implements Notific
             new MBeanAttributeInfo[_metrics.size()];
         int i=0;
         for (String name : _metrics.keySet()) {
-            String attributeType = getAttributeType(name);
-			String attributeDescription = getAttributeDescription(name);
-			attrs[i++] =
-                new MBeanAttributeInfo(
-                		name,
-                        attributeType,
-                        attributeDescription,
-                        true,   // isReadable
-                        false,  // isWritable
-                        false); // isIs
+        	if ( !isPID(name) ){
+	            String attributeType = getAttributeType(name);
+				String attributeDescription = getAttributeDescription(name);
+				attrs[i++] =
+	                new MBeanAttributeInfo(
+	                		name,
+	                        attributeType,
+	                        attributeDescription,
+	                        true,   // isReadable
+	                        false,  // isWritable
+	                        false); // isIs
+        	}else{ // still the same as above
+	            String attributeType = getAttributeType(name);
+				String attributeDescription = getAttributeDescription(name);
+				attrs[i++] =
+	                new MBeanAttributeInfo(
+	                		name,
+	                        attributeType,
+	                        attributeDescription,
+	                        true,   // isReadable
+	                        false,  // isWritable
+	                        false); // isIs
+        		
+        	}
         }        
         return attrs;
     }
+
+	public boolean isPID(String name) {
+		return name.indexOf("::")>0;
+	}
     long lastSyncTimeMilliseconds = -1;
-    long lastUpdatesCounter = -1; 
-    private void syncValues() {
-//    	if (!inited){
-//    		System.out.println("not inited yet...");
-//    		try {
-//    			init();
-//    		} catch (Exception e) { 
-//    			e.printStackTrace();
-//    		}    		
-//    	}
+    long lastUpdatesCounter = -1;
+	private double health;
+	private double healthFactor; 
+
+	/**
+	 * accumulate new absolute value and retunt diff from prev
+	 * @author vipup
+	 * @param namePar
+	 * @param newVal
+	 * @return
+	 */
+	double accumulateValue(String namePar, double newVal){
+		double retval = 0;
+		try{
+			String s = ""+ _metrics .get(namePar);
+			_metrics .put(namePar,newVal);
+			retval = Double.parseDouble( s);
+			retval = newVal - retval;
+		}catch(Exception e){}
+		return retval;
+	}
+	
+	private void syncValues() {
     	long startTmp = System.currentTimeMillis();
 
-    	_metrics .put("loggedFatal",loggedFatal);
-    	_metrics .put("loggedError",loggedError);
-    	_metrics .put("loggedWarn",loggedWarn);
-    	_metrics .put("loggedInfo",loggedInfo);
-    	_metrics .put("loggedDebug",loggedDebug);    	
-    	_metrics .put("loggedTrace",loggedTrace);
+    	health += -100.0 * accumulateValue("loggedFatal",loggedFatal); 
+    	health += -10.0 * accumulateValue("loggedError",loggedError); 
+    	health += -10.0 * accumulateValue("loggedWarn",loggedWarn);    
+    	health += 1.0 * accumulateValue("loggedInfo",loggedInfo);   
+    	health += 10.0 * accumulateValue("loggedDebug",loggedDebug); 
+    	health += 100.0 * accumulateValue("loggedTrace",loggedTrace); 
+
+    	health += healthFactor ;
+    	
+    	
+    	_metrics .put("health",new Double( health ) );
+
+    	
     	_metrics .put("loggedCounter",loggedCounter);
 		_metrics .put("updateCounter",  new Long(updateCounter)  );
     	_metrics .put("successCounter",  new Long(successCounter));
@@ -267,8 +314,8 @@ public class RrdKeeper extends NotificationBroadcasterSupport implements Notific
 //    		log.warn(  "syncValues() ",ee);
 //    	}
 //    	
+    	// here is some statistical calculations 
     	long nowTmp = System.currentTimeMillis();
-    	
     	long sinceLastMsTmp = nowTmp - lastSyncTimeMilliseconds;
     	if ( sinceLastMsTmp  >60*1000){ // 1 per min
     		_metrics .put("timePerSync",   new Long(startTmp - nowTmp  ));
@@ -280,10 +327,56 @@ public class RrdKeeper extends NotificationBroadcasterSupport implements Notific
     		_metrics .put("updatesPerSecond",   new Double(updatesPerSecond));
     		lastSyncTimeMilliseconds = nowTmp ;
     	}				
-
-		
-
+    	
+    	// here is some PID - calculations ()
+    	if ( sinceLastMsTmp  >5*1000){ // 5 sec ((((also 1 per min ??
+    		String [] names = _metrics.keySet().toArray(new String[]{});
+			for (String name : names) {
+    			  if ( isPID(name) )continue; // only 1-st level of metrics will be processed with PID-controller
+    	          if (!"health".equals(name))continue; 
+    	          Pid pid = getPid(name);
+    	          Number val = _metrics.get(name);
+    	          double input =   val.doubleValue();
+    	          // calculate integrated value
+    	          double newVal = pid.Compute(input);
+    	          healthFactor = newVal ; ///????
+    	          storeVpid( name, pid);
+    	          _metrics .put(name+"::"+"newVal",    new Double(newVal ) ); 
+    	          
+    	          Properties pidProps = pid.toProperties();
+    	          for (String key:pidProps.keySet().toArray(new String[]{})){
+    	        	  _metrics .put(name+"::"+key,new Double(pidProps.getProperty(key)));
+    	          }
+    	     }     
+    	}
 	}
+    
+    
+    
+    
+	private Pid getPid(String name) {
+		Cache _vpids = Manager.getCache(Pid.class.getName()); 
+		String persistenceName = name+".properties";
+		Properties pVpid = (Properties) _vpids.get(persistenceName );
+		Pid retval = null;
+		try{
+			 retval  = new Pid (pVpid);
+		}catch(Exception e){e.printStackTrace();}
+		
+		if (retval==null){
+ 
+			retval = new Pid( 1, -1,100, .123, .135, .012, Pid.DIRECT);
+			storeVpid( name, retval);
+		}
+		return retval;
+	}
+
+	public void storeVpid( String name, Pid retval) {
+		Cache _vpids = Manager.getCache(Pid.class.getName()); 
+		String persistenceName = name+".properties";		
+		_vpids.put(persistenceName, retval.toProperties());
+	}
+
 	public void warning() {
 		warningCounter++;
 	}

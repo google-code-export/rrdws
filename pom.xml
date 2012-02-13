@@ -98,7 +98,7 @@
 		<dependency>
 			<groupId>cc.co.llabor</groupId>
 			<artifactId>cachefs</artifactId>
-			<version>0.0.5</version>
+			<version>0.0.12</version>
 		</dependency>
 		<dependency>
 			<groupId>cc.co.llabor</groupId>
@@ -135,7 +135,7 @@
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>jsr107cache</artifactId>
-			<version>${gae.version}</version>
+			<version>1.3.4</version>
 		</dependency>
 
 
@@ -457,7 +457,7 @@
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-local-runtime</artifactId>
-			<version>${gae.version}</version>
+			<version>1.3.4</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -754,7 +754,7 @@
 			SDK version pointed to by ${gae.home} property (Typically,
 			one used by your Eclipse plug-in)
 		-->
-		<gae.version>1.3.4</gae.version>
+		<gae.version>1.6.2.1</gae.version>
 
 		<!-- GWT version -->
 		<gwt.version>1.7.1</gwt.version>
