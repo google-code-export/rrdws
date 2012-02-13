@@ -268,7 +268,7 @@ public class LServlet extends HttpServlet {
 					if (dataTmp == null){
 						xRespTmp = urlFetcherTmp.fetchGetResp(urlStr, headsToResend);
 						
-					}else if (((LCacheEntry) dataTmp).getExpired() > System.currentTimeMillis()){
+					}else if (dataTmp instanceof LCacheEntry  && ((LCacheEntry) dataTmp).getExpired() > System.currentTimeMillis()){
 						// write cached !
 						LCacheEntry theItem = (LCacheEntry) dataTmp;	
 						resp.setContentType(theItem.getCxType());

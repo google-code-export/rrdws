@@ -25,6 +25,8 @@
     <attribute name="loggedDebug"  type="counter"/>
     <attribute name="loggedTrace"  type="counter" />
     
+    <attribute name="health" alias="health"  />
+    
 
     </mbean>
   </mbeans>

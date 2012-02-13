@@ -54,7 +54,7 @@ public class PidTest extends TestCase {
 			Setpoint = 100.0;
 
 			// turn the PID on
-			myPID.SetMode(Pid.AUTOMATIC);
+			myPID.setMode(Pid.AUTOMATIC);
 		}
 
 		// void loop()
