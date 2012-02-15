@@ -171,7 +171,6 @@ public class LServlet extends HttpServlet {
 				
 			}
 			
-			checkBlack(decodedUrl);
 			 
 			String []decodedUrls ;
 			int ind=0;
@@ -204,8 +203,12 @@ public class LServlet extends HttpServlet {
 				urlStr = req.getParameter(_U_R_L_) ; 
 			}
 			
+
 			// normalize non-protocol-ADDRESS
-			urlStr = (""+urlStr ).startsWith("http")? urlStr:"http://"+urlStr;			
+			urlStr = (""+urlStr ).startsWith("http")? urlStr:"http://"+urlStr;		
+			checkBlack(decodedUrl);
+			checkBlack(urlStr);
+			
 			if (TRACE) System_out_println(_U_R_L_ + " := "+ urlStr);
 			targetUrl = new StringBuilder(urlStr);
 
