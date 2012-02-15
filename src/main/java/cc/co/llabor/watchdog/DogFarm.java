@@ -2,8 +2,7 @@ package cc.co.llabor.watchdog;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.Timer; 
 import java.util.logging.Logger;
 
 /** 
