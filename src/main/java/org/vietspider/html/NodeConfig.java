@@ -4,6 +4,8 @@
  **************************************************************************/
 package org.vietspider.html;
 import org.vietspider.html.Tag;
+import org.vietspider.html.MoveType;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -23,10 +25,10 @@ public @interface NodeConfig {
   boolean hidden () default false;
   boolean block() default false;
   
-  MoveType move() default MoveType.ADD;
+  org.vietspider.html.MoveType move() default org.vietspider.html.MoveType.ADD;
   
-  Tag start () default Tag.REQUIRED;
-  Tag end () default Tag.REQUIRED;  
+  org.vietspider.html.Tag start () default org.vietspider.html.Tag.REQUIRED;
+  org.vietspider.html.Tag end () default org.vietspider.html.Tag.REQUIRED;  
   Class<?> [] end_types() default {};
   Name [] end_names() default {};
   
