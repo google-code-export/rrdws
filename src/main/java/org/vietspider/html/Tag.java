@@ -9,4 +9,4 @@ package org.vietspider.html;
  *          Email:nhudinhthuan@yahoo.com
  * Aug 3, 2006
  */
-public enum Tag { REQUIRED, OPTIONAL, FORBIDDEN }
+public   enum Tag { REQUIRED, OPTIONAL, FORBIDDEN }

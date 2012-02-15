@@ -37,11 +37,22 @@ vars.put("names", names);
 vars.put(ToolBox.KEY_EVENT_LOG_STAT, stats);
 
 
-// reuse prev result if any
+//reuse prev result if any
 Object result = session.getAttribute("result");
 if (result !=null){
 	vars.put("result", result);	
 }
+
+//reuse prev a...z if any
+String [] oneCharVars = new String[]{"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","r","s","t","m","n","o"};
+for (String varName:oneCharVars){
+	Object ocvTMp = session.getAttribute(varName);
+	if (ocvTMp !=null){
+		vars.put("result", ocvTMp);
+	}
+}
+
+
 //Now we execute it.
 result = MVEL.eval(expression,session, vars);//
 session.setAttribute("result", result);

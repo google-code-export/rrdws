@@ -41,7 +41,14 @@ public class StartStopServlet extends HttpServlet {
 	private static final long serialVersionUID = -3432681267977857824L;
 	private static Logger log = LoggerFactory.getLogger(cc.co.llabor.system.StartStopServlet.class);
 	private static int groupCounter = 0;
-	ThreadGroup mythreads = new ThreadGroup("rrd@"+groupCounter++);
+	ThreadGroup mythreads = null;
+	{
+		try{
+			mythreads= new ThreadGroup("rrd@"+groupCounter++);
+		}catch ( SecurityException e) {
+			mythreads= Thread.currentThread().getThreadGroup() ;
+		}
+	}
 	
 	ServerLauncher serverLauncher;
 	 
@@ -55,115 +62,158 @@ public class StartStopServlet extends HttpServlet {
 	AbstractLimitWatchDog hTimer;
 	
 	public void init(ServletConfig config) throws ServletException{
+		long initResult = -1; 
 		try {
 			initShutdownHook();  
+			initResult *= -2;
 		} catch (Exception e) {
+			initResult += -1;
 			log.error("RRD initShutdownHook : ", e);
-		}		
+		}catch(Throwable e){
+			initResult += -1;
+			e.printStackTrace();
+		}	
 		if ( !isGAE()){
 			String[] arg0=new String[]{};
 			// collectd SERVER
 			startCollectdServer(arg0);
-			
+			initResult *= -2;
 			// collectd CLIENT (agent)
 			startColelctdClient();
-					
+			initResult *= -2;		
 			// start collectd queue-worker
 			startCollectdWorker();
+			initResult *= -2;
 		}		
 		try{
 			if (isMRTGEnabled()){
 				startMrtgServer();
+				initResult *= -2;
+				
 			}
-		}catch(IOException e){
+		}catch(Throwable e){
+			initResult += -1;
 			e.printStackTrace();
 		}
 		  
 		if(1==3)
 		try {
 			hTimer = DogFarm.startTimer( HighLimitWatchDog.class );
+			initResult *= -2;
 		} catch (IllegalArgumentException e) {
+			initResult += -1;
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SecurityException e) {
+			initResult += -1;
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InstantiationException e) {
+			initResult += -1;
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
+			initResult += -1;
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
+			initResult += -1;
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSuchMethodException e) {
+			initResult += -1;
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch(Throwable e){
+			initResult += -1;
 			e.printStackTrace();
 		}
 		if(1==3)
 		try {
 			lTimer = DogFarm.startTimer( LowLimitWatchDog.class );
+			initResult *= -2;
 		} catch (IllegalArgumentException e) {
+			initResult += -1;
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SecurityException e) {
+			initResult += -1;
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InstantiationException e) {
+			initResult += -1;
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
+			initResult += -1;
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
+			initResult += -1;
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSuchMethodException e) {
+			initResult += -1;
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}catch(Throwable e){
+			initResult += -1;
+			e.printStackTrace();
+		}
 		
 		try {
 			lTimer = DogFarm.startTimer( RRDHighLimitWatchDog.class );
+			initResult *= -2;
 		} catch (IllegalArgumentException e) {
+			initResult += -1;
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SecurityException e) {
+			initResult += -1;
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InstantiationException e) {
+			initResult += -1;
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
+			initResult += -1;
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
+			initResult += -1;
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSuchMethodException e) {
+			initResult += -1;
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		} catch (Throwable e) {
+			initResult += -1;
+			// TODO Auto-generated catch block
+			e.printStackTrace(); 
+		}
 		// do exactly the same as prev-WatchDog, but otherwise
-		AlertCaptain ac = AlertCaptain.getInstance(mythreads);
 //		Cache tholdRepo = Manager.getCache("thold");
 //		Object tholdProps = tholdRepo.get("default.properties");//RRDHighLimitWatchDog
-//		try {
+		try {
 //			log.info(Repo.getBanner( "tholdHealthWatchDog"));
 //			
 //			Threshold watchDog  = ac.toThreshold(tholdProps );
 //			ac.register(  watchDog );
 //			lookInsideThold(tholdProps);
-			ac.init();			
-//		} catch (TholdException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
-		
-		
-		
+			AlertCaptain ac = AlertCaptain.getInstance(mythreads);
+			initResult *= -2;
+			ac.init();		
+			initResult *= -2;
+		} catch (Throwable e) {
+			initResult += -1;
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		System.out.println("................................." );
+		System.out.println(".   initRetval :"+initResult  );
+		System.out.println("................................." );
 		super.init(config); 
 	}
  
