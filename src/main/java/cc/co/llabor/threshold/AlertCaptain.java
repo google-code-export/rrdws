@@ -56,19 +56,29 @@ public class AlertCaptain implements Runnable, NotificationListener {
 				if (!inited) {
 					if (myself.isAsync && !myself.isAlive) {
 						System.out.println("starting ....");
-						
-						Thread th = new Thread(groupTmp , myself, "AlertCaptain");
-						th.setPriority(Thread.MAX_PRIORITY / 2
-								+ Thread.MAX_PRIORITY / 4); // 75%
-						myself.isAlive = true;
-						th.start();
-						System.out.println("...done.");
-						inited = true;
+						init(groupTmp);
+						System.out.println("...done."); 	
 					}
 				}
 			}
 		}
 		return myself;
+	}
+	public static void init(ThreadGroup groupTmp) {
+		try{
+			Thread th = groupTmp == null?
+					new Thread(  myself, "AlertCaptain"):
+					new Thread(groupTmp , myself, "AlertCaptain")							
+				;
+			th.setPriority(Thread.MAX_PRIORITY / 2
+					+ Thread.MAX_PRIORITY / 4); // 75%
+			myself.isAlive = true;
+			th.start();
+			inited = true;
+		}catch(Throwable e){
+			if (groupTmp !=null)init(null); 
+			e.printStackTrace();
+		}
 	}
 
 	private List<Threshold> ToDo = new ArrayList<Threshold>();

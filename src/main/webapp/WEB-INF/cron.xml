@@ -9,6 +9,6 @@ xsi:schemaLocation="http://googleappengine.googlecode.com/cron cron.xsd">
   <cron> 
     <url>/_ah/sessioncleanup?clear</url> 
     <description>Clean up sessions</description> 
-    <schedule>every 2 minutes</schedule> 
+    <schedule>every 32 minutes</schedule> 
   </cron>  
 </cronentries>
