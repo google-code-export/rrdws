@@ -30,13 +30,13 @@
 		<artifactId>noti4j</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</dependency>
-	<!-- 
+	<!-- SIGAR
+          -->    	
 <dependency>
 	<groupId>org.fusesource</groupId>
 	<artifactId>sigar</artifactId>
 	<version>1.6.4j</version>
 </dependency>
-          -->    	
 	<dependency>
 		<groupId>org.igniterealtime.smack</groupId>
 		<artifactId>smack</artifactId>
@@ -944,8 +944,8 @@
 							<include>
 								net.sf.jsr107cache.CacheFactory
 							</include>
-						</includes>
-						<targetPath>${basedir}/target/${pom.artifactId}-${pom.version}/META-INF/services</targetPath>
+						</includes>						
+						<targetPath>${basedir}/target/${pom.artifactId}-${pom.version}/WEB-INF/classes/META-INF/services</targetPath>
 					</resource>
 					
 					
