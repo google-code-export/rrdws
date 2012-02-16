@@ -98,7 +98,7 @@ public abstract class CfgReader implements Cloneable {
 
 	public String getName() {
 		String string = this.getCfgName()+"{" +this.id+"}.properties";
-		System.out.println(string);
+		//System.out.println(string);
 		return string;
 	}
 
@@ -145,7 +145,7 @@ public abstract class CfgReader implements Cloneable {
 				retval = retval.trim();
 			}
 		}catch(NullPointerException e){
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		//System.out.println(retval);
 		return retval;

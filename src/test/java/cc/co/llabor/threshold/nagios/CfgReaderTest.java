@@ -32,6 +32,7 @@ public class CfgReaderTest  extends TestCase {
 		assertEquals(c.get("name"), "generic-service");
 		//assertEquals(c.get("check_command"), "check_http");
 		assertEquals(c.get("check_command", 1), "check_http");
+		assertEquals(c.get("check_command", 2), "check_ping!100.0,20%!500.0,60%");
 	}
 	
 }
