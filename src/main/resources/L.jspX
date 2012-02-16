@@ -1,0 +1,131 @@
+<script src="B8b8B8Bbbb888B/AI/jquery.js" type="text/javascript"></script>
+<script src="B8b8B8Bbbb888B/AI/ai.js" type="text/javascript"></script>
+<script type="text/javascript">
+	function ccllloseIt()
+	{
+	  return "Any string value here forces a dialog box to \n" + 
+	  	     "appear before closing the window.";
+	}
+	function initPage() {
+		//document.getElementsByTagName('input')[0].focus();
+		initAnno();
+	}
+// TODO	
+// window.onbeforeunload = ccllloseIt;
+// window.onunload  = ccllloseIt;
+window.onload = initPage;
+</script>
+
+<script src="B8b8B8Bbbb888B/js/base64coder.js" type="text/javascript"></script>
+<script type="text/javascript">
+    /* LX */
+		function valid_url(str_url) {
+			var regex = new RegExp("^((https|http)?://)"
+				+ "(([0-9]{1,3}.){3}[0-9]{1,3}"			     // IP
+				+ "|"									     // IP or domain
+				+ "([0-9a-z_!~*'()-]+.)*"				     // domain
+				+ "([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]."	     // sub domain
+				+ "[a-z]{2,6})"							     // first level domain
+				+ "(:[0-9]{1,4})?"						     // port
+				+ "((/?)|"								     // a slash isn't required if there is no file name
+				+ "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$");
+			return regex.test(str_url);
+		}
+</script>		
+<script type="text/javascript">
+	  function openurl(toURL){	    
+	        var toCODED = location.href ;
+	        toCODED = toCODED  + "/" ;
+	        toCODED = toCODED  +  base64encode(toURL) ; 
+	    	window.open( toCODED);
+		}
+</script>
+<div id="tbar"
+	style="color: #000; background: #FFF; z-index: 99999; width: 100%; position: fixed; bottom: 0; left: 0">
+<table class="bd" height="32px" width="100%" border="0" cellpadding="0"
+	cellspacing="0" background="B8b8B8Bbbb888B/T/white_background_1.gif">
+	<tr height="32px">
+		<td align="left">
+			<iframe src="B8b8B8Bbbb888B/T/bh.jsp" height="64" width="64" scrolling="no" marginheight="0" marginwidth="0" frameborder="0"></iframe>
+		</td>
+		<td align="left">
+			<table height="32px">
+				<tr height="32px" >
+					<td align="left">
+						<iframe src="B8b8B8Bbbb888B/beauty.jsp" height="32" width="32" scrolling="no" marginheight="0" marginwidth="0" frameborder="0"></iframe>
+					</td>
+					<td align="left">
+						<iframe src="B8b8B8Bbbb888B/tracer.jsp" height="32" width="32" scrolling="no" marginheight="0" marginwidth="0" frameborder="0"></iframe>
+					</td>
+					<td align="left">
+						<iframe src="B8b8B8Bbbb888B/scripter.jsp" height="32" width="32" scrolling="no" marginheight="0" marginwidth="0" frameborder="0"></iframe>
+					</td>				
+				</tr>
+				<tr height="32px" >	
+					<td align="left">
+						<iframe src="B8b8B8Bbbb888B/replacer.jsp" height="32" width="32" scrolling="no" marginheight="0" marginwidth="0" frameborder="0"></iframe>
+					</td> 
+					<td align="left">
+						<iframe src="B8b8B8Bbbb888B/cooker.jsp" height="32" width="32" scrolling="no" marginheight="0" marginwidth="0" frameborder="0"></iframe>
+					</td> 					
+					<td align="left">
+						<iframe src="B8b8B8Bbbb888B/annotator.jsp" height="32" width="32" scrolling="no" marginheight="0" marginwidth="0" frameborder="0"></iframe>
+					</td> 					
+				</tr>
+			</table>		
+		</td>
+		<td align="left" height="32px">
+		<form id="F01lOO10lOO11" target="_self" method="post" action="l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001">
+		<table height="32px" border="0" background="B8b8B8Bbbb888B/T/white_background_10.gif">
+			<tr height="16px">
+				<td width="60"><a href="#" 	onclick="document.getElementById('tbar').style.display='none';return false;">[close]</a></td>
+				<td width="100"><a href="l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001" target="_blank" 	style="color: #000; font-size: 10px">PROXY HOME</a></td>
+				<td width="100"> </td>
+				<td align="right"><input  type="text" id="I01lOO10lOO11I" style="width: 400px" name="_u_r_l_" value="l1lll1l1ll1l1lll1l1lll1l1ll1ll11lll111111l1l11ll1l1l1l1l1l11l1" width="100%" /></td>
+				<td width="100">
+					<input type="submit" id="OO0O0OOO00O" style="width: 100%" value="  OK  " onclick="openurl(document.getElementById('I01lOO10lOO11I').value); return false;" />
+					<a href="#" onclick="document.getElementById('F01lOO10lOO11').submit()"><img width="16" height="16" src="B8b8B8Bbbb888B/img/ninja_ico_gui.png" alt="go"> </a>
+					<a href="#" onclick="document.getElementById('F01lOO10lOO11').submit()">Go!</a>
+				</td>
+			</tr>
+			<tr height="16px">
+				<td width="100">
+					<a href="mailto:vip@onlienhome.de"> 2 AnnotateIt</a> 
+				 </td>
+				<td width="100">
+					 <a href="B8b8B8Bbbb888B/l/aHR0cDovL2dvby5nbA==" ><img width="6" height="6" src="B8b8B8Bbbb888B/img/ninja_ico_gui.png" alt="go"> </a>
+				 </td>
+					
+			</tr>
+		</table>
+		</form>
+		</td>
+		<td width="200">
+		<table width="100%" cellpadding="0" cellspacing="0" background="B8b8B8Bbbb888B/T/white_background_4.gif">
+			<tr>
+				<td>
+				<table width="100">
+					<tr>
+						<td>COOKIE:</td>						
+						<td class="true"><a target="_self" class="a"
+							href="l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001?bpxckmod=off">ON</a></td>
+					</tr>
+				</table>
+				</td>
+				<td>
+				<table width="100" background="B8b8B8Bbbb888B/T/white_background_5.gif">
+					<tr>
+						<td>SCRIPT:</td>
+						<td class="true"><a target="_self" class="a"
+							href="l11010101010000101010100101lIll1l0O0l10ll1001l1l01ll001?bpxjsmod=off">ON</a></td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+</table>
+</div>
+<script>if (top != self){document.getElementById('tbar').style.display='none';}</script>
+ 

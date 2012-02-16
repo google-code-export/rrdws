@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Binary Clock</title>
+<style type="text/css">
+#bclock table {
+    border-collapse: collapse;
+    display: inline-block;
+    padding: 0;
+    padding: 0;
+    border: 2px solid #bbb;
+}
+#bclock table td {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin: 0;
+    border: 2px solid #fff;
+    background: #fff;
+}
+#bclock table th {
+    width: 16px;
+    height: 20px;
+    padding: 0 2px;
+    margin: 0;
+    border: 2px solid #fff;
+    background: #8fdbfc;
+    color: #000;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 10px;
+}
+#bclock table td.pix {
+    background: #96abff;
+}
+</style>
+<script src="jquery.min.js"></script>
+<script>
+$(function() {
+    window.setInterval(bclock_date, 1000);
+    bclock_date();
+});
+function bclock_show(num, $tr) {
+    var dividend = num;
+    var rest;
+    var i = 0;
+    while(i < 6) {
+        var rest = dividend % 2;
+        if (rest == 1) {
+            $tr.find('td').eq(i).addClass('pix');
+        } else {
+            $tr.find('td').eq(i).removeClass('pix');
+        }
+        if(rest == 1) {
+            dividend = dividend - 1;
+        }
+        dividend = dividend / 2;
+        i ++;
+    }
+}
+function bclock_date() {
+    var $bclock = $('#bclock table');
+    var now = new Date();
+    bclock_show(now.getFullYear() - 2000, $bclock.find('tr:eq(6)'));
+    bclock_show(now.getMonth() + 1, $bclock.find('tr:eq(5)'));
+    bclock_show(now.getDate(), $bclock.find('tr:eq(4)'));
+    bclock_show(now.getHours(), $bclock.find('tr:eq(3)'));
+    bclock_show(now.getMinutes(), $bclock.find('tr:eq(2)'));
+    bclock_show(now.getSeconds(), $bclock.find('tr:eq(1)'));
+    $bclock.find('tr:eq(0) th:eq(6)').text(now.getSeconds());
+}
+</script>
+</head>
+<body>
+<div id="bclock">
+<table>
+<tr><th>1</th><th>2</th><th>4</th><th>8</th><th>16</th><th>32</th><th>/</th></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><th>sec</th></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><th>min</th></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><th>hour</th></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><th>day</th></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><th>month</th></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><th>year</th></tr>
+</table>
+</div>
+</body>
+</html>

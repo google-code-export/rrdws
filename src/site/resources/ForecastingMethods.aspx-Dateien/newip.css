@@ -1,0 +1,103 @@
+﻿body 
+{
+	font-family: Arial, Helvetica, sans-serif ;
+}
+
+h1
+{
+	font-size:20px;
+	color:#303030;
+}
+
+.rollover
+{
+	margin: 0px 0px 0px 0px;
+}
+
+.rollover a
+{
+	display: inline;
+	width: 130px;
+	padding: 0px 10px 0px 10px;
+	border: 0;
+	margin: 0px 0px 0px 0px;
+	color: #A0A0A0;
+	background: url(  '../images/rollover.jpg' ) no-repeat 0 0;
+	text-decoration: none;
+}
+
+.rollover a:hover 
+{ 
+background-position: 0 -36px;
+color: #FFF;
+cursor:hand;
+}
+
+.rollover a:active 
+{
+background-position: 0 -72px;
+color:#fff;
+}
+
+
+.footer
+{
+	font-size:60%;
+	width:100%;
+	text-align:left;
+}
+
+.list
+{
+}
+
+.rowlist
+{
+	width:610px;
+	padding-left:10px;
+}
+
+
+table.elegant { 
+    border-collapse:collapse;
+    margin:15px 0px;
+}
+table.elegant th { 
+    text-align:left;
+    background-color:#f4f4f4;
+    font-weight:bold;
+    border:1px solid #bbb;
+    padding:5px;
+}
+table.elegant td { 
+    background-color:#ffffff;
+    padding:5px;
+    border:1px solid #bbb;
+    vertical-align:top;
+}
+table.elegant tr.highlightRow td { 
+    background-color:#d3f889;
+}
+div.elegantbox { 
+    margin:15px 0px;
+    border:1px solid #bbb;
+}
+div.elegantboxheader { 
+    border-bottom:1px solid #bbb;
+    padding:5px;
+    color: #cc6600;
+    font-weight:bold;
+}
+div.elegantboxbody {
+    padding:5px 12px 12px 12px;
+}
+table.elegant td img {
+    padding:0px;
+    margin:0px;
+}
+
+
+.buttons
+{
+	cursor: hand; cursor: pointer;
+}

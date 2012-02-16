@@ -1,0 +1,4029 @@
+Content-Type: multipart/related; start=<op.mhtml.1302014915730.6d3b0e24442b9c0d@10.2.212.206>; boundary=----------lU2mF85cjuH0DsGDayNSn3
+Content-Location: http://blogs.sun.com/jmxetc/entry/don_t_fell_in_the
+Subject: =?utf-8?Q?JMX,=20SNMP,=20Java,=20etc...:=20Don't=20fall=20in=20the=20traps...?=
+MIME-Version: 1.0
+
+------------lU2mF85cjuH0DsGDayNSn3
+Content-Disposition: inline; filename=don_t_fell_in_the.htm
+Content-Type: text/html; charset=utf-8; name=don_t_fell_in_the.htm
+Content-ID: <op.mhtml.1302014915730.6d3b0e24442b9c0d@10.2.212.206>
+Content-Location: http://blogs.sun.com/jmxetc/entry/don_t_fell_in_the
+Content-Transfer-Encoding: Quoted-Printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- decorator began with line above -->
+<html>
+<head>
+    <link rel=3D"openid.server" href=3D"https://openid.sun.com/openid/se=
+rvice" />
+    <link rel=3D"openid.delegate" href=3D"http://openid.sun.com/jmxetc" =
+/>
+        <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3D=
+utf-8">
+        <meta http-equiv=3D"Content-Language" content=3D"en">
+                       <link rel=3D"stylesheet" type=3D"text/css" href=3D=
+"http://blogs.sun.com/jmxetc/resource/Scripts/SyntaxHighlighter.css"></l=
+ink>  =
+
+ <link rel=3D"stylesheet" type=3D"text/css" href=3D"/themes/base.css" />=
+ 	 =
+
+      <link rel=3D"stylesheet" type=3D"text/css" href=3D"/themes/basic/t=
+heme.css" /> 	 =
+
+ <!-- ukey=3D"20C3BBDB" -->
+<style type=3D"text/css" media=3D"print">
+    .rWeblogCategoryChooser{ visibility: hidden; }
+    .entries{ width: 100%; float: none; }
+    .rightbar{ visibility: hidden; }
+</style>            <link rel=3D"alternate" type=3D"application/rss+xml"=
+ title=3D"RSS" href=3D"http://blogs.sun.com/jmxetc/feed/entries/rss" />
+        <link rel=3D"EditURI" type=3D"application/rsd+xml" title=3D"RSD"=
+ href=3D"http://blogs.sun.com/jmxetc/rsd"/>
+    <script type=3D"text/javascript" src=3D"/theme/scripts/roller.js">
+    </script>
+
+    <!-- Syntax Highlighter Plugin -->  =
+
+    <script language=3D"javascript" src=3D"/jmxetc/resource/Scripts/shCo=
+re.js"></script>  =
+
+    <script language=3D"javascript" src=3D"/jmxetc/resource/Scripts/shBr=
+ushJScript.js"></script>  =
+
+    <script language=3D"javascript" src=3D"/jmxetc/resource/Scripts/shBr=
+ushJava.js"></script>  =
+
+    <script language=3D"javascript" src=3D"/jmxetc/resource/Scripts/shBr=
+ushXml.js"></script>  =
+
+    <script language=3D"javascript">  =
+
+    function startHighlighter()  =
+
+    {  =
+
+    dp.sh.ClipboardSwf =3D 'http://blogs.sun.com/jmxetc/resource/Scripts=
+/clipboard.swf';  =
+
+    dp.sh.HighlightAll('code');  =
+
+    }  =
+
+    </script>  =
+
+    <!-- End Syntax Highlighter Plugin -->
+
+    <!-- ukey=3D"20C3BBDB" -->
+    <!--
+    <title>JMX, SNMP, Java, etc... : Weblog</title>
+    -->
+   <title>JMX, SNMP, Java, etc...: Don't fall in the traps...</title>
+</head>
+<body>
+<!-- next print $decorator_body -->
+
+<div class=3D"entries">
+    <table>
+    <tr><td><a =
+
+         href=3D"http://blogs.sun.com/roller/page/jmxetc/About" =
+
+         title=3D"About Me"
+         ><img
+         alt=3D"About Me" =
+
+         height=3D"75"
+         border=3D"1"
+         src=3D"http://blogs.sun.com/roller/resources/jmxetc/me.jpg"/></=
+a></td>
+    <td width=3D"100%">
+    <h1>JMX, SNMP, Java, etc...</h1>
+    <h2>Daniel Fuchs blogs on JMX, SNMP, Java, etc...</h2>
+    <center><small>
+    The views expressed in this blog are <a href=3D"http://blogs.sun.com=
+/roller/page/jmxetc/About"
+                 title=3D"About Me: read my disclaimer"
+                 >my own</a>, =
+
+    and I <i>do not</i> speak for my employer.</small></center>
+    </td>
+    </tr>
+    </table>
+        <div class=3D"rWeblogCategoryChooser">
+            <span class=3D"rChosenCategory">All</span>
+    =
+
+                |
+                    <span class=3D"rUnchosenCategory"><a href=3D"http://=
+blogs.sun.com/jmxetc/category/Personal">Personal</a></span>
+                    |
+                    <span class=3D"rUnchosenCategory"><a href=3D"http://=
+blogs.sun.com/jmxetc/category/Sun">Sun</a></span>
+                </div>
+  <center>tags: =
+
+                                  <A CLASS=3D"tag s2" HREF=3D"http://blo=
+gs.sun.com/jmxetc/tags/blogging"
+           TITLE=3D"5"> blogging</A>
+                                                              <A CLASS=3D=
+"tag s2" HREF=3D"http://blogs.sun.com/jmxetc/tags/firewall"
+           TITLE=3D"6"> firewall</A>
+                              <A CLASS=3D"tag s2" HREF=3D"http://blogs.s=
+un.com/jmxetc/tags/hg"
+           TITLE=3D"4"> hg</A>
+                                      <A CLASS=3D"tag s5" HREF=3D"http:/=
+/blogs.sun.com/jmxetc/tags/java"
+           TITLE=3D"54"> java</A>
+                                      <A CLASS=3D"tag s4" HREF=3D"http:/=
+/blogs.sun.com/jmxetc/tags/jconsole"
+           TITLE=3D"14"> jconsole</A>
+                                      <A CLASS=3D"tag s5" HREF=3D"http:/=
+/blogs.sun.com/jmxetc/tags/jmx"
+           TITLE=3D"50"> jmx</A>
+                              <A CLASS=3D"tag s4" HREF=3D"http://blogs.s=
+un.com/jmxetc/tags/jvm"
+           TITLE=3D"16"> jvm</A>
+                              <A CLASS=3D"tag s4" HREF=3D"http://blogs.s=
+un.com/jmxetc/tags/management"
+           TITLE=3D"18"> management</A>
+                              <A CLASS=3D"tag s2" HREF=3D"http://blogs.s=
+un.com/jmxetc/tags/mbean"
+           TITLE=3D"4"> mbean</A>
+                      <A CLASS=3D"tag s2" HREF=3D"http://blogs.sun.com/j=
+mxetc/tags/mercurial"
+           TITLE=3D"4"> mercurial</A>
+                      <A CLASS=3D"tag s4" HREF=3D"http://blogs.sun.com/j=
+mxetc/tags/monitoring"
+           TITLE=3D"20"> monitoring</A>
+                                      <A CLASS=3D"tag s3" HREF=3D"http:/=
+/blogs.sun.com/jmxetc/tags/opendmk"
+           TITLE=3D"8"> opendmk</A>
+                              <A CLASS=3D"tag s2" HREF=3D"http://blogs.s=
+un.com/jmxetc/tags/openjdk"
+           TITLE=3D"6"> openjdk</A>
+                      <A CLASS=3D"tag s4" HREF=3D"http://blogs.sun.com/j=
+mxetc/tags/opensource"
+           TITLE=3D"14"> opensource</A>
+                                      <A CLASS=3D"tag s2" HREF=3D"http:/=
+/blogs.sun.com/jmxetc/tags/rmi"
+           TITLE=3D"6"> rmi</A>
+                                              <A CLASS=3D"tag s4" HREF=3D=
+"http://blogs.sun.com/jmxetc/tags/snmp"
+           TITLE=3D"14"> snmp</A>
+                                      <A CLASS=3D"tag s2" HREF=3D"http:/=
+/blogs.sun.com/jmxetc/tags/ssl"
+           TITLE=3D"3"> ssl</A>
+                                                                  </cent=
+er>
+    <center><br><a href=3D"http://blogs.sun.com/roller/page/jmxetc/Toc"
+        title=3D"Table Of Contents"
+       >Table Of Contents</a> (list all entries)</center>
+
+  <hr>
+       <!-- =
+
+   showNextPreviousLinks() is no longer needed as next/prev links are =
+
+   built-into the  macro.
+   -->
+
+    =
+
+
+        <div class=3D"next-previous">
+                                    &laquo; <a href=3D"http://blogs.sun.=
+com/jmxetc/entry/building_jmx_in_mustang">Building JMX in...</a> |  =
+
+                <a href=3D"/jmxetc/">Main</a>
+                | <a href=3D"http://blogs.sun.com/jmxetc/entry/what_will=
+_you_be_doing">What will you be...</a> &raquo;
+        </div>
+    =
+
+                <div class=3D"box">
+
+<div class=3D"entry">
+       <a href=3D"http://blogs.sun.com/jmxetc/date/20060510"><img
+        class=3D"daypermalink"
+        src=3D"/images/permalink.gif"
+        title=3D"Permanent link to this day"
+        alt=3D"20060510" /></a>
+        Wednesday May 10, 2006     </div>
+
+   <table border=3D"1" cellspacing=3D"0" ><tr><td>
+   <a name=3D"don_t_fell_in_the" id=3D"don_t_fell_in_the"></a>
+   <table border=3D"0" cellspacing=3D"0"><tr><td>
+<script type=3D"text/javascript">var dzone_url =3D 'http://blogs.sun.com=
+/jmxetc/entry/don_t_fell_in_the';</script>
+<script type=3D"text/javascript">var dzone_title =3D 'Don't fall in the =
+traps...';</script>
+<script type=3D"text/javascript">var dzone_style =3D '2';</script>
+<script language=3D"javascript" src=3D"http://widgets.dzone.com/widgets/=
+zoneit.js"></script>
+   </td>
+   <td><b>Don't fall in the traps...</b></td></tr></table>   =
+
+   <hr>
+                                      <i>... or the Hitchhiker's guide t=
+o SNMP - part III ...</i>
+        =
+
+        <p>Well, what I had really in mind when I started writing this e=
+ntry, was =
+
+            to demonstrate how to <a
+                href=3D"http://blogs.sun.com/roller/page/jmxetc?entry=3D=
+feeling_trapped"
+                title=3D"Feeling trapped?"
+            >send an SNMP trap from within an application =
+
+            deployed in Sun's AppServer</a>. You might think that was a =
+curious idea - and =
+
+            I may even agree. However, I quickly realized that I wouldn'=
+t be able =
+
+            to make my demonstration without first saying a few words ab=
+out traps in =
+
+            SNMP. So if you're looking at SNMP because the only thing yo=
+u want to do
+            is sending SNMP notifications - then here are probably a few=
+ things you =
+
+        should know if you don't want to... <i>fall in the traps...</i><=
+/p>
+        =
+
+        <h3>Overview</h3>
+        <p>Before going further and starting to describe traps in SNMP, =
+I might be
+            able to entice you into some background reading. I have alre=
+ady written quite
+            a few blog entries related to SNMP - and some of them will p=
+rovide you with
+        a layer of background SNMP culture:</p>
+        <ul>
+            <p>[<a =
+
+                    href=3D"http://blogs.sun.com/roller/page/jmxetc?entr=
+y=3Dsimple_is_not_easy"
+                    title=3D"Simple Is Not Easy"
+                >Simple&nbsp;Is&nbsp;Not&nbsp;Easy</a>] which provides a=
+ brief introduction about SNMP,
+                <br>[<a =
+
+                    href=3D"http://blogs.sun.com/roller/page/jmxetc?entr=
+y=3Dwhat_is_the_jvm_snmp"
+                    title=3D"What is the JVM SNMP Agent?"
+                >What&nbsp;is&nbsp;the&nbsp;JVM&nbsp;SNMP&nbsp;Agent?</a=
+>] which briefly outlines
+                the presence (and limitations) of the built-in SNMP agen=
+t present in <a
+                    href=3D"http://java.sun.com/j2se/1.5.0/docs/index.ht=
+ml">Tiger</a> and <a href=3D"http://mustang.dev.java.net/"
+                                                                        =
+               title=3D"Java 6" =
+
+                >Mustang</a> JVM,
+                <br>[<a =
+
+                    href=3D"http://blogs.sun.com/roller/page/jmxetc?entr=
+y=3Dlife_the_universe_and_everything"
+                    title=3D"The Hitchhiker's Guide to SNMP - part I"
+                >Life,&nbsp;the&nbsp;Universe,&nbsp;and&nbsp;Everything<=
+/a>] which discusses the concept of OBJECT IDENTIFIER in SNMP,
+                <br> and [<a =
+
+                    href=3D"http://blogs.sun.com/roller/page/jmxetc?entr=
+y=3Dunderstanding_the_structure_of_management"
+                    title=3D"The Hitchhiker's Guide to SNMP - part II"
+                >Understanding&nbsp;the&nbsp;Structure&nbsp;of&nbsp;Mana=
+gement&nbsp;Information</a>] which gives a very brief overview of SMI - =
+the language in which SNMP MIBs are described.
+            </p>
+        </ul>
+        <p>Finally - here is a list of the subjects we will talk about t=
+oday:
+            <ul><center>
+                    [<a
+                        href=3D"#What"
+                        title=3D"What is an SNMP trap?"
+                    >What&nbsp;is&nbsp;an&nbsp;SNMP&nbsp;trap?</a>]
+                    [<a
+                        href=3D"#PDU"
+                        title=3D"The trap PDU"
+                    >The&nbsp;trap&nbsp;PDU</a>]
+                    [<a
+                        href=3D"#TrapV1"
+                        title=3D"Traps in SNMP v1"
+                    >Traps in SNMP v1</a>]
+                    [<a
+                        href=3D"#TrapV2V3"
+                        title=3D"Traps in SNMP v2 &amp; v3"
+                    >Traps&nbsp;in&nbsp;SNMP&nbsp;v2&nbsp;&amp;&nbsp;v3<=
+/a>]
+                    [<a
+                        href=3D"#Informs"
+                        title=3D"SNMP Informs"
+                    >SNMP&nbsp;Informs</a>]
+                    [<a
+                        href=3D"#WhatsInIt"
+                        title=3D"What's in a trap?"
+                    >What's&nbsp;in&nbsp;a&nbsp;trap?</a>]
+                    [<a
+                        href=3D"#Conversion"
+                        title=3D"Trap Conversion"
+                    >Trap&nbsp;Conversion</a>]
+                    [<a
+                        href=3D"#Why"
+                        title=3D"Why do I need a MIB definition?"
+                    >Why&nbsp;do&nbsp;I&nbsp;need&nbsp;a&nbsp;MIB defini=
+tion?</a>]
+                    [<a
+                        href=3D"#Limits"
+                        title=3D"What are the limitations of using traps=
+ or informs?"
+                    >What&nbsp;are&nbsp;the&nbsp;limitations?</a>]
+                    [<a
+                        href=3D"#Conclusion"
+                        title=3D"Conclusion"
+                    >Conclusion</a>]
+            </center></ul>
+        </p>
+        <h3><a name=3D"What">What is an SNMP trap?</a></h3>
+        <p>An SNMP trap is <b>an asynchronous SNMP notification</b>, sen=
+t from one =
+
+            SNMP entity (traditionally, an SNMP agent) to another SNMP e=
+ntity =
+
+            (traditionally, an SNMP manager or management console). =
+
+            An SNMP trap is made from two things: =
+
+            an SNMP <a href=3D"http://en.wikipedia.org/wiki/Protocol_dat=
+a_unit"
+                       title=3D"Protocol Data Unit"
+            >PDU</a> - which is defined at the protocol level, and a =
+
+            <b>MIB definition</b> - which explains the semantics of the =
+notification and =
+
+        defines its payload.</p>
+        =
+
+        <h3><a name=3D"PDU">The trap PDU</a></h3>
+        <p>The trap PDU is defined at protocol level. At this point - we=
+ can make =
+
+           the distinction between three kind of traps: traps in SNMP v1=
+, traps =
+
+           in SNMP v2 &amp; v3, and SNMP informs.
+        </p>
+        <p>I am not going to launch here in a full description of the SN=
+MP PDU used to =
+
+            transport SNMP traps, and the interested reader is kindly in=
+vited to refer =
+
+            directly to the appropriate <a
+                href=3D"http://blogs.sun.com/roller/page/jmxetc?entry=3D=
+simple_is_not_easy#snmp_versions"
+                title=3D"Simple Is Not Easy: SNMP Versions"
+            >RFC for each of the SNMP versions</a>. However, here =
+
+            are a few facts you should probably know:
+        </p>
+        <h4><a name=3D"TrapV1">Traps in SNMP v1</a></h4>
+        <p>In SNMP v1 - there was a specific PDU dedicated for traps. SN=
+MP v1 made the
+        distinction between generic traps (defined by the SNMP protocol =
+itself) and
+        proprietary traps (defined in application MIBs) and termed =
+
+        'enterpriseSpecific', since they would only apply to the specifi=
+c domain of =
+
+        the application in which they were defined.</p>
+        <p>Generic traps were identified by a small enumerated integer -=
+ defined =
+
+        in RFC 1157 as</p>
+        =
+
+        <table align=3D"center" border=3D"1" width=3D"90%" bgcolor=3D"#d=
+ddddd" rules=3D"all" frame=3D"below">
+            <tbody><tr><td valign=3D"top">
+                        <pre>
+        generic-trap      -- generic trap type
+             INTEGER {
+                 coldStart(0),
+                 warmStart(1),
+                 linkDown(2),
+                 linkUp(3),
+                 authenticationFailure(4),
+                 egpNeighborLoss(5),
+                 enterpriseSpecific(6)
+              },
+                        </pre>
+        </td></tr></tbody></table>
+        =
+
+        <p>Enterprise specific traps where identified by:</p>
+        <ul><li>The value of 'generic-trap' set to enterpriseSpecific(6)=
+</li>
+            <li>An enterprise OID identifying the 'registration authorit=
+y' under
+            which the trap was defined</li>
+            <li>A 'specific-trap' integer uniquely identifying the trap =
+type =
+
+            within the registration domain defined by the enterprise OID=
+.</li>
+        </ul>
+        <p>These information (generic-trap, specific-trap, enterprise OI=
+D), =
+
+            were reflected in specific fields defined in the SNMP v1 Tra=
+p-PDU
+            (see <a =
+
+                href=3D"http://www.ietf.org/rfc/rfc1157.txt"
+                title=3D"A Simple Network Management Protocol (SNMP)"
+            >RFC 1157</a> and <a
+                href=3D"http://www.ietf.org/rfc/rfc1215.txt"
+                title=3D"A Convention for Defining Traps for use with th=
+e SNMP"
+        >RFC 1215</a> for more details).
+    </p>
+        <h4><a name=3D"TrapV2V3">Traps in SNMP v2 &amp; v3</a></h4>
+        <p>Starting with SNMP v2 - and continued in SNMP v3 also - all S=
+NMP PDUs
+            have been normalized - that is, they are all built on the sa=
+me structure,
+            and no longer have any specific fields depending on their ty=
+pe. =
+
+            The only thing that distinguishes them is their PDU type tag=
+ - and of
+            course - the semantics of the objects they transport - but t=
+his semantics
+        is no longer reflected in the structure of the PDU itself.</p>
+        <p>As a result, SNMP v2/v3 (the protocols) no longer make the di=
+stinction =
+
+            between 'generic traps' and 'specific traps'. SNMP v2/v3 sim=
+ply define
+            a PDU to transport asynchronous notifications (traps) - but =
+the semantics
+            of the trap is now completely defined in the MIB in which th=
+at trap
+            is defined. It therefore presents a much more regular and cl=
+eaner =
+
+            separation between the protocol (SNMP) and the model (MIBs) =
+than it used to =
+
+        in SNMP v1.</p>
+        <p>Associated to this, RFC 3584, <a
+                href=3D"http://www.ietf.org/rfc/rfc3584.txt"
+                title=3D"Coexistence between Version 1, Version 2, and V=
+ersion 3 of the Internet-standard Network Management Framework"
+            >Coexistence between Version 1, Version 2, and Version 3 of =
+the =
+
+            Internet-standard Network Management Framework</a>, explains=
+ the mappings
+            between traps defined in the various versions of the protoco=
+ls and in =
+
+            particular shows how traps defined in MIBs written using SMI=
+v1 can be
+            transported with higher version of the protocols. Readers wh=
+o may not
+            be familiar with the arcanes of the various SNMP versions ar=
+e invited
+            to refer to my previous entry, <a =
+
+                href=3D"http://blogs.sun.com/roller/page/jmxetc?entry=3D=
+simple_is_not_easy" =
+
+                title=3D"Simple Is Not Easy - A brief introduction to SN=
+MP"
+        >Simple Is Not Easy</a> for a brief introduction.</p>
+        <h4><a name=3D"Informs">SNMP Informs</a></h4>
+        <p>In addition to PDU normalization, SNMP v2 introduced a new ve=
+rb in the
+            protocol, called 'INFORM'. Originally, 'INFORM's were though=
+t to =
+
+            provide a communication channel between SNMP Manager entitie=
+s - that is,
+            Manager to Manager communication. In reallity, 'INFORM's hav=
+e been used
+            as a means to implement acknowledged notifications, a task t=
+hey are much
+        better suited to.</p>
+        <p>Since all PDUs have been normalized - the content of an 'INFO=
+RM' PDU can
+            be rigorously identical to that of a trap PDU. Upon receptio=
+n of an
+            'INFORM' PDU, an SNMP entity is required to send it back to =
+the originating
+            application, whose address can be found in the received UDP =
+packet - thus
+        acknowledging the reception of the 'INFORM' message.</p>
+        =
+
+        <h3><a name=3D"WhatsInIt">What's in a trap?</a></h3>
+        <p>As we have seen earlier, a trap is not only defined by the pr=
+otocol itslef, =
+
+            but also, by its MIB definition. In SNMPv1, using SMIv1, tra=
+ps were defined
+            using the TRAP-TYPE macro. For instance, here is how we woul=
+d have defined
+        the <b>jvmLowMemoryPoolUsageNotif</b> trap had we used SMIv1:</p=
+>
+        =
+
+        <table align=3D"center" border=3D"1" width=3D"90%" bgcolor=3D"#d=
+ddddd" rules=3D"all" frame=3D"below">
+            <tbody><tr><td valign=3D"top">
+                        <pre>
+jvmLowMemoryPoolUsageNotif TRAP-TYPE
+    ENTERPRISE  <font color=3D"blue">jvmMgtMIBLowMemoryNotifs</font>
+    VARIABLES   { jvmMemPoolName, jvmMemPoolUsed, jvmMemPoolThreshdCount=
+ }
+    DESCRIPTION
+           "This notification is sent when the memory usage threshold of=
+
+	    a memory pool is exceeded.
+           "
+    REFERENCE "J2SE 5.0 API Specification,
+              java.lang.management.MemoryNotification,
+	      java.lang.management.MemoryPoolMXBean"
+    ::=3D <font color=3D"red">1</font> =
+
+                        </pre>
+        </td></tr></tbody></table>
+        =
+
+        <p>In SMIv2, the TRAP-TYPE macro has been replaced by the NOTIFI=
+CATION-TYPE
+            macro - so this is how our actual trap definition, from the
+            <a =
+
+                href=3D"http://java.sun.com/j2se/1.5.0/docs/guide/manage=
+ment/JVM-MANAGEMENT-MIB.mib"
+                title=3D"The JVM-MANAGEMENT-MIB exposes JVM Monitoring a=
+nd Management through SNMP"
+        >JVM-MANAGEMENT-MIB</a> looks like:</p>
+        =
+
+        <table align=3D"center" border=3D"1" width=3D"90%" bgcolor=3D"#d=
+ddddd" rules=3D"all" frame=3D"below">
+            <tbody><tr><td valign=3D"top">
+                        <pre>
+jvmLowMemoryPrefix OBJECT IDENTIFIER =
+
+    ::=3D { <font color=3D"blue">jvmMgtMIBLowMemoryNotifs</font> <font c=
+olor=3D"green">0</font> } =
+
+
+jvmLowMemoryPoolUsageNotif NOTIFICATION-TYPE
+    OBJECTS {  jvmMemPoolName, jvmMemPoolUsed, jvmMemPoolThreshdCount }
+    STATUS current
+    DESCRIPTION
+           "This notification is sent when the memory usage threshold of=
+
+	    a memory pool is exceeded.
+           "
+    REFERENCE "J2SE 5.0 API Specification,
+              java.lang.management.MemoryNotification,
+	      java.lang.management.MemoryPoolMXBean"
+    ::=3D { jvmLowMemoryPrefix  <font color=3D"red">1</font> }
+                        </pre>
+        </td></tr></tbody></table>
+        =
+
+        <p>When the <b>jvmLowMemoryPoolUsageNotif</b> trap is sent throu=
+gh SNMPv2, its OID <tt>'jvmLowMemoryPoolUsageNotif'</tt> (or <tt>jvmMgtM=
+IBLowMemoryNotifs.0.1</tt>)
+            will be included in the varbind list of the SNMPv2 trap PDU,=
+ thus
+        permitting to identify which trap is being sent:
+        </p> =
+
+        <pre>[snmpTrapOID.0=3DjvmMgtMIBLowMemoryNotifs.0.1]</pre>
+        <p>This information replaces the tuple: </p>
+        <pre>(enterprise=3D'jvmMgtMIBLowMemoryNotifs', generic-trap=3D'e=
+nterpriseSpecific(6)', specific-trap=3D1)</pre> =
+
+        <p>that used to be sent through SNMPv1.</p>
+        =
+
+        <h3><a name=3D"Conversion">Trap Conversion</a></h3>
+        <p>RFC 3584, <a
+                href=3D"http://www.ietf.org/rfc/rfc3584.txt"
+                title=3D"Coexistence between Version 1, Version 2, and V=
+ersion 3 of the Internet-standard Network Management Framework"
+            >Coexistence between Version 1, Version 2, and Version 3 of =
+the =
+
+            Internet-standard Network Management Framework</a>, explains=
+ how this
+            mapping is done: =
+
+            <br>In SNMPv1, a trap used to be identified by
+            three things: its <font color=3D"blue">enterprise OID</font>=
+, =
+
+            its generic-trap value, and its <font color=3D"red">specific=
+ trap value</font>. =
+
+            <br>In SNMPv2, these three things have been replaced by
+            a single thing: the notification OID. =
+
+            <br>Basically, we can say that a trap that used to be =
+
+        defined in SNMP v1 by</p>
+        <pre>
+(enterprise=3D'jvmMgtMIBLowMemoryNotifs', generic-trap=3D'enterpriseSpec=
+ific(6)', specific-trap=3D1)
+        </pre>
+        <p>will be defined in SNMPv2 by the OID <tt>'jvmMgtMIBLowMemoryN=
+otifs.0.1'</tt>.
+            <br>Note that for what used to be 'generic-traps' - linkUp, =
+linkDown etc... =
+
+            standard OIDs have been provided - as explained by <a
+                href=3D"http://www.ietf.org/rfc/rfc3584.txt"
+                title=3D"Coexistence between Version 1, Version 2, and V=
+ersion 3 of the Internet-standard Network Management Framework"
+        >RFC 3584</a>:</p>
+        =
+
+        <table align=3D"center" border=3D"1" width=3D"90%" bgcolor=3D"#d=
+ddddd" rules=3D"all" frame=3D"below">
+            <tbody><tr><td valign=3D"top">
+                        <pre>
+      generic-trap parameter   snmpTrapOID.0
+      =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+   =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+      0                        1.3.6.1.6.3.1.1.5.1 (coldStart)
+      1                        1.3.6.1.6.3.1.1.5.2 (warmStart)
+      2                        1.3.6.1.6.3.1.1.5.3 (linkDown)
+      3                        1.3.6.1.6.3.1.1.5.4 (linkUp)
+      4                        1.3.6.1.6.3.1.1.5.5 (authenticationFailur=
+e)
+      5                        1.3.6.1.6.3.1.1.5.6 (egpNeighborLoss)
+                        </pre>
+        </td></tr></tbody></table>
+        <p></p>
+        <h3><a name=3D"Why">Why do I need a MIB definition?</a></h3>
+        <p>Well, as we have seen, TRAP-TYPE definition, or NOTIFICATION-=
+TYPE definition, =
+
+        is really important - because it defines:</p>
+        <ul>
+            <li>The trap identification (enterprise,generic-trap,specifi=
+c-trap) in SMIv1,
+            trap OID in SMIv2, that is going to be sent over the wire to=
+ the manager,</li>
+            <li>The semantics of the trap being sent (english text writt=
+en in the =
+
+            trap DESCRIPTION clause),</li>
+            <li>The list of additional variables (VARIABLES or OBJECTS c=
+lause) that a =
+
+            manager can expect that trap to contain.</li>
+        </ul>
+        <p>Without the MIB definition, it would be impossible for a clie=
+nt application
+            to understand the purpose and semantics of the trap. Indeed,=
+ it would be like
+            trying to code against a binary Java library without having =
+access to its =
+
+            Javadoc.
+        </p>
+        <h3><a name=3D"Limits">What are the limitations of using traps o=
+r informs?</a></h3>
+        <p>The first limitation is that if you want to be SNMP compliant=
+, you need to
+            send traps for which a definition exists. You cannot 'invent=
+' a trap OID.
+            You could use an existing one - and the MIBs defined by the =
+IETF =
+
+            <a href=3D"http://www.ietf.org/html.charters/disman-charter.=
+html"
+               title=3D"IETF Distributed Management"
+            >disman</a> group may be a good source to look at, or you co=
+uld write
+            your own MIB definition. You will not need to compile the MI=
+B definition
+            in order to write the code that sends the trap, but you will=
+ need it to
+            explain to your SNMP clients what they should expect and wha=
+t it all
+        means.</p>
+        <p>The second limitation is that traps are transported in SNMP o=
+ver UDP. =
+
+            As such they are not reliable. Therefore, it is not guarante=
+ed that =
+
+            anybody will receive your traps. Usually, it is rare that tr=
+aps
+            are swallowed by the network, but it can happen. Also if you=
+ are
+            using SNMPv3, your trap could be rejected by the remote appl=
+ication
+        if it doesn't arrive in a timely fashion.</p>
+        <p>Of course, you could use SNMP informs instead of traps - in o=
+rder =
+
+            to be sure that your notification has been delivered, but th=
+is may
+            not be as satisfactory as you would require: this time it's =
+the response =
+
+        to your inform that could be lost or delayed by the network.</p>=
+
+        <p>Because these problems can happen, it is usually recommended =
+for SNMP
+            applications not to rely on traps being delivered. It is rec=
+ommended
+            to design your SNMP MIB in such a way that an SNMP manager c=
+ould
+            discover that it has missed a trap simply by querrying the s=
+tate of
+            the objects defined in the MIB. For instance, using the <a =
+
+                href=3D"http://java.sun.com/j2se/1.5.0/docs/guide/manage=
+ment/JVM-MANAGEMENT-MIB.mib"
+                title=3D"The JVM-MANAGEMENT-MIB exposes JVM Monitoring a=
+nd Management through SNMP"
+            >JVM-MANAGEMENT-MIB</a>, a manager can determine that it has=
+ missed
+            a <b>jvmLowMemoryPoolUsageNotif</b> notification if it sees =
+that the
+            <b>jvmMemPoolThreshdCount</b> has increased.
+            <br>This means that if you are considering using traps, and =
+want to adhere
+            to SNMP best practices, you should also be prepared to code =
+a full fledged
+        SNMP agent in order to answer to SNMP manager queries.</p>   =
+
+        <p>Finally, there's a limitation in SNMP packet sizes. You canno=
+t stuff =
+
+            just anything in an UDP packet. This means that planning to =
+use SNMP simply
+            as a transport to tunnel non SNMP information encoded e.g. i=
+n plain text,
+        or OCTET-STRING may not always work.</p>
+        <h3><a name=3D"Conclusion">Conclusion</a></h3>
+        <p>SNMP is often seen as an attractive solution because:</p>
+        <ul><li>It is a standard protocol, almost ubiquitous</li>
+            <li>They say it's simple - well, at least, it's well known</=
+li>
+            <li>Configuring firewalls to let SNMP traffic through is usu=
+ally quite =
+
+            manageable</li>
+            <li>It goes through UDP - so it's relatively lightweight in =
+terms of
+                network resource consumption (doesn't need an opened pee=
+r to =
+
+            peer connection)</li>
+            <li>Sending traps is simple</li>
+        </ul>
+        <p><b>But</b> don't forget the other side of the medal:</p>
+        <ul><li>It does have its limitations</li>
+            <li>It is not appropriate for everything</li>
+            <li>You cannot ignore MIBs</li>
+            <li>You need to understand what you're doing</li>
+            <li>If you use SNMP v3, configuration will most probably be =
+tricky</li>
+        </ul>
+        <p>Well, if you still think that SNMP traps is what you need - w=
+ait for my
+            <a
+                href=3D"http://blogs.sun.com/roller/page/jmxetc?entry=3D=
+feeling_trapped"
+                title=3D"Feeling trapped?"
+            >next blog entry</a>! I might be finally able to talk about =
+my original =
+
+            subject, which was: how to send traps from an application de=
+ployed in
+        Sun AppServer.</p>
+        <p>So watch out! Don't fall in the traps!</p>
+        <br>Cheers,<br> =
+
+        <blockquote>
+            <u><b>Update:</b></u> If you are looking for an introduction=
+ to multi =
+
+            indexed SNMP tables, you may also want to read the 4<sup>th<=
+/sup> =
+
+            episode in the Hitchhiker's Guide To SNMP series: <a href=3D=
+"http://blogs.sun.com/jmxetc/entry/welcome_to_the_snmp_table%21"
+            >Welcome to the SNMP table!</a>
+        </blockquote>  =
+
+
+              Tags:   =
+
+    	    <a href=3D"http://blogs.sun.com/jmxetc/tags/snmp" rel=3D"tag">s=
+nmp</a> =
+
+    =
+
+<br>
+   Posted by dfuchs
+   <span class=3D"dateStamp">(     May 10 2006, 07:52:58 PM CEST     )</=
+span>
+       <a href=3D"http://blogs.sun.com/jmxetc/entry/don_t_fell_in_the"
+        title=3D"Permanent link to this weblog entry"
+        class=3D"entrypermalink">Permalink</a>
+                   <a href=3D"http://blogs.sun.com/jmxetc/entry/don_t_fe=
+ll_in_the#comments" class=3D"entrycommentslink">Comments [5]</a>
+       </td></tr></table>
+<br>
+    =
+
+    =
+
+</div>
+    =
+
+                    <div class=3D"trackbackUrl">
+            Trackback URL: http://blogs.sun.com/jmxetc/entry/don_t_fell_=
+in_the
+        </div>
+                                <a name=3D"comments"></a>
+    <div class=3D"comments" id=3D"comments">
+
+            <div class=3D"comments-head">Comments:</div>
+            =
+
+    <br/>
+                        <a name=3D"comment-1154355454000" id=3D"comment-=
+1154355454000"></a>
+            <div class=3D"comment odd" id=3D"comment1">
+
+                no comments
+
+                <p class=3D"comment-details">
+                Posted by
+                                    <b>ZAHID MAJID</b>
+                =
+
+                on July 31, 2006 at 04:17 PM CEST
+
+                <a href=3D"http://blogs.sun.com/jmxetc/entry/don_t_fell_=
+in_the#comment-1154355454000"
+                   class=3D"entrypermalink" title=3D"comment permalink">=
+#</a>
+                </p>
+
+            </div>
+
+                                <a name=3D"comment-1154360590000" id=3D"=
+comment-1154360590000"></a>
+            <div class=3D"comment even" id=3D"comment2">
+
+                no reply ;-)
+
+                <p class=3D"comment-details">
+                Posted by
+                                    <a rel=3D"nofollow" href=3D"http://b=
+logs.sun.com/roller/page/jmxetc"><b>daniel</b></a>
+                =
+
+                on July 31, 2006 at 05:43 PM CEST
+
+                <a href=3D"http://blogs.sun.com/jmxetc/entry/don_t_fell_=
+in_the#comment-1154360590000"
+                   class=3D"entrypermalink" title=3D"comment permalink">=
+#</a>
+                </p>
+
+            </div>
+
+                                <a name=3D"comment-1236104756000" id=3D"=
+comment-1236104756000"></a>
+            <div class=3D"comment odd" id=3D"comment3">
+
+                =
+
+<p>Hey,Daniel,</p>
+
+
+<p>Your SNMP series are really good resources for me to learn. Right now=
+ I am working on a project that requires writing some business data (def=
+ined by RFC3881 which is xml format) into the SNMP trap. In my case, I n=
+eed to convert the RFC3881 xml schema into the MIB definition. I know th=
+ere's lots of tools can used to build the MIB. but I did not heard any o=
+f them can convert to XML Schema into MIB. any suggestion from you?</p>
+
+
+<p>Thanks in advance.</p>
+
+
+<p>Richard</p>
+
+
+
+                <p class=3D"comment-details">
+                Posted by
+                                    <b>richard shan</b>
+                =
+
+                on March 03, 2009 at 07:25 PM CET
+
+                <a href=3D"http://blogs.sun.com/jmxetc/entry/don_t_fell_=
+in_the#comment-1236104756000"
+                   class=3D"entrypermalink" title=3D"comment permalink">=
+#</a>
+                </p>
+
+            </div>
+
+                                <a name=3D"comment-1254396869000" id=3D"=
+comment-1254396869000"></a>
+            <div class=3D"comment even" id=3D"comment4">
+
+                =
+
+<p>Thanx a lot for the article. Let me know if there is  an easy way to =
+send traps using a plugin or something using grails in groovy and log4j.=
+</p>
+
+
+<p>Ushani</p>
+
+
+
+                <p class=3D"comment-details">
+                Posted by
+                                    <b>Ushani</b>
+                =
+
+                on October 01, 2009 at 01:34 PM CEST
+
+                <a href=3D"http://blogs.sun.com/jmxetc/entry/don_t_fell_=
+in_the#comment-1254396869000"
+                   class=3D"entrypermalink" title=3D"comment permalink">=
+#</a>
+                </p>
+
+            </div>
+
+                                <a name=3D"comment-1258698256000" id=3D"=
+comment-1258698256000"></a>
+            <div class=3D"comment odd" id=3D"comment5">
+
+                =
+
+<p>its very helpful and very easy to understand.<br/>
+i thank to Daniel for his wonderful work !!</p>
+
+
+
+                <p class=3D"comment-details">
+                Posted by
+                                    <b>praveen</b>
+                =
+
+                on November 20, 2009 at 07:24 AM CET
+
+                <a href=3D"http://blogs.sun.com/jmxetc/entry/don_t_fell_=
+in_the#comment-1258698256000"
+                   class=3D"entrypermalink" title=3D"comment permalink">=
+#</a>
+                </p>
+
+            </div>
+
+                </div>
+        =
+
+    <div class=3D"comments-form">
+    <div class=3D"comments-head">Post a Comment:</div><br/>
+
+
+        =
+
+    <form method=3D"post" action=3D"http://blogs.sun.com/jmxetc/entry/do=
+n_t_fell_in_the" focus=3D"name"
+        name=3D"form" onsubmit=3D"fixURL(this); return validateComments(=
+this)">
+        =
+
+        =
+
+        <!-- is this a post or a preview -->
+        <input type=3D"hidden" name=3D"method" value=3D"post" />
+
+        <table cellspacing=3D"0" cellpadding=3D"1" border=3D"0" width=3D=
+"95%">
+        <tr><th>Name:</th>
+            <td><input type=3D"text" name=3D"name" value=3D"" size=3D"50=
+" maxlength=3D"255" /></td>
+        </tr>
+
+        <tr><th>E-Mail:</th>
+            <td><input type=3D"text" name=3D"email" value=3D"" size=3D"5=
+0" maxlength=3D"255" /></td>
+        </tr>
+
+        <tr><th>URL:</th>
+            <td><input type=3D"text" name=3D"url" value=3D"" size=3D"50"=
+ maxlength=3D"255" /></td>
+        </tr>
+
+                <tr>
+            <td></td>
+            <td>
+                <input type=3D"checkbox" id=3D"notify" name=3D"notify" /=
+>
+                <label for=3D"notify">Notify me by email of new comments=
+</label>
+            </td>
+        </tr>
+        =
+
+        <tr>
+            <td></td>
+            <td>
+                <input type=3D"checkbox" id=3D"rememberInfo" name=3D"rem=
+emberInfo" />
+                <label for=3D"rememberInfo">Remember Information?</label=
+>
+            </td>
+        </tr>
+        </table>
+        <br/>
+
+        <table>
+        <tr><th style=3D"text-align: left">Your Comment:</th></tr>
+        <tr>
+            <td>
+            <textarea name=3D"content" cols=3D"50" rows=3D"10"></textare=
+a><br />
+            <span class=3D"comments-syntax-indicator">
+            HTML Syntax:
+                            <span class=3D"disabled">NOT allowed</span>
+                        </span>
+            </td>
+        </tr>
+        </table>
+        =
+
+        <script type=3D"text/javascript" src=3D"/theme/scripts/clientSid=
+eInclude.js"></script>
+        <div id=3D"commentAuthenticator"></div>
+ =
+
+        <table cellspacing=3D"0" cellpadding=3D"1" border=3D"0" width=3D=
+"95%">
+        <tr>
+            <td align=3D"left" nowrap=3D"nowrap">
+               <input type=3D"button" name=3D"post" value=3D"&nbsp;Comme=
+nt Preview&nbsp;"
+                  onClick=3D"this.form.method.value=3D'preview';this.for=
+m.submit()" />
+               <input type=3D"submit" name=3D"post" value=3D"&nbsp;Post&=
+nbsp;" />
+            </td>
+            <td align=3D"right">
+               <!-- <input type=3D"button" value=3D"&nbsp;Clear Info&nbs=
+p;" /> -->
+            </td>
+        </tr>
+        </table>
+
+    </form>
+
+    <script type=3D"text/javascript" src=3D"/theme/scripts/roller.js"></=
+script>
+    <script type=3D"text/javascript">
+    clientSideInclude('commentAuthenticator', '/CommentAuthenticatorServ=
+let');
+
+    var author =3D getCookie("commentAuthor");
+    var email =3D getCookie("commentEmail");
+    var url =3D getCookie("commentUrl");
+    // check each field - IE will render "null"
+    if (author) {
+        document.form.name.value =3D author;
+    }
+    if (email) {
+        document.form.email.value =3D email;
+    }
+    if (url) {
+        document.form.url.value =3D url;
+    }
+
+    if (author || email || url) {
+        document.form.rememberInfo.checked =3D true;
+    }
+
+    function fixURL(theForm) {
+        if (theForm.url.value !=3D "" &&
+            theForm.url.value.indexOf("http://") =3D=3D -1) { //prepend =
+http://
+            theForm.url.value =3D "http://"+theForm.url.value;
+        }
+        saveUserInformation(theForm);
+    }
+
+    function saveUserInformation(theForm) {
+        if (theForm.rememberInfo.checked) {
+            rememberUser(theForm);
+        } else {
+            forgetUser(theForm);
+        }
+    }
+
+    function validateComments(theForm) {
+        if (theForm.content.value =3D=3D "") {
+            alert("Please enter a comment.");
+            theForm.content.focus();
+            return false;
+        }
+    }
+    </script>
+
+
+    </div>
+    =
+
+    <!-- Begin SiteCatalyst code version: G.5. -->
+<script type=3D"text/javascript" language=3D"JavaScript">
+    <!--
+    if(typeof s_channel=3D=3D'undefined'){var s_channel=3D"jmxetc";}
+    //--></script>
+<script type=3D"text/javascript" language=3D"JavaScript" src=3D"/omnitur=
+e/s_code_remote.js"></script>
+<!-- End SiteCatalyst code version: G.5. -->
+
+       <!-- =
+
+   showNextPreviousLinks() is no longer needed as next/prev links are =
+
+   built-into the  macro.
+   -->
+
+    <center><small>[<a href=3D"http://blogs.sun.com/roller/page/jmxetc/T=
+oc"
+        title=3D"Table Of Contents"
+       >Table Of Contents</a>]</small></center>
+    <hr>
+    <center><small>
+    The views expressed in this blog are <a href=3D"http://blogs.sun.com=
+/roller/page/jmxetc/About"
+                 title=3D"About Me: read my disclaimer"
+                 >my own</a> Weblog, =
+
+    and I <i>do not</i> speak for my employer.</small>
+    <br><hr>
+    </center>
+<!-- ukey=3D"20C3BBDB" -->
+</div>
+<div class=3D"rightbar">
+    <h2>Calendar</h2>
+    <div class=3D"sidebar">
+            <table cellspacing=3D"0" border=3D"0"  summary=3D"Blog Archi=
+ve Calendar" class=3D"hCalendarTable"><tr><td colspan=3D"7" align=3D"cen=
+ter" class=3D"hCalendarMonthYearRow"><a href=3D"/jmxetc/date/201102" tit=
+le=3D"Prev" class=3D"hCalendarNavBar">&laquo;</a> March 2011</td></tr><t=
+r><th class=3D"hCalendarDayNameRow" align=3D"center">Sun</th><th class=3D=
+"hCalendarDayNameRow" align=3D"center">Mon</th><th class=3D"hCalendarDay=
+NameRow" align=3D"center">Tue</th><th class=3D"hCalendarDayNameRow" alig=
+n=3D"center">Wed</th><th class=3D"hCalendarDayNameRow" align=3D"center">=
+Thu</th><th class=3D"hCalendarDayNameRow" align=3D"center">Fri</th><th c=
+lass=3D"hCalendarDayNameRow" align=3D"center">Sat</th></tr><tr><td class=
+=3D"hCalendarDayNotInMonth">&nbsp;</td><td class=3D"hCalendarDayNotInMon=
+th">&nbsp;</td><td class=3D"hCalendarDay"><div class=3D"hCalendarDayTitl=
+e">1</div></td><td class=3D"hCalendarDay"><div class=3D"hCalendarDayTitl=
+e">2</div></td><td class=3D"hCalendarDay"><div class=3D"hCalendarDayTitl=
+e">3</div></td><td class=3D"hCalendarDay"><div class=3D"hCalendarDayTitl=
+e">4</div></td><td class=3D"hCalendarDay"><div class=3D"hCalendarDayTitl=
+e">5</div></td></tr><tr><td class=3D"hCalendarDay"><div class=3D"hCalend=
+arDayTitle">6</div></td><td class=3D"hCalendarDay"><div class=3D"hCalend=
+arDayTitle">7</div></td><td class=3D"hCalendarDay"><div class=3D"hCalend=
+arDayTitle">8</div></td><td class=3D"hCalendarDay"><div class=3D"hCalend=
+arDayTitle">9</div></td><td class=3D"hCalendarDay"><div class=3D"hCalend=
+arDayTitle">10</div></td><td class=3D"hCalendarDay"><div class=3D"hCalen=
+darDayTitle">11</div></td><td class=3D"hCalendarDay"><div class=3D"hCale=
+ndarDayTitle">12</div></td></tr><tr><td class=3D"hCalendarDay"><div clas=
+s=3D"hCalendarDayTitle">13</div></td><td class=3D"hCalendarDay"><div cla=
+ss=3D"hCalendarDayTitle">14</div></td><td class=3D"hCalendarDay"><div cl=
+ass=3D"hCalendarDayTitle">15</div></td><td class=3D"hCalendarDay"><div c=
+lass=3D"hCalendarDayTitle">16</div></td><td class=3D"hCalendarDay"><div =
+class=3D"hCalendarDayTitle">17</div></td><td class=3D"hCalendarDay"><div=
+ class=3D"hCalendarDayTitle">18</div></td><td class=3D"hCalendarDay"><di=
+v class=3D"hCalendarDayTitle">19</div></td></tr><tr><td class=3D"hCalend=
+arDay"><div class=3D"hCalendarDayTitle">20</div></td><td class=3D"hCalen=
+darDay"><div class=3D"hCalendarDayTitle">21</div></td><td class=3D"hCale=
+ndarDay"><div class=3D"hCalendarDayTitle">22</div></td><td class=3D"hCal=
+endarDay"><div class=3D"hCalendarDayTitle">23</div></td><td class=3D"hCa=
+lendarDay"><div class=3D"hCalendarDayTitle">24</div></td><td class=3D"hC=
+alendarDay"><div class=3D"hCalendarDayTitle">25</div></td><td class=3D"h=
+CalendarDay"><div class=3D"hCalendarDayTitle">26</div></td></tr><tr><td =
+class=3D"hCalendarDay"><div class=3D"hCalendarDayTitle">27</div></td><td=
+ class=3D"hCalendarDay"><div class=3D"hCalendarDayTitle">28</div></td><t=
+d class=3D"hCalendarDay"><div class=3D"hCalendarDayTitle">29</div></td><=
+td class=3D"hCalendarDayCurrent"><div class=3D"hCalendarDayTitle">30</di=
+v></td><td class=3D"hCalendarDay"><div class=3D"hCalendarDayTitle">31</d=
+iv></td><td class=3D"hCalendarDayNotInMonth">&nbsp;</td><td class=3D"hCa=
+lendarDayNotInMonth">&nbsp;</td></tr><tr><td class=3D"hCalendarDayNotInM=
+onth">&nbsp;</td><td class=3D"hCalendarDayNotInMonth">&nbsp;</td><td cla=
+ss=3D"hCalendarDayNotInMonth">&nbsp;</td><td class=3D"hCalendarDayNotInM=
+onth">&nbsp;</td><td class=3D"hCalendarDayNotInMonth">&nbsp;</td><td cla=
+ss=3D"hCalendarDayNotInMonth">&nbsp;</td><td class=3D"hCalendarDayNotInM=
+onth">&nbsp;</td></tr><tr class=3D"hCalendarNextPrev"><td colspan=3D"7" =
+align=3D"center"><a href=3D"/jmxetc/" class=3D"hCalendarNavBar">Today</a=
+></td></tr></table>
+    </div>
+
+    <h2>RSS Feeds</h2>
+    <div class=3D"sidebar">
+        <a href=3D"http://blogs.sun.com/jmxetc/feed/entries/rss"><img cl=
+ass=3D"rssbadge"
+        src=3D"/images/rssbadge.gif" alt=3D"XML" /></a>
+<br>
+        <a href=3D"http://blogs.sun.com/jmxetc/feed/entries/rss">All</a>=
+<br />
+                <a href=3D"http://blogs.sun.com/jmxetc/feed/entries/rss?=
+cat=3D%2FPersonal">/Personal</a><br />
+            <a href=3D"http://blogs.sun.com/jmxetc/feed/entries/rss?cat=3D=
+%2FSun">/Sun</a><br />
+        </div>
+    <h2>DFuchs on DZone</h2>
+    <div class=3D"sidebar">
+       <a href=3D"http://www.dzone.com/feed/shared/220136/rss.xml"
+        ><img class=3D"smrssbadge"
+          src=3D"/roller/images/smrssbadge.gif"
+          alt=3D"[rss]"/></a> <a =
+
+       href=3D"http://www.dzone.com/users/shared/220136.html"
+       title=3D"DFuchs on DZone: my shared links">Shared Links</a>
+       <br><a href=3D"http://www.dzone.com/feed/user/220136/rss.xml"
+        ><img class=3D"smrssbadge"
+          src=3D"/roller/images/smrssbadge.gif"
+          alt=3D"[rss]"/></a> <a =
+
+       href=3D"http://www.dzone.com/users/links/220136.html"
+       title=3D"DFuchs on DZone: submitted links">Submitted Links</a>   =
+ =
+
+    <br>&nbsp;&nbsp;Also on <a href=3D"http://javablogs.com/ViewBlog.act=
+ion?id=3D13501"
+      title=3D"java.blogs"
+    ><img src=3D"http://blogs.sun.com/roller/resources/jmxetc/javablog-s=
+mall.gif" alt=3D"java.blogs"/></a>
+    <br>&nbsp;&nbsp;and on <a href=3D"http://technorati.com/faves?sub=3D=
+addfavbtn&amp;add=3Dhttp://blogs.sun.com/jmxetc"><img src=3D"http://stat=
+ic.technorati.com/pix/fave/btn-fave2.png" alt=3D"Add to Technorati Favor=
+ites" /></a>
+    </div>
+
+    <h2>Search</h2>
+    <div class=3D"sidebar">
+    <script type=3D"text/javascript">
+    function prepareSearchForm() {
+        document.getElementById("searchForm").searchQuery.name =3D "oq";=
+
+        document.getElementById("searchFilter").innerHTML =3D "<input ty=
+pe=3D'hidden' id=3D'searchFilteredQuery' name=3D'q' value=3D''>";
+    }
+    function submitSearchForm() {
+        var form =3D document.getElementById("searchForm");
+        var query =3D form.searchQuery.value;
+        if (query =3D=3D null || query =3D=3D "") {
+            return false;
+        }
+        var filter =3D " weblog:=3Djmxetc";
+        if (form.searchQuery.value.indexOf(filter) =3D=3D -1) {
+            form.searchFilteredQuery.value =3D form.searchQuery.value + =
+filter + " site:blogs.sun.com";
+        }
+        else {
+            form.searchFilteredQuery.value =3D form.searchQuery.value + =
+" site:blogs.sun.com";
+        }
+        return true;
+    }
+</script>
+<form id=3D"searchForm" action=3D"http://search.oracle.com/search/search=
+"
+      onsubmit=3D"return submitSearchForm();" method=3D"get">
+    <input type=3D"hidden" id=3D"searchOp" name=3D"search_p_main_operato=
+r" value=3D"all" />
+    <input type=3D"hidden" id=3D"searchGroup" name=3D"group" value=3D"Bl=
+ogs" />
+    <p>
+    <input type=3D"text" id=3D"searchQuery" name=3D"q" size=3D"10" maxle=
+ngth=3D"255" />
+    <input type=3D"submit" id=3D"searchSubmit" value=3D"Search" />
+    </p>
+    <span id=3D"searchFilter">
+        <noscript>Search filtering requires JavaScript</noscript>
+    </span>
+</form>
+<script type=3D"text/javascript">prepareSearchForm();</script>
+<!-- Start of GetJava Button -->
+ <a href=3D"http://java.com/java/download/index.jsp?cid=3Djdp74800" targ=
+et=3D"_blank" >
+<img width=3D"170" height=3D"100" border=3D"0" style=3D"margin: 8px;" al=
+t=3D"GetJava Download Button" title=3D"GetJava" src=3D"http://java.com/e=
+n/img/everywhere/getjava_lg.gif?cid=3Djdp74800">
+</a><!-- End of GetJava Button -->
+<!-- Start of GetJava Source -->
+<a href=3D"http://www.sun.com/software/opensource/java/getinvolved.jsp">=
+<img src =3D"http://www.sun.com/software/opensource/java/img/dukesource1=
+80.gif" border=3D"0" style=3D"margin: 8px;" alt=3D"Get the Source" title=
+=3D"OpenSourceJava"></a>
+<!-- End of GetJava Source -->
+<a href=3D"http://www.netbeans.info/downloads/index.php"><img src=3D"htt=
+p://www.netbeans.org/images/collateral/55/80x15-Blog-Buttons/get_netbean=
+s/nb_blog_get_redblue.gif" border=3D"0" style=3D"margin: 8px;" alt=3D"Do=
+wnload NetBeans!"></a>
+    </div>
+
+    <h2>Links</h2>
+    <div class=3D"sidebar">
+                           <ul class=3D"rFolder">
+                    <li class=3D"rFolderItem">
+                    <a href=3D"http://www.sun.com/bigadmin/hubs/java/"
+           title=3D"Lots of useful related tips and resources for System=
+ Administrators"
+           class=3D"rBookmark0">Java for SysAdmins</a>
+        </li>
+                <li class=3D"rFolderItem">
+                    <a href=3D"http://forum.java.sun.com/profile.jspa?us=
+erID=3D591268"
+           title=3D"I also sometimes answer questions about JMX, SNMP, J=
+ava, etc.. on Sun Developer's Network Forums"
+           class=3D"rBookmark0">My Posts on SDN</a>
+        </li>
+                <li class=3D"rFolderItem">
+                    <a href=3D"http://developers.sun.com/services/"
+           title=3D"Sun's Developer Services"
+           class=3D"rBookmark0">Need professional support?</a>
+        </li>
+                <li class=3D"rFolderItem">
+                    <a href=3D"http://www.sun.com/training/"
+           title=3D"Sun's catalog has a lot of interesting courses..."
+           class=3D"rBookmark0">Need some training?</a>
+        </li>
+                <li class=3D"rFolderItem">
+                    <a href=3D"http://www.sun.com/software/opensource/le=
+arnmore.jsp"
+           title=3D"Learn More about Open Source & Sun"
+           class=3D"rBookmark0">Open Source & Sun</a>
+        </li>
+                <li class=3D"rFolderItem">
+                    <a href=3D"http://planetjdk.org/"
+           title=3D"Aggregation of blogs from people participating to th=
+e Java Development Kit."
+           class=3D"rBookmark0">Planet JDK</a>
+        </li>
+                <li class=3D"rFolderItem">
+                    <a href=3D"http://opendmk.dev.java.net/"
+           title=3D"Project OpenDMK is an Open Source version of the Jav=
+a DMK 5.1"
+           class=3D"rBookmark0">Project OpenDMK</a>
+        </li>
+                <li class=3D"rFolderItem">
+                    <a href=3D"http://blogs.sun.com/roller/page/jmxetc?e=
+ntry=3Dwhere_can_i_get_my"
+           title=3D"Where Can I Get My Questions About JMX Answered"
+           class=3D"rBookmark0">Questions about JMX?</a>
+        </li>
+                <li class=3D"rFolderItem">
+                    <a href=3D"http://blogs.sun.com/roller/page/jmxetc?e=
+ntry=3Dsimple_is_not_easy"
+           title=3D"Simple Is Not Easy"
+           class=3D"rBookmark0">Questions about SNMP?</a>
+        </li>
+                <li class=3D"rFolderItem">
+                    <a href=3D"http://blogs.sun.com/theaquarium/"
+           title=3D"GlassFish and J2EE blogs"
+           class=3D"rBookmark0">The Aquarium</a>
+        </li>
+                <li class=3D"rFolderItem">
+                    <a href=3D"http://blogs.sun.com/thejavatutorials"
+           title=3D"The Java Tutorials' WebLog"
+           class=3D"rBookmark0">The Java Tutorials' Blog</a>
+        </li>
+                <li class=3D"rFolderItem">
+                    <a href=3D"http://visualvm.dev.java.net/"
+           title=3D"JMX Inside! Profile, Troubleshoot, Monitor, Analyze"=
+
+           class=3D"rBookmark1">VisualVM (JMX Inside)</a>
+        </li>
+                <li class=3D"rFolderItem">
+                    <a href=3D"http://blogs.sun.com/jmxetc/entry/what_is=
+_jmx"
+           title=3D"A short introduction to JMX on this blog."
+           class=3D"rBookmark0">What Is JMX</a>
+        </li>
+                <li class=3D"rFolderItem">
+                    <a href=3D"http://blogs.sun.com/"
+           title=3D""
+           class=3D"rBookmark0">blogs.sun.com</a>
+        </li>
+                <li class=3D"rFolderItem">
+                    <a href=3D"http://www.sun.com/aboutsun/environment/w=
+hy.jsp"
+           title=3D"Sun's Eco-Responsibility Initiative"
+           class=3D"rBookmark1">Sun Eco Center</a>
+        </li>
+                <li class=3D"rFolderItem">
+                    <a href=3D"http://java.sun.com/products/JavaManageme=
+nt/index.jsp"
+           title=3D"Java Mangement Extensions (JMX)"
+           class=3D"rBookmark0">JMX Home Page</a>
+        </li>
+                <li class=3D"rFolderItem">
+                    <a href=3D"http://java.sun.com/products/jdmk/index.j=
+sp"
+           title=3D"Java Dynamic Management Kit"
+           class=3D"rBookmark0">Java DMK (SNMP inside!)</a>
+        </li>
+                <li class=3D"rFolderItem">
+                    <a href=3D"http://www.netbeans.org/"
+           title=3D"Get NetBeans from NetBeans.org"
+           class=3D"rBookmark0">NetBeans Home Page</a>
+        </li>
+                   </ul>
+        <script type=3D"text/javascript" src=3D"http://embed.technorati.=
+com/embed/4j8rz4ces3.js"></script>
+<br>
+<!-- Start of StatCounter Code -->
+<script type=3D"text/javascript" language=3D"javascript">
+<!-- =
+
+var sc_project=3D1223870; =
+
+var sc_invisible=3D1; =
+
+var sc_partition=3D10; =
+
+var sc_security=3D"f87d160f"; =
+
+var sc_text=3D1; =
+
+//-->
+</script>
+
+<script type=3D"text/javascript" language=3D"javascript" src=3D"http://w=
+ww.statcounter.com/counter/counter.js"></script><noscript><a href=3D"htt=
+p://www.statcounter.com/" target=3D"_blank"><img  src=3D"http://c11.stat=
+counter.com/counter.php?sc_project=3D1223870&amp;amp;java=3D0&amp;amp;se=
+curity=3Df87d160f&amp;amp;invisible=3D1" alt=3D"free hit counter script"=
+ border=3D"0"></a> </noscript>
+<!-- End of StatCounter Code -->
+    </div>
+
+    <h2>Lookup RFC</h2>
+    <div class=3D"sidebar">
+    <table border=3D"0" cellspacing=3D"0" frame=3D"void">
+      <tbody>
+      <tr>
+        <td align=3D"center" nowrap=3D"nowrap">RFC:</td>
+        <td align=3D"center" nowrap=3D"nowrap">
+        <form method=3D"get"
+ action=3D"http://www.rfc-editor.org/cgi-bin/rfcsearch.pl"> <input
+ name=3D"searchwords" size=3D"8" maxlength=3D"255" value=3D"" type=3D"te=
+xt"> <input
+ name=3D"opt" value=3D"All+fields" type=3D"hidden"> <input name=3D"num"
+ value=3D"25" type=3D"hidden"> <input name=3D"format" value=3D"ftp"
+ type=3D"hidden"> <input name=3D"filefmt" value=3D"txt" type=3D"hidden">=
+ <input
+ name=3D"search_doc" value=3D"search_all" type=3D"hidden"> <input
+ name=3D"match_method" value=3D"prefix" type=3D"hidden"> <input
+ name=3D"abstract" value=3D"absoff" type=3D"hidden"> <input name=3D"keyw=
+ords"
+ value=3D"keyoff" type=3D"hidden"> <input name=3D"sort_method" value=3D"=
+newer"
+ type=3D"hidden"></form>
+        </td>
+      </tr>
+      </tbody>
+      </table>
+    </div>
+
+    <h2>Planet JMX</h2>
+    <div class=3D"sidebar">
+    <p><a href=3D"http://blogs.sun.com/roller/rss/sundararajan"
+        ><img class=3D"smrssbadge"
+          src=3D"/roller/images/smrssbadge.gif"
+          alt=3D"URL of site's RSS feed"/></a> <a =
+
+       href=3D"http://blogs.sun.com/roller/page/sundararajan"
+       title=3D"A.Sundararajan's blog">A. Sundararajan</a>
+    <br><a href=3D"http://blogs.sun.com/roller/rss/alanb"
+        ><img class=3D"smrssbadge"
+          src=3D"/roller/images/smrssbadge.gif"
+          alt=3D"URL of site's RSS feed"/></a> <a =
+
+       href=3D"http://blogs.sun.com/roller/page/alanb"
+       title=3D"Alan's blog">Alan Bateman</a>
+    <br><a href=3D"http://blogs.sun.com/roller/rss/dannycoward"
+        ><img class=3D"smrssbadge"
+          src=3D"/roller/images/smrssbadge.gif"
+          alt=3D"URL of site's RSS feed"/></a> <a =
+
+       href=3D"http://blogs.sun.com/roller/page/dannycoward"
+       title=3D"Danny Coward's Sun Weblog">Danny Coward</a>
+    <br><a href=3D"http://weblogs.java.net/blog/emcmanus/index.rdf"
+        ><img class=3D"smrssbadge"
+          src=3D"/roller/images/smrssbadge.gif"
+          alt=3D"URL of site's RSS feed"/></a> <a =
+
+       href=3D"http://weblogs.java.net/blog/emcmanus/"
+       title=3D"&Eacute;amonn's blog">&Eacute;amonn McManus</a>
+    <br><a href=3D"http://blogs.sun.com/roller/rss/jmxnetbeans"
+        ><img class=3D"smrssbadge"
+          src=3D"/roller/images/smrssbadge.gif"
+          alt=3D"URL of site's RSS feed"/></a> <a =
+
+       href=3D"http://blogs.sun.com/roller/page/jmxnetbeans"
+       title=3D"Jean-Fran&ccedil;ois Denise : JMX, NetBeans and more!">J=
+ean-Fran&ccedil;ois Denise</a>
+    <br><a href=3D"http://blogs.sun.com/roller/rss/joel"
+        ><img class=3D"smrssbadge"
+          src=3D"/roller/images/smrssbadge.gif"
+          alt=3D"URL of site's RSS feed"/></a> <a =
+
+       href=3D"http://blogs.sun.com/roller/page/joel"
+       title=3D"Jo&euml;l F&eacute;raud : Building JMX">Jo&euml;l F&eacu=
+te;raud</a>
+    <br><a href=3D"http://weblogs.java.net/blog/mandychung/index.rdf"
+        ><img class=3D"smrssbadge"
+          src=3D"/roller/images/smrssbadge.gif"
+          alt=3D"URL of site's RSS feed"/></a> <a =
+
+       href=3D"http://weblogs.java.net/blog/mandychung/"
+       title=3D"Mandy's blog">Mandy Chung</a>
+    <br><a href=3D"http://blogs.sun.com/roller/rss/lmalventosa"
+        ><img class=3D"smrssbadge"
+          src=3D"/roller/images/smrssbadge.gif"
+          alt=3D"URL of site's RSS feed"/></a> <a =
+
+       href=3D"http://blogs.sun.com/roller/page/lmalventosa"
+       title=3D"Luis-Miguel's blog">Luis-Miguel Alventosa</a>
+    </p>
+
+    </div>
+
+    <h2>From Grenoble</h2>
+    <div class=3D"sidebar">
+    <p><a href=3D"http://blogs.sun.com/roller/rss/erwann"
+        ><img class=3D"smrssbadge"
+          src=3D"/roller/images/smrssbadge.gif"
+          alt=3D"URL of site's RSS feed"/></a> <a =
+
+           href=3D"http://blogs.sun.com/erwann"
+           title=3D"Erwann Ch=C3=A9ned=C3=A9">Erwann Ch=C3=A9ned=C3=A9</=
+a>
+	<br><a href=3D"http://blogs.sun.com/roller/rss/ppetit"
+        ><img class=3D"smrssbadge"
+          src=3D"/roller/images/smrssbadge.gif"
+          alt=3D"URL of site's RSS feed"/></a> <a =
+
+           href=3D"http://blogs.sun.com/ppetit"
+           title=3D"Patrick Petit">Patrick Petit</a>
+	<br><a href=3D"http://blogs.sun.com/roller/rss/Ludo"
+        ><img class=3D"smrssbadge"
+          src=3D"/roller/images/smrssbadge.gif"
+          alt=3D"URL of site's RSS feed"/></a> <a =
+
+           href=3D"http://blogs.sun.com/Ludo"
+           title=3D"Ludovic Poitou">Ludovic Poitou</a>
+	<br><a href=3D"http://blogs.sun.com/roller/rss/nickstephen"
+        ><img class=3D"smrssbadge"
+           src=3D"/roller/images/smrssbadge.gif"
+           alt=3D"URL of site's RSS feed"/></a> <a =
+
+	   href=3D"http://blogs.sun.com/nickstephen"
+           title=3D"Nick Stephen">Nick Stephen</a>
+	<br><a href=3D"http://blogs.sun.com/roller/rss/sandoz"
+        ><img class=3D"smrssbadge"
+           src=3D"/roller/images/smrssbadge.gif"
+           alt=3D"URL of site's RSS feed"/></a> <a =
+
+	   href=3D"http://blogs.sun.com/roller/page/sandoz"
+           title=3D"Paul Sandoz">Paul Sandoz</a>
+	<br><a href=3D"http://blogs.sun.com/roch"
+        ><img class=3D"smrssbadge"
+           src=3D"/roller/images/smrssbadge.gif"
+           alt=3D"URL of site's RSS feed"/></a> <a =
+
+	   href=3D"http://blogs.sun.com/roller/page/roch"
+           title=3D"Roch Bourbonnais">Roch Bourbonnais</a>
+	<br><a href=3D"http://blogs.sun.com/roller/rss/smckinty"
+        ><img class=3D"smrssbadge" =
+
+           src=3D"/roller/images/smrssbadge.gif"
+           alt=3D"URL of site's RSS feed"/></a> <a =
+
+           href=3D"http://blogs.sun.com/smckinty"
+           title=3D"Steve Mc Kinty">Steve Mc Kinty</a>
+	<br><a href=3D"http://blogs.sun.com/roller/rss/sduloutr"
+        ><img class=3D"smrssbadge" =
+
+           src=3D"/roller/images/smrssbadge.gif"
+           alt=3D"URL of site's RSS feed"/></a> <a =
+
+           href=3D"http://blogs.sun.com/sduloutr"
+           title=3D"Sylvain Duloutre">Sylvain Duloutre</a>
+         </p>
+      </div>
+
+    <h2>Navigation</h2>
+    <div class=3D"sidebar">
+    <!--    <ul class=3D"linkblog">
+      </ul>
+ -->
+                 <ul class=3D"rNavigationBar">
+        <li class=3D"rNavItem">
+    <a href=3D"/">blogs.sun.com</a></li>              <li class=3D"rNavI=
+tem">
+    <a href=3D"http://blogs.sun.com/jmxetc/">Weblog</a></li>            =
+                                                                        =
+                                                                =
+
+                                        <li class=3D"rNavItem">
+    <a href=3D"http://blogs.sun.com/jmxetc/page/Toc">Table Of Contents</=
+a></li>                =
+
+                                                                        =
+                    =
+
+                                        <li class=3D"rNavItem">
+    <a href=3D"http://blogs.sun.com/jmxetc/page/About">About Me</a></li>=
+                =
+
+                        =
+
+                               <li class=3D"rNavItem">
+    <a href=3D"/roller-ui/login-redirect.rol">Login</a></li>            =
+    </ul >
+              =
+
+    =
+
+    </div>
+
+    <h2>Referers</h2>
+    <div class=3D"sidebar">
+    <p>Today's Page Hits: 342</p>
+    </div>
+</div>
+
+
+<script language=3D"javascript">
+    startHighlighter()
+</script>
+
+<!-- now print decorator footer/close html -->
+</body>
+</html>
+
+------------lU2mF85cjuH0DsGDayNSn3
+Content-Disposition: inline; filename=SyntaxHighlighter.css
+Content-Type: text/css; charset=utf-8; name=SyntaxHighlighter.css
+Content-Location: http://blogs.sun.com/jmxetc/resource/Scripts/SyntaxHighlighter.css
+Content-Transfer-Encoding: 8bit
+
+.dp-highlighter
+{
+	font-family: "Consolas", "Courier New", Courier, mono, serif;
+	font-size: 12px;
+	background-color: #E7E5DC;
+	width: 99%;
+	overflow: auto;
+	margin: 18px 0 18px 0 !important;
+	padding-top: 1px; /* adds a little border on top when controls are hidden */
+}
+
+/* clear styles */
+.dp-highlighter ol,
+.dp-highlighter ol li,
+.dp-highlighter ol li span 
+{
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+
+.dp-highlighter a,
+.dp-highlighter a:hover
+{
+	background: none;
+	border: none;
+	padding: 0;
+	margin: 0;
+}
+
+.dp-highlighter .bar
+{
+	padding-left: 45px;
+}
+
+.dp-highlighter.collapsed .bar,
+.dp-highlighter.nogutter .bar
+{
+	padding-left: 0px;
+}
+
+.dp-highlighter ol
+{
+	list-style: decimal; /* for ie */
+	background-color: #fff;
+	margin: 0px 0px 1px 45px !important; /* 1px bottom margin seems to fix occasional Firefox scrolling */
+	padding: 0px;
+	color: #5C5C5C;
+}
+
+.dp-highlighter.nogutter ol,
+.dp-highlighter.nogutter ol li
+{
+	list-style: none !important;
+	margin-left: 0px !important;
+}
+
+.dp-highlighter ol li,
+.dp-highlighter .columns div
+{
+	list-style: decimal-leading-zero; /* better look for others, override cascade from OL */
+	list-style-position: outside !important;
+	border-left: 3px solid #6CE26C;
+	background-color: #F8F8F8;
+	color: #5C5C5C;
+	padding: 0 3px 0 10px !important;
+	margin: 0 !important;
+	line-height: 14px;
+}
+
+.dp-highlighter.nogutter ol li,
+.dp-highlighter.nogutter .columns div
+{
+	border: 0;
+}
+
+.dp-highlighter .columns
+{
+	background-color: #F8F8F8;
+	color: gray;
+	overflow: hidden;
+	width: 100%;
+}
+
+.dp-highlighter .columns div
+{
+	padding-bottom: 5px;
+}
+
+.dp-highlighter ol li.alt
+{
+	background-color: #FFF;
+	color: inherit;
+}
+
+.dp-highlighter ol li span
+{
+	color: black;
+	background-color: inherit;
+}
+
+/* Adjust some properties when collapsed */
+
+.dp-highlighter.collapsed ol
+{
+	margin: 0px;
+}
+
+.dp-highlighter.collapsed ol li
+{
+	display: none;
+}
+
+/* Additional modifications when in print-view */
+
+.dp-highlighter.printing
+{
+	border: none;
+}
+
+.dp-highlighter.printing .tools
+{
+	display: none !important;
+}
+
+.dp-highlighter.printing li
+{
+	display: list-item !important;
+}
+
+/* Styles for the tools */
+
+.dp-highlighter .tools
+{
+	padding: 3px 8px 3px 10px;
+	font: 9px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	color: silver;
+	background-color: #f8f8f8;
+	padding-bottom: 10px;
+	border-left: 3px solid #6CE26C;
+}
+
+.dp-highlighter.nogutter .tools
+{
+	border-left: 0;
+}
+
+.dp-highlighter.collapsed .tools
+{
+	border-bottom: 0;
+}
+
+.dp-highlighter .tools a
+{
+	font-size: 9px;
+	color: #a0a0a0;
+	background-color: inherit;
+	text-decoration: none;
+	margin-right: 10px;
+}
+
+.dp-highlighter .tools a:hover
+{
+	color: red;
+	background-color: inherit;
+	text-decoration: underline;
+}
+
+/* About dialog styles */
+
+.dp-about { background-color: #fff; color: #333; margin: 0px; padding: 0px; }
+.dp-about table { width: 100%; height: 100%; font-size: 11px; font-family: Tahoma, Verdana, Arial, sans-serif !important; }
+.dp-about td { padding: 10px; vertical-align: top; }
+.dp-about .copy { border-bottom: 1px solid #ACA899; height: 95%; }
+.dp-about .title { color: red; background-color: inherit; font-weight: bold; }
+.dp-about .para { margin: 0 0 4px 0; }
+.dp-about .footer { background-color: #ECEADB; color: #333; border-top: 1px solid #fff; text-align: right; }
+.dp-about .close { font-size: 11px; font-family: Tahoma, Verdana, Arial, sans-serif !important; background-color: #ECEADB; color: #333; width: 60px; height: 22px; }
+
+/* Language specific styles */
+
+.dp-highlighter .comment, .dp-highlighter .comments { color: #008200; background-color: inherit; }
+.dp-highlighter .string { color: blue; background-color: inherit; }
+.dp-highlighter .keyword { color: #069; font-weight: bold; background-color: inherit; }
+.dp-highlighter .preprocessor { color: gray; background-color: inherit; }
+
+------------lU2mF85cjuH0DsGDayNSn3
+Content-Disposition: inline; filename=base.css
+Content-Type: text/css; charset=utf-8; name=base.css
+Content-Location: http://blogs.sun.com/themes/base.css
+Content-Transfer-Encoding: 8bit
+
+/*
+* Licensed to the Apache Software Foundation (ASF) under one or more
+*  contributor license agreements.  The ASF licenses this file to You
+* under the Apache License, Version 2.0 (the "License"); you may not
+* use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.  For additional information regarding
+* copyright in this work, please see the NOTICE file in the top level
+* directory of this distribution.
+*/
+
+/* Common CSS */
+
+a {
+    font-weight: normal;
+    text-decoration: underline;
+}
+a:active {}
+a:link {}
+a:visited {}
+a:hover {}
+body {
+    font-family: verdana, sans-serif;
+    font-size: small;
+}
+p {
+    margin:10px 10px 10px 10px;
+    text-align: left;
+}
+pre {
+    margin:0px 10px 0px 10px;
+    overflow: auto;
+}
+.code {
+    margin:10px 10px 10px 20px;
+    padding: 3px 3px;
+}
+.quote {
+    margin-left: 10%;
+    text-align: justify;
+    font-style: italic;
+}
+img {
+    border: 0px;
+    margin: 0px; 
+}
+
+/* bookmark.vm */
+
+.rFolder {
+    font-size: small;
+    font-weight: bold;
+}
+li.rFolderItem {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+    font-size : small;
+    font-weight: normal;
+}
+.rBookmark0 {
+  margin-left: 10px;
+  font-size: small;
+}
+img.rBookmark {
+    margin-left: 10px;
+    border: 0;
+}
+img.smrssbadge {
+    margin-left: 10px;
+    border: 0;
+}
+
+/* navbar.vm */
+
+.rNavigationBar {
+    margin-left: 0;
+    padding-left: 0;
+}
+li.rNavItem {
+    list-style: none;
+    font-size : small;
+    font-weight: normal;
+}
+
+/* navbar-css.vm */
+ul.rMenu {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+}
+li.rMenuItem {
+    font-size : small;
+    font-weight: normal;
+}
+
+/* newsfeed.vm */
+
+div.rNewsfeedTitle {
+    font-weight: 600;
+}
+a.rNewsfeedLink, span.rNewsfeedLink {
+    display:block;
+    margin-left: 10px;
+    font-size : small;
+    font-weight: bolder;
+}
+span.rNewsfeedDesc {
+    display:block;
+    margin-left: 10px;
+    font-size : small;
+    font-weight: normal;
+}
+
+/* referer.vm */
+
+ul.rReferersList {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+}
+li.rReferersListItem {
+    font-size : small;
+    font-weight: normal;
+}
+a.linkback {
+    border-style: double;
+}
+
+/* comments.vm */
+
+a.entrycommentslink {
+    background: transparent;
+}
+/* master containing div or ul */
+.comments {
+  margin: 10px 5px 10px 5px;
+}
+/* Preview / Comments Header */
+div.comments-head {
+  font-weight:bold;
+  margin-top:10px;
+  text-transform:uppercase;
+}
+/* actual comment content */
+.comment {
+    margin: 5px 10px 10px 5px; 
+}
+/* commenter info */
+p.comment-details {
+    background: transparent;
+    font-size: .95em;
+    margin: 10px 0px 10px 10px !important;
+}
+div.comments-form {
+  font-weight:normal;
+  margin: 15px 15px 15px 15px;
+}
+span.comments-syntax-indicator {
+    display: block;
+}
+ul.commentsList {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+}
+li.commentsListItem {
+    font-size : small;
+    font-weight: normal;
+}
+label.rememberInfo{
+    font-size: small;
+}
+label.notify{
+    font-size: small;
+}
+/* Begin Hidden Comment Form */
+form.commentFormBox {
+    margin-top: 10px;
+}
+tr.commentFormRow {
+    font-size: 12px;
+    padding-bottom: 6px;
+}
+input.commentFormInput {
+    font-size: 1em;
+}
+textarea.commentFormTextarea {
+    font-size: 12px;
+    width: 90% !important;
+}
+.comments-syntax-indicator {
+    font-weight: bold;
+}
+.comments-syntax-indicator span.enabled {
+    background: transparent;
+    color: green;
+    font-style: italic;
+}
+.comments-syntax-indicator span.disabled {
+    background: transparent;
+    color: red;
+    font-style: italic;
+}
+div.commentBody {}
+div.commentByline {}
+div.commentAuthor {
+    border: none;
+}
+
+/* weblog.vm */
+
+a.daypermalink {
+    border-style : none;
+}
+a.entrypermalink {
+    background: transparent;
+}
+span.disabled {
+    color: red;
+}
+span.enabled {
+    color: green;
+}
+form#searchForm {
+}
+div#searchAgain {
+  border: 1px solid #999;
+  font-size: 1em;
+}
+div.trackbackUrl {
+    background: transparent;
+    margin: 0px 10px 10px 10px;
+    text-align: left;
+}
+#nextEntry {
+    text-align: right;
+}
+#previousEntry {
+    text-align: left;
+}
+ul.recentposts {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+}
+li.recentposts {
+    font-size : small;
+    font-weight: normal;
+}
+ul.linkblog {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+}
+li.linkblog {
+    font-size : small;
+    font-weight: normal;
+}
+.next-previous {
+    text-align: center;
+    padding: 1em 0 1em 0;
+}
+.error {
+    display: block;
+    background-color: #ffcccc;
+    border: 1px solid red;
+    color: #aa0000;
+    font-size: 0.9em;
+    font-weight: normal;
+    margin: 5px 10px 5px 0px;
+    padding: 3px;
+    width: 95%;
+}
+.status {
+    display: block;
+    background-color: #CCFFCC;
+    border: 1px solid green;
+    color: #000000;
+    font-size: .9em;
+    font-weight: normal;
+    margin: 5px 10px 5px 0px;
+    padding: 3px;
+    width: 95%;
+}
+
+/* website.vm */
+
+div.rWeblogCategoryChooser {
+    background: transparent;
+    margin-bottom: 10px;
+}
+a.rUnchosenCategory {
+    font-size: medium;
+    font-weight: normal;
+}
+span.rChosenCategory {
+    font-size: medium;
+    font-weight: bolder;
+}
+
+/* CalendarTag.java */
+
+table.hCalendarTable {
+    text-align : center;
+}
+td.hCalendarMonthYearRow {
+    font-weight: bold;
+}
+a.hCalendarNavBar {
+}
+th.hCalendarDayNameRow {
+    text-align : center;
+    font-size : x-small;
+    font-weight : bolder;
+}
+tr.hCalendarNextPrev {
+    text-align : center;
+    font-size : x-small;
+    font-style : italic;
+}
+td.hCalendarDayNotInMonth {
+    font-size : x-small;
+    color: gray;
+}
+td.hCalendarDayCurrent {
+    text-align : center;
+    font-size  : x-small;
+    font-weight: bolder;
+}
+td.hCalendarDayLinked {
+    text-align : center;
+    font-size  : x-small;
+    font-weight: bolder;
+}
+div.hCalendarDayTitle {
+    font-size:  .9em;
+    text-align: center;
+}
+td.hCalendarDay {
+    text-align: center;
+    font-size : x-small;
+}
+
+/* BigWeblogCalendarModel */ 
+
+div.hCalendarDayTitleBig {
+  position: relative;
+  left: 0;
+  top: 0;
+  width: 25%;
+  padding: 3px 0 3px 0;
+  background: transparent;
+  color: #050505;
+  border-right: 1px solid #050505;
+  border-bottom: 1px solid #050505;
+  font-size: small;
+  text-align: center;
+  font-size: small;
+}
+div.bCalendarDayContentBig {
+  font-size: x-small;
+  padding: 3px 0px 3px 0px;
+}
+
+
+------------lU2mF85cjuH0DsGDayNSn3
+Content-Disposition: inline; filename=theme.css
+Content-Type: text/css; charset=utf-8; name=theme.css
+Content-Location: http://blogs.sun.com/themes/basic/theme.css
+Content-Transfer-Encoding: 8bit
+
+/*
+* Licensed to the Apache Software Foundation (ASF) under one or more
+*  contributor license agreements.  The ASF licenses this file to You
+* under the Apache License, Version 2.0 (the "License"); you may not
+* use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.  For additional information regarding
+* copyright in this work, please see the NOTICE file in the top level
+* directory of this distribution.
+*/
+
+.entries{
+	width: 80%;
+	float: left;
+}
+.entries h1{
+	text-align: center;
+}
+div.rWeblogCategoryChooser {
+	text-align: center;
+}
+.rightbar{ 
+	width: 20%;
+	float: right;
+}
+.sidebar{
+	margin-left: 6;
+	padding-left: 5;
+}
+div.entry {
+  font-family:verdana, arial, sans-serif; 
+  font-size: 10px; 
+  color: #999; 
+  font-weight:bold;
+  margin-top:10px;
+  text-transform:uppercase;
+  border-bottom:1px dotted #666;		
+}
+
+div.day {
+  border-style: dotted;
+  border-width: thin;
+  font-family: verdana, sans-serif;
+  font-size: small;
+  color: black;
+  color : #000000;
+}
+
+div.box {
+  margin: 15px 15px 15px 15px;
+}
+
+h1 {
+  color:#CC9933;
+}
+h2 {
+  font-family:verdana, arial, sans-serif;
+  color:#999;
+  font-size:12px;
+  font-weight:bold;
+  background:#FFF;
+  line-height:14px;
+  padding:2px;
+  margin-top:10px;
+  border-bottom:1px dotted #666;
+  text-transform:uppercase;
+  letter-spacing: .2em;  					
+}
+
+p {
+  font-family: verdana, sans-serif;
+  font-size: small;
+  color: black;
+  color : #000000;
+}
+
+body {
+  font-family: verdana, sans-serif;
+  font-size: small;
+  color: black;
+  background-color: white;
+}
+a {
+  text-decoration: none;
+}
+a:link { 
+  color: blue;
+  font-weight: medium;
+}
+a:visited {
+  color: purple;
+  font-weight: medium;
+}
+
+a:hover {
+  text-decoration: underline overline;
+}
+img {
+  border: 0px;
+  margin: 0px; 
+}
+
+.dateStamp {
+  color : gray;
+  font-size: small;
+}
+
+.rFolder {
+	margin-left: 0;
+	padding-left: 0;
+}
+.rBookmark1 {
+  margin-left: 10px;
+  font-size: small;
+  font-weight: bold;
+}
+.rBookmark2 {
+  margin-left: 10px;
+  font-weight: bold;
+  font-size: large
+}
+.rBookmark3 {
+  margin-left: 10px;
+  font-size: x-large
+}
+
+.hCalendarTable {
+  text-align : center;
+}
+.hCalendarTitle {
+  text-align : center;
+  font-weight : bolder;
+  font-size: large;
+}
+.hCalendarDayNameRow {
+  text-align : center;
+  font-weight : bolder;
+  font-size : x-small;
+}
+.hCalendarDay {
+  text-align : center;
+  font-size : x-small;
+}
+.hCalendarDayCurrent {
+  text-align : center;
+  font-size : x-small;
+  font-weight : bolder ;
+}
+.hCalendarDayLinked {
+  font-size : x-small;
+  font-weight : bolder ;
+  text-align : center;
+}
+.hCalendarDayNotInMonth {
+  font-size : x-small;
+  background-color: white;
+  color: gray;
+}
+.hCalendarNextPrev {
+  font-size : x-small;
+  text-align : center;
+  font-style : italic;
+}
+
+.rChosenCategory {
+    font-weight: bolder;
+}
+.rUnchosenCategory {
+    font-size: medium;
+}
+
+ul.rReferersList {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+  font-size : x-small;
+}
+li.rReferersListItem {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+  font-size : x-small;
+}
+    
+.comments {
+  margin: 15px 15px 15px 15px;
+}		
+.comment {
+	margin: 5px 0px 10px 5px;
+	border: 1px solid #ddd;
+  	background:#eee;	
+}
+.comments-form {
+  font-family:verdana, arial, sans-serif;
+  color:#999;
+  font-size:10px;
+  font-weight:normal;
+  background:#FFF;	
+  margin: 15px 15px 15px 15px;
+}	
+			
+.comments-head	{ 
+  font-family:verdana, arial, sans-serif; 
+  font-size: 10px; 
+  color: #999; 
+  font-weight:bold;
+  margin-top:10px;
+  text-transform:uppercase;
+  border-bottom:1px dotted #666;		
+}
+
+
+------------lU2mF85cjuH0DsGDayNSn3
+Content-Disposition: inline; filename=roller.js
+Content-Type: application/x-javascript; charset=utf-8; name=roller.js
+Content-Location: http://blogs.sun.com/theme/scripts/roller.js
+Content-Transfer-Encoding: Base64
+
+LyoKKiBMaWNlbnNlZCB0byB0aGUgQXBhY2hlIFNvZnR3YXJlIEZvdW5kYXRpb24g
+KEFTRikgdW5kZXIgb25lIG9yIG1vcmUKKiAgY29udHJpYnV0b3IgbGljZW5zZSBh
+Z3JlZW1lbnRzLiAgVGhlIEFTRiBsaWNlbnNlcyB0aGlzIGZpbGUgdG8gWW91Ciog
+dW5kZXIgdGhlIEFwYWNoZSBMaWNlbnNlLCBWZXJzaW9uIDIuMCAodGhlICJMaWNl
+bnNlIik7IHlvdSBtYXkgbm90CiogdXNlIHRoaXMgZmlsZSBleGNlcHQgaW4gY29t
+cGxpYW5jZSB3aXRoIHRoZSBMaWNlbnNlLgoqIFlvdSBtYXkgb2J0YWluIGEgY29w
+eSBvZiB0aGUgTGljZW5zZSBhdAoqCiogICAgIGh0dHA6Ly93d3cuYXBhY2hlLm9y
+Zy9saWNlbnNlcy9MSUNFTlNFLTIuMAoqCiogVW5sZXNzIHJlcXVpcmVkIGJ5IGFw
+cGxpY2FibGUgbGF3IG9yIGFncmVlZCB0byBpbiB3cml0aW5nLCBzb2Z0d2FyZQoq
+IGRpc3RyaWJ1dGVkIHVuZGVyIHRoZSBMaWNlbnNlIGlzIGRpc3RyaWJ1dGVkIG9u
+IGFuICJBUyBJUyIgQkFTSVMsCiogV0lUSE9VVCBXQVJSQU5USUVTIE9SIENPTkRJ
+VElPTlMgT0YgQU5ZIEtJTkQsIGVpdGhlciBleHByZXNzIG9yIGltcGxpZWQuCiog
+U2VlIHRoZSBMaWNlbnNlIGZvciB0aGUgc3BlY2lmaWMgbGFuZ3VhZ2UgZ292ZXJu
+aW5nIHBlcm1pc3Npb25zIGFuZAoqIGxpbWl0YXRpb25zIHVuZGVyIHRoZSBMaWNl
+bnNlLiAgRm9yIGFkZGl0aW9uYWwgaW5mb3JtYXRpb24gcmVnYXJkaW5nCiogY29w
+eXJpZ2h0IGluIHRoaXMgd29yaywgcGxlYXNlIHNlZSB0aGUgTk9USUNFIGZpbGUg
+aW4gdGhlIHRvcCBsZXZlbAoqIGRpcmVjdG9yeSBvZiB0aGlzIGRpc3RyaWJ1dGlv
+bi4KKi8KLyogVGhpcyBmdW5jdGlvbiBpcyB1c2VkIHRvIHNldCBjb29raWVzICov
+DQpmdW5jdGlvbiBzZXRDb29raWUobmFtZSx2YWx1ZSxleHBpcmVzLHBhdGgsZG9t
+YWluLHNlY3VyZSkgew0KICBkb2N1bWVudC5jb29raWUgPSBuYW1lICsgIj0iICsg
+ZXNjYXBlICh2YWx1ZSkgKw0KICAgICgoZXhwaXJlcykgPyAiOyBleHBpcmVzPSIg
+KyBleHBpcmVzLnRvR01UU3RyaW5nKCkgOiAiIikgKw0KICAgICgocGF0aCkgPyAi
+OyBwYXRoPSIgKyBwYXRoIDogIiIpICsNCiAgICAoKGRvbWFpbikgPyAiOyBkb21h
+aW49IiArIGRvbWFpbiA6ICIiKSArICgoc2VjdXJlKSA/ICI7IHNlY3VyZSIgOiAi
+Iik7DQp9DQoNCi8qIFRoaXMgZnVuY3Rpb24gaXMgdXNlZCB0byBnZXQgY29va2ll
+cyAqLw0KZnVuY3Rpb24gZ2V0Q29va2llKG5hbWUpIHsNCgl2YXIgcHJlZml4ID0g
+bmFtZSArICI9IiANCgl2YXIgc3RhcnQgPSBkb2N1bWVudC5jb29raWUuaW5kZXhP
+ZihwcmVmaXgpIA0KDQoJaWYgKHN0YXJ0PT0tMSkgew0KCQlyZXR1cm4gbnVsbDsN
+Cgl9DQoJDQoJdmFyIGVuZCA9IGRvY3VtZW50LmNvb2tpZS5pbmRleE9mKCI7Iiwg
+c3RhcnQrcHJlZml4Lmxlbmd0aCkgDQoJaWYgKGVuZD09LTEpIHsNCgkJZW5kPWRv
+Y3VtZW50LmNvb2tpZS5sZW5ndGg7DQoJfQ0KDQoJdmFyIHZhbHVlPWRvY3VtZW50
+LmNvb2tpZS5zdWJzdHJpbmcoc3RhcnQrcHJlZml4Lmxlbmd0aCwgZW5kKSANCgly
+ZXR1cm4gdW5lc2NhcGUodmFsdWUpOw0KfQ0KDQovKiBUaGlzIGZ1bmN0aW9uIGlz
+IHVzZWQgdG8gZGVsZXRlIGNvb2tpZXMgKi8NCmZ1bmN0aW9uIGRlbGV0ZUNvb2tp
+ZShuYW1lLHBhdGgsZG9tYWluKSB7DQogIGlmIChnZXRDb29raWUobmFtZSkpIHsN
+CiAgICBkb2N1bWVudC5jb29raWUgPSBuYW1lICsgIj0iICsNCiAgICAgICgocGF0
+aCkgPyAiOyBwYXRoPSIgKyBwYXRoIDogIiIpICsNCiAgICAgICgoZG9tYWluKSA/
+ICI7IGRvbWFpbj0iICsgZG9tYWluIDogIiIpICsNCiAgICAgICI7IGV4cGlyZXM9
+VGh1LCAwMS1KYW4tNzAgMDA6MDA6MDEgR01UIjsNCiAgfQ0KfQ0KDQpmdW5jdGlv
+biByZW1lbWJlclVzZXIodGhlRm9ybSkgew0KICAgIHZhciBleHBpcmVzID0gbmV3
+IERhdGUoKTsNCiAgICBleHBpcmVzLnNldFRpbWUoZXhwaXJlcy5nZXRUaW1lKCkg
+KyAyNCAqIDM2NSAqIDYwICogNjAgKiAxMDAwKTsgLy8gc2V0cyBpdCBmb3IgYXBw
+cm94IDM2NSBkYXlzLg0KICAgIC8vIHNldHMgaXQgZm9yIGVudGlyZSBkb21haW4s
+IHNvIGZyZWVyb2xsZXIgd2lsbCByZW1lbWJlciBmb3IgYWxsIHVzZXJzDQogICAg
+c2V0Q29va2llKCJjb21tZW50QXV0aG9yIix0aGVGb3JtLm5hbWUudmFsdWUsZXhw
+aXJlcywiLyIpOyANCiAgICBzZXRDb29raWUoImNvbW1lbnRFbWFpbCIsdGhlRm9y
+bS5lbWFpbC52YWx1ZSxleHBpcmVzLCIvIik7DQogICAgc2V0Q29va2llKCJjb21t
+ZW50VXJsIix0aGVGb3JtLnVybC52YWx1ZSxleHBpcmVzLCIvIik7DQp9DQoNCmZ1
+bmN0aW9uIGZvcmdldFVzZXIodGhlRm9ybSkgew0KICAgIGRlbGV0ZUNvb2tpZSgi
+Y29tbWVudEF1dGhvciIsIi8iKTsNCiAgICBkZWxldGVDb29raWUoImNvbW1lbnRF
+bWFpbCIsIi8iKTsNCiAgICBkZWxldGVDb29raWUoImNvbW1lbnRVcmwiLCIvIik7
+DQp9DQoNCi8qIFRoaXMgZnVuY3Rpb24gaXMgdXNlZCB0byBzaG93L2hpZGUgZWxl
+bWVudHMgd2l0aCBhIGRpc3BsYXk6bm9uZSBzdHlsZSBhdHRyaWJ1dGUgKi8gDQpm
+dW5jdGlvbiB0b2dnbGUodGFyZ2V0SWQpIHsNCiAgICBpZiAoZG9jdW1lbnQuZ2V0
+RWxlbWVudEJ5SWQpIHsNCiAgICAgICAgdGFyZ2V0ID0gZG9jdW1lbnQuZ2V0RWxl
+bWVudEJ5SWQodGFyZ2V0SWQpOw0KICAgIAlpZiAodGFyZ2V0LnN0eWxlLmRpc3Bs
+YXkgPT0gIm5vbmUiKSB7DQogICAgCQl0YXJnZXQuc3R5bGUuZGlzcGxheSA9ICIi
+OyAgICAgICAgICAgIA0KICAgIAl9IGVsc2Ugew0KICAgIAkJdGFyZ2V0LnN0eWxl
+LmRpc3BsYXkgPSAibm9uZSI7DQogICAgCX0NCiAgICB9DQp9DQoNCi8qIFRoZSB0
+b2dnbGVGb2xkZXIgYW5kIHRvZ2dsZVBsdXNNaW51cyBmdW5jdGlvbnMgYXJlIGZv
+ciBleHBhbmRpbmcvY29udHJhY3RpbmcgZm9sZGVycyAqLw0KZnVuY3Rpb24gdG9n
+Z2xlRm9sZGVyKHRhcmdldElkKSB7DQogICAgdmFyIGV4cGFuZGVkOw0KICAgIGlm
+IChkb2N1bWVudC5nZXRFbGVtZW50QnlJZCkgew0KICAgICAgICB0YXJnZXQgPSBk
+b2N1bWVudC5nZXRFbGVtZW50QnlJZCh0YXJnZXRJZCk7DQogICAgCWlmICh0YXJn
+ZXQuc3R5bGUuZGlzcGxheSA9PSAibm9uZSIpIHsNCiAgICAJCXRhcmdldC5zdHls
+ZS5kaXNwbGF5ID0gIiI7ICAgIA0KICAgICAgICAgICAgZXhwYW5kZWQgPSB0cnVl
+OyAgICAgICAgDQogICAgCX0gZWxzZSB7DQogICAgCQl0YXJnZXQuc3R5bGUuZGlz
+cGxheSA9ICJub25lIjsNCiAgICAgICAgICAgIGV4cGFuZGVkID0gZmFsc2U7DQog
+ICAgCX0NCiAgICAgICAgdG9nZ2xlUGx1c01pbnVzKCJpIiArIHRhcmdldElkKTsN
+CiAgICAgICAgDQogICAgICAgIC8vIHNldCBhIGNvb2tpZSB0byByZW1lbWJlciB0
+aGlzIHByZWZlcmVuY2UNCiAgICAgICAgdmFyIGV4cGlyZXMgPSBuZXcgRGF0ZSgp
+Ow0KICAgICAgICBleHBpcmVzLnNldFRpbWUoZXhwaXJlcy5nZXRUaW1lKCkgKyAy
+NCAqIDM2NSAqIDYwICogNjAgKiAxMDAwKTsgLy8gc2V0cyBpdCBmb3IgYXBwcm94
+IDM2NSBkYXlzLg0KICAgICAgICBzZXRDb29raWUoInJmb2xkZXItIit0YXJnZXRJ
+ZCxleHBhbmRlZCxleHBpcmVzLCIvIik7DQogICAgfQ0KfQ0KDQpmdW5jdGlvbiB0
+b2dnbGVQbHVzTWludXModGFyZ2V0SWQpIHsNCiAgICBpZiAoZG9jdW1lbnQuZ2V0
+RWxlbWVudEJ5SWQpIHsNCiAgICAgICAgdGFyZ2V0ID0gZG9jdW1lbnQuZ2V0RWxl
+bWVudEJ5SWQodGFyZ2V0SWQpOw0KICAgIAlpZiAodGFyZ2V0LmlubmVySFRNTCA9
+PSAiKyIpIHsNCiAgICAJCXRhcmdldC5pbm5lckhUTUwgPSAiLSI7DQogICAgCX0g
+ZWxzZSB7DQogICAgCQl0YXJnZXQuaW5uZXJIVE1MID0gIisiOw0KICAgIAl9DQog
+ICAgfQ0KfQ0KDQovKiBUaGlzIGZ1bmN0aW9uIGlzIHRvIHNldCBmb2xkZXJzIHRv
+IGV4cGFuZC9jb250cmFjdCBiYXNlZCBvbiBhIHVzZXIncyBwcmVmZXJlbmNlICov
+DQpmdW5jdGlvbiBmb2xkZXJQcmVmZXJlbmNlKGZvbGRlcklkKSB7DQogICAgdmFy
+IGZvbGRlckNvb2tpZSA9IGdldENvb2tpZSgicmZvbGRlci0iK2ZvbGRlcklkKTsN
+CiAgICBpZiAoZm9sZGVyQ29va2llICE9IG51bGwpIHsgLy8gd2UgaGF2ZSB1c2Vy
+J3MgbGFzdCBzZXR0aW5nDQogICAgICAgIGZvbGRlciA9IGRvY3VtZW50LmdldEVs
+ZW1lbnRCeUlkKGZvbGRlcklkKTsNCiAgICAgICAgcGx1c01pbnVzID0gZG9jdW1l
+bnQuZ2V0RWxlbWVudEJ5SWQoImkiK2ZvbGRlcklkKTsNCiAgICAgICAgaWYgKGZv
+bGRlckNvb2tpZSA9PSAidHJ1ZSIpIHsgLy8gc2hvdw0KICAgICAgICAgICAgZm9s
+ZGVyLnN0eWxlLmRpc3BsYXkgPSAiIjsNCiAgICAgICAgICAgIHBsdXNNaW51cy5p
+bm5lckhUTUwgPSAiLSI7DQogICAgICAgIH0gZWxzZSB7IC8vIGhpZGUNCiAgICAg
+ICAgICAgIGZvbGRlci5zdHlsZS5kaXNwbGF5ID0gIm5vbmUiOw0KICAgICAgICAg
+ICAgcGx1c01pbnVzLmlubmVySFRNTCA9ICIrIjsgDQogICAgICAgIH0NCiAgICB9
+DQp9DQoNCmZ1bmN0aW9uIHRvZ2dsZU5leHRSb3coZSkgew0KICAgIGlmIChlLnR5
+cGUgPT0gImNoZWNrYm94Iikgew0KICAgICAgICB2YXIgY2hlY2tlZCA9IGUuY2hl
+Y2tlZDsNCiAgICB9IGVsc2UgaWYgKGUudHlwZSA9PSAicmFkaW8iKSB7DQogICAg
+ICAgIHZhciB2ID0gZS52YWx1ZTsNCiAgICAgICAgdmFyIGNoZWNrZWQgPSAodiA9
+PSAiMSIgfHwgdiA9PSAieSIgfHwgdiA9PSAidHJ1ZSIpID8gdHJ1ZSA6IGZhbHNl
+Ow0KICAgIH0NCiAgICAvLyB2YXIgbmV4dFJvdyA9IGUucGFyZW50Tm9kZS5wYXJl
+bnROb2RlLm5leHRTaWJsaW5nOw0KICAgIC8vIHRoZSBhYm92ZSBkb2Vzbid0IHdv
+cmsgb24gTW96aWxsYSBzaW5jZSBpdCB0cmVhdHMgd2hpdGUgc3BhY2UgYXMgbm9k
+ZXMNCiAgICB2YXIgdGhpc1JvdyA9IGUucGFyZW50Tm9kZS5wYXJlbnROb2RlOw0K
+ICAgIHZhciB0YWJsZUJvZHkgPSB0aGlzUm93LnBhcmVudE5vZGU7DQogICAgdmFy
+IG5leHRSb3cgPSB0YWJsZUJvZHkuZ2V0RWxlbWVudHNCeVRhZ05hbWUoInRyIilb
+dGhpc1Jvdy5yb3dJbmRleCsxXTsNCiAgICANCiAgICBpZiAoY2hlY2tlZCA9PSB0
+cnVlKSB7DQogICAgICAgIG5leHRSb3cuc3R5bGUuZGlzcGxheSA9ICIiOw0KICAg
+IH0gZWxzZSB7DQogICAgICAgIG5leHRSb3cuc3R5bGUuZGlzcGxheSA9ICJub25l
+IjsNCiAgICB9DQp9DQoNCmZ1bmN0aW9uIHRvZ2dsZUNvbnRyb2wodG9nZ2xlSWQs
+IHRhcmdldElkKSB7DQogICAgdmFyIGV4cGFuZGVkOw0KICAgIGlmIChkb2N1bWVu
+dC5nZXRFbGVtZW50QnlJZCkgew0KICAgICAgICB0YXJnZXQgPSBkb2N1bWVudC5n
+ZXRFbGVtZW50QnlJZCh0YXJnZXRJZCk7DQogICAgICAgIHRvZ2dsZSA9IGRvY3Vt
+ZW50LmdldEVsZW1lbnRCeUlkKHRvZ2dsZUlkKTsNCiAgICAJaWYgKHRhcmdldC5z
+dHlsZS5kaXNwbGF5ID09ICJub25lIikgew0KICAgIAkJdGFyZ2V0LnN0eWxlLmRp
+c3BsYXkgPSAiIjsgIA0KICAgICAgICAgICAgZXhwYW5kZWQgPSB0cnVlOyAgDQog
+ICAgICAgICAgICAgICAgICANCiAgICAJfSBlbHNlIHsNCiAgICAJCXRhcmdldC5z
+dHlsZS5kaXNwbGF5ID0gIm5vbmUiOyAgDQogICAgICAgICAgICBleHBhbmRlZCA9
+IGZhbHNlOw0KICAgIAl9DQogICAgICAgIHRvZ2dsZVBsdXNNaW51cygiaSIgKyB0
+YXJnZXRJZCk7DQogICAgICAgIA0KICAgICAgICAvLyBzZXQgYSBjb29raWUgdG8g
+cmVtZW1iZXIgdGhpcyBwcmVmZXJlbmNlDQogICAgICAgIHZhciBleHBpcmVzID0g
+bmV3IERhdGUoKTsNCiAgICAgICAgZXhwaXJlcy5zZXRUaW1lKGV4cGlyZXMuZ2V0
+VGltZSgpICsgMjQgKiAzNjUgKiA2MCAqIDYwICogMTAwMCk7IC8vIHNldHMgaXQg
+Zm9yIGFwcHJveCAzNjUgZGF5cy4NCiAgICAgICAgc2V0Q29va2llKCJjb250cm9s
+LSIrdGFyZ2V0SWQsZXhwYW5kZWQsZXhwaXJlcywiLyIpOw0KICAgIH0NCn0NCg0K
+ZnVuY3Rpb24gaXNibGFuayhzKSB7DQogICBmb3IgKHZhciBpPTA7IGk8cy5sZW5n
+dGg7IHMrKykgew0KICAgICAgdmFyIGMgPSBzLmNoYXJBdChpKTsNCiAgICAgIGlm
+ICgoYyE9JyAnKSAmJiAoYyE9J1xuJykgJiYgKGMhPScnKSkgcmV0dXJuIGZhbHNl
+Ow0KICAgfQ0KICAgIHJldHVybiB0cnVlOw0KfQ0KDQovLyBTaG93IHRoZSBkb2N1
+bWVudCdzIHRpdGxlIG9uIHRoZSBzdGF0dXMgYmFyDQp3aW5kb3cuZGVmYXVsdFN0
+YXR1cz1kb2N1bWVudC50aXRsZTs=
+
+------------lU2mF85cjuH0DsGDayNSn3
+Content-Disposition: inline; filename=shCore.js
+Content-Type: application/x-javascript; charset=utf-8; name=shCore.js
+Content-Location: http://blogs.sun.com/jmxetc/resource/Scripts/shCore.js
+Content-Transfer-Encoding: Base64
+
+LyoNCiAqIEpzTWluDQogKiBKYXZhc2NyaXB0IENvbXByZXNzb3INCiAqIGh0dHA6
+Ly93d3cuY3JvY2tmb3JkLmNvbS8NCiAqIGh0dHA6Ly93d3cuc21hbGxzaGFycHRv
+b2xzLmNvbS8NCiovDQoNCnZhciBkcD17c2g6e1Rvb2xiYXI6e30sVXRpbHM6e30s
+UmVnZXhMaWI6e30sQnJ1c2hlczp7fSxTdHJpbmdzOntBYm91dERpYWxvZzonPGh0
+bWw+PGhlYWQ+PHRpdGxlPkFib3V0Li4uPC90aXRsZT48L2hlYWQ+PGJvZHkgY2xh
+c3M9ImRwLWFib3V0Ij48dGFibGUgY2VsbHNwYWNpbmc9IjAiPjx0cj48dGQgY2xh
+c3M9ImNvcHkiPjxwIGNsYXNzPSJ0aXRsZSI+ZHAuU3ludGF4SGlnaGxpZ2h0ZXI8
+L2Rpdj48ZGl2IGNsYXNzPSJwYXJhIj5WZXJzaW9uOiB7Vn08L3A+PHA+PGEgaHJl
+Zj0iaHR0cDovL3d3dy5kcmVhbXByb2plY3Rpb25zLmNvbS9zeW50YXhoaWdobGln
+aHRlci8/cmVmPWFib3V0IiB0YXJnZXQ9Il9ibGFuayI+aHR0cDovL3d3dy5kcmVh
+bXByb2plY3Rpb25zLmNvbS9zeW50YXhoaWdobGlnaHRlcjwvYT48L3A+JmNvcHk7
+MjAwNC0yMDA3IEFsZXggR29yYmF0Y2hldi48L3RkPjwvdHI+PHRyPjx0ZCBjbGFz
+cz0iZm9vdGVyIj48aW5wdXQgdHlwZT0iYnV0dG9uIiBjbGFzcz0iY2xvc2UiIHZh
+bHVlPSJPSyIgb25DbGljaz0id2luZG93LmNsb3NlKCkiLz48L3RkPjwvdHI+PC90
+YWJsZT48L2JvZHk+PC9odG1sPid9LENsaXBib2FyZFN3ZjpudWxsLFZlcnNpb246
+JzEuNS4xJ319O2RwLlN5bnRheEhpZ2hsaWdodGVyPWRwLnNoO2RwLnNoLlRvb2xi
+YXIuQ29tbWFuZHM9e0V4cGFuZFNvdXJjZTp7bGFiZWw6JysgZXhwYW5kIHNvdXJj
+ZScsY2hlY2s6ZnVuY3Rpb24oaGlnaGxpZ2h0ZXIpe3JldHVybiBoaWdobGlnaHRl
+ci5jb2xsYXBzZTt9LGZ1bmM6ZnVuY3Rpb24oc2VuZGVyLGhpZ2hsaWdodGVyKQ0K
+e3NlbmRlci5wYXJlbnROb2RlLnJlbW92ZUNoaWxkKHNlbmRlcik7aGlnaGxpZ2h0
+ZXIuZGl2LmNsYXNzTmFtZT1oaWdobGlnaHRlci5kaXYuY2xhc3NOYW1lLnJlcGxh
+Y2UoJ2NvbGxhcHNlZCcsJycpO319LFZpZXdTb3VyY2U6e2xhYmVsOid2aWV3IHBs
+YWluJyxmdW5jOmZ1bmN0aW9uKHNlbmRlcixoaWdobGlnaHRlcikNCnt2YXIgY29k
+ZT1kcC5zaC5VdGlscy5GaXhGb3JCbG9nZ2VyKGhpZ2hsaWdodGVyLm9yaWdpbmFs
+Q29kZSkucmVwbGFjZSgvPC9nLCcmbHQ7Jyk7dmFyIHduZD13aW5kb3cub3Blbign
+JywnX2JsYW5rJywnd2lkdGg9NzUwLCBoZWlnaHQ9NDAwLCBsb2NhdGlvbj0wLCBy
+ZXNpemFibGU9MSwgbWVudWJhcj0wLCBzY3JvbGxiYXJzPTAnKTt3bmQuZG9jdW1l
+bnQud3JpdGUoJzx0ZXh0YXJlYSBzdHlsZT0id2lkdGg6OTklO2hlaWdodDo5OSUi
+PicrY29kZSsnPC90ZXh0YXJlYT4nKTt3bmQuZG9jdW1lbnQuY2xvc2UoKTt9fSxD
+b3B5VG9DbGlwYm9hcmQ6e2xhYmVsOidjb3B5IHRvIGNsaXBib2FyZCcsY2hlY2s6
+ZnVuY3Rpb24oKXtyZXR1cm4gd2luZG93LmNsaXBib2FyZERhdGEhPW51bGx8fGRw
+LnNoLkNsaXBib2FyZFN3ZiE9bnVsbDt9LGZ1bmM6ZnVuY3Rpb24oc2VuZGVyLGhp
+Z2hsaWdodGVyKQ0Ke3ZhciBjb2RlPWRwLnNoLlV0aWxzLkZpeEZvckJsb2dnZXIo
+aGlnaGxpZ2h0ZXIub3JpZ2luYWxDb2RlKS5yZXBsYWNlKC8mbHQ7L2csJzwnKS5y
+ZXBsYWNlKC8mZ3Q7L2csJz4nKS5yZXBsYWNlKC8mYW1wOy9nLCcmJyk7aWYod2lu
+ZG93LmNsaXBib2FyZERhdGEpDQp7d2luZG93LmNsaXBib2FyZERhdGEuc2V0RGF0
+YSgndGV4dCcsY29kZSk7fQ0KZWxzZSBpZihkcC5zaC5DbGlwYm9hcmRTd2YhPW51
+bGwpDQp7dmFyIGZsYXNoY29waWVyPWhpZ2hsaWdodGVyLmZsYXNoQ29waWVyO2lm
+KGZsYXNoY29waWVyPT1udWxsKQ0Ke2ZsYXNoY29waWVyPWRvY3VtZW50LmNyZWF0
+ZUVsZW1lbnQoJ2RpdicpO2hpZ2hsaWdodGVyLmZsYXNoQ29waWVyPWZsYXNoY29w
+aWVyO2hpZ2hsaWdodGVyLmRpdi5hcHBlbmRDaGlsZChmbGFzaGNvcGllcik7fQ0K
+Zmxhc2hjb3BpZXIuaW5uZXJIVE1MPSc8ZW1iZWQgc3JjPSInK2RwLnNoLkNsaXBi
+b2FyZFN3ZisnIiBGbGFzaFZhcnM9ImNsaXBib2FyZD0nK2VuY29kZVVSSUNvbXBv
+bmVudChjb2RlKSsnIiB3aWR0aD0iMCIgaGVpZ2h0PSIwIiB0eXBlPSJhcHBsaWNh
+dGlvbi94LXNob2Nrd2F2ZS1mbGFzaCI+PC9lbWJlZD4nO30NCmFsZXJ0KCdUaGUg
+Y29kZSBpcyBpbiB5b3VyIGNsaXBib2FyZCBub3cnKTt9fSxQcmludFNvdXJjZTp7
+bGFiZWw6J3ByaW50JyxmdW5jOmZ1bmN0aW9uKHNlbmRlcixoaWdobGlnaHRlcikN
+Cnt2YXIgaWZyYW1lPWRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ0lGUkFNRScpO3Zh
+ciBkb2M9bnVsbDtpZnJhbWUuc3R5bGUuY3NzVGV4dD0ncG9zaXRpb246YWJzb2x1
+dGU7d2lkdGg6MHB4O2hlaWdodDowcHg7bGVmdDotNTAwcHg7dG9wOi01MDBweDsn
+O2RvY3VtZW50LmJvZHkuYXBwZW5kQ2hpbGQoaWZyYW1lKTtkb2M9aWZyYW1lLmNv
+bnRlbnRXaW5kb3cuZG9jdW1lbnQ7ZHAuc2guVXRpbHMuQ29weVN0eWxlcyhkb2Ms
+d2luZG93LmRvY3VtZW50KTtkb2Mud3JpdGUoJzxkaXYgY2xhc3M9IicraGlnaGxp
+Z2h0ZXIuZGl2LmNsYXNzTmFtZS5yZXBsYWNlKCdjb2xsYXBzZWQnLCcnKSsnIHBy
+aW50aW5nIj4nK2hpZ2hsaWdodGVyLmRpdi5pbm5lckhUTUwrJzwvZGl2PicpO2Rv
+Yy5jbG9zZSgpO2lmcmFtZS5jb250ZW50V2luZG93LmZvY3VzKCk7aWZyYW1lLmNv
+bnRlbnRXaW5kb3cucHJpbnQoKTthbGVydCgnUHJpbnRpbmcuLi4nKTtkb2N1bWVu
+dC5ib2R5LnJlbW92ZUNoaWxkKGlmcmFtZSk7fX0sQWJvdXQ6e2xhYmVsOic/Jyxm
+dW5jOmZ1bmN0aW9uKGhpZ2hsaWdodGVyKQ0Ke3ZhciB3bmQ9d2luZG93Lm9wZW4o
+JycsJ19ibGFuaycsJ2RpYWxvZyx3aWR0aD0zMDAsaGVpZ2h0PTE1MCxzY3JvbGxi
+YXJzPTAnKTt2YXIgZG9jPXduZC5kb2N1bWVudDtkcC5zaC5VdGlscy5Db3B5U3R5
+bGVzKGRvYyx3aW5kb3cuZG9jdW1lbnQpO2RvYy53cml0ZShkcC5zaC5TdHJpbmdz
+LkFib3V0RGlhbG9nLnJlcGxhY2UoJ3tWfScsZHAuc2guVmVyc2lvbikpO2RvYy5j
+bG9zZSgpO3duZC5mb2N1cygpO319fTtkcC5zaC5Ub29sYmFyLkNyZWF0ZT1mdW5j
+dGlvbihoaWdobGlnaHRlcikNCnt2YXIgZGl2PWRvY3VtZW50LmNyZWF0ZUVsZW1l
+bnQoJ0RJVicpO2Rpdi5jbGFzc05hbWU9J3Rvb2xzJztmb3IodmFyIG5hbWUgaW4g
+ZHAuc2guVG9vbGJhci5Db21tYW5kcykNCnt2YXIgY21kPWRwLnNoLlRvb2xiYXIu
+Q29tbWFuZHNbbmFtZV07aWYoY21kLmNoZWNrIT1udWxsJiYhY21kLmNoZWNrKGhp
+Z2hsaWdodGVyKSkNCmNvbnRpbnVlO2Rpdi5pbm5lckhUTUwrPSc8YSBocmVmPSIj
+IiBvbmNsaWNrPSJkcC5zaC5Ub29sYmFyLkNvbW1hbmQoXCcnK25hbWUrJ1wnLHRo
+aXMpO3JldHVybiBmYWxzZTsiPicrY21kLmxhYmVsKyc8L2E+Jzt9DQpyZXR1cm4g
+ZGl2O30NCmRwLnNoLlRvb2xiYXIuQ29tbWFuZD1mdW5jdGlvbihuYW1lLHNlbmRl
+cikNCnt2YXIgbj1zZW5kZXI7d2hpbGUobiE9bnVsbCYmbi5jbGFzc05hbWUuaW5k
+ZXhPZignZHAtaGlnaGxpZ2h0ZXInKT09LTEpDQpuPW4ucGFyZW50Tm9kZTtpZihu
+IT1udWxsKQ0KZHAuc2guVG9vbGJhci5Db21tYW5kc1tuYW1lXS5mdW5jKHNlbmRl
+cixuLmhpZ2hsaWdodGVyKTt9DQpkcC5zaC5VdGlscy5Db3B5U3R5bGVzPWZ1bmN0
+aW9uKGRlc3REb2Msc291cmNlRG9jKQ0Ke3ZhciBsaW5rcz1zb3VyY2VEb2MuZ2V0
+RWxlbWVudHNCeVRhZ05hbWUoJ2xpbmsnKTtmb3IodmFyIGk9MDtpPGxpbmtzLmxl
+bmd0aDtpKyspDQppZihsaW5rc1tpXS5yZWwudG9Mb3dlckNhc2UoKT09J3N0eWxl
+c2hlZXQnKQ0KZGVzdERvYy53cml0ZSgnPGxpbmsgdHlwZT0idGV4dC9jc3MiIHJl
+bD0ic3R5bGVzaGVldCIgaHJlZj0iJytsaW5rc1tpXS5ocmVmKyciPjwvbGluaz4n
+KTt9DQpkcC5zaC5VdGlscy5GaXhGb3JCbG9nZ2VyPWZ1bmN0aW9uKHN0cikNCnty
+ZXR1cm4oZHAuc2guaXNCbG9nZ2VyTW9kZT09dHJ1ZSk/c3RyLnJlcGxhY2UoLzxi
+clxzKlwvPz58Jmx0O2JyXHMqXC8/Jmd0Oy9naSwnXG4nKTpzdHI7fQ0KZHAuc2gu
+UmVnZXhMaWI9e011bHRpTGluZUNDb21tZW50czpuZXcgUmVnRXhwKCcvXFwqW1xc
+c1xcU10qP1xcKi8nLCdnbScpLFNpbmdsZUxpbmVDQ29tbWVudHM6bmV3IFJlZ0V4
+cCgnLy8uKiQnLCdnbScpLFNpbmdsZUxpbmVQZXJsQ29tbWVudHM6bmV3IFJlZ0V4
+cCgnIy4qJCcsJ2dtJyksRG91YmxlUXVvdGVkU3RyaW5nOm5ldyBSZWdFeHAoJyIo
+PzpcXC58KFxcXFxcXCIpfFteXFwiIlxcbl0pKiInLCdnJyksU2luZ2xlUXVvdGVk
+U3RyaW5nOm5ldyBSZWdFeHAoIicoPzpcXC58KFxcXFxcXCcpfFteXFwnJ1xcbl0p
+KiciLCdnJyl9O2RwLnNoLk1hdGNoPWZ1bmN0aW9uKHZhbHVlLGluZGV4LGNzcykN
+Cnt0aGlzLnZhbHVlPXZhbHVlO3RoaXMuaW5kZXg9aW5kZXg7dGhpcy5sZW5ndGg9
+dmFsdWUubGVuZ3RoO3RoaXMuY3NzPWNzczt9DQpkcC5zaC5IaWdobGlnaHRlcj1m
+dW5jdGlvbigpDQp7dGhpcy5ub0d1dHRlcj1mYWxzZTt0aGlzLmFkZENvbnRyb2xz
+PXRydWU7dGhpcy5jb2xsYXBzZT1mYWxzZTt0aGlzLnRhYnNUb1NwYWNlcz10cnVl
+O3RoaXMud3JhcENvbHVtbj04MDt0aGlzLnNob3dDb2x1bW5zPXRydWU7fQ0KZHAu
+c2guSGlnaGxpZ2h0ZXIuU29ydENhbGxiYWNrPWZ1bmN0aW9uKG0xLG0yKQ0Ke2lm
+KG0xLmluZGV4PG0yLmluZGV4KQ0KcmV0dXJuLTE7ZWxzZSBpZihtMS5pbmRleD5t
+Mi5pbmRleCkNCnJldHVybiAxO2Vsc2UNCntpZihtMS5sZW5ndGg8bTIubGVuZ3Ro
+KQ0KcmV0dXJuLTE7ZWxzZSBpZihtMS5sZW5ndGg+bTIubGVuZ3RoKQ0KcmV0dXJu
+IDE7fQ0KcmV0dXJuIDA7fQ0KZHAuc2guSGlnaGxpZ2h0ZXIucHJvdG90eXBlLkNy
+ZWF0ZUVsZW1lbnQ9ZnVuY3Rpb24obmFtZSkNCnt2YXIgcmVzdWx0PWRvY3VtZW50
+LmNyZWF0ZUVsZW1lbnQobmFtZSk7cmVzdWx0LmhpZ2hsaWdodGVyPXRoaXM7cmV0
+dXJuIHJlc3VsdDt9DQpkcC5zaC5IaWdobGlnaHRlci5wcm90b3R5cGUuR2V0TWF0
+Y2hlcz1mdW5jdGlvbihyZWdleCxjc3MpDQp7dmFyIGluZGV4PTA7dmFyIG1hdGNo
+PW51bGw7d2hpbGUoKG1hdGNoPXJlZ2V4LmV4ZWModGhpcy5jb2RlKSkhPW51bGwp
+DQp0aGlzLm1hdGNoZXNbdGhpcy5tYXRjaGVzLmxlbmd0aF09bmV3IGRwLnNoLk1h
+dGNoKG1hdGNoWzBdLG1hdGNoLmluZGV4LGNzcyk7fQ0KZHAuc2guSGlnaGxpZ2h0
+ZXIucHJvdG90eXBlLkFkZEJpdD1mdW5jdGlvbihzdHIsY3NzKQ0Ke2lmKHN0cj09
+bnVsbHx8c3RyLmxlbmd0aD09MCkNCnJldHVybjt2YXIgc3Bhbj10aGlzLkNyZWF0
+ZUVsZW1lbnQoJ1NQQU4nKTtzdHI9c3RyLnJlcGxhY2UoLyAvZywnJm5ic3A7Jyk7
+c3RyPXN0ci5yZXBsYWNlKC88L2csJyZsdDsnKTtzdHI9c3RyLnJlcGxhY2UoL1xu
+L2dtLCcmbmJzcDs8YnI+Jyk7aWYoY3NzIT1udWxsKQ0Ke2lmKCgvYnIvZ2kpLnRl
+c3Qoc3RyKSkNCnt2YXIgbGluZXM9c3RyLnNwbGl0KCcmbmJzcDs8YnI+Jyk7Zm9y
+KHZhciBpPTA7aTxsaW5lcy5sZW5ndGg7aSsrKQ0Ke3NwYW49dGhpcy5DcmVhdGVF
+bGVtZW50KCdTUEFOJyk7c3Bhbi5jbGFzc05hbWU9Y3NzO3NwYW4uaW5uZXJIVE1M
+PWxpbmVzW2ldO3RoaXMuZGl2LmFwcGVuZENoaWxkKHNwYW4pO2lmKGkrMTxsaW5l
+cy5sZW5ndGgpDQp0aGlzLmRpdi5hcHBlbmRDaGlsZCh0aGlzLkNyZWF0ZUVsZW1l
+bnQoJ0JSJykpO319DQplbHNlDQp7c3Bhbi5jbGFzc05hbWU9Y3NzO3NwYW4uaW5u
+ZXJIVE1MPXN0cjt0aGlzLmRpdi5hcHBlbmRDaGlsZChzcGFuKTt9fQ0KZWxzZQ0K
+e3NwYW4uaW5uZXJIVE1MPXN0cjt0aGlzLmRpdi5hcHBlbmRDaGlsZChzcGFuKTt9
+fQ0KZHAuc2guSGlnaGxpZ2h0ZXIucHJvdG90eXBlLklzSW5zaWRlPWZ1bmN0aW9u
+KG1hdGNoKQ0Ke2lmKG1hdGNoPT1udWxsfHxtYXRjaC5sZW5ndGg9PTApDQpyZXR1
+cm4gZmFsc2U7Zm9yKHZhciBpPTA7aTx0aGlzLm1hdGNoZXMubGVuZ3RoO2krKykN
+Cnt2YXIgYz10aGlzLm1hdGNoZXNbaV07aWYoYz09bnVsbCkNCmNvbnRpbnVlO2lm
+KChtYXRjaC5pbmRleD5jLmluZGV4KSYmKG1hdGNoLmluZGV4PGMuaW5kZXgrYy5s
+ZW5ndGgpKQ0KcmV0dXJuIHRydWU7fQ0KcmV0dXJuIGZhbHNlO30NCmRwLnNoLkhp
+Z2hsaWdodGVyLnByb3RvdHlwZS5Qcm9jZXNzUmVnZXhMaXN0PWZ1bmN0aW9uKCkN
+Cntmb3IodmFyIGk9MDtpPHRoaXMucmVnZXhMaXN0Lmxlbmd0aDtpKyspDQp0aGlz
+LkdldE1hdGNoZXModGhpcy5yZWdleExpc3RbaV0ucmVnZXgsdGhpcy5yZWdleExp
+c3RbaV0uY3NzKTt9DQpkcC5zaC5IaWdobGlnaHRlci5wcm90b3R5cGUuUHJvY2Vz
+c1NtYXJ0VGFicz1mdW5jdGlvbihjb2RlKQ0Ke3ZhciBsaW5lcz1jb2RlLnNwbGl0
+KCdcbicpO3ZhciByZXN1bHQ9Jyc7dmFyIHRhYlNpemU9NDt2YXIgdGFiPSdcdCc7
+ZnVuY3Rpb24gSW5zZXJ0U3BhY2VzKGxpbmUscG9zLGNvdW50KQ0Ke3ZhciBsZWZ0
+PWxpbmUuc3Vic3RyKDAscG9zKTt2YXIgcmlnaHQ9bGluZS5zdWJzdHIocG9zKzEs
+bGluZS5sZW5ndGgpO3ZhciBzcGFjZXM9Jyc7Zm9yKHZhciBpPTA7aTxjb3VudDtp
+KyspDQpzcGFjZXMrPScgJztyZXR1cm4gbGVmdCtzcGFjZXMrcmlnaHQ7fQ0KZnVu
+Y3Rpb24gUHJvY2Vzc0xpbmUobGluZSx0YWJTaXplKQ0Ke2lmKGxpbmUuaW5kZXhP
+Zih0YWIpPT0tMSkNCnJldHVybiBsaW5lO3ZhciBwb3M9MDt3aGlsZSgocG9zPWxp
+bmUuaW5kZXhPZih0YWIpKSE9LTEpDQp7dmFyIHNwYWNlcz10YWJTaXplLXBvcyV0
+YWJTaXplO2xpbmU9SW5zZXJ0U3BhY2VzKGxpbmUscG9zLHNwYWNlcyk7fQ0KcmV0
+dXJuIGxpbmU7fQ0KZm9yKHZhciBpPTA7aTxsaW5lcy5sZW5ndGg7aSsrKQ0KcmVz
+dWx0Kz1Qcm9jZXNzTGluZShsaW5lc1tpXSx0YWJTaXplKSsnXG4nO3JldHVybiBy
+ZXN1bHQ7fQ0KZHAuc2guSGlnaGxpZ2h0ZXIucHJvdG90eXBlLlN3aXRjaFRvTGlz
+dD1mdW5jdGlvbigpDQp7dmFyIGh0bWw9dGhpcy5kaXYuaW5uZXJIVE1MLnJlcGxh
+Y2UoLzwoYnIpXC8/Pi9naSwnXG4nKTt2YXIgbGluZXM9aHRtbC5zcGxpdCgnXG4n
+KTtpZih0aGlzLmFkZENvbnRyb2xzPT10cnVlKQ0KdGhpcy5iYXIuYXBwZW5kQ2hp
+bGQoZHAuc2guVG9vbGJhci5DcmVhdGUodGhpcykpO2lmKHRoaXMuc2hvd0NvbHVt
+bnMpDQp7dmFyIGRpdj10aGlzLkNyZWF0ZUVsZW1lbnQoJ2RpdicpO3ZhciBjb2x1
+bW5zPXRoaXMuQ3JlYXRlRWxlbWVudCgnZGl2Jyk7dmFyIHNob3dFdmVyeT0xMDt2
+YXIgaT0xO3doaWxlKGk8PTE1MCkNCntpZihpJXNob3dFdmVyeT09MCkNCntkaXYu
+aW5uZXJIVE1MKz1pO2krPShpKycnKS5sZW5ndGg7fQ0KZWxzZQ0Ke2Rpdi5pbm5l
+ckhUTUwrPScmbWlkZG90Oyc7aSsrO319DQpjb2x1bW5zLmNsYXNzTmFtZT0nY29s
+dW1ucyc7Y29sdW1ucy5hcHBlbmRDaGlsZChkaXYpO3RoaXMuYmFyLmFwcGVuZENo
+aWxkKGNvbHVtbnMpO30NCmZvcih2YXIgaT0wLGxpbmVJbmRleD10aGlzLmZpcnN0
+TGluZTtpPGxpbmVzLmxlbmd0aC0xO2krKyxsaW5lSW5kZXgrKykNCnt2YXIgbGk9
+dGhpcy5DcmVhdGVFbGVtZW50KCdMSScpO3ZhciBzcGFuPXRoaXMuQ3JlYXRlRWxl
+bWVudCgnU1BBTicpO2xpLmNsYXNzTmFtZT0oaSUyPT0wKT8nYWx0JzonJztzcGFu
+LmlubmVySFRNTD1saW5lc1tpXSsnJm5ic3A7JztsaS5hcHBlbmRDaGlsZChzcGFu
+KTt0aGlzLm9sLmFwcGVuZENoaWxkKGxpKTt9DQp0aGlzLmRpdi5pbm5lckhUTUw9
+Jyc7fQ0KZHAuc2guSGlnaGxpZ2h0ZXIucHJvdG90eXBlLkhpZ2hsaWdodD1mdW5j
+dGlvbihjb2RlKQ0Ke2Z1bmN0aW9uIFRyaW0oc3RyKQ0Ke3JldHVybiBzdHIucmVw
+bGFjZSgvXlxzKiguKj8pW1xzXG5dKiQvZywnJDEnKTt9DQpmdW5jdGlvbiBDaG9w
+KHN0cikNCntyZXR1cm4gc3RyLnJlcGxhY2UoL1xuKiQvLCcnKS5yZXBsYWNlKC9e
+XG4qLywnJyk7fQ0KZnVuY3Rpb24gVW5pbmRlbnQoc3RyKQ0Ke3ZhciBsaW5lcz1k
+cC5zaC5VdGlscy5GaXhGb3JCbG9nZ2VyKHN0cikuc3BsaXQoJ1xuJyk7dmFyIGlu
+ZGVudHM9bmV3IEFycmF5KCk7dmFyIHJlZ2V4PW5ldyBSZWdFeHAoJ15cXHMqJywn
+ZycpO3ZhciBtaW49MTAwMDtmb3IodmFyIGk9MDtpPGxpbmVzLmxlbmd0aCYmbWlu
+PjA7aSsrKQ0Ke2lmKFRyaW0obGluZXNbaV0pLmxlbmd0aD09MCkNCmNvbnRpbnVl
+O3ZhciBtYXRjaGVzPXJlZ2V4LmV4ZWMobGluZXNbaV0pO2lmKG1hdGNoZXMhPW51
+bGwmJm1hdGNoZXMubGVuZ3RoPjApDQptaW49TWF0aC5taW4obWF0Y2hlc1swXS5s
+ZW5ndGgsbWluKTt9DQppZihtaW4+MCkNCmZvcih2YXIgaT0wO2k8bGluZXMubGVu
+Z3RoO2krKykNCmxpbmVzW2ldPWxpbmVzW2ldLnN1YnN0cihtaW4pO3JldHVybiBs
+aW5lcy5qb2luKCdcbicpO30NCmZ1bmN0aW9uIENvcHkoc3RyaW5nLHBvczEscG9z
+MikNCntyZXR1cm4gc3RyaW5nLnN1YnN0cihwb3MxLHBvczItcG9zMSk7fQ0KdmFy
+IHBvcz0wO2lmKGNvZGU9PW51bGwpDQpjb2RlPScnO3RoaXMub3JpZ2luYWxDb2Rl
+PWNvZGU7dGhpcy5jb2RlPUNob3AoVW5pbmRlbnQoY29kZSkpO3RoaXMuZGl2PXRo
+aXMuQ3JlYXRlRWxlbWVudCgnRElWJyk7dGhpcy5iYXI9dGhpcy5DcmVhdGVFbGVt
+ZW50KCdESVYnKTt0aGlzLm9sPXRoaXMuQ3JlYXRlRWxlbWVudCgnT0wnKTt0aGlz
+Lm1hdGNoZXM9bmV3IEFycmF5KCk7dGhpcy5kaXYuY2xhc3NOYW1lPSdkcC1oaWdo
+bGlnaHRlcic7dGhpcy5kaXYuaGlnaGxpZ2h0ZXI9dGhpczt0aGlzLmJhci5jbGFz
+c05hbWU9J2Jhcic7dGhpcy5vbC5zdGFydD10aGlzLmZpcnN0TGluZTtpZih0aGlz
+LkNzc0NsYXNzIT1udWxsKQ0KdGhpcy5vbC5jbGFzc05hbWU9dGhpcy5Dc3NDbGFz
+cztpZih0aGlzLmNvbGxhcHNlKQ0KdGhpcy5kaXYuY2xhc3NOYW1lKz0nIGNvbGxh
+cHNlZCc7aWYodGhpcy5ub0d1dHRlcikNCnRoaXMuZGl2LmNsYXNzTmFtZSs9JyBu
+b2d1dHRlcic7aWYodGhpcy50YWJzVG9TcGFjZXM9PXRydWUpDQp0aGlzLmNvZGU9
+dGhpcy5Qcm9jZXNzU21hcnRUYWJzKHRoaXMuY29kZSk7dGhpcy5Qcm9jZXNzUmVn
+ZXhMaXN0KCk7aWYodGhpcy5tYXRjaGVzLmxlbmd0aD09MCkNCnt0aGlzLkFkZEJp
+dCh0aGlzLmNvZGUsbnVsbCk7dGhpcy5Td2l0Y2hUb0xpc3QoKTt0aGlzLmRpdi5h
+cHBlbmRDaGlsZCh0aGlzLmJhcik7dGhpcy5kaXYuYXBwZW5kQ2hpbGQodGhpcy5v
+bCk7cmV0dXJuO30NCnRoaXMubWF0Y2hlcz10aGlzLm1hdGNoZXMuc29ydChkcC5z
+aC5IaWdobGlnaHRlci5Tb3J0Q2FsbGJhY2spO2Zvcih2YXIgaT0wO2k8dGhpcy5t
+YXRjaGVzLmxlbmd0aDtpKyspDQppZih0aGlzLklzSW5zaWRlKHRoaXMubWF0Y2hl
+c1tpXSkpDQp0aGlzLm1hdGNoZXNbaV09bnVsbDtmb3IodmFyIGk9MDtpPHRoaXMu
+bWF0Y2hlcy5sZW5ndGg7aSsrKQ0Ke3ZhciBtYXRjaD10aGlzLm1hdGNoZXNbaV07
+aWYobWF0Y2g9PW51bGx8fG1hdGNoLmxlbmd0aD09MCkNCmNvbnRpbnVlO3RoaXMu
+QWRkQml0KENvcHkodGhpcy5jb2RlLHBvcyxtYXRjaC5pbmRleCksbnVsbCk7dGhp
+cy5BZGRCaXQobWF0Y2gudmFsdWUsbWF0Y2guY3NzKTtwb3M9bWF0Y2guaW5kZXgr
+bWF0Y2gubGVuZ3RoO30NCnRoaXMuQWRkQml0KHRoaXMuY29kZS5zdWJzdHIocG9z
+KSxudWxsKTt0aGlzLlN3aXRjaFRvTGlzdCgpO3RoaXMuZGl2LmFwcGVuZENoaWxk
+KHRoaXMuYmFyKTt0aGlzLmRpdi5hcHBlbmRDaGlsZCh0aGlzLm9sKTt9DQpkcC5z
+aC5IaWdobGlnaHRlci5wcm90b3R5cGUuR2V0S2V5d29yZHM9ZnVuY3Rpb24oc3Ry
+KQ0Ke3JldHVybidcXGInK3N0ci5yZXBsYWNlKC8gL2csJ1xcYnxcXGInKSsnXFxi
+Jzt9DQpkcC5zaC5CbG9nZ2VyTW9kZT1mdW5jdGlvbigpDQp7ZHAuc2guaXNCbG9n
+Z2VyTW9kZT10cnVlO30NCmRwLnNoLkhpZ2hsaWdodEFsbD1mdW5jdGlvbihuYW1l
+LHNob3dHdXR0ZXIsc2hvd0NvbnRyb2xzLGNvbGxhcHNlQWxsLGZpcnN0TGluZSxz
+aG93Q29sdW1ucykNCntmdW5jdGlvbiBGaW5kVmFsdWUoKQ0Ke3ZhciBhPWFyZ3Vt
+ZW50cztmb3IodmFyIGk9MDtpPGEubGVuZ3RoO2krKykNCntpZihhW2ldPT1udWxs
+KQ0KY29udGludWU7aWYodHlwZW9mKGFbaV0pPT0nc3RyaW5nJyYmYVtpXSE9Jycp
+DQpyZXR1cm4gYVtpXSsnJztpZih0eXBlb2YoYVtpXSk9PSdvYmplY3QnJiZhW2ld
+LnZhbHVlIT0nJykNCnJldHVybiBhW2ldLnZhbHVlKycnO30NCnJldHVybiBudWxs
+O30NCmZ1bmN0aW9uIElzT3B0aW9uU2V0KHZhbHVlLGxpc3QpDQp7Zm9yKHZhciBp
+PTA7aTxsaXN0Lmxlbmd0aDtpKyspDQppZihsaXN0W2ldPT12YWx1ZSkNCnJldHVy
+biB0cnVlO3JldHVybiBmYWxzZTt9DQpmdW5jdGlvbiBHZXRPcHRpb25WYWx1ZShu
+YW1lLGxpc3QsZGVmYXVsdFZhbHVlKQ0Ke3ZhciByZWdleD1uZXcgUmVnRXhwKCde
+JytuYW1lKydcXFsoXFx3KylcXF0kJywnZ2knKTt2YXIgbWF0Y2hlcz1udWxsO2Zv
+cih2YXIgaT0wO2k8bGlzdC5sZW5ndGg7aSsrKQ0KaWYoKG1hdGNoZXM9cmVnZXgu
+ZXhlYyhsaXN0W2ldKSkhPW51bGwpDQpyZXR1cm4gbWF0Y2hlc1sxXTtyZXR1cm4g
+ZGVmYXVsdFZhbHVlO30NCmZ1bmN0aW9uIEZpbmRUYWdzQnlOYW1lKGxpc3QsbmFt
+ZSx0YWdOYW1lKQ0Ke3ZhciB0YWdzPWRvY3VtZW50LmdldEVsZW1lbnRzQnlUYWdO
+YW1lKHRhZ05hbWUpO2Zvcih2YXIgaT0wO2k8dGFncy5sZW5ndGg7aSsrKQ0KaWYo
+dGFnc1tpXS5nZXRBdHRyaWJ1dGUoJ25hbWUnKT09bmFtZSkNCmxpc3QucHVzaCh0
+YWdzW2ldKTt9DQp2YXIgZWxlbWVudHM9W107dmFyIGhpZ2hsaWdodGVyPW51bGw7
+dmFyIHJlZ2lzdGVyZWQ9e307dmFyIHByb3BlcnR5TmFtZT0naW5uZXJIVE1MJztG
+aW5kVGFnc0J5TmFtZShlbGVtZW50cyxuYW1lLCdwcmUnKTtGaW5kVGFnc0J5TmFt
+ZShlbGVtZW50cyxuYW1lLCd0ZXh0YXJlYScpO2lmKGVsZW1lbnRzLmxlbmd0aD09
+MCkNCnJldHVybjtmb3IodmFyIGJydXNoIGluIGRwLnNoLkJydXNoZXMpDQp7dmFy
+IGFsaWFzZXM9ZHAuc2guQnJ1c2hlc1ticnVzaF0uQWxpYXNlcztpZihhbGlhc2Vz
+PT1udWxsKQ0KY29udGludWU7Zm9yKHZhciBpPTA7aTxhbGlhc2VzLmxlbmd0aDtp
+KyspDQpyZWdpc3RlcmVkW2FsaWFzZXNbaV1dPWJydXNoO30NCmZvcih2YXIgaT0w
+O2k8ZWxlbWVudHMubGVuZ3RoO2krKykNCnt2YXIgZWxlbWVudD1lbGVtZW50c1tp
+XTt2YXIgb3B0aW9ucz1GaW5kVmFsdWUoZWxlbWVudC5hdHRyaWJ1dGVzWydjbGFz
+cyddLGVsZW1lbnQuY2xhc3NOYW1lLGVsZW1lbnQuYXR0cmlidXRlc1snbGFuZ3Vh
+Z2UnXSxlbGVtZW50Lmxhbmd1YWdlKTt2YXIgbGFuZ3VhZ2U9Jyc7aWYob3B0aW9u
+cz09bnVsbCkNCmNvbnRpbnVlO29wdGlvbnM9b3B0aW9ucy5zcGxpdCgnOicpO2xh
+bmd1YWdlPW9wdGlvbnNbMF0udG9Mb3dlckNhc2UoKTtpZihyZWdpc3RlcmVkW2xh
+bmd1YWdlXT09bnVsbCkNCmNvbnRpbnVlO2hpZ2hsaWdodGVyPW5ldyBkcC5zaC5C
+cnVzaGVzW3JlZ2lzdGVyZWRbbGFuZ3VhZ2VdXSgpO2VsZW1lbnQuc3R5bGUuZGlz
+cGxheT0nbm9uZSc7aGlnaGxpZ2h0ZXIubm9HdXR0ZXI9KHNob3dHdXR0ZXI9PW51
+bGwpP0lzT3B0aW9uU2V0KCdub2d1dHRlcicsb3B0aW9ucyk6IXNob3dHdXR0ZXI7
+aGlnaGxpZ2h0ZXIuYWRkQ29udHJvbHM9KHNob3dDb250cm9scz09bnVsbCk/IUlz
+T3B0aW9uU2V0KCdub2NvbnRyb2xzJyxvcHRpb25zKTpzaG93Q29udHJvbHM7aGln
+aGxpZ2h0ZXIuY29sbGFwc2U9KGNvbGxhcHNlQWxsPT1udWxsKT9Jc09wdGlvblNl
+dCgnY29sbGFwc2UnLG9wdGlvbnMpOmNvbGxhcHNlQWxsO2hpZ2hsaWdodGVyLnNo
+b3dDb2x1bW5zPShzaG93Q29sdW1ucz09bnVsbCk/SXNPcHRpb25TZXQoJ3Nob3dj
+b2x1bW5zJyxvcHRpb25zKTpzaG93Q29sdW1uczt2YXIgaGVhZE5vZGU9ZG9jdW1l
+bnQuZ2V0RWxlbWVudHNCeVRhZ05hbWUoJ2hlYWQnKVswXTtpZihoaWdobGlnaHRl
+ci5TdHlsZSYmaGVhZE5vZGUpDQp7dmFyIHN0eWxlTm9kZT1kb2N1bWVudC5jcmVh
+dGVFbGVtZW50KCdzdHlsZScpO3N0eWxlTm9kZS5zZXRBdHRyaWJ1dGUoJ3R5cGUn
+LCd0ZXh0L2NzcycpO2lmKHN0eWxlTm9kZS5zdHlsZVNoZWV0KQ0Ke3N0eWxlTm9k
+ZS5zdHlsZVNoZWV0LmNzc1RleHQ9aGlnaGxpZ2h0ZXIuU3R5bGU7fQ0KZWxzZQ0K
+e3ZhciB0ZXh0Tm9kZT1kb2N1bWVudC5jcmVhdGVUZXh0Tm9kZShoaWdobGlnaHRl
+ci5TdHlsZSk7c3R5bGVOb2RlLmFwcGVuZENoaWxkKHRleHROb2RlKTt9DQpoZWFk
+Tm9kZS5hcHBlbmRDaGlsZChzdHlsZU5vZGUpO30NCmhpZ2hsaWdodGVyLmZpcnN0
+TGluZT0oZmlyc3RMaW5lPT1udWxsKT9wYXJzZUludChHZXRPcHRpb25WYWx1ZSgn
+Zmlyc3RsaW5lJyxvcHRpb25zLDEpKTpmaXJzdExpbmU7aGlnaGxpZ2h0ZXIuSGln
+aGxpZ2h0KGVsZW1lbnRbcHJvcGVydHlOYW1lXSk7aGlnaGxpZ2h0ZXIuc291cmNl
+PWVsZW1lbnQ7ZWxlbWVudC5wYXJlbnROb2RlLmluc2VydEJlZm9yZShoaWdobGln
+aHRlci5kaXYsZWxlbWVudCk7fX0NCg==
+
+------------lU2mF85cjuH0DsGDayNSn3
+Content-Disposition: inline; filename=shBrushJScript.js
+Content-Type: application/x-javascript; charset=utf-8; name=shBrushJScript.js
+Content-Location: http://blogs.sun.com/jmxetc/resource/Scripts/shBrushJScript.js
+Content-Transfer-Encoding: Base64
+
+LyoNCiAqIEpzTWluDQogKiBKYXZhc2NyaXB0IENvbXByZXNzb3INCiAqIGh0dHA6
+Ly93d3cuY3JvY2tmb3JkLmNvbS8NCiAqIGh0dHA6Ly93d3cuc21hbGxzaGFycHRv
+b2xzLmNvbS8NCiovDQoNCmRwLnNoLkJydXNoZXMuSlNjcmlwdD1mdW5jdGlvbigp
+DQp7dmFyIGtleXdvcmRzPSdhYnN0cmFjdCBib29sZWFuIGJyZWFrIGJ5dGUgY2Fz
+ZSBjYXRjaCBjaGFyIGNsYXNzIGNvbnN0IGNvbnRpbnVlIGRlYnVnZ2VyICcrJ2Rl
+ZmF1bHQgZGVsZXRlIGRvIGRvdWJsZSBlbHNlIGVudW0gZXhwb3J0IGV4dGVuZHMg
+ZmFsc2UgZmluYWwgZmluYWxseSBmbG9hdCAnKydmb3IgZnVuY3Rpb24gZ290byBp
+ZiBpbXBsZW1lbnRzIGltcG9ydCBpbiBpbnN0YW5jZW9mIGludCBpbnRlcmZhY2Ug
+bG9uZyBuYXRpdmUgJysnbmV3IG51bGwgcGFja2FnZSBwcml2YXRlIHByb3RlY3Rl
+ZCBwdWJsaWMgcmV0dXJuIHNob3J0IHN0YXRpYyBzdXBlciBzd2l0Y2ggJysnc3lu
+Y2hyb25pemVkIHRoaXMgdGhyb3cgdGhyb3dzIHRyYW5zaWVudCB0cnVlIHRyeSB0
+eXBlb2YgdmFyIHZvaWQgdm9sYXRpbGUgd2hpbGUgd2l0aCc7dGhpcy5yZWdleExp
+c3Q9W3tyZWdleDpkcC5zaC5SZWdleExpYi5TaW5nbGVMaW5lQ0NvbW1lbnRzLGNz
+czonY29tbWVudCd9LHtyZWdleDpkcC5zaC5SZWdleExpYi5NdWx0aUxpbmVDQ29t
+bWVudHMsY3NzOidjb21tZW50J30se3JlZ2V4OmRwLnNoLlJlZ2V4TGliLkRvdWJs
+ZVF1b3RlZFN0cmluZyxjc3M6J3N0cmluZyd9LHtyZWdleDpkcC5zaC5SZWdleExp
+Yi5TaW5nbGVRdW90ZWRTdHJpbmcsY3NzOidzdHJpbmcnfSx7cmVnZXg6bmV3IFJl
+Z0V4cCgnXlxccyojLionLCdnbScpLGNzczoncHJlcHJvY2Vzc29yJ30se3JlZ2V4
+Om5ldyBSZWdFeHAodGhpcy5HZXRLZXl3b3JkcyhrZXl3b3JkcyksJ2dtJyksY3Nz
+OidrZXl3b3JkJ31dO3RoaXMuQ3NzQ2xhc3M9J2RwLWMnO30NCmRwLnNoLkJydXNo
+ZXMuSlNjcmlwdC5wcm90b3R5cGU9bmV3IGRwLnNoLkhpZ2hsaWdodGVyKCk7ZHAu
+c2guQnJ1c2hlcy5KU2NyaXB0LkFsaWFzZXM9WydqcycsJ2pzY3JpcHQnLCdqYXZh
+c2NyaXB0J107DQo=
+
+------------lU2mF85cjuH0DsGDayNSn3
+Content-Disposition: inline; filename=shBrushJava.js
+Content-Type: application/x-javascript; charset=utf-8; name=shBrushJava.js
+Content-Location: http://blogs.sun.com/jmxetc/resource/Scripts/shBrushJava.js
+Content-Transfer-Encoding: Base64
+
+LyoNCiAqIEpzTWluDQogKiBKYXZhc2NyaXB0IENvbXByZXNzb3INCiAqIGh0dHA6
+Ly93d3cuY3JvY2tmb3JkLmNvbS8NCiAqIGh0dHA6Ly93d3cuc21hbGxzaGFycHRv
+b2xzLmNvbS8NCiovDQoNCmRwLnNoLkJydXNoZXMuSmF2YT1mdW5jdGlvbigpDQp7
+dmFyIGtleXdvcmRzPSdhYnN0cmFjdCBhc3NlcnQgYm9vbGVhbiBicmVhayBieXRl
+IGNhc2UgY2F0Y2ggY2hhciBjbGFzcyBjb25zdCAnKydjb250aW51ZSBkZWZhdWx0
+IGRvIGRvdWJsZSBlbHNlIGVudW0gZXh0ZW5kcyAnKydmYWxzZSBmaW5hbCBmaW5h
+bGx5IGZsb2F0IGZvciBnb3RvIGlmIGltcGxlbWVudHMgaW1wb3J0ICcrJ2luc3Rh
+bmNlb2YgaW50IGludGVyZmFjZSBsb25nIG5hdGl2ZSBuZXcgbnVsbCAnKydwYWNr
+YWdlIHByaXZhdGUgcHJvdGVjdGVkIHB1YmxpYyByZXR1cm4gJysnc2hvcnQgc3Rh
+dGljIHN0cmljdGZwIHN1cGVyIHN3aXRjaCBzeW5jaHJvbml6ZWQgdGhpcyB0aHJv
+dyB0aHJvd3MgdHJ1ZSAnKyd0cmFuc2llbnQgdHJ5IHZvaWQgdm9sYXRpbGUgd2hp
+bGUnO3RoaXMucmVnZXhMaXN0PVt7cmVnZXg6ZHAuc2guUmVnZXhMaWIuU2luZ2xl
+TGluZUNDb21tZW50cyxjc3M6J2NvbW1lbnQnfSx7cmVnZXg6ZHAuc2guUmVnZXhM
+aWIuTXVsdGlMaW5lQ0NvbW1lbnRzLGNzczonY29tbWVudCd9LHtyZWdleDpkcC5z
+aC5SZWdleExpYi5Eb3VibGVRdW90ZWRTdHJpbmcsY3NzOidzdHJpbmcnfSx7cmVn
+ZXg6ZHAuc2guUmVnZXhMaWIuU2luZ2xlUXVvdGVkU3RyaW5nLGNzczonc3RyaW5n
+J30se3JlZ2V4Om5ldyBSZWdFeHAoJ1xcYihbXFxkXSsoXFwuW1xcZF0rKT98MHhb
+YS1mMC05XSspXFxiJywnZ2knKSxjc3M6J251bWJlcid9LHtyZWdleDpuZXcgUmVn
+RXhwKCcoPyFcXEBpbnRlcmZhY2VcXGIpXFxAW1xcJFxcd10rXFxiJywnZycpLGNz
+czonYW5ub3RhdGlvbid9LHtyZWdleDpuZXcgUmVnRXhwKCdcXEBpbnRlcmZhY2Vc
+XGInLCdnJyksY3NzOidrZXl3b3JkJ30se3JlZ2V4Om5ldyBSZWdFeHAodGhpcy5H
+ZXRLZXl3b3JkcyhrZXl3b3JkcyksJ2dtJyksY3NzOidrZXl3b3JkJ31dO3RoaXMu
+Q3NzQ2xhc3M9J2RwLWonO3RoaXMuU3R5bGU9Jy5kcC1qIC5hbm5vdGF0aW9uIHsg
+Y29sb3I6ICM2NDY0NjQ7IH0nKycuZHAtaiAubnVtYmVyIHsgY29sb3I6ICNDMDAw
+MDA7IH0nO30NCmRwLnNoLkJydXNoZXMuSmF2YS5wcm90b3R5cGU9bmV3IGRwLnNo
+LkhpZ2hsaWdodGVyKCk7ZHAuc2guQnJ1c2hlcy5KYXZhLkFsaWFzZXM9WydqYXZh
+J107DQo=
+
+------------lU2mF85cjuH0DsGDayNSn3
+Content-Disposition: inline; filename=shBrushXml.js
+Content-Type: application/x-javascript; charset=utf-8; name=shBrushXml.js
+Content-Location: http://blogs.sun.com/jmxetc/resource/Scripts/shBrushXml.js
+Content-Transfer-Encoding: Base64
+
+LyoNCiAqIEpzTWluDQogKiBKYXZhc2NyaXB0IENvbXByZXNzb3INCiAqIGh0dHA6
+Ly93d3cuY3JvY2tmb3JkLmNvbS8NCiAqIGh0dHA6Ly93d3cuc21hbGxzaGFycHRv
+b2xzLmNvbS8NCiovDQoNCmRwLnNoLkJydXNoZXMuWG1sPWZ1bmN0aW9uKCkNCnt0
+aGlzLkNzc0NsYXNzPSdkcC14bWwnO3RoaXMuU3R5bGU9Jy5kcC14bWwgLmNkYXRh
+IHsgY29sb3I6ICNmZjE0OTM7IH0nKycuZHAteG1sIC50YWcsIC5kcC14bWwgLnRh
+Zy1uYW1lIHsgY29sb3I6ICMwNjk7IGZvbnQtd2VpZ2h0OiBib2xkOyB9JysnLmRw
+LXhtbCAuYXR0cmlidXRlIHsgY29sb3I6IHJlZDsgfScrJy5kcC14bWwgLmF0dHJp
+YnV0ZS12YWx1ZSB7IGNvbG9yOiBibHVlOyB9Jzt9DQpkcC5zaC5CcnVzaGVzLlht
+bC5wcm90b3R5cGU9bmV3IGRwLnNoLkhpZ2hsaWdodGVyKCk7ZHAuc2guQnJ1c2hl
+cy5YbWwuQWxpYXNlcz1bJ3htbCcsJ3hodG1sJywneHNsdCcsJ2h0bWwnLCd4aHRt
+bCddO2RwLnNoLkJydXNoZXMuWG1sLnByb3RvdHlwZS5Qcm9jZXNzUmVnZXhMaXN0
+PWZ1bmN0aW9uKCkNCntmdW5jdGlvbiBwdXNoKGFycmF5LHZhbHVlKQ0Ke2FycmF5
+W2FycmF5Lmxlbmd0aF09dmFsdWU7fQ0KdmFyIGluZGV4PTA7dmFyIG1hdGNoPW51
+bGw7dmFyIHJlZ2V4PW51bGw7dGhpcy5HZXRNYXRjaGVzKG5ldyBSZWdFeHAoJyhc
+Jmx0O3w8KVxcIVxcW1tcXHdcXHNdKj9cXFsoLnxcXHMpKj9cXF1cXF0oXCZndDt8
+PiknLCdnbScpLCdjZGF0YScpO3RoaXMuR2V0TWF0Y2hlcyhuZXcgUmVnRXhwKCco
+XCZsdDt8PCkhLS1cXHMqLio/XFxzKi0tKFwmZ3Q7fD4pJywnZ20nKSwnY29tbWVu
+dHMnKTtyZWdleD1uZXcgUmVnRXhwKCcoWzpcXHctXC5dKylcXHMqPVxccyooIi4q
+PyJ8XCcuKj9cJ3xcXHcrKSp8KFxcdyspJywnZ20nKTt3aGlsZSgobWF0Y2g9cmVn
+ZXguZXhlYyh0aGlzLmNvZGUpKSE9bnVsbCkNCntpZihtYXRjaFsxXT09bnVsbCkN
+Cntjb250aW51ZTt9DQpwdXNoKHRoaXMubWF0Y2hlcyxuZXcgZHAuc2guTWF0Y2go
+bWF0Y2hbMV0sbWF0Y2guaW5kZXgsJ2F0dHJpYnV0ZScpKTtpZihtYXRjaFsyXSE9
+dW5kZWZpbmVkKQ0Ke3B1c2godGhpcy5tYXRjaGVzLG5ldyBkcC5zaC5NYXRjaCht
+YXRjaFsyXSxtYXRjaC5pbmRleCttYXRjaFswXS5pbmRleE9mKG1hdGNoWzJdKSwn
+YXR0cmlidXRlLXZhbHVlJykpO319DQp0aGlzLkdldE1hdGNoZXMobmV3IFJlZ0V4
+cCgnKFwmbHQ7fDwpLypcXD8qKD8hXFwhKXwvKlxcPyooXCZndDt8PiknLCdnbScp
+LCd0YWcnKTtyZWdleD1uZXcgUmVnRXhwKCcoPzpcJmx0O3w8KS8qXFw/Klxccyoo
+WzpcXHctXC5dKyknLCdnbScpO3doaWxlKChtYXRjaD1yZWdleC5leGVjKHRoaXMu
+Y29kZSkpIT1udWxsKQ0Ke3B1c2godGhpcy5tYXRjaGVzLG5ldyBkcC5zaC5NYXRj
+aChtYXRjaFsxXSxtYXRjaC5pbmRleCttYXRjaFswXS5pbmRleE9mKG1hdGNoWzFd
+KSwndGFnLW5hbWUnKSk7fX0NCg==
+
+------------lU2mF85cjuH0DsGDayNSn3
+Content-Disposition: inline; filename=me.jpg
+Content-Type: text/html; name=me.jpg
+Content-Location: http://blogs.sun.com/roller/resources/jmxetc/me.jpg
+Content-Transfer-Encoding: Base64
+
+/9j/4AAQSkZJRgABAQAAAQABAAD//gBKCgpDUkVBVE9SOiBYViBWZXJzaW9uIDMu
+MTBhICBSZXY6IDEyLzI5Lzk0ICBRdWFsaXR5ID0gNzUsIFNtb290aGluZyA9IDAK
+/9sAQwAIBgYHBgUIBwcHCQkICgwUDQwLCwwZEhMPFB0aHx4dGhwcICQuJyAiLCMc
+HCg3KSwwMTQ0NB8nOT04MjwuMzQy/9sAQwEJCQkMCwwYDQ0YMiEcITIyMjIyMjIy
+MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIy/8AAEQgA
++wDXAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//E
+ALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEV
+UtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVm
+Z2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrC
+w8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEB
+AQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMR
+BAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1
+Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKT
+lJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm
+5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8Au69dFfE+pRxwuzLcvhmGAPmPQ/nV
+SLVHsrb5wpidgAp+b5fX/wCt71d8Qw3Y8SasIwIz5zldzAZBLHd+tc2yiAZluDIz
+dmX5c/1rzZ0nzNmF/eLN3fvFcCW0O+AFldQu3Jx9M9BVX7VNNcTN5CmeQEghRlGx
+xjsBTY7YGOSZm8sRMzBQMuQBtJH5/wA6kW5gSSPhSzsAA/HzEHp7cHFKOwKLMyeC
+IIQW8+PJwxUrnjk469cjimKmDG8E8gMDCYAyEgEHK9c9en51av7WWK3aMqpVcPvV
+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
+qaKuGGdtzN1Ls//Z
+
+------------lU2mF85cjuH0DsGDayNSn3
+Content-Disposition: inline; filename=permalink.gif
+Content-Type: image/gif; name=permalink.gif
+Content-Location: http://blogs.sun.com/images/permalink.gif
+Content-Transfer-Encoding: Base64
+
+R0lGODlhDAAPAIAAAP///wAAACwAAAAADAAPAAACHoyPB8ttkNRr9EUbaM2XZ81g
+EfSBJDlOppicJtoZBQA7
+
+------------lU2mF85cjuH0DsGDayNSn3
+Content-Disposition: inline; filename=zoneit.js
+Content-Type: text/html; charset=utf-8; name=zoneit.js
+Content-Location: http://widgets.dzone.com/widgets/zoneit.js
+Content-Transfer-Encoding: 8bit
+
+(function() {
+var write_string = '<iframe src="http://widgets.dzone.com/links/widgets/zoneit.html?t=';
+write_string += window.dzone_style ? window.dzone_style : '1';
+write_string += '&url=';
+if (window.dzone_url) write_string += encodeURIComponent(dzone_url);
+else  write_string += encodeURIComponent(window.location);
+if (window.dzone_title) write_string += '&title=' + encodeURIComponent(dzone_title);
+else  write_string += '&title=' + encodeURIComponent(document.title);
+if (window.dzone_blurb) write_string += '&description=' + encodeURIComponent(dzone_blurb);
+if (window.dzone_style == '2') write_string += '" height="25" width="155" scrolling="no" frameborder="0"></iframe>';
+else write_string += '" height="70" width="50" scrolling="no" frameborder="0"></iframe>';
+document.write(write_string);
+})()
+------------lU2mF85cjuH0DsGDayNSn3
+Content-Disposition: inline; filename=clientSideInclude.js
+Content-Type: application/x-javascript; charset=utf-8; name=clientSideInclude.js
+Content-Location: http://blogs.sun.com/theme/scripts/clientSideInclude.js
+Content-Transfer-Encoding: Base64
+
+LyoKKiBMaWNlbnNlZCB0byB0aGUgQXBhY2hlIFNvZnR3YXJlIEZvdW5kYXRpb24g
+KEFTRikgdW5kZXIgb25lIG9yIG1vcmUKKiAgY29udHJpYnV0b3IgbGljZW5zZSBh
+Z3JlZW1lbnRzLiAgVGhlIEFTRiBsaWNlbnNlcyB0aGlzIGZpbGUgdG8gWW91Ciog
+dW5kZXIgdGhlIEFwYWNoZSBMaWNlbnNlLCBWZXJzaW9uIDIuMCAodGhlICJMaWNl
+bnNlIik7IHlvdSBtYXkgbm90CiogdXNlIHRoaXMgZmlsZSBleGNlcHQgaW4gY29t
+cGxpYW5jZSB3aXRoIHRoZSBMaWNlbnNlLgoqIFlvdSBtYXkgb2J0YWluIGEgY29w
+eSBvZiB0aGUgTGljZW5zZSBhdAoqCiogICAgIGh0dHA6Ly93d3cuYXBhY2hlLm9y
+Zy9saWNlbnNlcy9MSUNFTlNFLTIuMAoqCiogVW5sZXNzIHJlcXVpcmVkIGJ5IGFw
+cGxpY2FibGUgbGF3IG9yIGFncmVlZCB0byBpbiB3cml0aW5nLCBzb2Z0d2FyZQoq
+IGRpc3RyaWJ1dGVkIHVuZGVyIHRoZSBMaWNlbnNlIGlzIGRpc3RyaWJ1dGVkIG9u
+IGFuICJBUyBJUyIgQkFTSVMsCiogV0lUSE9VVCBXQVJSQU5USUVTIE9SIENPTkRJ
+VElPTlMgT0YgQU5ZIEtJTkQsIGVpdGhlciBleHByZXNzIG9yIGltcGxpZWQuCiog
+U2VlIHRoZSBMaWNlbnNlIGZvciB0aGUgc3BlY2lmaWMgbGFuZ3VhZ2UgZ292ZXJu
+aW5nIHBlcm1pc3Npb25zIGFuZAoqIGxpbWl0YXRpb25zIHVuZGVyIHRoZSBMaWNl
+bnNlLiAgRm9yIGFkZGl0aW9uYWwgaW5mb3JtYXRpb24gcmVnYXJkaW5nCiogY29w
+eXJpZ2h0IGluIHRoaXMgd29yaywgcGxlYXNlIHNlZSB0aGUgTk9USUNFIGZpbGUg
+aW4gdGhlIHRvcCBsZXZlbAoqIGRpcmVjdG9yeSBvZiB0aGlzIGRpc3RyaWJ1dGlv
+bi4KKi8KLy8gZ2xvYmFsIHZhcnMgZm9yIGFjY2VzcyBmcm9tIGNhbGxiYWNrIGZ1
+bmN0aW9uCnZhciByZXEgPSBmYWxzZTsKdmFyIGVsZW1lbnQ7CgpmdW5jdGlvbiBj
+bGllbnRTaWRlSW5jbHVkZShpZCwgdXJsKSB7CiAgLy8gRm9yIFNhZmFyaSwgRmly
+ZWZveCwgYW5kIG90aGVyIG5vbi1NUyBicm93c2VycwogIGlmICh3aW5kb3cuWE1M
+SHR0cFJlcXVlc3QpIHsKICAgIHRyeSB7CiAgICAgIHJlcSA9IG5ldyBYTUxIdHRw
+UmVxdWVzdCgpOwogICAgfSBjYXRjaCAoZSkgewogICAgICByZXEgPSBmYWxzZTsK
+ICAgIH0KICB9IGVsc2UgaWYgKHdpbmRvdy5BY3RpdmVYT2JqZWN0KSB7CiAgICAv
+LyBGb3IgSW50ZXJuZXQgRXhwbG9yZXIgb24gV2luZG93cwogICAgdHJ5IHsKICAg
+ICAgcmVxID0gbmV3IEFjdGl2ZVhPYmplY3QoIk1zeG1sMi5YTUxIVFRQIik7CiAg
+ICB9IGNhdGNoIChlKSB7CiAgICAgIHRyeSB7CiAgICAgICAgcmVxID0gbmV3IEFj
+dGl2ZVhPYmplY3QoIk1pY3Jvc29mdC5YTUxIVFRQIik7CiAgICAgIH0gY2F0Y2gg
+KGUpIHsKICAgICAgICByZXEgPSBmYWxzZTsKICAgICAgfQogICAgfQogIH0KIC8v
+IHZhciBlbGVtZW50ID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoaWQpOwogZWxl
+bWVudCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKGlkKTsKIGlmICghZWxlbWVu
+dCkgewogIGFsZXJ0KCJCYWQgaWQgIiArIGlkICsKICAgInBhc3NlZCB0byBjbGll
+bnRTaWRlSW5jbHVkZS4iICsKICAgIllvdSBuZWVkIGEgZGl2IG9yIHNwYW4gZWxl
+bWVudCAiICsKICAgIndpdGggdGhpcyBpZCBpbiB5b3VyIHBhZ2UuIik7CiAgcmV0
+dXJuOwogfQogIGlmIChyZXEpIHsKICAgIC8vIEFzeW5jaHJvbm91cyByZXF1ZXN0
+IHVzaW5nIHByb2Nlc3NSZXFDaGFuZ2UgY2FsbGJhY2sKICAgIHJlcS5vbnJlYWR5
+c3RhdGVjaGFuZ2UgPSBwcm9jZXNzUmVxQ2hhbmdlOwogICAgcmVxLm9wZW4oJ0dF
+VCcsIHVybCwgdHJ1ZSk7CiAgICByZXEuc2VuZChudWxsKTsKICB9Cn0KCi8vIGhh
+bmRsZSBvbnJlYWR5c3RhdGVjaGFuZ2UgZXZlbnQgb2YgcmVxIG9iamVjdApmdW5j
+dGlvbiBwcm9jZXNzUmVxQ2hhbmdlKCkgewogICAgLy8gb25seSBpZiByZXEgc2hv
+d3MgImxvYWRlZCIKICAgIGlmIChyZXEucmVhZHlTdGF0ZSA9PSA0KSB7CiAgICAg
+ICAgLy8gb25seSBpZiAiT0siCiAgICAgICAgaWYgKHJlcS5zdGF0dXMgPT0gMjAw
+KSB7CiAgICAgICAgICAgIGVsZW1lbnQuaW5uZXJIVE1MID0gcmVxLnJlc3BvbnNl
+VGV4dDsKICAgICAgICAgfSBlbHNlIHsKICAgICAgICAgICAgYWxlcnQoIlRoZXJl
+IHdhcyBhIHByb2JsZW0gcmV0cmlldmluZyB0aGUgWE1MIGRhdGE6XG4iICsKICAg
+ICAgICAgICAgICAgIHJlcS5zdGF0dXNUZXh0KTsKICAgICAgICAgfQogICAgfQp9
+IA==
+
+------------lU2mF85cjuH0DsGDayNSn3
+Content-Disposition: inline; filename=s_code_remote.js
+Content-Type: application/x-javascript; charset=utf-8; name=s_code_remote.js
+Content-Location: http://blogs.sun.com/omniture/s_code_remote.js
+Content-Transfer-Encoding: Base64
+
+LyogU2l0ZUNhdGFseXN0IGNvZGUgdmVyc2lvbjogSC4xNC4gQ29weXJpZ2h0IE9t
+bml0dXJlLCBJbmMuIE1vcmUgaW5mbyBhdmFpbGFibGUgYXQgaHR0cDovL3d3dy5v
+bW5pdHVyZS5jb20gKi8KLyogQXV0aG9yOiBOZWlsIEV2YW5zICovCi8qKioqKioq
+KioqKioqKioqKioqKioqKioqKiBDT05GSUcgU0VDVElPTiAqKioqKioqKioqKioq
+KioqKioqKioqKioqKioqKioqKioqKioqKioqLwovKiBTcGVjaWZ5IHRoZSBSZXBv
+cnQgU3VpdGUocykgKi8KdmFyIHNfYWNjb3VudD0ic3VuYmxvZ3MyZGV2IjsKdmFy
+IHN1bl9keW5hbWljQWNjb3VudFNlbGVjdGlvbj10cnVlOwp2YXIgc3VuX2R5bmFt
+aWNBY2NvdW50TGlzdD0ic3VuZ2xvYmFsLHN1bmJsb2dzMz1ibG9ncy5zdW4uY29t
+O3N1bmJsb2dzMmRldj0uIjsJCi8qIFNwZWNpZnkgdGhlIFJlcG9ydCBTdWl0ZSBJ
+RCAqLwp2YXIgc19zaXRlaWQ9ImJsb2dzOiI7Ci8qIFNldHRpbmdzIGZvciBwYWdl
+TmFtZSAqLwovLyBzdHJpcCAnL3JvbGxlci9wYWdlJyBvdXQgb2YgdGhlIHBhZ2Ug
+bmFtZQovLyBhcHBlbmQgJy8nIHRvIGRpcmVjdG9yeSBuYW1lcyBpZiBuZWVkZWQK
+aWYgKHR5cGVvZiBzX3BhZ2VOYW1lPT11bmRlZmluZWQgJiYgc19wYWdlVHlwZT09
+IiIpIHsKdmFyIHNfcGFnZU5hbWU9d2luZG93LnRvcC5sb2NhdGlvbi5wYXRobmFt
+ZS50b0xvd2VyQ2FzZSgpOwp2YXIgc191bndhbnRlZFByZWZpeCA9ICcvcm9sbGVy
+L3BhZ2UnOwppZiAoc19wYWdlTmFtZS5pbmRleE9mKHNfdW53YW50ZWRQcmVmaXgp
+PT0wKSB7CiAgICBzX3BhZ2VOYW1lID0gc19wYWdlTmFtZS5zdWJzdHJpbmcoc191
+bndhbnRlZFByZWZpeC5sZW5ndGgpOwogICAgaWYgKHNfcGFnZU5hbWUuY2hhckF0
+KHNfcGFnZU5hbWUubGVuZ3RoLTEpIT0nLycpIHsKICAgICAgICB2YXIgc19sYXN0
+ID0gc19wYWdlTmFtZTsKICAgICAgICB3aGlsZSAoc19sYXN0LmluZGV4T2YoJy8n
+KSE9LTEpIHsKICAgICAgICAgICAgc19sYXN0ID0gc19sYXN0LnN1YnN0cmluZyhz
+X2xhc3QuaW5kZXhPZignLycpKzEpOwogICAgICAgIH0KICAgICAgICBpZiAoc19s
+YXN0LmluZGV4T2YoJy4nKT09LTEpIHsKICAgICAgICAgICAgc19wYWdlTmFtZSAr
+PSAnLyc7CiAgICAgICAgfQogICAgfQp9Cn0KLyogUmVtb3RlIE9tbml0dXJlIEpT
+IGNhbGwgICovCnZhciBzdW5fc3NsPSh3aW5kb3cubG9jYXRpb24ucHJvdG9jb2wu
+dG9Mb3dlckNhc2UoKS5pbmRleE9mKCJodHRwcyIpIT0tMSk7CglpZihzdW5fc3Ns
+ID09IHRydWUpIHsgdmFyIGZ1bGxVUkwgPSAiaHR0cHM6Ly93d3cuc3VuLmNvbS9z
+aGFyZS9tZXRyaWNzL21ldHJpY3NfZ3JvdXAxLmpzIjsgfQoJCWVsc2UgeyB2YXIg
+ZnVsbFVSTD0gImh0dHA6Ly93d3ctY2RuLnN1bi5jb20vc2hhcmUvbWV0cmljcy9t
+ZXRyaWNzX2dyb3VwMS5qcyI7IH0KZG9jdW1lbnQud3JpdGUoIjxzYyIgKyAicmlw
+dCB0eXBlPVwidGV4dC9qYXZhc2NyaXB0XCIgc3JjPVwiIitmdWxsVVJMKyJcIj48
+L3NjIiArICJyaXB0PiIpOwovKioqKioqKioqKioqKioqKioqKioqKioqKiogRU5E
+IENPTkZJRyBTRUNUSU9OICoqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioq
+KioqKioqLwpmdW5jdGlvbiBzX3Jlc2V0c3RhbmRhcmQocykgewoJaWYgKHR5cGVv
+ZiBzX3BhZ2VUeXBlPT0ndW5kZWZpbmVkJyB8fCBzX3BhZ2VUeXBlPT0nJykgewoJ
+c19wcm9wMzE9c19wYWdlTmFtZTsKCXNfcGFnZU5hbWU9c19jaGFubmVsKyIgKHNp
+dGUgc2VjdGlvbikiOwoJfQp9
+
+------------lU2mF85cjuH0DsGDayNSn3
+Content-Disposition: inline; filename=rssbadge.gif
+Content-Type: image/gif; name=rssbadge.gif
+Content-Location: http://blogs.sun.com/images/rssbadge.gif
+Content-Transfer-Encoding: Base64
+
+R0lGODlhJAAOANUAANVYBPHUwOFdBP/28P9yFeCngvfp4OVeBPRkBe3JsfBjBfr0
+79+ecv+rc/fg0NByM+e9of/j0Z9BA//m1eWEQ/+FNP/awc5VBM1nI//t4eezkeir
+gtRhFPBsFOR3Lt1uJPDBofjXwf98JOZ7M/PCofqWU/CugiEOAfmygv/Rsv+PRP+0
+gn0zAv+aV8JQBD8aAf/IpP////9mAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAAkAA4AAAbKwAlsSCwaj8ijpyVrOp/Q
+qDTKYk6vWKq12YgNCDJVLEJYxWKVJuwcjlmmVWgoliBkYo+LOQZBEM4xLmIBAFJx
+TyILMQ4xDC4IZoofKwNngjGEhltOJWcBLgcyZhB0AySWg4VaUWIxBhxNZgUgZxio
+mKpQh04EAwOMGrExBSN0LreZq08pjQ9nFKLDAgguALcGGysrKk+7Ml2fByiuHbIC
+TreAMSYKTt4yB9VNAi4uMvTnTvUyCvX++TLeZRlIRcKLgwgTKlzIcOGJIAA7
+
+------------lU2mF85cjuH0DsGDayNSn3
+Content-Disposition: inline; filename=smrssbadge.gif
+Content-Type: text/html; name=smrssbadge.gif
+Content-Location: http://blogs.sun.com/roller/images/smrssbadge.gif
+Content-Transfer-Encoding: Base64
+
+R0lGODlhEAAHAPcIMf////HUwOFdBP/28P9yFeCngvfp4OVeBPRkBe3JsfBjBfr0
+79+ecv+rc/fg0NByM+e9of/j0Z9BA//m1eWEQ/+FNP/awc5VBM1nI//t4eezkeir
+gtRhFPBsFOR3Lt1uJPDBofjXwf98JOZ7M/PCofqWU/CugiEOAfmygv/Rsv+PRP+0
+gn0zAv+aV8JQBD8aAf/IpNVYBP9mAAACAAABDaQALgBBAHEAgNwBZYwAQAAAAQAA
+jKEAPWMAMz4AQAMAUD4AWmMAPwQAMDAAJAAAQAQAQAAATTAAQAQAWzAATgQAgT4A
+fzAATwMAZ2MAXj4APwQAjHEAiWMAUgMAd6EAa3EAQAQAXXEAaaEAQAQATAQAMnEA
+PqEAPwQAC2MADnEATgMAJT4ALwQAATAABD4ATwMAFgAAIgQAAAAAgDUAAAAAODEB
+aSAAADoAAASAAP//5v//zP//s///mf//f//m///m5v/mzP/ms//mmf/mf//M///M
+5v/MzP/Ms//Mmf/Mf/+z//+z5v+zzP+zs/+zmf+zf/+Z//+Z5v+ZzP+Zs/+Zmf+Z
+f/9///9/5v9/zP9/s/9/mf9/f+b//+b/5ub/zOb/s+b/meb/f+bm/+bm5ubmzObm
+s+bmmebmf+bM/+bM5ubMzObMswAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAACwAAAAAEAAHAAAINgAblBhIsGDBBxUQKFzIkKEEEQoBIJBI
+ceJCCQkjRgRQUSFGjRUpSkTwsaFJjxckqFzJkiWLgAA7
+
+------------lU2mF85cjuH0DsGDayNSn3
+Content-Disposition: inline; filename=javablog-small.gif
+Content-Type: text/html; name=javablog-small.gif
+Content-Location: http://blogs.sun.com/roller/resources/jmxetc/javablog-small.gif
+Content-Transfer-Encoding: Base64
+
+R0lGODdhUAAPAPcAAAAAADMAAGYAAJkAAMwAAP8AAAAzADMzAGYzAJkzAMwzAP8z
+AABmADNmAGZmAJlmAMxmAP9mAACZADOZAGaZAJmZAMyZAP+ZAADMADPMAGbMAJnM
+AMzMAP/MAAD/ADP/AGb/AJn/AMz/AP//AAAAMzMAM2YAM5kAM8wAM/8AMwAzMzMz
+M2YzM5kzM8wzM/8zMwBmMzNmM2ZmM5lmM8xmM/9mMwCZMzOZM2aZM5mZM8yZM/+Z
+MwDMMzPMM2bMM5nMM8zMM//MMwD/MzP/M2b/M5n/M8z/M///MwAAZjMAZmYAZpkA
+ZswAZv8AZgAzZjMzZmYzZpkzZswzZv8zZgBmZjNmZmZmZplmZsxmZv9mZgCZZjOZ
+ZmaZZpmZZsyZZv+ZZgDMZjPMZmbMZpnMZszMZv/MZgD/ZjP/Zmb/Zpn/Zsz/Zv//
+ZgAAmTMAmWYAmZkAmcwAmf8AmQAzmTMzmWYzmZkzmcwzmf8zmQBmmTNmmWZmmZlm
+mcxmmf9mmQCZmTOZmWaZmZmZmcyZmf+ZmQDMmTPMmWbMmZnMmczMmf/MmQD/mTP/
+mWb/mZn/mcz/mf//mQAAzDMAzGYAzJkAzMwAzP8AzAAzzDMzzGYzzJkzzMwzzP8z
+zABmzDNmzGZmzJlmzMxmzP9mzACZzDOZzGaZzJmZzMyZzP+ZzADMzDPMzGbMzJnM
+zMzMzP/MzAD/zDP/zGb/zJn/zMz/zP//zAAA/zMA/2YA/5kA/8wA//8A/wAz/zMz
+/2Yz/5kz/8wz//8z/wBm/zNm/2Zm/5lm/8xm//9m/wCZ/zOZ/2aZ/5mZ/8yZ//+Z
+/wDM/zPM/2bM/5nM/8zM///M/wD//zP//2b//5n//8z//////wAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAABQAA8AQAjKAK0IHEiwoMGDCBMqXMhw
+4DVPENdEnOhJosSKFB96ggaR48aOID+KhEiypMmTKCFeE6gxpcuSGj2SlPmypk2U
+K620vImTp8+fOFkCPblzqNGaOVteJGmRacmLMUN6nCr1KFKhFIEW9UnTKtGGYMOK
+HXvwmtmzaNOqXcu2rdu3cLFiHBq1ZFevP5M6jXhxad+lMaHJHExTMF6XerOuWTzR
+L2NPdamKlHz3MGS5jv0+fRx48MzChi2bTLxU69DQomGyhMu6tevXa60EBAA7
+
+------------lU2mF85cjuH0DsGDayNSn3
+Content-Disposition: inline; filename=btn-fave2.png
+Content-Type: image/png; name=btn-fave2.png
+Content-Location: http://static.technorati.com/pix/fave/btn-fave2.png
+Content-Transfer-Encoding: Base64
+
+iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAABGdBTUEAANbY1E9Y
+MgAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAADAUExURTqh
+ADigADedADSZADKYADOWAD2xAzmfADuwAPT78Pb784nHZjylAP3+/DKVAOXz3jee
+ADukAHTDUTCTADWbADGUAFnEG0S0DIO+ZvX78zqjAJHScDaaADidALbhovD57L7l
+qrLenLvnonnPSrflnkO0CVjBHvj89kyzHIfPY1TAGHnJUaXbiqvekrffpfr9+Tap
+ADqvADisADSnAEK5ADOlAEW9AD60AEC2AEO7ADyxADCSADuiAD2mADGWAP////yj
+JWYAAAFbSURBVHjarFJZW8IwEFwoR7nvGwUEtCoovVuv+f//ymw2lfLpm0x2JrOT
+bR7aUuPjqmgQfV4VRNSMomh8V0NtN44YAFgUuZFWUp0hykeRcVnbJKr20nRbA6O2
+TRUghDGsaRbp/iK5mE7TXpWq8+Be7gNWT0EQqJ0J5QJIyxBrIklkRo54qX1epRtK
+1jhMFlhUDtglSQKhLtk1clHyIzhPy7m6rliI6629bT/bduVhFccxhMgsWLMIvLKE
+dyOxkUKRlt094NiMSQuVt/+huySr6Nax0RcesXIZ/K5EXCOm3FzEmvO6dd2iRdbQ
+WwMLdd8jcOtpAEKWXMH7s87jnje0qGydnDrUZzmq/8Y5aQBMpWzEQlRHpskOThkV
+rDK1S77fnwGvwKzvCwAhy2XlHLLj87jvl9o0KoVh6Lx00Nk4oQHANKpbqfB3dE71
+k6URDb6uigFN36+K6bcAAwDWAf2/qj5u2AAAAABJRU5ErkJggg==
+
+------------lU2mF85cjuH0DsGDayNSn3
+Content-Disposition: inline; filename=getjava_lg.gif
+Content-Type: image/gif; name=getjava_lg.gif
+Content-Location: http://java.com/en/img/everywhere/getjava_lg.gif?cid=jdp74800
+Content-Transfer-Encoding: Base64
+
+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
+O93phBZlGW5WiZ1hiaUD0Q4IADs=
+
+------------lU2mF85cjuH0DsGDayNSn3
+Content-Disposition: inline; filename=tr_embed_t_js.js
+Content-Type: text/html; charset=utf-8; name=tr_embed_t_js.js
+Content-Location: http://embed.technorati.com/embed/4j8rz4ces3.js
+Content-Transfer-Encoding: 8bit
+
+(function(){
+    
+var trStylesheetURL = "http://scm-l3.technorati.com/styles/widgets/blog-widget.css";
+var trHead = document.getElementsByTagName("head")[0] || document.documentElement;
+var trStylesheet = document.createElement("link");
+trStylesheet.setAttribute("rel", "stylesheet");
+trStylesheet.setAttribute("type", "text/css");
+trStylesheet.setAttribute("href", trStylesheetURL);
+trHead.appendChild(trStylesheet);
+
+})();
+
+------------lU2mF85cjuH0DsGDayNSn3
+Content-Disposition: inline; filename=counter.js
+Content-Type: application/x-javascript; charset=utf-8; name=counter.js
+Content-Location: http://www.statcounter.com/counter/counter.js
+Content-Transfer-Encoding: Base64
+
+dmFyIHNjX3dpZHRoPXNjcmVlbi53aWR0aDt2YXIgc2NfaGVpZ2h0PXNjcmVlbi5o
+ZWlnaHQ7dmFyIHNjX3JlZmVyZXI9IiIrZG9jdW1lbnQucmVmZXJyZXI7dHJ5e3Nj
+X3JlZmVyZXI9IiIrcGFyZW50LmRvY3VtZW50LnJlZmVycmVyfWNhdGNoKGV4KXtz
+Y19yZWZlcmVyPSIiK2RvY3VtZW50LnJlZmVycmVyfXZhciBzY191bmlxdWU9MDt2
+YXIgc2NfcmV0dXJuaW5nPTA7dmFyIHNjX3JldHVybnM9MDt2YXIgc2NfZXJyb3I9
+MDt2YXIgc2NfcmVtb3ZlPTA7dmFyIHNjX2Nscz0tMTt2YXIgc2NfaW52PTA7dmFy
+IHNjX29zPSIiO3ZhciBzY190aXRsZT0iIjt2YXIgc2NfdXJsPSIiO3ZhciBzY19i
+YXNlX2Rpcj0iIjt2YXIgc2NfY2xpY2tfZGlyPSIiO3ZhciBzY19saW5rX2JhY2tf
+c3RhcnQ9IiI7dmFyIHNjX2xpbmtfYmFja19lbmQ9IiI7dmFyIHNjX3NlY3VyaXR5
+X2NvZGU9IiI7dmFyIHNjX2h0dHBfdXJsPSJodHRwIjt2YXIgc2NfaG9zdD0ic3Rh
+dGNvdW50ZXIuY29tIjtpZih3aW5kb3cuc2NfaW52aXNpYmxlKXtpZih3aW5kb3cu
+c2NfaW52aXNpYmxlPT0xKXtzY19pbnY9MX19aWYod2luZG93LnNjX2NsaWNrX3N0
+YXQpe3NjX2Nscz13aW5kb3cuc2NfY2xpY2tfc3RhdH1pZih3aW5kb3cuc2NfaHR0
+cHMpe2lmKHNjX2h0dHBzPT0xKXtzY19kb2NfbG9jPScnK2RvY3VtZW50LmxvY2F0
+aW9uO215UkU9bmV3IFJlZ0V4cCgiXmh0dHBzIiwiaSIpO2lmKHNjX2RvY19sb2Mu
+bWF0Y2gobXlSRSkpe3NjX2h0dHBfdXJsPSJodHRwcyJ9fX1pZih3aW5kb3cuc2Nf
+bG9jYWwpe3NjX2Jhc2VfZGlyPXNjX2xvY2FsfWVsc2V7aWYoc2NfY2xzPT0tMSl7
+c2NfY2xzPTF9c2NfYmFzZV9kaXI9c2NfaHR0cF91cmwrIjovL2MuIitzY19ob3N0
+KyIvIn1zY19jbGlja19kaXI9c2NfYmFzZV9kaXI7aWYod2luZG93LnNjX3RleHQp
+e3NjX2Jhc2VfZGlyKz0idGV4dC5waHA/In1lbHNle3NjX2Jhc2VfZGlyKz0idC5w
+aHA/In1pZih3aW5kb3cuc2NfcHJvamVjdCl7c2NfYmFzZV9kaXIrPSJzY19wcm9q
+ZWN0PSIrc2NfcHJvamVjdH1lbHNlIGlmKHdpbmRvdy51c3Ipe3NjX2Jhc2VfZGly
+Kz0idXNyPSIrdXNyfWVsc2V7c2NfZXJyb3I9MX1pZih3aW5kb3cuc2NfcmVtb3Zl
+X2xpbmspe3NjX2xpbmtfYmFja19zdGFydD0iIjtzY19saW5rX2JhY2tfZW5kPSIi
+fWVsc2V7c2NfbGlua19iYWNrX3N0YXJ0PSI8YSBjbGFzcz1cInN0YXRjb3VudGVy
+XCIgaHJlZj1cImh0dHA6Ly93d3cuIitzY19ob3N0KyJcIiB0YXJnZXQ9XCJfYmxh
+bmtcIj4iO3NjX2xpbmtfYmFja19lbmQ9IjxcL2E+In1zY19kYXRlPW5ldyBEYXRl
+KCk7c2NfdGltZT1zY19kYXRlLmdldFRpbWUoKTtzY190aW1lX2RpZmZlcmVuY2U9
+MzYwMDAwMDtzY190aXRsZT0iIitkb2N1bWVudC50aXRsZTtzY191cmw9IiIrZG9j
+dW1lbnQubG9jYXRpb247c2NfcmVmZXJlcj1zY19yZWZlcmVyLnN1YnN0cmluZygw
+LDYwMCk7c2NfdGl0bGU9c2NfdGl0bGUuc3Vic3RyaW5nKDAsMzAwKTtzY191cmw9
+c2NfdXJsLnN1YnN0cmluZygwLDMwMCk7c2NfcmVmZXJlcj1lc2NhcGUoc2NfcmVm
+ZXJlcik7aWYoZW5jb2RlVVJJQ29tcG9uZW50KXtzY190aXRsZT1lbmNvZGVVUklD
+b21wb25lbnQoc2NfdGl0bGUpfWVsc2V7c2NfdGl0bGU9ZXNjYXBlKHNjX3RpdGxl
+KX1zY191cmw9ZXNjYXBlKHNjX3VybCk7aWYod2luZG93LnNjX3NlY3VyaXR5KXtz
+Y19zZWN1cml0eV9jb2RlPXNjX3NlY3VyaXR5fWlmKHNjX3NjcmlwdF9udW0pe3Nj
+X3NjcmlwdF9udW0rK31lbHNle3ZhciBzY19zY3JpcHRfbnVtPTF9dmFyIHNjX3Ry
+YWNraW5nX3VybD1zY19iYXNlX2RpcisiJnJlc29sdXRpb249IitzY193aWR0aCsi
+Jmg9IitzY19oZWlnaHQrIiZjYW1lZnJvbT0iK3NjX3JlZmVyZXIrIiZ1PSIrc2Nf
+dXJsKyImdD0iK3NjX3RpdGxlKyImamF2YT0xJnNlY3VyaXR5PSIrc2Nfc2VjdXJp
+dHlfY29kZSsiJnNjX3JhbmRvbT0iK01hdGgucmFuZG9tKCkrIiZzY19zbnVtPSIr
+c2Nfc2NyaXB0X251bTt2YXIgc2NfY2xzdHI9IjxzcGFuIGNsYXNzPVwic3RhdGNv
+dW50ZXJcIj4iO3ZhciBzY19jbHRleHQ9IlwiIGFsdD1cIlN0YXRDb3VudGVyIC0g
+RnJlZSBXZWIgVHJhY2tlciBhbmQgQ291bnRlclwiIGJvcmRlcj1cIjBcIj4iO3Zh
+ciBzY19zdHJvdXQ9c2NfY2xzdHIrc2NfbGlua19iYWNrX3N0YXJ0KyI8aW1nIHNy
+Yz1cIiIrc2NfdHJhY2tpbmdfdXJsK3NjX2NsdGV4dCtzY19saW5rX2JhY2tfZW5k
+KyI8L3NwYW4+IjtpZihzY19lcnJvcj09MSl7ZG9jdW1lbnQud3JpdGVsbigiQ29k
+ZSBjb3JydXB0ZWQuIEluc2VydCBmcmVzaCBjb3B5LiIpfWVsc2UgaWYoc2NfcmVt
+b3ZlPT0xKXt9ZWxzZXtpZihzY19pbnY9PTEpe2lmKHdpbmRvdy5zY19jYWxsKXtz
+Y19jYWxsKyt9ZWxzZXtzY19jYWxsPTF9ZXZhbCgidmFyIHNjX2ltZyIrc2NfY2Fs
+bCsiID0gbmV3IEltYWdlKCk7c2NfaW1nIitzY19jYWxsKyIuc3JjID0gXCIiK3Nj
+X3RyYWNraW5nX3VybCsiJmludmlzaWJsZT0xXCIiKX1lbHNlIGlmKHdpbmRvdy5z
+Y190ZXh0KXtkb2N1bWVudC53cml0ZWxuKCc8c2NyJysnaXB0IGxhbmd1YWdlPSJK
+YXZhU2NyaXB0IicrJyBzcmM9JytzY190cmFja2luZ191cmwrIiZ0ZXh0PSIrc2Nf
+dGV4dCsnPjwvc2NyJysnaXB0PicpfWVsc2V7ZG9jdW1lbnQud3JpdGVsbihzY19z
+dHJvdXQpfX1pZihzY19jbHM+MCl7aWYoY2xpY2tzdGF0X2RvbmUhPTEpe3ZhciBj
+bGlja3N0YXRfZG9uZT0xO3ZhciBjbGlja3N0YXRfcHJvamVjdD13aW5kb3cuc2Nf
+cHJvamVjdDt2YXIgY2xpY2tzdGF0X3NlY3VyaXR5PXdpbmRvdy5zY19zZWN1cml0
+eV9jb2RlO3ZhciBkbGV4dD0iN3p8YWFjfGF2aXxjc3Z8ZG9jfGRvY3h8ZXhlfGZs
+dnxnaWZ8Z3p8anBlP2d8anN8bXAoM3w0fGU/Zyl8bW92fHBkZnxwaHBzfHBuZ3xw
+cHR8cmFyfHNpdHx0YXJ8dG9ycmVudHx0eHR8d21hfHdtdnx4bHN8eGxzeHx4bWx8
+emlwIjtpZih0eXBlb2Yod2luZG93LnNjX2Rvd25sb2FkX3R5cGUpPT0nc3RyaW5n
+Jyl7ZGxleHQ9d2luZG93LnNjX2Rvd25sb2FkX3R5cGV9dmFyIGx0eXBlPSJodHRw
+cz98ZnRwfHRlbG5ldHxzc2h8c3NsfG1haWx0byI7dmFyIHNlY29uZD0iYWN8Y298
+Z292fGx0ZHxtZXxtb2R8bmV0fG5pY3xuaHN8b3JnfHBsY3xwb2xpY2V8c2NofGNv
+bSI7dmFyIGRsPW5ldyBSZWdFeHAoIlxcLigiK2RsZXh0KyIpJCIsImkiKTt2YXIg
+bG5rPW5ldyBSZWdFeHAoIl4oIitsdHlwZSsiKToiLCJpIik7dmFyIGRvbXNlYz1u
+ZXcgUmVnRXhwKCJcXigiK3NlY29uZCsiKSQiLCJpIik7dmFyIGhvc3RfbmFtZT1s
+b2NhdGlvbi5ob3N0LnJlcGxhY2UoL153d3dcLi9pLCIiKTt2YXIgaG9zdF9zcGxp
+dHRlZD1ob3N0X25hbWUuc3BsaXQoIi4iKTt2YXIgZG9tYWluPWhvc3Rfc3BsaXR0
+ZWQucG9wKCk7dmFyIGhvc3Rfc3BsaXQ9aG9zdF9zcGxpdHRlZC5wb3AoKTtpZihk
+b21zZWMudGVzdChob3N0X3NwbGl0KSl7ZG9tYWluPWhvc3Rfc3BsaXQrIi4iK2Rv
+bWFpbjtob3N0X3NwbGl0PWhvc3Rfc3BsaXR0ZWQucG9wKCl9ZG9tYWluPWhvc3Rf
+c3BsaXQrIi4iK2RvbWFpbjt2YXIgbG5rbG9jYWxfbWFzaz0iXmh0dHBzPzpcL1wv
+KC4qKSIrZG9tYWluO3ZhciBsbmtsb2NhbD1uZXcgUmVnRXhwKGxua2xvY2FsX21h
+c2ssImkiKTtpZihkb2N1bWVudC5nZXRFbGVtZW50c0J5VGFnTmFtZSl7dmFyIGFu
+Y2hvcnM9ZG9jdW1lbnQuZ2V0RWxlbWVudHNCeVRhZ05hbWUoJ2EnKTtmb3IodmFy
+IGk9MDtpPGFuY2hvcnMubGVuZ3RoO2krKyl7dmFyIGFuY2hvcj1hbmNob3JzW2ld
+O2lmKGFuY2hvci5vbm1vdXNlZG93bil7dmFyIG9yaWdpbmFsX2NsaWNrPWFuY2hv
+ci5vbm1vdXNlZG93bjt2YXIgcz1vcmlnaW5hbF9jbGljay50b1N0cmluZygpLnNw
+bGl0KCJcbiIpLmpvaW4oIiAiKTt2YXIgYnM9cy5pbmRleE9mKCd7Jyk7dmFyIGhl
+YWQ9cy5zdWJzdHIoMCxicyk7dmFyIHBzPWhlYWQuaW5kZXhPZignKCcpO3ZhciBw
+ZT1oZWFkLmluZGV4T2YoJyknKTt2YXIgcGFyYW1zPWhlYWQuc3Vic3RyaW5nKHBz
+KzEscGUpO3ZhciBwbGlzdD1wYXJhbXMuc3BsaXQoIiwiKTt2YXIgYm9keT1zLnN1
+YnN0cihicysxLHMubGVuZ3RoLWJzLTIpO3ZhciBpbnNlcnQ9InNjX2NsaWNrc3Rh
+dF9jYWxsKHRoaXMsJyIrc2NfY2xpY2tfZGlyKyInKTsiO3ZhciBmaW5hbF9ib2R5
+PWluc2VydCtib2R5O3ZhciBldl9oZWFkPSJuZXcgRnVuY3Rpb24gKCI7dmFyIGV2
+X3BhcmFtcz0iIjt2YXIgZXZfc2VwPSIiO2Zvcih2YXIgc2NfaT0wO3NjX2k8cGxp
+c3QubGVuZ3RoO3NjX2krKyl7ZXZfcGFyYW1zPWV2X3NlcCsiJyIrcGxpc3Rbc2Nf
+aV0rIiciO2V2X3NlcD0iLCJ9aWYoZXZfc2VwPT0iLCIpe2V2X3BhcmFtcys9Iiwi
+fXZhciBldl9mb290PSJmaW5hbF9ib2R5KTsiO3ZhciBldl9maW5hbD1ldl9oZWFk
+K2V2X3BhcmFtcytldl9mb290O2FuY2hvci5vbm1vdXNlZG93bj1ldmFsKGV2X2Zp
+bmFsKX1lbHNle2FuY2hvci5vbm1vdXNlZG93bj1uZXcgRnVuY3Rpb24oImV2ZW50
+Iiwic2NfY2xpY2tzdGF0X2NhbGwodGhpcywnIitzY19jbGlja19kaXIrIicpO3Jl
+dHVybiB0cnVlOyIpfX19ZnVuY3Rpb24gc2Nfbm9uZSgpe3JldHVybn1mdW5jdGlv
+biBzY19kZWxheSgpe2lmKHdpbmRvdy5zY19jbGlja19zdGF0KXt2YXIgZD13aW5k
+b3cuc2NfY2xpY2tfc3RhdH1lbHNle3ZhciBkPTI1MH12YXIgbj1uZXcgRGF0ZSgp
+O3ZhciB0PW4uZ2V0VGltZSgpK2Q7d2hpbGUobi5nZXRUaW1lKCk8dCl7dmFyIG49
+bmV3IERhdGUoKX19ZnVuY3Rpb24gc2NfY2xpY2tzdGF0X2NhbGwoYWRhdGEsc2Nf
+Y2xpY2tfZGlyKXtpZihhZGF0YSl7dmFyIGNsaWNrbW9kZT0wO2lmKGxuay50ZXN0
+KGFkYXRhKSl7aWYoKGxua2xvY2FsLnRlc3QoYWRhdGEpKSl7aWYoZGwudGVzdChh
+ZGF0YSkpe2NsaWNrbW9kZT0xfWVsc2UgaWYod2luZG93LnNjX2V4aXRfbGlua19k
+ZXRlY3QmJm5ldyBSZWdFeHAoc2NfZXhpdF9saW5rX2RldGVjdCwiaSIpLnRlc3Qo
+YWRhdGEpKXtjbGlja21vZGU9Mn1lbHNlIGlmKHNjX2Nscz09Mil7Y2xpY2ttb2Rl
+PTJ9fWVsc2V7Y2xpY2ttb2RlPTJ9fWlmKGNsaWNrbW9kZSE9MCl7dmFyIHNjX2xp
+bms9ZXNjYXBlKGFkYXRhKTtpZihzY19saW5rLmxlbmd0aD4wKXt2YXIgc2NfcmVx
+PXNjX2NsaWNrX2RpcisiY2xpY2suZ2lmP3NjX3Byb2plY3Q9IitjbGlja3N0YXRf
+cHJvamVjdCsiJnNlY3VyaXR5PSIrY2xpY2tzdGF0X3NlY3VyaXR5KyImYz0iK3Nj
+X2xpbmsrIiZtPSIrY2xpY2ttb2RlKyImdT0iK3NjX3VybCsiJnQ9IitzY190aXRs
+ZSsiJnJhbmQ9IitNYXRoLnJhbmRvbSgpO3ZhciBzY19yZXFfaW1hZ2U9bmV3IElt
+YWdlKCk7c2NfcmVxX2ltYWdlLm9ubG9hZD1zY19ub25lO3NjX3JlcV9pbWFnZS5z
+cmM9c2NfcmVxO3NjX2RlbGF5KCl9fX19dmFyIHNjX2dzeW5fcGF0dGVybj0nZ29v
+Z2xlc3luZGljYXRpb25cLmNvbXx5cG4tanNcLm92ZXJ0dXJlXC5jb218eXBuLWpz
+XC55c21cLnlhaG9vXC5jb218Z29vZ2xlYWRzXC5nXC5kb3VibGVjbGlja1wubmV0
+Jzt2YXIgc2NfcHg7dmFyIHNjX3B5O2Z1bmN0aW9uIHNjX2Fkc2Vuc2VfY2xpY2so
+c2NfZGF0YSl7dmFyIHNjX2xpbms9ZXNjYXBlKHNjX2RhdGEuc3JjKTt2YXIgaT1u
+ZXcgSW1hZ2UoKTt2YXIgc2NfcmVxPXNjX2NsaWNrX2RpcisiY2xpY2suZ2lmP3Nj
+X3Byb2plY3Q9IitjbGlja3N0YXRfcHJvamVjdCsiJnNlY3VyaXR5PSIrY2xpY2tz
+dGF0X3NlY3VyaXR5KyImYz0iK3NjX2xpbmsrIiZtPTImdT0iK3NjX3VybCsiJnQ9
+IitzY190aXRsZSsiJnJhbmQ9IitNYXRoLnJhbmRvbSgpO2kuc3JjPXNjX3JlcTtz
+Y19kZWxheSgpfWZ1bmN0aW9uIHNjX2Fkc2Vuc2VfaW5pdCgpe2lmKGRvY3VtZW50
+LmFsbCYmdHlwZW9mIHdpbmRvdy5vcGVyYT09InVuZGVmaW5lZCIpe3ZhciBlbD1k
+b2N1bWVudC5nZXRFbGVtZW50c0J5VGFnTmFtZSgiaWZyYW1lIik7Zm9yKHZhciBp
+PTA7aTxlbC5sZW5ndGg7aSsrKXtpZihlbFtpXS5zcmMubWF0Y2goc2NfZ3N5bl9w
+YXR0ZXJuKSl7ZWxbaV0ub25mb2N1cz1mdW5jdGlvbigpe3NjX2Fkc2Vuc2VfY2xp
+Y2sodGhpcyl9fX19ZWxzZXtpZih0eXBlb2Ygd2luZG93LmFkZEV2ZW50TGlzdGVu
+ZXIhPSJ1bmRlZmluZWQiKXt3aW5kb3cuYWRkRXZlbnRMaXN0ZW5lcigidW5sb2Fk
+IixzY19leGl0cGFnZSxmYWxzZSk7d2luZG93LmFkZEV2ZW50TGlzdGVuZXIoIm1v
+dXNlbW92ZSIsc2NfZ2V0bW91c2UsdHJ1ZSl9fX1pZih0eXBlb2Ygd2luZG93LmFk
+ZEV2ZW50TGlzdGVuZXIhPSd1bmRlZmluZWQnKXt3aW5kb3cuYWRkRXZlbnRMaXN0
+ZW5lcignbG9hZCcsc2NfYWRzZW5zZV9pbml0LGZhbHNlKX1lbHNle2lmKHR5cGVv
+ZiBkb2N1bWVudC5hZGRFdmVudExpc3RlbmVyIT0ndW5kZWZpbmVkJyl7ZG9jdW1l
+bnQuYWRkRXZlbnRMaXN0ZW5lcignbG9hZCcsc2NfYWRzZW5zZV9pbml0LGZhbHNl
+KX1lbHNle2lmKHR5cGVvZiB3aW5kb3cuYXR0YWNoRXZlbnQhPSd1bmRlZmluZWQn
+KXt3aW5kb3cuYXR0YWNoRXZlbnQoJ29ubG9hZCcsc2NfYWRzZW5zZV9pbml0KX1l
+bHNle2lmKHR5cGVvZiB3aW5kb3cub25sb2FkPT0nZnVuY3Rpb24nKXt2YXIgc2Nf
+ZXhpc3Rpbmc9b25sb2FkO3dpbmRvdy5vbmxvYWQ9ZnVuY3Rpb24oKXtzY19leGlz
+dGluZygpO3NjX2Fkc2Vuc2VfaW5pdCgpfX1lbHNle3dpbmRvdy5vbmxvYWQ9c2Nf
+YWRzZW5zZV9pbml0fX19fWZ1bmN0aW9uIHNjX2dldG1vdXNlKGUpe2lmKHR5cGVv
+ZiBlLnBhZ2VYPT0ibnVtYmVyIil7c2NfcHg9ZS5wYWdlWDtzY19weT1lLnBhZ2VZ
+fWVsc2V7aWYodHlwZW9mIGUuY2xpZW50WD09Im51bWJlciIpe3NjX3B4PWUuY2xp
+ZW50WDtzY19weT1lLmNsaWVudFk7aWYoZG9jdW1lbnQuYm9keSYmKGRvY3VtZW50
+LmJvZHkuc2Nyb2xsTGVmdHx8ZG9jdW1lbnQuYm9keS5zY3JvbGxUb3ApKXtzY19w
+eCs9ZG9jdW1lbnQuYm9keS5zY3JvbGxMZWZ0O3NjX3B5Kz1kb2N1bWVudC5ib2R5
+LnNjcm9sbFRvcH1lbHNle2lmKGRvY3VtZW50LmRvY3VtZW50RWxlbWVudCYmKGRv
+Y3VtZW50LmRvY3VtZW50RWxlbWVudC5zY3JvbGxMZWZ0fHxkb2N1bWVudC5kb2N1
+bWVudEVsZW1lbnQuc2Nyb2xsVG9wKSl7c2NfcHgrPWRvY3VtZW50LmRvY3VtZW50
+RWxlbWVudC5zY3JvbGxMZWZ0O3NjX3B5Kz1kb2N1bWVudC5kb2N1bWVudEVsZW1l
+bnQuc2Nyb2xsVG9wfX19fX1mdW5jdGlvbiBzY19maW5keShvYmope3ZhciB5PTA7
+d2hpbGUob2JqKXt5Kz1vYmoub2Zmc2V0VG9wO29iaj1vYmoub2Zmc2V0UGFyZW50
+fXJldHVybih5KX1mdW5jdGlvbiBzY19maW5keChvYmope3ZhciB4PTA7d2hpbGUo
+b2JqKXt4Kz1vYmoub2Zmc2V0TGVmdDtvYmo9b2JqLm9mZnNldFBhcmVudH1yZXR1
+cm4oeCl9ZnVuY3Rpb24gc2NfZXhpdHBhZ2UoZSl7YWQ9ZG9jdW1lbnQuZ2V0RWxl
+bWVudHNCeVRhZ05hbWUoImlmcmFtZSIpO2lmKHR5cGVvZiBzY19weD09InVuZGVm
+aW5lZCIpe3JldHVybn1mb3IoaT0wO2k8YWQubGVuZ3RoO2krKyl7dmFyIGFkTGVm
+dD1zY19maW5keChhZFtpXSk7dmFyIGFkVG9wPXNjX2ZpbmR5KGFkW2ldKTt2YXIg
+YWRXPXBhcnNlSW50KGFkTGVmdCkrcGFyc2VJbnQoYWRbaV0ud2lkdGgpKzE1O3Zh
+ciBhZEg9cGFyc2VJbnQoYWRUb3ApK3BhcnNlSW50KGFkW2ldLmhlaWdodCkrMTA7
+dmFyIGluRnJhbWVYPShzY19weD4oYWRMZWZ0LTEwKSYmc2NfcHg8YWRXKTt2YXIg
+aW5GcmFtZVk9KHNjX3B5PihhZFRvcC0xMCkmJnNjX3B5PGFkSCk7aWYoaW5GcmFt
+ZVkmJmluRnJhbWVYKXtpZihhZFtpXS5zcmMubWF0Y2goc2NfZ3N5bl9wYXR0ZXJu
+KSl7c2NfYWRzZW5zZV9jbGljayhhZFtpXSl9fX19fX0=
+
+------------lU2mF85cjuH0DsGDayNSn3--

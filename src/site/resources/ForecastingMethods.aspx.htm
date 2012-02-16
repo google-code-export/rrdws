@@ -1,0 +1,473 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><title>
+	Time-series Forecasting Methods
+</title><meta name="description" content="Easy-to-use Excel plug-in for business and financial forecasting. Advanced and classical algorithms with automatic Best Fit calculation. Advanced Wavelet forecasting. Better results than anything or anyone. "><meta name="keywords" content="Time-Series Forecasting Software, Stock Market Prediction, Sales Forecasting Software, Stock Forecasting, Wavelet, Smoothing, Regression, Time Series, Forecasting"><meta name="robots" content="index,follow"><link href="ForecastingMethods.aspx-Dateien/newip.css" rel="stylesheet" type="text/css">
+    <script src="ForecastingMethods.aspx-Dateien/newip.js" type="text/javascript"></script>
+
+    
+</head>
+<body style="margin: 0pt;">
+    <form name="aspnetForm" method="post" action="ForecastingMethods.aspx" id="aspnetForm" style="border: none; width:850px;">
+<div>
+<input name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKMTY1NDU2MTA1Mg9kFgJmD2QWAgIDD2QWAgIDDw8WAh4EVGV4dAUINC80LzIwMTFkZGRDghEoH+QgMSFSav+3mIzVRn2NSw==" type="hidden">
+</div>
+
+<script type="text/javascript" src="ForecastingMethods.aspx-Dateien/common.txt"></script><script type="text/javascript" src="ForecastingMethods.aspx-Dateien/AjaxMethodsApp_Code.txt"></script>
+    <div>
+        <div style="background-color:Black;border:0;padding:0;margin:0;width:800px;">
+        <a href="http://www.ipredict.it/">
+            <img style="border: 0pt none; padding: 0pt; margin: 0pt;" alt="Time-Series Forecasting Software, Stock Market Prediction, Sales Forecasting Software" title="Time-Series Forecasting Software, Stock Market Prediction, Sales Forecasting Software" src="ForecastingMethods.aspx-Dateien/logo.jpg"></a>
+        </div>
+        <div class="rollover" style="background-color:Black;width:800px;line-height:36px;vertical-align:middle;"> 
+            <a class="rollover" title="Forecasting Software Home" href="http://www.ipredict.it/">Home</a>
+            <a class="rollover" title="Purchase Forecasting Software" href="http://www.ipredict.it/Purchase.aspx">Purchase</a>
+            <a class="rollover" title="IPredict Products" href="http://www.ipredict.it/Products.aspx">Products</a>
+            <a class="rollover" title="Forecasting Resources" href="http://www.ipredict.it/Resources.aspx">Resources</a>
+            <a class="rollover" title="IPredict Support" href="http://www.ipredict.it/Support.aspx">Support</a>
+            <a class="rollover" title="Q-Forecast" href="http://www.ipredict.it/QForecast.aspx">Q-Forecast</a>
+            <a class="rollover" title="Login" href="http://www.ipredict.it/Login.aspx">Login</a>
+            <a class="rollover" title="Blog" href="http://www.ipredict.it/public/blog/">Blog</a>
+            <a class="rollover" title="About IPredict" href="http://www.ipredict.it/About.aspx">About</a>
+        </div>
+                            
+        <br>
+        <div style="margin-left:3px;">
+        
+
+
+    
+<h1 style="text-align: justify">IPredict Time-series Forecasting Methods</h1>
+		<p style="text-align: justify">IPredict offers a wide selection of 
+		time-series forecasting algorithms, regression forecasting, smoothing and curve or model fitting algorithms. Together 
+		with all classical algorithms you will find proprietary and advanced 
+		algorithms with superior performance in statistical forecasting.<br>
+		Take a look at IPredict <a href="http://www.ipredict.it/Benchmarks.aspx">benchmarks</a> 
+		to see the difference in performance of some of these algorithms.<br>
+		To see how these methods are applied to everyday financial forecasting 
+		take a look at our free online <a href="http://www.ipredict.it/OnlineDemo.aspx">
+		stock market prediction</a> or <a href="http://www.ipredict.it/Public/DemoWF.zip">download</a> 
+		the example program that applies Wavelet Forecasting to financial data.</p>
+		<p style="text-align: justify">All proprietary algorithms (14. Holt 
+Winter's Modified Multiple 
+		Seasonalities, 26. Haar Denoising, 27. Daubechies Linear Denoising, 
+28. Daubechies Exponential Denoising, 29. Wavelet Forecasting, 34. 
+Fractal Projection, 35. Active Moving Average)
+		are subject to copyright and all rights are reserved to IPredict.</p>
+		<p style="text-align: justify">The most important feature of IPredict is 
+		the Excel wizard that allows you, without forecasting expertise or statistics 
+		knowledge, to produce a reliable forecast in minutes. The wizard 
+		automates the time-series forecasting tasks, computes the best parameters given the 
+		time-series and allows you to choose visually the best approach for your 
+		problem. The best fit is calculated using the most appropriate technique 
+		by ranking using a user selected <a href="http://www.ipredict.it/ErrorStatistics.aspx">statistical 
+		error</a>.</p>
+		<h1 style="text-align: justify">Classical Algorithms</h1>
+		<h4 style="text-align: justify">1. Simple Moving Average</h4>
+		<p style="text-align: justify">The Simple Moving Average smooth past 
+		data by arithmetically averaging over a specified period and projecting 
+		forward in time. This is normally considered a smoothing algorithm and 
+		has poor forecasting results in most cases.</p>
+		<h4 style="text-align: justify">2. Geometric Moving Average</h4>
+		<p style="text-align: justify">The Geometric Moving Average smooth past 
+		data by geometrically averaging over a specified period and projecting 
+		forward in time. This is normally considered a smoothing algorithm and 
+		has poor forecasting results in most cases.</p>
+		<h4 style="text-align: justify">3. Triangular Moving Average</h4>
+		<p style="text-align: justify">The Triangular Moving Average is a 
+		weighted moving average with weights that form a triangular shape. The 
+		projection technique is the same of the Simple Moving Average. This is 
+		normally considered a smoothing algorithm and has poor forecasting 
+		results in most cases.</p>
+		<h4 style="text-align: justify">4. Parabolic Moving Average</h4>
+		<p style="text-align: justify">The Parabolic Moving Average is a 
+		weighted moving average with weights that form a parabolic shape. The 
+		projection technique is the same of the Simple Moving Average. This is 
+		normally considered a smoothing algorithm and has poor forecasting 
+		results in most cases.</p>
+		<h4 style="text-align: justify">5. Double Moving Average</h4>
+		<p style="text-align: justify">The Double Moving Average applies in 
+		sequence for two times the Simple Moving Average algorithm. This is 
+		normally considered a smoothing algorithm and has poor forecasting 
+		results in most cases.</p>
+<h4 style="text-align: justify">6. Exponential Moving Average</h4>
+		<p style="text-align: justify">The Exponential Moving Average is 
+		summarized by the equation:<br>
+&nbsp;&nbsp;&nbsp;&nbsp; X'<sub>t</sub> = αX<sub>t </sub>
+		+ (1-α)X'<sub>t-1<br>
+		</sub>it is a weighted moving average with weights that decrease 
+		exponentially going backwards in time. This is normally considered a 
+		smoothing algorithm and has poor forecasting results in most cases.</p>
+		<h4 style="text-align: justify">7. Double Exponential Moving Average</h4>
+		<p style="text-align: justify">The Double Exponential Moving Average 
+		applies the Exponential Moving Average twice. This is normally 
+		considered a smoothing algorithm and has poor forecasting results in 
+		most cases.<br>
+		If the equation of the single exponential moving average can be 
+		expressed as in (6):<br>
+&nbsp;&nbsp;&nbsp;&nbsp; X'<sub>t</sub> = αX<sub>t </sub>
+		+ (1-α)X'<sub>t-1<br>
+		</sub>then the equation of the double exponential moving average can be 
+		expressed as:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; X''<sub>t</sub> = αX<sup>'</sup><sub>t </sub>
+		+ (1-α)X''<sub>t-1</sub></p>
+		<h4 style="text-align: justify">8. Holt's Double Exponential</h4>
+		<p style="text-align: justify">Holt's Double Exponential is similar to 
+		the Double Exponential Moving Average. It allows you to specify the two 
+		smoothing constants used in the process. It is useful for data in a 
+		simple linear trend.</p>
+		<h4 style="text-align: justify">9. Triple Exponential Moving Average</h4>
+		<p style="text-align: justify">The Triple Exponential Moving Average 
+		applies three times the Exponential Moving Average. This is normally 
+		considered a smoothing algorithm and has poor forecasting results in 
+		most cases.<br>
+		If the equation of the single exponential moving average can be 
+		expressed as in (6):<br>
+&nbsp;&nbsp;&nbsp;&nbsp; X'<sub>t</sub> = αX<sub>t </sub>
+		+ (1-α)X'<sub>t-1<br>
+		</sub>and the equation of the double exponential moving average can be 
+		expressed as in (7):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; X''<sub>t</sub> = αX<sup>'</sup><sub>t </sub>
+		+ (1-α)X''<sub>t-1<br>
+		</sub>then the equation of the triple exponential moving average can be 
+		expressed as:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; X'''<sub>t</sub> = αX<sup>''</sup><sub>t </sub>
+		+ (1-α)X'''<sub>t-1</sub></p>
+		<h4 style="text-align: justify">10. Holt's Triple Exponential</h4>
+		<p style="text-align: justify">Holt's Triple Exponential is the 
+		classical Holt's forecasting algorithm. It is useful for data in a 
+		simple linear trend.</p>
+		<h4 style="text-align: justify">11. Adaptive Response Rate Exponential 
+		Smoothing</h4>
+		<p style="text-align: justify">The Adaptive Exponential Smoothing 
+		automatically adjusts the smoothing parameters based on the forecast 
+		error. This is normally considered a smoothing algorithm and has poor 
+		forecasting results in most cases.</p>
+<h4 style="text-align: justify">12. Holt Winter's Additive</h4>
+		<p style="text-align: justify">The Holt Winter's Additive method is 
+		applicable when the time series contains a seasonal component. This 
+		method assumes the time series is composed by a linear trend and a 
+		seasonal cycle, it constructs three statistically correlated series 
+		(smoothed, seasonal and trend) and projects forward the identified trend 
+		and seasonality.</p>
+		<h4 style="text-align: justify">13. Holt Winter's Multiplicative</h4>
+		<p style="text-align: justify">Like Holt Winter's Additive this method 
+		can be applied to a seasonal time series. The model assumes that the 
+		components of the time series (smoothed, seasonal and trend) are 
+		multiplied together giving as result a more 'active' time series. </p>
+		<h4 style="text-align: justify">14. Holt Winter's Modified Multiple Seasonalities</h4>
+		<p style="text-align: justify">The Modified Multiple Seasonalities is a 
+		proprietary algorithm based on Holt Winter's algorithm that can take 
+		into consideration multiple seasonalities. This model is especially 
+		suited for financial time series. Two versions of this algorithm are now 
+		available with different computational logic.</p>
+		<h4 style="text-align: justify">15. Additive Decomposition</h4>
+		<p style="text-align: justify">Additive Decomposition computes the 
+		decomposition of the time series into its components, trend, 
+		seasonality, cyclical and error. It projects the identified parts to the 
+		future and sums the resulting projection to form the forecast. The model 
+		is assumed to be additive (that is all parts are summed up to give the 
+		forecast).<br>
+		The model equation is:<br>
+&nbsp;&nbsp;&nbsp;&nbsp; X'<sub>t</sub> = T<sub>t </sub>
+		+ S<sub>t </sub>
+		+ C<sub>t </sub>
+		+ ε<sub>t<br>
+		</sub>where T is the trend, S the seasonality, C the cycle and
+		ε the error.</p>
+		<h4 style="text-align: justify">16. Multiplicative Decomposition</h4>
+		<p style="text-align: justify">Multiplicative Decomposition like 
+		Additive Decomposition computes the decomposition of the time series 
+		into its components, trend, seasonality, cyclical and error and then 
+		projects to the future. The model is assumed to be multiplicative (that 
+		is all parts are multiplied by each other to give the forecast).<br>
+		The model equation is:<br>
+&nbsp;&nbsp;&nbsp;&nbsp; X'<sub>t</sub> = T<sub>t </sub>* S<sub>t </sub>* C<sub>t </sub>
+		* ε<sub>t<br>
+		</sub>where T is the trend, S the seasonality, C the cycle and
+		ε the error.</p>
+		<h4 style="text-align: justify">17. Sparse Series Croston's Exponential</h4>
+		<p style="text-align: justify">This is a very useful algorithm for 
+		sparse time series. The model is equivalent to an Exponential Moving 
+		Average both in quantities and in time.</p>
+		<h1 style="text-align: justify">Curve and Bayesian Model Fitting</h1>
+		<h4 style="text-align: justify">18. Linear Trend / Regression</h4>
+		<p style="text-align: justify">The Linear Trend fits the time series to 
+		a straight line and projecting forward in time.<br>
+		The model equation is:<br>
+&nbsp;&nbsp;&nbsp;&nbsp; X'<sub>t</sub> = m*t + q</p>
+		<h4 style="text-align: justify">19. Linear Trend And Additive 
+		Seasonality</h4>
+		<p style="text-align: justify">The Linear Trend and Additive Seasonality 
+		assume the data is made of a linear trend plus a single additive 
+		seasonality. It then fits the equation to the data using a Bayesian fit 
+		and projects forward in time.<br>
+		The model equation is:<br>
+&nbsp;&nbsp;&nbsp;&nbsp; X'<sub>t</sub> = m*t + A*sin(ωt) 
+		+ q</p>
+		<h4 style="text-align: justify">20. Linear Trend And Multiplicative 
+		Seasonality</h4>
+		<p style="text-align: justify">The Linear Trend and Multiplicative 
+		Seasonality assume the data is made of a linear trend plus a single 
+		multiplicative seasonality. It then fits the equation to the data using 
+		a Bayesian fit and projects forward in time.<br>
+		The model equation is:<br>
+&nbsp;&nbsp;&nbsp;&nbsp; X'<sub>t</sub> = m*t * A*sin(ωt) 
+		* q</p>
+		<h4 style="text-align: justify">21. Linear Trend And Multiple 
+		Seasonalities</h4>
+		<p style="text-align: justify">The Linear Trend and Multiple 
+		Seasonalities assume the data is made of a linear trend plus multiple 
+		additive or multiplicative seasonalities. It then fits the equation to 
+		the data using a Bayesian fit and projects forward in time. It is 
+		especially useful for financial time series.</p>
+		<h4 style="text-align: justify">22. Polynomial</h4>
+		<p style="text-align: justify">The Polynomial algorithm fits a 
+		polynomial equation (up to the desired order) to the data using a 
+		Bayesian fit and projects forward in time. You must be careful not to 
+		over fit the data with a very long polynomial.<br>
+		The model equation is:<br>
+&nbsp;&nbsp;&nbsp;&nbsp; X'<sub>t</sub> = A + B*t + C*t<sup>2</sup> + D*t<sup>3</sup> 
+		+ ...</p>
+		<h4 style="text-align: justify">23. Logarithmic</h4>
+		<p style="text-align: justify">The Logarithmic algorithm fits a 
+		logarithmic equation to the data using a Bayesian fit and projects 
+		forward in time.<br>
+		The model equation is:<br>
+&nbsp;&nbsp;&nbsp;&nbsp; X'<sub>t</sub> = A + B*log(t)</p>
+		<h4 style="text-align: justify">24. Exponential</h4>
+		<p style="text-align: justify">The Exponential algorithm fits an 
+		exponential equation to the data using a Bayesian fit and projects 
+		forward in time.<br>
+		The model equation is:<br>
+&nbsp;&nbsp;&nbsp;&nbsp; X'<sub>t</sub> = A + B*exp(t)</p>
+		<h1 style="text-align: justify">Wavelet Smoothing and Forecasting</h1>
+		<h4 style="text-align: justify">25. Frequency Identification</h4>
+		<p style="text-align: justify">One of the biggest issues when dealing 
+		with algorithms that require seasonality indexes is to compute the 
+		seasonalities. All competitors require you to compute these magic 
+		numbers and even the most advanced packages aren't able to tell this 
+		simple and intuitive figure: the seasonality of a time series. The 
+		Frequency Identification algorithm computes the frequencies that are 
+		inside the input time series.</p>
+		<h4 style="text-align: justify">26. Haar Denoising</h4>
+		<p style="text-align: justify">Removing noise from a time series is 
+		always difficult and current algorithms (averages, exponential averages, 
+		etc...) always introduce a lag in data or change the statistical 
+		properties of the underlying time series. Haar Denoising is able to 
+		remove the noise that is in the time series using the Haar Wavelet 
+		transform and a proprietary algorithm. </p>
+		<h4 style="text-align: justify">27. Daubechies Linear Denoising</h4>
+		<p style="text-align: justify">Like Haar Denoising the Daubechies Linear 
+		Denoising applies a Daubechies Wavelet transform and a proprietary 
+		algorithm to linearly denoise the time series.</p>
+		<h4 style="text-align: justify">28. Daubechies Exponential Denoising</h4>
+		<p style="text-align: justify">The denoising in this case decreases 
+		exponentially with the wavelet power.</p>
+		<h4 style="text-align: justify">29. Wavelet Forecasting</h4>
+		<p>This algorithm uses the Daubechies Wavelet transform to 
+		produce a forecast with a proprietary algorithm.</p><h1 style="text-align: justify">
+		Additional Functions and Algorithms</h1>
+		<h4 style="text-align: justify">30. Random Number Generation</h4>
+		<p style="text-align: justify">Special care must be taken into account 
+		when generating test beds for ideas and models. Usually the stock Rand() 
+		Excel function is not enough. IPredict provides four statistically 
+		independent Uniform Random Number Generators and one Gaussian Generator.</p>
+		<h4 style="text-align: justify">31. Wavelet Transforms</h4>
+		<p style="text-align: justify">This is the base of the Wavelet 
+		forecasting algorithm. The wavelet transform is the base of a lot of 
+		today's algorithms in the field of Digital Signal Processing, Quantum 
+		Mechanics, Image Processing and Speech Recognition among others. The 
+		forward and inverse Daubechies and Haar transforms are included.</p>
+		<h4 style="text-align: justify">32. Fourier Transforms</h4>
+		<p style="text-align: justify">
+            These are the classical Fourier Transforms for forecasting. IPredict includes Sine,
+            Cosine and Fast Fourier
+		Transforms.</p>
+		<h4 style="text-align: justify">33. Hurst Exponent</h4>
+		<p style="text-align: justify">The estimate of the Hurst Exponent is 
+		very important to help understand the properties of a time-series and 
+		how much it looks like a random walk (i.e. how much the time-series is 
+		predictable). Three methods are provided based on Daubechies, Haar and 
+		Rescaled Range algorithms.</p>
+<h1 style="text-align: justify">Advanced Algorithms</h1>
+
+<h4 style="text-align: justify">34. Fractal Projection</h4>
+<p style="text-align: justify">
+The Fractal Projection algorithm represents a new approach to forecasting. 
+This algorithm is able to project to the future a pattern stretching it in times or values as appropriate.
+</p>
+
+<h4 style="text-align: justify">35. Active Moving Average</h4>
+<p style="text-align: justify">
+The Active Moving Average belongs to the class of Exponential Moving Averages but its calculation
+is quadratic in nature and is much quicker than standard Moving
+    Averages in "following" the original signal.
+</p>
+
+
+<h1 style="text-align: justify">Kernel Smoothing</h1>
+
+Kernel smoothing weights every single data point in a time-series with weights coming from a generating function.
+
+<h4 style="text-align: justify">36. Gaussian Kernel Smoothing</h4>
+<p style="text-align: justify">
+The Gaussian Kernel Smoothing is a classical Kernel Smoothing algorithm. 
+    <br>
+The kernel function is the following:<br>
+K(t) = e<sup>-λ * t<sup>2</sup></sup>
+</p>
+
+<h4 style="text-align: justify">37. Hilbert Kernel Smoothing</h4>
+<p style="text-align: justify">
+The Hilbert Kernel Smoothing function is:<br>
+K(t) = -π / t
+</p>
+
+<h4 style="text-align: justify">38. Triangle Kernel Smoothing</h4>
+<p style="text-align: justify">
+The Triangle Kernel Smoothing function is:<br>
+K(T) = 1 - Abs(t) 
+</p>
+
+<h4 style="text-align: justify">39. Epanechnicov Kernel Smoothing</h4>
+<p style="text-align: justify">
+The Epanechnicov Kernel Smoothing function is:<br>
+K(t) = 3/4 * (1 - t<sup>2</sup>)
+</p>
+
+<h4 style="text-align: justify">40. Quartic Kernel Smoothing</h4>
+<p style="text-align: justify">
+The Quartic Kernel Smoothing function is:<br>
+K(t) = 15/16 * (1 - t<sup>2</sup>)<sup>2</sup>
+</p>
+
+<h4 style="text-align: justify">41. Triweight Kernel Smoothing</h4>
+<p style="text-align: justify">
+The Triweight Kernel function is:<br>
+K(t) = 35/32 * (1 - t<sup>2</sup>)<sup>3</sup>
+</p>
+
+<h4 style="text-align: justify">42. Cosine Kernel Smoothing</h4>
+<p style="text-align: justify">
+The Cosine Kernel function is:<br>
+K(t) = -π/4 * Cos(π/2 * t)
+</p>
+
+
+<h4 style="text-align: justify">43. Savitsky-Golay Smoothing</h4>
+<p style="text-align: justify">
+This algorithm is a smoothing filter that essentially applies a 
+polynomial regression of a certain degree to a time-series. 
+The advantage of the Savitsky-Golay filter is that it tends to preserve 
+certain features of the time-series like local minima and maxima.
+</p>
+          
+
+<h4>44. Spline Smoothing</h4>
+<p>
+Spline smoothing consists in computing the spline that approximates the 
+input data and projecting it to internal or external points. It is 
+useful when compressing or expanding data before a projection is done.
+</p>
+
+
+<br>
+
+
+
+
+
+    
+
+        </div>
+        <br>
+        <br>
+        <table style="border: 0pt none; width: 800px;">
+        <tbody>
+            <tr>
+                <td colspan="3">
+                    <h1>
+                        <b>Read More Articles on Time-series Forecasting</b>&nbsp;</h1>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img style="vertical-align: middle; border: 0pt none; height: 5px; width: 5px; margin-left: 5px;" src="ForecastingMethods.aspx-Dateien/arrow-sm.jpg" alt="">
+                    <a href="http://www.ipredict.it/TimeSeriesForecasting.aspx">Time Series Forecasting</a>.<br>
+                    <img style="vertical-align: middle; border: 0pt none; height: 5px; width: 5px; margin-left: 5px;" src="ForecastingMethods.aspx-Dateien/arrow-sm.jpg" alt="">
+                    <a href="http://www.ipredict.it/ForecastingMethods.aspx">Forecasting Methods</a>.<br>
+                    <img style="vertical-align: middle; border: 0pt none; height: 5px; width: 5px; margin-left: 5px;" src="ForecastingMethods.aspx-Dateien/arrow-sm.jpg" alt="">
+                    <a href="http://www.ipredict.it/Forecasting.aspx">Forecasting Concepts</a>.<br>
+                    <img style="vertical-align: middle; border: 0pt none; height: 5px; width: 5px; margin-left: 5px;" src="ForecastingMethods.aspx-Dateien/arrow-sm.jpg" alt="">
+                    <a href="http://www.ipredict.it/ErrorStatistics.aspx">Error Statistics</a>.<br>
+                    <img style="vertical-align: middle; border: 0pt none; height: 5px; width: 5px; margin-left: 5px;" src="ForecastingMethods.aspx-Dateien/arrow-sm.jpg" alt="">
+                    <a href="http://www.ipredict.it/Methods/FastFourierTransform.aspx">Fast Fourier Transform</a>.<br>
+                    <img style="vertical-align: middle; border: 0pt none; height: 5px; width: 5px; margin-left: 5px;" src="ForecastingMethods.aspx-Dateien/arrow-sm.jpg" alt="">
+                    <a href="http://www.ipredict.it/Methods/KernelSmoothing.aspx">Kernel Smoothing</a>.<br>
+                    <img style="vertical-align: middle; border: 0pt none; height: 5px; width: 5px; margin-left: 5px;" src="ForecastingMethods.aspx-Dateien/arrow-sm.jpg" alt="">
+                    <a href="http://www.ipredict.it/Methods/SavitskyGolay.aspx">Savitsky-Golay Smoothing</a>.<br>
+                    <img style="vertical-align: middle; border: 0pt none; height: 5px; width: 5px; margin-left: 5px;" src="ForecastingMethods.aspx-Dateien/arrow-sm.jpg" alt="">
+                    <a href="http://www.ipredict.it/Methods/YahooLoader.aspx">Downloading Financial Data from Yahoo</a>.<br>
+                    <img style="vertical-align: middle; border: 0pt none; height: 5px; width: 5px; margin-left: 5px;" src="ForecastingMethods.aspx-Dateien/arrow-sm.jpg" alt="">
+                    <a href="http://www.ipredict.it/Methods/DigitalSignalProcessing.aspx">Digital Signal Processing</a>.<br>
+                    <img style="vertical-align: middle; border: 0pt none; height: 5px; width: 5px; margin-left: 5px;" src="ForecastingMethods.aspx-Dateien/arrow-sm.jpg" alt="">
+                    <a href="http://www.ipredict.it/Methods/CurveAnalysis.aspx">Curve Analysis</a>.<br>
+                    <img style="vertical-align: middle; border: 0pt none; height: 5px; width: 5px; margin-left: 5px;" src="ForecastingMethods.aspx-Dateien/arrow-sm.jpg" alt="">
+                    <a href="http://www.ipredict.it/Methods/MarkowitzOptimalPortfolio.aspx">Markowitz Optimal Portfolio</a>.<br>                       
+                </td>
+                <td>
+                </td>
+                <td>
+                    <img style="vertical-align: middle; border: 0pt none; height: 5px; width: 5px; margin-left: 5px;" src="ForecastingMethods.aspx-Dateien/arrow-sm.jpg" alt="">
+                    <a href="http://www.ipredict.it/Benchmarks.aspx">Holt Winter's, Series Decomposition and Wavelet Benchmarks</a>.<br>
+                    <img style="vertical-align: middle; border: 0pt none; height: 5px; width: 5px; margin-left: 5px;" src="ForecastingMethods.aspx-Dateien/arrow-sm.jpg" alt="">
+                    <a href="http://www.ipredict.it/UseOfMAInForecasting.aspx">Use of the Moving Average in Time-series Forecasting</a>.<br>
+                    <img style="vertical-align: middle; border: 0pt none; height: 5px; width: 5px; margin-left: 5px;" src="ForecastingMethods.aspx-Dateien/arrow-sm.jpg" alt="">
+                    <a href="http://www.ipredict.it/Denoising.aspx">Denoising Techniques</a>.<br>
+                    <img style="vertical-align: middle; border: 0pt none; height: 5px; width: 5px; margin-left: 5px;" src="ForecastingMethods.aspx-Dateien/arrow-sm.jpg" alt="">
+                    <a href="http://www.ipredict.it/Performance.aspx">Computational Performance</a>.<br>
+                    <img style="vertical-align: middle; border: 0pt none; height: 5px; width: 5px; margin-left: 5px;" src="ForecastingMethods.aspx-Dateien/arrow-sm.jpg" alt="">
+                    <a href="http://www.ipredict.it/Methods/MovingAverage.aspx">Moving Averages</a>.<br>
+                    <img style="vertical-align: middle; border: 0pt none; height: 5px; width: 5px; margin-left: 5px;" src="ForecastingMethods.aspx-Dateien/arrow-sm.jpg" alt="">
+                    <a href="http://www.ipredict.it/Methods/ActiveMovingAverage.aspx">Active Moving Average</a>.<br>
+                    <img style="vertical-align: middle; border: 0pt none; height: 5px; width: 5px; margin-left: 5px;" src="ForecastingMethods.aspx-Dateien/arrow-sm.jpg" alt="">
+                    <a href="http://www.ipredict.it/Methods/FractalProjection.aspx">Fractal Projection</a>.<br>
+                    <img style="vertical-align: middle; border: 0pt none; height: 5px; width: 5px; margin-left: 5px;" src="ForecastingMethods.aspx-Dateien/arrow-sm.jpg" alt="">
+                    <a href="http://www.ipredict.it/Methods/Regression.aspx">Multiple Regression</a>.<br>
+                    <img style="vertical-align: middle; border: 0pt none; height: 5px; width: 5px; margin-left: 5px;" src="ForecastingMethods.aspx-Dateien/arrow-sm.jpg" alt="">
+                    <a href="http://www.ipredict.it/Methods/PrincipalComponentAnalysis.aspx">Principal Component Analysis</a>.<br>
+                    <img style="vertical-align: middle; border: 0pt none; height: 5px; width: 5px; margin-left: 5px;" src="ForecastingMethods.aspx-Dateien/arrow-sm.jpg" alt="">
+                    <a href="http://www.ipredict.it/Methods/OptionsBlackScholesMerton.aspx">Options Pricing with Black-Scholes</a>.<br>                       
+                    <img style="vertical-align: middle; border: 0pt none; height: 5px; width: 5px; margin-left: 5px;" src="ForecastingMethods.aspx-Dateien/arrow-sm.jpg" alt="">
+                    <a href="http://www.ipredict.it/Methods/Preprocessing.aspx">Time-series preprocessing</a>.<br>                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+        <div class="footer">
+            <hr>
+            <span style="font-weight: 400">Copyright © 2004, 2010 IPredict It, All rights reserved.<br>
+                Send mail to <a href="mailto:webmaster@ipredict.it"><span style="color: #2f69cd">webmaster@ipredict.it</span></a>
+                with questions or comments about this web site.<br>
+                Last modified:
+                <span id="ctl00_lbDate">4/4/2011</span>
+            </span>
+<!-- xx -->
+
+        </div>
+    </div>
+    </form>
+    
+    <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="ForecastingMethods.aspx-Dateien/ga.js" type="text/javascript"></script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("UA-138900-1");
+        pageTracker._trackPageview();
+    } catch (err) { }</script>
+
+
+</body></html>

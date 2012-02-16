@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<web-app>
+	<description>RRD4J @GAE/J2EE</description>
+	<display-name>
+		${pom.name}: ${pom.groupId}- ${pom.artifactId}- ${pom.version}-
+		${buildNumber}
+	</display-name>
+	<context-param>
+		<param-name>buildNumber</param-name>
+		<param-value>${buildNumber}</param-value>
+	</context-param>
+<filter>
+  <filter-name>ETagFilter</filter-name>
+  <filter-class>cc.co.llabor.http.ETagFilter</filter-class>
+  <init-param>
+    <param-name>exclude</param-name>
+    <param-value>/main.htm</param-value>
+  </init-param>
+</filter> 
+<!-- 
+<filter-mapping>
+  <filter-name>ETagFilter</filter-name>
+  <url-pattern>*</url-pattern>
+</filter-mapping> 
+ -->
+	<servlet>
+		<servlet-name>StartStopServlet</servlet-name>
+		<servlet-class>cc.co.llabor.system.StartStopServlet</servlet-class> 
+		<load-on-startup>1</load-on-startup>
+	</servlet>	
+	<servlet>
+		<servlet-name>info</servlet-name>
+		<jsp-file>/info.jsp</jsp-file>
+	</servlet>
+	<servlet>
+		<servlet-name>L</servlet-name>
+		<jsp-file>/T/L.jsp</jsp-file>
+	</servlet>
+	<servlet>
+		<servlet-name>speed.gif</servlet-name>
+		<jsp-file>/speed.jsp</jsp-file>
+	</servlet> 
+	<servlet>
+		<servlet-name>speed.svg</servlet-name>
+		<jsp-file>/svg.jsp</jsp-file>
+	</servlet> 
+	<!-- Servlets -->
+	<servlet>
+		<servlet-name>x</servlet-name>
+		<servlet-class>ws.rrd.server.XServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>l</servlet-name>
+		<servlet-class>ws.rrd.server.LServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>F</servlet-name>
+		<servlet-class>ws.rrd.server.FServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>S</servlet-name>
+		<servlet-class>ws.rrd.server.SServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>C</servlet-name>
+		<servlet-class>ws.rrd.server.CSServlet</servlet-class>
+	</servlet>
+	<!-- 
+		<servlet>
+		<servlet-name>greetServlet</servlet-name>
+		<servlet-class>ws.rrd.server.GreetingServiceImpl</servlet-class>
+		</servlet>
+	-->
+	<servlet>
+		<servlet-name>mailhandler</servlet-name>
+		<servlet-class>
+			cc.co.llabor.mail.MailHandlerServlet
+		</servlet-class>
+	</servlet>
+
+
+	<servlet>
+		<servlet-name>_ah_sessioncleanup</servlet-name>
+
+		<servlet-class>
+			com.google.apphosting.utils.servlet.SessionCleanupServlet
+		</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>annotations</servlet-name>
+		<jsp-file>/api.jsp</jsp-file>
+	</servlet>
+
+    <servlet> 
+     <servlet-name>ShellServlet</servlet-name> 
+     <servlet-class>com.jsos.shell.ShellServlet</servlet-class> 
+    </servlet>
+<servlet-mapping> 
+    <servlet-name>ShellServlet</servlet-name> 
+    <url-pattern>/servlet/ShellServlet</url-pattern> 
+   </servlet-mapping>	
+	
+<!--
+        create: "/annoCREATE",
+        read: "/annoREAD/:id",
+        update: "/annoUPDATE/:id",
+        destroy: "/annoDESTROY/:id",
+        search: "/annoSEARCH"
+--> 
+ <servlet-mapping>
+        <servlet-name>annotations</servlet-name>
+        <url-pattern>/annoCREATE/*</url-pattern>
+    </servlet-mapping>
+ <servlet-mapping>
+        <servlet-name>annotations</servlet-name>
+        <url-pattern>/annoREAD/*</url-pattern>
+    </servlet-mapping>
+ <servlet-mapping>
+        <servlet-name>annotations</servlet-name>
+        <url-pattern>/annoUPDATE/*</url-pattern>
+    </servlet-mapping>
+ <servlet-mapping>
+        <servlet-name>annotations</servlet-name>
+        <url-pattern>/annoDESTROY/*</url-pattern>
+    </servlet-mapping>
+
+ <servlet-mapping>
+        <servlet-name>annotations</servlet-name>
+        <url-pattern>/annoSEARCH/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>annotations</servlet-name>
+        <url-pattern>/Al/*</url-pattern>
+    </servlet-mapping>	
+
+	<servlet-mapping>
+		<servlet-name>speed.svg</servlet-name>
+		<url-pattern>/speed.svg</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>StartStopServlet</servlet-name>
+		<url-pattern>/sss</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>speed.gif</servlet-name>
+		<url-pattern>/speed.gif</url-pattern>
+	</servlet-mapping>
+	
+  <servlet-mapping>
+    <servlet-name>_ah_sessioncleanup</servlet-name>
+    <url-pattern>/_ah/sessioncleanup</url-pattern>
+  </servlet-mapping> 
+	<!-- 
+		<security-constraint> 
+		<web-resource-collection> 
+		<web-resource-name>session-cleanup</web-resource-name> 
+		<url-pattern>/_ah/sessioncleanup</url-pattern> 
+		</web-resource-collection> 
+		<auth-constraint> 
+		<role-name>admin</role-name> 
+		</auth-constraint> 
+		</security-constraint>
+	-->
+	<servlet-mapping>
+		<servlet-name>mailhandler</servlet-name>
+		<url-pattern>/_ah/mail/*</url-pattern>
+	</servlet-mapping>
+	<!-- 
+		<security-constraint>
+		<web-resource-collection>
+		<url-pattern>/_ah/mail/*</url-pattern>
+		</web-resource-collection>
+		auth-constraint>
+		<role-name>admin</role-name>
+		</auth-constraint
+		</security-constraint>
+	-->
+
+	<!-- 
+		<servlet-mapping>
+		<servlet-name>greetServlet</servlet-name>
+		<url-pattern>/rrd/greet</url-pattern>
+		
+		</servlet-mapping>
+	-->
+
+	<servlet-mapping>
+		<servlet-name>info</servlet-name>
+		<url-pattern>/info.htm</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>l</servlet-name>
+		<url-pattern>/l/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>x</servlet-name>
+		<url-pattern>/x/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>S</servlet-name>
+		<url-pattern>/S/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>C</servlet-name>
+		<url-pattern>/C/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>F</servlet-name>
+		<url-pattern>/F/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>L</servlet-name>
+		<url-pattern>/T</url-pattern>
+	</servlet-mapping>
+	<!-- Default page to serve -->
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+<!-- http://mojo.codehaus.org/jspc-maven-plugin/usage.html -->
+<!-- [INSERT FRAGMENT HERE] -->
+
+<!--[disabled FRAGMENT HERE]-->
+
+</web-app>

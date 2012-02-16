@@ -1,0 +1,1 @@
+mvn -o -e tomcat:redeploy -Dcccache -DLOCAL8080 -Dmaven.test.skip=true
