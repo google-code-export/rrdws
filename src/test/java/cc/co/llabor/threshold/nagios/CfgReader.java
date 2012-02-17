@@ -19,6 +19,7 @@ import cc.co.llabor.cache.Manager;
  * Creation:  16.02.2012::13:16:21<br> 
  */
 public abstract class CfgReader implements Cloneable {
+	private static final String EOL = "\n";
 	CfgReader theNext =null;
 	private static int idCounter = 0;
 	private int id = idCounter ++;	
@@ -72,17 +73,18 @@ public abstract class CfgReader implements Cloneable {
 
 
 	private void readFromCfg() throws IOException { 
-		for (String line = readln(); line != null; line = readln()) {
+		for (StringWithComments line = readln(); line.getLine() != null; line = readln()) {
 			// define XXX{
-			if (line.startsWith("define ")) { // accumulate props for one
+			if (line.getLine().startsWith("define ")) { // accumulate props for one
 											  // section... 
 				// TODO assert line has a CfgName after define like  services.cfg @define service{@				 
 				while (!(line = readln()).equals("}")){
-					String key_val []= line.replace(" ", "\t").replace("\t\t", "\t").replace("\t\t", "\t").replace("\t\t", "\t").replace("\t\t", "\t").replace("\t\t", "\t").replace("\t\t", "\t").replace("\t\t", "\t").replace("\t", ";").split(";");
+					String key_val []= line.getLine().replace(" ", "\t").replace("\t\t", "\t").replace("\t\t", "\t").replace("\t\t", "\t").replace("\t\t", "\t").replace("\t\t", "\t").replace("\t\t", "\t").replace("\t\t", "\t").replace("\t", ";").split(";");
 					String keyTmp = key_val [0];
-					String valTmp= key_val [1];
-					Properties  theP = this.toProperties();
-					theP.put(keyTmp, valTmp);
+					String valTmp= line.getLine().substring(keyTmp.length()).trim();
+					CommentedProperties  theP = this.toProperties();
+					String commentTmp = line.getComments();
+					theP.setProperty(keyTmp, valTmp, commentTmp);
 					this.flush(theP);
 				}
 				// here try to read the rest..
@@ -104,9 +106,9 @@ public abstract class CfgReader implements Cloneable {
 
 	 
 	
-	private Properties toProperties() { 
-		Properties retval =  (Properties) this.getCache().get(getName());
-		retval = retval==null?new Properties():retval;
+	private CommentedProperties toProperties() { 
+		CommentedProperties retval =  (CommentedProperties) this.getCache().get(getName());
+		retval = retval==null?new CommentedProperties():retval;
 		return retval;
 	}
 
@@ -134,21 +136,26 @@ public abstract class CfgReader implements Cloneable {
 	 * @return
 	 * @throws IOException
 	 */
-	private String readln() throws IOException {
+	private StringWithComments readln() throws IOException {
 		String retval = inBuf.readLine();
+		
 		linecount++;
+		String skipped = "";
 		try{
 			retval = retval.trim();
 			// #
 			while (retval.startsWith("#")||"".equals( retval) ){
+				skipped += retval;
+				skipped += EOL;
 				retval = inBuf.readLine();
 				retval = retval.trim();
+				
 			}
 		}catch(NullPointerException e){
 			//e.printStackTrace();
 		}
-		//System.out.println(retval);
-		return retval;
+		//System.out.println(skipped);
+		return new StringWithComments(retval, skipped);
 	}
 
 
