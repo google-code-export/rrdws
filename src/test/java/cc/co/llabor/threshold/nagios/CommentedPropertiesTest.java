@@ -1,20 +1,19 @@
 package cc.co.llabor.threshold.nagios;
 
-
-import java.io.BufferedReader;
+ 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.InputStream; 
 import java.io.OutputStream;
 import java.util.Properties;
 
 import junit.framework.TestCase;
-
-import org.apache.axis.utils.ByteArray;
-import org.apache.axis.utils.ByteArrayOutputStream;
+  
 import org.junit.After;
 import org.junit.Before;
+
+import cc.co.llabor.props.CommentedProperties;
 
 /** 
  * <b>Description:TODO</b>

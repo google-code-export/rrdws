@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader; 
 import java.util.Properties;
+ 
 
 import net.sf.jsr107cache.Cache; 
 import cc.co.llabor.cache.Manager;
+import cc.co.llabor.props.CommentedProperties;
 
 /** 
  * <b>Description:TODO</b>
@@ -94,7 +96,7 @@ public abstract class CfgReader implements Cloneable {
 		}  
 	}
 
-	public synchronized void flush(Properties theP) {
+	public synchronized void flush(CommentedProperties  theP) {
 		this.getCache().put(this.getName(), theP);
 	}
 
@@ -107,7 +109,8 @@ public abstract class CfgReader implements Cloneable {
 	 
 	
 	private CommentedProperties toProperties() { 
-		CommentedProperties retval =  (CommentedProperties) this.getCache().get(getName());
+		Object object = this.getCache().get(getName());
+		CommentedProperties retval =  (CommentedProperties) object;
 		retval = retval==null?new CommentedProperties():retval;
 		return retval;
 	}
