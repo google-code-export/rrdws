@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader; 
+import java.util.Hashtable;
+import java.util.LinkedList;
 import java.util.Properties;
  
 
@@ -20,142 +22,114 @@ import cc.co.llabor.props.CommentedProperties;
  * 
  * Creation:  16.02.2012::13:16:21<br> 
  */
-public abstract class CfgReader implements Cloneable {
+public abstract class CfgReader extends LinkedList<CfgReader> {
 	private static final String EOL = "\n";
 	CfgReader theNext =null;
-	private static int idCounter = 0;
-	private int id = idCounter ++;	
-	private BufferedReader inBuf; 
-	abstract String getCfgName(); 
+
 	
-	public String get(String key) {
-		return get(key, 0);
+
+	
+	private static final String STD_ENCODING = "UTF-8";
+ 
+
+
+
+
+	static LinkedList<Cfg> readFromCfg(Cfg cfgPar) throws IOException { 
+		return readFromCfg(cfgPar.getCfgName());
 	}
+	static LinkedList<Cfg> readFromCfg(String cfgName ) throws IOException { 
+		
+		LinkedList<Cfg> retval=new LinkedList<Cfg>();
+	
+		InputStream in = Cfg.class.getClassLoader().getResourceAsStream("nagios/"+cfgName  );
+		BufferedReader inBuf = new BufferedReader(new InputStreamReader(in, STD_ENCODING)   );
+	
+		for (StringWithComments line = readln(inBuf); line  != null; line = readln(inBuf)) {
+			// define XXX{
+			if (line.getLine().startsWith("define ")) { // accumulate props for one
+				String sTitle = line.getComments();
+				Cfg e = new GenCfg(cfgName);
+				CommentedProperties  theP = e.isInited()?e.toProperties():new CommentedProperties(sTitle);
+				
+ 							  // section... 
+				// TODO assert line has a CfgName after define like  services.cfg @define service{@				 
+				while (((line = readln(inBuf)) !=null)){
+					if ("}".equals(line.getLine())){
+						break;
+					}else{
+						//System.out.println(line.getLine());
+					}
+					//(!"}".equals(line = readln(inBuf)) )&& 
+					String lTmp = line.getLine();
+					String key_val []= lTmp.replace(" ", "\t").replace("\t\t", "\t").replace("\t\t", "\t").replace("\t\t", "\t").replace("\t\t", "\t").replace("\t\t", "\t").replace("\t\t", "\t").replace("\t\t", "\t").replace("\t", ";").split(";");
+					String keyTmp = key_val [0];
+					String valTmp= line.getLine().substring(keyTmp.length()).trim();
+					String commentTmp = line.getComments();
+					commentTmp = "}".equals( commentTmp)?"":commentTmp;
+					theP.setProperty(keyTmp, valTmp, commentTmp);
+					
+				}
+				e.flush(theP);
+				retval.add(e); 
+			} 
+		}  
+		 
+		return retval;
+	}
+
+	//final static Hashtable<String,CfgChain> cfgRepo = new Hashtable<String, CfgChain>();
+
 	/**
 	 * search the key in the sub-Cfg on position == index
 	 * @author vipup
 	 * @param key
 	 * @param index
+	 * @param cfgPar 
 	 * @return
 	 * @throws NullPointerException
 	 */
-	public String get(String key, int index) { 
-		String retval = null;  
-		if (index == 0){
-			retval = this.toProperties().getProperty(key); 
-		}else{
-			retval = this.theNext.get(key, index-1);
-		}
-		return retval;
-	}
-
-	{
-		init();
-	}
-	private void init(){ //init only once
-		String cfgName = getCfgName(); 
- 		try {
- 			InputStream in = this.getClass().getClassLoader().getResourceAsStream("nagios/"+cfgName);
- 			inBuf = new BufferedReader(new InputStreamReader(in)  );
-			readFromCfg( );
-			inBuf.close();
+	public String get(String key, int index, Cfg cfgPar) {
+		LinkedList<Cfg> cfgTmp = null;
+		try {
+			cfgTmp = readFromCfg( cfgPar);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-	}
-
-	private Cache getCache() {
-		String cacheName =CfgReader.class.getName();
-		Cache cache = Manager.getCache(cacheName  );
-		return cache;
-	}
-
-
-
-	private void readFromCfg() throws IOException { 
-		for (StringWithComments line = readln(); line.getLine() != null; line = readln()) {
-			// define XXX{
-			if (line.getLine().startsWith("define ")) { // accumulate props for one
-											  // section... 
-				// TODO assert line has a CfgName after define like  services.cfg @define service{@				 
-				while (!(line = readln()).equals("}")){
-					String key_val []= line.getLine().replace(" ", "\t").replace("\t\t", "\t").replace("\t\t", "\t").replace("\t\t", "\t").replace("\t\t", "\t").replace("\t\t", "\t").replace("\t\t", "\t").replace("\t\t", "\t").replace("\t", ";").split(";");
-					String keyTmp = key_val [0];
-					String valTmp= line.getLine().substring(keyTmp.length()).trim();
-					CommentedProperties  theP = this.toProperties();
-					String commentTmp = line.getComments();
-					theP.setProperty(keyTmp, valTmp, commentTmp);
-					this.flush(theP);
-				}
-				// here try to read the rest..
-				this.theNext = getClone();
-				this.theNext .readFromCfg();
-			} 
-		}  
-	}
-
-	public synchronized void flush(CommentedProperties  theP) {
-		this.getCache().put(this.getName(), theP);
-	}
-
-	public String getName() {
-		String string = this.getCfgName()+"{" +this.id+"}.properties";
-		//System.out.println(string);
-		return string;
-	}
-
-	 
-	
-	private CommentedProperties toProperties() { 
-		Object object = this.getCache().get(getName());
-		CommentedProperties retval =  (CommentedProperties) object;
-		retval = retval==null?new CommentedProperties():retval;
+		String retval = null;   
+		//retval = cfgRepo.get(  cfgPar.getCfgName() ).get( index ).get(key);
+		retval = cfgTmp.get( index ).get(key);
 		return retval;
-	}
-
-	private CfgReader getClone() {
-		CfgReader  retval = null;
-		try {
-			retval =  (CfgReader) this.clone();
-			this.theNext =retval ; 
-			retval.theNext = null;
-			idCounter ++;
-			retval.id = this.id+1;
-		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return retval;
-	}
-
-
-	int linecount = -1;
+	} 
 	
 	/**
 	 * return trimmed, uncommented, non-empty line of CFG-File
 	 * @author vipup
+	 * @param inBuf 
 	 * @return
 	 * @throws IOException
 	 */
-	private StringWithComments readln() throws IOException {
+	private static StringWithComments readln(BufferedReader inBuf) throws IOException {
 		String retval = inBuf.readLine();
-		
-		linecount++;
+
 		String skipped = "";
+		String prefix = "";
 		try{
 			retval = retval.trim();
 			// #
 			while (retval.startsWith("#")||"".equals( retval) ){
+				skipped += prefix ;
 				skipped += retval;
-				skipped += EOL;
+				prefix  = EOL;
 				retval = inBuf.readLine();
 				retval = retval.trim();
 				
 			}
 		}catch(NullPointerException e){
 			//e.printStackTrace();
+			//throw new IOException("EOF at line "+linecount);
+			return null;
 		}
 		//System.out.println(skipped);
 		return new StringWithComments(retval, skipped);
