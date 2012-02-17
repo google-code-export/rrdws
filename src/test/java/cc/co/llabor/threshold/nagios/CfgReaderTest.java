@@ -33,9 +33,12 @@ public class CfgReaderTest  extends TestCase {
 		//assertEquals(c.get("contact_name"), "nagiosadmin");
 		//name    generic-service  
 		assertEquals(c.get(0).get("name"), "generic-service");
+		assertEquals(c.get(0).toProperties().keySet().size() ,13);
 		//assertEquals(c.get("check_command"), "check_http");
 		assertEquals(c.get(1).get("check_command" ), "check_http");
+		assertEquals(c.get(1).toProperties().keySet().size(), 13);
 		assertEquals(c.get(2).get("check_command" ), "check_ping!100.0,20%!500.0,60%");
+		assertEquals(c.get(2).toProperties().keySet().size(), 13 );
 	}
 	
 }
