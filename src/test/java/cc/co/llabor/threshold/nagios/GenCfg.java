@@ -6,12 +6,21 @@ package cc.co.llabor.threshold.nagios;
  * <b>Copyright:</b>     Copyright (c) 2006-2008 Monster AG <br>
  * <b>Company:</b>       Monster AG  <br>
  * 
- * Creation:  16.02.2012::14:08:11<br> 
+ * Creation:  17.02.2012::20:23:21<br> 
  */
-public class ServicesCfg extends Cfg{	 
-	String getCfgName() { 
-		return "services.cfg"; 
+public class GenCfg extends Cfg {
+
+	private String cfgName;
+
+	public GenCfg(String cfgName) {
+		this.cfgName = cfgName;
 	}
+
+	@Override
+	String getCfgName() { 
+			return cfgName; 
+	}
+
 }
 
 

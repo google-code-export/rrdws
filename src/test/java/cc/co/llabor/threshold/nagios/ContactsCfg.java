@@ -8,7 +8,7 @@ package cc.co.llabor.threshold.nagios;
  * 
  * Creation:  16.02.2012::14:08:11<br> 
  */
-public class ContactsCfg extends CfgReader{	 
+public class ContactsCfg extends Cfg{	 
 	String getCfgName() { 
 		return "contacts.cfg"; 
 	}
