@@ -22,11 +22,13 @@ import cc.co.llabor.props.CommentedProperties;
 public abstract class Cfg implements Cloneable{
  
 	abstract String getCfgName(); 
-	private static int idCounter = 0;
-	private int id = idCounter ++;
+	 
+	private int id = -1;
 	private boolean inited = false;		
 	public String getName() {
-		String string = this.getCfgName()+"{" +this.id+"}.properties";
+		Cache cache = this.getCache();
+		this.id = this.id == -1? cache.keySet().size():this.id;
+		String string =this.id+".properties";
 		//System.out.println(string);
 		return string;
 	}
@@ -34,18 +36,24 @@ public abstract class Cfg implements Cloneable{
 	public synchronized void flush(CommentedProperties  theP) {
 		String name = this.getName();
 		Cache cache = this.getCache();
+		System.out.println(cache.keySet());
+		Object oldTmp = cache.get(name);
+		if (oldTmp!=null && oldTmp .equals(theP)) return; // nothing to store
+		//TODO backup prev. version
 		Object put = cache.put(name, theP);
 		this.inited = put !=null;
 	}
 	public Cfg makeEmptyClone() throws CloneNotSupportedException {
 		Cfg retval = (Cfg) this.clone();
-		retval .id = idCounter++;
+		Cache cache = this.getCache();
+		System.out.println(cache.keySet());
+		retval .id =cache.keySet().size()+1;
 		return retval ;
 	}
 
 	private Cache getCache() {
-		String cacheName =CfgReader.class.getName();
-		Cache cache = Manager.getCache(cacheName  );
+		String cacheName =CfgReader.class.getName()+"/"+this.getCfgName();
+		Cache cache = Manager.getCache(cacheName );
 		return cache;
 	}
 	
