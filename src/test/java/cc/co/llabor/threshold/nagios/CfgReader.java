@@ -49,7 +49,9 @@ public abstract class CfgReader extends LinkedList<CfgReader> {
 			// define XXX{
 			if (line.getLine().startsWith("define ")) { // accumulate props for one
 				String sTitle = line.getComments();
-				Cfg e = new GenCfg(cfgName);
+				int beginIndex ="define ".length();
+				String sClass = line.getLine().substring(beginIndex ) .replace("{", "").replace(" ", "");
+				Cfg e = new GenCfg(sClass );
 				CommentedProperties  theP = e.isInited()?e.toProperties():new CommentedProperties(sTitle);
 				
  							  // section... 
@@ -58,7 +60,7 @@ public abstract class CfgReader extends LinkedList<CfgReader> {
 					if ("}".equals(line.getLine())){
 						break;
 					}else{
-						//System.out.println(line.getLine());
+						//System.out.println(line.getLine());						
 					}
 					//(!"}".equals(line = readln(inBuf)) )&& 
 					String lTmp = line.getLine();
@@ -132,6 +134,16 @@ public abstract class CfgReader extends LinkedList<CfgReader> {
 			return null;
 		}
 		//System.out.println(skipped);
+		// http://nagios.sourceforge.net/docs/3_0/objectdefinitions.html#contactgroup
+		// ....
+		// 3.Characters that appear after a semicolon (;) in configuration lines are treated as comments and are not processed
+		if (retval.indexOf(";")>=0){
+			int beginIndex = retval.indexOf(";");
+			skipped +=prefix;
+			skipped +="# "+ retval.substring(beginIndex+1);
+			retval = retval.substring(0,beginIndex);
+		}
+		
 		return new StringWithComments(retval, skipped);
 	}
 
