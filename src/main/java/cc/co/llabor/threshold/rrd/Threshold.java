@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Properties;
  
 /** 
- * <b>Description:TODO</b>
+ * <b>refactored from http://cricket.sourceforge.net/support/doc/monitor-thresholds.html </b>
  * @author      vipup<br>
  * <br>
  * <b>Copyright:</b>     Copyright (c) 2006-2008 Monster AG <br>

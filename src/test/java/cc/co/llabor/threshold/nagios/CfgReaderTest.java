@@ -82,7 +82,7 @@ public class CfgReaderTest  extends TestCase {
 		LinkedList<Cfg> c = CfgReader.readFromCfg("contactgroup.cfg") ;//c = new ServicesCfg();
 	 	//alias			Novell Administrators
 		assertEquals(c.get(0).get("alias"), "Novell Administrators");
-		assertEquals(c.get(0).toProperties().keySet().size() ,8); 
+		assertEquals(c.get(0).toProperties().keySet().size() ,3); 
 	}		
 }
 

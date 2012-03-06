@@ -348,12 +348,15 @@ public class LServlet extends HttpServlet {
 			
 			if ( isCSS(contextTypeStr)  )
 			{
+				setupResponseProperty( resp,  xRespTmp);
 				outTmp = performCSS(resp, contextTypeStr, urlStr, xRespTmp, entity, contextEncStr);
 				return;
 			}else if ( isBinary(contextTypeStr) ){
+				setupResponseProperty( resp,  xRespTmp);
 				outTmp = performBinary(resp, contextTypeStr, urlStr, xRespTmp, entity, contextEncStr);
 				return;
 			}else if (  isScript(contextTypeStr) ){
+				setupResponseProperty( resp,  xRespTmp);
 				outTmp = performScript(resp, contextTypeStr, urlStr, entity, contextEncStr);
 				return;
 				
@@ -522,10 +525,12 @@ public class LServlet extends HttpServlet {
 		resp.setStatus(302 );
 		
 		
-		String urlTo = "http://www.anti-scam.org/scamers-pics/scamers_XXXX_Y.jpg";
+		String urlTo = "http://www.anti-scam.org/scamers-pics/ZZ/scamers_XXXX_Y.jpg";
 //			http://www.anti-scam.org/scamers-pics/scamers_4137_1.jpg
-		urlTo = urlTo.replace("XXXX", ""+(1000 + System.nanoTime()%3000));
+		long picId = (1000 + System.nanoTime()%3000);
+		urlTo = urlTo.replace("XXXX", ""+picId);
 		urlTo = urlTo.replace("Y",  ""+ (1+System.currentTimeMillis()%3) );
+		urlTo = urlTo.replace("ZZ",  (""+  picId).substring(0,2	) );
 		resp.setHeader( "Location",  urlTo);
 		resp.setHeader( "Connection", "close" );
 		resp.sendRedirect(urlTo);

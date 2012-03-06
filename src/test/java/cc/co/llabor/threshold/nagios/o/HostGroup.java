@@ -1,4 +1,4 @@
-package cc.co.llabor.threshold.nagios;
+package cc.co.llabor.threshold.nagios.o;
 /** 
  * <b>Description:TODO</b>
  * @author      vipup<br>
@@ -6,12 +6,10 @@ package cc.co.llabor.threshold.nagios;
  * <b>Copyright:</b>     Copyright (c) 2006-2008 Monster AG <br>
  * <b>Company:</b>       Monster AG  <br>
  * 
- * Creation:  16.02.2012::14:08:11<br> 
+ * Creation:  21.02.2012::09:52:43<br> 
  */
-public class ContactsCfg extends Cfg{	 
-	String getCfgName() { 
-		return "contacts.cfg"; 
-	}
+public class HostGroup extends ServiceGroup {
+
 }
 
 
