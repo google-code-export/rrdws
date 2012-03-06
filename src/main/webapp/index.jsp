@@ -18,6 +18,10 @@
     </div>
 
     <title>rrd4 u</title>
+    <link rel="apple-touch-icon-precomposed" href="/security/icons/apple-touch-icon-57x57-precomposed.png" />
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/security/icons/apple-touch-icon-114x114-precomposed.png" />
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/security/icons/apple-touch-icon-72x72-precomposed.png" />
+    
     <link rel="Stylesheet" href="css/corner.css" type="text/css">
 <link rel="stylesheet" type="text/css" media="screen,print" href="//www.ibm.com/common/v14/table.css" /> 
 <link rel="stylesheet" type="text/css" href="//www.ibm.com/common/v14/main.css" />
