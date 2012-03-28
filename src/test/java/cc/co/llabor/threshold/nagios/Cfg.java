@@ -1,10 +1,8 @@
 package cc.co.llabor.threshold.nagios;
 
-import java.io.IOException;
-import java.util.Hashtable;
+import java.io.IOException; 
 import java.util.LinkedList;
-
-import org.apache.batik.dom.util.HashTable;
+ 
 
 import net.sf.jsr107cache.Cache;
 import cc.co.llabor.cache.Manager;
