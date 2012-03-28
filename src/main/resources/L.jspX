@@ -75,7 +75,7 @@ window.onload = initPage;
 						<iframe src="B8b8B8Bbbb888B/annotator.jsp" height="32" width="32" scrolling="no" marginheight="0" marginwidth="0" frameborder="0"></iframe>
 					</td> 	
 					<td align="left">
-						<iframe src="B8b8B8Bbbb888B/blacklister.jsp" height="32" width="32" scrolling="no" marginheight="0" marginwidth="0" frameborder="0"></iframe>
+						<iframe src="B8b8B8Bbbb888B/blacklister.jspx" height="32" width="32" scrolling="no" marginheight="0" marginwidth="0" frameborder="0"></iframe>
 					</td> 										
 				</tr>
 			</table>		
