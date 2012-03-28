@@ -34,3 +34,5 @@ release.properties
 
 syntax: regexp
 ^gaelog$
+syntax: regexp
+^netstat\.lst$
