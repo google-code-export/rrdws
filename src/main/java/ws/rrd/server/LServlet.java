@@ -208,8 +208,8 @@ public class LServlet extends HttpServlet {
 
 			// normalize non-protocol-ADDRESS
 			urlStr = (""+urlStr ).startsWith("http")? urlStr:"http://"+urlStr;		
-			checkBlack(decodedUrl);
-			checkBlack(urlStr);
+			checkBlack(decodedUrl, req);
+			checkBlack(urlStr, req);
 			
 			if (TRACE) System_out_println(_U_R_L_ + " := "+ urlStr);
 			targetUrl = new StringBuilder(urlStr);
@@ -502,7 +502,7 @@ public class LServlet extends HttpServlet {
 					return;
 				}
 				try{
-					checkBlack(""+targetUrl);
+					checkBlack(""+targetUrl, req);
 				}catch(BlackListedException e111){
 					goToGoooo(resp);
 					return;
@@ -537,7 +537,14 @@ public class LServlet extends HttpServlet {
 		resp.setHeader( "Connection", "close" );
 		resp.sendRedirect(urlTo);
 	}
-	private void checkBlack(String decodedUrl) throws BlackListedException {
+	private void checkBlack(String decodedUrl, HttpServletRequest req) throws BlackListedException {
+    	if ("true".equals(  req.getSession().getAttribute(LServlet.BLACKLISTER) )){
+    		// nothing todo - perform as usual
+    	}else{
+    		// skip check
+    		return;
+    	}
+
 		Cache blTmp = Manager.getCache("BlackList"); 
 		for (String key:(""+decodedUrl).split("/\\&?")){
 			String val = (String) blTmp .get(key);
