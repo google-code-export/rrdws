@@ -87,6 +87,8 @@ public class LServlet extends HttpServlet {
 	public static final String BEAUTIFY = "BEAUTIFY";
 	public static final String REPLACER = "REPLACER";
 	public static final String TRACER = "TRACER";
+	public static final String BLACKLISTER = "BLACKLISTER";
+	
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
