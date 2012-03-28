@@ -31,3 +31,6 @@ effective-pom.xml
 release.properties
 .*
 
+
+syntax: regexp
+^gaelog$
