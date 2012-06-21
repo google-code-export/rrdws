@@ -28,7 +28,7 @@
 	<dependency>
 		<groupId>eu.blky</groupId>
 		<artifactId>noti4j</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.1</version>
 	</dependency>
 	<!-- 
 <dependency>
@@ -98,13 +98,13 @@
 		<dependency>
 			<groupId>cc.co.llabor</groupId>
 			<artifactId>jcollectd</artifactId>
-			<version>0.1.5-SNAPSHOT</version>
+			<version>0.1.5</version>
 		</dependency>
 
 		<dependency>
 			<groupId>cc.co.llabor</groupId>
 			<artifactId>cachefs</artifactId>
-			<version>0.0.13-SNAPSHOT</version>
+			<version>0.0.13</version>
 		</dependency>
 		<dependency>
 			<groupId>cc.co.llabor</groupId>
@@ -142,6 +142,7 @@
 			<groupId>com.google.appengine</groupId>
 			<artifactId>jsr107cache</artifactId>
 			<version>1.3.4</version>
+			<scope>${gae.api.scope}</scope>
 		</dependency>
 
 
@@ -472,17 +473,7 @@
 	<build>
 
 		<plugins>
-<plugin>
-  <groupId>com.jelastic</groupId>
-  <artifactId>jelastic-maven-plugin</artifactId>
-  <version>1.4</version>
-  <configuration>
-     <email>${jelastic.username}</email>
-     <password>${jelastic.password}</password>
-     <context><!-- ... --></context>
-     <environment><!-- ... --></environment>
-  </configuration>
- </plugin>	
+ 	
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -945,7 +936,7 @@
 								net.sf.jsr107cache.CacheFactory
 							</include>
 						</includes>
-						<targetPath>${basedir}/target/${pom.artifactId}-${pom.version}/META-INF/services</targetPath>
+						<targetPath>${basedir}/target/${pom.artifactId}-${pom.version}/WEB-INF/classes/META-INF/services</targetPath>
 					</resource>
 					
 					
@@ -990,6 +981,28 @@
 			</url>
 			<layout>default</layout>
 		</repository>
+		
+		
+				 
+		<repository>
+			<id>pegasusRELEASE</id>
+			<name>Pegasus RELEASE-Dir</name>
+			<url>
+				https://pegasus.peras.fiducia.de/upme/up/RELEASES/
+			</url>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>	
+		
+		
+		
+		
+		
 	</repositories>
 
 	<pluginRepositories>
