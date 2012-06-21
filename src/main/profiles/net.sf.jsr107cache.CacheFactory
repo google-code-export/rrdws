@@ -1,5 +1,6 @@
 cc.co.llabor.cache.BasicCacheFactory
-Only first line of this file will be reader
+net.sf.jsr107cache.CacheFactory=cc.co.llabor.cache.BasicCacheFactory
+Only first (OR 2nd!? )line of this file will be reader
 rest is ignored 
 @see net.sf.jsr107cache.CacheManager.class#Line:98
 
