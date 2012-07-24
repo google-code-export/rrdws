@@ -54,7 +54,21 @@
 		<groupId>jmxlogger</groupId>
 		<artifactId>jmx-logger-log4j</artifactId>
 		<version>0.3.1</version>
-	</dependency> 	
+	</dependency>
+		<!-- JMX logging -->
+	<dependency>
+		<groupId>jmxlogger</groupId>
+		<artifactId>jmxlogger</artifactId>
+		<version>0.3.0</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>org.mvel</groupId>
+		<artifactId>mvel2</artifactId>
+		<version>2.0.14</version>
+	</dependency>
+            
+	 	
 
 		<!-- mibble-mibs-2.9.2.jar mibble-parser-2.9.2.jar grammatica-1.5.jar -->
 		<dependency>
@@ -680,7 +694,7 @@
 			<plugin>
 				<groupId>net.kindleit</groupId>
 				<artifactId>maven-gae-plugin</artifactId>
-				<version>0.5.9</version>
+				
 				<configuration>
 					<!-- jvmFlags>
 						<jvmFlag>-Xdebug</jvmFlag>
