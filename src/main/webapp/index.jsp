@@ -38,7 +38,8 @@
 		<a href="_ah/mail/" target="_blank"><IMG SRC="img/ait.jpg">mail</a>
 		<a href="push.jsp" target="_blank"><IMG SRC="img/ninja_ico_consock.jpg">push</a>
 		<a href="getput.jsp" target="_blank"><IMG SRC="img/ninja_ico_consock.jpg">+<IMG SRC="img/ninja_ico_listen.jpg">get2put</a>		
-		<a href="l/aHR0cDovL2hhYnJhaGFici5ydS8=" target="_blank"><IMG SRC="img/ajax-loader.gif">habr</a>		
+		<a href="l/aHR0cDovL2hhYnJhaGFici5ydS8=" target="_blank"><IMG SRC="img/ajax-loader.gif">habr</a>
+		<a href="l/aHR0cDovL2ZpZHVjaWEuZGUv" target="_blank"><IMG SRC="img/ajax-loader.gif">I</a>		
     </div>    
 <%@page import="org.jrobin.cmd.RrdCommander"%>
 <%@page import="org.jrobin.svg.RrdGraphInfo"%>

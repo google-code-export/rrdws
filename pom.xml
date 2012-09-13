@@ -28,7 +28,7 @@
 	<dependency>
 		<groupId>eu.blky</groupId>
 		<artifactId>noti4j</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.1</version>
 	</dependency>
 	<!-- SIGAR
           -->    	
@@ -54,7 +54,21 @@
 		<groupId>jmxlogger</groupId>
 		<artifactId>jmx-logger-log4j</artifactId>
 		<version>0.3.1</version>
-	</dependency> 	
+	</dependency>
+		<!-- JMX logging -->
+	<dependency>
+		<groupId>jmxlogger</groupId>
+		<artifactId>jmxlogger</artifactId>
+		<version>0.3.0</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>org.mvel</groupId>
+		<artifactId>mvel2</artifactId>
+		<version>2.0.14</version>
+	</dependency>
+            
+	 	
 
 		<!-- mibble-mibs-2.9.2.jar mibble-parser-2.9.2.jar grammatica-1.5.jar -->
 		<dependency>
@@ -98,13 +112,13 @@
 		<dependency>
 			<groupId>cc.co.llabor</groupId>
 			<artifactId>jcollectd</artifactId>
-			<version>0.1.5-SNAPSHOT</version>
+			<version>0.1.5</version>
 		</dependency>
 
 		<dependency>
 			<groupId>cc.co.llabor</groupId>
 			<artifactId>cachefs</artifactId>
-			<version>0.0.13-SNAPSHOT</version>
+			<version>0.0.13</version>
 		</dependency>
 		<dependency>
 			<groupId>cc.co.llabor</groupId>
@@ -142,6 +156,7 @@
 			<groupId>com.google.appengine</groupId>
 			<artifactId>jsr107cache</artifactId>
 			<version>1.3.4</version>
+			<scope>${gae.api.scope}</scope>
 		</dependency>
 
 
@@ -472,17 +487,7 @@
 	<build>
 
 		<plugins>
-<plugin>
-  <groupId>com.jelastic</groupId>
-  <artifactId>jelastic-maven-plugin</artifactId>
-  <version>1.4</version>
-  <configuration>
-     <email>${jelastic.username}</email>
-     <password>${jelastic.password}</password>
-     <context><!-- ... --></context>
-     <environment><!-- ... --></environment>
-  </configuration>
- </plugin>	
+ 	
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -689,7 +694,7 @@
 			<plugin>
 				<groupId>net.kindleit</groupId>
 				<artifactId>maven-gae-plugin</artifactId>
-				<version>0.5.9</version>
+				
 				<configuration>
 					<!-- jvmFlags>
 						<jvmFlag>-Xdebug</jvmFlag>
@@ -944,7 +949,7 @@
 							<include>
 								net.sf.jsr107cache.CacheFactory
 							</include>
-						</includes>						
+						</includes>
 						<targetPath>${basedir}/target/${pom.artifactId}-${pom.version}/WEB-INF/classes/META-INF/services</targetPath>
 					</resource>
 					
@@ -990,6 +995,28 @@
 			</url>
 			<layout>default</layout>
 		</repository>
+		
+		
+				 
+		<repository>
+			<id>pegasusRELEASE</id>
+			<name>Pegasus RELEASE-Dir</name>
+			<url>
+				https://pegasus.peras.fiducia.de/upme/up/RELEASES/
+			</url>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>	
+		
+		
+		
+		
+		
 	</repositories>
 
 	<pluginRepositories>
