@@ -29,14 +29,7 @@
 		<groupId>eu.blky</groupId>
 		<artifactId>noti4j</artifactId>
 		<version>0.0.1</version>
-	</dependency>
-	<!-- SIGAR
-          -->    	
-<dependency>
-	<groupId>org.fusesource</groupId>
-	<artifactId>sigar</artifactId>
-	<version>1.6.4j</version>
-</dependency>
+	</dependency> 
 	<dependency>
 		<groupId>org.igniterealtime.smack</groupId>
 		<artifactId>smack</artifactId>
