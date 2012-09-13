@@ -35,7 +35,7 @@ import java.util.Vector;
 class Timer  implements Runnable , MrtgConstants {
 	private volatile boolean active = true;
 	
-	static final ThreadGroup defTG = new ThreadGroup( "mrtg" );
+	static final ThreadGroup defTG = new ThreadGroup( "MRTG_4j" );
 	
 
 	private Queue<SnmpReader> queue;
