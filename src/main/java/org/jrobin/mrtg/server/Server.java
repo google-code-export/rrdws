@@ -37,6 +37,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import ws.rrd.csv.Registry;
@@ -101,8 +102,10 @@ public class Server implements MrtgConstants {
 //		}
 		// create template files
 		try {
-			createXmlTemplateIfNecessary(Config.getRrdTemplateFile(), RRD_TEMPLATE_STR);
-			createXmlTemplateIfNecessary(Config.getGraphTemplateFile(), GRAPH_TEMPLATE_STR);
+			String rrdTemplateFile = Config.getRrdTemplateFile();
+			createXmlTemplateIfNecessary(rrdTemplateFile, RRD_TEMPLATE_STR);
+			String graphTemplateFile = Config.getGraphTemplateFile();
+			createXmlTemplateIfNecessary(graphTemplateFile, GRAPH_TEMPLATE_STR);
 		}
 		catch(IOException ioe) {
 			throw new MrtgException(ioe);
@@ -195,11 +198,12 @@ public class Server implements MrtgConstants {
 				File fout = new File(Config.getHardwareFile());
 				File foutTmp = File.createTempFile("mrtgstage", ".xml", fout.getParentFile());
 				String msg = "store mrtg.conf into {"+fout.getAbsolutePath()+"}";
-				log.debug( "saveHardware::"+msg); 
+				log.debug( "saveHardware into ["+msg +"].."); 
 				FileOutputStream destination = new FileOutputStream(foutTmp);
 				StreamResult result = new StreamResult(destination);
 				transformer.transform(source, result);
 				destination.close();
+				log.debug( ".done.");
 			
 				if (fout.exists()){// make backup
 					File dest = new File (fout.getAbsolutePath()+".bak"+((System.currentTimeMillis()/1000)%24*60*60 ));
@@ -219,13 +223,18 @@ public class Server implements MrtgConstants {
 			factory.setValidating(false);
 			factory.setNamespaceAware(false);
 			DocumentBuilder builder = factory.newDocumentBuilder();
-			Document doc = builder.parse(new File(Config.getHardwareFile()));
+			String hardwareFile = Config.getHardwareFile();
+			log.debug("USING hardware file:"+hardwareFile);
+			Document doc = builder.parse(new File(hardwareFile));
 			Element root = doc.getDocumentElement();
 			NodeList nodes = root.getElementsByTagName("router");
 			deviceList = new DeviceList();
 			Vector routers = deviceList.getRouters();
 			for(int i = 0; i < nodes.getLength(); i++) {
-				routers.add(new Device(nodes.item(i)));
+				Node item = nodes.item(i);
+				Device e = new Device(item);
+				routers.add(e);
+				log.debug("added device:"+e);
 			}
 		} catch (Exception e) {
 			throw new MrtgException(e);
@@ -399,6 +408,7 @@ public class Server implements MrtgConstants {
 
 	public static void main(String[] acceptedClients) throws Exception {
         Server s = Server.getInstance();
+        acceptedClients = acceptedClients==null?new String[]{}:acceptedClients;
 		s.start(acceptedClients);
 	}
 

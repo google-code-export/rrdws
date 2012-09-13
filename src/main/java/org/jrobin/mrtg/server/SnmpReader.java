@@ -72,10 +72,12 @@ class SnmpReader   {
 			}
 			if(ifIndex >= 0) {
 				String oidTmp = link.getDescr();
+				ifDescr = link.getIfDescr();
 				if (oidTmp .indexOf("/")>=0){ // have to be 1.3.6.1.4.1.42.2.145.3.163.1.1.3.10.1.8.0.0.0.0.0.0.6.88
-					ifDescr = link.getIfDescr();
 					oidTmp = comm.toNumericOID(ifDescr);
-				}
+				} 
+				
+				
 				Debug.print("Sampling: " + ifDescr + "@" + host + 	" [" + ifIndex + "]{"+oidTmp+"}"); 
 				 
 				String value  = null;
@@ -84,8 +86,9 @@ class SnmpReader   {
 					RawSample sample = createRawSample(value);
 					link.processSample(sample);
 				}
+				if (ifDescr == null)  throw new IllegalArgumentException("ifDescr IS NULL");
 				if (link.getSnmpVersion() == 1)
-					value  = comm.get(ifDescr, ifIndex);
+					value  = comm.getSNMPv2(oidTmp );//TODO hotfixed into v2 !check v.1 value  = comm.get(ifDescr, ifIndex);
 				else
 					value  = comm.getSNMPv2(oidTmp );
 				RawSample sample = createRawSample(value);

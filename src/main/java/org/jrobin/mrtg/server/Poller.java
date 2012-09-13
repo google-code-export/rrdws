@@ -532,6 +532,7 @@ class Poller {
 	}
 
 	String get(String oid, int index) throws IOException {
+		if (oid == null)  throw new IllegalArgumentException("ifDescr IS NULL");
 		String OID = toNumericOID(oid);
 		String numericOid = OID + "." + index;
 		String retval = null;
