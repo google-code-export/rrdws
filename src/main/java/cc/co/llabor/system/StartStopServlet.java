@@ -86,11 +86,11 @@ public class StartStopServlet extends HttpServlet {
 			initResult *= -2;
 		}		
 		try{
-			if (isMRTGEnabled()){
+			 
 				startMrtgServer();
 				initResult *= -2;
 				
-			}
+			 
 		}catch(Throwable e){
 			initResult += -1;
 			e.printStackTrace();
@@ -275,33 +275,7 @@ public class StartStopServlet extends HttpServlet {
 			} 
 		}
 	}
-
-	private void startMrtgServer() {
-		log.info(Repo.getBanner("mrtgServer"));
-		 String[] acceptedClients = new String[]{};
-		//jrobin/mrtg/server/Server
-		try {
-			Server.main(acceptedClients);
-			
-
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	
-	private void initAutoDiscover(String hostPar, String communityPar, String numericOid, String ifDescr) throws IOException{
-		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
-		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
-		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
-		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
-		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
-		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
-		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
-		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
-		IfDsicoverer.startDiscoverer(mythreads, hostPar, communityPar, numericOid, ifDescr);
-	}
 	private boolean isMRTGEnabled() throws IOException {
 		RuntimeMXBean RuntimemxBean = ManagementFactory.getRuntimeMXBean();
 		
@@ -372,7 +346,33 @@ JRE_HOME/lib/management/snmp.acl
 		}
 		return retval;
 		
+	}	
+
+	private void startMrtgServer() { 
+		log.info(Repo.getBanner("mrtgServer"));
+		 String[] acceptedClients = new String[]{};
+		//jrobin/mrtg/server/Server
+		try {
+			if (!isMRTGEnabled())return;
+			Server.main(acceptedClients);  
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
+	
+	private void initAutoDiscover(String hostPar, String communityPar, String numericOid, String ifDescr) throws IOException{
+		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
+		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
+		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
+		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
+		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
+		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
+		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
+		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
+		IfDsicoverer.startDiscoverer(mythreads, hostPar, communityPar, numericOid, ifDescr);
+	}
+
 
 	/**
 	 * @author vipup

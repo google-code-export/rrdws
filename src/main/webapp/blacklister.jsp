@@ -1,13 +1,13 @@
 <%@page import="ws.rrd.server.LServlet"%><%
- 	
-	if ("true".equals( request.getParameter(LServlet.BLACKLISTER)))
- 		session.setAttribute(LServlet.BEAUTIFY,"true");	
-	if ("false".equals( request.getParameter(LServlet.BLACKLISTER)))
- 		session.setAttribute(LServlet.BEAUTIFY,"false");	
- 	String isBeautify = ""+session.getAttribute(LServlet.BLACKLISTER);	
-	String imgName = "true".equals(isBeautify) ? "blacklON.png" : "blacklOFF.png";
-	String contraTmp = "true".equals(isBeautify)?"false":"true";
+ 	String MY_CONST = LServlet.BLACKLISTER;
+	if ("true".equals( request.getParameter(MY_CONST)))
+ 		session.setAttribute(MY_CONST,"true");	
+	if ("false".equals( request.getParameter(MY_CONST)))
+ 		session.setAttribute(MY_CONST,"false");	
+ 	String isTHE = ""+session.getAttribute(MY_CONST);	
+	String imgName = "true".equals(isTHE) ? "blacklON.png" : "blacklOFF.png";
+	String contraTmp = "true".equals(isTHE)?"false":"true";
 %>
-<a href="beauty.jsp?<%=LServlet.BEAUTIFY%>=<%=contraTmp%>">
+<a href="beauty.jsp?<%=MY_CONST%>=<%=contraTmp%>">
 <img 	height="64px" width="64px"  src="<%=LServlet.SwapServletUrl %>../img/<%=imgName%>">
 </a>
