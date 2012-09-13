@@ -1,4 +1,6 @@
-<%@page import="ws.rrd.server.LServlet"%><%
+<%@page 
+import="cc.co.llabor.cache.replace.ReplaceStore"%><%@page 
+import="ws.rrd.server.LServlet"%><%
  	
 	if ("true".equals( request.getParameter(LServlet.REPLACER))){
  		session.setAttribute(LServlet.REPLACER,"true");
@@ -12,7 +14,7 @@
 	String imgName = "true".equals(isReplacer) ? "r1.jpeg" : "r0.jpeg";
 	String contraTmp = "true".equals(isReplacer)?"false":"true";
 %>
-<%@page import="cc.co.llabor.cache.replace.ReplaceStore"%>
+
 <a href="replacer.jsp?<%=LServlet.REPLACER%>=<%=contraTmp%>">
 <img 	
 	height="32px" width="32px"  

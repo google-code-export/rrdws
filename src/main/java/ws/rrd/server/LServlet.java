@@ -1002,6 +1002,7 @@ public class LServlet extends HttpServlet {
 			"Content-Language",
 //			"Content-Encoding",
 			"Content-Disposition",// : attachment; filename=Personalakte.pdf
+			"filename",  
 			"Date",
 			"Last-Modified" ,
 			"Accept",
