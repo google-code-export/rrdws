@@ -47,7 +47,7 @@ public class JMXAppender extends JmxLogAppender{
     long seqCounter = 0;
     private Notification buildNotification(LoggingEvent event){
         long seqnum = seqCounter++;
-        long timestamp  =  event.getTimeStamp();
+        long timestamp  =  event.getStartTime();
 
         // keep a copy of the stats
 //        statistics = (Map<String, Long>) event.get(ToolBox.KEY_EVENT_LOG_STAT);

@@ -497,7 +497,7 @@
 					maven-mercurial-build-number-plugin
 				</artifactId>
 				<version>1.0</version>
-				<executions>
+				<executions> 
 					<execution>
 						<goals>
 							<goal>set-build-number</goal>
@@ -520,36 +520,79 @@
 				</configuration>
 			</plugin>
 			<!-- begin - precompiling jsps -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>jspc-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>jspc</id>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
-
-
-					<!-- webXml>${basedir}/target/jspCweb.xml</webXml> -->
-					<injectString>
-						&lt;!-- [INSERT FRAGMENT HERE] --&gt;
-					</injectString>
-
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging-api</artifactId>
-						<version>1.1</version>
-					</dependency>
-				</dependencies>
-			</plugin>
+			  <plugin> 
+            <groupId>org.codehaus.mojo.jspc</groupId> 
+            <artifactId>jspc-maven-plugin</artifactId> 
+            <executions> 
+                <execution> 
+                    <id>jspc</id> 
+                    <phase>compile</phase> 
+                    <goals> 
+                        <goal>compile</goal> 
+                    </goals> 
+                </execution> 
+            </executions> 
+            <configuration> 
+                <packageName>org.apache.jsp</packageName> 
+                <source>1.5</source> 
+                <target>1.5</target> 
+                <trimSpaces>false</trimSpaces> 
+            </configuration> 
+            <dependencies>   
+                <!--  
+                    Hack the jspc plugin, which only supports Tomcat 6, to work for Tomcat 7. See: 
+                    http://hasini-gunasinghe.blogspot.com/2011/09/how-to-use-pre-compiled-jsps-in-webapp.html  
+                --> 
+                <dependency>   
+                    <groupId>org.codehaus.mojo.jspc</groupId>   
+                    <artifactId>jspc-compiler-tomcat6</artifactId>   
+                    <version>2.0-alpha-3</version>   
+ 
+                    <exclusions>   
+                        <exclusion>   
+                            <groupId>org.apache.tomcat</groupId>   
+                            <artifactId>jasper</artifactId>   
+                        </exclusion>   
+                        <exclusion>   
+                            <groupId>org.apache.tomcat</groupId>   
+                            <artifactId>jasper-el</artifactId>   
+                        </exclusion>   
+                        <exclusion>   
+                            <groupId>org.apache.tomcat</groupId>   
+                            <artifactId>jasper-jdt</artifactId>   
+                        </exclusion>   
+                        <exclusion>   
+                            <groupId>org.apache.tomcat</groupId>   
+                            <artifactId>servlet-api</artifactId>   
+                        </exclusion>   
+                        <exclusion>   
+                            <groupId>org.apache.tomcat</groupId>   
+                            <artifactId>jsp-api</artifactId>   
+                        </exclusion>   
+                        <exclusion>   
+                            <groupId>org.apache.tomcat</groupId>   
+                            <artifactId>el-api</artifactId>   
+                        </exclusion>   
+                        <exclusion>   
+                            <groupId>org.apache.tomcat</groupId>   
+                            <artifactId>annotations-api</artifactId>   
+                        </exclusion>   
+                    </exclusions>   
+                </dependency>   
+ 
+                <dependency>   
+                    <groupId>org.apache.tomcat</groupId>   
+                    <artifactId>tomcat-jasper</artifactId>   
+                    <version>${tomcat.version}</version>  
+                </dependency>   
+ 
+                <dependency>   
+                    <groupId>org.eclipse.jdt.core.compiler</groupId>   
+                    <artifactId>ecj</artifactId>   
+                    <version>3.5.1</version>   
+                </dependency> 
+            </dependencies> 
+        </plugin> 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
@@ -776,6 +819,9 @@
 			environment
 		-->
 		<gwt.style>DETAILED</gwt.style>
+		
+		<tomcat.version>6.0.35</tomcat.version> 
+		
 	</properties>
 
 	<profiles>
