@@ -583,7 +583,7 @@
                 <dependency>   
                     <groupId>org.apache.tomcat</groupId>   
                     <artifactId>tomcat-jasper</artifactId>   
-                    <version>${tomcat.version}</version>  
+                    <version>${tomcat-jasper.version}</version>  
                 </dependency>   
  
                 <dependency>   
@@ -821,6 +821,7 @@
 		<gwt.style>DETAILED</gwt.style>
 		
 		<tomcat.version>6.0.35</tomcat.version> 
+		<tomcat-jasper.version>7.0.30</tomcat-jasper.version> 
 		
 	</properties>
 
