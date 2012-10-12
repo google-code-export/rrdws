@@ -1,1 +1,1 @@
-mvn -o -e tomcat:redeploy -Dcccache -Dmaven.test.skip=true -DPAITEST02 tomcat:redeploy
+mvn -o -e tomcat:redeploy -Dcccache -Dmaven.test.skip=true -DPAITEST02 
