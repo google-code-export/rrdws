@@ -37,7 +37,7 @@ try{
                     response.getWriter().append( "<br>ContentType:::::"+ item.getContentType() );                    
                     session.setAttribute(item.getName(),item );                
                     nameTmp = MemoryFileCache.getInstance("DEFAULT.BAK"). put( item  );
-					System.out.println( "stored into memcache as ::["+nameTmp +"]");
+					System.out.println( "UPDATE.jsp:stored into memcache as ::["+nameTmp +"]");
 					// process last CSV-data
 					CSVParser csv = new CSVParser( item.getInputStream());
 					Action a = new RrdUpdateAction();

@@ -43,7 +43,7 @@ try{
                     </td><%
 					session.setAttribute(item.getName(),item );                
                     nameTmp = MemoryFileCache.getInstance("DEFAULT.BAK"). put( item  );
-					System.out.println( "stored into memcache as ::["+nameTmp +"]");
+					System.out.println( "XUPDATE.jsp:stored into memcache as ::["+nameTmp +"]");
 					// process last XML-data
 					XMLReader reader = XMLReaderFactory.createXMLReader();
 					RrdUpdateAction rrdActioner = new  RrdUpdateAction();
