@@ -442,11 +442,15 @@ JRE_HOME/lib/management/snmp.acl
 		} catch (RrdException e1) {
 			log.error("doStop() failed", e1);
 		} 
-		
-		DogFarm.stopTimer( lTimer  ); 
-		log.info(Repo.getBanner( "+lTimer"));
-		DogFarm.stopTimer( hTimer  );
-		log.info(Repo.getBanner( "+hTimer"));
+		try {
+			DogFarm.stopTimer( lTimer  ); 
+			log.info(Repo.getBanner( "+lTimer"));
+			DogFarm.stopTimer( hTimer  );
+			log.info(Repo.getBanner( "+hTimer"));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 		
 		try {
 			Server.getInstance().stop();
