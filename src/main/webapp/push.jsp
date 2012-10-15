@@ -53,7 +53,7 @@ try{
 					String nameTmp = ""+item.getName();
                     session.setAttribute(nameTmp,item );
 					nameTmp = MemoryFileCache.getInstance("DEFAULT.BAK"). put( item  );
-					System.out.println( "stored into memcache as ::["+nameTmp +"]");
+					System.out.println( "PUSH.jsp:stored into memcache as ::["+nameTmp +"]");
                     //pm.makePersistent(item);
             }
 %>
