@@ -355,7 +355,8 @@ public class RrdKeeper extends NotificationBroadcasterSupport implements Notific
     
     
 	private Pid getPid(String name) {
-		Cache _vpids = Manager.getCache(Pid.class.getName()); 
+		String name2 = Pid.class.getName();
+		Cache _vpids = Manager.getCache(name2); 
 		String persistenceName = name+".properties";
 		Properties pVpid = (Properties) _vpids.get(persistenceName );
 		Pid retval = null;
