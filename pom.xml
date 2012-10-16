@@ -519,93 +519,14 @@
 					</systemProperties>
 				</configuration>
 			</plugin>
-			<!-- begin - precompiling jsps -->
-			  <plugin> 
-            <groupId>org.codehaus.mojo.jspc</groupId> 
-            <artifactId>jspc-maven-plugin</artifactId> 
-            <executions> 
-                <execution> 
-                    <id>jspc</id> 
-                    <phase>compile</phase> 
-                    <goals> 
-                        <goal>compile</goal> 
-                    </goals> 
-                </execution> 
-            </executions> 
-            <configuration> 
-                <packageName>org.apache.jsp</packageName> 
-                <source>1.5</source> 
-                <target>1.5</target> 
-                <trimSpaces>false</trimSpaces> 
-            </configuration> 
-            <dependencies>   
-                <!--  
-                    Hack the jspc plugin, which only supports Tomcat 6, to work for Tomcat 7. See: 
-                    http://hasini-gunasinghe.blogspot.com/2011/09/how-to-use-pre-compiled-jsps-in-webapp.html  
-                --> 
-                <dependency>   
-                    <groupId>org.codehaus.mojo.jspc</groupId>   
-                    <artifactId>jspc-compiler-tomcat6</artifactId>   
-                    <version>2.0-alpha-3</version>   
- 
-                    <exclusions>   
-                        <exclusion>   
-                            <groupId>org.apache.tomcat</groupId>   
-                            <artifactId>jasper</artifactId>   
-                        </exclusion>   
-                        <exclusion>   
-                            <groupId>org.apache.tomcat</groupId>   
-                            <artifactId>jasper-el</artifactId>   
-                        </exclusion>   
-                        <exclusion>   
-                            <groupId>org.apache.tomcat</groupId>   
-                            <artifactId>jasper-jdt</artifactId>   
-                        </exclusion>   
-                        <exclusion>   
-                            <groupId>org.apache.tomcat</groupId>   
-                            <artifactId>servlet-api</artifactId>   
-                        </exclusion>   
-                        <exclusion>   
-                            <groupId>org.apache.tomcat</groupId>   
-                            <artifactId>jsp-api</artifactId>   
-                        </exclusion>   
-                        <exclusion>   
-                            <groupId>org.apache.tomcat</groupId>   
-                            <artifactId>el-api</artifactId>   
-                        </exclusion>   
-                        <exclusion>   
-                            <groupId>org.apache.tomcat</groupId>   
-                            <artifactId>annotations-api</artifactId>   
-                        </exclusion>   
-                    </exclusions>   
-                </dependency>   
- 
-                <dependency>   
-                    <groupId>org.apache.tomcat</groupId>   
-                    <artifactId>tomcat-jasper</artifactId>   
-                    <version>${tomcat-jasper.version}</version>  
-                </dependency>   
- 
-                <dependency>   
-                    <groupId>org.eclipse.jdt.core.compiler</groupId>   
-                    <artifactId>ecj</artifactId>   
-                    <version>3.5.1</version>   
-                </dependency> 
-            </dependencies> 
-        </plugin> 
+			 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
-					<!-- precompiled JSPs   
-						<webXml>${basedir}/target/jspweb.xml</webXml>
-					-->
+					<!-- 
 					<webResources>
 						<resource>
-							<!--  
-								<directory>${basedir}/target/</directory>
-								<directory>${basedir}/target/${pom.artifactId}-${pom.version}/WEB-INF</directory>
-							-->
 							<directory>${basedir}/target/</directory>
 							<filtering>true</filtering>
 							<targetPath>WEB-INF/</targetPath>
@@ -617,6 +538,7 @@
 					<webXml>
 						${basedir}/target/${pom.artifactId}-${pom.version}/WEB-INF/jspweb.xml
 					</webXml>
+					 -->
 					<archive>
 						<manifest>
 							<addDefaultImplementationEntries>
@@ -820,71 +742,167 @@
 		-->
 		<gwt.style>DETAILED</gwt.style>
 		
-		<tomcat.version>6.0.35</tomcat.version> 
+		
 		<tomcat-jasper.version>7.0.30</tomcat-jasper.version> 
 		
 	</properties>
 
 	<profiles>
-        <profile>
-            <id>jelastic</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-             	<property>
-					<name>jelastic</name>
-					 	
+		<profile>
+			<id>TOMCAT_deploy_v_6_xxx</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+				<property>
+					<name>TOMCAT6</name>
 				</property>
 			</activation>
-
-            <properties>
-                <jelastic.username>vAsiLiij.pupkin@googlEMail.Com</jelastic.username>
-                <jelastic.password>OMpS0zFWXOGPlxt</jelastic.password>
-             
-		  		<gae.api.scope>compile</gae.api.scope>
+			<properties>
+				<tomcat.version>6.0.35</tomcat.version> 
+		  		<gae.api.scope>provided</gae.api.scope>
 				<gae.application.version>xxx</gae.application.version>
 			</properties>
-			<build>
-				<resources>
-					<resource>
-						<directory>src/main/resources</directory>
-						<includes>
-							<include>**/*</include>
-						</includes>
-					</resource>
-					<resource>
-						<filtering>true</filtering>
-						<directory>
-							${basedir}/src/main/profiles
-						</directory>
-						<includes>
-							<include>
-								log4j.properties
-							</include>
-						</includes>
-						<targetPath></targetPath>
-					</resource>
- 					<resource>
-						<directory>src/main/resources</directory>
-						<includes>
-							<include>**/*</include>
-						</includes>
-					</resource>
-					<resource>
-						<filtering>true</filtering>
-						<directory>
-							${basedir}/src/main/profiles
-						</directory>
-						<includes>
-							<include>
-								log4j.properties
-							</include>
-						</includes>
-						<targetPath></targetPath>
-					</resource>
-				</resources>
+			<build> 
+					<plugins>	
+					<!-- begin - precompiling jsps -->
+						<plugin> 
+				            <groupId>org.codehaus.mojo.jspc</groupId> 
+				            <artifactId>jspc-maven-plugin</artifactId> 
+				            <executions> 
+				                <execution> 
+				                    <id>jspc</id> 
+				                    <phase>compile</phase> 
+				                    <goals> 
+				                        <goal>compile</goal> 
+				                    </goals> 
+				                </execution> 
+				            </executions> 
+				            <configuration> 
+				                <packageName>org.apache.jsp</packageName> 
+				                <source>1.5</source> 
+				                <target>1.5</target> 
+									<!-- webXml>${basedir}/target/jspCweb.xml</webXml> -->
+									<injectString>
+										&lt;!-- [INSERT FRAGMENT HERE] --&gt;
+									</injectString>                
+				                <trimSpaces>false</trimSpaces> 
+				            </configuration>
+							<dependencies>
+								<dependency>
+									<groupId>org.codehaus.mojo.jspc</groupId>
+									<artifactId>jspc-compiler-tomcat6</artifactId>
+									<version>2.0-alpha-3</version>
+								</dependency>							
+				                <dependency>
+				                     <groupId>org.apache.tomcat</groupId>
+				                     <artifactId>jasper</artifactId>
+				                     <version>${tomcat.version}</version>
+				                     <scope>provided</scope>
+				                </dependency>
+							
+								<dependency>
+									<groupId>commons-logging</groupId>
+									<artifactId>commons-logging-api</artifactId>
+									<version>1.1</version>
+								</dependency>
+							</dependencies>
+						</plugin>
+					</plugins> 
 			</build>
-			
-        </profile>
+		</profile>
+	
+		<profile>
+			<id>TOMCAT_DEPLOY_V_7_xxx</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+				<property>
+					<name>TOMCAT7</name>
+				</property>
+			</activation>
+			<properties>
+		  		<gae.api.scope>provided</gae.api.scope>
+				<gae.application.version>xxx</gae.application.version>
+			</properties>
+			<build> 
+					<plugins>
+						<plugin>
+							<groupId>org.codehaus.mojo.jspc</groupId>
+							<artifactId>jspc-maven-plugin</artifactId>
+							<executions>
+								<execution>
+									<id>jspc</id>
+									<phase>compile</phase>
+									<goals>
+										<goal>compile</goal>
+									</goals>
+								</execution>
+							</executions>
+							<configuration>
+								<packageName>org.apache.jsp</packageName>
+								<source>1.5</source>
+								<target>1.5</target>
+								<!-- webXml>${basedir}/target/jspCweb.xml</webXml> -->
+								<injectString>
+									&lt;!-- [INSERT FRAGMENT HERE] --&gt; </injectString>
+								<trimSpaces>false</trimSpaces>
+							</configuration>
+							<dependencies>
+								<!-- Hack the jspc plugin, which only supports Tomcat 6, to work for 
+									Tomcat 7. See: http://hasini-gunasinghe.blogspot.com/2011/09/how-to-use-pre-compiled-jsps-in-webapp.html -->
+								<dependency>
+									<groupId>org.codehaus.mojo.jspc</groupId>
+									<artifactId>jspc-compiler-tomcat6</artifactId>
+									<version>2.0-alpha-3</version>
+		
+									<exclusions>
+										<exclusion>
+											<groupId>org.apache.tomcat</groupId>
+											<artifactId>jasper</artifactId>
+										</exclusion>
+										<exclusion>
+											<groupId>org.apache.tomcat</groupId>
+											<artifactId>jasper-el</artifactId>
+										</exclusion>
+										<exclusion>
+											<groupId>org.apache.tomcat</groupId>
+											<artifactId>jasper-jdt</artifactId>
+										</exclusion>
+										<exclusion>
+											<groupId>org.apache.tomcat</groupId>
+											<artifactId>servlet-api</artifactId>
+										</exclusion>
+										<exclusion>
+											<groupId>org.apache.tomcat</groupId>
+											<artifactId>jsp-api</artifactId>
+										</exclusion>
+										<exclusion>
+											<groupId>org.apache.tomcat</groupId>
+											<artifactId>el-api</artifactId>
+										</exclusion>
+										<exclusion>
+											<groupId>org.apache.tomcat</groupId>
+											<artifactId>annotations-api</artifactId>
+										</exclusion>
+									</exclusions>
+								</dependency>
+		
+								<dependency>
+									<groupId>org.apache.tomcat</groupId>
+									<artifactId>tomcat-jasper</artifactId>
+									<version>${tomcat-jasper.version}</version>
+								</dependency>
+		
+								<dependency>
+									<groupId>org.eclipse.jdt.core.compiler</groupId>
+									<artifactId>ecj</artifactId>
+									<version>3.5.1</version>
+								</dependency>
+							</dependencies>
+						</plugin>
+					</plugins> 
+			</build>
+		</profile>
+	
+
 		<!--
 			We can configure our integration server to activate this
 			profile and perform gae:deploy, thus uploading latest

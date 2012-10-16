@@ -1,1 +1,1 @@
-mvn -o -e tomcat:redeploy -Dcccache -DLOCAL9090 -Dmaven.test.skip=true
+mvn -o -e help:active-profiles tomcat:redeploy -Dcccache -DLOCAL9090 -Dmaven.test.skip=true
