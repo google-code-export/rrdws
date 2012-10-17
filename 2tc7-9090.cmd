@@ -1,0 +1,1 @@
+mvn -o -e help:active-profiles tomcat:redeploy -Dcccache -DLOCALtc79090 -DTOMCAT7 -Dmaven.test.skip=true
