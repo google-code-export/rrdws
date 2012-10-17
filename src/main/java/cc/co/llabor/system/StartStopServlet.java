@@ -3,16 +3,11 @@ package cc.co.llabor.system;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
-import java.lang.reflect.InvocationTargetException;
-import java.util.List;
-import java.util.Properties;
-
+import java.lang.reflect.InvocationTargetException; 
+import java.util.Properties; 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;  
-
-import net.sf.jsr107cache.Cache;
-
+import javax.servlet.http.HttpServlet;    
 import org.collectd.DataWorker; 
 import org.jrobin.core.RrdDbPool;
 import org.jrobin.core.RrdException;
@@ -20,9 +15,7 @@ import org.jrobin.mrtg.MrtgException;
 import org.jrobin.mrtg.server.IfDsicoverer;
 import org.jrobin.mrtg.server.Server;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;   
-
-import cc.co.llabor.cache.Manager;
+import org.slf4j.LoggerFactory;    
 import cc.co.llabor.features.Repo;
 import cc.co.llabor.threshold.AlertCaptain;
 import cc.co.llabor.threshold.TholdException;
@@ -40,11 +33,20 @@ public class StartStopServlet extends HttpServlet {
 	 */
 	private static final long serialVersionUID = -3432681267977857824L;
 	private static Logger log = LoggerFactory.getLogger(cc.co.llabor.system.StartStopServlet.class);
-	private static int groupCounter = 0;
+
 	ThreadGroup mythreads = null;
 	{
+		String name = ""+System.currentTimeMillis();
 		try{
-			mythreads= new ThreadGroup("rrd@"+groupCounter++);
+			// @see org.collectd.mx.MBeanSender.getInstanceName()
+			name = "rrd#"+System.getProperty("jcd.instance", name  );
+			  
+		}catch ( SecurityException e) {
+			mythreads= Thread.currentThread().getThreadGroup() ;
+		}
+		try{ 
+			mythreads= new ThreadGroup(name);
+			mythreads.setDaemon(true);
 		}catch ( SecurityException e) {
 			mythreads= Thread.currentThread().getThreadGroup() ;
 		}
@@ -399,14 +401,15 @@ JRE_HOME/lib/management/snmp.acl
 		t1.start();		
 	}
 
+	//TODO the only one ??
 	ClientLauncher clientLauncher;
 	/**
 	 * @author vipup
 	 */
 	private void startColelctdClient() {
 		log.info(Repo.getBanner( "collectClient"));
-		ClientLauncher clientLauncher = new ClientLauncher() ;
-		Thread t1 = new Thread ( this.mythreads, clientLauncher, "collectdCLIENT");
+		clientLauncher = new ClientLauncher() ;
+		Thread t1 = new Thread ( this.mythreads, clientLauncher, "collectdCLIENTstater.TMP");
 		t1.setDaemon(true);
 		t1.start();
 	}
@@ -466,7 +469,13 @@ JRE_HOME/lib/management/snmp.acl
 			e.printStackTrace();
 		}
 		
-		
+		try {
+			clientLauncher.killProcessTree();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+					
 		
 		log.info(Repo.getBanner( "+rrdws"));
 		log.info("Stoped");
