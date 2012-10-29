@@ -70,11 +70,14 @@ public class RrdKeeper extends NotificationBroadcasterSupport implements Notific
         }catch(InstanceAlreadyExistsException e)
         {e.printStackTrace();
         	MBeanInfo oldOne = bs.getMBeanInfo(name);
-        	System.out.println("ungeristered MBean:"+oldOne);
+        	System.out.print("ungeristered MBean:"+oldOne+"...");
         	try{
         		bs.unregisterMBean(name);
+            	System.out.println("DONE!"+oldOne);
+
         	}catch(Throwable ee){
         		ee.printStackTrace();
+        		System.err.println("ERROR unregistering!"+oldOne);
         	}
         	init();
         } 
@@ -356,7 +359,12 @@ public class RrdKeeper extends NotificationBroadcasterSupport implements Notific
     
 	private Pid getPid(String name) {
 		String name2 = Pid.class.getName();
+		Thread currentThread = Thread.currentThread();
+		ClassLoader clBak = currentThread.getContextClassLoader();
+		ClassLoader clLocal = this.getClass().getClassLoader();
+		currentThread.setContextClassLoader(clLocal);
 		Cache _vpids = Manager.getCache(name2); 
+		currentThread.setContextClassLoader(clBak );
 		String persistenceName = name+".properties";
 		Properties pVpid = (Properties) _vpids.get(persistenceName );
 		Pid retval = null;
@@ -373,9 +381,21 @@ public class RrdKeeper extends NotificationBroadcasterSupport implements Notific
 	}
 
 	public void storeVpid( String name, Pid retval) {
-		Cache _vpids = Manager.getCache(Pid.class.getName()); 
-		String persistenceName = name+".properties";		
-		_vpids.put(persistenceName, retval.toProperties());
+		
+		/// <push>
+		Thread currentThread = Thread.currentThread();
+		ClassLoader clBak = currentThread.getContextClassLoader();
+		ClassLoader clLocal = this.getClass().getClassLoader();
+		currentThread.setContextClassLoader(clLocal);
+		/// </push>
+		String name2 = Pid.class.getName();
+		Cache _vpids = Manager.getCache(name2); 
+		String persistenceName = name+".properties";	 
+		Properties properties = retval.toProperties();
+		_vpids.put(persistenceName, properties);
+		/// <pop>		
+		currentThread.setContextClassLoader(clBak );
+		/// <pop>		
 	}
 
 	public void warning() {

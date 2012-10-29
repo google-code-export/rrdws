@@ -1,1 +1,1 @@
-mvn -o -e tomcat:redeploy -Dcccache -Dmaven.test.skip=true -DT60 tomcat:redeploy
+mvn -o -e tomcat:redeploy -Dcccache -Dmaven.test.skip=true -DTOMCAT6  -DT60 tomcat:redeploy
