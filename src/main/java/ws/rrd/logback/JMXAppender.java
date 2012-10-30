@@ -13,7 +13,7 @@ import jmxlogger.integration.log4j.JmxLogAppender;
 import jmxlogger.tools.ToolBox;
 
 /** 
- * <b>Description:TODO</b>
+ * <b>Description:Wrapper for generin JmxLogAppender</b>
  * @author      vipup<br>
  * <br>
  * <b>Copyright:</b>     Copyright (c) 2006-2008 Monster AG <br>
@@ -23,6 +23,22 @@ import jmxlogger.tools.ToolBox;
  */
 public class JMXAppender extends JmxLogAppender{
 	private Map <String,Long> statistics;	
+	
+	 
+	public JMXAppender(){
+		super();
+		
+		System.out.println("JMXAppender inited.");
+	}
+	
+	
+    public synchronized void close()
+    {
+    	System.out.println("JMXAppender destroy...");
+        super.close();
+        System.out.println("JMXAppender destroy compleete.");
+    }
+	
 	   /**
      * Prepares event information as Notification object.
      * @param event
@@ -101,16 +117,21 @@ public class JMXAppender extends JmxLogAppender{
     }
     {
     	try {
+    		System.out.println("<jmxlog!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     		System.out.println("!!!!!!!!!   !!!!  !!! !!!!   !!!      !!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     		System.out.println("!!!!!!!!!! !!!!! ! !! !!!!! !!!!!! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     		System.out.println("!!!!!!!!!! !!!!! !! ! !!!!! !!!!!! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     		System.out.println("!!!!!!!!!! !!!!! !!!  !!!!! !!!!!! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     		System.out.println("!!!!!!!!     !!! !!!! !!!!   !!!!! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-			initShutdownHook() ;
+    		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    		initShutdownHook() ;
+    		System.out.println("------------------------------------------------------------------");
     		System.out.println("---------------    --- --  ---------------------------------------");
     		System.out.println("--------------- --- --   -----------------------------------------");
     		System.out.println("--------------- --- -- -- ----------------------------------------");
     		System.out.println("----------------   --- --- ---------------------------------------");
+    		System.out.println("------------------------------------------------------------<jmxlog");
+    		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println("*************************************************************************");
@@ -118,9 +139,9 @@ public class JMXAppender extends JmxLogAppender{
 			System.out.println("*************************************************************************");
 			e.printStackTrace();
 			System.out.println("*************************************************************************");
-			System.out.println("*************************************************************************");
-			System.out.println("*************************************************************************");
-			System.out.println("*************************************************************************");
+			System.out.println("*****************************              ******************************");
+			System.out.println("***************************** error@jmxlog ******************************");
+			System.out.println("*****************************              ******************************");
 			System.out.println("*************************************************************************");
 			System.out.println("*************************************************************************");
 			System.out.println("*************************************************************************");
@@ -139,6 +160,7 @@ public class JMXAppender extends JmxLogAppender{
 		 
 		Runtime.getRuntime().addShutdownHook(new Thread("rrd.JMXAppender.ShutdownHook") {
 			public void run() {
+				System.out.println("<jmxlog!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 	    		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 	    		System.out.println("!!!!!!!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 	    		System.out.println("!!!!!!!!!!!!!!!!!! !!! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -146,11 +168,11 @@ public class JMXAppender extends JmxLogAppender{
 	    		System.out.println("!!!!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 	    		close();
 	    		System.out.println("------------------------------------------------------------------");
+	    		System.out.println("---------------------------        -------------------------------");
+	    		System.out.println("--------------------------- jmxlog -------------------------------");
+	    		System.out.println("---------------------------        -------------------------------");
 	    		System.out.println("------------------------------------------------------------------");
-	    		System.out.println("------------------------------------------------------------------");
-	    		System.out.println("------------------------------------------------------------------");
-	    		System.out.println("------------------------------------------------------------------");
-	    		System.out.println("------------------------------------------------------------------");				
+	    		System.out.println("-----------------------------------------------------------<jmxlog");				
 				
 			}
 		});

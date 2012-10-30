@@ -105,7 +105,7 @@
 		<dependency>
 			<groupId>cc.co.llabor</groupId>
 			<artifactId>jcollectd</artifactId>
-			<version>0.1.7</version>
+			<version>0.1.9-SNAPSHOT</version>
 		</dependency>
 
 		<!--  reused from jcollectd-artefact
