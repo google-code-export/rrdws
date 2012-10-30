@@ -173,7 +173,7 @@ public class RrdUpdateAction implements Action {
 		 * @param xpath
 		 * @return
 		 */
-		private static final String xpath2Hash(String xpath) {
+		public static final String xpath2Hash(String xpath) {
 			String rrddb = "X"+xpath.hashCode()+".rrd";
 			checkReg(rrddb, xpath);
 			return rrddb;

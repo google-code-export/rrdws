@@ -18,6 +18,8 @@ import org.jrobin.core.RrdDb;
 import org.jrobin.core.RrdDbPool;
 import org.jrobin.core.RrdException;
 
+import ws.rrd.csv.RrdUpdateAction;
+
 import cc.co.llabor.cache.Manager;
  
 public class RRDHighLimitWatchDog extends AbstractLimitWatchDog {
@@ -86,20 +88,7 @@ public class RRDHighLimitWatchDog extends AbstractLimitWatchDog {
 		long retval= -1; 
 		RrdDbPool instance;
 		try {
-			
-			/**
-			 * BE CAREFULL WITH reimpelmentation THIS METHOD! The risk is to look all exisitng RRD-Databases
-			 * 
-			 * @author vipup
-			 * @param xpath
-			 * @return
-			 */
-			//private static final String xpath2Hash(String xpath) {
-				String rrddb = "X"+this.rrdPATH.hashCode()+".rrd";
-			//	checkReg(rrddb, xpath);
-			//	return rrddb;
-			//}			
-			
+			String rrddb = RrdUpdateAction.xpath2Hash(rrdPATH);
 			instance = RrdDbPool.getInstance();
 			//instance.reset();
 			RrdDb db = instance .requestRrdDb(rrddb);
@@ -114,7 +103,7 @@ public class RRDHighLimitWatchDog extends AbstractLimitWatchDog {
 			log.error(  "getCurrent()failed", e1);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			log.error(  "getCurrent() failed", e);
+			log.error(  "getCurrent() failed", e);//e.printStackTrace()
 		} 		
 		return retval ;
 	}

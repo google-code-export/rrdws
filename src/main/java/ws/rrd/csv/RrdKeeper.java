@@ -65,6 +65,13 @@ public class RrdKeeper extends NotificationBroadcasterSupport implements Notific
             ManagementFactory.getPlatformMBeanServer();    	
         ObjectName name = new ObjectName(DOMAIN + ":" + "type=" + ""+this.getClass().getName());
         try{
+        	System.out.print("delete Obj["+name+"]...");
+        	bs.unregisterMBean( name);
+        	System.out.println("done");
+        }catch(javax.management.InstanceNotFoundException e){
+        	System.out.println("ignored.");
+        }
+        try{
         	bs.registerMBean(this, name);
         	assert bs.getObjectInstance(name) != null : "RRDKeeper MBean is not registered";   
         }catch(InstanceAlreadyExistsException e)
