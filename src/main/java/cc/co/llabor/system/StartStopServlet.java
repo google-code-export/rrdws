@@ -19,12 +19,7 @@ import org.slf4j.LoggerFactory;
 import cc.co.llabor.features.Repo;
 import cc.co.llabor.threshold.AlertCaptain;
 import cc.co.llabor.threshold.TholdException;
-import cc.co.llabor.threshold.rrd.Threshold;
-import cc.co.llabor.watchdog.AbstractLimitWatchDog;
-import cc.co.llabor.watchdog.DogFarm;
-import cc.co.llabor.watchdog.HighLimitWatchDog;
-import cc.co.llabor.watchdog.LowLimitWatchDog;  
-import cc.co.llabor.watchdog.RRDHighLimitWatchDog;
+import cc.co.llabor.threshold.rrd.Threshold; 
 
 public class StartStopServlet extends HttpServlet {
 	
@@ -59,9 +54,7 @@ public class StartStopServlet extends HttpServlet {
 	public static boolean isGAE() {
 		return !(System.getProperty("com.google.appengine.runtime.version")==null);
 	}
-	
-	AbstractLimitWatchDog lTimer;
-	AbstractLimitWatchDog hTimer;
+	 
 	
 	public void init(ServletConfig config) throws ServletException{
 		long initResult = -1; 
@@ -97,104 +90,8 @@ public class StartStopServlet extends HttpServlet {
 			initResult += -1;
 			e.printStackTrace();
 		}
-		  
-		if(1==3)
-		try {
-			hTimer = DogFarm.startTimer( HighLimitWatchDog.class );
-			initResult *= -2;
-		} catch (IllegalArgumentException e) {
-			initResult += -1;
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			initResult += -1;
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			initResult += -1;
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			initResult += -1;
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			initResult += -1;
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			initResult += -1;
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}catch(Throwable e){
-			initResult += -1;
-			e.printStackTrace();
-		}
-		if(1==3)
-		try {
-			lTimer = DogFarm.startTimer( LowLimitWatchDog.class );
-			initResult *= -2;
-		} catch (IllegalArgumentException e) {
-			initResult += -1;
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			initResult += -1;
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			initResult += -1;
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			initResult += -1;
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			initResult += -1;
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			initResult += -1;
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}catch(Throwable e){
-			initResult += -1;
-			e.printStackTrace();
-		}
-		
-		try {
-			lTimer = DogFarm.startTimer( RRDHighLimitWatchDog.class );
-			initResult *= -2;
-		} catch (IllegalArgumentException e) {
-			initResult += -1;
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			initResult += -1;
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			initResult += -1;
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			initResult += -1;
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			initResult += -1;
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			initResult += -1;
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Throwable e) {
-			initResult += -1;
-			// TODO Auto-generated catch block
-			e.printStackTrace(); 
-		}
+		   
+		 
 		// do exactly the same as prev-WatchDog, but otherwise
 //		Cache tholdRepo = Manager.getCache("thold");
 //		Object tholdProps = tholdRepo.get("default.properties");//RRDHighLimitWatchDog
@@ -351,7 +248,7 @@ JRE_HOME/lib/management/snmp.acl
 	}	
 
 	private void startMrtgServer() { 
-		log.info(Repo.getBanner("mrtgServer"));
+		log_info(Repo.getBanner("mrtgServer"));
 		 String[] acceptedClients = new String[]{};
 		//jrobin/mrtg/server/Server
 		try {
@@ -364,16 +261,18 @@ JRE_HOME/lib/management/snmp.acl
 	}
 	
 	private void initAutoDiscover(String hostPar, String communityPar, String numericOid, String ifDescr) throws IOException{
-		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
-		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
-		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
-		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
-		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
-		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
-		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
-		log.info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
+		log_info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
+		log_info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
+		log_info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
+		log_info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
+		log_info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
+		log_info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
+		log_info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
+		log_info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
 		IfDsicoverer.startDiscoverer(mythreads, hostPar, communityPar, numericOid, ifDescr);
 	}
+
+
 
 
 	/**
@@ -381,7 +280,7 @@ JRE_HOME/lib/management/snmp.acl
 	 */
 	private void startCollectdWorker() { 
 		//rrdDataWorker.dat
-		log.info(Repo.getBanner( "rrdDataWorker"));
+		log_info(Repo.getBanner( "rrdDataWorker"));
 			worker = new DataWorker(); 
 			Thread t1 = new Thread(mythreads, worker, "rrd DataWorker");
 			t1.setDaemon(true);
@@ -394,20 +293,29 @@ JRE_HOME/lib/management/snmp.acl
 	 * @param arg0
 	 */
 	private void startCollectdServer(final String[] arg0) {
-		log.info(Repo.getBanner( "collectServer"));
+		log_info(Repo.getBanner( "collectServer"));
 		serverLauncher = new ServerLauncher(arg0);
 		Thread t1 = new Thread ( this.mythreads, serverLauncher, "jcollectd_Server");
 		t1.setDaemon(true);
 		t1.start();		
 	}
 
+	private void log_info(String s) {
+		if (log!=null) log.info(s);
+		else System.out.println(s);
+	}
+
+	private void log_info(String string, Object[] objects) {
+		if (log!=null) log.info(string,objects);
+		else System.out.println(string+":::[]{}"+objects);
+	}
 	//TODO the only one ??
 	ClientLauncher clientLauncher;
 	/**
 	 * @author vipup
 	 */
 	private void startColelctdClient() {
-		log.info(Repo.getBanner( "collectClient"));
+		log_info(Repo.getBanner( "collectClient"));
 		clientLauncher = new ClientLauncher() ;
 		Thread t1 = new Thread ( this.mythreads, clientLauncher, "collectdCLIENTstater.TMP");
 		t1.setDaemon(true);
@@ -433,7 +341,7 @@ JRE_HOME/lib/management/snmp.acl
     }
     
     public void doStop() {
-		log.info("Shutting down...");
+		log_info("Shutting down...");
 		serverLauncher.destroyServer();
 		// close all RRDs..
 		RrdDbPool instance;
@@ -445,16 +353,7 @@ JRE_HOME/lib/management/snmp.acl
 		} catch (RrdException e1) {
 			log.error("doStop() failed", e1);
 		} 
-		try {
-			DogFarm.stopTimer( lTimer  ); 
-			log.info(Repo.getBanner( "+lTimer"));
-			DogFarm.stopTimer( hTimer  );
-			log.info(Repo.getBanner( "+hTimer"));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
-		
+ 	 
 		try {
 			Server.getInstance().stop();
 		} catch (MrtgException e) {
@@ -477,7 +376,7 @@ JRE_HOME/lib/management/snmp.acl
 		}
 					
 		
-		log.info(Repo.getBanner( "+rrdws"));
-		log.info("Stoped");
+		log_info(Repo.getBanner( "+rrdws"));
+		log_info("Stoped");
 	}
 }
