@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?> 
-<web-app>
+<web-app version="2.5" 
+xmlns="http://java.sun.com/xml/ns/javaee" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee  http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+> 
 	<description>RRD4J @GAE/J2EE</description>
 	<display-name>
 		${pom.name}: ${pom.groupId}- ${pom.artifactId}- ${pom.version}-
@@ -16,7 +20,15 @@
     <param-name>exclude</param-name>
     <param-value>/main.htm</param-value>
   </init-param>
-</filter> 
+</filter>
+
+	<!-- /rrd/src/main/java/ws/rrd/logback/ServletListener.java -->
+	<listener>
+		<listener-class>
+			QuartzInitializerListener  
+        </listener-class>
+	</listener>
+
 <!-- 
 <filter-mapping>
   <filter-name>ETagFilter</filter-name>
@@ -219,6 +231,9 @@
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
+	
+	
+	
 <!-- http://mojo.codehaus.org/jspc-maven-plugin/usage.html -->
 <!-- [INSERT FRAGMENT HERE] -->
 
