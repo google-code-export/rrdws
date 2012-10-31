@@ -4,42 +4,28 @@ import java.io.File;
 import java.lang.management.ManagementFactory;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.Executors;
-
+import java.util.Map;  
 import javax.management.MBeanServer;
 import javax.management.Notification;
-import javax.management.ObjectName;
-
+import javax.management.ObjectName; 
 import org.apache.log4j.Layout;
 import org.apache.log4j.Level;
 import org.apache.log4j.PatternLayout;
 import org.apache.log4j.Priority;
 import org.apache.log4j.spi.LoggingEvent;
-import org.apache.log4j.spi.ErrorCode;
-
-
+import org.apache.log4j.spi.ErrorCode; 
 import jmxlogger.integration.log4j.JmxLogAppender;
-import jmxlogger.tools.JmxConfigStore;
-import jmxlogger.tools.JmxEventWrapper;
-import jmxlogger.tools.JmxLogEmitter;
+import jmxlogger.tools.JmxConfigStore; 
 import jmxlogger.tools.JmxLogService;
 import jmxlogger.tools.ToolBox;
-import jmxlogger.tools.JmxConfigStore.ConfigEvent;
-
-
-import ws.rrd.csv.RrdKeeper;
-
+import jmxlogger.tools.JmxConfigStore.ConfigEvent; 
 /**
  * This class implements the Log4J appender for JmxLogConfigurer.  It can be used to broadcast
  * Log4J log events as JMX events.  When this class is initialized by the logging
- * framework, it creates a JMX MBean that emitts log event.
-
-
+ * framework, it creates a JMX MBean that emitts log event. 
  *
  * @author vladimir.vivien
- */
-
+ */ 
 public class JMXAppender extends JmxLogAppender{ 
     private JmxLogService jmxLogService;
     private JmxConfigStore configStore;
@@ -96,8 +82,7 @@ public class JMXAppender extends JmxLogAppender{
     }
 
     public void setObjectName(String objName){
-        setObjectNameValue(createObjectNameInstance(objName));
-
+        setObjectNameValue(createObjectNameInstance(objName)); 
     }
 
     public String getObjectName(String objName){
@@ -109,14 +94,11 @@ public class JMXAppender extends JmxLogAppender{
         configStore.putValue(ToolBox.KEY_CONFIG_JMX_OBJECTNAME, name);
     }
     public ObjectName getObjectNameValue() {
-        return (ObjectName)configStore.getValue(ToolBox.KEY_CONFIG_JMX_OBJECTNAME);
-
-
+        return (ObjectName)configStore.getValue(ToolBox.KEY_CONFIG_JMX_OBJECTNAME); 
     }
 
     public void setMBeanServer(String domain) {
-        setMBeanServerValue(createServerInstance(domain));
-
+        setMBeanServerValue(createServerInstance(domain)); 
     }
     public String getMBeanServer() {
         MBeanServer svr = (MBeanServer)configStore.getValue(ToolBox.KEY_CONFIG_JMX_SERVER);
@@ -125,17 +107,10 @@ public class JMXAppender extends JmxLogAppender{
     
     public void setMBeanServerValue(MBeanServer server){
         configStore.putValue(ToolBox.KEY_CONFIG_JMX_SERVER, server);
-    }
-
-
-
+    } 
+    
 public MBeanServer getMBeanServerValue() {
-     return (MBeanServer)configStore.getValue(ToolBox.KEY_CONFIG_JMX_SERVER);
-
-
-
-
-
+     return (MBeanServer)configStore.getValue(ToolBox.KEY_CONFIG_JMX_SERVER); 
 }
 
 public void setFilterExpression(String exp){
@@ -144,11 +119,7 @@ public void setFilterExpression(String exp){
 }
 
 public String getFilterExpression(){
-    return (String)configStore.getValue(ToolBox.KEY_CONFIG_FILTER_EXP);
-
-
-
-
+    return (String)configStore.getValue(ToolBox.KEY_CONFIG_FILTER_EXP); 
 }
 
 public void setFilterScriptFile(String fileName) {
@@ -156,10 +127,7 @@ public void setFilterScriptFile(String fileName) {
     if(ToolBox.isFileValid(f)){
         configStore.putValue(ToolBox.KEY_CONFIG_FILTER_SCRIPT, f);
         configStore.postEvent(new ConfigEvent(this, ToolBox.KEY_CONFIG_FILTER_SCRIPT, f));
-    }
-
-
-
+    }  
 }
 
 public String getFilterScriptFile(){
@@ -182,18 +150,28 @@ public void setServerAddress(String addr){
 @Override
 public void activateOptions() {
     configure();
+    
     if(!jmxLogService.isStarted()){
         jmxLogService.start();
     }
+    ServletListener.registerToKilling(this);
 }
 
 
-
-
-
-
-
-
+/**
+ * Log4J life cycle method,  
+ * 
+ * Finalize this appender by calling the derived class'<code>close</code> method.
+ * 
+ * 
+ * @since 0.8.4 
+ * 
+ * */
+@Override
+public void finalize(){
+	this.close();
+	super.finalize();
+} 
 
 
 
@@ -251,22 +229,8 @@ public synchronized void close()
  * @return
  */
 public boolean requiresLayout() {
-    return true;
-
-
-
-
-
-
-}
-
-
-
-
-
-
-
-
+    return true; 
+} 
 /**
  * Determines whether the Appender's configuration is OK.
  * @return boolean
@@ -286,18 +250,7 @@ private boolean isConfiguredOk(){
 
  */
 private boolean isLoggable(LoggingEvent event) {
-    return (event.getLevel().isGreaterOrEqual(this.getThreshold()));
-
-
-
-
-
-
-
-
-
-
-
+    return (event.getLevel().isGreaterOrEqual(this.getThreshold())); 
 }
 
 /**
@@ -310,11 +263,8 @@ private void initializeLogger() {
     configStore.addListener(new JmxConfigStore.ConfigEventListener() {
         public void onValueChanged(JmxConfigStore.ConfigEvent event) {
             if (event.getKey().equals(ToolBox.KEY_CONFIG_LOG_LEVEL) && event.getSource() != JMXAppender.this) {
-                setInternalThreshold((String) event.getValue());
- 
-            }
-
- 
+                setInternalThreshold((String) event.getValue()); 
+            } 
         }
     });
 }
@@ -403,34 +353,8 @@ private MBeanServer createServerInstance(String domain) {
         svr = ToolBox.findMBeanServer(domain);
     }
     return svr;
-}
-
- 
-    
- 
- 
-  
-    
-     
-    
-    /**
-    Finalize this appender by calling the derived class'
-    <code>close</code> method.
-
-    @since 0.8.4 */
-    @Override
-    public void finalize(){
-    	this.close();
-    	super.finalize();
-    }
-      
- 	
-		 
-	
-
-	
-	
-	   /**
+} 
+	 /**
      * Prepares event information as Notification object.
      * @param event
      * @return Notification
@@ -450,7 +374,8 @@ private MBeanServer createServerInstance(String domain) {
         return note;
     }
     long seqCounter = 0;
-    private Notification buildNotification(LoggingEvent event){
+    
+    protected Notification buildNotification(LoggingEvent event){
         long seqnum = seqCounter++;
         long timestamp  =  event.getStartTime();
 
