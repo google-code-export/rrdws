@@ -25,7 +25,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee  http://java.sun.com/xml/n
 	<!-- /rrd/src/main/java/ws/rrd/logback/ServletListener.java -->
 	<listener>
 		<listener-class>
-			QuartzInitializerListener  
+			ws.rrd.logback.ServletListener
         </listener-class>
 	</listener>
 
