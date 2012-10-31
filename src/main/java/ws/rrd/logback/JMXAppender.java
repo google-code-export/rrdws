@@ -148,14 +148,27 @@ public void setServerAddress(String addr){
  * Log4J life cycle method, called once all gettters/setters are called.
  */
 @Override
-public void activateOptions() {
-    configure();
-    
-    if(!jmxLogService.isStarted()){
-        jmxLogService.start();
-    }
-    ServletListener.registerToKilling(this);
-}
+	public void activateOptions() {
+		try {
+			configure(); 
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		try {
+			if (!jmxLogService.isStarted()) {
+				jmxLogService.start();
+			}
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		try {
+
+			ServletListener.registerToKilling(this);
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+
+	}
 
 
 /**
@@ -359,7 +372,7 @@ private MBeanServer createServerInstance(String domain) {
      * @param event
      * @return Notification
      */
-    protected Notification buildNotification(Map<String,Object> event){
+    private Notification buildNotification(Map<String,Object> event){
         long seqnum = (event.get(ToolBox.KEY_EVENT_SEQ_NUM) != null) ? (Long)event.get(ToolBox.KEY_EVENT_SEQ_NUM) : 0L;
         long timestamp  = (event.get(ToolBox.KEY_EVENT_TIME_STAMP) != null) ? (Long)event.get(ToolBox.KEY_EVENT_TIME_STAMP) : 0L;
  
@@ -375,7 +388,7 @@ private MBeanServer createServerInstance(String domain) {
     }
     long seqCounter = 0;
     
-    protected Notification buildNotification(LoggingEvent event){
+    private Notification buildNotification(LoggingEvent event){
         long seqnum = seqCounter++;
         long timestamp  =  event.getStartTime();
 
