@@ -16,7 +16,7 @@ import org.apache.log4j.spi.LoggingEvent;
 import org.apache.log4j.spi.ErrorCode; 
 import jmxlogger.integration.log4j.JmxLogAppender;
 import jmxlogger.tools.JmxConfigStore; 
-import jmxlogger.tools.JmxLogService;
+//import jmxlogger.tools.JmxLogService;
 import jmxlogger.tools.ToolBox;
 import jmxlogger.tools.JmxConfigStore.ConfigEvent; 
 /**
@@ -27,7 +27,7 @@ import jmxlogger.tools.JmxConfigStore.ConfigEvent;
  * @author vladimir.vivien
  */ 
 public class JMXAppender extends JmxLogAppender{ 
-    private JmxLogService jmxLogService;
+    private JMXService jmxLogService;
     private JmxConfigStore configStore;
     private Layout logLayout = new PatternLayout("%-4r [%t] %-5p %c %x - %m%n");
     
@@ -270,7 +270,7 @@ private boolean isLoggable(LoggingEvent event) {
  * Initialize the JMX Logger object.
  */
 private void initializeLogger() {
-    jmxLogService = (jmxLogService == null) ? JmxLogService.createInstance() : jmxLogService;
+    jmxLogService = (jmxLogService == null) ? JMXService.createInstance() : jmxLogService;
     configStore = jmxLogService.getDefaultConfigurationStore();
     // what to do when a value is update
     configStore.addListener(new JmxConfigStore.ConfigEventListener() {
