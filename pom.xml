@@ -799,7 +799,7 @@
 				                     <groupId>org.apache.tomcat</groupId>
 				                     <artifactId>jasper</artifactId>
 				                     <version>${tomcat.version}</version>
-				                     <scope>provided</scope>
+				                     <!--scope>provided</scope-->
 				                </dependency>
 							
 								<dependency>
@@ -999,7 +999,7 @@
 								log4j.properties
 							</include> 
 						</includes>
-						<targetPath></targetPath>
+						<targetPath>./</targetPath>
 					</resource>
 					<resource>
 						<filtering>true</filtering>
