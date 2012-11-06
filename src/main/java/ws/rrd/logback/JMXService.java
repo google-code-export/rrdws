@@ -217,13 +217,15 @@ public class JMXService {
         });
     }
 
-	final static ThreadFactory threadFactory = new LocalThreadPoolFactory();
+	
 	
     private void setupNoteProducers() {
+    	ThreadFactory threadFactory = new LocalThreadPoolFactory("noteProducers");
 		noteProducers = Executors.newFixedThreadPool(producerSize,  threadFactory );
     }
 
     private void setupNoteConsumerTask() {
+    	ThreadFactory threadFactory = new LocalThreadPoolFactory("noteConsumer");
         noteConsumer = Executors.newSingleThreadExecutor( threadFactory);
         noteConsumer.execute(new Runnable() {
             public void run() {

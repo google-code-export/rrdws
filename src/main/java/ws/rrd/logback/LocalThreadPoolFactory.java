@@ -17,22 +17,19 @@ public class LocalThreadPoolFactory implements ThreadFactory {
 
 	static final AtomicInteger poolNumber = new AtomicInteger(1);
 	final AtomicInteger threadNumber = new AtomicInteger(1);
-	private ThreadGroup threadGroup;
-	final String namePrefix;
+	 
+	 
+	final String namePrefix ;
+ 
 
-	public LocalThreadPoolFactory() {
-		SecurityManager s = System.getSecurityManager();
-		threadGroup = (s != null) ? s.getThreadGroup() : Thread.currentThread() .getThreadGroup();
-		namePrefix = "jmxlogger-" + poolNumber.getAndIncrement() + "-thread-";
-	}
-	public LocalThreadPoolFactory(ThreadGroup threadGroup) {
-		this.threadGroup = threadGroup;
-		namePrefix = "jmxlogger=" + poolNumber.getAndIncrement() + "-thread-";
+	public LocalThreadPoolFactory(String string) {
+		namePrefix = "jmxlogger-" + poolNumber.getAndIncrement() + "-"+string+"-";
 	}
 
 	@Override
 	public Thread newThread(Runnable task) {
-		Thread thread = new Thread(threadGroup, task);
+		ThreadGroup threadGroup = ServletListener.getDefaultThreadGroup();
+		Thread thread = new Thread(threadGroup , task);
 		thread.setName(namePrefix + threadNumber.getAndIncrement());
 		thread.setDaemon(true);
 		return thread;
