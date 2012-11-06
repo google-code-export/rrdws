@@ -19,10 +19,31 @@ import org.slf4j.LoggerFactory;
 public class ServletListener implements ServletContextListener{
 	
 	private static final Logger log = LoggerFactory.getLogger(ServletListener.class  );
+	static ThreadGroup mythreads = null;
+	{
+		String name = ""+System.currentTimeMillis();
+		try{
+			// @see org.collectd.mx.MBeanSender.getInstanceName()
+			name = "rrd#"+System.getProperty("jcd.instance", name  );
+			  
+		}catch ( SecurityException e) {
+			mythreads= Thread.currentThread().getThreadGroup() ;
+		}
+		try{ 
+			mythreads= new ThreadGroup(name);
+			mythreads.setDaemon(true);
+		}catch ( SecurityException e) {
+			mythreads= Thread.currentThread().getThreadGroup() ;
+		}
+	}	
+	
+	public static ThreadGroup getDefaultThreadGroup( ){
+		return mythreads;
+	}
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
-		log.info("!!!!!!!!!!!!!!!!!!rrd contextInitialized!!!!!!!!!!!!!");
+		log.info("!!!!!!!!!!!!!!!!!!rrd contextInitialized!!!!!!!!!!!!!"); 
 	}
 
 	@Override

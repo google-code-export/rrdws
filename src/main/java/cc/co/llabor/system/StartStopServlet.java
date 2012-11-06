@@ -16,6 +16,8 @@ import org.jrobin.mrtg.server.IfDsicoverer;
 import org.jrobin.mrtg.server.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;    
+
+import ws.rrd.logback.ServletListener;
 import cc.co.llabor.features.Repo;
 import cc.co.llabor.threshold.AlertCaptain;
 import cc.co.llabor.threshold.TholdException;
@@ -29,23 +31,7 @@ public class StartStopServlet extends HttpServlet {
 	private static final long serialVersionUID = -3432681267977857824L;
 	private static Logger log = LoggerFactory.getLogger(cc.co.llabor.system.StartStopServlet.class);
 
-	ThreadGroup mythreads = null;
-	{
-		String name = ""+System.currentTimeMillis();
-		try{
-			// @see org.collectd.mx.MBeanSender.getInstanceName()
-			name = "rrd#"+System.getProperty("jcd.instance", name  );
-			  
-		}catch ( SecurityException e) {
-			mythreads= Thread.currentThread().getThreadGroup() ;
-		}
-		try{ 
-			mythreads= new ThreadGroup(name);
-			mythreads.setDaemon(true);
-		}catch ( SecurityException e) {
-			mythreads= Thread.currentThread().getThreadGroup() ;
-		}
-	}
+
 	
 	ServerLauncher serverLauncher;
 	 
@@ -101,7 +87,7 @@ public class StartStopServlet extends HttpServlet {
 //			Threshold watchDog  = ac.toThreshold(tholdProps );
 //			ac.register(  watchDog );
 //			lookInsideThold(tholdProps);
-			AlertCaptain ac = AlertCaptain.getInstance(mythreads);
+			AlertCaptain ac = AlertCaptain.getInstance(ServletListener.getDefaultThreadGroup());
 			initResult *= -2;
 			ac.init();		
 			initResult *= -2;
@@ -269,7 +255,7 @@ JRE_HOME/lib/management/snmp.acl
 		log_info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
 		log_info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
 		log_info("SNMP autodiscovery started for: host{},community{} from OID:{} || {}" ,new Object[]{hostPar,  communityPar,  numericOid,  ifDescr });
-		IfDsicoverer.startDiscoverer(mythreads, hostPar, communityPar, numericOid, ifDescr);
+		IfDsicoverer.startDiscoverer(ServletListener.getDefaultThreadGroup(), hostPar, communityPar, numericOid, ifDescr);
 	}
 
 
@@ -282,7 +268,7 @@ JRE_HOME/lib/management/snmp.acl
 		//rrdDataWorker.dat
 		log_info(Repo.getBanner( "rrdDataWorker"));
 			worker = new DataWorker(); 
-			Thread t1 = new Thread(mythreads, worker, "rrd DataWorker");
+			Thread t1 = new Thread(ServletListener.getDefaultThreadGroup(), worker, "rrd DataWorker");
 			t1.setDaemon(true);
 			t1.start(); 
 	}
@@ -295,7 +281,8 @@ JRE_HOME/lib/management/snmp.acl
 	private void startCollectdServer(final String[] arg0) {
 		log_info(Repo.getBanner( "collectServer"));
 		serverLauncher = new ServerLauncher(arg0);
-		Thread t1 = new Thread ( this.mythreads, serverLauncher, "jcollectd_Server");
+		ThreadGroup dtgTmp = ServletListener.getDefaultThreadGroup();
+		Thread t1 = new Thread ( dtgTmp , serverLauncher, "jcollectd_Server");
 		t1.setDaemon(true);
 		t1.start();		
 	}
@@ -317,7 +304,8 @@ JRE_HOME/lib/management/snmp.acl
 	private void startColelctdClient() {
 		log_info(Repo.getBanner( "collectClient"));
 		clientLauncher = new ClientLauncher() ;
-		Thread t1 = new Thread ( this.mythreads, clientLauncher, "collectdCLIENTstater.TMP");
+		ThreadGroup dtgTmp = ServletListener.getDefaultThreadGroup();
+		Thread t1 = new Thread ( dtgTmp , clientLauncher, "collectdCLIENTstater.TMP");
 		t1.setDaemon(true);
 		t1.start();
 	}
@@ -362,7 +350,8 @@ JRE_HOME/lib/management/snmp.acl
 		}
 		
 		try {
-			AlertCaptain.getInstance(mythreads).setAlive(false);
+			ThreadGroup mythreads = ServletListener.getDefaultThreadGroup();
+			AlertCaptain.getInstance(mythreads ).setAlive(false);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
