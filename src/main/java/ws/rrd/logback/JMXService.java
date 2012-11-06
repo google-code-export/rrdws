@@ -26,9 +26,7 @@ package ws.rrd.logback;
 
  
 
-import java.io.File;
-import java.lang.management.ManagementFactory;
-import java.lang.management.RuntimeMXBean;
+import java.io.File; 
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;

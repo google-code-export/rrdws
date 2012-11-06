@@ -36,7 +36,7 @@ import ws.rrd.pid.arduino.Pid;
 import cc.co.llabor.cache.Manager;
 
 /** 
- * <b>Description:TODO</b>
+ * <b>Description:Notify itself via JMX and collect any kind of statistics from other notifications</b>
  * @author      vipup<br>
  * <br>
  * <b>Copyright:</b>     Copyright (c) 2006-2008 Monster AG <br>
@@ -60,35 +60,26 @@ public class RrdKeeper extends NotificationBroadcasterSupport implements Notific
 		super();
 	}
 	
-    private synchronized void init() throws Exception {
-        MBeanServer bs =
-            ManagementFactory.getPlatformMBeanServer();    	
-        ObjectName name = new ObjectName(DOMAIN + ":" + "type=" + ""+this.getClass().getName());
-        try{
-        	System.out.print("delete Obj["+name+"]...");
-        	bs.unregisterMBean( name);
-        	System.out.println("done");
-        }catch(javax.management.InstanceNotFoundException e){
-        	System.out.println("ignored.");
-        }
-        try{
-        	bs.registerMBean(this, name);
-        	assert bs.getObjectInstance(name) != null : "RRDKeeper MBean is not registered";   
-        }catch(InstanceAlreadyExistsException e)
-        {e.printStackTrace();
-        	MBeanInfo oldOne = bs.getMBeanInfo(name);
-        	System.out.print("ungeristered MBean:"+oldOne+"...");
-        	try{
-        		bs.unregisterMBean(name);
-            	System.out.println("DONE!"+oldOne);
-
-        	}catch(Throwable ee){
-        		ee.printStackTrace();
-        		System.err.println("ERROR unregistering!"+oldOne);
-        	}
-        	init();
-        } 
-   }
+	
+	private synchronized void init() throws Exception {
+		MBeanServer bs = ManagementFactory.getPlatformMBeanServer();
+		String nameTmp = DOMAIN + ":type=" + this.getClass().getName();
+		ObjectName oName = new ObjectName(nameTmp);
+		try {
+			System.out.print("ungeristered MBean:[" + oName + "]...");
+			bs.unregisterMBean(oName);
+			System.out.println("DONE "+ oName + "].");
+		} catch (javax.management.InstanceNotFoundException e) {
+			e.printStackTrace();
+			System.err.println("ERROR unregistering!" + oName);
+		}
+		try {
+			bs.registerMBean(this, oName);
+			assert bs.getObjectInstance(oName) != null : "RRDKeeper MBean is not registered";
+		} catch (InstanceAlreadyExistsException e) {
+			e.printStackTrace(); 
+		}
+	}
  
 	
     /**

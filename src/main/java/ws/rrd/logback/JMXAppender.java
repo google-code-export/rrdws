@@ -14,6 +14,8 @@ import org.apache.log4j.PatternLayout;
 import org.apache.log4j.Priority;
 import org.apache.log4j.spi.LoggingEvent;
 import org.apache.log4j.spi.ErrorCode; 
+
+import ws.rrd.csv.RrdKeeper;
 import jmxlogger.integration.log4j.JmxLogAppender;
 import jmxlogger.tools.JmxConfigStore; 
 //import jmxlogger.tools.JmxLogService;
@@ -196,8 +198,8 @@ public void finalize(){
  * sends the log message to the JMX event bus.
  * @param log4jEvent
  */
-@Override
-protected void append(LoggingEvent log4jEvent) {
+//@Override
+protected void appendORIGINAL(LoggingEvent log4jEvent) {
     // check configuration
     if (!isConfiguredOk()) {
         errorHandler.error("Unable to log message, check configuration.");
@@ -404,7 +406,47 @@ private MBeanServer createServerInstance(String domain) {
         note.setUserData(event.getRenderedMessage());
         return note;
     }
-	 
+
+    @Override
+    protected void append(LoggingEvent log4jEvent) {
+    	//super.append(log4jEvent);
+    	int level = log4jEvent.getLevel().toInt();
+    	RrdKeeper instance = RrdKeeper.getInstance();
+    	instance.logged();
+    	Object handback = log4jEvent;
+		// @jmxlogger.tools.JmxLogEmitter.sendLog(Map<String, Object>)
+    	//sendNotification(buildNotification(event));
+		Notification notification = buildNotification(log4jEvent);
+		handback = ""+handback;
+		instance.handleNotification(notification , handback);
+		switch (level) {
+			case Priority.ALL_INT :
+				instance.loggedTRACE();
+				break;
+			case Priority.DEBUG_INT :
+				instance.loggedDEBUG();
+				break;
+			case Priority.ERROR_INT:
+				instance.loggedERROR();
+				break;
+			case Priority.FATAL_INT  :
+				instance.loggedFATAL();
+				break;
+			case Priority.WARN_INT  :
+				instance.loggedWARN();
+				break;
+			case Priority.INFO_INT :
+				instance.loggedINFO();
+				break;
+
+			default :
+				break;
+		}
+    	// instead of super ...
+		appendORIGINAL(log4jEvent);
+    }    
+    
+    
     {
     	try {
     		System.out.println("<jmxlog!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
