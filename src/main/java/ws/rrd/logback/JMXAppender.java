@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.management.MBeanServer;
 import javax.management.Notification;
 import javax.management.ObjectName; 
+
+import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.Layout;
 import org.apache.log4j.Level;
 import org.apache.log4j.PatternLayout;
@@ -16,7 +18,7 @@ import org.apache.log4j.spi.LoggingEvent;
 import org.apache.log4j.spi.ErrorCode; 
 
 import ws.rrd.csv.RrdKeeper;
-import jmxlogger.integration.log4j.JmxLogAppender;
+//import jmxlogger.integration.log4j.JmxLogAppender;
 import jmxlogger.tools.JmxConfigStore; 
 //import jmxlogger.tools.JmxLogService;
 import jmxlogger.tools.ToolBox;
@@ -28,7 +30,7 @@ import jmxlogger.tools.JmxConfigStore.ConfigEvent;
  *
  * @author vladimir.vivien
  */ 
-public class JMXAppender extends JmxLogAppender{ 
+public class JMXAppender extends AppenderSkeleton{ 
     private JMXService jmxLogService;
     private JmxConfigStore configStore;
     private Layout logLayout = new PatternLayout("%-4r [%t] %-5p %c %x - %m%n");

@@ -57,7 +57,65 @@ import jmxlogger.tools.ToolBox;
  * @author vladimir.vivien
  */
 public class JMXService {
-    private JmxLogEmitterMBean logMBean;
+    private final class NoteConsumer implements Runnable {
+		public void run() {
+		    try {
+		        while (true) {
+		            JmxEventWrapper eventWrapper = queue.take();
+		            ((JmxLogEmitter)logMBean).sendLog(eventWrapper.unwrap());
+		        }
+		    } catch (InterruptedException ex) {
+		        Thread.currentThread().interrupt();
+		    }
+		}
+	}
+
+	private final class NoteProducer implements Runnable {
+		private final Map<String, Object> event;
+		private NoteProducer(Map<String, Object> event) {
+			this.event = event;
+		}
+		public void run() {
+		    // apply filter configuration then put event not on queue
+		    if(logFilter.isLogAllowed(Collections.unmodifiableMap(event))){
+		        // update LEVEL statistics
+		        String level = (String) event.get(ToolBox.KEY_EVENT_LEVEL);
+		        if(level != null){
+		            Long levelCount = logStatistics.get(level);
+		            if (levelCount == null) {
+		                logStatistics.put(level, new Long(1));
+		            } else {
+		                long updatedVal = levelCount.longValue() + 1;
+		                logStatistics.put(level, new Long(updatedVal));
+		            }
+		        }
+
+		        // update logger value
+		        String logger = (String)event.get(ToolBox.KEY_EVENT_LOGGER);
+		        if(logger != null){
+		        Long loggerCount = logStatistics.get(logger);
+		            if (loggerCount == null) {
+		                logStatistics.put(logger, new Long(1));
+		            } else {
+		                long updatedVal = loggerCount.longValue() + 1;
+		                logStatistics.put(logger, new Long(updatedVal));
+		            }
+		        }
+
+		        // update filtered Counter
+		        logStatistics.put(ToolBox.KEY_EVENT_LOG_COUNTED, new Long(totalLogCounter.incrementAndGet()));                 
+		        event.put(ToolBox.KEY_EVENT_LOG_STAT, Collections.unmodifiableMap(logStatistics));
+
+		        // add system statiscs
+		        HashMap sysStats = new HashMap<String,Object>();
+
+		        // put in queue to be sent.
+		        queue.put(new JmxEventWrapper(Collections.unmodifiableMap(event)));
+		    }
+		}
+	}
+
+	private JmxLogEmitterMBean logMBean;
     private JmxScriptedLogFilter logFilter;
     private JmxConfigStore configStore;
     private AtomicLong totalLogCounter = new AtomicLong(0);
@@ -174,70 +232,34 @@ public class JMXService {
         logStatistics.put(ToolBox.KEY_EVENT_LOG_COUNT_ATTEMPTED, new Long(attemptedLogCounter.incrementAndGet()));
         event.put(ToolBox.KEY_EVENT_LOG_STAT, Collections.unmodifiableMap(logStatistics));
         event.put(ToolBox.KEY_EVENT_SYS_STAT, Collections.unmodifiableMap(ToolBox.getSystemInfo()));
-
-        noteProducers.execute(new Runnable(){
-            public void run() {
-                // apply filter configuration then put event not on queue
-                if(logFilter.isLogAllowed(Collections.unmodifiableMap(event))){
-                    // update LEVEL statistics
-                    String level = (String) event.get(ToolBox.KEY_EVENT_LEVEL);
-                    if(level != null){
-                        Long levelCount = logStatistics.get(level);
-                        if (levelCount == null) {
-                            logStatistics.put(level, new Long(1));
-                        } else {
-                            long updatedVal = levelCount.longValue() + 1;
-                            logStatistics.put(level, new Long(updatedVal));
-                        }
-                    }
-
-                    // update logger value
-                    String logger = (String)event.get(ToolBox.KEY_EVENT_LOGGER);
-                    if(logger != null){
-                    Long loggerCount = logStatistics.get(logger);
-                        if (loggerCount == null) {
-                            logStatistics.put(logger, new Long(1));
-                        } else {
-                            long updatedVal = loggerCount.longValue() + 1;
-                            logStatistics.put(logger, new Long(updatedVal));
-                        }
-                    }
-
-                    // update filtered Counter
-                    logStatistics.put(ToolBox.KEY_EVENT_LOG_COUNTED, new Long(totalLogCounter.incrementAndGet()));                 
-                    event.put(ToolBox.KEY_EVENT_LOG_STAT, Collections.unmodifiableMap(logStatistics));
-
-                    // add system statiscs
-                    HashMap sysStats = new HashMap<String,Object>();
-
-                    // put in queue to be sent.
-                    queue.put(new JmxEventWrapper(Collections.unmodifiableMap(event)));
-                }
-            }
-        });
+        // this start should be only once
+        if (!isNoteConsumerStarted){
+        	synchronized (noteConsumer) {
+	    		if (!isNoteConsumerStarted){
+	    			synchronized (noteConsumer) {
+	    				noteConsumer.execute(new NoteConsumer());
+	    				isNoteConsumerStarted=true;
+	    			}
+	    		}
+        	}
+        }
+        noteProducers.execute(new NoteProducer(event));
     }
-
+    boolean isNoteConsumerStarted = false;
 	
 	
     private void setupNoteProducers() {
-    	ThreadFactory threadFactory = new LocalThreadPoolFactory("noteProducers");
+		// TODO here is workaround for delayed log4j-destroy mechanism.
+		// TODO fix it in favor to CORRECT Log4j Appender-destroy-API.
+    	ThreadFactory threadFactory = new LocalThreadPoolFactory("noteProducers", this);
 		noteProducers = Executors.newFixedThreadPool(producerSize,  threadFactory );
     }
 
     private void setupNoteConsumerTask() {
-    	ThreadFactory threadFactory = new LocalThreadPoolFactory("noteConsumer");
-        noteConsumer = Executors.newSingleThreadExecutor( threadFactory);
-        noteConsumer.execute(new Runnable() {
-            public void run() {
-                try {
-                    while (true) {
-                        JmxEventWrapper eventWrapper = queue.take();
-                        ((JmxLogEmitter)logMBean).sendLog(eventWrapper.unwrap());
-                    }
-                } catch (InterruptedException ex) {
-                    Thread.currentThread().interrupt();
-                }
-            }
-        });
+		// TODO here is workaround for delayed log4j-destroy mechanism.
+		// TODO fix it in favor to CORRECT Log4j Appender-destroy-API.
+    	ThreadFactory threadFactory = new LocalThreadPoolFactory("noteConsumer", this);
+        noteConsumer = Executors.newCachedThreadPool(  threadFactory);
+        //noteConsumer.execute(new NoteConsumer());
     }
 }

@@ -1,8 +1,13 @@
 package ws.rrd.logback;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import org.mvel2.util.ThisLiteral;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
  
@@ -24,7 +29,7 @@ public class ServletListener implements ServletContextListener{
 		String name = ""+System.currentTimeMillis();
 		try{
 			// @see org.collectd.mx.MBeanSender.getInstanceName()
-			name = "rrd#"+System.getProperty("jcd.instance", name  );
+			name = "rrd#"+System.currentTimeMillis()+"#"+System.getProperty("jcd.instance", name  );
 			  
 		}catch ( SecurityException e) {
 			mythreads= Thread.currentThread().getThreadGroup() ;
@@ -40,7 +45,16 @@ public class ServletListener implements ServletContextListener{
 	public static ThreadGroup getDefaultThreadGroup( ){
 		return mythreads;
 	}
-
+	public static ThreadGroup getDefaultThreadGroup(
+			LocalThreadPoolFactory localThreadPoolFactory) {
+		System.out.println("provide TG=="+mythreads +"for LocalThreadPoolFactory::"+localThreadPoolFactory);
+		// TODO here is workaround for delayed log4j-destroy mechanism.
+		// TODO fix it in favor to CORRECT Log4j Appender-destroy-API.
+		threadPoolFactoryList.add( localThreadPoolFactory);
+		return mythreads; 
+	}
+	static List<LocalThreadPoolFactory> threadPoolFactoryList = new ArrayList<LocalThreadPoolFactory>();
+	
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
 		log.info("!!!!!!!!!!!!!!!!!!rrd contextInitialized!!!!!!!!!!!!!"); 
@@ -49,9 +63,17 @@ public class ServletListener implements ServletContextListener{
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
 		log.info("..............rrd contextDestroyed...................");
+		// TODO here is workaround for delayed log4j-destroy mechanism.
+		// TODO fix it in favor to CORRECT Log4j Appender-destroy-API.
 		if (appenderToKill!=null){
 			appenderToKill.close();
 			appenderToKill = null;
+		}
+		// TODO here is workaround for delayed log4j-destroy mechanism.
+		// TODO fix it in favor to CORRECT Log4j Appender-destroy-API.
+		for(LocalThreadPoolFactory threadPoolFactory:threadPoolFactoryList){
+			threadPoolFactory.close();	
+			System.out.println(threadPoolFactory+" is closed.");
 		}
 		log.info(".....................................................");
 	}
@@ -60,6 +82,8 @@ public class ServletListener implements ServletContextListener{
 	public static void registerToKilling(JMXAppender jmxAppender) {
 		appenderToKill = jmxAppender;
 	}
+
+
 
 }
 
