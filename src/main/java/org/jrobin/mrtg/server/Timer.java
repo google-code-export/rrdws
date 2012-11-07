@@ -61,13 +61,13 @@ class Timer  implements Runnable , MrtgConstants {
 		// Init Clockwork as SNMP-initiator
 		Thread thr1 = new Thread(tgPar, this, "mrtg.TimerItself");
 		
-		thr1 .start();
-		thr2 .start();
+		thr1 .start();//mrtg.TimerItself  (writer, queue-writer)
+		thr2 .start();//mrtg.SnmpWorker   (reader, queue-reader, snmp-resolver, snmp-data-pusher)
 		
 		rrdWriter = new RrdWriter( );
 		// TODO =8-0
-		Thread thr3 = new Thread(tgPar , this, "mrtg.RRDWriter");
-		thr3 .start();
+		Thread thr3 = new Thread(tgPar , rrdWriter, "mrtg.RRDWriter");
+		thr3 .start();//mrtg.RRDWriter (  snmp-data-POPer :) )
 		
 	}
 
@@ -87,8 +87,10 @@ class Timer  implements Runnable , MrtgConstants {
 				Collection<Port> links = router.getLinks();
 				for (Object linkO  :links  ) {
 					Port link = (Port) linkO;
-                    if(router.isActive() && link.isActive() &&
-						link.isDue() && !link.isSampling()) {
+                    if(router.isActive())
+                    if( link.isActive() )
+                    if(	link.isDue() )
+                    if( !link.isSampling() ) {
                     	SnmpReader snmpReader = new SnmpReader(router, link); 
                     	this.queue.add(snmpReader); 
 					}
