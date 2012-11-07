@@ -414,7 +414,7 @@ public class AlertCaptain implements Runnable, NotificationListener {
 			}
 		}
 		System.out
-				.println(" |nasd;famsadflasmdfhq;wrxqweuiqwxrf;heqx,rqlwexr,qwexr,qeurx..  ");
+				.println("AlertCaptain is stopped |nasd;famsadflasmdfhq;wrxqweuiqwxrf;heqx,rqlwexr,qwexr,qeurx..  ");
 		log.info(Repo.getBanner("+AlertCaptain"));
 	}
 	public void wait100() {
