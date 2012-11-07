@@ -51,7 +51,7 @@ public class ServletListener implements ServletContextListener{
 		// TODO here is workaround for delayed log4j-destroy mechanism.
 		// TODO fix it in favor to CORRECT Log4j Appender-destroy-API.
 		threadPoolFactoryList.add( localThreadPoolFactory);
-		return mythreads; 
+		return getDefaultThreadGroup( ); 
 	}
 	static List<LocalThreadPoolFactory> threadPoolFactoryList = new ArrayList<LocalThreadPoolFactory>();
 	
