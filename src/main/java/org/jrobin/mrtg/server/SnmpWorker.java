@@ -46,7 +46,7 @@ public class   SnmpWorker implements Runnable{
     	public SnmpWorker() {
     		queue = new LinkedList<SnmpReader>();
 		}
-    	public static final int MAX_ERRORS_ALLOWED = 1000;
+    	public static final int MAX_ERRORS_ALLOWED = 11000;
     	public static int ERROR_COUNT = 0;
 		public void run() {
     		while(isAlive ){ 

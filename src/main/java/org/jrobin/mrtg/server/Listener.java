@@ -158,7 +158,8 @@ class Listener implements MrtgConstants {
 		public Vector getAvailableLinks(String host) {
 			Vector result = new Vector();
 			try {
-				String[] links = Server.getInstance().getAvailableLinks(host);
+				Server instance = Server.getInstance();
+				String[] links = instance.getAvailableLinks(host);
 				for (int i = 0; i < links.length; i++) {
 					result.add(links[i]);
 				}

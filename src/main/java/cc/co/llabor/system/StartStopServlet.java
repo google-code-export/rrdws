@@ -224,8 +224,9 @@ JRE_HOME/lib/management/snmp.acl
 			}
 		}
 		
-		// TODO calculate enabling MRTG
-		//retval =true;
+		// ala 234.234.234.234:16161
+		// self SNMP-discover  ONLY i case, when  JVM has java-SNMP-params
+		retval =hostPar.indexOf(":")>0 && hostPar.indexOf(".")>0&& hostPar.lastIndexOf(".")>0&& hostPar.lastIndexOf(".")>hostPar.indexOf(".") ;
 		if (retval ){
 			initAutoDiscover(hostPar, communityPar, numericOid, ifDescr);
 		}
