@@ -141,8 +141,9 @@ class SnmpReader   {
 						numericOid = comm.toNumericOID(theOldOIDTmp); 	
 					} 
 					link.deactivate();
-					//instanceTmp.addLink(host, ifDescr, descr, samplingInterval, active );
-					performAutoDiscovery( ownTG, host, community , ifDescr,  numericOid);
+					// TODO should it be rediscovered on any SNMP error??
+					if (2=="DO".length())
+						IfDsicoverer.startDiscoverer(ownTG, host, community, numericOid, ifDescr);
 					
 				}else  if (link.getErrorCount()>1 && (mesTmp .indexOf( "timed out")>0 || mesTmp.indexOf("No such instance")>=0)){ // 2nd try via ver2
 					link.setSnmpVersion(2);
@@ -176,29 +177,7 @@ class SnmpReader   {
 		}
 	}
 
-	/**
-	 * @deprecated
-	 * @author vipup
-	 * @param hostPar
-	 * @param communityPar
-	 * @param ifDescr
-	 * @param numericOid
-	 * @throws MrtgException
-	 * @throws IOException
-	 */
-	private static void performAutoDiscovery(String hostPar,
-			String communityPar, String ifDescr, String numericOid)
-			throws MrtgException, IOException {
-		performAutoDiscovery(Thread.currentThread().getThreadGroup(), hostPar,
-				communityPar, ifDescr, numericOid);
-	}
-	
-	
-	private static void performAutoDiscovery( ThreadGroup tgPar, String hostPar,  String communityPar, String ifDescr, String numericOid) throws MrtgException, IOException {
-		IfDsicoverer.startDiscoverer(tgPar, hostPar, communityPar, numericOid, ifDescr);
-
-	}
-
+  
 	private void findIfIndex() throws MrtgException {
 		for(int i = 0; i < RECONFIGURE_RETRIES; i++) {
 			try {

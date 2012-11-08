@@ -160,75 +160,48 @@ public class StartStopServlet extends HttpServlet {
 			} 
 		}
 	}
-	
-	private boolean isMRTGEnabled() throws IOException {
-		RuntimeMXBean RuntimemxBean = ManagementFactory.getRuntimeMXBean();
-		
+
+	/**
+	 * 
+	 * when JVM gets Sun-SNMP start-parameters, then own JVM-snmp agent will be 
+	 * discovered.
+	 * 
+	 * otherwise the localhost:161 (standart SNMP)will be discovered.  
+	 * 
+	 * @author vipup
+	 * @throws IOException
+	 */
+	private void checkAutodiscoveringRequestSNMP() throws IOException{
+		RuntimeMXBean RuntimemxBean = ManagementFactory.getRuntimeMXBean(); 
 		// grep com.sun.management.snmp
-		boolean retval = false; 
 		String ifDescr ="/jvmMgtMIB/";
 		String numericOid =".0";
 		String communityPar="public";
 		String hostPar="127.0.0.1:161";
-		for(String arg:RuntimemxBean.getInputArguments()) {
-			System.out.println(arg);
-			log.debug("DEBUG{}",arg);
-			log.info("INFO{}",arg);
-			log.error( "ERR{}",arg);
-			log.trace("TRACE{}",arg);
-			log.warn("WARN{}",arg);
-			
-/*
- * 
- * -Dcom.sun.management.snmp.port=1616, 
--Dcom.sun.management.snmp.acl=false, 
--Dcom.sun.management.snmp.interface=127.0.0.1
-#http://download.oracle.com/javase/1.5.0/docs/guide/management/SNMP.html#snmp_properties
-com.sun.management.snmp.port=portNum
-com.sun.management.snmp.acl.file=ACLFilePath
-com.sun.management.snmp.trap	Remote port to which the SNMP agent sends traps. 	162
-com.sun.management.snmp.interface	Optional. The local host InetAddress, to force the SNMP agent to bind to the given InetAddress. This is for multi-home hosts if one wants to listen to a specific subnet only.	N/A
-com.sun.management.snmp.acl.file	Path to a valid ACL file. After the JVM has started, modifying the ACL file has no effect.	JRE_HOME/lib/management/snmp.acl
-#http://download.oracle.com/javase/6/docs/technotes/guides/management/snmp.html
-Property Name	
-Description	
-Default
-
-com.sun.management.snmp.trap	
-Remote port to which the SNMP agent sends traps.	
-162
-
-com.sun.management.snmp. interface	
-Optional. The local host InetAddress, to force the SNMP agent to bind to the given InetAddress. This is for multi-home hosts if one wants to listen to a specific subnet only.	
-Not applicable
-
-com.sun.management.snmp.acl	
-Enables or disables SNMP ACL checks.	
-true
-
-com.sun.management.snmp. acl.file	
-Path to a valid ACL file. After the Java VM has started, modifying the ACL file has no effect.	
-JRE_HOME/lib/management/snmp.acl
-			
- */		
+		for(String arg:RuntimemxBean.getInputArguments()) { 
 			if (arg.indexOf("com.sun.management.snmp.interface")>=0){
 				hostPar = arg.substring(arg.indexOf("=")+1)+ hostPar.substring(hostPar.indexOf(":"));
 			}
 			if (arg.indexOf("com.sun.management.snmp.port")>=0){
 				hostPar = hostPar.substring(0, hostPar.indexOf(":")+1)+arg.substring(arg.indexOf("=")+1);
-			}
-			if (arg.indexOf("com.sun.management.snmp")>=0){
-				
-				// initiate own Autodiscover
-				int val = arg.indexOf("com.sun.management.snmp"); 
-			}
-		}
-		
+			} 
+		} 
 		// ala 234.234.234.234:16161
 		// self SNMP-discover  ONLY i case, when  JVM has java-SNMP-params
-		retval =hostPar.indexOf(":")>0 && hostPar.indexOf(".")>0&& hostPar.lastIndexOf(".")>0&& hostPar.lastIndexOf(".")>hostPar.indexOf(".") ;
-		if (retval ){
+		boolean autoDiscoverEnabled =hostPar.indexOf(":")>0 && hostPar.indexOf(".")>0&& hostPar.lastIndexOf(".")>0&& hostPar.lastIndexOf(".")>hostPar.indexOf(".") ;
+		if (autoDiscoverEnabled ){
 			initAutoDiscover(hostPar, communityPar, numericOid, ifDescr);
+		}
+		
+	}
+	
+	private boolean isMRTGEnabled() throws IOException {
+		boolean retval = true; 
+		try{
+			String strTmp = System.getProperty("mrtg4j", "true");
+			retval = Boolean.parseBoolean(strTmp );
+		}catch(Exception e){ // ignore any errors
+			e.printStackTrace();
 		}
 		return retval;
 		
@@ -240,7 +213,10 @@ JRE_HOME/lib/management/snmp.acl
 		//jrobin/mrtg/server/Server
 		try {
 			if (!isMRTGEnabled())return;
-			Server.main(acceptedClients);  
+			Server.main(acceptedClients);
+			
+			checkAutodiscoveringRequestSNMP();
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

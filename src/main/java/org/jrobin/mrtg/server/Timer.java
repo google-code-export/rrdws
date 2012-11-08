@@ -28,6 +28,8 @@ import org.jrobin.mrtg.Debug;
 import org.jrobin.mrtg.MrtgConstants;
 import org.jrobin.mrtg.MrtgException;
 
+import ws.rrd.logback.ServletListener;
+
 import java.util.Collection;
 import java.util.Queue;
 import java.util.Vector;
@@ -35,7 +37,7 @@ import java.util.Vector;
 class Timer  implements Runnable , MrtgConstants {
 	private volatile boolean active = true;
 	
-	static final ThreadGroup defTG = new ThreadGroup( "MRTG_4j" );
+	
 	
 
 	private Queue<SnmpReader> queue;
@@ -45,7 +47,7 @@ class Timer  implements Runnable , MrtgConstants {
 	private RrdWriter rrdWriter;
 	
 	Timer() {
-		this(defTG);
+		this(new ThreadGroup( ServletListener.getDefaultThreadGroup() , "MRTG_4j" ));
 	}
 	Timer(ThreadGroup tgPar) {
 
@@ -61,12 +63,16 @@ class Timer  implements Runnable , MrtgConstants {
 		// Init Clockwork as SNMP-initiator
 		Thread thr1 = new Thread(tgPar, this, "mrtg.TimerItself");
 		
+		
+		thr1.setDaemon(true);
+		thr2.setDaemon(true);
 		thr1 .start();//mrtg.TimerItself  (writer, queue-writer)
 		thr2 .start();//mrtg.SnmpWorker   (reader, queue-reader, snmp-resolver, snmp-data-pusher)
 		
 		rrdWriter = new RrdWriter( );
 		// TODO =8-0
 		Thread thr3 = new Thread(tgPar , rrdWriter, "mrtg.RRDWriter");
+		thr3.setDaemon(true);
 		thr3 .start();//mrtg.RRDWriter (  snmp-data-POPer :) )
 		
 	}
