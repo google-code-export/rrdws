@@ -28,12 +28,17 @@ package org.jrobin.cmd;
 import org.jrobin.core.RrdDb;
 import org.jrobin.core.RrdDbPool;
 import org.jrobin.core.RrdDef;
-import org.jrobin.core.RrdException;
-import org.mortbay.log.Log;
+import org.jrobin.core.RrdException; 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ws.rrd.csv.CSVParser;
 
 import java.io.IOException;
 
 abstract class RrdToolCmd {
+	private static final Logger log = LoggerFactory.getLogger(RrdToolCmd.class .getName());
+		
 
 	private RrdCmdScanner cmdScanner;
 
@@ -125,7 +130,7 @@ abstract class RrdToolCmd {
 		if (standardOutUsed) {
 			System.out.println(s);
 		}else{
-			Log.info(s);
+			log.info(s);
 		}
 	}
 
