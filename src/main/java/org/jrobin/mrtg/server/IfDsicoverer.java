@@ -53,13 +53,16 @@ public class IfDsicoverer implements Runnable{
 		Poller theFirstOne = new Poller(hostPar, communityPar);
 		queue.add(theFirstOne);
 	} 
-	 
+	public final static int MAX_CHECK_QUEUE = 123;// (sec) 2 Minutes should be enough for 1 try?
+	private int checkCounter = 0;
 	boolean isAlive = true;
 	public void run() {
 		while(isAlive ){ 
 			if (queue.isEmpty()){
 				try {
 					Thread.sleep(1001);
+					checkCounter ++;
+					isAlive = isAlive && checkCounter <MAX_CHECK_QUEUE;
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -75,10 +78,12 @@ public class IfDsicoverer implements Runnable{
 				}	
 			}
 		}
+		// clean up the pool
+		discovererPool.remove(this.key);		
 	}
 	private void performDiscovery(Poller commPar ) {	
 		
-		System.out.println("##"+id+"##"+key+" >;-o... >;-o... >;-o... >;-o... >;-o... >;-o... >;-o... >;-o... >;-o... >;-o... ");
+		System.out.println("##"+id+"##"+key+":: Discovering started for:"+commPar);
 
 		try {
 			
@@ -86,7 +91,9 @@ public class IfDsicoverer implements Runnable{
 			MibValueSymbol lastSymbol = null;
 			try{
 				lastSymbol  = commPar.getLastSymbol();
-			}catch(Throwable e){ }
+			}catch(Throwable e){
+				//e.printStackTrace();
+			}
 			if (lastSymbol==null){
 				try{// TODO lets statrt from start ?
 					commPar.getNextSNMPv2( commPar.getNumericOid( "jvmMgtMIB"));
@@ -102,35 +109,36 @@ public class IfDsicoverer implements Runnable{
 			for (String retvLTmp = commPar.getNextSNMPv2( numOID);lastKey !=""+commPar.getLastOID();numOID = ""+commPar.getLastOID()){
 				String iPrefixTmp = ifDescr.substring(0, ifDescr.lastIndexOf("/"));
 				String ifPathTmp = iPrefixTmp+"/"+descr;
-				String chkOID = commPar.toNumericOID(ifPathTmp);
+				String chk_OID_tmp = commPar.toNumericOID(ifPathTmp);
 				numOID = ""+commPar.getLastOID();
 				try{ // add only Digital-metricas
 					double valTmp = Double.parseDouble( retvLTmp );
-					String pathToAdd = toXName(commPar);
-					
-					retcode = instanceTmp.addLink(host, pathToAdd, 2, numOID, samplingInterval, active );
+					String pathToAddTmp = toXName(commPar);
+					// store discovered link
+					retcode = instanceTmp.addLink(host, pathToAddTmp, 2, numOID, samplingInterval, active );
 					
 					while (retcode ==-255){// // there are ling with path BUT! diff OID
 					// try to combite path+OID as a new path...
 						DeviceList deviceList = instanceTmp.getDeviceList();
 						Device routerByHost = deviceList.getRouterByHost(host);
-						Port pTmp = routerByHost.getLinkByIfDescr(pathToAdd);
+						Port pTmp = routerByHost.getLinkByIfDescr(pathToAddTmp);
 						String pOIDTmp = pTmp.getIfAlias();
 						// logical numOID - pOIDTmp:
 						Mib mib = commPar.getLastSymbol().getMib();
-						MibValueSymbol symbolByOid = mib.getSymbolByOid(numOID);
-						String prefixTmp = ""+symbolByOid.getValue();
-						String suffixTmp = numOID.substring(prefixTmp.length()) ;
-						pathToAdd = pathToAdd +"/["+suffixTmp+"]"; 
-						retcode = instanceTmp.addLink(host, pathToAdd, 2, numOID, samplingInterval, active ); 
+						MibValueSymbol symbolByOidTmp = mib.getSymbolByOid(numOID);
+						String prefixTmp = ""+symbolByOidTmp.getValue();
+						int pLengthTmp = prefixTmp.length();
+						String suffixTmp = numOID.substring(pLengthTmp) ;
+						pathToAddTmp = pathToAddTmp +"/["+suffixTmp+"]"; 
+						retcode = instanceTmp.addLink(host, pathToAddTmp, 2, numOID, samplingInterval, active ); 
 					}
 					if (retcode ==0)
-						log.debug("+++ chkOID:{}=={}::{}[5:{}]4:{}3:{}2:{}1:{} ",new Object[]{chkOID,retcode,retvLTmp, valTmp, numOID ,ifPathTmp});
+						log.debug("+++ chkOID:{}=={}::{}[5:{}]4:{}3:{}2:{}1:{} ",new Object[]{chk_OID_tmp,retcode,retvLTmp, valTmp, numOID ,ifPathTmp});
 					else
 						log.trace( "... numOID:{} = {}" , numOID, retcode  );
 					
 				}catch(Throwable eDDD){
-					log.trace( chkOID, eDDD );					
+					log.trace( chk_OID_tmp, eDDD );					
 				}
 				// skip (1)
 				retvLTmp = commPar.getNextSNMPv2( numOID);
@@ -159,28 +167,46 @@ public class IfDsicoverer implements Runnable{
 	private static int dCounter = 0;
 
 	final static Map<String, Thread> discovererPool = new HashMap<String, Thread>();
+	/**
+	 * initiate the new Discovery-Thread for given host/comunity
+	 * 
+	 * @author vipup
+	 * @param tgPar
+	 * @param hostPar
+	 * @param communityPar
+	 * @param numericOid
+	 * @param ifDescrPar
+	 * @throws IOException
+	 */
 	public static void startDiscoverer(ThreadGroup tgPar, String hostPar, String communityPar,	String numericOid, String ifDescrPar) throws IOException {
-		String key = hostPar +"::"+communityPar;
+		String keyTmp = hostPar +"::"+communityPar;
 		synchronized (discovererPool) {
-			Thread theT  =  discovererPool.get(key );
+			Thread theT  =  discovererPool.get(keyTmp );
 			if (theT  == null){
 				IfDsicoverer newDiscoverer = new IfDsicoverer(hostPar, communityPar, numericOid, ifDescrPar);
 				dCounter++;
 				newDiscoverer.setId(dCounter);
-				newDiscoverer.setKey(key);
+				newDiscoverer.setKey(keyTmp);
 				String sDiscNameTmp = "Discoverer#"+newDiscoverer.getId()+" :"+hostPar;
 				Thread t2Run = new Thread(tgPar, newDiscoverer, sDiscNameTmp);
-				t2Run.setDaemon(false);
-				discovererPool.put(key, t2Run);
-				synchronized (key) {
+				t2Run.setDaemon(true);
+				discovererPool.put(keyTmp, t2Run);
+				synchronized (keyTmp) {
 					t2Run.start();
 				}
 			}else{
-				System.out.println("DUPLICATING Discovery quering of ///////////////////////"+key+"/////////// IGNORED.");
-				
+				log.debug("duplicate SNMP-Discovery-request //["+keyTmp+"]// will be ignored.");
 			}
 		}		
 	}
+	public static String[] listDiscoverer(){
+		String[] retval = new String[]{"emptylist"};
+		try{
+			retval = discovererPool.keySet().toArray(retval);
+		}catch(Exception e){}
+		return retval ;
+	}
+	
 	private void setKey(String key) {
 		this.key = key;
 	}

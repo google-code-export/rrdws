@@ -29,6 +29,7 @@ import org.jrobin.core.RrdDb;
 import org.jrobin.core.RrdDbPool;
 import org.jrobin.core.RrdDef;
 import org.jrobin.core.RrdException;
+import org.mortbay.log.Log;
 
 import java.io.IOException;
 
@@ -66,7 +67,7 @@ abstract class RrdToolCmd {
 	}
 
 	static boolean rrdDbPoolUsed = true;
-	static boolean standardOutUsed = true;
+	static boolean standardOutUsed = false;
 
 	static boolean isRrdDbPoolUsed() {
 		return rrdDbPoolUsed;
@@ -123,6 +124,8 @@ abstract class RrdToolCmd {
 	static void println(String s) {
 		if (standardOutUsed) {
 			System.out.println(s);
+		}else{
+			Log.info(s);
 		}
 	}
 

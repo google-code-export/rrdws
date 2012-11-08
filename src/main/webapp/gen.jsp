@@ -1,4 +1,13 @@
-<%@page import="java.io.File"%><%@page import="java.io.OutputStream"%><%@page import="org.jrobin.cmd.RrdCommander"%><%@page import="java.io.FileInputStream"%><%@page import="java.io.ByteArrayInputStream"%><%@page  contentType="image/gif"%><%
+<%@page 
+import="java.io.File"%><%@page 
+import="java.io.OutputStream"%><%@page 
+import="org.jrobin.cmd.RrdCommander"%><%@page 
+import="java.io.FileInputStream"%><%@page 
+import="java.io.ByteArrayInputStream"%><%@page  
+contentType="image/gif"%><%
+////////////////////////////////////////////////
+// generates RRD-graphics by requested DB-alias
+////////////////////////////////////////////////
 response.setContentType("image/gif");
 %><%
 // init tmDIR
@@ -23,7 +32,7 @@ long lastMod = imgTmp .lastModified() ;
 boolean isExpired = imgTmp .exists() && (lastMod + 1000*60*5) < System.currentTimeMillis() ;
 
 if (!imgTmp .exists()  || isExpired){
-	System.out.println(""+lastMod+"  1@@@@@@@@ " +(lastMod -System.currentTimeMillis() ) +" isExpired == "+isExpired);
+	//System.out.println(""+lastMod+"  1@@@@@@@@ " +(lastMod -System.currentTimeMillis() ) +" isExpired == "+isExpired);
 	RrdCommander.execute(cmdTmp);
 }else{
 	//System.out.println("till update :"+ (imgTmp .lastModified() - System.currentTimeMillis() ) +" ms.");

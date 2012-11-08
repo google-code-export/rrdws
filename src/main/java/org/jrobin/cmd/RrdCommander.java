@@ -163,6 +163,8 @@ public class RrdCommander {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
+		RrdToolCmd.setStandardOutUsed(true);
+		
 		System.out.println("== JRobin's RRDTool commander ==");
 		System.out.println("Type a RRDTool command after the dollar sign and press Enter.");
 		System.out.println("Start your RRDTool command with 'create', 'update', 'fetch' etc.");
