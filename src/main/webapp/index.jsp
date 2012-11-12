@@ -32,7 +32,8 @@
 <body  onLoad="return 1;"> 
 
     <div class='cornerC' id='cornerC'>
-        <a href="list.jsp" target="_blank"><IMG SRC="img/s1.jpeg">list</a>
+        <a href="tab.jsp" target="_blank"><IMG SRC="img/tablist.jpeg">list</a>
+        <a href="mrtg.jsp" target="_blank"><IMG SRC="img/mrtg.gif">mrtg</a>
         <a href="mvel.jsp" target="_blank"><IMG SRC="img/ninja_ico_gui.png">mvel</a>
         <a href="formats.jsp" target="_blank"><IMG height=32 width=32 SRC="img/bug.gif">formats</a>
 		<a href="_ah/mail/" target="_blank"><IMG SRC="img/ait.jpg">mail</a>

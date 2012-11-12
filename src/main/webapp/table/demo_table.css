@@ -23,7 +23,7 @@
  *     ensure that you either have "example_alt_pagination" as a body class name, or better yet,
  *     modify that selector.
  *   Note that the path used for Images is relative. All images are by default located in
- *     ../images/ - relative to this CSS file.
+ *     timg/ - relative to this CSS file.
  */
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -44,7 +44,7 @@
 	height: 30px;
 	margin-left: -125px;
 	margin-top: -15px;
-	padding: 14px 0 2px 0;
+	padding: 1px 0 1px 0;
 	border: 1px solid #ddd;
 	text-align: center;
 	color: #999;
@@ -96,33 +96,33 @@
 	color: #666 !important;
 }
 .paginate_disabled_previous, .paginate_enabled_previous {
-	padding-left: 23px;
+	padding-left: 19px;
 }
 .paginate_disabled_next, .paginate_enabled_next {
-	padding-right: 23px;
+	padding-right: 21px;
 	margin-left: 10px;
 }
 
 .paginate_disabled_previous {
-	background: url('../images/back_disabled.png') no-repeat top left;
+	background: url('timg/back_disabled.png') no-repeat top left;
 }
 
 .paginate_enabled_previous {
-	background: url('../images/back_enabled.png') no-repeat top left;
+	background: url('timg/back_enabled.png') no-repeat top left;
 }
 .paginate_enabled_previous:hover {
-	background: url('../images/back_enabled_hover.png') no-repeat top left;
+	background: url('timg/back_enabled_hover.png') no-repeat top left;
 }
 
 .paginate_disabled_next {
-	background: url('../images/forward_disabled.png') no-repeat top right;
+	background: url('timg/forward_disabled.png') no-repeat top right;
 }
 
 .paginate_enabled_next {
-	background: url('../images/forward_enabled.png') no-repeat top right;
+	background: url('timg/forward_enabled.png') no-repeat top right;
 }
 .paginate_enabled_next:hover {
-	background: url('../images/forward_enabled_hover.png') no-repeat top right;
+	background: url('timg/forward_enabled_hover.png') no-repeat top right;
 }
 
 
@@ -150,7 +150,7 @@ table.display {
 }
 
 table.display thead th {
-	padding: 3px 18px 3px 10px;
+	padding: 1px 2px 1px 2px;
 	border-bottom: 1px solid black;
 	font-weight: bold;
 	cursor: pointer;
@@ -158,7 +158,7 @@ table.display thead th {
 }
 
 table.display tfoot th {
-	padding: 3px 18px 3px 10px;
+	padding: 2px 1px 2px 1px;
 	border-top: 1px solid black;
 	font-weight: bold;
 }
@@ -168,7 +168,7 @@ table.display tr.heading2 td {
 }
 
 table.display td {
-	padding: 3px 10px;
+	padding: 0px 1px;
 }
 
 table.display td.center {
@@ -182,23 +182,23 @@ table.display td.center {
  */
 
 .sorting_asc {
-	background: url('../images/sort_asc.png') no-repeat center right;
+	background: url('timg/sort_asc.png') no-repeat center right;
 }
 
 .sorting_desc {
-	background: url('../images/sort_desc.png') no-repeat center right;
+	background: url('timg/sort_desc.png') no-repeat center right;
 }
 
 .sorting {
-	background: url('../images/sort_both.png') no-repeat center right;
+	background: url('timg/sort_both.png') no-repeat center right;
 }
 
 .sorting_asc_disabled {
-	background: url('../images/sort_asc_disabled.png') no-repeat center right;
+	background: url('timg/sort_asc_disabled.png') no-repeat center right;
 }
 
 .sorting_desc_disabled {
-	background: url('../images/sort_desc_disabled.png') no-repeat center right;
+	background: url('timg/sort_desc_disabled.png') no-repeat center right;
 }
  
 table.display thead th:active,
@@ -299,8 +299,8 @@ tfoot input.search_init {
 
 td.group {
 	background-color: #d1cfd0;
-	border-bottom: 2px solid #A19B9E;
-	border-top: 2px solid #A19B9E;
+	border-bottom: 0px solid #A19B9E;
+	border-top: 0px solid #A19B9E;
 }
 
 td.details {
@@ -317,6 +317,9 @@ td.details {
 	width: 400px;
 	height: 22px;
 	line-height: 22px;
+  /* Netscape 4, IE 4.x-5.0/Win and other lesser browsers will use this */
+  position: absolute; left: 200px; top: 0px;
+	
 }
 
 .paging_full_numbers a:active {
