@@ -13,17 +13,22 @@
 		<script type="text/javascript" language="javascript" src="table/jquery.dataTables.js"></script>  
 		<script type="text/javascript" charset="utf-8">
 			var oTable;
+			var selectCounter = 0;
 			var giRedraw = false;
 			$(document).ready(function() {
 				/* Add a click handler to the rows - this could be used as a callback */
 				$("#example tbody").click(function(event) {
  
-					if ( $(event.target.parentNode).hasClass('row_selected') )
-						$(event.target.parentNode).removeClass('row_selected');
-					else	{
-						$(event.target.parentNode).addClass('row_selected');
-						$(selecterRRDs).src=event.target;
+					if ( $(event.target.parentNode).hasClass('row_selected') ){
+						$(event.target.parentNode).removeClass('row_selected');																		
+						delRrd(selectCounter);
+						selectCounter=selectCounter-1;
+					} else	{
+						$(event.target.parentNode).addClass('row_selected');												
+						selectCounter=selectCounter+1;
+						addRrd(selectCounter);
 					}
+					updateRdd(oTable);
 				}); 
 				/* Add a click handler for the delete row */
 				$('#delete').click( function() {
@@ -32,10 +37,7 @@
 					for ( var i=anSelected.length ; i>0 ; i-- ){
 						oTable.fnDeleteRow( anSelected[i-1] );
 					}
-				} );
-	
-			
-
+				} ); 
 				/* Init the table */			
 				oTable = $('#example').dataTable( {
 					"oLanguage": {
@@ -49,7 +51,102 @@
  
 				
 			} );
+			function toColor(counter){
+				var retval = "" ;
+				var hexStr =new Array( 'F','7', '0' , '4', '9', 'A', '1' , 'F');
+				retval += hexStr[counter  %4];
+				retval += hexStr[counter  %6];
+				retval += hexStr[(counter+2)  %3];
+				retval += hexStr[counter  %5];
+				retval += hexStr[(counter+1)  %5];
+				retval += hexStr[counter  %7];
+				return retval;			
+			}
+			
+			function addRrd(counter){
+				var newTextBoxDiv = $(document.createElement('div')).attr("id", 'TextBoxDiv' + counter);
+				var htmlTmp = 'Textbox #'+ counter + ' : </label>' +
+					  '<input type="text" name="textbox' + counter + 
+					  '" id="textbox' + counter + '" value="'+counter+'" >';
+				htmlTmp += 	'<input type="text" name="dbField' + counter + 
+					  '" id="dbField' + counter + '" value="data:AVERAGE" enable="false" size="3">';
+				htmlTmp += 	'<input type="text" name="dbAlias' + counter + 
+					  '" id="dbAlias' + counter + '" value="my'+counter+'" enable="false" size="3">';
+				htmlTmp += 	'<input type="text" name="dbColor' + counter + 
+					  '" id="dbColor' + counter + '" value="#'+toColor(counter)+'" enable="false">';
+				htmlTmp += 	':<input type="text" name="dbNote' + counter + 
+					  '" id="dbNote' + counter + '" value=".'+counter+'.n" enable="false">';
+  
+				newTextBoxDiv.html(htmlTmp);
+				newTextBoxDiv.appendTo("#TextBoxesGroup");			
+			}
+			function delRrd(counter){
+				var bNname = "#TextBoxDiv" + counter;
+				var oDiv = $(bNname);
+				oDiv.remove();			
+			}
+			
+			function updateRdd(oTable){
+				var anSelected = fnGetSelected( oTable );
+				var txtTmp = "list["+selectCounter+"]==";				
+				var prefix = "";
+				var dbTmp = "";
+				var dbFieldTmp = "";
+				var dbAliasTmp = "";
+				var dbColorTmp = "";
+				var dbColorTmp = "";
+				var dbNoteTmp = "";
+				var defTmp = "";
+				var visTmp = "";
 				
+				var defAccu = "";
+				var visAccu = "";
+				
+				for ( var i=anSelected.length ; i>0 ; i-- ){
+						txtTmp =txtTmp+ prefix + anSelected[i-1]  ;
+						prefix = ",";
+						dbTmp = oTable._fnGetCellData(anSelected[i-1],2);
+						
+						document.getElementById("textbox"+i).setAttribute("value", dbTmp);
+						var ind = i ;
+						//dbFieldTmp = document.getElementById("dbField"+ind).getAttribute("value");
+						dbFieldTmp = "data:AVERAGE"; 
+						//document.getElementById("dbAlias"+ind).getValue();
+						dbAliasTmp = "my"+ind;
+						dbColorTmp = "#"+toColor(ind);
+						dbNoteTmp = "not"+ind;
+						//DEF:myspeed2=X840983877.rrd:data:AVERAGE 
+						defTmp = ' DEF:' + dbAliasTmp + '=' + dbTmp +':'+dbFieldTmp;
+						defAccu += defTmp;
+						// LINE2:myspeed3#00FF88:asdfasdf 
+						visTmp = ' LINE2:' +dbAliasTmp +''+ dbColorTmp +':' + dbNoteTmp;
+						visAccu += visTmp;
+						
+				} 
+				// jquery
+				//$('#textbox1').val ( txtTmp +"," + counter );
+				// js
+				document.getElementById("rrdlist").setAttribute("value", txtTmp);
+				
+				// rrdIMG
+				var cmdPrefix = "gifgen.jsp?cmd=rrdtool+graph+speed.gif+";
+				var cmd  = cmdPrefix ;
+				// -v 'vip'  -t 'XXXX!'
+				cmd = cmd + "-v '" +document.getElementById("_vtitle").value +"' ";
+				cmd = cmd + "-t '" +document.getElementById("_htitle").value+ "' ";
+				cmd = cmd +document.getElementById("textareaRrd").value;
+				cmd +=defAccu;
+				cmd +=visAccu;
+				
+				document.getElementById("textDebug").value =  addslashes( cmd );
+				document.getElementById("rrdimg").setAttribute("src",  addslashes( cmd ));
+				
+			}	
+			//http://stackoverflow.com/questions/770523/escaping-strings-in-javascript
+			// http://www.w3schools.com/jsref/jsref_replace.asp
+ 			function addslashes( str ) {
+				return (str+'').replace(/#/g,'%23').replace(/([\\"'])/g, "\\$1");
+			}
 
 			/*
 			 * I don't actually use this here, but it is provided as it might be useful and demonstrates
@@ -92,7 +189,6 @@
 	</tbody>
 	<tfoot>
 		<tr>
-
 			<th>Rendering engine</th>
 			<th>Browser</th>
 			<th>Platform(s)</th>
@@ -108,5 +204,30 @@
 			<p><a href="javascript:void(0)" id="delete">Delete selected row</a></p>
 			</div>
 			 
+<table> <tbody><tr><td>
+<div id='TextBoxesGroup'>
+	<label>RRDs to visualize : </label><input type='text' id='rrdlist' value='-' size='77'>
+</div>		
+<div id='RRDGroup'>
+	<label>h-title: </label><input type='text' id='_htitle' value='h-Title' />
+	<label>v-title: </label><input type='text' id='_vtitle' value='v-Title' />
+
+	<div id="rrdDiv1">
+		<label>cmd : </label>
+		<textarea type='textarea' name="textareaRrd"  cols="60" rows="4" id='textareaRrd' >     --start now-1week
+		</textarea>
+	</div>
+</div>			
+</td><td>
+	<div id="rrdIMAGE">
+		<img  id="rrdimg" src="speed.gif"/>
+	</div>
+
+</td></tr><tbody></table> 
+<input type='button' value='Add Button' id='addButton'>
+<input type='button' value='Remove Button' id='removeButton'>
+<input type='button' value='Get TextBox Value' id='getButtonValue'>
+ <textarea type='textarea' name="textDebug"  cols="160" rows="4" id='textDebug' >  ddddddddd </textarea>
+	
 	</body>
 </html>

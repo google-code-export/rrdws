@@ -11,6 +11,9 @@
 		</style>
 		<script type="text/javascript" language="javascript" src="table/jquery.js"></script>
 		<script type="text/javascript" language="javascript" src="table/jquery.dataTables.js"></script> 
+		<!-- the mousewheel plugin - optional to provide mousewheel support -->
+		<script type="text/javascript" language="javascript"  src="table/jquery.mousewheel.js"></script>
+
 		<script type="text/javascript" charset="utf-8">
 			var oTable;
 			var giRedraw = false;
@@ -25,8 +28,27 @@
 					"sPaginationType": "full_numbers",
 					"sAjaxSource": 'listasjson1.jsp'
 				} );
+				
 			} );
-			
+			/* Click event handler */
+			$('#example tbody tr').live('click', function () {
+				var aData = oTable.fnGetData( this );
+				var iId = aData[0];
+				
+				if ( jQuery.inArray(iId, gaiSelected) == -1 )
+				{
+					gaiSelected[gaiSelected.length++] = iId;
+				}
+				else
+				{
+					gaiSelected = jQuery.grep(gaiSelected, function(value) {
+						return value != iId;
+					} );
+				}
+				
+				$(this).toggleClass('row_selected');
+			} );				
+
 			/* Get the rows which are currently selected */
 			function fnGetSelected( oTableLocal )
 			{
@@ -42,6 +64,7 @@
 				}
 				return aReturn;
 			}
+			
 		</script>
 	</head>
 	<body id="dt_example">
