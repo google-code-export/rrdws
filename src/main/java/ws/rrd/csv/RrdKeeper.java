@@ -1,11 +1,16 @@
 package ws.rrd.csv;
- 
+  
 import java.lang.management.ManagementFactory;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Method; 
+import java.lang.reflect.Method;  
 import java.util.HashMap; 
 import java.util.Map; 
-import java.util.Properties;
+import java.util.Properties; 
+
+//import java.util.concurrent.Executors;
+//import java.util.concurrent.ScheduledExecutorService;
+//import java.util.concurrent.ThreadFactory;
+//import java.util.concurrent.TimeUnit;
 
 import javax.management.Attribute;
 import javax.management.AttributeList;
@@ -23,14 +28,18 @@ import javax.management.MalformedObjectNameException;
 import javax.management.Notification;
 import javax.management.NotificationBroadcaster;
 import javax.management.NotificationBroadcasterSupport; 
+import javax.management.ObjectInstance;
 import javax.management.ObjectName;
 import javax.management.ReflectionException; 
+ 
 
 import net.sf.jsr107cache.Cache;
 
+import org.jrobin.core.RrdException; 
+import org.jrobin.mrtg.server.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+ 
 import ws.rrd.pid.arduino.Pid;
 
 import cc.co.llabor.cache.Manager;
@@ -48,6 +57,8 @@ public class RrdKeeper extends NotificationBroadcasterSupport implements Notific
 
 	private static final String DOMAIN = "rrdMX";
 	static RrdKeeper me = new RrdKeeper(); // jaja! natuerlich. singleton :-P... 
+
+
 	static { 
 		try {
 			me.init();
@@ -56,19 +67,139 @@ public class RrdKeeper extends NotificationBroadcasterSupport implements Notific
 			e.printStackTrace();
 		}
 	}
+	static {
+		try{
+			 //if ("Java.concurency".equals("enabled"))setupHeartbeat(); // TODO SCHWERWIEGEND: Could not find class: 'ri.cache.BasicCacheFactory'
+			 //else
+				 me.setupHeartbeatThread();
+		}catch(Throwable e){
+			e.printStackTrace();
+		}
+		
+	}
+	static private long beatCounter;
 	private RrdKeeper(){
 		super();
 	}
 	
+	static String rrdUID = "heartbeat/alive";
 	
+	private void beat( ) {  	  
+		
+		Thread.currentThread().setContextClassLoader(RrdKeeper.class.getClassLoader());
+		String timeMs = ""+  System.currentTimeMillis() ;
+		String data = ""+ (System.currentTimeMillis() -beatCounter);
+		Action rrdUpdateAction =  new RrdUpdateAction();
+		String pathTmp = Server.calPath2RRDb ( rrdUID,  "heartbeat");
+		Object retval = rrdUpdateAction.perform(  pathTmp ,  timeMs , data);
+		beatCounter =  System.currentTimeMillis() - beatCounter;
+		if (retval instanceof RrdException){
+			rrdUID = "heartbeat/RIP";
+		}else { 
+			log.debug("processed :{}=[{}]", pathTmp, timeMs );
+		}
+	} 
+	/**
+	 * java.concurrent - variant of heartbeat
+	 * TODO - fix the issue with Classloader
+	 * @author vipup
+	 */
+//    static private void setupHeartbeat() {
+//    	ScheduledExecutorService heartbeat = null;
+//    	int corePoolSize = 1;
+//		//ThreadFactory localThreadFactory = new LocalThreadFactory();
+//		heartbeat = Executors.newScheduledThreadPool(corePoolSize);//SingleThreadExecutor();
+//		Runnable command = new Runnable() { 
+//			// make a beat 
+//			public void run() { 
+//                  beat();                    	 
+//            }
+//        };
+//		long initialDelay = 1000;
+//		long period = 1000;
+//		/*
+//		 * Creates and executes a periodic action that becomes enabled first after 
+//		 * the given initial delay, and subsequently with the given period; 
+//		 * that is executions will commence after initialDelay then initialDelay+period, 
+//		 * then initialDelay + 2 * period, and so on. 
+//		 * If any execution of the task encounters an exception, subsequent executions are suppressed. 
+//		 * Otherwise, the task will only terminate via cancellation or termination of the executor. 
+//		 * If any execution of this task takes longer than its period, then subsequent executions may 
+//		 * start late, but will not concurrently execute.
+//		*/
+//		//Parameters:
+//		//command the task to execute
+//		//initialDelay the time to delay first execution
+//		//period the period between successive executions
+//		//unit the time unit of the initialDelay and period parameters 
+//		TimeUnit unit = TimeUnit.MILLISECONDS;
+//		heartbeat.scheduleAtFixedRate(command , initialDelay , period, unit );
+//    } 
+    
+    private boolean isAlive = true;
+     
+    public void destroy(){
+    	isAlive=false;
+    }
+    /**
+     * starts local daemon-thread with never-ending-loop 
+     * @author vipup
+     */
+    private void setupHeartbeatThread() {
+    	int corePoolSize = 1; 
+		final long initialDelay = 1000;
+		final long period = 1000;
+		Runnable command = new Runnable() {  
+			// make a beat
+			public void run() {
+				try {
+					Thread.sleep(initialDelay);
+					while (isAlive) { 
+						beat();
+						Thread.sleep(period); 
+					}
+				} catch (InterruptedException e) {
+					isAlive = false;
+				}
+			}
+        };
+		//ThreadGroup tgTmp = //ServletListener.getDefaultThreadGroup();
+        //ThreadGroup tgTmp = Thread.currentThread().getThreadGroup();
+		Thread heartbeat  = new Thread(/* tgTmp,*/ command, "heartbeat#"+System.currentTimeMillis() );
+        
+
+		/*
+		 * Creates and executes a periodic action that becomes enabled first after 
+		 * the given initial delay, and subsequently with the given period; 
+		 * that is executions will commence after initialDelay then initialDelay+period, 
+		 * then initialDelay + 2 * period, and so on. 
+		 * If any execution of the task encounters an exception, subsequent executions are suppressed. 
+		 * Otherwise, the task will only terminate via cancellation or termination of the executor. 
+		 * If any execution of this task takes longer than its period, then subsequent executions may 
+		 * start late, but will not concurrently execute.
+		*/
+		//Parameters:
+		//command the task to execute
+		//initialDelay the time to delay first execution
+		//period the period between successive executions
+		//unit the time unit of the initialDelay and period parameters 
+		//TimeUnit unit = TimeUnit.MILLISECONDS;
+		heartbeat.start();
+    } 
+
+    
 	private synchronized void init() throws Exception {
 		MBeanServer bs = ManagementFactory.getPlatformMBeanServer();
 		String nameTmp = DOMAIN + ":type=" + this.getClass().getName();
 		ObjectName oName = new ObjectName(nameTmp);
 		try {
 			System.out.print("ungeristered MBean:[" + oName + "]...");
-			bs.unregisterMBean(oName);
+			ObjectInstance oTmp = bs.getObjectInstance(oName);
+			bs.unregisterMBean(oName);			
 			System.out.println("DONE "+ oName + "].");
+			// this point is reached - the oldRRDKeeper have to be destroyed first
+			System.out.println(""+oTmp);
+			
 		} catch (javax.management.InstanceNotFoundException e) {
 			e.printStackTrace();
 			System.err.println("ERROR unregistering!" + oName);
@@ -79,6 +210,7 @@ public class RrdKeeper extends NotificationBroadcasterSupport implements Notific
 		} catch (InstanceAlreadyExistsException e) {
 			e.printStackTrace(); 
 		}
+		 
 	}
  
 	
@@ -451,7 +583,7 @@ public class RrdKeeper extends NotificationBroadcasterSupport implements Notific
 	public void performNotification(String xpath, long timestamp, String data) {
 		Notification notification = new //Notification(data, xpath,  timestamp );
 		Notification("xpath", xpath, this.updateCounter, timestamp, data);
-		sendNotification(notification );
+		super.sendNotification(notification );
 	}	
 
 }
