@@ -33,7 +33,7 @@ public class LocalThreadPoolFactory implements ThreadFactory {
 	@Override
 	public Thread newThread(Runnable task) {
 		ThreadGroup threadGroup = ServletListener.getDefaultThreadGroup(this);
-		Thread thread = new Thread(threadGroup , task);
+		Thread thread = new Thread(/*threadGroup , */task);
 		thread.setName(namePrefix + threadNumber.getAndIncrement());
 		thread.setDaemon(true);
 		return thread;
