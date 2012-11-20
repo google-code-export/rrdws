@@ -69,7 +69,7 @@ public class RrdKeeper extends NotificationBroadcasterSupport implements Notific
 	}
 	static {
 		try{
-			 //if ("Java.concurency".equals("enabled"))setupHeartbeat(); // TODO SCHWERWIEGEND: Could not find class: 'ri.cache.BasicCacheFactory'
+			 //if ("Java.concurency".equals("enabled"))setupHeartbeat();
 			 //else
 				 me.setupHeartbeatThread();
 		}catch(Throwable e){
@@ -77,7 +77,11 @@ public class RrdKeeper extends NotificationBroadcasterSupport implements Notific
 		}
 		
 	}
-	static private long beatCounter;
+	final long initialDelay = 1000;
+	final long period = 1000;
+	static private long beatCounter = 0;
+	static private long beatStart = System.currentTimeMillis() ;
+	static private long lastBeat = Long.MIN_VALUE;
 	private RrdKeeper(){
 		super();
 	}
@@ -85,18 +89,24 @@ public class RrdKeeper extends NotificationBroadcasterSupport implements Notific
 	static String rrdUID = "heartbeat/alive";
 	
 	private void beat( ) {  	  
-		
+		beatCounter++;
+		// this DIFF should be exactly equals 
+		long beatDiff  = lastBeat -(beatStart + initialDelay + beatCounter * period) ;
+		String timeMs = ""+  System.currentTimeMillis() ; 
 		Thread.currentThread().setContextClassLoader(RrdKeeper.class.getClassLoader());
-		String timeMs = ""+  System.currentTimeMillis() ;
-		String data = ""+ (System.currentTimeMillis() -beatCounter);
 		Action rrdUpdateAction =  new RrdUpdateAction();
-		String pathTmp = Server.calPath2RRDb ( rrdUID,  "heartbeat");
+		String pathTmp = Server.calPath2RRDb ( rrdUID,  "heartbeat"); 
+		double beatVal = ((double)beatDiff)/(double)beatCounter;
+		String data = beatCounter==0?(""+beatDiff):(""+beatVal);
 		Object retval = rrdUpdateAction.perform(  pathTmp ,  timeMs , data);
-		beatCounter =  System.currentTimeMillis() - beatCounter;
+		double  rrdPerSec = 1.0D/((double)(1+lastBeat- System.currentTimeMillis())); 
+		Object retval2 = rrdUpdateAction.perform(   "heartbeat/rrdPerSec" ,  timeMs , ""+rrdPerSec );
+		lastBeat =  System.currentTimeMillis() ;
+		
 		if (retval instanceof RrdException){
 			rrdUID = "heartbeat/RIP";
 		}else { 
-			log.debug("processed :{}=[{}]", pathTmp, timeMs );
+			log.debug("processed :{}=[{}]", pathTmp, beatVal );
 		}
 	} 
 	/**
@@ -147,8 +157,7 @@ public class RrdKeeper extends NotificationBroadcasterSupport implements Notific
      */
     private void setupHeartbeatThread() {
     	int corePoolSize = 1; 
-		final long initialDelay = 1000;
-		final long period = 1000;
+
 		Runnable command = new Runnable() {  
 			// make a beat
 			public void run() {
@@ -160,6 +169,8 @@ public class RrdKeeper extends NotificationBroadcasterSupport implements Notific
 					}
 				} catch (InterruptedException e) {
 					isAlive = false;
+				} catch (RuntimeException e){
+					System.out.println("+.. +. .+. .+  .+. .+. .+. .+ .+ +. .+ +   + Hearbeat is stopped:"+Thread.currentThread().getName());
 				}
 			}
         };
