@@ -86,7 +86,7 @@ public class RrdKeeper extends NotificationBroadcasterSupport implements Notific
 		super();
 	}
 	
-	static String rrdUID = "heartbeat/alive";
+	static String rrdUID = "rrdws/heartbeat/alive";
 	
 	private void beat( ) {  	  
 		beatCounter++;
@@ -94,19 +94,18 @@ public class RrdKeeper extends NotificationBroadcasterSupport implements Notific
 		long beatDiff  = lastBeat -(beatStart + initialDelay + beatCounter * period) ;
 		String timeMs = ""+  System.currentTimeMillis() ; 
 		Thread.currentThread().setContextClassLoader(RrdKeeper.class.getClassLoader());
-		Action rrdUpdateAction =  new RrdUpdateAction();
-		String pathTmp = Server.calPath2RRDb ( rrdUID,  "heartbeat"); 
+		Action rrdUpdateAction =  new RrdUpdateAction(); 
 		double beatVal = ((double)beatDiff)/(double)beatCounter;
 		String data = beatCounter==0?(""+beatDiff):(""+beatVal);
-		Object retval = rrdUpdateAction.perform(  pathTmp ,  timeMs , data);
+		Object retval = rrdUpdateAction.perform(  rrdUID ,  timeMs , data);
 		double  rrdPerSec = 1.0D/((double)(1+lastBeat- System.currentTimeMillis())); 
-		Object retval2 = rrdUpdateAction.perform(   "heartbeat/rrdPerSec" ,  timeMs , ""+rrdPerSec );
+		Object retval2 = rrdUpdateAction.perform(   "rrdws/heartbeat/rrdPerSec" ,  timeMs , ""+rrdPerSec );
 		lastBeat =  System.currentTimeMillis() ;
 		
 		if (retval instanceof RrdException){
-			rrdUID = "heartbeat/RIP";
+			rrdUID = "rrdws/heartbeat/RIP";
 		}else { 
-			log.debug("processed :{}=[{}]", pathTmp, beatVal );
+			log.debug("processed :{}=[{}]", rrdUID, beatVal );
 		}
 	} 
 	/**
@@ -162,6 +161,7 @@ public class RrdKeeper extends NotificationBroadcasterSupport implements Notific
 			// make a beat
 			public void run() {
 				try {
+					System.out.println("**** RRDWS-Hearbeat ***** " );
 					Thread.sleep(initialDelay);
 					while (isAlive) { 
 						beat();
@@ -170,7 +170,7 @@ public class RrdKeeper extends NotificationBroadcasterSupport implements Notific
 				} catch (InterruptedException e) {
 					isAlive = false;
 				} catch (RuntimeException e){
-					System.out.println("+.. +. .+. .+  .+. .+. .+. .+ .+ +. .+ +   + Hearbeat is stopped:"+Thread.currentThread().getName());
+					System.out.println("+.. +. .+. .+  .+. .+. .+. .+ .+ +. .+ +   + RRDWS-Hearbeat is stopped:"+Thread.currentThread().getName());
 				}
 			}
         };
@@ -212,8 +212,8 @@ public class RrdKeeper extends NotificationBroadcasterSupport implements Notific
 			System.out.println(""+oTmp);
 			
 		} catch (javax.management.InstanceNotFoundException e) {
-			e.printStackTrace();
-			System.err.println("ERROR unregistering!" + oName);
+			//e.printStackTrace();
+			System.err.println("ERROR unregistering!" + oName +" ------------------ ignored.");
 		}
 		try {
 			bs.registerMBean(this, oName);
