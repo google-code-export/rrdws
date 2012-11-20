@@ -35,8 +35,7 @@ import javax.management.ReflectionException;
 
 import net.sf.jsr107cache.Cache;
 
-import org.jrobin.core.RrdException; 
-import org.jrobin.mrtg.server.Server;
+import org.jrobin.core.RrdException;  
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
  
@@ -56,22 +55,18 @@ import cc.co.llabor.cache.Manager;
 public class RrdKeeper extends NotificationBroadcasterSupport implements NotificationBroadcaster,   DynamicMBean{
 
 	private static final String DOMAIN = "rrdMX";
-	static RrdKeeper me = new RrdKeeper(); // jaja! natuerlich. singleton :-P... 
-
+	static RrdKeeper me = new RrdKeeper(); // jaja! natuerlich. singleton :-P...  
 
 	static { 
 		try {
 			me.init();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) { 
 			e.printStackTrace();
 		}
 	}
 	static {
-		try{
-			 //if ("Java.concurency".equals("enabled"))setupHeartbeat();
-			 //else
-				 me.setupHeartbeatThread();
+		try{ 
+			me.setupHeartbeatThread();
 		}catch(Throwable e){
 			e.printStackTrace();
 		}
@@ -99,51 +94,15 @@ public class RrdKeeper extends NotificationBroadcasterSupport implements Notific
 		String data = beatCounter==0?(""+beatDiff):(""+beatVal);
 		Object retval = rrdUpdateAction.perform(  rrdUID ,  timeMs , data);
 		double  rrdPerSec = 1.0D/((double)(1+lastBeat- System.currentTimeMillis())); 
-		Object retval2 = rrdUpdateAction.perform(   "rrdws/heartbeat/rrdPerSec" ,  timeMs , ""+rrdPerSec );
-		lastBeat =  System.currentTimeMillis() ;
-		
+		retval = rrdUpdateAction.perform(   "rrdws/heartbeat/rrdPerSec" ,  timeMs , ""+rrdPerSec ); 
 		if (retval instanceof RrdException){
 			rrdUID = "rrdws/heartbeat/RIP";
 		}else { 
 			log.debug("processed :{}=[{}]", rrdUID, beatVal );
 		}
+		lastBeat =  System.currentTimeMillis() ;
 	} 
-	/**
-	 * java.concurrent - variant of heartbeat
-	 * TODO - fix the issue with Classloader
-	 * @author vipup
-	 */
-//    static private void setupHeartbeat() {
-//    	ScheduledExecutorService heartbeat = null;
-//    	int corePoolSize = 1;
-//		//ThreadFactory localThreadFactory = new LocalThreadFactory();
-//		heartbeat = Executors.newScheduledThreadPool(corePoolSize);//SingleThreadExecutor();
-//		Runnable command = new Runnable() { 
-//			// make a beat 
-//			public void run() { 
-//                  beat();                    	 
-//            }
-//        };
-//		long initialDelay = 1000;
-//		long period = 1000;
-//		/*
-//		 * Creates and executes a periodic action that becomes enabled first after 
-//		 * the given initial delay, and subsequently with the given period; 
-//		 * that is executions will commence after initialDelay then initialDelay+period, 
-//		 * then initialDelay + 2 * period, and so on. 
-//		 * If any execution of the task encounters an exception, subsequent executions are suppressed. 
-//		 * Otherwise, the task will only terminate via cancellation or termination of the executor. 
-//		 * If any execution of this task takes longer than its period, then subsequent executions may 
-//		 * start late, but will not concurrently execute.
-//		*/
-//		//Parameters:
-//		//command the task to execute
-//		//initialDelay the time to delay first execution
-//		//period the period between successive executions
-//		//unit the time unit of the initialDelay and period parameters 
-//		TimeUnit unit = TimeUnit.MILLISECONDS;
-//		heartbeat.scheduleAtFixedRate(command , initialDelay , period, unit );
-//    } 
+ 
     
     private boolean isAlive = true;
      
@@ -154,8 +113,7 @@ public class RrdKeeper extends NotificationBroadcasterSupport implements Notific
      * starts local daemon-thread with never-ending-loop 
      * @author vipup
      */
-    private void setupHeartbeatThread() {
-    	int corePoolSize = 1; 
+    private void setupHeartbeatThread() { 
 
 		Runnable command = new Runnable() {  
 			// make a beat
