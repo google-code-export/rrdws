@@ -17,6 +17,7 @@ import org.jrobin.mrtg.server.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;    
 
+import ws.rrd.csv.RrdKeeper;
 import ws.rrd.logback.ServletListener;
 import cc.co.llabor.features.Repo;
 import cc.co.llabor.threshold.AlertCaptain;
@@ -81,6 +82,7 @@ public class StartStopServlet extends HttpServlet {
 		// do exactly the same as prev-WatchDog, but otherwise
 //		Cache tholdRepo = Manager.getCache("thold");
 //		Object tholdProps = tholdRepo.get("default.properties");//RRDHighLimitWatchDog
+		Thread.currentThread().setContextClassLoader(RrdKeeper.class.getClassLoader());
 		try {
 //			log.info(Repo.getBanner( "tholdHealthWatchDog"));
 //			
