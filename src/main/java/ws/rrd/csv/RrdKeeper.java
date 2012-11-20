@@ -134,7 +134,7 @@ public class RrdKeeper extends NotificationBroadcasterSupport implements Notific
         };
 		//ThreadGroup tgTmp = //ServletListener.getDefaultThreadGroup();
         //ThreadGroup tgTmp = Thread.currentThread().getThreadGroup();
-		Thread heartbeat  = new Thread(/* tgTmp,*/ command, "heartbeat#"+System.currentTimeMillis() );
+		Thread heartbeat  = new Thread(/* tgTmp,*/ command, "rrdws-heartbeat#"+System.currentTimeMillis() );
         
 
 		/*
