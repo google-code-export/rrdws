@@ -2,8 +2,7 @@
 package cc.co.llabor.system;    
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
-import java.lang.management.RuntimeMXBean;
-import java.lang.reflect.InvocationTargetException; 
+import java.lang.management.RuntimeMXBean; 
 import java.util.Properties; 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -153,10 +152,9 @@ public class StartStopServlet extends HttpServlet {
 						pSubset.setProperty(keyToStore, valToStore);
 						
 					}
-				}
+				} 
+				Threshold watchDogTmp  = AlertCaptain.toThreshold(pSubset );
 				AlertCaptain acTmp = AlertCaptain.getInstance();
-				Threshold watchDogTmp  = acTmp.toThreshold(pSubset );
-				
 				acTmp.register(  watchDogTmp );
 				
 			} 

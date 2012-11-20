@@ -23,8 +23,7 @@
  * Boston, MA 02111-1307, USA.
  */
 package org.jrobin.mrtg.server;
-
-import net.sf.jsr107cache.Cache;
+ 
 
 import org.jrobin.GraphInfo;
 import org.jrobin.cmd.RrdCommander;
@@ -40,9 +39,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import ws.rrd.csv.Registry;
-import cc.co.llabor.cache.Manager;
-import cc.co.llabor.system.StartStopServlet;
+import ws.rrd.csv.Registry; 
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -362,7 +359,8 @@ public class Server implements MrtgConstants {
 	}
 
 	synchronized Device[] getRouters() {
-		return (Device[]) deviceList.getRouters().toArray(new Device[0]);
+		Vector routers = deviceList.getRouters();
+		return (Device[]) routers.toArray(new Device[0]);
 	}
 
 	String[] getAvailableLinks(String host) throws MrtgException {
