@@ -3,7 +3,7 @@ package ws.rrd.server;
 import org.vietspider.html.HTMLDocument; 
 
 /** 
- * <b>produce xmlht output</b>
+ * <b>produce xmlht output(HTML->XHTML)</b>
  * @author      vipup<br>
  * <br>
  * <b>Copyright:</b>     Copyright (c) 2006-2008 Monster AG <br>

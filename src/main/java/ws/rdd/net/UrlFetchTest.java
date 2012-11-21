@@ -54,6 +54,7 @@ import org.jrobin.cmd.RrdCommander;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ws.rrd.server.Base64Coder;
 import ws.rrd.server.LServlet;
 
 import cc.co.llabor.cache. Manager;
@@ -162,7 +163,22 @@ public class UrlFetchTest implements Serializable{
 					} 
 			}			
 		} else if (statusLine.getStatusCode() == 401 ||"HTTP/1.1 401 Unauthorized".equals(statusTmp) || "HTTP/1.0 401 Unauthorized".equals(statusTmp) || "HTTP/1.1 401 Authorization Required".equals(statusTmp)) {			 
-			String basicAuth = searchForAuth(toFetchKey, m);		 
+			String basicAuth = searchForAuth(toFetchKey, m);	
+			// User-pwd in the URL like 'http://appspot.com:bossEmailAsPWD@someDot.com@benzinpreis.de/xml/preise.xml'
+			String userTmp = null;
+			String pwdTmp = null;
+			if (basicAuth==null&&toFetchStr.indexOf(":")<toFetchStr.lastIndexOf(":")){
+				try{
+					String urlTmp = toFetchStr;
+					toFetchStr = urlTmp.substring(0, urlTmp.indexOf("//")+2)+urlTmp.substring(urlTmp.lastIndexOf("@")+1);
+					String userPasswordTmp = urlTmp.substring(urlTmp.indexOf("//")+2, urlTmp.lastIndexOf("@"));
+					userTmp = userPasswordTmp.split(":")[0];
+					pwdTmp = userPasswordTmp.split(":")[1];
+					System.out.println(userPasswordTmp+";;;=="+userTmp+"//"+pwdTmp);
+					basicAuth = ""+userTmp+":"+pwdTmp;
+					basicAuth = new String(Base64Coder.encode(basicAuth.getBytes()));
+				}catch(Throwable e){}
+			}			
 			if (basicAuth != null) {// go forward with cached
 				m.addHeader("Authorization", (basicAuth.startsWith("Basic ")?"":"Basic ") + basicAuth);
 				respTmp = httpClient.execute(m);
@@ -250,6 +266,19 @@ public class UrlFetchTest implements Serializable{
 		String fetchUrl = null == toFetchStr
 				? "http://www.fidu"+"cia.de/service/suchergebnis.html?searchTerm=java"
 				: toFetchStr;
+		// User-pwd in the URL like 'http://appspot.com:bossEmailAsPWD@someDot.com@benzinpreis.de/xml/preise.xml'
+		String userTmp = null;
+		String pwdTmp = null;
+		if (fetchUrl.indexOf(":")<fetchUrl.lastIndexOf(":")){
+			try{
+				String urlTmp = fetchUrl;
+				fetchUrl = urlTmp.substring(0, urlTmp.indexOf("//")+2)+urlTmp.substring(urlTmp.lastIndexOf("@")+1);
+				String userPasswordTmp = urlTmp.substring(urlTmp.indexOf("//")+2, urlTmp.lastIndexOf("@"));
+				userTmp = userPasswordTmp.split(":")[0];
+				pwdTmp = userPasswordTmp.split(":")[1];
+				System.out.println(userPasswordTmp+";;;=="+userTmp+"//"+pwdTmp);
+			}catch(Throwable e){}
+		}
 		HttpUriRequest m = new HttpGet(fetchUrl);
 		for (String[] nextHeader : headers){
 			String headerNameTmp = nextHeader[0];

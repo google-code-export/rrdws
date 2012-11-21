@@ -25,6 +25,11 @@
 	<packaging>war</packaging>
 
 	<dependencies>
+		<dependency>
+			<groupId>net.sf.jtidy</groupId>
+			<artifactId>jtidy</artifactId>
+			<version>r938</version>
+		</dependency>
 	<dependency>
 		<groupId>eu.blky</groupId>
 		<artifactId>noti4j</artifactId>

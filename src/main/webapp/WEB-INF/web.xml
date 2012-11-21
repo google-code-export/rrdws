@@ -62,6 +62,14 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee  http://java.sun.com/xml/n
 		<servlet-class>ws.rrd.server.XServlet</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>y</servlet-name>
+		<servlet-class>ws.rrd.server.YServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>z</servlet-name>
+		<servlet-class>ws.rrd.server.ZServlet</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>l</servlet-name>
 		<servlet-class>ws.rrd.server.LServlet</servlet-class>
 	</servlet>
@@ -211,6 +219,14 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee  http://java.sun.com/xml/n
 		<servlet-name>x</servlet-name>
 		<url-pattern>/x/*</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>y</servlet-name>
+		<url-pattern>/y/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>z</servlet-name>
+		<url-pattern>/z/*</url-pattern>
+	</servlet-mapping>	
 	<servlet-mapping>
 		<servlet-name>S</servlet-name>
 		<url-pattern>/S/*</url-pattern>
