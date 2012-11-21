@@ -167,7 +167,10 @@ public class UrlFetchTest implements Serializable{
 			// User-pwd in the URL like 'http://appspot.com:bossEmailAsPWD@someDot.com@benzinpreis.de/xml/preise.xml'
 			String userTmp = null;
 			String pwdTmp = null;
-			if (basicAuth==null&&toFetchStr.indexOf(":")<toFetchStr.lastIndexOf(":")){
+			if (basicAuth==null&&
+					toFetchStr.indexOf(":")<toFetchStr.lastIndexOf(":")  &&
+					toFetchStr.indexOf("@")< toFetchStr.lastIndexOf("@") && // TODO :-\ 
+					toFetchStr.indexOf("http")==toFetchStr.lastIndexOf("http")){
 				try{
 					String urlTmp = toFetchStr;
 					toFetchStr = urlTmp.substring(0, urlTmp.indexOf("//")+2)+urlTmp.substring(urlTmp.lastIndexOf("@")+1);
@@ -269,7 +272,10 @@ public class UrlFetchTest implements Serializable{
 		// User-pwd in the URL like 'http://appspot.com:bossEmailAsPWD@someDot.com@benzinpreis.de/xml/preise.xml'
 		String userTmp = null;
 		String pwdTmp = null;
-		if (fetchUrl.indexOf(":")<fetchUrl.lastIndexOf(":")){
+		if (fetchUrl.indexOf(":")<fetchUrl.lastIndexOf(":") && 
+				fetchUrl.indexOf("@")< fetchUrl.lastIndexOf("@") && // TODO :-\ 
+				fetchUrl.indexOf("http")==fetchUrl.lastIndexOf("http")){
+			System.out.println("????PWD@URL????"+fetchUrl);
 			try{
 				String urlTmp = fetchUrl;
 				fetchUrl = urlTmp.substring(0, urlTmp.indexOf("//")+2)+urlTmp.substring(urlTmp.lastIndexOf("@")+1);
@@ -301,7 +307,10 @@ public class UrlFetchTest implements Serializable{
 			httpClient.getParams().setParameter("http.connection.timeout", new Integer(this.socketTimeout));
 			
 		}
+		
+		System.out.println(fetchUrl);
 		HttpResponse respTmp = httpClient.execute(m);
+			
 		
 		respTmp = makeAuth(toFetchStr, httpClient, m, respTmp);
 		this.parseCookies(m, respTmp);
