@@ -1,15 +1,15 @@
-<%@page import="java.util.HashMap"%>
-<%@page import="java.util.Map"%>
-<%@page 
+<%@page import="ws.rrd.json.Tool"%><%@page 
+import="java.util.HashMap"%><%@page 
+import="java.util.Map"%><%@page 
 import="ws.rrd.csv.Registry"%><%@page 
 import="net.sf.jsr107cache.Cache"%><%@page 
-import="cc.co.llabor.cache.Manager"%><%
+import="cc.co.llabor.cache.Manager"%><% 
 response.setContentType("text/plain;charset=UTF-8");
 response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
 response.setHeader("Pragma","no-cache"); //HTTP 1.0
 response.setDateHeader ("Expires", 0); //prevents caching at the proxy server
 //response.setHeader("Content-Disposition", "inline;filename=xxx.json");
-%><%
+%><% 
 // 
 Cache cache = Manager.getCache();
 Registry reg = (Registry) cache.get("REGISTRY");
@@ -40,7 +40,7 @@ if (!"".equals(sSearch)){
 	keysTmp = filteredTmp;
 	iTotalDisplayRecords = keysTmp.size();
 } 
-System.out.println(""+iDisplayLength+","+iDisplayStart+",'"+sSearch+"',"+sEcho+","+iTotalRecords+":"+iTotalDisplayRecords);
+System.out.println("iDisplayLength="+iDisplayLength+"&iDisplayStart="+iDisplayStart+"sSearch&='"+sSearch+"'&sEcho="+sEcho+"//||iTotalRecords::"+iTotalRecords+"iTotalDisplayRecords:"+iTotalDisplayRecords);
 %>{ 
   "sEcho": "<%=sEcho %>",
   "iTotalRecords": "<%=iTotalRecords %>",
@@ -54,11 +54,13 @@ if (i<iDisplayStart)continue;
 if (i>(iDisplayStart+iDisplayLength))break;
 
 String iTmp =reg.getPath2db().get(key);
-String titleTmp = "`" + key +"`";
+String titleTmp = "`" + Tool.escapeJavaScript( key ) +"`";
 String aVal = "xwin.jsp?db="+ iTmp+"&_t="+titleTmp;
 String aTxt = ""+(i%3);
 String imgSrc = "gen.jsp?db="+ iTmp;
-%> <%=prefix%>[ "<%=i %>" , "<a target='_blank' href='<%=aVal%>'><%=aTxt%></a>" , "<%=iTmp%>" ,"<a target='_blank' href='<%=aVal%>'><%=key%></a>" , "<img src='<%=imgSrc%>'/>" ]
+String aHrefVal = "<a target='_blank' href='xwin.jsp?db="+ iTmp+"&_t="+key+"'>"+key+"</a>";
+aHrefVal =  Tool.escapeJavaScript(  aHrefVal );
+%> <%=prefix%>[ "<%=i %>" , "<a target='_blank' href='<%=aVal%>'><%=aTxt%></a>" , "<%=iTmp%>" , "<%=aHrefVal%>" , "<img src='<%=imgSrc%>'/>" ]
 
 <%
 prefix = ",";
