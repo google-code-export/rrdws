@@ -42,7 +42,7 @@
 					"bProcessing": true,
 					"bServerSide": true,
 					"sPaginationType": "full_numbers",
-					"sAjaxSource": 'listPP.jsp' 				
+					"sAjaxSource": 'listPP1.jsp' 				
 				} );
  
 				
@@ -74,6 +74,7 @@
 				var counter = selectCounter;
 				// DB-name
 				var dbTmp = rowObj[0].children[2].valueOf().textContent; 
+				var dbNameTmp = rowObj[0].children[3].valueOf().textContent;
 				
 				var newTextBoxDiv = $(document.createElement('div')).attr("id", 'TextBoxDiv' + rrdUID);				
 				var htmlTmp = '<font color="#'+toColor(rrdUID)+'">Textbox #'+ counter + ' : </font></label>' ;
@@ -89,7 +90,7 @@
 				htmlTmp += 	'<input type="text" name="dbColor' + counter + 
 					  '" id="dbColor' + counter + '" value="#'+toColor(rrdUID)+'" enable="false">';
 				htmlTmp += 	':<input type="text" name="dbNote' + counter + 
-					  '" id="dbNote' + counter + '" value=".'+counter+'.n" enable="false">';
+					  '" id="dbNote' + counter + '" value="'+    dbNameTmp   +'." enable="false">';
 				
 				newTextBoxDiv.html(htmlTmp);
 				newTextBoxDiv.appendTo("#TextBoxesGroup");			
@@ -139,7 +140,7 @@
 						defTmp = ' DEF:' + dbAliasTmp + '=' + dbTmp +':'+dbFieldTmp;
 						defAccu += defTmp;
 						// LINE2:myspeed3#00FF88:asdfasdf 
-						visTmp = ' LINE2:' +dbAliasTmp +''+ dbColorTmp +':' + dbNoteTmp;
+						visTmp = ' LINE2:' +dbAliasTmp +''+ dbColorTmp +':' +  killSlasches (dbNoteTmp)  ;
 						visAccu += visTmp;
 						
 				} 
@@ -167,6 +168,14 @@
  			function addslashes( str ) {
 				return (str+'').replace(/#/g,'%23').replace(/([\\"'])/g, "\\$1");
 			}
+			
+ 
+ 			function killSlasches( str ) {
+				var retval = (str+'') ;
+				retval = retval.replace(/[\\\/()\ ]/g, ".");
+				alert (retval);
+				return retval;
+			}			
 
 			/*
 			 * I don't actually use this here, but it is provided as it might be useful and demonstrates
