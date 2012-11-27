@@ -276,7 +276,7 @@
 
 	<div id="rrdDiv2">
 		<label>cmd : </label>
-		<textarea type='textarea' name="textareaRrd"  cols="60" rows="4" id='textareaRrd' >--start now-1week</textarea>
+		<textarea type='textarea' name="textareaRrd"  cols="60" rows="4" id='textareaRrd' >--start now-1week --start now-1week  -c BACK#ECEAEB -c CANVAS#FAFAFC -c SHADEA#6E6A6F  -c SHADEB#6F6A6E -c GRID#FFEEFE -c MGRID#CEFFFE -c FONT#0F0F50 -c ARROW#5055F0</textarea>
 	</div>
 </div>			
 </td><td>
