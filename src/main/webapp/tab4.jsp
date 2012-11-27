@@ -158,24 +158,25 @@
 				} 
 				
 				// rrdIMG
-				var cmdPrefix = "gifgen.jsp?cmd=rrdtool+graph+speed.gif+";
-				var cmd  = cmdPrefix ;
+				var cmdPrefix =  "gifgen.jsp?cmd=rrdtool graph speed.gif ";
+				var cmd  = cmdPrefix  ;
 				// -v 'vip'  -t 'XXXX!'
-				cmd = cmd + "-v '" +document.getElementById("_vtitle").value +"' ";
-				cmd = cmd + "-t '" +document.getElementById("_htitle").value+ "' ";
+				cmd = cmd + "-v \'" +document.getElementById("_vtitle").value +"\' ";
+				cmd = cmd + "-t \'" +document.getElementById("_htitle").value+ "\' ";
 				cmd = cmd + document.getElementById("_y_logarithm").getAttribute("value");
 				cmd = cmd +document.getElementById("textareaRrd").value;
 				cmd +=defAccu;
 				cmd +=visAccu;
 				
-				document.getElementById("textDebug").value =  addslashes( cmd );
+				document.getElementById("textDebug").value =   cmd ;
 				document.getElementById("rrdimg").setAttribute("src",  addslashes( cmd ));
 				
 			}	
 			//http://stackoverflow.com/questions/770523/escaping-strings-in-javascript
 			// http://www.w3schools.com/jsref/jsref_replace.asp
- 			function addslashes( str ) {
-				return (str+'').replace(/#/g,'%23').replace(/([\\"'])/g, "\\$1")  .replace(/\'/g ,'%qt%') ;
+ 			function addslashes( str ) { //.replace(/%20/g,' ').	replace(/\'/g ,'%qt%') 
+				return (str+'').
+					replace(/#/g,'%23').replace(/([\\"'])/g, '\\$1');
 			}
 			
  
@@ -275,8 +276,7 @@
 
 	<div id="rrdDiv2">
 		<label>cmd : </label>
-		<textarea type='textarea' name="textareaRrd"  cols="60" rows="4" id='textareaRrd' >     --start now-1week
-		</textarea>
+		<textarea type='textarea' name="textareaRrd"  cols="60" rows="4" id='textareaRrd' >--start now-1week</textarea>
 	</div>
 </div>			
 </td><td>
