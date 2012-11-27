@@ -47,15 +47,15 @@
  
 				
 			} );
-			function toColor(counter){
+			function toColor(counterPar){
 				var retval = "" ;
 				var hexStr =new Array( 'F','7', '0' , '4', '9', 'A', '1' , 'F');
-				retval += hexStr[counter  %4];
-				retval += hexStr[counter  %6];
-				retval += hexStr[(counter+2)  %3];
-				retval += hexStr[counter  %5];
-				retval += hexStr[(counter+1)  %5];
-				retval += hexStr[counter  %7];
+				retval += hexStr[counterPar  %4];
+				retval += hexStr[counterPar  %6];
+				retval += hexStr[(counterPar+2)  %3];
+				retval += hexStr[counterPar  %5];
+				retval += hexStr[(counterPar+1)  %5];
+				retval += hexStr[counterPar  %7];
 				return retval;			
 			}
 			
@@ -72,26 +72,28 @@
 				var rrdUID = rrdCounter ++;
 				rowObj.addClass('row_selected');												
 				selectCounter=selectCounter+1;
-				var counter = selectCounter;
+				var counter = rrdUID;
 				// DB-name
 				var dbTmp = rowObj[0].children[2].valueOf().textContent; 
 				var dbNameTmp = rowObj[0].children[3].valueOf().textContent;
 				
 				var newTextBoxDiv = $(document.createElement('div')).attr("id", 'TextBoxDiv' + rrdUID);				
-				var htmlTmp = '<font color="#'+toColor(rrdUID)+'">Textbox #'+ counter + ' : </font></label>' ;
+				var htmlTmp = '<font color="#'+toColor(rrdUID)+'">#'+ counter + ' : </font></label>' ;
 				var delId = ""+counter+"#"+dbTmp+":"+rrdUID;
 				htmlTmp += '<button onClick="javascript:removeRrd('+rrdUID+')" id="rem'+rrdUID+'">X</button>';				
 				 
 				htmlTmp += 	'<input type="text" name="textbox' + counter + 
-							'" id="textbox' + counter + '" value="'+dbTmp+'" >';
+							'" id="textbox' + counter + '" value="'+dbTmp+'"  size="8" >';
 				htmlTmp += 	'<input type="text" name="dbField' + counter + 
-					  '" id="dbField' + counter + '" value="data:AVERAGE" enable="false" size="3">';
+					  '" id="dbField' + counter + '" value="data:AVERAGE" readonly="readonly"  size="2">';
 				htmlTmp += 	'<input type="text" name="dbAlias' + counter + 
 					  '" id="dbAlias' + counter + '" value="my'+counter+'" enable="false" size="3">';
 				htmlTmp += 	'<input type="text" name="dbColor' + counter + 
-					  '" id="dbColor' + counter + '" value="#'+toColor(rrdUID)+'" enable="false">';
+					  '" id="dbColor' + counter + '" value="#'+toColor(rrdUID)+'" size="6" enable="false">';
+				htmlTmp += 	'<input type="text" name="dbStyle' + counter + 
+					  '" id="dbStyle' + counter + '" value="'+  document.getElementById("_drawSwitch").getAttribute("value") +'" size="4" enable="false">';					  
 				htmlTmp += 	':<input type="text" name="dbNote' + counter + 
-					  '" id="dbNote' + counter + '" value="'+    dbNameTmp   +'." enable="false">';
+					  '" id="dbNote' + counter + '" value="'+    dbNameTmp   +'." size="55"  enable="false">';
 				
 				newTextBoxDiv.html(htmlTmp);
 				newTextBoxDiv.appendTo("#TextBoxesGroup");			
@@ -99,8 +101,8 @@
 			// unselect element from RRD-available-Table
 			function delRrd(rowObj){
 				rowObj.removeClass('row_selected');		
-				var counter = selectCounter;
-				var bNname = "#TextBoxDiv" + counter;
+				var counterTmp = selectCounter;
+				var bNname = "#TextBoxDiv" + counterTmp;
 				var oDiv = $(bNname);
 				oDiv.remove();			
 				selectCounter=selectCounter-1;
@@ -116,12 +118,13 @@
 				}catch(errTmp){
 					alert(errTmp);
 				}				
-				var txtTmp = "list["+rrdCounterTmp+"]==";				
+	
 				var prefix = "";
 				var dbTmp = "";
 				var dbFieldTmp = "";
 				var dbAliasTmp = "";
 				var dbColorTmp = ""; 
+				var dbStyleTmp = "";
 				var dbNoteTmp = "";
 				var defTmp = "";
 				var visTmp = "";
@@ -130,7 +133,7 @@
 				var visAccu = "";
 				
 				for ( var i=rrdCounterTmp ; i>2 ; i-- ){
-						txtTmp =txtTmp+ prefix + i  ;
+						
 						prefix = ",";
 						//dbTmp = oTable._fnGetCellData(anSelected[i-1],2); 
 						//document.getElementById("textbox"+i).setAttribute("value", dbTmp);
@@ -143,18 +146,16 @@
 						//document.getElementById("dbAlias"+ind).getValue();
 						dbAliasTmp = elTmp.children[4].value;
 						dbColorTmp = elTmp.children[5].value;
-						dbNoteTmp = "."+elTmp.children[6].value;
+						dbStyleTmp = elTmp.children[6].value;
+						dbNoteTmp = "."+elTmp.children[7].value;
 						//DEF:myspeed2=X840983877.rrd:data:AVERAGE 
 						defTmp = ' DEF:' + dbAliasTmp + '=' + dbTmp +':'+dbFieldTmp;
 						defAccu += defTmp;
 						// LINE2:myspeed3#00FF88:asdfasdf 
-						visTmp = ' LINE2:' +dbAliasTmp +''+ dbColorTmp +':' +  killSlasches (dbNoteTmp)  ;
+						 
+						visTmp = ' '+dbStyleTmp+':' +dbAliasTmp +''+ dbColorTmp +':' +  killSlasches (dbNoteTmp)  ;
 						visAccu += visTmp;
 				} 
-				// jquery
-				//$('#textbox1').val ( txtTmp +"," + counter );
-				// js
-				document.getElementById("rrdlist").setAttribute("value", txtTmp);
 				
 				// rrdIMG
 				var cmdPrefix = "gifgen.jsp?cmd=rrdtool+graph+speed.gif+";
@@ -174,7 +175,7 @@
 			//http://stackoverflow.com/questions/770523/escaping-strings-in-javascript
 			// http://www.w3schools.com/jsref/jsref_replace.asp
  			function addslashes( str ) {
-				return (str+'').replace(/#/g,'%23').replace(/([\\"'])/g, "\\$1");
+				return (str+'').replace(/#/g,'%23').replace(/([\\"'])/g, "\\$1")  .replace(/\'/g ,'%qt%') ;
 			}
 			
  
@@ -209,6 +210,13 @@
 				logarithmicTmp = logarithmicTmp==""? " -o ":"";
 				document.getElementById("_y_logarithm").setAttribute("value", logarithmicTmp);
 				updateRdd( );
+			}
+			
+			var drawSwitchCounter =  0;
+			function drawSwitch(){
+				drawSwitchCounter ++;
+				var drawModes = new Array("LINE1", "LINE2", "LINE3", "AREA");
+				document.getElementById("_drawSwitch").setAttribute("value", drawModes[drawSwitchCounter%drawModes.length]);
 			}
 			
 		</script>
@@ -250,16 +258,19 @@
 			 
 <table> <tbody><tr><td>
 <div id='TextBoxesGroup'>
-	<label>RRDs to visualize : </label><input type='text' id='rrdlist' value='-' size='77'>
+	<label >currentTimeMillis#</label><input    type='text' id='rrdlist' value='<%=System.currentTimeMillis()%>' size='77'>
 </div>		
 <div id='RRDGroup'>
 	<label>h-title: </label><input type='text' id='_htitle' value='h-Title' />
 	<label>v-title: </label><input type='text' id='_vtitle' value='v-Title' />
 	<div id="rrdDiv1">
-	<label>Logarithmic y-axis scaling. </label><input onclick="javascript:y_logarithmSwitch()" type='button' id='_y_logarithm' value='v' />
+	<label>Logarithmic y-axis scaling. </label><input onclick="javascript:y_logarithmSwitch()" type='button' id='_y_logarithm' value='' />
 	</div>
 	<div id="rrdDiv1">
-		<label>update </label><input onclick="javascript:updateRdd()" type='button' id='_updateRRd' value='.' />
+		<label>update </label><input onclick="javascript:updateRdd()" type='button' id='_updateRRd' value='(69)' />
+	</div>
+	<div id="rrdDiv2">
+		<label>DRAWTYPE </label><input onclick="javascript:drawSwitch()" type='button' id='_drawSwitch' value='LINE1' />
 	</div>
 
 	<div id="rrdDiv2">

@@ -32,9 +32,26 @@ iTotalRecords = keysTmp.size();iTotalDisplayRecords = keysTmp.size();
 //calcSearch, if any
 if (!"".equals(sSearch)){
 	Map<String, String>  filteredTmp = new HashMap<String, String>();
+	// ++
 	for (String key:keysTmp.keySet() ){
-		if (key.toUpperCase().indexOf(sSearch.toUpperCase())>-1){
-			filteredTmp.put(key,keysTmp .get(key));
+		for (String tagTmp :sSearch.split(" ,")){ 
+			if (!tagTmp.startsWith("-")){
+				if (key.toUpperCase().indexOf(tagTmp.toUpperCase())>-1){
+					filteredTmp.put(key,keysTmp .get(key));
+				} 
+			}
+		}
+	}
+	keysTmp = new HashMap<String, String>();
+	keysTmp.putAll(filteredTmp);
+	// --
+	for (String key:keysTmp.keySet() ){
+		for (String tagTmp :sSearch.split(" ,")){
+			if (tagTmp.startsWith("-")){
+				if (key.toUpperCase().indexOf(tagTmp.substring(1).toUpperCase())>-1){
+					filteredTmp.remove(key);
+				} 
+			}
 		}
 	}
 	keysTmp = filteredTmp;
