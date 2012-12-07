@@ -269,7 +269,11 @@ public class LServlet extends HttpServlet {
 				urlStr = checkGOTO(urlStr);				
 				try{					
 					String keyTmp = calcCackeKey(urlStr);
-					Object dataTmp = getCache .get(keyTmp );
+					Object dataTmp = null;
+					try{
+						dataTmp = getCache .get(keyTmp );
+					}catch(Exception e){e.printStackTrace();/* ignore any gae-limits, if any */}
+					
 					if (dataTmp == null){
 						xRespTmp = urlFetcherTmp.fetchGetResp(urlStr, headsToResend);
 						
@@ -281,9 +285,11 @@ public class LServlet extends HttpServlet {
 						outTmp.write(theItem.getBytes()); 
 						return;	
 					}else{
+						try{
 						 getCache .remove(urlStr);
 						 dataTmp =null;
 						 xRespTmp = urlFetcherTmp.fetchGetResp(urlStr, headsToResend);
+						}catch(Exception e){e.printStackTrace();/* ignore any gae-limits, if any */} 
 					}
 				}catch(ClientProtocolException e){
 					log.error( "URL{"+urlStr+"}::",  e);
@@ -606,7 +612,7 @@ public class LServlet extends HttpServlet {
 		try{
 			LCacheEntry newData = new LCacheEntry(key, bytesTmp, cxType);
 			getCache.put(key, newData);
-		}catch(Throwable e){}
+		}catch(Throwable e){e.printStackTrace();}
 	}
 	public static String calcCackeKey(String urlStr) {
 		String key = urlStr;
