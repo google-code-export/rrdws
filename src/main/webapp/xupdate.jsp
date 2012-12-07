@@ -19,7 +19,7 @@
 <%
 try{
     // Check that we have a file upload request
-    if(ServletFileUpload.isMultipartContent(request)){
+    if (ServletFileUpload.isMultipartContent(request)){
           
             MemoryFileItemFactory factory = MemoryFileItemFactory.getInstance();
             ServletFileUpload upload = new ServletFileUpload(factory);
