@@ -504,6 +504,17 @@
 					maven-mercurial-build-number-plugin
 				</artifactId>
 				<version>1.0</version>
+				<dependencies>
+
+<dependency>
+	<groupId>commons-io</groupId>
+	<artifactId>commons-io</artifactId>
+	<version>2.4</version>
+</dependency>
+				</dependencies>
+
+
+
 				<executions> 
 					<execution>
 						<goals>
@@ -703,12 +714,13 @@
 		</plugins>
 		<!-- Build Settings -->
 		<extensions>
-			<!-- FIX 4 "Cannot find wagon which supports the requested protocol: svn" -->
+			<!-- FIX 4 "Cannot find wagon which supports the requested protocol: svn" 
 			<extension>
 				<groupId>org.jvnet</groupId>
 				<artifactId>wagon-svn</artifactId>
 				<version>1.8</version>
 			</extension>
+			-->
 		</extensions>
 
 	</build><!-- Specify hard-coded project properties here -->
@@ -1052,15 +1064,7 @@
 				http://maven-gae-plugin.googlecode.com/svn/repository
 			</url>
 		</repository>
-		<!-- wagon-svn id located here -->
-		<repository>
-			<id>ZKgoogle</id>
-			<name>zkossAtGoogleCode</name>
-			<url>
-				http://zkoss.googlecode.com/svn/release-repository/
-			</url>
-			<layout>default</layout>
-		</repository>
+
 		
 		
 				 
@@ -1081,11 +1085,23 @@
 		
 		
 		
+			<!-- wagon-svn id located here -->
+		<repository>
+			<id>ZKgoogle</id>
+			<name>zkossAtGoogleCode</name>
+			<url>
+				http://zkoss.googlecode.com/svn/release-repository/
+			</url>
+			<layout>default</layout>
+		</repository>
 		
 		
 	</repositories>
 
 	<pluginRepositories>
+	
+
+	
 		<pluginRepository>
 			<id>DataNucleus_2</id>
 			<url>http://www.datanucleus.org/downloads/maven2/</url>
